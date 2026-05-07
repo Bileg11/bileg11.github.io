@@ -108,20 +108,38 @@ body{
   position:relative;
   overflow:hidden;
 }
-.hero-bg{
+/* YouTube video background */
+.hero-video-wrap{
+  position:absolute;inset:0;
+  overflow:hidden;
+  z-index:0;
+}
+.hero-video-wrap iframe{
+  position:absolute;
+  top:50%;left:50%;
+  transform:translate(-50%,-50%);
+  width:177.78vh; /* 16:9 */
+  height:100%;
+  min-width:100%;
+  min-height:56.25vw; /* 16:9 */
+  pointer-events:none;
+  opacity:.55;
+}
+.hero-video-fallback{
   position:absolute;inset:0;
   background-image:url('https://images.unsplash.com/photo-1537535933671-9cb7d2af5a70?w=1800&q=80');
   background-size:cover;background-position:center;
   opacity:.35;
-  transform:scale(1.05);
-  transition:transform 8s ease;
 }
-.hero-gradient{position:absolute;inset:0;background:linear-gradient(to bottom,rgba(0,0,0,.1) 0%,rgba(0,0,0,.5) 100%)}
+.hero-gradient{
+  position:absolute;inset:0;z-index:1;
+  background:linear-gradient(to bottom,rgba(0,0,0,.25) 0%,rgba(0,0,0,.65) 100%);
+}
 .hero-eyebrow{
   font-size:13px;font-weight:500;letter-spacing:.06em;text-transform:uppercase;
   color:rgba(255,255,255,.6);
   margin-bottom:20px;
-  position:relative;
+  position:relative;z-index:2;
   animation:heroFade .9s ease both;
 }
 .hero h1{
@@ -130,7 +148,7 @@ body{
   line-height:1.05;
   letter-spacing:-.04em;
   margin-bottom:20px;
-  position:relative;
+  position:relative;z-index:2;
   animation:heroFade .9s ease .1s both;
 }
 .hero h1 em{
@@ -145,12 +163,12 @@ body{
   max-width:580px;
   margin:0 auto 40px;
   line-height:1.6;
-  position:relative;
+  position:relative;z-index:2;
   animation:heroFade .9s ease .2s both;
 }
 .hero-btns{
   display:flex;gap:12px;flex-wrap:wrap;justify-content:center;
-  position:relative;
+  position:relative;z-index:2;
   animation:heroFade .9s ease .3s both;
 }
 .btn-primary{
@@ -183,7 +201,7 @@ body{
   display:flex;gap:48px;flex-wrap:wrap;justify-content:center;
   margin-top:80px;padding-top:40px;
   border-top:1px solid rgba(255,255,255,.12);
-  position:relative;
+  position:relative;z-index:2;
   animation:heroFade .9s ease .4s both;
 }
 .hero-stat-num{font-size:36px;font-weight:700;letter-spacing:-.03em;color:#fff;margin-bottom:4px}
@@ -659,7 +677,17 @@ section,#booking-section{scroll-margin-top:60px}
 
 <!-- HERO -->
 <section class="hero" id="home">
-  <div class="hero-bg" id="heroBg"></div>
+  <!-- YouTube video background -->
+  <div class="hero-video-wrap">
+    <div class="hero-video-fallback"></div>
+    <iframe id="ytbg"
+      src="https://www.youtube.com/embed/2Zhubxr5dhQ?autoplay=1&mute=1&loop=1&playlist=2Zhubxr5dhQ&controls=0&showinfo=0&rel=0&modestbranding=1&playsinline=1&start=10"
+      title="Shanghai 4K"
+      frameborder="0"
+      allow="autoplay; encrypted-media"
+      allowfullscreen>
+    </iframe>
+  </div>
   <div class="hero-gradient"></div>
   <div class="hero-eyebrow">Шанхай · Монгол хөтөч · VIP Эрүүл мэнд</div>
   <h1>Аялангаа<br><em>Эрүүл мэнддээ</em><br>Зориул</h1>
@@ -1298,11 +1326,11 @@ window.addEventListener('scroll', () => {
   document.getElementById('scroll-top').classList.toggle('show', window.scrollY > 500);
 }, {passive:true});
 
-// ── HERO BG PARALLAX ──
-const heroBg = document.getElementById('heroBg');
+// ── HERO VIDEO PARALLAX (subtle) ──
+const heroVideoWrap = document.querySelector('.hero-video-wrap');
 window.addEventListener('scroll', () => {
-  if (window.scrollY < window.innerHeight && heroBg) {
-    heroBg.style.transform = `scale(1.05) translateY(${window.scrollY * 0.15}px)`;
+  if (window.scrollY < window.innerHeight && heroVideoWrap) {
+    heroVideoWrap.style.transform = `translateY(${window.scrollY * 0.2}px)`;
   }
 }, {passive:true});
 
