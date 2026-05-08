@@ -772,7 +772,7 @@ section,#booking-section{scroll-margin-top:60px}
       📋 Book a Guide
     </button>
   </div>
-  <button class="float-main" onclick="document.getElementById('floatMenu').classList.toggle('open')" title="Холбогдох">
+  <button class="float-main" onclick="document.getElementById('floatMenu').classList.toggle('open')" title="Contact">
     💬
   </button>
 </div>
@@ -828,13 +828,13 @@ section,#booking-section{scroll-margin-top:60px}
 
   <!-- CTA BUTTONS -->
   <div class="hero-btns">
-    <button class="btn-primary" onclick="scrollToId('medical')">🩺 Эрүүл мэндийн хөтөлбөр</button>
+    <button class="btn-primary" onclick="scrollToId('medical')">🩺 Healthcare Program</button>
     <button class="btn-ghost" onclick="window.location.href='/booking/'">Book a Guide</button>
   </div>
 
   <!-- STATS -->
   <div class="hero-stats">
-    <div><div class="hero-stat-num">Шанхай</div><div class="hero-stat-label">City Tour</div></div>
+    <div><div class="hero-stat-num">Shanghai</div><div class="hero-stat-label">City Tour</div></div>
     <div><div class="hero-stat-num">VIP</div><div class="hero-stat-label">Healthcare</div></div>
     <div><div class="hero-stat-num">MN</div><div class="hero-stat-label">In Mongolian</div></div>
     <div><div class="hero-stat-num">24/7</div><div class="hero-stat-label">Support</div></div>
@@ -1024,7 +1024,7 @@ section,#booking-section{scroll-margin-top:60px}
           </div>
           <div class="itin-stops">
             <div class="itin-stop">The Bund — colonial-era waterfront along the Huangpu River</div>
-            <div class="itin-stop">Yuyuan Garden — 450 жилийн настай уламжлалт Хятад цэцэрлэг</div>
+            <div class="itin-stop">Yuyuan Garden — 450-year-old traditional Chinese garden</div>
             <div class="itin-stop">Nanshi — old town, inner gate, local market</div>
             <div class="itin-stop">Xiaolongbao dinner — Din Tai Fung</div>
           </div>
@@ -1044,7 +1044,7 @@ section,#booking-section{scroll-margin-top:60px}
         <div class="itin-day">
           <div class="itin-day-header">
             <div class="itin-day-badge">3</div>
-            <div class="itin-day-title">Culture & Амралт</div>
+            <div class="itin-day-title">Culture & Leisure</div>
           </div>
           <div class="itin-stops">
             <div class="itin-stop">Shanghai Museum — 5,000 years of history</div>
@@ -1168,7 +1168,7 @@ section,#booking-section{scroll-margin-top:60px}
           <div class="itin-stops">
             <div class="itin-stop">Tax refund — claim back on purchases over 500 CNY</div>
             <div class="itin-stop">Use WeChat Pay — cashless shopping only</div>
-            <div class="itin-stop">Хуурамч бараас болгоомжил — алдарт захуудад хуурамч байдаг</div>
+            <div class="itin-stop">Beware of fakes — counterfeit goods at popular markets</div>
             <div class="itin-stop">Bring your passport — required for duty-free shopping</div>
           </div>
         </div>
@@ -1203,7 +1203,7 @@ section,#booking-section{scroll-margin-top:60px}
             <div class="itin-stop">Traditional Chinese dinner</div>
           </div>
         </div>
-        <div class="itin-meta"><div><span>3</span> Days</div><div><span>Culture</span> гүнзгий</div><div><span>Guide</span> Included</div></div>
+        <div class="itin-meta"><div><span>3</span> Days</div><div><span>Deep</span> Culture</div><div><span>Guide</span> Included</div></div>
       </div>
       <div class="itin-panel">
         <h3>Culture Tips</h3>
@@ -1212,7 +1212,7 @@ section,#booking-section{scroll-margin-top:60px}
           <div class="itin-stops">
             <div class="itin-stop">Remove hats in temples, maintain silence</div>
             <div class="itin-stop">Inform in advance if you have dietary restrictions</div>
-            <div class="itin-stop">Зураг авахад зөвшөөрөл авах — ялангуяа хүмүүс</div>
+            <div class="itin-stop">Ask permission before taking photos — especially of people</div>
             <div class="itin-stop">Chinese greeting: 你好 (Nǐ hǎo) — Hello</div>
           </div>
         </div>
@@ -1761,7 +1761,7 @@ function submitBooking(e) {
   const service = document.getElementById('b-service').value;
   const note = document.getElementById('b-note').value;
   // Facebook message link (fallback)
-  const msg = encodeURIComponent(`Сайн байна уу! Захиалга хийх гэж байна.\nНэр: ${name}\nУтас: ${phone}\nҮйлчилгээ: ${service}\nНэмэлт: ${note}`);
+  const msg = encodeURIComponent(`Hello! I would like to make a booking.\nName: ${name}\nPhone: ${phone}\nService: ${service}\nNote: ${note}`);
   document.getElementById('bookingForm').style.display = 'none';
   document.getElementById('bookingSuccess').style.display = 'block';
   // Auto open FB in background
