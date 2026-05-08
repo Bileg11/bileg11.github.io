@@ -452,38 +452,36 @@ footer{
         if (snap.exists()) p = snap.data();
       } catch(_) {}
 
-      const fullName    = [p.lastName, p.firstName].filter(Boolean).join(' ') || '—';
-      const profileLink = p.username
-        ? `bileg11.github.io/profile/${p.username}`
-        : `UID: ${currentUser.uid.slice(0,8)}`;
+      const fullName = [p.lastName, p.firstName].filter(Boolean).join(' ') || '—';
 
-      // Flag if form data differs from profile data
-      const phoneDiff = p.phone && p.phone !== data.phone;
-      const emailDiff = p.email && p.email !== data.email;
-      const nameDiff  = fullName !== '—' && fullName.trim() !== data.name.trim();
+      // Calculate age from birthday (YYYY-MM-DD)
+      let age = '—';
+      if (p.birthday) {
+        const bd = new Date(p.birthday);
+        const now = new Date();
+        let a = now.getFullYear() - bd.getFullYear();
+        if (now < new Date(now.getFullYear(), bd.getMonth(), bd.getDate())) a--;
+        if (a > 0 && a < 120) age = a + ' нас';
+      }
 
       const msg =
 `📋 <b>Шинэ захиалга!</b>
 
-━━━ 📝 ЗАХИАЛГА ━━━
+👤 <b>Нэр:</b> ${data.name}
+📞 <b>Утас:</b> ${data.phone}
 🛎 <b>Үйлчилгээ:</b> ${data.service}
-🗓 <b>Огноо:</b> ${data.start} · ${data.days}
-👥 <b>Хүн / Бүлэг:</b> ${data.people||'—'} / ${data.group||'—'}
+👥 <b>Хүн:</b> ${data.people||'—'}
+🗓 <b>Эхлэх:</b> ${data.start} · ${data.days}
+👨‍👩‍👧 <b>Бүлэг:</b> ${data.group||'—'}
 💬 <b>Нэмэлт:</b> ${data.note||'—'}
-
-━━━ 📬 ХАЯГИЙН МЭДЭЭЛЭЛ ━━━
-👤 <b>Нэр:</b> ${data.name}${nameDiff ? ' ⚠️' : ''}
-📞 <b>Утас:</b> ${data.phone}${phoneDiff ? ' ⚠️' : ''}
-📧 <b>И-мэйл:</b> ${data.email}${emailDiff ? ' ⚠️' : ''}
 📱 <b>Social:</b> ${data.social||'—'}
 
-━━━ 👤 БҮРТГЭЛИЙН МЭДЭЭЛЭЛ ━━━
-👤 <b>Нэр:</b> ${fullName}
+👤 <b>Хэрэглэгчийн мэдээлэл</b>
+🪪 <b>Нэр:</b> ${fullName}
 📞 <b>Утас:</b> ${p.phone||'—'}
 📧 <b>И-мэйл:</b> ${p.email || currentUser.email || '—'}
-⚥ <b>Хүйс:</b> ${p.gender||'—'}
-🎂 <b>Төрсөн огноо:</b> ${p.birthday||'—'}
-🔗 <b>Profile:</b> ${profileLink}`;
+🎂 <b>Нас:</b> ${age}
+⚥ <b>Хүйс:</b> ${p.gender||'—'}`;
 
       await sendTelegram(msg);
 
