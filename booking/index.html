@@ -314,7 +314,7 @@ footer{
 <script src="/js/calendar.js"></script>
 <script type="module">
   import { initializeApp } from "https://www.gstatic.com/firebasejs/11.7.1/firebase-app.js";
-  import { getFirestore, collection, addDoc, serverTimestamp } from "https://www.gstatic.com/firebasejs/11.7.1/firebase-firestore.js";
+  import { getFirestore, collection, addDoc, serverTimestamp, doc, getDoc } from "https://www.gstatic.com/firebasejs/11.7.1/firebase-firestore.js";
   import { getAnalytics, logEvent } from "https://www.gstatic.com/firebasejs/11.7.1/firebase-analytics.js";
   import { getAuth, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/11.7.1/firebase-auth.js";
 
@@ -445,7 +445,37 @@ footer{
       await addDoc(collection(db, "bookings"), data);
       logEvent(analytics, 'booking_submitted', { service: data.service, people: data.people });
 
-      const msg = `📋 <b>Шинэ захиалга!</b>\n\n👤 <b>Нэр:</b> ${data.name}\n📞 <b>Утас:</b> ${data.phone}\n📧 <b>И-мэйл:</b> ${data.email}\n🛎 <b>Үйлчилгээ:</b> ${data.service}\n👥 <b>Хүн:</b> ${data.people||'—'}\n🗓 <b>Эхлэх:</b> ${data.start} (${data.days})\n👨‍👩‍👧 <b>Бүлэг:</b> ${data.group||'—'}\n💬 <b>Нэмэлт:</b> ${data.note||'—'}\n📱 <b>Social:</b> ${data.social||'—'}`;
+      // Fetch user profile from Firestore
+      let p = {};
+      try {
+        const snap = await getDoc(doc(db, 'users', currentUser.uid));
+        if (snap.exists()) p = snap.data();
+      } catch(_) {}
+
+      const fullName = [p.lastName, p.firstName].filter(Boolean).join(' ') || '—';
+      const profileLink = p.username
+        ? `bileg11.github.io/profile/${p.username}`
+        : `UID: ${currentUser.uid.slice(0,8)}`;
+
+      const msg =
+`📋 <b>Шинэ захиалга!</b>
+
+━━━ 📝 ЗАХИАЛГЫН МЭДЭЭЛЭЛ ━━━
+🛎 <b>Үйлчилгээ:</b> ${data.service}
+🗓 <b>Огноо:</b> ${data.start} · ${data.days}
+👥 <b>Хүн/Бүлэг:</b> ${data.people||'—'} / ${data.group||'—'}
+💬 <b>Нэмэлт:</b> ${data.note||'—'}
+
+━━━ 👤 ЗАХИАЛАГЧИЙН МЭДЭЭЛЭЛ ━━━
+🪪 <b>Нэр (маягт):</b> ${data.name}
+👤 <b>Нэр (profile):</b> ${fullName}
+📞 <b>Утас:</b> ${data.phone}
+📧 <b>И-мэйл:</b> ${data.email}
+⚥ <b>Хүйс:</b> ${p.gender||'—'}
+🎂 <b>Төрсөн огноо:</b> ${p.birthday||'—'}
+📱 <b>Social:</b> ${data.social||'—'}
+🔗 <b>Profile:</b> ${profileLink}`;
+
       await sendTelegram(msg);
 
       document.getElementById('bookingForm').style.display = 'none';
