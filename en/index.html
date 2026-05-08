@@ -608,6 +608,32 @@ footer{
 .nav-user-btn:hover{background:var(--border)}
 .nav-user-avatar{width:22px;height:22px;border-radius:50%;background:var(--blue);color:#fff;font-size:10px;display:flex;align-items:center;justify-content:center;font-weight:600}
 
+/* ── AUTH MODAL ── */
+.auth-overlay{display:none;position:fixed;inset:0;background:rgba(0,0,0,.5);z-index:2000;align-items:center;justify-content:center;backdrop-filter:blur(4px)}
+.auth-overlay.open{display:flex}
+.auth-modal{background:var(--card);border-radius:20px;padding:36px 32px;width:100%;max-width:400px;margin:16px;box-shadow:0 20px 60px rgba(0,0,0,.15);position:relative}
+.auth-close{position:absolute;top:16px;right:16px;background:none;border:none;font-size:20px;cursor:pointer;color:var(--muted);line-height:1;padding:4px 8px;border-radius:8px}
+.auth-close:hover{background:var(--bg2)}
+.auth-tabs{display:flex;gap:0;border-bottom:1px solid var(--border);margin-bottom:24px}
+.auth-tab{flex:1;padding:10px;background:none;border:none;font-size:14px;font-weight:500;color:var(--muted);cursor:pointer;border-bottom:2px solid transparent;margin-bottom:-1px;transition:.15s;font-family:inherit}
+.auth-tab.active{color:var(--blue);border-bottom-color:var(--blue)}
+.auth-title{font-size:22px;font-weight:700;letter-spacing:-.02em;color:var(--dark2);margin-bottom:4px}
+.auth-sub{font-size:13px;color:var(--muted);margin-bottom:24px}
+.auth-field{margin-bottom:14px}
+.auth-field label{display:block;font-size:12px;font-weight:600;color:var(--muted2);margin-bottom:6px;text-transform:uppercase;letter-spacing:.04em}
+.auth-input{width:100%;padding:10px 14px;border:1px solid var(--border);border-radius:10px;font-size:14px;font-family:inherit;color:var(--dark2);background:var(--bg);transition:.15s;outline:none}
+.auth-input:focus{border-color:var(--blue);box-shadow:0 0 0 3px rgba(0,113,227,.08)}
+.auth-btn{width:100%;padding:12px;background:var(--blue);color:#fff;border:none;border-radius:12px;font-size:14px;font-weight:600;cursor:pointer;font-family:inherit;margin-top:8px;transition:.2s}
+.auth-btn:hover{background:var(--blue-hover)}
+.auth-divider{text-align:center;font-size:12px;color:var(--muted);margin:16px 0;position:relative}
+.auth-divider::before,.auth-divider::after{content:'';position:absolute;top:50%;width:42%;height:1px;background:var(--border)}
+.auth-divider::before{left:0}.auth-divider::after{right:0}
+.auth-fb-btn{width:100%;padding:11px;background:#1877f2;color:#fff;border:none;border-radius:12px;font-size:14px;font-weight:500;cursor:pointer;font-family:inherit;display:flex;align-items:center;justify-content:center;gap:8px;transition:.2s}
+.auth-fb-btn:hover{background:#166fe5}
+.auth-msg{font-size:12px;padding:10px 14px;border-radius:8px;margin-top:12px;display:none}
+.auth-msg.error{background:#fff0f0;color:#c0392b;border:1px solid #fcc}
+.auth-msg.success{background:#f0fff4;color:#27ae60;border:1px solid #b2f0c8}
+
 /* ── LOADING SCREEN ── */
 #loader{
   position:fixed;inset:0;z-index:9999;
@@ -752,6 +778,44 @@ section,#booking-section{scroll-margin-top:60px}
 </head>
 <body>
 
+<!-- AUTH MODAL -->
+<div class="auth-overlay" id="authOverlay" onclick="if(event.target===this)closeAuthModal()">
+  <div class="auth-modal">
+    <button class="auth-close" onclick="closeAuthModal()">✕</button>
+    <div class="auth-tabs">
+      <button class="auth-tab active" onclick="switchAuthTab('login',this)">Login</button>
+      <button class="auth-tab" onclick="switchAuthTab('register',this)">Register</button>
+    </div>
+    <div id="auth-login">
+      <div class="auth-title">Welcome back 👋</div>
+      <div class="auth-sub">Sign in to view your bookings</div>
+      <div class="auth-field"><label>Email</label><input class="auth-input" type="email" id="login-email" placeholder="example@gmail.com"></div>
+      <div class="auth-field"><label>Password</label><input class="auth-input" type="password" id="login-pass" placeholder="••••••••"></div>
+      <button class="auth-btn" onclick="doLogin()">Sign In →</button>
+      <div class="auth-msg" id="login-msg"></div>
+      <div class="auth-divider">or</div>
+      <button class="auth-fb-btn" onclick="doFbLogin()">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="white"><path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"/></svg>
+        Continue with Facebook
+      </button>
+    </div>
+    <div id="auth-register" style="display:none">
+      <div class="auth-title">Create account ✨</div>
+      <div class="auth-sub">Sign up to get started</div>
+      <div class="auth-field"><label>Name</label><input class="auth-input" type="text" id="reg-name" placeholder="Your name"></div>
+      <div class="auth-field"><label>Email</label><input class="auth-input" type="email" id="reg-email" placeholder="example@gmail.com"></div>
+      <div class="auth-field"><label>Password</label><input class="auth-input" type="password" id="reg-pass" placeholder="8+ characters"></div>
+      <button class="auth-btn" onclick="doRegister()">Create Account →</button>
+      <div class="auth-msg" id="reg-msg"></div>
+      <div class="auth-divider">or</div>
+      <button class="auth-fb-btn" onclick="doFbLogin()">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="white"><path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"/></svg>
+        Continue with Facebook
+      </button>
+    </div>
+  </div>
+</div>
+
 <!-- LOADER -->
 <div id="loader">
   <div class="loader-logo">LFS <span>Shanghai</span></div>
@@ -782,6 +846,7 @@ section,#booking-section{scroll-margin-top:60px}
   <div class="nav-logo" onclick="window.scrollTo({top:0,behavior:'smooth'})">LFS <span>Shanghai</span></div>
   <div class="nav-actions">
     <div class="lang-switch"><a href="/mn/" class="lang-btn">МН</a><a href="/en/" class="lang-btn lang-active">EN</a></div>
+    <button class="nav-user-btn" id="nav-auth-btn" onclick="openAuthModal()">Login 👤</button>
     <button class="nav-btn" onclick="window.location.href='/booking/'">Book Now ↗</button>
   </div>
   <div class="hamburger" onclick="toggleMobileMenu()">
@@ -1785,7 +1850,9 @@ function openAccountModal() {
 <script type="module">
   import { initializeApp } from "https://www.gstatic.com/firebasejs/11.7.1/firebase-app.js";
   import { getAnalytics, logEvent } from "https://www.gstatic.com/firebasejs/11.7.1/firebase-analytics.js";
-  const app = initializeApp({
+  import { getAuth, createUserWithEmailAndPassword, signInWithEmailAndPassword, onAuthStateChanged, signOut } from "https://www.gstatic.com/firebasejs/11.7.1/firebase-auth.js";
+
+  const firebaseConfig = {
     apiKey: "AIzaSyDixZdKwlrixRFokERCMQ5Ld1BMkhUttCQ",
     authDomain: "lfs-shanghai.firebaseapp.com",
     projectId: "lfs-shanghai",
@@ -1793,9 +1860,77 @@ function openAccountModal() {
     messagingSenderId: "337508244675",
     appId: "1:337508244675:web:f47b7e14417a0f1d129676",
     measurementId: "G-81DTJ80VLR"
-  });
+  };
+  const app = initializeApp(firebaseConfig);
   const analytics = getAnalytics(app);
-  logEvent(analytics, 'page_view', { page_title: 'Home' });
+  const auth = getAuth(app);
+  logEvent(analytics, 'page_view', { page_title: 'Home EN' });
+
+  onAuthStateChanged(auth, user => {
+    const btn = document.getElementById('nav-auth-btn');
+    if (!btn) return;
+    if (user) {
+      const name = user.displayName || user.email.split('@')[0];
+      btn.textContent = name + ' 👤';
+      btn.onclick = () => {
+        if (confirm('Sign out?')) signOut(auth);
+      };
+    } else {
+      btn.textContent = 'Login 👤';
+      btn.onclick = openAuthModal;
+    }
+  });
+
+  window.doLogin = async function() {
+    const email = document.getElementById('login-email').value.trim();
+    const pass = document.getElementById('login-pass').value;
+    const msg = document.getElementById('login-msg');
+    msg.style.display = 'none';
+    try {
+      await signInWithEmailAndPassword(auth, email, pass);
+      closeAuthModal();
+    } catch(e) {
+      msg.textContent = 'Invalid email or password.';
+      msg.className = 'auth-msg error';
+      msg.style.display = 'block';
+    }
+  };
+
+  window.doRegister = async function() {
+    const email = document.getElementById('reg-email').value.trim();
+    const pass = document.getElementById('reg-pass').value;
+    const msg = document.getElementById('reg-msg');
+    msg.style.display = 'none';
+    if (pass.length < 6) {
+      msg.textContent = 'Password must be at least 6 characters.';
+      msg.className = 'auth-msg error'; msg.style.display = 'block'; return;
+    }
+    try {
+      await createUserWithEmailAndPassword(auth, email, pass);
+      closeAuthModal();
+    } catch(e) {
+      msg.textContent = e.code === 'auth/email-already-in-use' ? 'This email is already registered.' : 'An error occurred. Please try again.';
+      msg.className = 'auth-msg error'; msg.style.display = 'block';
+    }
+  };
+
+  window.doFbLogin = function() {
+    window.open('https://www.facebook.com/a.bileg.2025', '_blank');
+  };
+</script>
+
+<script>
+function openAuthModal() { document.getElementById('authOverlay').classList.add('open'); }
+function closeAuthModal() { document.getElementById('authOverlay').classList.remove('open'); }
+function switchAuthTab(tab, btn) {
+  document.querySelectorAll('.auth-tab').forEach(b => b.classList.remove('active'));
+  btn.classList.add('active');
+  document.getElementById('auth-login').style.display = tab === 'login' ? 'block' : 'none';
+  document.getElementById('auth-register').style.display = tab === 'register' ? 'block' : 'none';
+}
+window.openAuthModal = openAuthModal;
+window.closeAuthModal = closeAuthModal;
+window.switchAuthTab = switchAuthTab;
 </script>
 </body>
 </html>
