@@ -71,7 +71,10 @@ body{font-family:'Inter',sans-serif;background:var(--bg);color:var(--dark2);min-
 /* PHOTO UPLOAD */
 .photo-upload-btn{display:flex;align-items:center;justify-content:center;gap:8px;width:100%;padding:11px;background:var(--bg3);border:1px dashed var(--border);border-radius:12px;font-size:14px;font-weight:500;cursor:pointer;font-family:inherit;color:var(--dark2);transition:.15s}
 .photo-upload-btn:hover{border-color:var(--blue);color:var(--blue);background:#f0f6ff}
+.photo-upload-btn.invalid{border-color:#e53935!important;background:#fff5f5!important;color:#e53935!important;box-shadow:0 0 0 3px rgba(229,57,53,.1)}
 #photo-file-input{display:none}
+.photo-hint{font-size:11px;color:#e53935;margin-top:6px;display:none;text-align:center}
+.photo-hint.show{display:block}
 
 /* BOOKINGS */
 .bookings-card{background:var(--bg2);border-radius:var(--radius);border:1px solid var(--border);padding:28px}
@@ -134,11 +137,12 @@ body{font-family:'Inter',sans-serif;background:var(--bg);color:var(--dark2);min-
 
     <!-- PHOTO UPLOAD -->
     <div id="photoSection" style="display:none;margin-bottom:20px;padding-bottom:20px;border-bottom:1px solid var(--border)">
-      <div class="section-title">Профайл зураг солих</div>
+      <div class="section-title">Профайл зураг</div>
       <input type="file" id="photo-file-input" accept="image/*">
-      <button class="photo-upload-btn" onclick="document.getElementById('photo-file-input').click()">
+      <button class="photo-upload-btn" id="photo-upload-btn" onclick="document.getElementById('photo-file-input').click()">
         📷 Зураг сонгох / авах
       </button>
+      <div class="photo-hint" id="hint-photo">Профайл зураг оруулна уу</div>
     </div>
 
     <div class="section-title">Хувийн мэдээлэл</div>
@@ -324,6 +328,9 @@ document.getElementById('photo-file-input').addEventListener('change', function(
       document.getElementById('pp-initials').style.display = 'none';
       document.getElementById('photoSection').style.display = 'none';
       currentProfile.photoURL = base64;
+      // Clear photo validation state
+      document.getElementById('photo-upload-btn')?.classList.remove('invalid');
+      document.getElementById('hint-photo')?.classList.remove('show');
     };
     image.src = ev.target.result;
   };
@@ -354,6 +361,16 @@ window.saveProfile = async function() {
 
   // ── Validation ──────────────────────────────────────
   let hasError = false;
+
+  if (!photoURL) {
+    const btn = document.getElementById('photo-upload-btn');
+    const hint = document.getElementById('hint-photo');
+    btn?.classList.add('invalid');
+    hint?.classList.add('show');
+    // Open the photo section so the user sees it
+    document.getElementById('photoSection').style.display = 'block';
+    hasError = true;
+  }
   if (!lastName)  { profileSetInvalid('edit-lastname',  'hint-lastname');  hasError = true; }
   if (!firstName) { profileSetInvalid('edit-firstname', 'hint-firstname'); hasError = true; }
   if (!gender)    {
