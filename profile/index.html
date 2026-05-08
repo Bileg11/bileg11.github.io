@@ -43,10 +43,12 @@ body{font-family:'Inter',sans-serif;background:var(--bg);color:var(--dark2);min-
 @media(max-width:500px){.field-row{grid-template-columns:1fr}}
 .field{margin-bottom:14px}
 .field > label{display:block;font-size:12px;font-weight:600;color:var(--muted2);margin-bottom:6px;letter-spacing:.03em;text-transform:uppercase}
-.field input,.field select{width:100%;padding:10px 14px;border:1px solid var(--border);border-radius:10px;font-size:14px;font-family:inherit;color:var(--dark2);background:var(--bg);outline:none;transition:.15s}
-.field input:focus,.field select:focus{border-color:var(--blue);box-shadow:0 0 0 3px rgba(0,113,227,.08)}
-.gender-row{display:flex;gap:20px;padding-top:2px}
-.gender-row label{display:flex;align-items:center;gap:6px;font-size:14px;font-weight:400;text-transform:none;letter-spacing:0;cursor:pointer;color:var(--dark2);margin-bottom:0}
+.field input:not([type="radio"]),.field select{width:100%;padding:10px 14px;border:1px solid var(--border);border-radius:10px;font-size:14px;font-family:inherit;color:var(--dark2);background:var(--bg);outline:none;transition:.15s}
+.field input:not([type="radio"]):focus,.field select:focus{border-color:var(--blue);box-shadow:0 0 0 3px rgba(0,113,227,.08)}
+.gender-row{display:flex;gap:20px;padding-top:4px}
+.gender-row label{display:inline-flex;align-items:center;gap:8px;font-size:14px;font-weight:400;text-transform:none;letter-spacing:0;cursor:pointer;color:var(--dark2);margin-bottom:0;line-height:1}
+.gender-row input[type="radio"]{-webkit-appearance:radio;appearance:radio;width:16px;height:16px;min-width:16px;min-height:16px;margin:0;padding:0;cursor:pointer;flex-shrink:0;border:none;background:none}
+.gender-row label span{display:inline-block;line-height:1}
 .username-wrap{position:relative}
 .username-wrap input{padding-right:36px}
 .username-check{position:absolute;right:12px;top:50%;transform:translateY(-50%);font-size:14px;font-weight:600;pointer-events:none}
@@ -149,8 +151,8 @@ body{font-family:'Inter',sans-serif;background:var(--bg);color:var(--dark2);min-
     <div class="field">
       <label>Хүйс</label>
       <div class="gender-row">
-        <label><input type="radio" name="edit-gender" value="Эрэгтэй"> Эрэгтэй</label>
-        <label><input type="radio" name="edit-gender" value="Эмэгтэй"> Эмэгтэй</label>
+        <label><input type="radio" name="edit-gender" value="Эрэгтэй"><span>Эрэгтэй</span></label>
+        <label><input type="radio" name="edit-gender" value="Эмэгтэй"><span>Эмэгтэй</span></label>
       </div>
     </div>
     <div class="field-row">
