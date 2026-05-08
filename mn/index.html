@@ -639,6 +639,15 @@ footer{
 .auth-msg.error{background:#fff0f0;color:#c0392b;border:1px solid #fcc}
 .auth-msg.success{background:#f0fff4;color:#27ae60;border:1px solid #b2f0c8}
 
+/* ── PROFILE MODAL ── */
+.profile-overlay{display:none;position:fixed;inset:0;background:rgba(0,0,0,.55);z-index:2001;align-items:center;justify-content:center;backdrop-filter:blur(4px)}
+.profile-overlay.open{display:flex}
+.profile-modal{background:var(--card);border-radius:20px;padding:36px 32px;width:100%;max-width:440px;margin:16px;box-shadow:0 20px 60px rgba(0,0,0,.18);max-height:90vh;overflow-y:auto}
+.profile-avatar-wrap{display:flex;justify-content:center;margin-bottom:20px}
+.profile-avatar{width:80px;height:80px;border-radius:50%;object-fit:cover;border:3px solid var(--border)}
+.profile-avatar-init{width:80px;height:80px;border-radius:50%;background:var(--blue);color:#fff;font-size:30px;display:flex;align-items:center;justify-content:center;font-weight:700}
+.nav-avatar{width:22px;height:22px;border-radius:50%;object-fit:cover;vertical-align:middle;margin-right:5px;border:1.5px solid var(--border)}
+
 /* ── LOADING SCREEN ── */
 #loader{
   position:fixed;inset:0;z-index:9999;
@@ -825,6 +834,24 @@ section,#booking-section{scroll-margin-top:60px}
       <button class="auth-btn" onclick="doRegister()">Бүртгүүлэх →</button>
       <div class="auth-msg" id="reg-msg"></div>
     </div>
+  </div>
+</div>
+
+<!-- PROFILE MODAL -->
+<div class="profile-overlay" id="profileOverlay">
+  <div class="profile-modal">
+    <div class="auth-title">Профайл үүсгэх 👋</div>
+    <div class="auth-sub">Нэг удаа бөглөхөд хангалттай</div>
+    <div class="profile-avatar-wrap">
+      <img class="profile-avatar" id="profile-photo-img" src="" style="display:none" onerror="this.style.display='none';document.getElementById('profile-photo-init').style.display='flex'">
+      <div class="profile-avatar-init" id="profile-photo-init">👤</div>
+    </div>
+    <div class="auth-field"><label>Овог</label><input class="auth-input" type="text" id="profile-lastname" placeholder="Овог"></div>
+    <div class="auth-field"><label>Нэр</label><input class="auth-input" type="text" id="profile-firstname" placeholder="Нэр"></div>
+    <div class="auth-field"><label>Утасны дугаар</label><input class="auth-input" type="tel" id="profile-phone" placeholder="+976 9999 9999"></div>
+    <div class="auth-field"><label>Төрсөн огноо</label><input class="auth-input" type="date" id="profile-birthday"></div>
+    <button class="auth-btn" onclick="doSaveProfile()">Хадгалах →</button>
+    <div class="auth-msg" id="profile-msg"></div>
   </div>
 </div>
 
@@ -1862,6 +1889,7 @@ function openAccountModal() {
   import { initializeApp } from "https://www.gstatic.com/firebasejs/11.7.1/firebase-app.js";
   import { getAnalytics, logEvent } from "https://www.gstatic.com/firebasejs/11.7.1/firebase-analytics.js";
   import { getAuth, createUserWithEmailAndPassword, signInWithEmailAndPassword, onAuthStateChanged, signOut, GoogleAuthProvider, FacebookAuthProvider, signInWithPopup } from "https://www.gstatic.com/firebasejs/11.7.1/firebase-auth.js";
+  import { getFirestore, doc, getDoc, setDoc } from "https://www.gstatic.com/firebasejs/11.7.1/firebase-firestore.js";
 
   const firebaseConfig = {
     apiKey: "AIzaSyDixZdKwlrixRFokERCMQ5Ld1BMkhUttCQ",
@@ -1875,23 +1903,81 @@ function openAccountModal() {
   const app = initializeApp(firebaseConfig);
   const analytics = getAnalytics(app);
   const auth = getAuth(app);
+  const db = getFirestore(app);
   logEvent(analytics, 'page_view', { page_title: 'Home MN' });
 
-  // Auth state
+  function updateNavUser(profile, photoURL) {
+    const btn = document.getElementById('nav-auth-btn');
+    if (!btn) return;
+    const name = (profile?.firstName || profile?.lastName)
+      ? (profile.lastName || '') + ' ' + (profile.firstName || '')
+      : (auth.currentUser?.displayName || auth.currentUser?.email?.split('@')[0] || '');
+    const photo = profile?.photoURL || photoURL || '';
+    if (photo) {
+      btn.innerHTML = `<img class="nav-avatar" src="${photo}"> ${name.trim()}`;
+    } else {
+      btn.textContent = name.trim() + ' 👤';
+    }
+    btn.onclick = () => { if (confirm('Гарах уу?')) signOut(auth); };
+  }
+
+  async function checkAndShowProfile(user) {
+    const ref = doc(db, 'users', user.uid);
+    const snap = await getDoc(ref);
+    if (!snap.exists()) {
+      // Pre-fill photo
+      const img = document.getElementById('profile-photo-img');
+      const init = document.getElementById('profile-photo-init');
+      if (user.photoURL) {
+        img.src = user.photoURL;
+        img.style.display = 'block';
+        init.style.display = 'none';
+      }
+      // Pre-fill name from social login
+      if (user.displayName) {
+        const parts = user.displayName.split(' ');
+        document.getElementById('profile-firstname').value = parts[0] || '';
+        document.getElementById('profile-lastname').value = parts.slice(1).join(' ') || '';
+      }
+      document.getElementById('profileOverlay').classList.add('open');
+    } else {
+      updateNavUser(snap.data(), user.photoURL);
+    }
+  }
+
   onAuthStateChanged(auth, user => {
     const btn = document.getElementById('nav-auth-btn');
     if (!btn) return;
     if (user) {
-      const name = user.displayName || user.email.split('@')[0];
-      btn.textContent = name + ' 👤';
-      btn.onclick = () => {
-        if (confirm('Гарах уу?')) signOut(auth);
-      };
+      checkAndShowProfile(user);
     } else {
-      btn.textContent = 'Нэвтрэх 👤';
+      btn.innerHTML = 'Нэвтрэх 👤';
       btn.onclick = openAuthModal;
     }
   });
+
+  window.doSaveProfile = async function() {
+    const user = auth.currentUser;
+    if (!user) return;
+    const msg = document.getElementById('profile-msg');
+    const firstName = document.getElementById('profile-firstname').value.trim();
+    const lastName  = document.getElementById('profile-lastname').value.trim();
+    const phone     = document.getElementById('profile-phone').value.trim();
+    const birthday  = document.getElementById('profile-birthday').value;
+    if (!firstName) {
+      msg.textContent = 'Нэрээ оруулна уу.';
+      msg.className = 'auth-msg error'; msg.style.display = 'block'; return;
+    }
+    try {
+      const profile = { firstName, lastName, phone, birthday, photoURL: user.photoURL || '', email: user.email || '', createdAt: Date.now() };
+      await setDoc(doc(db, 'users', user.uid), profile);
+      document.getElementById('profileOverlay').classList.remove('open');
+      updateNavUser(profile, user.photoURL);
+    } catch(e) {
+      msg.textContent = 'Хадгалахад алдаа гарлаа: ' + e.message;
+      msg.className = 'auth-msg error'; msg.style.display = 'block';
+    }
+  };
 
   window.doLogin = async function() {
     const email = document.getElementById('login-email').value.trim();
