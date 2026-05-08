@@ -1,0 +1,296 @@
+<!DOCTYPE html>
+<html lang="mn">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Захиалах — LFS Shanghai</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:ital,wght@0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,300;1,400&display=swap" rel="stylesheet">
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+:root{
+  --bg:#fff;--bg2:#f5f5f7;--bg3:#fbfbfd;--card:#fff;
+  --text:#1d1d1f;--muted:#6e6e73;--muted2:#86868b;
+  --blue:#0071e3;--blue-hover:#0077ed;
+  --border:rgba(0,0,0,.08);--border2:rgba(0,0,0,.05);
+  --shadow:0 2px 20px rgba(0,0,0,.08);--shadow2:0 8px 40px rgba(0,0,0,.12);
+  --radius:18px;--radius2:24px;--dark:#000;--dark2:#1d1d1f;
+}
+html{scroll-behavior:smooth}
+body{
+  font-family:'Inter',system-ui,-apple-system,BlinkMacSystemFont,'SF Pro Display','Segoe UI',sans-serif;
+  background:var(--bg);color:var(--text);overflow-x:hidden;
+  line-height:1.47059;-webkit-font-smoothing:antialiased;
+}
+::-webkit-scrollbar{width:6px}
+::-webkit-scrollbar-track{background:var(--bg2)}
+::-webkit-scrollbar-thumb{background:#c7c7cc;border-radius:3px}
+
+/* NAV */
+.nav{
+  position:fixed;top:0;left:0;right:0;z-index:500;height:52px;
+  display:flex;align-items:center;justify-content:space-between;
+  padding:0 22px;
+  background:rgba(255,255,255,.85);
+  backdrop-filter:saturate(180%) blur(20px);
+  -webkit-backdrop-filter:saturate(180%) blur(20px);
+  border-bottom:1px solid rgba(0,0,0,.06);
+}
+.nav-logo{
+  font-size:17px;font-weight:700;color:var(--dark2);
+  letter-spacing:-.02em;cursor:pointer;user-select:none;
+  text-decoration:none;
+}
+.nav-logo span{color:var(--blue)}
+.nav-back{
+  padding:7px 16px;background:var(--bg2);color:var(--dark2);
+  border:none;border-radius:20px;font-size:12px;font-weight:500;
+  cursor:pointer;font-family:inherit;transition:background .2s;
+  text-decoration:none;display:inline-flex;align-items:center;gap:6px;
+}
+.nav-back:hover{background:var(--border)}
+
+/* HERO */
+.page-hero{
+  padding:120px 24px 60px;
+  text-align:center;
+  background:linear-gradient(180deg,var(--bg2) 0%,var(--bg) 100%);
+}
+.page-eyebrow{
+  font-size:12px;font-weight:600;letter-spacing:.08em;text-transform:uppercase;
+  color:var(--blue);margin-bottom:16px;
+}
+.page-hero h1{
+  font-size:clamp(36px,6vw,64px);font-weight:700;
+  line-height:1.05;letter-spacing:-.04em;
+  color:var(--dark2);margin-bottom:14px;
+}
+.page-hero p{
+  font-size:clamp(15px,2vw,18px);color:var(--muted);
+  max-width:480px;margin:0 auto;line-height:1.65;
+}
+
+/* BOOKING SECTION */
+.booking-wrap{
+  max-width:860px;margin:0 auto;
+  padding:60px 24px 100px;
+  display:grid;grid-template-columns:1.1fr 1fr;gap:48px;
+}
+@media(max-width:700px){.booking-wrap{grid-template-columns:1fr;gap:32px;padding:40px 20px 80px}}
+
+/* FORM */
+.form-label{font-size:12px;font-weight:600;color:var(--muted2);letter-spacing:.03em;display:block;margin-bottom:6px}
+.form-input,.form-select,.form-textarea{
+  width:100%;background:var(--bg2);border:1px solid var(--border);
+  border-radius:12px;padding:12px 16px;
+  color:var(--dark2);font-size:14px;font-family:inherit;
+  outline:none;transition:.2s;-webkit-appearance:none;
+}
+.form-input:focus,.form-select:focus,.form-textarea:focus{
+  border-color:var(--blue);background:#fff;box-shadow:0 0 0 3px rgba(0,113,227,.1)
+}
+.form-textarea{resize:vertical;min-height:100px;line-height:1.6}
+.form-group{margin-bottom:16px}
+.form-row{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+@media(max-width:500px){.form-row{grid-template-columns:1fr}}
+.form-submit{
+  width:100%;padding:14px;background:var(--blue);color:#fff;
+  border:none;border-radius:14px;font-size:15px;font-weight:600;
+  cursor:pointer;font-family:inherit;transition:.2s;margin-top:4px;
+}
+.form-submit:hover{background:var(--blue-hover)}
+
+/* INFO CARD */
+.booking-info-card{
+  background:var(--bg2);border-radius:var(--radius2);padding:32px;
+}
+.booking-info-title{font-size:20px;font-weight:700;letter-spacing:-.03em;color:var(--dark2);margin-bottom:24px}
+.info-row{display:flex;gap:14px;margin-bottom:20px;padding-bottom:20px;border-bottom:1px solid var(--border)}
+.info-row:last-child{border-bottom:none;margin-bottom:0;padding-bottom:0}
+.info-icon{
+  width:40px;height:40px;border-radius:10px;
+  background:#fff;display:flex;align-items:center;justify-content:center;
+  font-size:18px;flex-shrink:0;box-shadow:var(--shadow);
+}
+.info-title{font-size:13px;font-weight:600;color:var(--dark2);margin-bottom:3px}
+.info-desc{font-size:12px;color:var(--muted);line-height:1.5}
+
+/* SUCCESS */
+.success-msg{display:none;text-align:center;padding:40px 20px}
+.success-icon{font-size:48px;margin-bottom:16px}
+.success-msg h3{font-size:22px;font-weight:700;color:var(--dark2);margin-bottom:12px}
+.success-msg p{font-size:15px;color:var(--muted);line-height:1.7}
+
+/* FOOTER */
+footer{
+  background:var(--bg2);border-top:1px solid var(--border);
+  padding:40px 24px;text-align:center;
+}
+.footer-logo{font-size:16px;font-weight:700;letter-spacing:-.02em;color:var(--dark2);margin-bottom:6px}
+.footer-logo span{color:var(--blue)}
+.footer-copy{font-size:12px;color:var(--muted)}
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav class="nav">
+  <a href="apple.html" class="nav-logo">LFS <span>Shanghai</span></a>
+  <a href="apple.html" class="nav-back">← Буцах</a>
+</nav>
+
+<!-- HERO -->
+<div class="page-hero">
+  <div class="page-eyebrow">Хөтөч Захиалах</div>
+  <h1>Аяллаа эхлүүлэцгээе</h1>
+  <p>Мэдээллээ бөглөж, бид 24 цагийн дотор холбогдоно. Хөтөч тань аяллын өмнөөс эхлэн туслах болно.</p>
+</div>
+
+<!-- BOOKING FORM -->
+<div class="booking-wrap">
+  <div>
+    <form id="bookingForm" onsubmit="submitBooking(event)">
+      <div class="form-row">
+        <div class="form-group">
+          <label class="form-label">Нэр *</label>
+          <input class="form-input" type="text" id="b-name" placeholder="Таны нэр" required>
+        </div>
+        <div class="form-group">
+          <label class="form-label">Утас / WeChat *</label>
+          <input class="form-input" type="text" id="b-phone" placeholder="+976 xxxxxxxx" required>
+        </div>
+      </div>
+      <div class="form-row">
+        <div class="form-group">
+          <label class="form-label">Ирэх огноо</label>
+          <input class="form-input" type="date" id="b-arrival">
+        </div>
+        <div class="form-group">
+          <label class="form-label">Явах огноо</label>
+          <input class="form-input" type="date" id="b-departure">
+        </div>
+      </div>
+      <div class="form-group">
+        <label class="form-label">Хүний тоо</label>
+        <select class="form-select" id="b-people">
+          <option value="">Сонгох...</option>
+          <option>1 хүн</option>
+          <option>2 хүн</option>
+          <option>3–4 хүн</option>
+          <option>5+ хүн</option>
+        </select>
+      </div>
+      <div class="form-group">
+        <label class="form-label">Үйлчилгээний төрөл</label>
+        <select class="form-select" id="b-service">
+          <option value="">Сонгох...</option>
+          <option>🌟 VIP эрүүл мэндийн үйлчилгээтэй аялал</option>
+          <option>🩺 VIP Эрүүл мэндийн шинжилгээ</option>
+          <option>🏙️ Аялалын хөтөч</option>
+          <option>🛍️ Шоппинг дагалдах</option>
+          <option>✈️ Нисэх онгоцны угтаа</option>
+          <option>💼 Бизнесийн хэлмэрч</option>
+        </select>
+      </div>
+      <div class="form-group">
+        <label class="form-label">Facebook / Instagram холбоос</label>
+        <input class="form-input" type="text" id="b-social" placeholder="facebook.com/... эсвэл @username">
+      </div>
+      <div class="form-row">
+        <div class="form-group">
+          <label class="form-label">Аялалын эхлэх огноо</label>
+          <input class="form-input" type="date" id="b-start">
+        </div>
+        <div class="form-group">
+          <label class="form-label">Хэдэн өдөр</label>
+          <select class="form-select" id="b-days">
+            <option value="">Сонгох...</option>
+            <option>1 өдөр</option>
+            <option>2 өдөр</option>
+            <option>3 өдөр</option>
+            <option>4–5 өдөр</option>
+            <option>7+ өдөр</option>
+          </select>
+        </div>
+      </div>
+      <div class="form-group">
+        <label class="form-label">Бүлгийн хэмжээ</label>
+        <select class="form-select" id="b-group">
+          <option value="">Сонгох...</option>
+          <option>1 хүн (ганцаараа)</option>
+          <option>2 хүн (хосоороо)</option>
+          <option>3–4 хүн (гэр бүл)</option>
+          <option>5–10 хүн (бүлэг)</option>
+          <option>10+ хүн (том бүлэг)</option>
+        </select>
+      </div>
+      <div class="form-group">
+        <label class="form-label">Нэмэлт хүсэлт</label>
+        <textarea class="form-textarea" id="b-note" placeholder="Тусгай хүсэлт, асуулт байвал бичнэ үү..."></textarea>
+      </div>
+      <button type="submit" class="form-submit">Захиалга Илгээх →</button>
+    </form>
+    <div class="success-msg" id="bookingSuccess">
+      <div class="success-icon">🎉</div>
+      <h3>Амжилттай илгээгдлээ!</h3>
+      <p>Таны захиалгыг хүлээн авлаа.<br>Бид 24 цагийн дотор танд хандана.<br><br>
+      <a href="https://www.facebook.com/a.bileg.2025" target="_blank" style="color:var(--blue);font-weight:600">Facebook-ээр шууд холбогдож болно →</a></p>
+    </div>
+  </div>
+
+  <div class="booking-info-card">
+    <div class="booking-info-title">Яагаад биднийг сонгох вэ?</div>
+    <div class="info-row">
+      <div class="info-icon">🗣️</div>
+      <div>
+        <div class="info-title">Монгол хэлтэй хөтөч</div>
+        <div class="info-desc">Хятад, Монгол, Англи хэл дээр чөлөөтэй харилцана. Хэлний саад байхгүй.</div>
+      </div>
+    </div>
+    <div class="info-row">
+      <div class="info-icon">⚡</div>
+      <div>
+        <div class="info-title">Хурдан & Дараалалгүй</div>
+        <div class="info-desc">VIP эмнэлэгт урьдчилан захиалга хийдэг тул 2–3 цагт бүтэн шинжилгээ дуусна.</div>
+      </div>
+    </div>
+    <div class="info-row">
+      <div class="info-icon">🌏</div>
+      <div>
+        <div class="info-title">Шанхайг гүнзгий мэднэ</div>
+        <div class="info-desc">Хотын нууц буланг, хамгийн сайн газруудыг, хэмнэлттэй арга замыг мэддэг хөтөч.</div>
+      </div>
+    </div>
+    <div class="info-row">
+      <div class="info-icon">📱</div>
+      <div>
+        <div class="info-title">Аяллын өмнө зөвлөгөө</div>
+        <div class="info-desc">Виз, VPN, мөнгөний бэлтгэл — аяллын өмнө бүхнийг тайлбарлаж өгнө.</div>
+      </div>
+    </div>
+    <a href="https://www.facebook.com/a.bileg.2025" target="_blank" style="display:flex;align-items:center;gap:8px;padding:13px 20px;background:#1877f2;color:#fff;border-radius:12px;text-decoration:none;font-size:14px;font-weight:500;margin-top:8px;justify-content:center">
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"/></svg>
+      Facebook-ээр шууд холбогдох
+    </a>
+  </div>
+</div>
+
+<footer>
+  <div class="footer-logo">LFS <span>Shanghai</span></div>
+  <div class="footer-copy">© 2025 LFS Shanghai. Бүх эрх хуулиар хамгаалагдсан.</div>
+</footer>
+
+<script>
+function submitBooking(e) {
+  e.preventDefault();
+  const name = document.getElementById('b-name').value;
+  const phone = document.getElementById('b-phone').value;
+  const service = document.getElementById('b-service').value;
+  const note = document.getElementById('b-note').value;
+  const msg = encodeURIComponent(`Сайн байна уу! Захиалга хийх гэж байна.\nНэр: ${name}\nУтас: ${phone}\nҮйлчилгээ: ${service}\nНэмэлт: ${note}`);
+  document.getElementById('bookingForm').style.display = 'none';
+  document.getElementById('bookingSuccess').style.display = 'block';
+  window.open('https://www.facebook.com/a.bileg.2025', '_blank');
+}
+</script>
+</body>
+</html>
