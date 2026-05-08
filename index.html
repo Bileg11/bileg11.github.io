@@ -1657,15 +1657,40 @@ window.addEventListener('scroll', () => {
 let curSlide = 0;
 const slides = document.querySelectorAll('.hero-slide');
 const dots = document.querySelectorAll('.hero-dot');
+let autoTimer;
 
 function goSlide(n) {
   slides[curSlide].classList.remove('active');
   dots[curSlide].classList.remove('active');
-  curSlide = n;
+  curSlide = (n + slides.length) % slides.length;
   slides[curSlide].classList.add('active');
   dots[curSlide].classList.add('active');
 }
-setInterval(() => goSlide((curSlide + 1) % slides.length), 4000);
+
+function startAuto() {
+  clearInterval(autoTimer);
+  autoTimer = setInterval(() => goSlide(curSlide + 1), 4000);
+}
+startAuto();
+
+// ── SWIPE / DRAG ──
+const heroEl = document.getElementById('heroSlides');
+let touchX = 0, mouseX = 0, dragging = false;
+
+heroEl.addEventListener('touchstart', e => { touchX = e.touches[0].clientX; }, {passive:true});
+heroEl.addEventListener('touchend', e => {
+  const diff = touchX - e.changedTouches[0].clientX;
+  if (Math.abs(diff) > 40) { goSlide(curSlide + (diff > 0 ? 1 : -1)); startAuto(); }
+}, {passive:true});
+
+heroEl.addEventListener('mousedown', e => { mouseX = e.clientX; dragging = true; });
+heroEl.addEventListener('mouseup', e => {
+  if (!dragging) return; dragging = false;
+  const diff = mouseX - e.clientX;
+  if (Math.abs(diff) > 40) { goSlide(curSlide + (diff > 0 ? 1 : -1)); startAuto(); }
+});
+heroEl.addEventListener('mouseleave', () => { dragging = false; });
+heroEl.style.cursor = 'grab';
 
 // ── COUNTER ANIMATION ──
 function animateCount(el, target, suffix) {
