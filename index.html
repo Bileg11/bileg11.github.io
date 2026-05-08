@@ -677,16 +677,12 @@ section,#booking-section{scroll-margin-top:60px}
 
 <!-- HERO -->
 <section class="hero" id="home">
-  <!-- YouTube video background -->
+  <!-- Video background -->
   <div class="hero-video-wrap">
-    <div class="hero-video-fallback"></div>
-    <iframe id="ytbg"
-      src="https://www.youtube.com/embed/2Zhubxr5dhQ?autoplay=1&mute=1&loop=1&playlist=2Zhubxr5dhQ&controls=0&showinfo=0&rel=0&modestbranding=1&playsinline=1&start=10"
-      title="Shanghai 4K"
-      frameborder="0"
-      allow="autoplay; encrypted-media"
-      allowfullscreen>
-    </iframe>
+    <video autoplay muted loop playsinline preload="auto"
+      style="position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);min-width:100%;min-height:100%;width:auto;height:auto;object-fit:cover;opacity:.6">
+      <source src="shanghai_web.mp4" type="video/mp4">
+    </video>
   </div>
   <div class="hero-gradient"></div>
   <div class="hero-eyebrow">Шанхай · Монгол хөтөч · VIP Эрүүл мэнд</div>
