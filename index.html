@@ -1962,7 +1962,7 @@ function openAccountModal() {
       checkAndShowProfile(user);
     } else {
       btn.innerHTML = 'Нэвтрэх 👤';
-      btn.onclick = openAuthModal;
+      btn.onclick = () => { window.location.href = '/login'; };
     }
   });
 
