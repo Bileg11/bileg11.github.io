@@ -42,11 +42,11 @@ body{font-family:'Inter',sans-serif;background:var(--bg);color:var(--dark2);min-
 .field-row{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-bottom:14px}
 @media(max-width:500px){.field-row{grid-template-columns:1fr}}
 .field{margin-bottom:14px}
-.field label{display:block;font-size:12px;font-weight:600;color:var(--muted2);margin-bottom:6px;letter-spacing:.03em;text-transform:uppercase}
+.field > label{display:block;font-size:12px;font-weight:600;color:var(--muted2);margin-bottom:6px;letter-spacing:.03em;text-transform:uppercase}
 .field input,.field select{width:100%;padding:10px 14px;border:1px solid var(--border);border-radius:10px;font-size:14px;font-family:inherit;color:var(--dark2);background:var(--bg);outline:none;transition:.15s}
 .field input:focus,.field select:focus{border-color:var(--blue);box-shadow:0 0 0 3px rgba(0,113,227,.08)}
-.gender-row{display:flex;gap:16px;padding-top:4px}
-.gender-row label{display:flex;align-items:center;gap:6px;font-size:14px;font-weight:400;text-transform:none;letter-spacing:0;cursor:pointer;color:var(--dark2)}
+.gender-row{display:flex;gap:20px;padding-top:2px}
+.gender-row label{display:flex;align-items:center;gap:6px;font-size:14px;font-weight:400;text-transform:none;letter-spacing:0;cursor:pointer;color:var(--dark2);margin-bottom:0}
 .save-btn{padding:11px 28px;background:var(--blue);color:#fff;border:none;border-radius:12px;font-size:14px;font-weight:600;cursor:pointer;font-family:inherit;transition:.2s}
 .save-btn:hover{background:var(--blue-hover)}
 .save-msg{font-size:12px;padding:8px 14px;border-radius:8px;margin-top:12px;display:none}
@@ -54,12 +54,9 @@ body{font-family:'Inter',sans-serif;background:var(--bg);color:var(--dark2);min-
 .save-msg.error{background:#fff0f0;color:#c0392b;border:1px solid #fcc;display:block}
 
 /* PHOTO UPLOAD */
-.photo-url-section{margin-top:14px;padding-top:14px;border-top:1px solid var(--border)}
-.photo-url-row{display:flex;gap:8px}
-.photo-url-input{flex:1;padding:9px 12px;border:1px solid var(--border);border-radius:10px;font-size:13px;font-family:inherit;color:var(--dark2);background:var(--bg);outline:none}
-.photo-url-input:focus{border-color:var(--blue)}
-.photo-url-btn{padding:9px 16px;background:var(--bg3);border:1px solid var(--border);border-radius:10px;font-size:13px;font-weight:500;cursor:pointer;font-family:inherit;color:var(--dark2);white-space:nowrap}
-.photo-url-btn:hover{border-color:var(--blue);color:var(--blue)}
+.photo-upload-btn{display:flex;align-items:center;justify-content:center;gap:8px;width:100%;padding:11px;background:var(--bg3);border:1px dashed var(--border);border-radius:12px;font-size:14px;font-weight:500;cursor:pointer;font-family:inherit;color:var(--dark2);transition:.15s}
+.photo-upload-btn:hover{border-color:var(--blue);color:var(--blue);background:#f0f6ff}
+#photo-file-input{display:none}
 
 /* BOOKINGS */
 .bookings-card{background:var(--bg2);border-radius:var(--radius);border:1px solid var(--border);padding:28px}
@@ -120,13 +117,13 @@ body{font-family:'Inter',sans-serif;background:var(--bg);color:var(--dark2);min-
       </div>
     </div>
 
-    <!-- PHOTO URL -->
+    <!-- PHOTO UPLOAD -->
     <div id="photoSection" style="display:none;margin-bottom:20px;padding-bottom:20px;border-bottom:1px solid var(--border)">
       <div class="section-title">Профайл зураг солих</div>
-      <div class="photo-url-row">
-        <input class="photo-url-input" type="text" id="new-photo-url" placeholder="Зургийн URL хаяг (https://...)">
-        <button class="photo-url-btn" onclick="applyPhotoUrl()">Хэрэглэх</button>
-      </div>
+      <input type="file" id="photo-file-input" accept="image/*">
+      <button class="photo-upload-btn" onclick="document.getElementById('photo-file-input').click()">
+        📷 Зураг сонгох / авах
+      </button>
     </div>
 
     <div class="section-title">Хувийн мэдээлэл</div>
@@ -220,16 +217,36 @@ function fillForm(p, user) {
   }
 }
 
-window.applyPhotoUrl = function() {
-  const url = document.getElementById('new-photo-url').value.trim();
-  if (!url) return;
-  const img = document.getElementById('pp-photo');
-  img.src = url;
-  img.style.display = 'block';
-  document.getElementById('pp-initials').style.display = 'none';
-  document.getElementById('photoSection').style.display = 'none';
-  currentProfile.photoURL = url;
-};
+// Photo file input → canvas compress → base64
+document.getElementById('photo-file-input').addEventListener('change', function(e) {
+  const file = e.target.files[0];
+  if (!file) return;
+  const reader = new FileReader();
+  reader.onload = function(ev) {
+    const image = new Image();
+    image.onload = function() {
+      const size = 300;
+      const canvas = document.createElement('canvas');
+      canvas.width = size; canvas.height = size;
+      const ctx = canvas.getContext('2d');
+      // Crop square from center
+      const min = Math.min(image.width, image.height);
+      const sx = (image.width - min) / 2;
+      const sy = (image.height - min) / 2;
+      ctx.drawImage(image, sx, sy, min, min, 0, 0, size, size);
+      const base64 = canvas.toDataURL('image/jpeg', 0.75);
+      // Show preview
+      const ppImg = document.getElementById('pp-photo');
+      ppImg.src = base64;
+      ppImg.style.display = 'block';
+      document.getElementById('pp-initials').style.display = 'none';
+      document.getElementById('photoSection').style.display = 'none';
+      currentProfile.photoURL = base64;
+    };
+    image.src = ev.target.result;
+  };
+  reader.readAsDataURL(file);
+});
 
 window.saveProfile = async function() {
   const msg = document.getElementById('save-msg');
@@ -286,7 +303,32 @@ async function loadBookings(email, uid) {
       </div>`;
     }).join('');
   } catch(e) {
-    container.innerHTML = '<div class="empty-bookings">Ачааллахад алдаа гарлаа</div>';
+    // Firestore index error — retry without orderBy
+    try {
+      const q2 = query(collection(db, 'bookings'), where('email', '==', email));
+      const snap2 = await getDocs(q2);
+      if (snap2.empty) {
+        container.innerHTML = '<div class="empty-bookings">Одоогоор захиалга байхгүй байна<br><a href="/booking/" style="color:var(--blue);font-weight:600;margin-top:8px;display:inline-block">Захиалга өгөх →</a></div>';
+        return;
+      }
+      const statusLabel = { new:'Шинэ', contacted:'Холбогдсон', done:'Дууссан' };
+      const statusClass = { new:'badge-new', contacted:'badge-contacted', done:'badge-done' };
+      container.innerHTML = snap2.docs.map(d => {
+        const b = d.data();
+        const st = b.status || (b.done ? 'done' : 'new');
+        const date = b.createdAt?.toDate?.()?.toLocaleDateString('mn-MN') || '—';
+        return `<div class="booking-item">
+          <div class="booking-item-top">
+            <span class="booking-service">${b.service || 'Үйлчилгээ'}</span>
+            <span class="badge ${statusClass[st]||'badge-new'}">${statusLabel[st]||'Шинэ'}</span>
+          </div>
+          <div class="booking-date">Огноо: ${b.start || '—'} · ${b.days || '—'}</div>
+          <div class="booking-meta">Захиалсан: ${date}</div>
+        </div>`;
+      }).join('');
+    } catch(e2) {
+      container.innerHTML = '<div class="empty-bookings">Одоогоор захиалга байхгүй байна<br><a href="/booking/" style="color:var(--blue);font-weight:600;margin-top:8px;display:inline-block">Захиалга өгөх →</a></div>';
+    }
   }
 }
 
