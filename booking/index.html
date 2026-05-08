@@ -289,6 +289,7 @@ footer{
   import { initializeApp } from "https://www.gstatic.com/firebasejs/11.7.1/firebase-app.js";
   import { getFirestore, collection, addDoc, serverTimestamp } from "https://www.gstatic.com/firebasejs/11.7.1/firebase-firestore.js";
   import { getAnalytics, logEvent } from "https://www.gstatic.com/firebasejs/11.7.1/firebase-analytics.js";
+  import { getAuth, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/11.7.1/firebase-auth.js";
 
   const firebaseConfig = {
     apiKey: "AIzaSyDixZdKwlrixRFokERCMQ5Ld1BMkhUttCQ",
@@ -303,7 +304,21 @@ footer{
   const app = initializeApp(firebaseConfig);
   const db = getFirestore(app);
   const analytics = getAnalytics(app);
+  const auth = getAuth(app);
   logEvent(analytics, 'page_view', { page_title: 'Booking Page' });
+
+  let currentUser = null;
+  onAuthStateChanged(auth, user => {
+    currentUser = user;
+    const btn = document.querySelector('.form-submit');
+    if (!user) {
+      btn.textContent = 'Нэвтэрч захиалга өгнө үү';
+      btn.style.background = 'var(--muted, #86868b)';
+    } else {
+      btn.textContent = 'Захиалга Илгээх →';
+      btn.style.background = '';
+    }
+  });
 
   const TELEGRAM_TOKEN = "8799776564:AAEiPSe4iSLLae2FFvY02eHaoSfXC-Bw3t0";
   const TELEGRAM_CHAT_ID = "5541078218";
@@ -326,6 +341,12 @@ footer{
 
   window.submitBooking = async function(e) {
     e.preventDefault();
+
+    if (!currentUser) {
+      alert('Захиалга өгөхийн тулд эхлээд нэвтэрнэ үү.');
+      window.location.href = '/';
+      return;
+    }
 
     const name    = document.getElementById('b-name').value.trim();
     const phone   = document.getElementById('b-phone').value.trim().replace(/\s/g,'');
