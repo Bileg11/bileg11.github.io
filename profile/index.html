@@ -91,9 +91,28 @@ body{font-family:'Inter',sans-serif;background:var(--bg);color:var(--dark2);min-
 .badge-done{background:rgba(52,199,89,.15);color:#27ae60}
 .empty-bookings{text-align:center;padding:40px 20px;color:var(--muted);font-size:14px}
 
-/* LOGOUT */
+/* LOGOUT / DELETE */
 .logout-btn{width:100%;margin-top:20px;padding:11px;background:none;border:1px solid var(--border);border-radius:12px;font-size:14px;color:var(--red);cursor:pointer;font-family:inherit;transition:.2s}
 .logout-btn:hover{background:#fff0f0;border-color:var(--red)}
+.delete-account-btn{width:100%;margin-top:10px;padding:11px;background:none;border:none;border-radius:12px;font-size:13px;color:var(--muted);cursor:pointer;font-family:inherit;transition:.2s}
+.delete-account-btn:hover{color:var(--red);background:#fff5f5}
+
+/* DELETE CONFIRM MODAL */
+.del-overlay{display:none;position:fixed;inset:0;background:rgba(0,0,0,.5);z-index:3000;align-items:flex-end;justify-content:center;backdrop-filter:blur(4px);-webkit-backdrop-filter:blur(4px)}
+.del-overlay.open{display:flex}
+@media(min-width:500px){.del-overlay{align-items:center}}
+.del-sheet{background:#fff;border-radius:24px 24px 0 0;padding:32px 28px 40px;width:100%;max-width:420px;text-align:center}
+@media(min-width:500px){.del-sheet{border-radius:24px;padding:36px 32px}}
+.del-icon{font-size:40px;margin-bottom:16px}
+.del-title{font-size:18px;font-weight:700;color:var(--dark2);letter-spacing:-.02em;margin-bottom:8px}
+.del-sub{font-size:14px;color:var(--muted);line-height:1.6;margin-bottom:24px}
+.del-confirm-input{width:100%;padding:11px 14px;border:1px solid var(--border);border-radius:10px;font-size:14px;font-family:inherit;color:var(--dark2);background:var(--bg2);outline:none;transition:.15s;text-align:center;margin-bottom:16px;letter-spacing:.05em}
+.del-confirm-input:focus{border-color:var(--red);box-shadow:0 0 0 3px rgba(229,57,53,.1);background:#fff}
+.del-btn-delete{width:100%;padding:13px;background:#e53935;color:#fff;border:none;border-radius:12px;font-size:14px;font-weight:600;cursor:pointer;font-family:inherit;margin-bottom:10px;transition:.2s;opacity:.4;pointer-events:none}
+.del-btn-delete.ready{opacity:1;pointer-events:all}
+.del-btn-delete.ready:hover{background:#c62828}
+.del-btn-cancel{width:100%;padding:11px;background:none;border:1px solid var(--border);border-radius:12px;font-size:14px;color:var(--muted);cursor:pointer;font-family:inherit;transition:.2s}
+.del-btn-cancel:hover{background:var(--bg2)}
 
 /* NOT LOGGED IN */
 .not-logged{text-align:center;padding:80px 20px}
@@ -197,13 +216,26 @@ body{font-family:'Inter',sans-serif;background:var(--bg);color:var(--dark2);min-
   </div>
 
   <button class="logout-btn" onclick="doLogout()">Гарах</button>
+  <button class="delete-account-btn" onclick="openDeleteModal()">Бүртгэл устгах</button>
+</div>
+
+<!-- DELETE CONFIRM MODAL -->
+<div class="del-overlay" id="delOverlay" onclick="if(event.target===this)closeDeleteModal()">
+  <div class="del-sheet">
+    <div class="del-icon">⚠️</div>
+    <div class="del-title">Бүртгэлээ устгах уу?</div>
+    <div class="del-sub">Энэ үйлдлийг буцаах боломжгүй. Таны захиалга, мэдээлэл бүгд устна.<br><br>Баталгаажуулахын тулд доорх нүдэнд <b>УСТГА</b> гэж бичнэ үү.</div>
+    <input class="del-confirm-input" id="delConfirmInput" type="text" placeholder="УСТГА" autocomplete="off" oninput="checkDelConfirm(this.value)">
+    <button class="del-btn-delete" id="delBtnConfirm" onclick="doDeleteAccount()">Бүртгэлийг бүрмөсөн устгах</button>
+    <button class="del-btn-cancel" onclick="closeDeleteModal()">Болих</button>
+  </div>
 </div>
 
 <script src="/js/toast.js"></script>
 <script src="/js/calendar.js"></script>
 <script type="module">
 import { initializeApp } from "https://www.gstatic.com/firebasejs/11.7.1/firebase-app.js";
-import { getAuth, onAuthStateChanged, signOut } from "https://www.gstatic.com/firebasejs/11.7.1/firebase-auth.js";
+import { getAuth, onAuthStateChanged, signOut, deleteUser } from "https://www.gstatic.com/firebasejs/11.7.1/firebase-auth.js";
 import { getFirestore, doc, getDoc, setDoc, deleteDoc, collection, query, where, getDocs, orderBy } from "https://www.gstatic.com/firebasejs/11.7.1/firebase-firestore.js";
 
 const app = initializeApp({
@@ -490,9 +522,46 @@ async function loadBookings(email, uid) {
 }
 
 window.doLogout = async function() {
-  if (confirm('Гарах уу?')) {
-    await signOut(auth);
-    window.location.href = '/';
+  await signOut(auth);
+  window.location.href = '/';
+};
+
+window.openDeleteModal = function() {
+  document.getElementById('delConfirmInput').value = '';
+  document.getElementById('delBtnConfirm').classList.remove('ready');
+  document.getElementById('delOverlay').classList.add('open');
+};
+window.closeDeleteModal = function() {
+  document.getElementById('delOverlay').classList.remove('open');
+};
+window.checkDelConfirm = function(val) {
+  const ready = val.trim().toUpperCase() === 'УСТГА';
+  document.getElementById('delBtnConfirm').classList.toggle('ready', ready);
+};
+
+window.doDeleteAccount = async function() {
+  if (!currentUser) return;
+  const btn = document.getElementById('delBtnConfirm');
+  btn.textContent = 'Устгаж байна...';
+  btn.classList.remove('ready');
+  try {
+    // 1. Delete username doc
+    if (currentProfile.username) {
+      await deleteDoc(doc(db, 'usernames', currentProfile.username)).catch(() => {});
+    }
+    // 2. Delete user doc
+    await deleteDoc(doc(db, 'users', currentUser.uid)).catch(() => {});
+    // 3. Delete auth account
+    await deleteUser(currentUser);
+    window.location.replace('/');
+  } catch(e) {
+    closeDeleteModal();
+    if (e.code === 'auth/requires-recent-login') {
+      toast('Дахин нэвтэрч орсны дараа устгана уу', 'warning', { duration: 5000 });
+      setTimeout(() => { window.location.href = '/login?redirect=/profile/'; }, 2000);
+    } else {
+      toast('Устгахад алдаа гарлаа', 'error', { subtitle: e.code || e.message });
+    }
   }
 };
 
