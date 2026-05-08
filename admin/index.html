@@ -107,9 +107,36 @@ body{font-family:'Inter',sans-serif;background:var(--bg);color:var(--text);min-h
 .row-people{font-size:12px;color:var(--text);text-align:center}
 .badge{display:inline-flex;align-items:center;padding:3px 9px;border-radius:20px;font-size:11px;font-weight:600}
 .badge-new{background:rgba(0,113,227,.2);color:#60a5fa}
+.badge-contacted{background:rgba(255,159,10,.2);color:var(--orange)}
 .badge-done{background:rgba(48,209,88,.15);color:var(--green)}
 .empty-state{padding:60px 20px;text-align:center;color:var(--muted);font-size:14px}
 .loading-state{padding:60px 20px;text-align:center;color:var(--muted);font-size:14px}
+
+/* FINANCE */
+.finance-top{display:flex;gap:16px;margin-bottom:28px;flex-wrap:wrap}
+.finance-stat{flex:1;min-width:140px;background:var(--bg2);border:1px solid var(--border);border-radius:var(--radius);padding:20px}
+.finance-stat .stat-label{font-size:11px;font-weight:500;color:var(--muted);letter-spacing:.04em;text-transform:uppercase;margin-bottom:8px}
+.finance-stat .stat-value{font-size:26px;font-weight:700;letter-spacing:-.02em}
+.finance-form{background:var(--bg2);border:1px solid var(--border);border-radius:var(--radius);padding:24px;margin-bottom:24px}
+.finance-form-title{font-size:14px;font-weight:600;margin-bottom:16px}
+.finance-row{display:flex;gap:10px;flex-wrap:wrap;align-items:flex-end}
+.finance-field{display:flex;flex-direction:column;gap:6px;flex:1;min-width:120px}
+.finance-field label{font-size:11px;font-weight:500;color:var(--muted);letter-spacing:.03em;text-transform:uppercase}
+.finance-input,.finance-select{background:var(--bg3);border:1px solid var(--border);border-radius:8px;padding:9px 12px;color:var(--text);font-size:13px;font-family:inherit;outline:none;transition:.15s}
+.finance-input:focus,.finance-select:focus{border-color:var(--blue)}
+.finance-add-btn{padding:9px 20px;background:var(--blue);color:#fff;border:none;border-radius:8px;font-size:13px;font-weight:600;cursor:pointer;font-family:inherit;white-space:nowrap;transition:.2s}
+.finance-add-btn:hover{background:var(--blue-hover)}
+.finance-list{background:var(--bg2);border:1px solid var(--border);border-radius:var(--radius);overflow:hidden}
+.finance-list-header{display:grid;grid-template-columns:100px 1fr 120px 100px 80px;gap:12px;padding:12px 20px;border-bottom:1px solid var(--border);font-size:11px;font-weight:600;color:var(--muted);letter-spacing:.04em;text-transform:uppercase}
+.finance-entry{display:grid;grid-template-columns:100px 1fr 120px 100px 80px;gap:12px;padding:13px 20px;border-bottom:1px solid var(--border);align-items:center;font-size:13px}
+.finance-entry:last-child{border-bottom:none}
+.finance-amount.income{color:var(--green);font-weight:600}
+.finance-amount.expense{color:var(--red);font-weight:600}
+.finance-del-btn{background:none;border:none;color:var(--muted);cursor:pointer;font-size:16px;padding:4px;border-radius:6px;transition:.15s}
+.finance-del-btn:hover{color:var(--red);background:rgba(255,69,58,.1)}
+@media(max-width:700px){.finance-list-header,.finance-entry{grid-template-columns:80px 1fr 80px}
+.finance-list-header span:nth-child(3),.finance-list-header span:nth-child(5),
+.finance-entry>*:nth-child(3),.finance-entry>*:nth-child(5){display:none}}
 
 /* MODAL */
 .modal-bg{display:none;position:fixed;inset:0;background:rgba(0,0,0,.7);z-index:200;align-items:center;justify-content:center;padding:20px}
@@ -165,7 +192,49 @@ body{font-family:'Inter',sans-serif;background:var(--bg);color:var(--text);min-h
   <div class="main">
     <div class="tabs">
       <button class="tab-btn active" onclick="switchTab('bookings',this)">📋 Захиалгууд</button>
+      <button class="tab-btn" onclick="switchTab('finance',this)">💰 Орлого/Зарлага</button>
       <button class="tab-btn" onclick="switchTab('analytics',this)">📊 Analytics</button>
+    </div>
+
+    <!-- FINANCE TAB -->
+    <div class="tab-content" id="tab-finance">
+      <div class="finance-top">
+        <div class="finance-stat"><div class="stat-label">Нийт орлого</div><div class="stat-value green" id="fin-income">—</div></div>
+        <div class="finance-stat"><div class="stat-label">Нийт зарлага</div><div class="stat-value" style="color:var(--red)" id="fin-expense">—</div></div>
+        <div class="finance-stat"><div class="stat-label">Цэвэр ашиг</div><div class="stat-value blue" id="fin-profit">—</div></div>
+        <div class="finance-stat"><div class="stat-label">Нийт бичилт</div><div class="stat-value" id="fin-count">—</div></div>
+      </div>
+      <div class="finance-form">
+        <div class="finance-form-title">Шинэ бичилт нэмэх</div>
+        <div class="finance-row">
+          <div class="finance-field">
+            <label>Төрөл</label>
+            <select class="finance-select" id="fin-type">
+              <option value="income">Орлого</option>
+              <option value="expense">Зарлага</option>
+            </select>
+          </div>
+          <div class="finance-field" style="flex:2">
+            <label>Тайлбар</label>
+            <input class="finance-input" type="text" id="fin-desc" placeholder="Ямар орлого/зарлага...">
+          </div>
+          <div class="finance-field">
+            <label>Дүн (₮)</label>
+            <input class="finance-input" type="number" id="fin-amount" placeholder="0">
+          </div>
+          <div class="finance-field">
+            <label>Огноо</label>
+            <input class="finance-input" type="date" id="fin-date">
+          </div>
+          <button class="finance-add-btn" onclick="addFinance()">+ Нэмэх</button>
+        </div>
+      </div>
+      <div class="finance-list">
+        <div class="finance-list-header">
+          <span>Огноо</span><span>Тайлбар</span><span>Дүн</span><span>Төрөл</span><span></span>
+        </div>
+        <div id="financeBody"><div class="loading-state">Ачаалж байна...</div></div>
+      </div>
     </div>
 
     <!-- ANALYTICS TAB -->
@@ -231,6 +300,7 @@ body{font-family:'Inter',sans-serif;background:var(--bg);color:var(--text);min-h
       <select class="filter-select" id="filterStatus" onchange="renderTable()">
         <option value="">Бүх статус</option>
         <option value="new">Шинэ</option>
+        <option value="contacted">Холбогдсон</option>
         <option value="done">Дууссан</option>
       </select>
       <span class="filter-count" id="filterCount"></span>
@@ -256,8 +326,9 @@ body{font-family:'Inter',sans-serif;background:var(--bg);color:var(--text);min-h
   <div class="modal" id="modal">
     <div class="modal-title">Захиалгын дэлгэрэнгүй</div>
     <div id="modalContent"></div>
-    <div class="modal-actions">
-      <button class="btn-mark-done" id="markDoneBtn" onclick="markDone()">✓ Дууссан гэж тэмдэглэх</button>
+    <div class="modal-actions" style="flex-wrap:wrap;gap:8px">
+      <button class="btn-mark-done" id="markContactedBtn" onclick="setStatus('contacted')" style="background:rgba(255,159,10,.15);border-color:rgba(255,159,10,.3);color:var(--orange)">📞 Холбогдсон</button>
+      <button class="btn-mark-done" id="markDoneBtn" onclick="setStatus('done')">✓ Дууссан</button>
       <button class="btn-close" onclick="closeModal()">Хаах</button>
     </div>
   </div>
@@ -266,7 +337,7 @@ body{font-family:'Inter',sans-serif;background:var(--bg);color:var(--text);min-h
 <script type="module">
 import { initializeApp } from "https://www.gstatic.com/firebasejs/11.7.1/firebase-app.js";
 import { getAuth, signInWithEmailAndPassword, signOut, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/11.7.1/firebase-auth.js";
-import { getFirestore, collection, getDocs, doc, updateDoc, orderBy, query } from "https://www.gstatic.com/firebasejs/11.7.1/firebase-firestore.js";
+import { getFirestore, collection, getDocs, addDoc, doc, updateDoc, deleteDoc, orderBy, query, serverTimestamp } from "https://www.gstatic.com/firebasejs/11.7.1/firebase-firestore.js";
 
 const firebaseConfig = {
   apiKey: "AIzaSyDixZdKwlrixRFokERCMQ5Ld1BMkhUttCQ",
@@ -282,6 +353,7 @@ const auth = getAuth(app);
 const db = getFirestore(app);
 
 let allBookings = [];
+let allFinances = [];
 let currentDocId = null;
 
 // AUTH STATE
@@ -323,6 +395,7 @@ window.switchTab = function(tab, btn) {
     btn.classList.add('active');
     document.getElementById('tab-' + tab).classList.add('active');
     if (tab === 'analytics') renderCharts();
+    if (tab === 'finance') loadFinance();
   };
 
   function renderCharts() {
@@ -392,10 +465,11 @@ window.renderTable = function() {
   const svc = document.getElementById('filterService').value;
   const status = document.getElementById('filterStatus').value;
 
+  const getStatus = b => b.status || (b.done ? 'done' : 'new');
   let filtered = allBookings.filter(b => {
     const matchSearch = !search || b.name?.toLowerCase().includes(search) || b.phone?.includes(search);
     const matchSvc = !svc || b.service === svc;
-    const matchStatus = !status || (status==='done' ? b.done : !b.done);
+    const matchStatus = !status || getStatus(b) === status;
     return matchSearch && matchSvc && matchStatus;
   });
 
@@ -406,18 +480,19 @@ window.renderTable = function() {
     return;
   }
 
-  document.getElementById('tableBody').innerHTML = filtered.map(b => `
-    <div class="booking-row" onclick="openModal('${b.id}')">
+  const statusLabel = {'new':'Шинэ','contacted':'Холбогдсон','done':'Дууссан'};
+  const statusClass = {'new':'badge-new','contacted':'badge-contacted','done':'badge-done'};
+  document.getElementById('tableBody').innerHTML = filtered.map(b => {
+    const st = getStatus(b);
+    return `<div class="booking-row" onclick="openModal('${b.id}')">
       <div class="row-name">${b.name || '—'}</div>
       <div class="row-phone">${b.phone || '—'}</div>
       <div class="row-service">${b.service || '—'}</div>
-      <div class="row-date">${b.arrival || b.start || '—'}</div>
+      <div class="row-date">${b.start || '—'}</div>
       <div class="row-people">${b.people || '—'}</div>
-      <div class="row-status">
-        <span class="badge ${b.done ? 'badge-done' : 'badge-new'}">${b.done ? 'Дууссан' : 'Шинэ'}</span>
-      </div>
-    </div>
-  `).join('');
+      <div class="row-status"><span class="badge ${statusClass[st]||'badge-new'}">${statusLabel[st]||'Шинэ'}</span></div>
+    </div>`;
+  }).join('');
 };
 
 window.openModal = function(id) {
@@ -441,8 +516,9 @@ window.openModal = function(id) {
     <div class="detail-row"><span class="detail-label">Огноо</span><span class="detail-value">${dateStr}</span></div>
     <div class="detail-row"><span class="detail-label">Статус</span><span class="detail-value"><span class="badge ${b.done?'badge-done':'badge-new'}">${b.done?'Дууссан':'Шинэ'}</span></span></div>
   `;
-  const btn = document.getElementById('markDoneBtn');
-  btn.style.display = b.done ? 'none' : 'block';
+  const st = b.status || (b.done ? 'done' : 'new');
+  document.getElementById('markContactedBtn').style.display = st === 'done' ? 'none' : 'block';
+  document.getElementById('markDoneBtn').style.display = st === 'done' ? 'none' : 'block';
   document.getElementById('modalBg').classList.add('open');
 };
 
@@ -453,14 +529,67 @@ window.closeModal = function(e) {
   }
 };
 
-window.markDone = async function() {
+window.setStatus = async function(status) {
   if (!currentDocId) return;
-  await updateDoc(doc(db, 'bookings', currentDocId), { done: true });
+  await updateDoc(doc(db, 'bookings', currentDocId), { status, done: status === 'done' });
   const b = allBookings.find(x => x.id === currentDocId);
-  if (b) b.done = true;
+  if (b) { b.status = status; b.done = status === 'done'; }
   updateStats();
   renderTable();
   document.getElementById('modalBg').classList.remove('open');
+};
+
+// ── FINANCE ──
+async function loadFinance() {
+  const q = query(collection(db, 'finances'), orderBy('date', 'desc'));
+  const snap = await getDocs(q);
+  allFinances = snap.docs.map(d => ({ id: d.id, ...d.data() }));
+  renderFinance();
+}
+
+function renderFinance() {
+  const income  = allFinances.filter(f=>f.type==='income').reduce((s,f)=>s+Number(f.amount),0);
+  const expense = allFinances.filter(f=>f.type==='expense').reduce((s,f)=>s+Number(f.amount),0);
+  const fmt = n => n.toLocaleString('mn-MN') + '₮';
+  document.getElementById('fin-income').textContent  = fmt(income);
+  document.getElementById('fin-expense').textContent = fmt(expense);
+  document.getElementById('fin-profit').textContent  = fmt(income - expense);
+  document.getElementById('fin-count').textContent   = allFinances.length;
+
+  if (!allFinances.length) {
+    document.getElementById('financeBody').innerHTML = '<div class="empty-state">Бичилт байхгүй байна</div>';
+    return;
+  }
+  document.getElementById('financeBody').innerHTML = allFinances.map(f => `
+    <div class="finance-entry">
+      <span style="color:var(--muted);font-size:12px">${f.date||'—'}</span>
+      <span>${f.description||'—'}</span>
+      <span class="finance-amount ${f.type}">${f.type==='income'?'+':'-'}${Number(f.amount).toLocaleString('mn-MN')}₮</span>
+      <span><span class="badge ${f.type==='income'?'badge-done':'badge-new'}">${f.type==='income'?'Орлого':'Зарлага'}</span></span>
+      <span><button class="finance-del-btn" onclick="deleteFinance('${f.id}')">🗑</button></span>
+    </div>
+  `).join('');
+}
+
+window.addFinance = async function() {
+  const type   = document.getElementById('fin-type').value;
+  const desc   = document.getElementById('fin-desc').value.trim();
+  const amount = document.getElementById('fin-amount').value;
+  const date   = document.getElementById('fin-date').value;
+  if (!desc || !amount || !date) { alert('Бүх талбарыг бөглөнө үү'); return; }
+  const entry = { type, description: desc, amount: Number(amount), date, createdAt: serverTimestamp() };
+  const ref = await addDoc(collection(db, 'finances'), entry);
+  allFinances.unshift({ id: ref.id, ...entry });
+  document.getElementById('fin-desc').value = '';
+  document.getElementById('fin-amount').value = '';
+  renderFinance();
+};
+
+window.deleteFinance = async function(id) {
+  if (!confirm('Устгах уу?')) return;
+  await deleteDoc(doc(db, 'finances', id));
+  allFinances = allFinances.filter(f => f.id !== id);
+  renderFinance();
 };
 
 // Enter key login
