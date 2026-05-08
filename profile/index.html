@@ -47,6 +47,13 @@ body{font-family:'Inter',sans-serif;background:var(--bg);color:var(--dark2);min-
 .field input:focus,.field select:focus{border-color:var(--blue);box-shadow:0 0 0 3px rgba(0,113,227,.08)}
 .gender-row{display:flex;gap:20px;padding-top:2px}
 .gender-row label{display:flex;align-items:center;gap:6px;font-size:14px;font-weight:400;text-transform:none;letter-spacing:0;cursor:pointer;color:var(--dark2);margin-bottom:0}
+.username-wrap{position:relative}
+.username-wrap input{padding-right:36px}
+.username-check{position:absolute;right:12px;top:50%;transform:translateY(-50%);font-size:14px;font-weight:600;pointer-events:none}
+.username-check.ok{color:var(--green)}
+.username-check.err{color:var(--red)}
+.username-link{font-size:11px;color:var(--muted2);margin-top:5px}
+.username-link span{color:var(--blue)}
 .save-btn{padding:11px 28px;background:var(--blue);color:#fff;border:none;border-radius:12px;font-size:14px;font-weight:600;cursor:pointer;font-family:inherit;transition:.2s}
 .save-btn:hover{background:var(--blue-hover)}
 .save-msg{font-size:12px;padding:8px 14px;border-radius:8px;margin-top:12px;display:none}
@@ -127,6 +134,14 @@ body{font-family:'Inter',sans-serif;background:var(--bg);color:var(--dark2);min-
     </div>
 
     <div class="section-title">Хувийн мэдээлэл</div>
+    <div class="field">
+      <label>Username</label>
+      <div class="username-wrap">
+        <input type="text" id="edit-username" placeholder="username" oninput="checkUsername(this.value)" autocomplete="off" spellcheck="false">
+        <span class="username-check" id="username-check"></span>
+      </div>
+      <div class="username-link">bileg11.github.io/profile/<span id="username-preview">username</span></div>
+    </div>
     <div class="field-row">
       <div class="field"><label>Овог</label><input type="text" id="edit-lastname" placeholder="Овог"></div>
       <div class="field"><label>Нэр</label><input type="text" id="edit-firstname" placeholder="Нэр"></div>
@@ -158,7 +173,7 @@ body{font-family:'Inter',sans-serif;background:var(--bg);color:var(--dark2);min-
 <script type="module">
 import { initializeApp } from "https://www.gstatic.com/firebasejs/11.7.1/firebase-app.js";
 import { getAuth, onAuthStateChanged, signOut } from "https://www.gstatic.com/firebasejs/11.7.1/firebase-auth.js";
-import { getFirestore, doc, getDoc, setDoc, collection, query, where, getDocs, orderBy } from "https://www.gstatic.com/firebasejs/11.7.1/firebase-firestore.js";
+import { getFirestore, doc, getDoc, setDoc, deleteDoc, collection, query, where, getDocs, orderBy } from "https://www.gstatic.com/firebasejs/11.7.1/firebase-firestore.js";
 
 const app = initializeApp({
   apiKey: "AIzaSyDixZdKwlrixRFokERCMQ5Ld1BMkhUttCQ",
@@ -207,15 +222,48 @@ function fillForm(p, user) {
   }
 
   // Fields
+  document.getElementById('edit-username').value  = p.username  || '';
   document.getElementById('edit-lastname').value  = p.lastName  || '';
   document.getElementById('edit-firstname').value = p.firstName || '';
   document.getElementById('edit-phone').value     = p.phone     || '';
   document.getElementById('edit-birthday').value  = p.birthday  || '';
+  if (p.username) {
+    document.getElementById('username-preview').textContent = p.username;
+    document.getElementById('username-check').textContent = '✓';
+    document.getElementById('username-check').className = 'username-check ok';
+  }
   if (p.gender) {
     const radio = document.querySelector(`input[name="edit-gender"][value="${p.gender}"]`);
     if (radio) radio.checked = true;
   }
 }
+
+// Username availability check
+let unameTimer;
+window.checkUsername = function(val) {
+  clearTimeout(unameTimer);
+  val = val.toLowerCase().replace(/[^a-z0-9_.]/g, '');
+  document.getElementById('edit-username').value = val;
+  const check = document.getElementById('username-check');
+  const preview = document.getElementById('username-preview');
+  preview.textContent = val || 'username';
+  if (!val) { check.textContent = ''; return; }
+  if (val.length < 3) {
+    check.textContent = '✗'; check.className = 'username-check err'; return;
+  }
+  check.textContent = '···'; check.className = 'username-check';
+  unameTimer = setTimeout(async () => {
+    if (val === currentProfile.username) {
+      check.textContent = '✓'; check.className = 'username-check ok'; return;
+    }
+    const snap = await getDoc(doc(db, 'usernames', val));
+    if (snap.exists()) {
+      check.textContent = '✗'; check.className = 'username-check err';
+    } else {
+      check.textContent = '✓'; check.className = 'username-check ok';
+    }
+  }, 500);
+};
 
 // Photo file input → canvas compress → base64
 document.getElementById('photo-file-input').addEventListener('change', function(e) {
@@ -251,6 +299,7 @@ document.getElementById('photo-file-input').addEventListener('change', function(
 window.saveProfile = async function() {
   const msg = document.getElementById('save-msg');
   msg.className = 'save-msg';
+  const username  = document.getElementById('edit-username').value.trim().toLowerCase();
   const firstName = document.getElementById('edit-firstname').value.trim();
   const lastName  = document.getElementById('edit-lastname').value.trim();
   const phone     = document.getElementById('edit-phone').value.trim();
@@ -260,7 +309,26 @@ window.saveProfile = async function() {
   const photoURL  = currentProfile.photoURL || currentUser.photoURL || '';
 
   try {
-    const profile = { firstName, lastName, phone, birthday, gender, photoURL, email: currentUser.email || '', updatedAt: Date.now() };
+    // Handle username change
+    if (username && username !== currentProfile.username) {
+      if (username.length < 3) {
+        msg.textContent = 'Username хамгийн багадаа 3 тэмдэгт байх ёстой.';
+        msg.className = 'save-msg error'; return;
+      }
+      const snap = await getDoc(doc(db, 'usernames', username));
+      if (snap.exists() && snap.data().uid !== currentUser.uid) {
+        msg.textContent = 'Энэ username аль хэдийн бүртгэлтэй байна.';
+        msg.className = 'save-msg error'; return;
+      }
+      // Remove old username
+      if (currentProfile.username) {
+        await deleteDoc(doc(db, 'usernames', currentProfile.username));
+      }
+      // Register new username
+      await setDoc(doc(db, 'usernames', username), { uid: currentUser.uid });
+    }
+
+    const profile = { username, firstName, lastName, phone, birthday, gender, photoURL, email: currentUser.email || '', updatedAt: Date.now() };
     if (!currentProfile.createdAt) profile.createdAt = Date.now();
     await setDoc(doc(db, 'users', currentUser.uid), { ...currentProfile, ...profile });
     currentProfile = { ...currentProfile, ...profile };
@@ -268,6 +336,11 @@ window.saveProfile = async function() {
     // Update header
     document.getElementById('pp-name').textContent = [lastName, firstName].filter(Boolean).join(' ') || '—';
     document.getElementById('pp-meta').textContent = [gender, birthday].filter(Boolean).join(' · ');
+
+    // Update URL
+    if (username) {
+      window.history.replaceState({}, '', `/profile/${username}`);
+    }
 
     msg.textContent = '✓ Амжилттай хадгалагдлаа';
     msg.className = 'save-msg success';
