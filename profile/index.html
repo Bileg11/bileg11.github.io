@@ -58,9 +58,15 @@ body{font-family:'Inter',sans-serif;background:var(--bg);color:var(--dark2);min-
 .username-link span{color:var(--blue)}
 .save-btn{padding:11px 28px;background:var(--blue);color:#fff;border:none;border-radius:12px;font-size:14px;font-weight:600;cursor:pointer;font-family:inherit;transition:.2s}
 .save-btn:hover{background:var(--blue-hover)}
-.save-msg{font-size:12px;padding:8px 14px;border-radius:8px;margin-top:12px;display:none}
+.save-msg{font-size:12px;padding:10px 14px;border-radius:8px;margin-top:12px;display:none;line-height:1.5}
 .save-msg.success{background:#f0fff4;color:#27ae60;border:1px solid #b2f0c8;display:block}
 .save-msg.error{background:#fff0f0;color:#c0392b;border:1px solid #fcc;display:block}
+.field input.invalid:not([type="radio"]),.field select.invalid{border-color:#e53935!important;background:#fff5f5;box-shadow:0 0 0 3px rgba(229,57,53,.1)!important}
+.field-hint{font-size:11px;color:#e53935;margin-top:4px;display:none}
+.field-hint.show{display:block}
+.gender-row.invalid-gender .gender-row-inner{outline:2px solid #e53935;border-radius:8px;padding:4px 8px}
+.invalid-gender-hint{font-size:11px;color:#e53935;margin-top:4px;display:none}
+.invalid-gender-hint.show{display:block}
 
 /* PHOTO UPLOAD */
 .photo-upload-btn{display:flex;align-items:center;justify-content:center;gap:8px;width:100%;padding:11px;background:var(--bg3);border:1px dashed var(--border);border-radius:12px;font-size:14px;font-weight:500;cursor:pointer;font-family:inherit;color:var(--dark2);transition:.15s}
@@ -145,19 +151,36 @@ body{font-family:'Inter',sans-serif;background:var(--bg);color:var(--dark2);min-
       <div class="username-link">bileg11.github.io/profile/<span id="username-preview">username</span></div>
     </div>
     <div class="field-row">
-      <div class="field"><label>Овог</label><input type="text" id="edit-lastname" placeholder="Овог"></div>
-      <div class="field"><label>Нэр</label><input type="text" id="edit-firstname" placeholder="Нэр"></div>
+      <div class="field">
+        <label>Овог</label>
+        <input type="text" id="edit-lastname" placeholder="Овог">
+        <div class="field-hint" id="hint-lastname">Овгоо оруулна уу</div>
+      </div>
+      <div class="field">
+        <label>Нэр</label>
+        <input type="text" id="edit-firstname" placeholder="Нэр">
+        <div class="field-hint" id="hint-firstname">Нэрээ оруулна уу</div>
+      </div>
     </div>
     <div class="field">
       <label>Хүйс</label>
-      <div class="gender-row">
+      <div class="gender-row" id="gender-row">
         <label><input type="radio" name="edit-gender" value="Эрэгтэй"><span>Эрэгтэй</span></label>
         <label><input type="radio" name="edit-gender" value="Эмэгтэй"><span>Эмэгтэй</span></label>
       </div>
+      <div class="field-hint" id="hint-gender">Хүйсээ сонгоно уу</div>
     </div>
     <div class="field-row">
-      <div class="field"><label>Утасны дугаар</label><input type="tel" id="edit-phone" placeholder="+976 9999 9999"></div>
-      <div class="field"><label>Төрсөн огноо</label><input type="date" id="edit-birthday"></div>
+      <div class="field">
+        <label>Утасны дугаар</label>
+        <input type="tel" id="edit-phone" placeholder="+976 9999 9999">
+        <div class="field-hint" id="hint-phone">Утасны дугаараа оруулна уу</div>
+      </div>
+      <div class="field">
+        <label>Төрсөн огноо</label>
+        <input type="date" id="edit-birthday">
+        <div class="field-hint" id="hint-birthday">Төрсөн огноогоо оруулна уу</div>
+      </div>
     </div>
     <button class="save-btn" onclick="saveProfile()">Хадгалах</button>
     <div class="save-msg" id="save-msg"></div>
@@ -307,6 +330,16 @@ document.getElementById('photo-file-input').addEventListener('change', function(
   reader.readAsDataURL(file);
 });
 
+function profileSetInvalid(inputId, hintId) {
+  const el = document.getElementById(inputId);
+  if (el) {
+    el.classList.add('invalid');
+    el.addEventListener('input',  () => { el.classList.remove('invalid'); document.getElementById(hintId)?.classList.remove('show'); }, { once: true });
+    el.addEventListener('change', () => { el.classList.remove('invalid'); document.getElementById(hintId)?.classList.remove('show'); }, { once: true });
+  }
+  document.getElementById(hintId)?.classList.add('show');
+}
+
 window.saveProfile = async function() {
   const msg = document.getElementById('save-msg');
   msg.className = 'save-msg';
@@ -318,6 +351,32 @@ window.saveProfile = async function() {
   const genderEl  = document.querySelector('input[name="edit-gender"]:checked');
   const gender    = genderEl ? genderEl.value : (currentProfile.gender || '');
   const photoURL  = currentProfile.photoURL || currentUser.photoURL || '';
+
+  // ── Validation ──────────────────────────────────────
+  let hasError = false;
+  if (!lastName)  { profileSetInvalid('edit-lastname',  'hint-lastname');  hasError = true; }
+  if (!firstName) { profileSetInvalid('edit-firstname', 'hint-firstname'); hasError = true; }
+  if (!gender)    {
+    document.getElementById('hint-gender')?.classList.add('show');
+    document.getElementById('gender-row')?.style.setProperty('outline', '2px solid #e53935');
+    document.querySelectorAll('input[name="edit-gender"]').forEach(r => {
+      r.addEventListener('change', () => {
+        document.getElementById('hint-gender')?.classList.remove('show');
+        document.getElementById('gender-row')?.style.removeProperty('outline');
+      }, { once: true });
+    });
+    hasError = true;
+  }
+  if (!phone)     { profileSetInvalid('edit-phone',    'hint-phone');    hasError = true; }
+  if (!birthday)  { profileSetInvalid('edit-birthday', 'hint-birthday'); hasError = true; }
+
+  if (hasError) {
+    msg.textContent = '⚠️ Мэдээллээ бүрэн бөглөнө үү';
+    msg.className = 'save-msg error';
+    msg.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+    return;
+  }
+  msg.className = 'save-msg';
 
   try {
     // Handle username change
