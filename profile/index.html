@@ -97,6 +97,16 @@ body{font-family:'Inter',sans-serif;background:var(--bg);color:var(--dark2);min-
 .delete-account-btn{width:100%;margin-top:10px;padding:11px;background:none;border:none;border-radius:12px;font-size:13px;color:var(--muted);cursor:pointer;font-family:inherit;transition:.2s}
 .delete-account-btn:hover{color:var(--red);background:#fff5f5}
 
+/* LOGOUT CONFIRM */
+.logout-confirm{display:none;margin-top:10px;background:var(--bg2);border:1px solid var(--border);border-radius:14px;padding:16px 18px;text-align:center}
+.logout-confirm.open{display:block}
+.logout-confirm-text{font-size:14px;color:var(--dark2);margin-bottom:14px;line-height:1.5}
+.logout-confirm-btns{display:flex;gap:10px}
+.logout-yes{flex:1;padding:10px;background:#e53935;color:#fff;border:none;border-radius:10px;font-size:14px;font-weight:600;cursor:pointer;font-family:inherit;transition:.2s}
+.logout-yes:hover{background:#c62828}
+.logout-no{flex:1;padding:10px;background:none;border:1px solid var(--border);border-radius:10px;font-size:14px;color:var(--muted);cursor:pointer;font-family:inherit;transition:.2s}
+.logout-no:hover{background:#fff;color:var(--dark2)}
+
 /* DELETE CONFIRM MODAL */
 .del-overlay{display:none;position:fixed;inset:0;background:rgba(0,0,0,.5);z-index:3000;align-items:flex-end;justify-content:center;backdrop-filter:blur(4px);-webkit-backdrop-filter:blur(4px)}
 .del-overlay.open{display:flex}
@@ -215,7 +225,14 @@ body{font-family:'Inter',sans-serif;background:var(--bg);color:var(--dark2);min-
     <div id="myBookings"><div class="empty-bookings">Ачаалж байна...</div></div>
   </div>
 
-  <button class="logout-btn" onclick="doLogout()">Гарах</button>
+  <button class="logout-btn" onclick="openLogoutConfirm()">Гарах</button>
+  <div class="logout-confirm" id="logoutConfirm">
+    <div class="logout-confirm-text">Та гарахдаа итгэлтэй байна уу?</div>
+    <div class="logout-confirm-btns">
+      <button class="logout-yes" onclick="doLogout()">Тийм, гарах</button>
+      <button class="logout-no" onclick="closeLogoutConfirm()">Үгүй</button>
+    </div>
+  </div>
   <button class="delete-account-btn" onclick="openDeleteModal()">Бүртгэл устгах</button>
 </div>
 
@@ -521,6 +538,12 @@ async function loadBookings(email, uid) {
   }
 }
 
+window.openLogoutConfirm = function() {
+  document.getElementById('logoutConfirm').classList.add('open');
+};
+window.closeLogoutConfirm = function() {
+  document.getElementById('logoutConfirm').classList.remove('open');
+};
 window.doLogout = async function() {
   await signOut(auth);
   window.location.href = '/';
@@ -545,13 +568,22 @@ window.doDeleteAccount = async function() {
   btn.textContent = 'Устгаж байна...';
   btn.classList.remove('ready');
   try {
-    // 1. Delete username doc
+    // 1. Archive to deleted_accounts before deleting anything
+    await setDoc(doc(db, 'deleted_accounts', currentUser.uid), {
+      ...currentProfile,
+      uid:          currentUser.uid,
+      authEmail:    currentUser.email || '',
+      authProvider: currentUser.providerData?.[0]?.providerId || '',
+      deletedAt:    Date.now()
+    }).catch(() => {});
+
+    // 2. Delete username doc
     if (currentProfile.username) {
       await deleteDoc(doc(db, 'usernames', currentProfile.username)).catch(() => {});
     }
-    // 2. Delete user doc
+    // 3. Delete user doc
     await deleteDoc(doc(db, 'users', currentUser.uid)).catch(() => {});
-    // 3. Delete auth account
+    // 4. Delete auth account
     await deleteUser(currentUser);
     window.location.replace('/');
   } catch(e) {
