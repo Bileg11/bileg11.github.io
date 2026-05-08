@@ -458,5 +458,79 @@ footer{
     }
   };
 </script>
+
+<script>
+// ── ENTER KEY NAVIGATION ─────────────────────────────────────────
+(function () {
+  // Logical order of fields in the form
+  const ORDER = ['b-name','b-phone','b-email','b-people','b-service','b-social','b-start','b-days','b-group','b-note'];
+
+  // For datepicker fields the real input is hidden; we need to focus its trigger div
+  function getFocusTarget(id) {
+    const el = document.getElementById(id);
+    if (!el) return null;
+    if (el.type === 'date' || el.style.display === 'none') {
+      const wrap = el.closest ? el.closest('.dp-wrap') : null;
+      if (wrap) return wrap.querySelector('.dp-input-fake');
+    }
+    return el;
+  }
+
+  function focusNext(fromId) {
+    const idx = ORDER.indexOf(fromId);
+    for (let i = idx + 1; i < ORDER.length; i++) {
+      const t = getFocusTarget(ORDER[i]);
+      if (t) {
+        t.focus();
+        // Scroll into view smoothly on mobile
+        t.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+        return;
+      }
+    }
+    // End of fields → focus submit
+    const btn = document.querySelector('.form-submit');
+    if (btn) { btn.focus(); btn.scrollIntoView({ behavior: 'smooth', block: 'nearest' }); }
+  }
+
+  // ── Text inputs: Enter → next ──────────────────────────────────
+  ['b-name', 'b-phone', 'b-email', 'b-social'].forEach(id => {
+    const el = document.getElementById(id);
+    if (!el) return;
+    el.addEventListener('keydown', e => {
+      if (e.key === 'Enter') { e.preventDefault(); focusNext(id); }
+    });
+  });
+
+  // ── Selects: pick → auto-advance ──────────────────────────────
+  // Also Enter on focused select (already has value) advances
+  ['b-people', 'b-service', 'b-days', 'b-group'].forEach(id => {
+    const el = document.getElementById(id);
+    if (!el) return;
+    el.addEventListener('change', () => { setTimeout(() => focusNext(id), 30); });
+    el.addEventListener('keydown', e => {
+      if (e.key === 'Enter' && el.value) { e.preventDefault(); focusNext(id); }
+    });
+  });
+
+  // ── Datepicker: date chosen → auto-advance ────────────────────
+  const startEl = document.getElementById('b-start');
+  if (startEl) {
+    startEl.addEventListener('change', () => { setTimeout(() => focusNext('b-start'), 60); });
+  }
+
+  // ── Textarea: Enter = newline (normal), Ctrl/Cmd+Enter = submit ─
+  const noteEl = document.getElementById('b-note');
+  if (noteEl) {
+    noteEl.addEventListener('keydown', e => {
+      if (e.key === 'Enter' && (e.ctrlKey || e.metaKey)) {
+        e.preventDefault();
+        document.querySelector('.form-submit')?.click();
+      }
+    });
+    // Also show hint in placeholder
+    noteEl.placeholder = 'Тусгай хүсэлт, асуулт байвал бичнэ үү...\n(Ctrl+Enter илгээх)';
+  }
+})();
+</script>
 </body>
 </html>
