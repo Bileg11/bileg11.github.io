@@ -452,28 +452,37 @@ footer{
         if (snap.exists()) p = snap.data();
       } catch(_) {}
 
-      const fullName = [p.lastName, p.firstName].filter(Boolean).join(' ') || '—';
+      const fullName    = [p.lastName, p.firstName].filter(Boolean).join(' ') || '—';
       const profileLink = p.username
         ? `bileg11.github.io/profile/${p.username}`
         : `UID: ${currentUser.uid.slice(0,8)}`;
 
+      // Flag if form data differs from profile data
+      const phoneDiff = p.phone && p.phone !== data.phone;
+      const emailDiff = p.email && p.email !== data.email;
+      const nameDiff  = fullName !== '—' && fullName.trim() !== data.name.trim();
+
       const msg =
 `📋 <b>Шинэ захиалга!</b>
 
-━━━ 📝 ЗАХИАЛГЫН МЭДЭЭЛЭЛ ━━━
+━━━ 📝 ЗАХИАЛГА ━━━
 🛎 <b>Үйлчилгээ:</b> ${data.service}
 🗓 <b>Огноо:</b> ${data.start} · ${data.days}
-👥 <b>Хүн/Бүлэг:</b> ${data.people||'—'} / ${data.group||'—'}
+👥 <b>Хүн / Бүлэг:</b> ${data.people||'—'} / ${data.group||'—'}
 💬 <b>Нэмэлт:</b> ${data.note||'—'}
 
-━━━ 👤 ЗАХИАЛАГЧИЙН МЭДЭЭЛЭЛ ━━━
-🪪 <b>Нэр (маягт):</b> ${data.name}
-👤 <b>Нэр (profile):</b> ${fullName}
-📞 <b>Утас:</b> ${data.phone}
-📧 <b>И-мэйл:</b> ${data.email}
+━━━ ✍️ МАЯГТАНД БИЧСЭН ━━━
+👤 <b>Нэр:</b> ${data.name}${nameDiff ? ' ⚠️' : ''}
+📞 <b>Утас:</b> ${data.phone}${phoneDiff ? ' ⚠️' : ''}
+📧 <b>И-мэйл:</b> ${data.email}${emailDiff ? ' ⚠️' : ''}
+📱 <b>Social:</b> ${data.social||'—'}
+
+━━━ 👤 БҮРТГЭЛИЙН МЭДЭЭЛЭЛ ━━━
+👤 <b>Нэр:</b> ${fullName}
+📞 <b>Утас:</b> ${p.phone||'—'}
+📧 <b>И-мэйл:</b> ${p.email || currentUser.email || '—'}
 ⚥ <b>Хүйс:</b> ${p.gender||'—'}
 🎂 <b>Төрсөн огноо:</b> ${p.birthday||'—'}
-📱 <b>Social:</b> ${data.social||'—'}
 🔗 <b>Profile:</b> ${profileLink}`;
 
       await sendTelegram(msg);
