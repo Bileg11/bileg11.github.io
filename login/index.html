@@ -175,6 +175,7 @@ body{
       Facebook-ээр нэвтрэх
     </button>
 
+    <div class="msg" id="social-msg"></div>
     <div class="divider">эсвэл и-мэйлээр</div>
 
     <!-- Email tabs -->
@@ -309,27 +310,39 @@ async function afterLogin(user) {
   window.location.replace(redirectTo);
 }
 
-// GOOGLE
-document.getElementById('btnGoogle').addEventListener('click', async () => {
+const ignoredPopupErrors = new Set([
+  'auth/popup-closed-by-user',
+  'auth/cancelled-popup-request',
+  'auth/user-cancelled'
+]);
+
+async function doSocialLogin(provider, btnId) {
+  const btn = document.getElementById(btnId);
+  if (btn.disabled) return;
+  btn.disabled = true;
+  const orig = btn.innerHTML;
+  btn.innerHTML = '<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><path d="M12 2v4M12 18v4M4.93 4.93l2.83 2.83M16.24 16.24l2.83 2.83M2 12h4M18 12h4M4.93 19.07l2.83-2.83M16.24 7.76l2.83-2.83"/></svg> &nbsp;Нэвтэрч байна...';
   try {
-    const res = await signInWithPopup(auth, new GoogleAuthProvider());
+    const res = await signInWithPopup(auth, provider);
     await afterLogin(res.user);
   } catch(e) {
-    if (e.code !== 'auth/popup-closed-by-user')
-      showMsg('social-err', 'Google нэвтрэхэд алдаа гарлаа: ' + (e.code || e.message));
+    btn.disabled = false;
+    btn.innerHTML = orig;
+    if (!ignoredPopupErrors.has(e.code)) {
+      showMsg('social-msg', 'Нэвтрэхэд алдаа гарлаа. Дахин оролдоно уу.');
+    }
   }
-});
+}
+
+// GOOGLE
+document.getElementById('btnGoogle').addEventListener('click', () =>
+  doSocialLogin(new GoogleAuthProvider(), 'btnGoogle')
+);
 
 // FACEBOOK
-document.getElementById('btnFb').addEventListener('click', async () => {
-  try {
-    const res = await signInWithPopup(auth, new FacebookAuthProvider());
-    await afterLogin(res.user);
-  } catch(e) {
-    if (e.code !== 'auth/popup-closed-by-user')
-      showMsg('social-err', 'Facebook нэвтрэхэд алдаа гарлаа: ' + (e.code || e.message));
-  }
-});
+document.getElementById('btnFb').addEventListener('click', () =>
+  doSocialLogin(new FacebookAuthProvider(), 'btnFb')
+);
 
 // EMAIL LOGIN
 document.getElementById('btnLogin').addEventListener('click', async () => {
