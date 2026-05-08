@@ -619,6 +619,110 @@ section,#booking-section{scroll-margin-top:60px}
 .success-icon{font-size:52px;margin-bottom:16px}
 .success-msg h3{font-size:24px;font-weight:700;letter-spacing:-.03em;margin-bottom:8px}
 .success-msg p{font-size:14px;color:var(--muted);line-height:1.7}
+
+/* ══════════════════════════════════════
+   RESPONSIVE — TABLET (max 860px)
+══════════════════════════════════════ */
+@media(max-width:860px){
+  .hero{padding:90px 24px 60px}
+  .hero-slides{aspect-ratio:16/9;max-height:360px}
+  .hero-stats{gap:24px}
+  .section{padding:72px 20px}
+  .services-section,.tips-section,.itin-section,.why-section,.booking-section{padding:72px 20px}
+  .medical-section{padding:80px 20px}
+  .nav-actions{display:none}
+}
+
+/* ══════════════════════════════════════
+   RESPONSIVE — MOBILE (max 600px)
+══════════════════════════════════════ */
+@media(max-width:600px){
+  /* Nav */
+  .nav-user-btn{display:none}
+
+  /* Hero */
+  .hero{padding:72px 20px 48px}
+  .hero-slides{aspect-ratio:4/3;max-height:280px;margin:28px 0 24px}
+  .hero-btns{flex-direction:column;align-items:stretch}
+  .btn-primary,.btn-ghost{justify-content:center;padding:15px 20px;font-size:15px}
+  .hero-stats{gap:0;border-top:1px solid var(--border)}
+  .hero-stat{flex:1 1 50%;padding:20px 0;text-align:center}
+  .hero-stat-num{font-size:26px}
+
+  /* Intro band */
+  .intro-grid{grid-template-columns:1fr 1fr}
+  .intro-item{padding:20px 16px;border-right:none;border-bottom:1px solid var(--border)}
+  .intro-item:nth-child(odd){border-right:1px solid var(--border)}
+  .intro-item:nth-last-child(-n+2){border-bottom:none}
+
+  /* Section base */
+  .section{padding:56px 20px}
+  .section-sub{font-size:15px}
+  .services-section,.tips-section,.itin-section,.why-section,.booking-section{padding:56px 20px}
+  .medical-section{padding:60px 20px}
+
+  /* Services */
+  .service-item{padding:28px 24px}
+
+  /* Medical */
+  .medical-inner{gap:36px}
+  .medical-card{padding:24px}
+
+  /* Itineraries */
+  .itin-panel{padding:24px 20px}
+  .itin-tabs{gap:6px}
+  .itin-tab{padding:7px 14px;font-size:12px}
+
+  /* Tips */
+  .tips-grid{gap:12px}
+  .tip-card{padding:24px}
+
+  /* Pricing section — stack to single column, price card on top */
+  #pricing > .section-max > div[style*="grid-template-columns"]{
+    display:flex!important;
+    flex-direction:column-reverse!important;
+  }
+  #pricing > .section-max > div > div:last-child{
+    position:static!important;
+  }
+  #pricing > .section-max > div > div:last-child > div{
+    padding:28px 24px!important;
+  }
+  #pricing > .section-max > div > div:last-child > div > div[style*="48px"]{
+    font-size:36px!important;
+  }
+  #pricing > .section-max > div > div:first-child > div{
+    padding:20px 20px!important;
+  }
+
+  /* Booking */
+  .booking-inner{gap:24px}
+  .booking-info-card{padding:24px}
+
+  /* Footer */
+  .footer-bottom{flex-direction:column;text-align:center;gap:12px}
+  footer{padding:40px 20px 28px}
+
+  /* Floating buttons */
+  #float-contact{bottom:20px;right:16px}
+  #scroll-top{bottom:80px;right:16px}
+
+  /* CTA section */
+  .cta-section{padding:72px 20px}
+  .cta-btns{flex-direction:column;align-items:center}
+  .btn-white,.btn-outline-white{width:100%;max-width:320px;justify-content:center}
+}
+
+/* ══════════════════════════════════════
+   RESPONSIVE — SMALL MOBILE (max 400px)
+══════════════════════════════════════ */
+@media(max-width:400px){
+  .hero h1{letter-spacing:-.03em}
+  .why-card{padding:24px}
+  .medical-title{font-size:30px}
+  .section-title{letter-spacing:-.03em}
+  .itin-tab{font-size:11px;padding:6px 10px}
+}
 </style>
 </head>
 <body>
