@@ -1896,6 +1896,7 @@ function openAccountModal() {
 </script>
 
 <script src="/js/toast.js"></script>
+<script src="/js/calendar.js"></script>
 <script type="module">
   import { initializeApp } from "https://www.gstatic.com/firebasejs/11.7.1/firebase-app.js";
   import { getAnalytics, logEvent } from "https://www.gstatic.com/firebasejs/11.7.1/firebase-analytics.js";
@@ -1916,6 +1917,12 @@ function openAccountModal() {
   const auth = getAuth(app);
   const db = getFirestore(app);
   logEvent(analytics, 'page_view', { page_title: 'Home MN' });
+
+  // Custom calendars
+  if (document.getElementById('b-start'))     initDatepicker('b-start',    { minToday: true, placeholder: 'Огноо сонгох' });
+  if (document.getElementById('b-arrival'))   initDatepicker('b-arrival',  { minToday: true, placeholder: 'Ирэх огноо' });
+  if (document.getElementById('b-departure')) initDatepicker('b-departure',{ minToday: true, placeholder: 'Явах огноо' });
+  if (document.getElementById('profile-birthday')) initDatepicker('profile-birthday', { placeholder: 'Төрсөн огноо' });
 
   function updateNavUser(profile, photoURL) {
     const btn = document.getElementById('nav-auth-btn');

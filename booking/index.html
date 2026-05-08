@@ -311,6 +311,7 @@ footer{
 </footer>
 
 <script src="/js/toast.js"></script>
+<script src="/js/calendar.js"></script>
 <script type="module">
   import { initializeApp } from "https://www.gstatic.com/firebasejs/11.7.1/firebase-app.js";
   import { getFirestore, collection, addDoc, serverTimestamp } from "https://www.gstatic.com/firebasejs/11.7.1/firebase-firestore.js";
@@ -332,6 +333,9 @@ footer{
   const analytics = getAnalytics(app);
   const auth = getAuth(app);
   logEvent(analytics, 'page_view', { page_title: 'Booking Page' });
+
+  // Custom calendar — today or later only
+  initDatepicker('b-start', { minToday: true, placeholder: 'Огноо сонгох' });
 
   function pulseNotice() {
     const notice = document.getElementById('authNotice');

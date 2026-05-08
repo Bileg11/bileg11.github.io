@@ -171,6 +171,7 @@ body{font-family:'Inter',sans-serif;background:var(--bg);color:var(--dark2);min-
 </div>
 
 <script src="/js/toast.js"></script>
+<script src="/js/calendar.js"></script>
 <script type="module">
 import { initializeApp } from "https://www.gstatic.com/firebasejs/11.7.1/firebase-app.js";
 import { getAuth, onAuthStateChanged, signOut } from "https://www.gstatic.com/firebasejs/11.7.1/firebase-auth.js";
@@ -189,6 +190,9 @@ const db   = getFirestore(app);
 
 let currentUser = null;
 let currentProfile = {};
+
+// Init calendar for birthday (no min restriction)
+initDatepicker('edit-birthday', { placeholder: 'Огноо сонгох' });
 
 onAuthStateChanged(auth, async user => {
   if (!user) {
@@ -227,7 +231,11 @@ function fillForm(p, user) {
   document.getElementById('edit-lastname').value  = p.lastName  || '';
   document.getElementById('edit-firstname').value = p.firstName || '';
   document.getElementById('edit-phone').value     = p.phone     || '';
-  document.getElementById('edit-birthday').value  = p.birthday  || '';
+  if (p.birthday) {
+    const bdEl = document.getElementById('edit-birthday');
+    bdEl.value = p.birthday;
+    bdEl.dispatchEvent(new Event('change'));
+  }
   if (p.username) {
     document.getElementById('username-preview').textContent = p.username;
     document.getElementById('username-check').textContent = '✓';
