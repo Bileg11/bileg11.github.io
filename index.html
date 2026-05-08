@@ -1895,6 +1895,7 @@ function openAccountModal() {
 }
 </script>
 
+<script src="/js/toast.js"></script>
 <script type="module">
   import { initializeApp } from "https://www.gstatic.com/firebasejs/11.7.1/firebase-app.js";
   import { getAnalytics, logEvent } from "https://www.gstatic.com/firebasejs/11.7.1/firebase-analytics.js";
@@ -2030,7 +2031,7 @@ function openAccountModal() {
       closeAuthModal();
     } catch(e) {
       if (e.code !== 'auth/popup-closed-by-user') {
-        alert('Нэвтрэхэд алдаа гарлаа: ' + (e.message || e.code));
+        toast('Нэвтрэхэд алдаа гарлаа', 'error', { subtitle: e.code || e.message });
       }
     }
   }

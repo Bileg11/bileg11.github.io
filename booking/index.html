@@ -310,6 +310,7 @@ footer{
   <div class="footer-copy">© 2025 LFS Shanghai. Бүх эрх хуулиар хамгаалагдсан.</div>
 </footer>
 
+<script src="/js/toast.js"></script>
 <script type="module">
   import { initializeApp } from "https://www.gstatic.com/firebasejs/11.7.1/firebase-app.js";
   import { getFirestore, collection, addDoc, serverTimestamp } from "https://www.gstatic.com/firebasejs/11.7.1/firebase-firestore.js";
@@ -449,7 +450,7 @@ footer{
       console.error(err);
       btn.disabled = false;
       btn.textContent = 'Захиалга Илгээх →';
-      alert('Алдаа: ' + (err.code || err.message || err));
+      toast('Алдаа гарлаа', 'error', { subtitle: err.code || err.message || String(err) });
     }
   };
 </script>

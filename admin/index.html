@@ -334,10 +334,11 @@ body{font-family:'Inter',sans-serif;background:var(--bg);color:var(--text);min-h
   </div>
 </div>
 
+<script src="/js/toast.js"></script>
 <script type="module">
 import { initializeApp } from "https://www.gstatic.com/firebasejs/11.7.1/firebase-app.js";
 import { getAuth, signInWithEmailAndPassword, signOut, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/11.7.1/firebase-auth.js";
-import { getFirestore, collection, getDocs, addDoc, doc, updateDoc, deleteDoc, orderBy, query, serverTimestamp } from "https://www.gstatic.com/firebasejs/11.7.1/firebase-firestore.js";
+import { getFirestore, collection, getDocs, addDoc, doc, updateDoc, deleteDoc, orderBy, query, serverTimestamp, onSnapshot, limit } from "https://www.gstatic.com/firebasejs/11.7.1/firebase-firestore.js";
 
 const firebaseConfig = {
   apiKey: "AIzaSyDixZdKwlrixRFokERCMQ5Ld1BMkhUttCQ",
@@ -363,11 +364,34 @@ onAuthStateChanged(auth, user => {
     document.getElementById('dashboard').style.display = 'block';
     document.getElementById('adminEmail').textContent = user.email;
     loadBookings();
+    startBookingListener();
   } else {
     document.getElementById('loginWrap').style.display = 'flex';
     document.getElementById('dashboard').style.display = 'none';
+    if (unsubBooking) { unsubBooking(); unsubBooking = null; }
   }
 });
+
+let unsubBooking = null;
+let listenerReady = false;
+
+function startBookingListener() {
+  if (unsubBooking) unsubBooking();
+  const q = query(collection(db, 'bookings'), orderBy('createdAt', 'desc'), limit(1));
+  unsubBooking = onSnapshot(q, snap => {
+    if (!listenerReady) { listenerReady = true; return; } // skip initial load
+    snap.docChanges().forEach(change => {
+      if (change.type === 'added') {
+        const b = change.doc.data();
+        toast(`📋 Шинэ захиалга ирлээ!`, 'info', {
+          subtitle: `${b.name || '—'} · ${b.service || ''}`,
+          duration: 6000
+        });
+        loadBookings();
+      }
+    });
+  });
+}
 
 // LOGIN
 window.doLogin = async function() {
@@ -529,6 +553,7 @@ window.closeModal = function(e) {
   }
 };
 
+const statusLabel = { new: 'Шинэ', contacted: 'Холбогдсон', done: 'Дууссан' };
 window.setStatus = async function(status) {
   if (!currentDocId) return;
   await updateDoc(doc(db, 'bookings', currentDocId), { status, done: status === 'done' });
@@ -537,6 +562,7 @@ window.setStatus = async function(status) {
   updateStats();
   renderTable();
   document.getElementById('modalBg').classList.remove('open');
+  toast(`Төлөв: ${statusLabel[status] || status}`, 'success');
 };
 
 // ── FINANCE ──
@@ -576,20 +602,24 @@ window.addFinance = async function() {
   const desc   = document.getElementById('fin-desc').value.trim();
   const amount = document.getElementById('fin-amount').value;
   const date   = document.getElementById('fin-date').value;
-  if (!desc || !amount || !date) { alert('Бүх талбарыг бөглөнө үү'); return; }
+  if (!desc || !amount || !date) { toast('Бүх талбарыг бөглөнө үү', 'warning'); return; }
   const entry = { type, description: desc, amount: Number(amount), date, createdAt: serverTimestamp() };
   const ref = await addDoc(collection(db, 'finances'), entry);
   allFinances.unshift({ id: ref.id, ...entry });
   document.getElementById('fin-desc').value = '';
   document.getElementById('fin-amount').value = '';
   renderFinance();
+  toast('Амжилттай нэмэгдлээ', 'success');
 };
 
 window.deleteFinance = async function(id) {
-  if (!confirm('Устгах уу?')) return;
+  const item = allFinances.find(f => f.id === id);
+  const label = item ? `"${item.description}"` : 'энэ бичлэгийг';
+  if (!confirm(`${label} устгах уу?`)) return;
   await deleteDoc(doc(db, 'finances', id));
   allFinances = allFinances.filter(f => f.id !== id);
   renderFinance();
+  toast('Устгагдлаа', 'info');
 };
 
 // Enter key login
