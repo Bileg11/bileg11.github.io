@@ -12,6 +12,7 @@
     "rewrites": [
       { "source": "/booking", "destination": "/booking/index.html" },
       { "source": "/admin", "destination": "/admin/index.html" },
+      { "source": "/profile", "destination": "/profile/index.html" },
       { "source": "/mn", "destination": "/mn/index.html" },
       { "source": "/en", "destination": "/en/index.html" }
     ],

@@ -92,6 +92,11 @@ body{
 .form-group{margin-bottom:16px}
 .form-row{display:grid;grid-template-columns:1fr 1fr;gap:12px}
 @media(max-width:500px){.form-row{grid-template-columns:1fr}}
+.form-input.invalid,.form-select.invalid{border-color:#e53935!important;background:#fff5f5;box-shadow:0 0 0 3px rgba(229,57,53,.1)!important}
+.form-error-msg{display:none;background:#fff0f0;border:1px solid #fcc;border-radius:12px;padding:12px 16px;font-size:13px;color:#c0392b;margin-bottom:16px;font-weight:500}
+.form-error-msg.show{display:block}
+.field-hint{font-size:11px;color:#e53935;margin-top:4px;display:none}
+.field-hint.show{display:block}
 .form-submit{
   width:100%;padding:14px;background:var(--blue);color:#fff;
   border:none;border-radius:14px;font-size:15px;font-weight:600;
@@ -149,15 +154,23 @@ footer{
 <div class="booking-wrap">
   <div>
     <form id="bookingForm" onsubmit="submitBooking(event)">
+      <div class="form-error-msg" id="formErrorMsg">⚠️ Мэдээллээ бүрэн бөглөнө үү</div>
       <div class="form-row">
         <div class="form-group">
-          <label class="form-label">Нэр</label>
+          <label class="form-label">Нэр *</label>
           <input class="form-input" type="text" id="b-name" placeholder="Таны нэр">
+          <div class="field-hint" id="hint-name">Нэрээ оруулна уу</div>
         </div>
         <div class="form-group">
-          <label class="form-label">Утас / WeChat</label>
-          <input class="form-input" type="text" id="b-phone" placeholder="+976 xxxxxxxx">
+          <label class="form-label">Утас / WeChat *</label>
+          <input class="form-input" type="text" id="b-phone" placeholder="88887777">
+          <div class="field-hint" id="hint-phone">8 оронтой дугаар оруулна уу</div>
         </div>
+      </div>
+      <div class="form-group">
+        <label class="form-label">И-мэйл *</label>
+        <input class="form-input" type="text" id="b-email" placeholder="example@gmail.com">
+        <div class="field-hint" id="hint-email">Зөв и-мэйл хаяг оруулна уу</div>
       </div>
       <div class="form-group">
         <label class="form-label">Хүний тоо</label>
@@ -170,7 +183,7 @@ footer{
         </select>
       </div>
       <div class="form-group">
-        <label class="form-label">Үйлчилгээний төрөл</label>
+        <label class="form-label">Үйлчилгээний төрөл *</label>
         <select class="form-select" id="b-service">
           <option value="">Сонгох...</option>
           <option>🌟 VIP эрүүл мэндийн үйлчилгээтэй аялал</option>
@@ -180,6 +193,7 @@ footer{
           <option>✈️ Нисэх онгоцны угтаа</option>
           <option>💼 Бизнесийн хэлмэрч</option>
         </select>
+        <div class="field-hint" id="hint-service">Үйлчилгээний төрлөө сонгоно уу</div>
       </div>
       <div class="form-group">
         <label class="form-label">Facebook / Instagram холбоос</label>
@@ -187,11 +201,12 @@ footer{
       </div>
       <div class="form-row">
         <div class="form-group">
-          <label class="form-label">Аялалын эхлэх огноо</label>
+          <label class="form-label">Аялалын эхлэх огноо *</label>
           <input class="form-input" type="date" id="b-start">
+          <div class="field-hint" id="hint-start">Огноогоо сонгоно уу</div>
         </div>
         <div class="form-group">
-          <label class="form-label">Хэдэн өдөр</label>
+          <label class="form-label">Хэдэн өдөр *</label>
           <select class="form-select" id="b-days">
             <option value="">Сонгох...</option>
             <option>1 өдөр</option>
@@ -200,6 +215,7 @@ footer{
             <option>4–5 өдөр</option>
             <option>7+ өдөр</option>
           </select>
+          <div class="field-hint" id="hint-days">Хэдэн өдрийн аялал болохыг сонгоно уу</div>
         </div>
       </div>
       <div class="form-group">
@@ -300,21 +316,55 @@ footer{
     });
   }
 
+  function setInvalid(id, hintId) {
+    const el = document.getElementById(id);
+    el.classList.add('invalid');
+    el.addEventListener('input', () => { el.classList.remove('invalid'); document.getElementById(hintId).classList.remove('show'); }, { once: true });
+    el.addEventListener('change', () => { el.classList.remove('invalid'); document.getElementById(hintId).classList.remove('show'); }, { once: true });
+    document.getElementById(hintId).classList.add('show');
+  }
+
   window.submitBooking = async function(e) {
     e.preventDefault();
 
+    const name    = document.getElementById('b-name').value.trim();
+    const phone   = document.getElementById('b-phone').value.trim().replace(/\s/g,'');
+    const email   = document.getElementById('b-email').value.trim();
+    const service = document.getElementById('b-service').value;
+    const start   = document.getElementById('b-start').value;
+    const days    = document.getElementById('b-days').value;
+
+    // Validation
+    let hasError = false;
+    const emailValid = /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
+    const phoneValid = /^\d{8}$/.test(phone);
+
+    if (!name)         { setInvalid('b-name', 'hint-name');       hasError = true; }
+    if (!phoneValid)   { setInvalid('b-phone', 'hint-phone');     hasError = true; }
+    if (!emailValid)   { setInvalid('b-email', 'hint-email');     hasError = true; }
+    if (!service)      { setInvalid('b-service', 'hint-service'); hasError = true; }
+    if (!start)        { setInvalid('b-start', 'hint-start');     hasError = true; }
+    if (!days)         { setInvalid('b-days', 'hint-days');       hasError = true; }
+
+    const errMsg = document.getElementById('formErrorMsg');
+    if (hasError) {
+      errMsg.classList.add('show');
+      errMsg.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+      return;
+    }
+    errMsg.classList.remove('show');
+
     const data = {
-      name:      document.getElementById('b-name').value,
-      phone:     document.getElementById('b-phone').value,
-      arrival:   document.getElementById('b-arrival').value,
-      departure: document.getElementById('b-departure').value,
-      people:    document.getElementById('b-people').value,
-      service:   document.getElementById('b-service').value,
-      social:    document.getElementById('b-social').value,
-      start:     document.getElementById('b-start').value,
-      days:      document.getElementById('b-days').value,
-      group:     document.getElementById('b-group').value,
-      note:      document.getElementById('b-note').value,
+      name,
+      phone,
+      email,
+      people:  document.getElementById('b-people').value,
+      service,
+      social:  document.getElementById('b-social').value,
+      start,
+      days,
+      group:   document.getElementById('b-group').value,
+      note:    document.getElementById('b-note').value,
       createdAt: serverTimestamp()
     };
 
@@ -326,7 +376,7 @@ footer{
       await addDoc(collection(db, "bookings"), data);
       logEvent(analytics, 'booking_submitted', { service: data.service, people: data.people });
 
-      const msg = `📋 <b>Шинэ захиалга!</b>\n\n👤 <b>Нэр:</b> ${data.name}\n📞 <b>Утас:</b> ${data.phone}\n🛎 <b>Үйлчилгээ:</b> ${data.service}\n👥 <b>Хүн:</b> ${data.people}\n📅 <b>Ирэх:</b> ${data.arrival}\n📅 <b>Явах:</b> ${data.departure}\n🗓 <b>Эхлэх:</b> ${data.start} (${data.days})\n👨‍👩‍👧 <b>Бүлэг:</b> ${data.group}\n💬 <b>Нэмэлт:</b> ${data.note || '—'}\n📱 <b>Social:</b> ${data.social || '—'}`;
+      const msg = `📋 <b>Шинэ захиалга!</b>\n\n👤 <b>Нэр:</b> ${data.name}\n📞 <b>Утас:</b> ${data.phone}\n📧 <b>И-мэйл:</b> ${data.email}\n🛎 <b>Үйлчилгээ:</b> ${data.service}\n👥 <b>Хүн:</b> ${data.people||'—'}\n🗓 <b>Эхлэх:</b> ${data.start} (${data.days})\n👨‍👩‍👧 <b>Бүлэг:</b> ${data.group||'—'}\n💬 <b>Нэмэлт:</b> ${data.note||'—'}\n📱 <b>Social:</b> ${data.social||'—'}`;
       await sendTelegram(msg);
 
       document.getElementById('bookingForm').style.display = 'none';

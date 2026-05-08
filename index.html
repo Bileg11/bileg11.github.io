@@ -1928,7 +1928,7 @@ function openAccountModal() {
     } else {
       btn.textContent = name.trim() + ' 👤';
     }
-    btn.onclick = () => { if (confirm('Гарах уу?')) signOut(auth); };
+    btn.onclick = () => { window.location.href = '/profile/'; };
   }
 
   async function checkAndShowProfile(user) {
