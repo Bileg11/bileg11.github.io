@@ -279,18 +279,70 @@ footer{
   <div class="footer-copy">© 2025 LFS Shanghai. Бүх эрх хуулиар хамгаалагдсан.</div>
 </footer>
 
-<script>
-function submitBooking(e) {
-  e.preventDefault();
-  const name = document.getElementById('b-name').value;
-  const phone = document.getElementById('b-phone').value;
-  const service = document.getElementById('b-service').value;
-  const note = document.getElementById('b-note').value;
-  const msg = encodeURIComponent(`Сайн байна уу! Захиалга хийх гэж байна.\nНэр: ${name}\nУтас: ${phone}\nҮйлчилгээ: ${service}\nНэмэлт: ${note}`);
-  document.getElementById('bookingForm').style.display = 'none';
-  document.getElementById('bookingSuccess').style.display = 'block';
-  window.open('https://www.facebook.com/a.bileg.2025', '_blank');
-}
+<script type="module">
+  import { initializeApp } from "https://www.gstatic.com/firebasejs/11.7.1/firebase-app.js";
+  import { getFirestore, collection, addDoc, serverTimestamp } from "https://www.gstatic.com/firebasejs/11.7.1/firebase-firestore.js";
+
+  const firebaseConfig = {
+    apiKey: "AIzaSyDixZdKwlrixRFokERCMQ5Ld1BMkhUttCQ",
+    authDomain: "lfs-shanghai.firebaseapp.com",
+    projectId: "lfs-shanghai",
+    storageBucket: "lfs-shanghai.firebasestorage.app",
+    messagingSenderId: "337508244675",
+    appId: "1:337508244675:web:f47b7e14417a0f1d129676"
+  };
+
+  const app = initializeApp(firebaseConfig);
+  const db = getFirestore(app);
+
+  const TELEGRAM_TOKEN = "8799776564:AAEiPSe4iSLLae2FFvY02eHaoSfXC-Bw3t0";
+  const TELEGRAM_CHAT_ID = "5541078218";
+
+  async function sendTelegram(text) {
+    await fetch(`https://api.telegram.org/bot${TELEGRAM_TOKEN}/sendMessage`, {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ chat_id: TELEGRAM_CHAT_ID, text, parse_mode: "HTML" })
+    });
+  }
+
+  window.submitBooking = async function(e) {
+    e.preventDefault();
+
+    const data = {
+      name:      document.getElementById('b-name').value,
+      phone:     document.getElementById('b-phone').value,
+      arrival:   document.getElementById('b-arrival').value,
+      departure: document.getElementById('b-departure').value,
+      people:    document.getElementById('b-people').value,
+      service:   document.getElementById('b-service').value,
+      social:    document.getElementById('b-social').value,
+      start:     document.getElementById('b-start').value,
+      days:      document.getElementById('b-days').value,
+      group:     document.getElementById('b-group').value,
+      note:      document.getElementById('b-note').value,
+      createdAt: serverTimestamp()
+    };
+
+    const btn = document.querySelector('.form-submit');
+    btn.disabled = true;
+    btn.textContent = 'Илгээж байна...';
+
+    try {
+      await addDoc(collection(db, "bookings"), data);
+
+      const msg = `📋 <b>Шинэ захиалга!</b>\n\n👤 <b>Нэр:</b> ${data.name}\n📞 <b>Утас:</b> ${data.phone}\n🛎 <b>Үйлчилгээ:</b> ${data.service}\n👥 <b>Хүн:</b> ${data.people}\n📅 <b>Ирэх:</b> ${data.arrival}\n📅 <b>Явах:</b> ${data.departure}\n🗓 <b>Эхлэх:</b> ${data.start} (${data.days})\n👨‍👩‍👧 <b>Бүлэг:</b> ${data.group}\n💬 <b>Нэмэлт:</b> ${data.note || '—'}\n📱 <b>Social:</b> ${data.social || '—'}`;
+      await sendTelegram(msg);
+
+      document.getElementById('bookingForm').style.display = 'none';
+      document.getElementById('bookingSuccess').style.display = 'block';
+    } catch (err) {
+      console.error(err);
+      btn.disabled = false;
+      btn.textContent = 'Захиалга Илгээх →';
+      alert('Алдаа гарлаа. Дахин оролдоно уу.');
+    }
+  };
 </script>
 </body>
 </html>
