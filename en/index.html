@@ -1,0 +1,1801 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>LFS Shanghai — Монгол Аялагчдын Найдвартай Guide</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:ital,wght@0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,300;1,400&display=swap" rel="stylesheet">
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+
+:root{
+  --bg:#fff;
+  --bg2:#f5f5f7;
+  --bg3:#fbfbfd;
+  --card:#fff;
+  --text:#1d1d1f;
+  --muted:#6e6e73;
+  --muted2:#86868b;
+  --blue:#0071e3;
+  --blue-hover:#0077ed;
+  --border:rgba(0,0,0,.08);
+  --border2:rgba(0,0,0,.05);
+  --shadow:0 2px 20px rgba(0,0,0,.08);
+  --shadow2:0 8px 40px rgba(0,0,0,.12);
+  --radius:18px;
+  --radius2:24px;
+  --dark:#000;
+  --dark2:#1d1d1f;
+}
+
+html{scroll-behavior:smooth}
+body{
+  font-family:'Inter',system-ui,-apple-system,BlinkMacSystemFont,'SF Pro Display','Segoe UI',sans-serif;
+  background:var(--bg);
+  color:var(--text);
+  overflow-x:hidden;
+  line-height:1.47059;
+  -webkit-font-smoothing:antialiased;
+}
+
+/* SCROLLBAR */
+::-webkit-scrollbar{width:6px}
+::-webkit-scrollbar-track{background:var(--bg2)}
+::-webkit-scrollbar-thumb{background:#c7c7cc;border-radius:3px}
+
+/* ── NAV ── */
+.nav{
+  position:fixed;top:0;left:0;right:0;z-index:500;
+  height:52px;
+  display:flex;align-items:center;justify-content:space-between;
+  padding:0 22px;
+  background:rgba(255,255,255,.85);
+  backdrop-filter:saturate(180%) blur(20px);
+  -webkit-backdrop-filter:saturate(180%) blur(20px);
+  border-bottom:1px solid rgba(0,0,0,.06);
+  transition:background .3s;
+}
+.nav-logo{
+  font-size:17px;font-weight:700;
+  color:var(--dark2);
+  letter-spacing:-.02em;
+  cursor:pointer;
+  user-select:none;
+}
+.nav-logo span{color:var(--blue)}
+.nav-links{display:flex;align-items:center;gap:0;position:fixed;top:0;left:50%;transform:translateX(-50%);height:52px;background:none;padding:0;z-index:490}
+.nav-link{
+  padding:6px 14px;
+  font-size:12px;font-weight:400;
+  color:var(--muted);
+  cursor:pointer;border:none;background:none;
+  font-family:inherit;
+  transition:color .2s;
+  white-space:nowrap;
+}
+.nav-link:hover{color:var(--dark2)}
+.nav-link.active{color:var(--dark2);font-weight:500}
+.nav-actions{display:flex;align-items:center;gap:8px}
+.nav-btn{
+  padding:7px 16px;
+  background:var(--blue);
+  color:#fff;
+  border:none;border-radius:20px;
+  font-size:12px;font-weight:500;
+  cursor:pointer;font-family:inherit;
+  transition:background .2s,transform .15s;
+}
+.nav-btn:hover{background:var(--blue-hover)}
+.lang-switch{display:flex;gap:2px;background:var(--bg2);border:1px solid var(--border);border-radius:20px;padding:3px}
+.lang-btn{padding:4px 10px;border-radius:16px;font-size:11px;font-weight:600;color:var(--muted);text-decoration:none;transition:.15s}
+.lang-btn:hover{color:var(--dark2)}
+.lang-active{background:var(--card);color:var(--dark2);box-shadow:0 1px 3px rgba(0,0,0,.08)}
+.hamburger{display:none;flex-direction:column;gap:4px;cursor:pointer;padding:6px}
+.hamburger span{display:block;width:18px;height:1px;background:var(--dark2);transition:.3s;border-radius:1px}
+@media(max-width:860px){
+  .nav-links{display:none;position:fixed;top:52px;left:0;right:0;bottom:0;height:auto;transform:none;z-index:499;background:var(--blue);flex-direction:column;align-items:flex-start;padding:24px 24px;gap:4px;border-top:1px solid rgba(255,255,255,.15);overflow-y:auto}
+  .nav-links.open{display:flex}
+  .nav-link{font-size:17px;font-weight:400;padding:12px 0;color:#fff;border-bottom:1px solid rgba(255,255,255,.15);width:100%}
+  .nav-link:hover,.nav-link.active{color:#fff;background:rgba(255,255,255,.12);border-radius:8px;padding-left:8px}
+  .hamburger{display:flex}
+  .nav-btn{display:none}
+}
+
+/* ── HERO ── */
+.hero{
+  background:var(--bg);
+  color:var(--dark2);
+  display:flex;flex-direction:column;
+  align-items:center;
+  text-align:center;
+  padding:120px 40px 80px;
+  max-width:1100px;
+  margin:0 auto;
+}
+/* ── HERO SLIDESHOW ── */
+.hero-slides{
+  width:100%;
+  border-radius:20px;
+  overflow:hidden;
+  position:relative;
+  aspect-ratio:16/7;
+  max-height:520px;
+  margin:40px 0 36px;
+  box-shadow:0 20px 60px rgba(0,0,0,.15);
+}
+.hero-slide{
+  position:absolute;inset:0;
+  background-size:cover;background-position:center;
+  opacity:0;transition:opacity .9s ease;
+}
+.hero-slide.active{opacity:1}
+.hero-dots{
+  display:flex;gap:7px;justify-content:center;
+  margin-bottom:36px;
+}
+.hero-dot{
+  width:6px;height:6px;border-radius:50%;
+  background:rgba(0,0,0,.15);
+  cursor:pointer;transition:all .3s;border:none;padding:0;
+}
+.hero-dot.active{background:var(--dark2);width:20px;border-radius:3px;}
+.slide-arrow{
+  position:absolute;top:50%;transform:translateY(-50%);
+  width:40px;height:40px;border-radius:50%;
+  background:rgba(255,255,255,.85);backdrop-filter:blur(8px);
+  border:none;cursor:pointer;
+  font-size:22px;line-height:1;color:var(--dark2);
+  display:flex;align-items:center;justify-content:center;
+  opacity:0;transition:opacity .2s,transform .2s;
+  z-index:10;
+}
+.slide-prev{left:12px}
+.slide-next{right:12px}
+.hero-slides:hover .slide-arrow{opacity:1}
+.slide-arrow:hover{background:rgba(255,255,255,1);transform:translateY(-50%) scale(1.08)}
+@media(max-width:600px){.slide-arrow{display:none}}
+.hero-eyebrow{
+  font-size:12px;font-weight:600;letter-spacing:.08em;text-transform:uppercase;
+  color:var(--blue);
+  margin-bottom:16px;
+  animation:heroFade .9s ease both;
+}
+.hero h1{
+  font-size:clamp(40px,7vw,80px);
+  font-weight:700;
+  line-height:1.05;
+  letter-spacing:-.04em;
+  margin-bottom:16px;
+  color:var(--dark2);
+  animation:heroFade .9s ease .1s both;
+}
+.hero h1 em{
+  font-style:normal;
+  color:var(--blue);
+}
+.hero-sub{
+  font-size:clamp(16px,2vw,19px);
+  font-weight:400;
+  color:var(--muted);
+  max-width:540px;
+  margin:0 auto 0;
+  line-height:1.65;
+  animation:heroFade .9s ease .2s both;
+}
+.hero-btns{
+  display:flex;gap:12px;flex-wrap:wrap;justify-content:center;
+  animation:heroFade .9s ease .3s both;
+}
+.btn-primary{
+  padding:14px 28px;
+  background:var(--blue);
+  color:#fff;
+  border:none;border-radius:28px;
+  font-size:15px;font-weight:500;
+  cursor:pointer;font-family:inherit;
+  transition:all .2s;
+  text-decoration:none;
+  display:inline-flex;align-items:center;gap:7px;
+}
+.btn-primary:hover{background:var(--blue-hover);transform:scale(1.02)}
+.btn-ghost{
+  padding:14px 28px;
+  background:var(--bg2);
+  color:var(--dark2);
+  border:1px solid var(--border);
+  border-radius:28px;
+  font-size:15px;font-weight:500;
+  cursor:pointer;font-family:inherit;
+  transition:all .2s;
+  text-decoration:none;
+  display:inline-flex;align-items:center;gap:7px;
+}
+.btn-ghost:hover{background:var(--border)}
+.hero-stats{
+  display:flex;gap:40px;flex-wrap:wrap;justify-content:center;
+  padding-top:32px;
+  border-top:1px solid var(--border);
+  animation:heroFade .9s ease .4s both;
+}
+.hero-stat-num{font-size:32px;font-weight:700;letter-spacing:-.03em;color:var(--dark2);margin-bottom:4px}
+.hero-stat-label{font-size:11px;font-weight:500;letter-spacing:.08em;text-transform:uppercase;color:var(--muted)}
+@keyframes heroFade{from{opacity:0;transform:translateY(24px)}to{opacity:1;transform:translateY(0)}}
+
+/* ── INTRO BAND ── */
+.intro-band{
+  background:var(--bg2);
+  padding:0;
+  border-bottom:1px solid var(--border);
+}
+.intro-grid{
+  display:grid;
+  grid-template-columns:repeat(4,1fr);
+  max-width:1100px;margin:0 auto;
+}
+@media(max-width:700px){.intro-grid{grid-template-columns:1fr 1fr}}
+.intro-item{
+  padding:32px 28px;
+  border-right:1px solid var(--border);
+  transition:background .2s;
+}
+.intro-item:last-child{border-right:none}
+.intro-item:hover{background:rgba(0,0,0,.02)}
+.intro-icon{font-size:24px;margin-bottom:12px}
+.intro-label{font-size:14px;font-weight:600;color:var(--dark2);margin-bottom:4px}
+.intro-desc{font-size:12px;color:var(--muted);line-height:1.5}
+
+/* ── SECTION BASE ── */
+.section{padding:100px 24px}
+.section-max{max-width:980px;margin:0 auto}
+.section-max-wide{max-width:1200px;margin:0 auto}
+.section-eyebrow{
+  font-size:12px;font-weight:600;letter-spacing:.08em;text-transform:uppercase;
+  color:var(--blue);margin-bottom:12px;
+}
+.section-title{
+  font-size:clamp(32px,5vw,56px);
+  font-weight:700;letter-spacing:-.04em;
+  line-height:1.07;
+  color:var(--dark2);
+  margin-bottom:16px;
+}
+.section-sub{
+  font-size:17px;font-weight:300;
+  color:var(--muted);
+  max-width:560px;
+  line-height:1.6;
+}
+
+/* ── REVEAL ANIMATION ── */
+.reveal{opacity:0;transform:translateY(32px);transition:opacity .7s ease,transform .7s ease}
+.reveal.visible{opacity:1;transform:translateY(0)}
+.reveal-delay-1{transition-delay:.1s}
+.reveal-delay-2{transition-delay:.2s}
+.reveal-delay-3{transition-delay:.3s}
+.reveal-delay-4{transition-delay:.4s}
+
+/* ── SERVICES ── */
+.services-section{background:var(--bg);padding:100px 24px}
+.services-grid{
+  display:grid;
+  grid-template-columns:repeat(auto-fit,minmax(240px,1fr));
+  gap:2px;
+  background:var(--border2);
+  border:1px solid var(--border2);
+  border-radius:var(--radius2);
+  overflow:hidden;
+  margin-top:60px;
+}
+.service-item{
+  background:var(--bg);
+  padding:44px 36px;
+  transition:background .2s;
+}
+.service-item:hover{background:var(--bg2)}
+.service-emoji{font-size:36px;margin-bottom:20px}
+.service-name{font-size:20px;font-weight:600;letter-spacing:-.02em;color:var(--dark2);margin-bottom:8px}
+.service-desc{font-size:14px;color:var(--muted);line-height:1.6}
+.service-link{
+  display:inline-flex;align-items:center;gap:4px;
+  margin-top:16px;font-size:14px;font-weight:500;color:var(--blue);
+  cursor:pointer;border:none;background:none;font-family:inherit;
+  transition:gap .2s;
+}
+.service-link:hover{gap:8px}
+
+/* ── MEDICAL DARK SECTION ── */
+.medical-section{
+  background:#000;
+  color:#fff;
+  padding:120px 24px;
+  position:relative;
+  overflow:hidden;
+}
+.medical-glow{
+  position:absolute;top:-200px;right:-100px;
+  width:600px;height:600px;
+  background:radial-gradient(circle,rgba(0,113,227,.2) 0%,transparent 70%);
+  pointer-events:none;
+}
+.medical-inner{
+  max-width:980px;margin:0 auto;
+  display:grid;grid-template-columns:1fr 1fr;gap:80px;align-items:center;
+}
+@media(max-width:700px){.medical-inner{grid-template-columns:1fr;gap:48px}}
+.medical-tag{
+  display:inline-flex;align-items:center;gap:6px;
+  background:rgba(0,113,227,.15);border:1px solid rgba(0,113,227,.3);
+  border-radius:20px;padding:5px 14px;
+  font-size:11px;font-weight:600;letter-spacing:.06em;text-transform:uppercase;
+  color:#60b5ff;margin-bottom:20px;
+}
+.medical-title{
+  font-size:clamp(32px,5vw,52px);
+  font-weight:700;letter-spacing:-.04em;line-height:1.07;
+  margin-bottom:16px;
+}
+.medical-sub{font-size:17px;font-weight:300;color:rgba(255,255,255,.65);line-height:1.65;margin-bottom:32px}
+.medical-list{display:flex;flex-direction:column;gap:14px;margin-bottom:36px}
+.medical-item{
+  display:flex;align-items:flex-start;gap:12px;
+  font-size:14px;color:rgba(255,255,255,.8);line-height:1.5;
+}
+.medical-check{
+  width:20px;height:20px;border-radius:50%;
+  background:rgba(0,113,227,.25);border:1px solid rgba(0,113,227,.5);
+  display:flex;align-items:center;justify-content:center;
+  flex-shrink:0;font-size:10px;color:#60b5ff;margin-top:1px;
+}
+.medical-card{
+  background:rgba(255,255,255,.05);
+  border:1px solid rgba(255,255,255,.1);
+  border-radius:var(--radius2);
+  padding:36px;
+}
+.medical-card-title{font-size:13px;font-weight:600;letter-spacing:.04em;text-transform:uppercase;color:rgba(255,255,255,.4);margin-bottom:24px}
+.medical-test{
+  display:flex;align-items:center;gap:12px;
+  padding:14px 0;
+  border-bottom:1px solid rgba(255,255,255,.06);
+  font-size:14px;color:rgba(255,255,255,.75);
+}
+.medical-test:last-child{border-bottom:none}
+.medical-test-dot{width:6px;height:6px;border-radius:50%;background:#60b5ff;flex-shrink:0}
+.medical-cta-row{display:flex;gap:12px;flex-wrap:wrap}
+
+/* ── WHY SECTION ── */
+.why-section{background:var(--bg2);padding:100px 24px}
+.why-grid{
+  display:grid;grid-template-columns:repeat(3,1fr);gap:24px;margin-top:60px;
+}
+@media(max-width:700px){.why-grid{grid-template-columns:1fr}}
+.why-card{
+  background:var(--bg);
+  border-radius:var(--radius2);
+  padding:36px;
+  transition:transform .25s,box-shadow .25s;
+}
+.why-card:hover{transform:translateY(-4px);box-shadow:var(--shadow2)}
+.why-num{
+  font-size:48px;font-weight:800;letter-spacing:-.05em;
+  color:var(--blue);margin-bottom:4px;opacity:.15;
+}
+.why-title{font-size:20px;font-weight:600;letter-spacing:-.02em;color:var(--dark2);margin-bottom:10px}
+.why-text{font-size:14px;color:var(--muted);line-height:1.65}
+
+/* ── ITINERARIES ── */
+.itin-section{background:var(--bg);padding:100px 24px}
+.itin-tabs{display:flex;gap:8px;margin-top:48px;margin-bottom:32px;flex-wrap:wrap}
+.itin-tab{
+  padding:8px 20px;border-radius:20px;
+  font-size:13px;font-weight:500;
+  border:1px solid var(--border);background:none;
+  color:var(--muted);cursor:pointer;font-family:inherit;
+  transition:.2s;
+}
+.itin-tab.active,.itin-tab:hover{background:var(--dark2);color:#fff;border-color:var(--dark2)}
+.itin-content{display:none}
+.itin-content.active{display:grid;grid-template-columns:1fr 1fr;gap:20px}
+@media(max-width:700px){.itin-content.active{grid-template-columns:1fr}}
+.itin-panel{
+  background:var(--bg2);
+  border-radius:var(--radius2);
+  padding:32px;
+}
+.itin-panel h3{font-size:22px;font-weight:700;letter-spacing:-.03em;color:var(--dark2);margin-bottom:24px}
+.itin-day{margin-bottom:20px}
+.itin-day-header{display:flex;align-items:center;gap:12px;margin-bottom:12px}
+.itin-day-badge{
+  width:30px;height:30px;border-radius:50%;
+  background:var(--blue);color:#fff;
+  display:flex;align-items:center;justify-content:center;
+  font-size:11px;font-weight:700;flex-shrink:0;
+}
+.itin-day-title{font-size:13px;font-weight:600;color:var(--dark2)}
+.itin-stops{padding-left:42px}
+.itin-stop{
+  display:flex;gap:8px;margin-bottom:8px;
+  font-size:13px;color:var(--muted);line-height:1.5;
+}
+.itin-stop::before{content:'';width:4px;height:4px;border-radius:50%;background:var(--blue);margin-top:8px;flex-shrink:0;opacity:.5}
+.itin-meta{
+  display:flex;gap:16px;margin-top:20px;padding-top:16px;
+  border-top:1px solid var(--border);font-size:12px;color:var(--muted);
+}
+.itin-meta span{color:var(--dark2);font-weight:600;margin-right:4px}
+
+/* ── TIPS SECTION ── */
+.tips-section{background:var(--bg2);padding:100px 24px}
+.tips-grid{
+  display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));
+  gap:16px;margin-top:60px;
+}
+.tip-card{
+  background:var(--bg);
+  border-radius:var(--radius2);
+  padding:32px;
+  transition:transform .25s,box-shadow .25s;
+  position:relative;overflow:hidden;
+}
+.tip-card:hover{transform:translateY(-3px);box-shadow:var(--shadow2)}
+.tip-icon{font-size:28px;margin-bottom:16px}
+.tip-title{font-size:17px;font-weight:600;letter-spacing:-.02em;color:var(--dark2);margin-bottom:8px}
+.tip-text{font-size:13px;color:var(--muted);line-height:1.65}
+.tip-tag{
+  display:inline-block;margin-top:16px;
+  font-size:11px;font-weight:600;padding:4px 12px;
+  border-radius:20px;background:rgba(0,113,227,.08);color:var(--blue);
+}
+
+/* ── BOOKING / CTA ── */
+.cta-section{
+  background:#000;color:#fff;
+  padding:120px 24px;text-align:center;
+}
+.cta-title{
+  font-size:clamp(40px,6vw,72px);font-weight:700;
+  letter-spacing:-.05em;line-height:1.05;
+  margin-bottom:16px;
+}
+.cta-title em{font-style:normal;color:var(--blue)}
+.cta-sub{font-size:19px;font-weight:300;color:rgba(255,255,255,.6);margin-bottom:40px}
+.cta-btns{display:flex;gap:12px;justify-content:center;flex-wrap:wrap}
+.btn-white{
+  padding:15px 30px;background:#fff;color:#000;
+  border:none;border-radius:30px;font-size:15px;font-weight:500;
+  cursor:pointer;font-family:inherit;
+  text-decoration:none;display:inline-flex;align-items:center;gap:6px;
+  transition:all .2s;
+}
+.btn-white:hover{background:#f0f0f0}
+.btn-outline-white{
+  padding:15px 30px;background:rgba(255,255,255,.12);color:#fff;
+  border:1px solid rgba(255,255,255,.2);border-radius:30px;font-size:15px;font-weight:500;
+  cursor:pointer;font-family:inherit;
+  text-decoration:none;display:inline-flex;align-items:center;gap:6px;
+  backdrop-filter:blur(10px);transition:all .2s;
+}
+.btn-outline-white:hover{background:rgba(255,255,255,.2)}
+
+/* ── BOOKING FORM SECTION ── */
+.booking-section{background:var(--bg);padding:100px 24px}
+.booking-inner{
+  max-width:820px;margin:0 auto;
+  display:grid;grid-template-columns:1.1fr 1fr;gap:48px;
+}
+@media(max-width:700px){.booking-inner{grid-template-columns:1fr;gap:32px}}
+.form-label{font-size:12px;font-weight:600;color:var(--muted2);letter-spacing:.03em;display:block;margin-bottom:6px}
+.form-input,.form-select,.form-textarea{
+  width:100%;
+  background:var(--bg2);border:1px solid var(--border);
+  border-radius:12px;padding:12px 16px;
+  color:var(--dark2);font-size:14px;font-family:inherit;
+  outline:none;transition:.2s;
+  -webkit-appearance:none;
+}
+.form-input:focus,.form-select:focus,.form-textarea:focus{border-color:var(--blue);background:#fff;box-shadow:0 0 0 3px rgba(0,113,227,.1)}
+.form-textarea{resize:vertical;min-height:100px;line-height:1.6}
+.form-group{margin-bottom:16px}
+.form-row{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+@media(max-width:500px){.form-row{grid-template-columns:1fr}}
+.form-submit{
+  width:100%;padding:14px;
+  background:var(--blue);color:#fff;
+  border:none;border-radius:14px;
+  font-size:15px;font-weight:600;
+  cursor:pointer;font-family:inherit;
+  transition:.2s;margin-top:4px;
+}
+.form-submit:hover{background:var(--blue-hover)}
+.booking-info-card{
+  background:var(--bg2);border-radius:var(--radius2);
+  padding:32px;
+}
+.booking-info-title{font-size:20px;font-weight:700;letter-spacing:-.03em;color:var(--dark2);margin-bottom:24px}
+.info-row{display:flex;gap:14px;margin-bottom:20px;padding-bottom:20px;border-bottom:1px solid var(--border)}
+.info-row:last-child{border-bottom:none;margin-bottom:0;padding-bottom:0}
+.info-icon{
+  width:40px;height:40px;border-radius:10px;
+  background:#fff;display:flex;align-items:center;justify-content:center;
+  font-size:18px;flex-shrink:0;box-shadow:var(--shadow);
+}
+.info-title{font-size:13px;font-weight:600;color:var(--dark2);margin-bottom:3px}
+.info-desc{font-size:12px;color:var(--muted);line-height:1.5}
+
+/* ── FOOTER ── */
+footer{
+  background:var(--bg2);
+  border-top:1px solid var(--border);
+  padding:60px 24px 40px;
+}
+.footer-inner{max-width:1000px;margin:0 auto}
+.footer-top{
+  display:grid;grid-template-columns:2fr 1fr 1fr;
+  gap:48px;margin-bottom:40px;
+}
+@media(max-width:700px){.footer-top{grid-template-columns:1fr;gap:32px}}
+.footer-logo{font-size:18px;font-weight:700;letter-spacing:-.02em;color:var(--dark2);margin-bottom:8px}
+.footer-logo span{color:var(--blue)}
+.footer-tagline{font-size:13px;color:var(--muted);line-height:1.6;max-width:280px;margin-bottom:20px}
+.footer-fb{
+  display:inline-flex;align-items:center;gap:8px;
+  padding:9px 18px;background:#fff;border:1px solid var(--border);
+  border-radius:20px;font-size:13px;font-weight:500;color:var(--dark2);
+  text-decoration:none;transition:.2s;box-shadow:var(--shadow);
+}
+.footer-fb:hover{box-shadow:var(--shadow2)}
+.footer-col-title{font-size:12px;font-weight:600;letter-spacing:.04em;text-transform:uppercase;color:var(--dark2);margin-bottom:16px}
+.footer-link{
+  display:block;font-size:13px;color:var(--muted);
+  text-decoration:none;margin-bottom:10px;
+  cursor:pointer;border:none;background:none;font-family:inherit;text-align:left;
+  transition:color .2s;
+}
+.footer-link:hover{color:var(--blue)}
+.footer-bottom{
+  display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:8px;
+  padding-top:24px;border-top:1px solid var(--border);
+  font-size:12px;color:var(--muted);
+}
+
+/* ── FLOATING CONTACT ── */
+#float-contact{position:fixed;bottom:28px;right:28px;z-index:400;display:flex;flex-direction:column;align-items:flex-end;gap:10px}
+.float-menu{display:flex;flex-direction:column;align-items:flex-end;gap:8px;opacity:0;transform:translateY(8px);pointer-events:none;transition:.25s;transform-origin:bottom right}
+.float-menu.open{opacity:1;transform:translateY(0);pointer-events:auto}
+.float-item{
+  display:flex;align-items:center;gap:10px;
+  padding:10px 18px;
+  background:#fff;
+  border-radius:24px;box-shadow:0 4px 24px rgba(0,0,0,.15);
+  font-size:13px;font-weight:500;color:var(--dark2);
+  text-decoration:none;cursor:pointer;border:none;font-family:inherit;
+  transition:transform .2s,box-shadow .2s;white-space:nowrap;
+}
+.float-item:hover{transform:translateY(-2px);box-shadow:0 8px 32px rgba(0,0,0,.2)}
+.float-main{
+  width:52px;height:52px;border-radius:50%;
+  background:var(--blue);color:#fff;
+  border:none;cursor:pointer;
+  display:flex;align-items:center;justify-content:center;
+  font-size:22px;
+  box-shadow:0 4px 20px rgba(0,113,227,.4);
+  transition:transform .2s,box-shadow .2s;
+}
+.float-main:hover{transform:scale(1.06);box-shadow:0 8px 32px rgba(0,113,227,.5)}
+
+/* ── SCROLL TO TOP ── */
+#scroll-top{
+  position:fixed;bottom:92px;right:28px;z-index:400;
+  width:40px;height:40px;border-radius:50%;
+  background:rgba(255,255,255,.9);backdrop-filter:blur(10px);
+  border:1px solid var(--border);color:var(--dark2);
+  font-size:16px;cursor:pointer;
+  display:flex;align-items:center;justify-content:center;
+  box-shadow:var(--shadow);
+  opacity:0;transform:translateY(8px);transition:.3s;
+}
+#scroll-top.show{opacity:1;transform:translateY(0)}
+#scroll-top:hover{box-shadow:var(--shadow2)}
+
+/* ── NAV USER AREA ── */
+.nav-user-btn{
+  display:flex;align-items:center;gap:6px;
+  padding:6px 12px;border-radius:16px;
+  background:var(--bg2);border:1px solid var(--border);
+  font-size:12px;font-weight:500;color:var(--dark2);
+  cursor:pointer;font-family:inherit;transition:.2s;
+}
+.nav-user-btn:hover{background:var(--border)}
+.nav-user-avatar{width:22px;height:22px;border-radius:50%;background:var(--blue);color:#fff;font-size:10px;display:flex;align-items:center;justify-content:center;font-weight:600}
+
+/* ── LOADING SCREEN ── */
+#loader{
+  position:fixed;inset:0;z-index:9999;
+  background:#fff;
+  display:flex;flex-direction:column;align-items:center;justify-content:center;
+  transition:opacity .5s ease;
+}
+#loader.hidden{opacity:0;pointer-events:none}
+.loader-logo{font-size:22px;font-weight:700;letter-spacing:-.02em;color:var(--dark2);margin-bottom:32px}
+.loader-logo span{color:var(--blue)}
+.loader-track{width:120px;height:2px;background:var(--border2);border-radius:2px;overflow:hidden}
+.loader-fill{height:100%;width:0;background:var(--blue);border-radius:2px;animation:loaderFill 1s ease forwards}
+@keyframes loaderFill{to{width:100%}}
+
+/* ── SMOOTH SECTION TRANSITIONS ── */
+section,#booking-section{scroll-margin-top:60px}
+
+/* ── UTILITY ── */
+.text-blue{color:var(--blue)}
+.text-muted{color:var(--muted)}
+.mt-8{margin-top:8px}
+.mt-16{margin-top:16px}
+.mt-24{margin-top:24px}
+.mt-40{margin-top:40px}
+.gold-divider{width:40px;height:2px;background:var(--blue);border-radius:2px;margin:16px 0}
+
+/* ── SUCCESS MESSAGE ── */
+.success-msg{display:none;text-align:center;padding:48px 20px}
+.success-icon{font-size:52px;margin-bottom:16px}
+.success-msg h3{font-size:24px;font-weight:700;letter-spacing:-.03em;margin-bottom:8px}
+.success-msg p{font-size:14px;color:var(--muted);line-height:1.7}
+
+/* ══════════════════════════════════════
+   RESPONSIVE — TABLET (max 860px)
+══════════════════════════════════════ */
+@media(max-width:860px){
+  .hero{padding:90px 24px 60px}
+  .hero-slides{aspect-ratio:16/9;max-height:360px}
+  .hero-stats{gap:24px}
+  .section{padding:72px 20px}
+  .services-section,.tips-section,.itin-section,.why-section,.booking-section{padding:72px 20px}
+  .medical-section{padding:80px 20px}
+  .nav-actions{display:none}
+}
+
+/* ══════════════════════════════════════
+   RESPONSIVE — MOBILE (max 600px)
+══════════════════════════════════════ */
+@media(max-width:600px){
+  /* Nav */
+  .nav-user-btn{display:none}
+
+  /* Hero */
+  .hero{padding:72px 20px 48px}
+  .hero-slides{aspect-ratio:4/3;max-height:280px;margin:28px 0 24px}
+  .hero-btns{flex-direction:column;align-items:stretch}
+  .btn-primary,.btn-ghost{justify-content:center;padding:15px 20px;font-size:15px}
+  .hero-stats{gap:0;border-top:1px solid var(--border)}
+  .hero-stat{flex:1 1 50%;padding:20px 0;text-align:center}
+  .hero-stat-num{font-size:26px}
+
+  /* Intro band */
+  .intro-grid{grid-template-columns:1fr 1fr}
+  .intro-item{padding:20px 16px;border-right:none;border-bottom:1px solid var(--border)}
+  .intro-item:nth-child(odd){border-right:1px solid var(--border)}
+  .intro-item:nth-last-child(-n+2){border-bottom:none}
+
+  /* Section base */
+  .section{padding:56px 20px}
+  .section-sub{font-size:15px}
+  .services-section,.tips-section,.itin-section,.why-section,.booking-section{padding:56px 20px}
+  .medical-section{padding:60px 20px}
+
+  /* Services */
+  .service-item{padding:28px 24px}
+
+  /* Medical */
+  .medical-inner{gap:36px}
+  .medical-card{padding:24px}
+
+  /* Itineraries */
+  .itin-panel{padding:24px 20px}
+  .itin-tabs{gap:6px}
+  .itin-tab{padding:7px 14px;font-size:12px}
+
+  /* Tips */
+  .tips-grid{gap:12px}
+  .tip-card{padding:24px}
+
+  /* Pricing individual cards — stack to single column */
+  #pricing div[style*="grid-template-columns:1fr 1fr"]{
+    grid-template-columns:1fr!important;
+  }
+
+  /* Pricing section — stack to single column, price card on top */
+  #pricing > .section-max > div[style*="grid-template-columns"]{
+    display:flex!important;
+    flex-direction:column-reverse!important;
+  }
+  #pricing > .section-max > div > div:last-child{
+    position:static!important;
+  }
+  #pricing > .section-max > div > div:last-child > div{
+    padding:28px 24px!important;
+  }
+  #pricing > .section-max > div > div:last-child > div > div[style*="48px"]{
+    font-size:36px!important;
+  }
+  #pricing > .section-max > div > div:first-child > div{
+    padding:20px 20px!important;
+  }
+
+  /* Booking */
+  .booking-inner{gap:24px}
+  .booking-info-card{padding:24px}
+
+  /* Footer */
+  .footer-bottom{flex-direction:column;text-align:center;gap:12px}
+  footer{padding:40px 20px 28px}
+
+  /* Floating buttons */
+  #float-contact{bottom:20px;right:16px}
+  #scroll-top{bottom:80px;right:16px}
+
+  /* CTA section */
+  .cta-section{padding:72px 20px}
+  .cta-btns{flex-direction:column;align-items:center}
+  .btn-white,.btn-outline-white{width:100%;max-width:320px;justify-content:center}
+}
+
+/* ══════════════════════════════════════
+   RESPONSIVE — SMALL MOBILE (max 400px)
+══════════════════════════════════════ */
+@media(max-width:400px){
+  .hero h1{letter-spacing:-.03em}
+  .why-card{padding:24px}
+  .medical-title{font-size:30px}
+  .section-title{letter-spacing:-.03em}
+  .itin-tab{font-size:11px;padding:6px 10px}
+}
+</style>
+</head>
+<body>
+
+<!-- LOADER -->
+<div id="loader">
+  <div class="loader-logo">LFS <span>Shanghai</span></div>
+  <div class="loader-track"><div class="loader-fill"></div></div>
+</div>
+
+<!-- SCROLL TO TOP -->
+<button id="scroll-top" onclick="window.scrollTo({top:0,behavior:'smooth'})" title="Дээш">↑</button>
+
+<!-- FLOATING CONTACT -->
+<div id="float-contact">
+  <div class="float-menu" id="floatMenu">
+    <a href="https://www.facebook.com/a.bileg.2025" target="_blank" class="float-item">
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="#1877f2"><path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"/></svg>
+      Facebook
+    </a>
+    <button class="float-item" onclick="window.location.href='/booking/';document.getElementById('floatMenu').classList.remove('open')">
+      📋 Guide Захиалах
+    </button>
+  </div>
+  <button class="float-main" onclick="document.getElementById('floatMenu').classList.toggle('open')" title="Холбогдох">
+    💬
+  </button>
+</div>
+
+<!-- NAV -->
+<nav class="nav" id="navbar">
+  <div class="nav-logo" onclick="window.scrollTo({top:0,behavior:'smooth'})">LFS <span>Shanghai</span></div>
+  <div class="nav-actions">
+    <div class="lang-switch"><a href="/mn" class="lang-btn">МН</a><a href="/en" class="lang-btn lang-active">EN</a></div>
+    <button class="nav-btn" onclick="window.location.href='/booking/'">Book Now ↗</button>
+  </div>
+  <div class="hamburger" onclick="toggleMobileMenu()">
+    <span></span><span></span><span></span>
+  </div>
+</nav>
+<!-- Mobile nav menu — outside nav to avoid backdrop-filter containing block issue -->
+<div class="nav-links" id="navLinks">
+  <button class="nav-link active" onclick="scrollTo_(0);toggleMobileMenu()">Home</button>
+  <button class="nav-link" onclick="scrollToId('services');toggleMobileMenu()">Services</button>
+  <button class="nav-link" onclick="scrollToId('medical');toggleMobileMenu()">Healthcare</button>
+  <button class="nav-link" onclick="scrollToId('itineraries');toggleMobileMenu()">Itineraries</button>
+  <button class="nav-link" onclick="scrollToId('tips');toggleMobileMenu()">Tips</button>
+  <button class="nav-link" onclick="scrollToId('pricing');toggleMobileMenu()">Pricing</button>
+  <button class="nav-link" onclick="window.location.href='/booking/';toggleMobileMenu()">Book</button>
+</div>
+
+<!-- HERO -->
+<div style="background:var(--bg);padding-top:52px">
+<section class="hero" id="home">
+  <div class="hero-eyebrow">Travel · Mongolian Guide · VIP Service · Healthcare</div>
+  <h1>Everything You Need in <em>Shanghai</em>, <em>ALL IN ONE</em></h1>
+  <p class="hero-sub">Нэг аяллаар хот үз, эрүүл мэндээ шалга, бизнесээ хий — бүгдийг Монгол хэлээр.</p>
+
+  <!-- IMAGE SLIDESHOW -->
+  <div class="hero-slides" id="heroSlides">
+    <div class="hero-slide active" style="background-image:url('https://images.unsplash.com/photo-1752662742861-fb76c71576d7?w=1600&q=85&auto=format&fit=crop')"></div>
+    <div class="hero-slide" style="background-image:url('https://images.unsplash.com/photo-1748078096034-46086f5b87da?w=1600&q=85&auto=format&fit=crop')"></div>
+    <div class="hero-slide" style="background-image:url('https://images.unsplash.com/photo-1647067151129-ac9991329a73?w=1600&q=85&auto=format&fit=crop')"></div>
+    <div class="hero-slide" style="background-image:url('https://images.unsplash.com/photo-1747479309766-37bbf669cffe?w=1600&q=85&auto=format&fit=crop')"></div>
+    <div class="hero-slide" style="background-image:url('https://images.unsplash.com/photo-1717400411765-0d6a4d0bc8db?w=1600&q=85&auto=format&fit=crop')"></div>
+    <button class="slide-arrow slide-prev" onclick="goSlide(curSlide-1);startAuto()" aria-label="Өмнөх">&#8249;</button>
+    <button class="slide-arrow slide-next" onclick="goSlide(curSlide+1);startAuto()" aria-label="Дараах">&#8250;</button>
+  </div>
+
+  <!-- DOTS -->
+  <div class="hero-dots" id="heroDots">
+    <button class="hero-dot active" onclick="goSlide(0)"></button>
+    <button class="hero-dot" onclick="goSlide(1)"></button>
+    <button class="hero-dot" onclick="goSlide(2)"></button>
+    <button class="hero-dot" onclick="goSlide(3)"></button>
+    <button class="hero-dot" onclick="goSlide(4)"></button>
+  </div>
+
+  <!-- CTA BUTTONS -->
+  <div class="hero-btns">
+    <button class="btn-primary" onclick="scrollToId('medical')">🩺 Эрүүл мэндийн хөтөлбөр</button>
+    <button class="btn-ghost" onclick="window.location.href='/booking/'">Guide Захиалах</button>
+  </div>
+
+  <!-- STATS -->
+  <div class="hero-stats">
+    <div><div class="hero-stat-num">Шанхай</div><div class="hero-stat-label">City Tour</div></div>
+    <div><div class="hero-stat-num">VIP</div><div class="hero-stat-label">Healthcare</div></div>
+    <div><div class="hero-stat-num">MN</div><div class="hero-stat-label">Монгол хэлээр</div></div>
+    <div><div class="hero-stat-num">24/7</div><div class="hero-stat-label">Support</div></div>
+  </div>
+</section>
+</div>
+
+<!-- INTRO BAND -->
+<div class="intro-band">
+  <div class="intro-grid">
+    <div class="intro-item">
+      <div class="intro-icon">🗣️</div>
+      <div class="intro-label">Монгол хэлтэй хөтөч</div>
+      <div class="intro-desc">Хятад, Монгол, Англи хэл дээр үйлчилгээ</div>
+    </div>
+    <div class="intro-item">
+      <div class="intro-icon">🗺️</div>
+      <div class="intro-label">Хувийн маршрут</div>
+      <div class="intro-desc">Таны хэрэгцээнд тулгуурлан боловсруулна</div>
+    </div>
+    <div class="intro-item">
+      <div class="intro-icon">✈️</div>
+      <div class="intro-label">Нисэх буудлаас тосох</div>
+      <div class="intro-desc">Pudong болон Hongqiao буудлаас</div>
+    </div>
+    <div class="intro-item">
+      <div class="intro-icon">💼</div>
+      <div class="intro-label">Бизнесийн үйлчилгээ</div>
+      <div class="intro-desc">Экспо, үзэсгэлэн, хэлмэрч үйлчилгээ</div>
+    </div>
+  </div>
+</div>
+
+<!-- SERVICES -->
+<section class="services-section reveal" id="services">
+  <div class="section-max">
+    <div class="section-eyebrow reveal">Services</div>
+    <div class="section-title reveal reveal-delay-1">What We Do</div>
+    <div class="section-sub reveal reveal-delay-2">Мэргэжлийн Монгол хөтөч. Аяллын бүхий л хэрэгцээг нэг дороос шийднэ.</div>
+    <div class="services-grid reveal reveal-delay-3">
+      <div class="service-item">
+        <div class="service-emoji">🩺</div>
+        <div class="service-name">VIP Healthcare</div>
+        <div class="service-desc">Олон улсын дээд зэрэглэлийн эмнэлэгт бүтэн биеийн иж бүрэн шинжилгээ. 2–3 цагт дараалалгүй.</div>
+        <button class="service-link" onclick="scrollToId('medical')">Learn More →</button>
+      </div>
+      <div class="service-item">
+        <div class="service-emoji">🏙️</div>
+        <div class="service-name">City Tour</div>
+        <div class="service-desc">The Bund, Yuyuan, Shanghai Tower болон бусад гол цэгүүдэд монгол хэлтэйгээ зочлоорой.</div>
+        <button class="service-link" onclick="scrollToId('itineraries')">View Itineraries →</button>
+      </div>
+      <div class="service-item">
+        <div class="service-emoji">🛍️</div>
+        <div class="service-name">Shopping Escort</div>
+        <div class="service-desc">IFC, Plaza 66, Nanjing Road — navigate the best shops with your Mongolian-speaking guide.</div>
+        <button class="service-link" onclick="window.location.href='/booking/'">Book Now →</button>
+      </div>
+      <div class="service-item">
+        <div class="service-emoji">🍜</div>
+        <div class="service-name">Food Tour</div>
+        <div class="service-desc">Experience Shanghai cuisine — Xiaolongbao, 5-star buffets, and local favorites.</div>
+        <button class="service-link" onclick="window.location.href='/booking/'">Book Now →</button>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- MEDICAL DARK SECTION -->
+<section class="medical-section" id="medical">
+  <div class="medical-glow"></div>
+  <div class="medical-inner">
+    <div>
+      <div class="medical-tag reveal">
+        <span>✨</span> Two birds, one stone
+      </div>
+      <h2 class="medical-title reveal reveal-delay-1">
+        Get a VIP Health Check<br>While Visiting<br>Shanghai
+      </h2>
+      <p class="medical-sub reveal reveal-delay-2">Don't limit your trip to shopping and sightseeing. Make the most valuable investment in yourself — dedicate this visit to your health.</p>
+      <div class="medical-list reveal reveal-delay-3">
+        <div class="medical-item">
+          <div class="medical-check">✓</div>
+          <div>VIP suite like a 5-star hotel, personal nurse</div>
+        </div>
+        <div class="medical-item">
+          <div class="medical-check">✓</div>
+          <div>2–3 цагт бүтэн биеийн шинжилгээ — дараалалгүй</div>
+        </div>
+        <div class="medical-item">
+          <div class="medical-check">✓</div>
+          <div>Results in English with full explanation</div>
+        </div>
+        <div class="medical-item">
+          <div class="medical-check">✓</div>
+          <div>MRI · CT · Cancer markers available as add-ons</div>
+        </div>
+      </div>
+      <div class="medical-cta-row reveal reveal-delay-4">
+        <button class="btn-primary" onclick="window.location.href='/booking/'">Book Now →</button>
+        <button class="btn-ghost" onclick="window.location.href='/booking/'">Learn More</button>
+      </div>
+    </div>
+    <div class="medical-card reveal reveal-delay-2">
+      <div class="medical-card-title">👑 Golden VIP Package — Included Tests</div>
+      <div class="medical-test">
+        <div class="medical-test-dot"></div>
+        Complete blood & urine analysis
+      </div>
+      <div class="medical-test">
+        <div class="medical-test-dot"></div>
+        Liver, kidney & thyroid examination
+      </div>
+      <div class="medical-test">
+        <div class="medical-test-dot"></div>
+        Color ultrasound — abdomen & thyroid
+      </div>
+      <div class="medical-test">
+        <div class="medical-test-dot"></div>
+        ECG (electrocardiogram)
+      </div>
+      <div class="medical-test">
+        <div class="medical-test-dot"></div>
+        Биеийн бүтцийн оношилгоо
+      </div>
+      <div class="medical-test">
+        <div class="medical-test-dot"></div>
+        Рентген — цээж
+      </div>
+      <div class="medical-test">
+        <div class="medical-test-dot"></div>
+        Breakfast included
+      </div>
+      <div style="margin-top:24px;padding-top:20px;border-top:1px solid rgba(255,255,255,.08)">
+        <div style="font-size:12px;color:rgba(255,255,255,.35);text-transform:uppercase;letter-spacing:.05em;margin-bottom:10px">Available as add-ons</div>
+        <div style="font-size:13px;color:rgba(255,255,255,.6)">MRI · CT scan · Cancer markers · Specialist consultation</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- WHY US -->
+<section class="why-section" id="why">
+  <div class="section-max">
+    <div class="section-eyebrow reveal">Why Choose Us</div>
+    <div class="section-title reveal reveal-delay-1">Your Trust is<br>Our Greatest Value</div>
+    <div class="why-grid">
+      <div class="why-card reveal reveal-delay-1">
+        <div class="why-num">★</div>
+        <div class="why-title">Professional Experience</div>
+        <div class="why-text">Mongolian-speaking guide specialized in Shanghai. Personalized itineraries with 5-star service.</div>
+      </div>
+      <div class="why-card reveal reveal-delay-2">
+        <div class="why-num">24/7</div>
+        <div class="why-title">Support</div>
+        <div class="why-text">Ready to help before, during, and after your trip. You'll never feel alone in China.</div>
+      </div>
+      <div class="why-card reveal reveal-delay-3">
+        <div class="why-num">VIP</div>
+        <div class="why-title">Personal Service</div>
+        <div class="why-text">Бүлгийн тур биш — таны хэрэгцээнд тулгуурлан тусгайлан боловсруулсан, өөрийнх нь маршрут, өөрийнх нь хурд.</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ITINERARIES -->
+<section class="itin-section" id="itineraries">
+  <div class="section-max-wide">
+    <div class="section-eyebrow reveal">Жишиг аялалын хуваарь</div>
+    <div class="section-title reveal reveal-delay-1">Shanghai Routes</div>
+    <div class="section-sub reveal reveal-delay-2">Carefully crafted itineraries from 1 to 5 days. Fully customizable to your needs.</div>
+    <div class="itin-tabs reveal reveal-delay-3">
+      <button class="itin-tab active" onclick="switchItin('classic',this)">🏙️ Classic</button>
+      <button class="itin-tab" onclick="switchItin('food',this)">🍜 Food</button>
+      <button class="itin-tab" onclick="switchItin('shopping',this)">🛍️ Shopping</button>
+      <button class="itin-tab" onclick="switchItin('culture',this)">🎎 Culture</button>
+    </div>
+
+    <div class="itin-content active" id="itin-classic">
+      <div class="itin-panel">
+        <h3>Classic Shanghai — 3 Days</h3>
+        <div class="itin-day">
+          <div class="itin-day-header">
+            <div class="itin-day-badge">1</div>
+            <div class="itin-day-title">Heart of the City</div>
+          </div>
+          <div class="itin-stops">
+            <div class="itin-stop">The Bund — colonial-era waterfront along the Huangpu River</div>
+            <div class="itin-stop">Yuyuan Garden — 450 жилийн настай уламжлалт Хятад цэцэрлэг</div>
+            <div class="itin-stop">Nanshi — old town, inner gate, local market</div>
+            <div class="itin-stop">Xiaolongbao dinner — Din Tai Fung</div>
+          </div>
+        </div>
+        <div class="itin-day">
+          <div class="itin-day-header">
+            <div class="itin-day-badge">2</div>
+            <div class="itin-day-title">Modern Shanghai</div>
+          </div>
+          <div class="itin-stops">
+            <div class="itin-stop">Shanghai Tower — world's 2nd tallest building, 118 floors</div>
+            <div class="itin-stop">Starbucks Reserve Roastery — world's largest Starbucks</div>
+            <div class="itin-stop">Xintiandi — art architecture, galleries, coffee</div>
+            <div class="itin-stop">Nanjing Road — main shopping street</div>
+          </div>
+        </div>
+        <div class="itin-day">
+          <div class="itin-day-header">
+            <div class="itin-day-badge">3</div>
+            <div class="itin-day-title">Culture & Амралт</div>
+          </div>
+          <div class="itin-stops">
+            <div class="itin-stop">Shanghai Museum — 5,000 years of history</div>
+            <div class="itin-stop">Zhujiajiao Water Town — canal town, boat rides</div>
+            <div class="itin-stop">M50 Art District — contemporary art village</div>
+          </div>
+        </div>
+        <div class="itin-meta">
+          <div><span>3</span> Days</div>
+          <div><span>10+</span> Locations</div>
+          <div><span>All</span> Included</div>
+        </div>
+      </div>
+      <div class="itin-panel">
+        <h3>VIP Healthcare + Хот — 2 өдөр</h3>
+        <div class="itin-day">
+          <div class="itin-day-header">
+            <div class="itin-day-badge">1</div>
+            <div class="itin-day-title">VIP Health Check Day</div>
+          </div>
+          <div class="itin-stops">
+            <div class="itin-stop">07:00 — Arrive at hospital, registration</div>
+            <div class="itin-stop">07:30 — Breakfast (included)</div>
+            <div class="itin-stop">08:00–11:00 — Full-body health checkup</div>
+            <div class="itin-stop">12:00 — Receive results, consult with doctor</div>
+            <div class="itin-stop">13:00 — Lunch and sightseeing along Xintiandi & Nanjing</div>
+          </div>
+        </div>
+        <div class="itin-day">
+          <div class="itin-day-header">
+            <div class="itin-day-badge">2</div>
+            <div class="itin-day-title">Хот аялал + Shopping</div>
+          </div>
+          <div class="itin-stops">
+            <div class="itin-stop">The Bund + Pudong panoramic views</div>
+            <div class="itin-stop">IFC Mall — luxury brand stores</div>
+            <div class="itin-stop">5-star buffet dinner</div>
+            <div class="itin-stop">Depart from Hongqiao / Pudong Airport</div>
+          </div>
+        </div>
+        <div class="itin-meta">
+          <div><span>2</span> Days</div>
+          <div><span>VIP</span> Hospital</div>
+          <div><span>Most</span> Popular</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="itin-content" id="itin-food">
+      <div class="itin-panel">
+        <h3>Foodны Аялал</h3>
+        <div class="itin-day">
+          <div class="itin-day-header"><div class="itin-day-badge">1</div><div class="itin-day-title">Traditional Shanghai Cuisine</div></div>
+          <div class="itin-stops">
+            <div class="itin-stop">Din Tai Fung — famous Xiaolongbao (soup dumplings)</div>
+            <div class="itin-stop">Yuyuan Bazaar — street food at the traditional market</div>
+            <div class="itin-stop">Nanxiang Mantou Dian — 100-year-old restaurant</div>
+            <div class="itin-stop">5-star buffet dinner — Pudong Shangri-La</div>
+          </div>
+        </div>
+        <div class="itin-day">
+          <div class="itin-day-header"><div class="itin-day-badge">2</div><div class="itin-day-title">Modern Food Culture</div></div>
+          <div class="itin-stops">
+            <div class="itin-stop">Starbucks Reserve Roastery — world's largest</div>
+            <div class="itin-stop">Ferguson Lane — European cuisine, art district</div>
+            <div class="itin-stop">Xintiandi — international restaurants</div>
+            <div class="itin-stop">Tianzifang — street food, craft beer</div>
+          </div>
+        </div>
+        <div class="itin-meta"><div><span>2</span> Days</div><div><span>8+</span> Restaurants</div><div><span>With</span> Commentary</div></div>
+      </div>
+      <div class="itin-panel">
+        <h3>Foodны гарын авлага</h3>
+        <div class="itin-day">
+          <div class="itin-day-header"><div class="itin-day-badge">💡</div><div class="itin-day-title">Must Try</div></div>
+          <div class="itin-stops">
+            <div class="itin-stop">Xiaolongbao — soup dumplings (symbol of Shanghai)</div>
+            <div class="itin-stop">Shengjianbao — pan-fried dumplings</div>
+            <div class="itin-stop">Scallion pancake — green onion flatbread</div>
+            <div class="itin-stop">Hairy crab (autumn) — Shanghai's luxury delicacy</div>
+            <div class="itin-stop">Red braised pork — slow-cooked pork belly</div>
+          </div>
+        </div>
+        <div class="itin-meta"><div><span>With</span> Commentary</div></div>
+        <div style="display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-top:12px">
+          <div style="border-radius:10px;overflow:hidden;aspect-ratio:4/3;background:var(--bg2);"><img src="https://images.unsplash.com/photo-1563245372-f21724e3856d?w=400&q=80" style="width:100%;height:100%;object-fit:cover" alt="Xiaolongbao"></div>
+          <div style="border-radius:10px;overflow:hidden;aspect-ratio:4/3;background:var(--bg2);"><img src="https://images.unsplash.com/photo-1582878826629-29b7ad1cdc43?w=400&q=80" style="width:100%;height:100%;object-fit:cover" alt="Shanghai food"></div>
+          <div style="border-radius:10px;overflow:hidden;aspect-ratio:4/3;background:var(--bg2);"><img src="https://images.unsplash.com/photo-1547592166-23ac45744acd?w=400&q=80" style="width:100%;height:100%;object-fit:cover" alt="Dim sum"></div>
+          <div style="border-radius:10px;overflow:hidden;aspect-ratio:4/3;background:var(--bg2);"><img src="https://images.unsplash.com/photo-1569050467447-ce54b3bbc37d?w=400&q=80" style="width:100%;height:100%;object-fit:cover" alt="Chinese food"></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="itin-content" id="itin-shopping">
+      <div class="itin-panel">
+        <h3>Shoppingийн Аялал — 2 өдөр</h3>
+        <div class="itin-day">
+          <div class="itin-day-header"><div class="itin-day-badge">1</div><div class="itin-day-title">Luxury Brands</div></div>
+          <div class="itin-stops">
+            <div class="itin-stop">IFC Mall — LV, Gucci, Prada, Hermès</div>
+            <div class="itin-stop">Plaza 66 — Chanel, Dior, Saint Laurent</div>
+            <div class="itin-stop">Nanjing West Road — premier luxury shopping street</div>
+            <div class="itin-stop">iapm Mall — open late, luxury brands</div>
+          </div>
+        </div>
+        <div class="itin-day">
+          <div class="itin-day-header"><div class="itin-day-badge">2</div><div class="itin-day-title">Local Goods + Markets</div></div>
+          <div class="itin-stops">
+            <div class="itin-stop">South Bund Fabric Market — custom-tailored clothing</div>
+            <div class="itin-stop">Yuyuan Bazaar — traditional souvenirs</div>
+            <div class="itin-stop">Tianzifang — crafts, artwork, gifts</div>
+            <div class="itin-stop">Qipu Road — affordable wholesale goods</div>
+          </div>
+        </div>
+        <div class="itin-meta"><div><span>2</span> Days</div><div><span>10+</span> Stores</div><div><span>Pricing</span> тохирч өгнө</div></div>
+      </div>
+      <div class="itin-panel">
+        <h3>Shoppingийн зөвлөмж</h3>
+        <div class="itin-day">
+          <div class="itin-day-header"><div class="itin-day-badge">💡</div><div class="itin-day-title">What You Need to Know</div></div>
+          <div class="itin-stops">
+            <div class="itin-stop">Tax refund — claim back on purchases over 500 CNY</div>
+            <div class="itin-stop">Use WeChat Pay — cashless shopping only</div>
+            <div class="itin-stop">Хуурамч бараас болгоомжил — алдарт захуудад хуурамч байдаг</div>
+            <div class="itin-stop">Bring your passport — required for duty-free shopping</div>
+          </div>
+        </div>
+        <div class="itin-meta"><div><span>All</span> Tips</div><div><span>In</span> English</div></div>
+      </div>
+    </div>
+
+    <div class="itin-content" id="itin-culture">
+      <div class="itin-panel">
+        <h3>Cultureын Аялал — 3 өдөр</h3>
+        <div class="itin-day">
+          <div class="itin-day-header"><div class="itin-day-badge">1</div><div class="itin-day-title">Historical Shanghai</div></div>
+          <div class="itin-stops">
+            <div class="itin-stop">Shanghai Museum — 140,000 artifacts, 5,000 years of history</div>
+            <div class="itin-stop">The Bund — colonial architecture, scenic views</div>
+            <div class="itin-stop">Yuyuan Garden — Ming Dynasty classical garden</div>
+          </div>
+        </div>
+        <div class="itin-day">
+          <div class="itin-day-header"><div class="itin-day-badge">2</div><div class="itin-day-title">Modern Art</div></div>
+          <div class="itin-stops">
+            <div class="itin-stop">M50 Art District — art village with 50+ galleries</div>
+            <div class="itin-stop">Rockbund Art Museum — contemporary art</div>
+            <div class="itin-stop">Tianzifang — bohemian lanes, handicrafts</div>
+          </div>
+        </div>
+        <div class="itin-day">
+          <div class="itin-day-header"><div class="itin-day-badge">3</div><div class="itin-day-title">Water Town Tour</div></div>
+          <div class="itin-stops">
+            <div class="itin-stop">Zhujiajiao — 1,700-year-old water town</div>
+            <div class="itin-stop">Boat rides, handicraft shops</div>
+            <div class="itin-stop">Traditional Chinese dinner</div>
+          </div>
+        </div>
+        <div class="itin-meta"><div><span>3</span> Days</div><div><span>Culture</span> гүнзгий</div><div><span>Guide</span> Included</div></div>
+      </div>
+      <div class="itin-panel">
+        <h3>Cultureын зөвлөмж</h3>
+        <div class="itin-day">
+          <div class="itin-day-header"><div class="itin-day-badge">💡</div><div class="itin-day-title">Chinese Customs</div></div>
+          <div class="itin-stops">
+            <div class="itin-stop">Remove hats in temples, maintain silence</div>
+            <div class="itin-stop">Foodны дэглэмийн хүн бол урьдчилан хэлэх</div>
+            <div class="itin-stop">Зураг авахад зөвшөөрөл авах — ялангуяа хүмүүс</div>
+            <div class="itin-stop">Chinese greeting: 你好 (Nǐ hǎo) — Hello</div>
+          </div>
+        </div>
+        <div class="itin-meta"><div><span>Deep</span> Culture</div><div><span>Guide</span> Included</div></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- TIPS -->
+<section class="tips-section" id="tips">
+  <div class="section-max-wide">
+    <div class="section-eyebrow reveal">Before You Travel to China</div>
+    <div class="section-title reveal reveal-delay-1">Everything You Need to Know</div>
+    <div class="section-sub reveal reveal-delay-2">Practical tips for first-time visitors to Shanghai.</div>
+    <div class="tips-grid">
+      <div class="tip-card reveal reveal-delay-1">
+        <div class="tip-icon">📱</div>
+        <div class="tip-title">Download a VPN</div>
+        <div class="tip-text">Google, Facebook, Instagram, and WhatsApp are blocked in China. Install a VPN before you go — ExpressVPN and NordVPN work well.</div>
+        <div class="tip-tag">Essential</div>
+      </div>
+      <div class="tip-card reveal reveal-delay-2">
+        <div class="tip-icon">💳</div>
+        <div class="tip-title">Set Up Alipay</div>
+        <div class="tip-text">China is cashless — payments are by QR code only. Set up WeChat Pay or Alipay before you go. Few places accept international cards.</div>
+        <div class="tip-tag">Important</div>
+      </div>
+      <div class="tip-card reveal reveal-delay-3">
+        <div class="tip-icon">🛂</div>
+        <div class="tip-title">Visa</div>
+        <div class="tip-text">Mongolian passport holders can enter visa-free for up to 30 days. Ensure your passport is valid for at least 6 more months.</div>
+        <div class="tip-tag">Know This</div>
+      </div>
+      <div class="tip-card reveal reveal-delay-1">
+        <div class="tip-icon">📡</div>
+        <div class="tip-title">SIM Card or Pocket WiFi</div>
+        <div class="tip-text">Get a Chinese SIM card or pocket WiFi. Available at the airport. Mongolian SIM roaming is expensive.</div>
+        <div class="tip-tag">Tips</div>
+      </div>
+      <div class="tip-card reveal reveal-delay-2">
+        <div class="tip-icon">🏥</div>
+        <div class="tip-title">Travel Insurance</div>
+        <div class="tip-text">Яаралтай тусламжийн зардал Хятадад маш өндөр байдаг. Аялалын даатгал заавал авч явах хэрэгтэй. VIP шинжилгээ авах гэж байгаа бол урьдчилан мэдэгдэх.</div>
+        <div class="tip-tag">Safety</div>
+      </div>
+      <div class="tip-card reveal reveal-delay-2">
+        <div class="tip-icon">🗺️</div>
+        <div class="tip-title">Maps</div>
+        <div class="tip-text">Google Maps doesn't work in China. Use Baidu Maps or Apple Maps. Gaode Maps (高德地图) has the most accurate maps.</div>
+        <div class="tip-tag">Navigation</div>
+      </div>
+      <div class="tip-card reveal reveal-delay-3">
+        <div class="tip-icon">🚇</div>
+        <div class="tip-title">Metro</div>
+        <div class="tip-text">Шанхайн метро хямд, хурдан, найдвартай. Jiaotong карт авахад л хүрнэ — бүх буудалд, автобусанд ашиглана. Карт 20 юань барьцаатай.</div>
+        <div class="tip-tag">Transport</div>
+      </div>
+      <div class="tip-card reveal reveal-delay-1">
+        <div class="tip-icon">🌐</div>
+        <div class="tip-title">Language</div>
+        <div class="tip-text">English is rarely spoken in China. Google Translate's camera feature is very useful. With a Mongolian guide, there's no language barrier.</div>
+        <div class="tip-tag">Communication</div>
+      </div>
+      <div class="tip-card reveal reveal-delay-2">
+        <div class="tip-icon">🏨</div>
+        <div class="tip-title">Hotel</div>
+        <div class="tip-text">Hotel захиалахдаа паспортын мэдээлэл шаардагдана. Гадаадын иргэдийг хүлээн авдаг буудал сонгох нь чухал — Airbnb Хятадад хязгаарлагдмал.</div>
+        <div class="tip-tag">Accommodation</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- PRICING -->
+<section style="background:var(--bg2);padding:100px 0" id="pricing">
+  <div class="section-max">
+    <div class="section-eyebrow reveal">Pricing · Packages</div>
+    <div class="section-title reveal reveal-delay-1">Golden Package</div>
+    <div class="section-sub reveal reveal-delay-2">5 хоног 4 шөнө — Эрүүл мэнд, аялал, шоппинг бүгдийг нэг дороос</div>
+
+    <div style="margin-top:56px;display:grid;grid-template-columns:1fr 340px;gap:32px;align-items:start" class="reveal reveal-delay-2">
+
+      <!-- Itinerary days -->
+      <div style="display:flex;flex-direction:column;gap:16px">
+
+        <!-- Day 1 -->
+        <div style="background:var(--card);border-radius:var(--radius);padding:28px 32px;box-shadow:var(--shadow);border:1px solid var(--border)">
+          <div style="display:flex;align-items:center;gap:16px;margin-bottom:16px">
+            <div style="width:40px;height:40px;border-radius:50%;background:#0071e3;color:#fff;display:flex;align-items:center;justify-content:center;font-size:14px;font-weight:700;flex-shrink:0">1</div>
+            <div>
+              <div style="font-size:12px;color:var(--muted2);text-transform:uppercase;letter-spacing:.06em;margin-bottom:2px">Day 1</div>
+              <div style="font-size:16px;font-weight:600;color:var(--dark2)">Arrival · Airport Pickup</div>
+            </div>
+          </div>
+          <div style="padding-left:56px;font-size:14px;color:var(--muted);line-height:1.7">
+            Picked up from the airport at 17:00 and transferred to the hospital. Initial consultation and preparation for tomorrow's health check.
+          </div>
+        </div>
+
+        <!-- Day 2 -->
+        <div style="background:var(--card);border-radius:var(--radius);padding:28px 32px;box-shadow:var(--shadow);border:1px solid var(--border)">
+          <div style="display:flex;align-items:center;gap:16px;margin-bottom:16px">
+            <div style="width:40px;height:40px;border-radius:50%;background:#0071e3;color:#fff;display:flex;align-items:center;justify-content:circle;font-size:14px;font-weight:700;flex-shrink:0;align-items:center;justify-content:center">2</div>
+            <div>
+              <div style="font-size:12px;color:var(--muted2);text-transform:uppercase;letter-spacing:.06em;margin-bottom:2px">Day 2</div>
+              <div style="font-size:16px;font-weight:600;color:var(--dark2)">VIP Health Check · City Tour</div>
+            </div>
+          </div>
+          <div style="padding-left:56px;font-size:14px;color:var(--muted);line-height:1.7">
+            Өглөө шинжилгээнд орж, хариугаа орчуулагч, хувийн сувилагчтайгаа хамт авна. Дараа нь хотын төвөөр аялна — алдарт <strong style="color:var(--dark2)">Nanjing Road</strong>, <strong style="color:var(--dark2)">The Bund</strong>, голоор завиар явж, <strong style="color:var(--dark2)">Shanghai Tower</strong>-ийн дээрээс гарч үзнэ.
+          </div>
+        </div>
+
+        <!-- Day 3 -->
+        <div style="background:var(--card);border-radius:var(--radius);padding:28px 32px;box-shadow:var(--shadow);border:1px solid var(--border)">
+          <div style="display:flex;align-items:center;gap:16px;margin-bottom:16px">
+            <div style="width:40px;height:40px;border-radius:50%;background:#0071e3;color:#fff;display:flex;align-items:center;justify-content:center;font-size:14px;font-weight:700;flex-shrink:0">3</div>
+            <div>
+              <div style="font-size:12px;color:var(--muted2);text-transform:uppercase;letter-spacing:.06em;margin-bottom:2px">Day 3</div>
+              <div style="font-size:16px;font-weight:600;color:var(--dark2)">Zoo · Luxury Buffet · Yu Garden</div>
+            </div>
+          </div>
+          <div style="padding-left:56px;font-size:14px;color:var(--muted);line-height:1.7">
+            370 гаруй нэр төрлийн 10,000 гаруй амьтантай <strong style="color:var(--dark2)">Shanghai Zoo</strong>-г үзнэ. Luxury дээд зэрэглэлийн буфет хоол идэж, <strong style="color:var(--dark2)">Yu Garden</strong>-оор зочилно.
+          </div>
+        </div>
+
+        <!-- Day 4 -->
+        <div style="background:var(--card);border-radius:var(--radius);padding:28px 32px;box-shadow:var(--shadow);border:1px solid var(--border)">
+          <div style="display:flex;align-items:center;gap:16px;margin-bottom:16px">
+            <div style="width:40px;height:40px;border-radius:50%;background:#0071e3;color:#fff;display:flex;align-items:center;justify-content:center;font-size:14px;font-weight:700;flex-shrink:0">4</div>
+            <div>
+              <div style="font-size:12px;color:var(--muted2);text-transform:uppercase;letter-spacing:.06em;margin-bottom:2px">Day 4</div>
+              <div style="font-size:16px;font-weight:600;color:var(--dark2)">Shopping · Xintiandi · LV · Starbucks үйлдвэр</div>
+            </div>
+          </div>
+          <div style="padding-left:56px;font-size:14px;color:var(--muted);line-height:1.7">
+            <strong style="color:var(--dark2)">Xintiandi Plaza</strong>-д орж, <strong style="color:var(--dark2)">Louis Vuitton</strong> дэлгүүрийг үзэж, дэлхийд цорын ганц нээлттэй <strong style="color:var(--dark2)">Starbucks үйлдвэр</strong>-т зочилно.
+          </div>
+        </div>
+
+        <!-- Day 5 -->
+        <div style="background:var(--card);border-radius:var(--radius);padding:28px 32px;box-shadow:var(--shadow);border:1px solid var(--border)">
+          <div style="display:flex;align-items:center;gap:16px;margin-bottom:16px">
+            <div style="width:40px;height:40px;border-radius:50%;background:var(--muted2);color:#fff;display:flex;align-items:center;justify-content:center;font-size:14px;font-weight:700;flex-shrink:0">5</div>
+            <div>
+              <div style="font-size:12px;color:var(--muted2);text-transform:uppercase;letter-spacing:.06em;margin-bottom:2px">Day 5</div>
+              <div style="font-size:16px;font-weight:600;color:var(--dark2)">Буцах · Нисэх онгоцны буудалд хүргэх</div>
+            </div>
+          </div>
+          <div style="padding-left:56px;font-size:14px;color:var(--muted);line-height:1.7">
+            Өглөө нисэх онгоцны буудалд хүргэж, Монголруу амжилттай буцна.
+          </div>
+        </div>
+
+      </div>
+
+      <!-- Price card -->
+      <div style="position:sticky;top:80px">
+        <div style="background:#000;border-radius:var(--radius2);padding:36px 32px;color:#fff">
+          <div style="font-size:11px;text-transform:uppercase;letter-spacing:.1em;color:rgba(255,255,255,.45);margin-bottom:12px">Total Price</div>
+          <div style="font-size:48px;font-weight:700;letter-spacing:-.02em;line-height:1;margin-bottom:4px">2,050,000<span style="font-size:22px;font-weight:400;opacity:.6">₮</span></div>
+          <div style="font-size:13px;color:rgba(255,255,255,.4);margin-bottom:32px">5 days · 4 nights · 1 person</div>
+
+          <div style="display:flex;flex-direction:column;gap:12px;margin-bottom:32px">
+            <div style="display:flex;align-items:center;gap:10px;font-size:13px;color:rgba(255,255,255,.75)">
+              <span style="color:#30d158;font-size:15px">✓</span> Airport pickup
+            </div>
+            <div style="display:flex;align-items:center;gap:10px;font-size:13px;color:rgba(255,255,255,.75)">
+              <span style="color:#30d158;font-size:15px">✓</span> VIP health check
+            </div>
+            <div style="display:flex;align-items:center;gap:10px;font-size:13px;color:rgba(255,255,255,.75)">
+              <span style="color:#30d158;font-size:15px">✓</span> Interpreter + personal nurse
+            </div>
+            <div style="display:flex;align-items:center;gap:10px;font-size:13px;color:rgba(255,255,255,.75)">
+              <span style="color:#30d158;font-size:15px">✓</span> City tour (all days)
+            </div>
+            <div style="display:flex;align-items:center;gap:10px;font-size:13px;color:rgba(255,255,255,.75)">
+              <span style="color:#30d158;font-size:15px">✓</span> Luxury buffet meals
+            </div>
+            <div style="display:flex;align-items:center;gap:10px;font-size:13px;color:rgba(255,255,255,.75)">
+              <span style="color:#30d158;font-size:15px">✓</span> Shopping хөтөч
+            </div>
+            <div style="display:flex;align-items:center;gap:10px;font-size:13px;color:rgba(255,255,255,.75)">
+              <span style="color:#30d158;font-size:15px">✓</span> Нисэх онгоцны буудалд хүргэх
+            </div>
+          </div>
+
+          <button onclick="window.location.href='/booking/'" style="width:100%;padding:16px;background:#0071e3;color:#fff;border:none;border-radius:12px;font-size:15px;font-weight:600;cursor:pointer;font-family:'Inter',sans-serif;letter-spacing:-.01em;transition:.2s" onmouseover="this.style.background='#0077ed'" onmouseout="this.style.background='#0071e3'">Book Now →</button>
+
+          <div style="margin-top:16px;font-size:11px;color:rgba(255,255,255,.25);text-align:center">Hotel costs separate · Flight costs separate</div>
+        </div>
+      </div>
+
+    </div>
+
+    <!-- Individual service pricing -->
+    <div style="margin-top:48px;padding-top:48px;border-top:1px solid var(--border)" class="reveal">
+      <div style="font-size:12px;font-weight:600;letter-spacing:.08em;text-transform:uppercase;color:var(--blue);margin-bottom:12px">Individual Service Pricing</div>
+      <div style="font-size:clamp(24px,4vw,36px);font-weight:700;letter-spacing:-.03em;color:var(--dark2);margin-bottom:8px">Guide · Interpreter</div>
+      <div style="font-size:15px;color:var(--muted);margin-bottom:36px">Can be booked separately if not included in the Golden Package.</div>
+
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:16px;max-width:700px">
+
+        <!-- Guide card -->
+        <div style="background:var(--card);border-radius:var(--radius2);padding:32px;box-shadow:var(--shadow);border:1px solid var(--border)">
+          <div style="font-size:28px;margin-bottom:16px">🧑‍💼</div>
+          <div style="font-size:13px;font-weight:600;text-transform:uppercase;letter-spacing:.06em;color:var(--muted2);margin-bottom:6px">Guide</div>
+          <div style="font-size:36px;font-weight:700;letter-spacing:-.03em;color:var(--dark2);line-height:1">500 <span style="font-size:18px;font-weight:400;color:var(--muted)">юань/өдөр</span></div>
+          <div style="margin-top:20px;padding-top:20px;border-top:1px solid var(--border);display:flex;flex-direction:column;gap:10px">
+            <div style="display:flex;gap:8px;font-size:13px;color:var(--muted)"><span style="color:var(--blue);flex-shrink:0">✓</span> Airport pickup & drop-off</div>
+            <div style="display:flex;gap:8px;font-size:13px;color:var(--muted)"><span style="color:var(--blue);flex-shrink:0">✓</span> City tour in Mongolian</div>
+            <div style="display:flex;gap:8px;font-size:13px;color:var(--muted)"><span style="color:var(--blue);flex-shrink:0">✓</span> Restaurant & shopping recommendations</div>
+          </div>
+        </div>
+
+        <!-- Translator card -->
+        <div style="background:var(--card);border-radius:var(--radius2);padding:32px;box-shadow:var(--shadow);border:1px solid var(--border)">
+          <div style="font-size:28px;margin-bottom:16px">🗣️</div>
+          <div style="font-size:13px;font-weight:600;text-transform:uppercase;letter-spacing:.06em;color:var(--muted2);margin-bottom:6px">Interpreter</div>
+          <div style="font-size:36px;font-weight:700;letter-spacing:-.03em;color:var(--dark2);line-height:1">500 <span style="font-size:18px;font-weight:400;color:var(--muted)">юань/өдөр</span></div>
+          <div style="margin-top:20px;padding-top:20px;border-top:1px solid var(--border);display:flex;flex-direction:column;gap:10px">
+            <div style="display:flex;gap:8px;font-size:13px;color:var(--muted)"><span style="color:var(--blue);flex-shrink:0">✓</span> Mongolian–Chinese interpretation</div>
+            <div style="display:flex;gap:8px;font-size:13px;color:var(--muted)"><span style="color:var(--blue);flex-shrink:0">✓</span> Medical interpretation (professional)</div>
+            <div style="display:flex;gap:8px;font-size:13px;color:var(--muted)"><span style="color:var(--blue);flex-shrink:0">✓</span> Business negotiations & contracts</div>
+          </div>
+        </div>
+
+      </div>
+
+      <!-- Discount note -->
+      <div style="margin-top:20px;max-width:700px;background:rgba(0,113,227,.06);border:1px solid rgba(0,113,227,.15);border-radius:14px;padding:16px 20px;display:flex;align-items:flex-start;gap:12px">
+        <span style="font-size:18px;flex-shrink:0">💬</span>
+        <div style="font-size:13px;color:var(--muted);line-height:1.6">
+          <strong style="color:var(--dark2)">Discounts available:</strong> Олон хүнтэй группээр ирж байгаа буюу олон өдрийн захиалга хийх тохиолдолд үнийг урьдчилан тохиролцож болно. <a href="#" onclick="window.location.href='/booking/';return false" style="color:var(--blue);text-decoration:none;font-weight:500">Contact Us →</a>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<!-- BOOKING -->
+<section class="booking-section" id="booking">
+  <div class="section-max">
+    <div class="section-eyebrow reveal">Guide Захиалах</div>
+    <div class="section-title reveal reveal-delay-1">Let's Start Your Journey</div>
+    <div class="section-sub reveal reveal-delay-2">Мэдээллээ бөглөж, бид 24 цагийн дотор холбогдоно. Guide тань аяллын өмнөөс эхлэн туслах болно.</div>
+    <div class="booking-inner" style="margin-top:48px">
+      <div>
+        <form id="bookingForm" onsubmit="submitBooking(event)">
+          <div class="form-row">
+            <div class="form-group">
+              <label class="form-label">Name *</label>
+              <input class="form-input" type="text" id="b-name" placeholder="Your name" required>
+            </div>
+            <div class="form-group">
+              <label class="form-label">Утас / WeChat *</label>
+              <input class="form-input" type="text" id="b-phone" placeholder="+976 xxxxxxxx" required>
+            </div>
+          </div>
+          <div class="form-row">
+            <div class="form-group">
+              <label class="form-label">Arrival date</label>
+              <input class="form-input" type="date" id="b-arrival">
+            </div>
+            <div class="form-group">
+              <label class="form-label">Departure date</label>
+              <input class="form-input" type="date" id="b-departure">
+            </div>
+          </div>
+          <div class="form-group">
+            <label class="form-label">Number of people</label>
+            <select class="form-select" id="b-people">
+              <option value="">Сонгох...</option>
+              <option>1 person</option>
+              <option>2 people</option>
+              <option>3–4 хүн</option>
+              <option>5+ people</option>
+            </select>
+          </div>
+          <div class="form-group">
+            <label class="form-label">Үйлчилгээний төрөл</label>
+            <select class="form-select" id="b-service">
+              <option value="">Сонгох...</option>
+              <option>🌟 VIP эрүүл мэндийн үйлчилгээтэй аялал</option>
+              <option>🩺 VIP Healthcareийн шинжилгээ</option>
+              <option>🏙️ Аялалын хөтөч</option>
+              <option>🛍️ Shopping Escort</option>
+              <option>✈️ Нисэх онгоцны угтаа</option>
+              <option>💼 Бизнесийн хэлмэрч</option>
+            </select>
+          </div>
+          <div class="form-group">
+            <label class="form-label">Facebook / Instagram холбоос</label>
+            <input class="form-input" type="text" id="b-social" placeholder="facebook.com/... or @username">
+          </div>
+          <div class="form-row">
+            <div class="form-group">
+              <label class="form-label">Аялалын эхлэх огноо</label>
+              <input class="form-input" type="date" id="b-start">
+            </div>
+            <div class="form-group">
+              <label class="form-label">Хэдэн өдөр</label>
+              <select class="form-select" id="b-days">
+                <option value="">Сонгох...</option>
+                <option>1 day</option>
+                <option>2 days</option>
+                <option>3 days</option>
+                <option>4–5 өдөр</option>
+                <option>7+ өдөр</option>
+              </select>
+            </div>
+          </div>
+          <div class="form-group">
+            <label class="form-label">Бүлгийн хэмжээ</label>
+            <select class="form-select" id="b-group">
+              <option value="">Сонгох...</option>
+              <option>1 хүн (ганцаараа)</option>
+              <option>2 хүн (хосоороо)</option>
+              <option>3–4 хүн (гэр бүл)</option>
+              <option>5–10 хүн (бүлэг)</option>
+              <option>10+ хүн (том бүлэг)</option>
+            </select>
+          </div>
+          <div class="form-group">
+            <label class="form-label">Нэмэлт хүсэлт</label>
+            <textarea class="form-textarea" id="b-note" placeholder="Any special requests or questions..."></textarea>
+          </div>
+          <button type="submit" class="form-submit">Submit Booking →</button>
+        </form>
+        <div class="success-msg" id="bookingSuccess">
+          <div class="success-icon">🎉</div>
+          <h3>Booking Submitted!</h3>
+          <p>Таны захиалгыг хүлээн авлаа.<br>Бид 24 цагийн дотор танд хандана.<br><br>
+          <a href="https://www.facebook.com/a.bileg.2025" target="_blank" style="color:var(--blue);font-weight:600">Facebook-ээр шууд холбогдож болно →</a></p>
+        </div>
+      </div>
+      <div class="booking-info-card reveal reveal-delay-2">
+        <div class="booking-info-title">Why Choose Us?</div>
+        <div class="info-row">
+          <div class="info-icon">🗣️</div>
+          <div>
+            <div class="info-title">Монгол хэлтэй хөтөч</div>
+            <div class="info-desc">Хятад, Монгол, Англи хэл дээр чөлөөтэй харилцана. Languageний саад байхгүй.</div>
+          </div>
+        </div>
+        <div class="info-row">
+          <div class="info-icon">⚡</div>
+          <div>
+            <div class="info-title">Хурдан & Дараалалгүй</div>
+            <div class="info-desc">VIP эмнэлэгт урьдчилан захиалга хийдэг тул 2–3 цагт бүтэн шинжилгээ дуусна.</div>
+          </div>
+        </div>
+        <div class="info-row">
+          <div class="info-icon">🌏</div>
+          <div>
+            <div class="info-title">Шанхайг гүнзгий мэднэ</div>
+            <div class="info-desc">Хотын нууц буланг, хамгийн сайн газруудыг, хэмнэлттэй арга замыг мэддэг хөтөч.</div>
+          </div>
+        </div>
+        <div class="info-row">
+          <div class="info-icon">📱</div>
+          <div>
+            <div class="info-title">Аяллын өмнө зөвлөгөө</div>
+            <div class="info-desc">Visa, VPN, мөнгөний бэлтгэл — аяллын өмнө бүхнийг тайлбарлаж өгнө.</div>
+          </div>
+        </div>
+        <a href="https://www.facebook.com/a.bileg.2025" target="_blank" style="display:flex;align-items:center;gap:8px;padding:13px 20px;background:#1877f2;color:#fff;border-radius:12px;text-decoration:none;font-size:14px;font-weight:500;margin-top:8px;justify-content:center">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"/></svg>
+          Facebook-ээр шууд холбогдох
+        </a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CTA BANNER -->
+<section class="cta-section">
+  <div class="section-max">
+    <div class="cta-title reveal">Asia's NEW YORK<br><em>SHANGHAI</em></div>
+    <div class="cta-sub reveal reveal-delay-1">Монгол хөтөчтэйгөө, ямар ч саадгүй, тайвнаар аялаарай.</div>
+    <div class="cta-btns reveal reveal-delay-2">
+      <button class="btn-white" onclick="window.location.href='/booking/'">Book Now →</button>
+      <a href="https://www.facebook.com/a.bileg.2025" target="_blank" class="btn-outline-white">
+        <svg width="15" height="15" viewBox="0 0 24 24" fill="currentColor"><path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"/></svg>
+        Facebook
+      </a>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-inner">
+    <div class="footer-top">
+      <div>
+        <div class="footer-logo">LFS <span>Shanghai</span></div>
+        <div class="footer-tagline">Mongolian-speaking guide specialized in Shanghai. We create personalized travel experiences.</div>
+        <a href="https://www.facebook.com/a.bileg.2025" target="_blank" class="footer-fb">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="#1877f2"><path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"/></svg>
+          Follow on Facebook
+        </a>
+      </div>
+      <div>
+        <div class="footer-col-title">Pages</div>
+        <button class="footer-link" onclick="window.scrollTo({top:0,behavior:'smooth'})">Home</button>
+        <button class="footer-link" onclick="scrollToId('services')">Services</button>
+        <button class="footer-link" onclick="scrollToId('medical')">Healthcare</button>
+        <button class="footer-link" onclick="scrollToId('itineraries')">Itineraries</button>
+        <button class="footer-link" onclick="scrollToId('tips')">Tips</button>
+        <button class="footer-link" onclick="scrollToId('pricing')">Pricing</button>
+        <button class="footer-link" onclick="window.location.href='/booking/'">Book</button>
+      </div>
+      <div>
+        <div class="footer-col-title">Contact</div>
+        <div style="font-size:13px;color:var(--muted);line-height:2.2">
+          <a href="https://www.facebook.com/a.bileg.2025" target="_blank" style="display:flex;align-items:center;gap:8px;color:var(--muted);text-decoration:none;margin-bottom:8px"><svg width="14" height="14" viewBox="0 0 24 24" fill="#1877f2"><path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"/></svg> Facebook</a>
+          <div style="display:flex;align-items:center;gap:8px;margin-bottom:8px">💬 <strong style="color:var(--dark2)">WeChat:</strong> lfsshanghai</div>
+          <div style="display:flex;align-items:center;gap:8px">📞 <strong style="color:var(--dark2)">+976 XXXX XXXX</strong></div>
+        </div>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <div>© 2026 LFS Shanghai. All rights reserved.</div>
+      <div>Shanghai, China 🇨🇳</div>
+    </div>
+  </div>
+</footer>
+
+<script>
+// ── LOADER ──
+window.addEventListener('load', () => {
+  setTimeout(() => {
+    const l = document.getElementById('loader');
+    if (l) { l.style.opacity = '0'; setTimeout(() => l.style.display = 'none', 500); }
+  }, 1100);
+});
+
+// ── NAV: scroll active + hamburger ──
+const navLinks = document.querySelectorAll('.nav-link');
+function setActiveNav(el) {
+  navLinks.forEach(n => n.classList.remove('active'));
+  if (el) el.classList.add('active');
+}
+function scrollToId(id) {
+  document.getElementById(id)?.scrollIntoView({behavior:'smooth'});
+  document.getElementById('navLinks').classList.remove('open');
+}
+function scrollTo_(y) {
+  window.scrollTo({top:y,behavior:'smooth'});
+  document.getElementById('navLinks').classList.remove('open');
+}
+function toggleMobileMenu() {
+  document.getElementById('navLinks').classList.toggle('open');
+}
+
+// ── SCROLL TO TOP ──
+window.addEventListener('scroll', () => {
+  document.getElementById('scroll-top').classList.toggle('show', window.scrollY > 500);
+}, {passive:true});
+
+// ── HERO SLIDESHOW ──
+let curSlide = 0;
+const slides = document.querySelectorAll('.hero-slide');
+const dots = document.querySelectorAll('.hero-dot');
+let autoTimer;
+
+function goSlide(n) {
+  slides[curSlide].classList.remove('active');
+  dots[curSlide].classList.remove('active');
+  curSlide = (n + slides.length) % slides.length;
+  slides[curSlide].classList.add('active');
+  dots[curSlide].classList.add('active');
+}
+
+function startAuto() {
+  clearInterval(autoTimer);
+  autoTimer = setInterval(() => goSlide(curSlide + 1), 4000);
+}
+startAuto();
+
+// ── SWIPE / DRAG ──
+const heroEl = document.getElementById('heroSlides');
+let touchX = 0, mouseX = 0, dragging = false;
+
+heroEl.addEventListener('touchstart', e => { touchX = e.touches[0].clientX; }, {passive:true});
+heroEl.addEventListener('touchend', e => {
+  const diff = touchX - e.changedTouches[0].clientX;
+  if (Math.abs(diff) > 40) { goSlide(curSlide + (diff > 0 ? 1 : -1)); startAuto(); }
+}, {passive:true});
+
+heroEl.addEventListener('mousedown', e => { mouseX = e.clientX; dragging = true; });
+heroEl.addEventListener('mouseup', e => {
+  if (!dragging) return; dragging = false;
+  const diff = mouseX - e.clientX;
+  if (Math.abs(diff) > 40) { goSlide(curSlide + (diff > 0 ? 1 : -1)); startAuto(); }
+});
+heroEl.addEventListener('mouseleave', () => { dragging = false; });
+heroEl.style.cursor = 'grab';
+
+// ── COUNTER ANIMATION ──
+function animateCount(el, target, suffix) {
+  const dur = 1800, start = performance.now();
+  const update = now => {
+    const p = Math.min((now - start) / dur, 1);
+    const ease = 1 - Math.pow(1 - p, 3);
+    el.textContent = Math.round(ease * target) + suffix;
+    if (p < 1) requestAnimationFrame(update);
+  };
+  requestAnimationFrame(update);
+}
+const heroStats = document.querySelector('.hero-stats');
+if (heroStats) {
+  const obs = new IntersectionObserver(entries => {
+    if (entries[0].isIntersecting) {
+      document.querySelectorAll('[data-count]').forEach(el => {
+        animateCount(el, +el.dataset.count, el.dataset.suffix || '');
+      });
+      obs.disconnect();
+    }
+  }, {threshold:.5});
+  obs.observe(heroStats);
+}
+
+// ── REVEAL ON SCROLL ──
+const revealObserver = new IntersectionObserver(entries => {
+  entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add('visible'); } });
+}, {threshold:.12, rootMargin:'0px 0px -40px 0px'});
+document.querySelectorAll('.reveal').forEach(el => revealObserver.observe(el));
+
+// ── ITINERARY TABS ──
+function switchItin(id, btn) {
+  document.querySelectorAll('.itin-content').forEach(c => c.classList.remove('active'));
+  document.querySelectorAll('.itin-tab').forEach(t => t.classList.remove('active'));
+  document.getElementById('itin-' + id)?.classList.add('active');
+  btn.classList.add('active');
+}
+
+// ── BOOKING FORM ──
+function submitBooking(e) {
+  e.preventDefault();
+  const name = document.getElementById('b-name').value;
+  const phone = document.getElementById('b-phone').value;
+  const service = document.getElementById('b-service').value;
+  const note = document.getElementById('b-note').value;
+  // Facebook message link (fallback)
+  const msg = encodeURIComponent(`Сайн байна уу! Захиалга хийх гэж байна.\nНэр: ${name}\nУтас: ${phone}\nҮйлчилгээ: ${service}\nНэмэлт: ${note}`);
+  document.getElementById('bookingForm').style.display = 'none';
+  document.getElementById('bookingSuccess').style.display = 'block';
+  // Auto open FB in background
+  window.open('https://www.facebook.com/a.bileg.2025', '_blank');
+}
+
+// ── CLOSE FLOAT MENU ──
+document.addEventListener('click', e => {
+  const fc = document.getElementById('float-contact');
+  if (fc && !fc.contains(e.target)) {
+    document.getElementById('floatMenu')?.classList.remove('open');
+  }
+});
+
+// ── STUB for old index.html compatibility ──
+function openAccountModal() {
+  alert('Нэвтрэх функц тун удахгүй нэмэгдэнэ.');
+}
+</script>
+
+<script type="module">
+  import { initializeApp } from "https://www.gstatic.com/firebasejs/11.7.1/firebase-app.js";
+  import { getAnalytics, logEvent } from "https://www.gstatic.com/firebasejs/11.7.1/firebase-analytics.js";
+  const app = initializeApp({
+    apiKey: "AIzaSyDixZdKwlrixRFokERCMQ5Ld1BMkhUttCQ",
+    authDomain: "lfs-shanghai.firebaseapp.com",
+    projectId: "lfs-shanghai",
+    storageBucket: "lfs-shanghai.firebasestorage.app",
+    messagingSenderId: "337508244675",
+    appId: "1:337508244675:web:f47b7e14417a0f1d129676",
+    measurementId: "G-81DTJ80VLR"
+  });
+  const analytics = getAnalytics(app);
+  logEvent(analytics, 'page_view', { page_title: 'Home' });
+</script>
+</body>
+</html>
