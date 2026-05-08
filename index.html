@@ -98,77 +98,72 @@ body{
 
 /* ── HERO ── */
 .hero{
-  min-height:100vh;
-  background:#000;
-  color:#fff;
+  background:var(--bg);
+  color:var(--dark2);
   display:flex;flex-direction:column;
-  align-items:center;justify-content:center;
+  align-items:center;
   text-align:center;
-  padding:120px 24px 80px;
+  padding:120px 40px 80px;
+  max-width:1100px;
+  margin:0 auto;
+}
+/* ── HERO SLIDESHOW ── */
+.hero-slides{
+  width:100%;
+  border-radius:20px;
+  overflow:hidden;
   position:relative;
-  overflow:hidden;
+  aspect-ratio:16/7;
+  max-height:520px;
+  margin:40px 0 36px;
+  box-shadow:0 20px 60px rgba(0,0,0,.15);
 }
-/* YouTube video background */
-.hero-video-wrap{
+.hero-slide{
   position:absolute;inset:0;
-  overflow:hidden;
-  z-index:0;
-}
-.hero-video-wrap iframe{
-  position:absolute;
-  top:50%;left:50%;
-  transform:translate(-50%,-50%);
-  width:177.78vh; /* 16:9 */
-  height:100%;
-  min-width:100%;
-  min-height:56.25vw; /* 16:9 */
-  pointer-events:none;
-  opacity:.55;
-}
-.hero-video-fallback{
-  position:absolute;inset:0;
-  background-image:url('https://images.unsplash.com/photo-1537535933671-9cb7d2af5a70?w=1800&q=80');
   background-size:cover;background-position:center;
-  opacity:.35;
+  opacity:0;transition:opacity .9s ease;
 }
-.hero-gradient{
-  position:absolute;inset:0;z-index:1;
-  background:linear-gradient(to bottom,rgba(0,0,0,.25) 0%,rgba(0,0,0,.65) 100%);
+.hero-slide.active{opacity:1}
+.hero-dots{
+  display:flex;gap:7px;justify-content:center;
+  margin-bottom:36px;
 }
+.hero-dot{
+  width:6px;height:6px;border-radius:50%;
+  background:rgba(0,0,0,.15);
+  cursor:pointer;transition:all .3s;border:none;padding:0;
+}
+.hero-dot.active{background:var(--dark2);width:20px;border-radius:3px;}
 .hero-eyebrow{
-  font-size:13px;font-weight:500;letter-spacing:.06em;text-transform:uppercase;
-  color:rgba(255,255,255,.6);
-  margin-bottom:20px;
-  position:relative;z-index:2;
+  font-size:12px;font-weight:600;letter-spacing:.08em;text-transform:uppercase;
+  color:var(--blue);
+  margin-bottom:16px;
   animation:heroFade .9s ease both;
 }
 .hero h1{
-  font-size:clamp(48px,8vw,96px);
+  font-size:clamp(40px,7vw,80px);
   font-weight:700;
   line-height:1.05;
   letter-spacing:-.04em;
-  margin-bottom:20px;
-  position:relative;z-index:2;
+  margin-bottom:16px;
+  color:var(--dark2);
   animation:heroFade .9s ease .1s both;
 }
 .hero h1 em{
   font-style:normal;
-  background:linear-gradient(135deg,#a8d8ff,#60b5ff);
-  -webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;
+  color:var(--blue);
 }
 .hero-sub{
-  font-size:clamp(17px,2.5vw,22px);
-  font-weight:300;
-  color:rgba(255,255,255,.75);
-  max-width:580px;
-  margin:0 auto 40px;
-  line-height:1.6;
-  position:relative;z-index:2;
+  font-size:clamp(16px,2vw,19px);
+  font-weight:400;
+  color:var(--muted);
+  max-width:540px;
+  margin:0 auto 0;
+  line-height:1.65;
   animation:heroFade .9s ease .2s both;
 }
 .hero-btns{
   display:flex;gap:12px;flex-wrap:wrap;justify-content:center;
-  position:relative;z-index:2;
   animation:heroFade .9s ease .3s both;
 }
 .btn-primary{
@@ -185,27 +180,25 @@ body{
 .btn-primary:hover{background:var(--blue-hover);transform:scale(1.02)}
 .btn-ghost{
   padding:14px 28px;
-  background:rgba(255,255,255,.15);
-  color:#fff;
-  border:1px solid rgba(255,255,255,.25);
+  background:var(--bg2);
+  color:var(--dark2);
+  border:1px solid var(--border);
   border-radius:28px;
   font-size:15px;font-weight:500;
   cursor:pointer;font-family:inherit;
   transition:all .2s;
   text-decoration:none;
   display:inline-flex;align-items:center;gap:7px;
-  backdrop-filter:blur(10px);
 }
-.btn-ghost:hover{background:rgba(255,255,255,.22)}
+.btn-ghost:hover{background:var(--border)}
 .hero-stats{
-  display:flex;gap:48px;flex-wrap:wrap;justify-content:center;
-  margin-top:80px;padding-top:40px;
-  border-top:1px solid rgba(255,255,255,.12);
-  position:relative;z-index:2;
+  display:flex;gap:40px;flex-wrap:wrap;justify-content:center;
+  padding-top:32px;
+  border-top:1px solid var(--border);
   animation:heroFade .9s ease .4s both;
 }
-.hero-stat-num{font-size:36px;font-weight:700;letter-spacing:-.03em;color:#fff;margin-bottom:4px}
-.hero-stat-label{font-size:11px;font-weight:500;letter-spacing:.08em;text-transform:uppercase;color:rgba(255,255,255,.5)}
+.hero-stat-num{font-size:32px;font-weight:700;letter-spacing:-.03em;color:var(--dark2);margin-bottom:4px}
+.hero-stat-label{font-size:11px;font-weight:500;letter-spacing:.08em;text-transform:uppercase;color:var(--muted)}
 @keyframes heroFade{from{opacity:0;transform:translateY(24px)}to{opacity:1;transform:translateY(0)}}
 
 /* ── INTRO BAND ── */
@@ -676,22 +669,37 @@ section,#booking-section{scroll-margin-top:60px}
 </nav>
 
 <!-- HERO -->
+<div style="background:var(--bg);padding-top:52px">
 <section class="hero" id="home">
-  <!-- Video background -->
-  <div class="hero-video-wrap">
-    <video autoplay muted loop playsinline preload="auto"
-      style="position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);min-width:100%;min-height:100%;width:auto;height:auto;object-fit:cover;opacity:.6">
-      <source src="shanghai_web.mp4" type="video/mp4">
-    </video>
-  </div>
-  <div class="hero-gradient"></div>
   <div class="hero-eyebrow">Шанхай · Монгол хөтөч · VIP Эрүүл мэнд</div>
-  <h1>Аялангаа<br><em>Эрүүл мэнддээ</em><br>Зориул</h1>
+  <h1>Аялангаа <em>Эрүүл мэнддээ</em> Зориул</h1>
   <p class="hero-sub">Шанхайд ирж бүтэн биеийн VIP оношилгоонд орж, хотыг монгол хөтөчтэйгөө туул. 1 аялалаар 2 үр дүн.</p>
+
+  <!-- IMAGE SLIDESHOW -->
+  <div class="hero-slides" id="heroSlides">
+    <div class="hero-slide active" style="background-image:url('https://images.unsplash.com/photo-1537535933671-9cb7d2af5a70?w=1600&q=85')"></div>
+    <div class="hero-slide" style="background-image:url('https://images.unsplash.com/photo-1474181487882-5abf3f0ba6c2?w=1600&q=85')"></div>
+    <div class="hero-slide" style="background-image:url('https://images.unsplash.com/photo-1513407030348-c983a97b98d8?w=1600&q=85')"></div>
+    <div class="hero-slide" style="background-image:url('https://images.unsplash.com/photo-1582037928769-181f2644ecb7?w=1600&q=85')"></div>
+    <div class="hero-slide" style="background-image:url('https://images.unsplash.com/photo-1559628233-100c798642d3?w=1600&q=85')"></div>
+  </div>
+
+  <!-- DOTS -->
+  <div class="hero-dots" id="heroDots">
+    <button class="hero-dot active" onclick="goSlide(0)"></button>
+    <button class="hero-dot" onclick="goSlide(1)"></button>
+    <button class="hero-dot" onclick="goSlide(2)"></button>
+    <button class="hero-dot" onclick="goSlide(3)"></button>
+    <button class="hero-dot" onclick="goSlide(4)"></button>
+  </div>
+
+  <!-- CTA BUTTONS -->
   <div class="hero-btns">
     <button class="btn-primary" onclick="scrollToId('medical')">🩺 Эрүүл мэндийн хөтөлбөр</button>
     <button class="btn-ghost" onclick="scrollToId('booking')">Хөтөч Захиалах</button>
   </div>
+
+  <!-- STATS -->
   <div class="hero-stats">
     <div>
       <div class="hero-stat-num" data-count="200" data-suffix="+">200+</div>
@@ -711,6 +719,7 @@ section,#booking-section{scroll-margin-top:60px}
     </div>
   </div>
 </section>
+</div>
 
 <!-- INTRO BAND -->
 <div class="intro-band">
@@ -1322,13 +1331,19 @@ window.addEventListener('scroll', () => {
   document.getElementById('scroll-top').classList.toggle('show', window.scrollY > 500);
 }, {passive:true});
 
-// ── HERO VIDEO PARALLAX (subtle) ──
-const heroVideoWrap = document.querySelector('.hero-video-wrap');
-window.addEventListener('scroll', () => {
-  if (window.scrollY < window.innerHeight && heroVideoWrap) {
-    heroVideoWrap.style.transform = `translateY(${window.scrollY * 0.2}px)`;
-  }
-}, {passive:true});
+// ── HERO SLIDESHOW ──
+let curSlide = 0;
+const slides = document.querySelectorAll('.hero-slide');
+const dots = document.querySelectorAll('.hero-dot');
+
+function goSlide(n) {
+  slides[curSlide].classList.remove('active');
+  dots[curSlide].classList.remove('active');
+  curSlide = n;
+  slides[curSlide].classList.add('active');
+  dots[curSlide].classList.add('active');
+}
+setInterval(() => goSlide((curSlide + 1) % slides.length), 4000);
 
 // ── COUNTER ANIMATION ──
 function animateCount(el, target, suffix) {
