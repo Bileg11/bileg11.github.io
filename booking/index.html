@@ -406,7 +406,7 @@ footer{
       console.error(err);
       btn.disabled = false;
       btn.textContent = 'Захиалга Илгээх →';
-      alert('Алдаа гарлаа. Дахин оролдоно уу.');
+      alert('Алдаа: ' + (err.code || err.message || err));
     }
   };
 </script>
