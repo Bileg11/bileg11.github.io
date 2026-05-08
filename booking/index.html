@@ -282,6 +282,7 @@ footer{
 <script type="module">
   import { initializeApp } from "https://www.gstatic.com/firebasejs/11.7.1/firebase-app.js";
   import { getFirestore, collection, addDoc, serverTimestamp } from "https://www.gstatic.com/firebasejs/11.7.1/firebase-firestore.js";
+  import { getAnalytics, logEvent } from "https://www.gstatic.com/firebasejs/11.7.1/firebase-analytics.js";
 
   const firebaseConfig = {
     apiKey: "AIzaSyDixZdKwlrixRFokERCMQ5Ld1BMkhUttCQ",
@@ -289,11 +290,14 @@ footer{
     projectId: "lfs-shanghai",
     storageBucket: "lfs-shanghai.firebasestorage.app",
     messagingSenderId: "337508244675",
-    appId: "1:337508244675:web:f47b7e14417a0f1d129676"
+    appId: "1:337508244675:web:f47b7e14417a0f1d129676",
+    measurementId: "G-81DTJ80VLR"
   };
 
   const app = initializeApp(firebaseConfig);
   const db = getFirestore(app);
+  const analytics = getAnalytics(app);
+  logEvent(analytics, 'page_view', { page_title: 'Booking Page' });
 
   const TELEGRAM_TOKEN = "8799776564:AAEiPSe4iSLLae2FFvY02eHaoSfXC-Bw3t0";
   const TELEGRAM_CHAT_ID = "5541078218";
@@ -330,6 +334,7 @@ footer{
 
     try {
       await addDoc(collection(db, "bookings"), data);
+      logEvent(analytics, 'booking_submitted', { service: data.service, people: data.people });
 
       const msg = `📋 <b>Шинэ захиалга!</b>\n\n👤 <b>Нэр:</b> ${data.name}\n📞 <b>Утас:</b> ${data.phone}\n🛎 <b>Үйлчилгээ:</b> ${data.service}\n👥 <b>Хүн:</b> ${data.people}\n📅 <b>Ирэх:</b> ${data.arrival}\n📅 <b>Явах:</b> ${data.departure}\n🗓 <b>Эхлэх:</b> ${data.start} (${data.days})\n👨‍👩‍👧 <b>Бүлэг:</b> ${data.group}\n💬 <b>Нэмэлт:</b> ${data.note || '—'}\n📱 <b>Social:</b> ${data.social || '—'}`;
       await sendTelegram(msg);
