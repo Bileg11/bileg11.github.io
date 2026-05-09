@@ -1,0 +1,15 @@
+{
+  "name": "lfs-shanghai-functions",
+  "description": "Firebase Cloud Functions for LFS Shanghai",
+  "main": "index.js",
+  "engines": {
+    "node": "20"
+  },
+  "dependencies": {
+    "firebase-admin": "^12.0.0",
+    "firebase-functions": "^5.0.0",
+    "nodemailer": "^6.9.0"
+  },
+  "devDependencies": {},
+  "private": true
+}
