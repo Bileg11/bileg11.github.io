@@ -1,4 +1,4 @@
-const CACHE = 'lfs-v2';
+const CACHE = 'lfs-v3';
 const STATIC = [
   '/',
   '/booking/',
