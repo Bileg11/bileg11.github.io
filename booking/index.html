@@ -6,6 +6,7 @@
 <title>Захиалга өгөх — LFS Shanghai</title>
 <link rel="manifest" href="/manifest.json">
 <link rel="icon" type="image/svg+xml" href="/favicon.svg">
+<meta name="google-site-verification" content="google-site-verification-placeholder">
 <meta name="description" content="Шанхайд аялах захиалгаа өгнө үү. 24 цагийн дотор холбогдоно.">
 <meta name="robots" content="index, follow">
 <meta property="og:type" content="website">
@@ -58,114 +59,202 @@ body{
 }
 .nav-back:hover{background:var(--border)}
 
-/* HERO */
-.page-hero{
-  padding:120px 24px 60px;
-  text-align:center;
-  background:linear-gradient(180deg,var(--bg2) 0%,var(--bg) 100%);
+/* PROGRESS BAR */
+.progress-bar-wrap{
+  position:fixed;top:52px;left:0;right:0;z-index:499;height:3px;
+  background:var(--bg2);
 }
-.page-eyebrow{
-  font-size:12px;font-weight:600;letter-spacing:.08em;text-transform:uppercase;
-  color:var(--blue);margin-bottom:16px;
-}
-.page-hero h1{
-  font-size:clamp(36px,6vw,64px);font-weight:700;
-  line-height:1.05;letter-spacing:-.04em;
-  color:var(--dark2);margin-bottom:14px;
-}
-.page-hero p{
-  font-size:clamp(15px,2vw,18px);color:var(--muted);
-  max-width:480px;margin:0 auto;line-height:1.65;
+.progress-bar-fill{
+  height:100%;background:var(--blue);
+  transition:width .4s cubic-bezier(.4,0,.2,1);
+  border-radius:0 2px 2px 0;
 }
 
-/* BOOKING SECTION */
-.booking-wrap{
-  max-width:860px;margin:0 auto;
-  padding:60px 24px 100px;
-  display:grid;grid-template-columns:1.1fr 1fr;gap:48px;
+/* PAGE LAYOUT */
+.page-outer{
+  min-height:100vh;padding:80px 24px 60px;
+  display:flex;align-items:flex-start;justify-content:center;
 }
-@media(max-width:700px){.booking-wrap{grid-template-columns:1fr;gap:32px;padding:40px 20px 80px}}
+.wizard-wrap{width:100%;max-width:600px;padding:40px 0 80px}
 
-/* FORM */
-.form-label{font-size:12px;font-weight:600;color:var(--muted2);letter-spacing:.03em;display:block;margin-bottom:6px}
-.form-input,.form-select,.form-textarea{
-  width:100%;background:var(--bg2);border:1px solid var(--border);
-  border-radius:12px;padding:12px 16px;
-  color:var(--dark2);font-size:14px;font-family:inherit;
-  outline:none;transition:.2s;-webkit-appearance:none;
-}
-.form-input:focus,.form-select:focus,.form-textarea:focus{
-  border-color:var(--blue);background:#fff;box-shadow:0 0 0 3px rgba(0,113,227,.1)
-}
-.form-textarea{resize:vertical;min-height:100px;line-height:1.6}
-.form-group{margin-bottom:16px}
-.form-row{display:grid;grid-template-columns:1fr 1fr;gap:12px}
-@media(max-width:500px){.form-row{grid-template-columns:1fr}}
-.form-input.invalid,.form-select.invalid{border-color:#e53935!important;background:#fff5f5;box-shadow:0 0 0 3px rgba(229,57,53,.1)!important}
-#social-help.open{display:block!important}
-.form-error-msg{display:none;background:#fff0f0;border:1px solid #fcc;border-radius:12px;padding:12px 16px;font-size:13px;color:#c0392b;margin-bottom:16px;font-weight:500}
-.form-error-msg.show{display:block}
-.field-hint{font-size:11px;color:#e53935;margin-top:4px;display:none}
-.field-hint.show{display:block}
-.form-submit{
-  width:100%;padding:14px;background:var(--blue);color:#fff;
-  border:none;border-radius:14px;font-size:15px;font-weight:600;
-  cursor:pointer;font-family:inherit;transition:.2s;margin-top:4px;
-}
-.form-submit:hover{background:var(--blue-hover)}
-
-/* INFO CARD */
-.auth-notice{display:none;background:#fff8e6;border:2px solid #f5c842;border-radius:14px;padding:16px 20px;margin-bottom:20px;align-items:flex-start;justify-content:space-between;gap:12px;flex-wrap:wrap}
+/* NOTICES */
+.auth-notice{display:none;background:#fff8e6;border:2px solid #f5c842;border-radius:14px;padding:16px 20px;margin-bottom:24px;align-items:flex-start;justify-content:space-between;gap:12px;flex-wrap:wrap}
 .auth-notice.show{display:flex}
 .auth-notice-text{font-size:14px;color:#7a5c00;font-weight:500;line-height:1.5}
 .auth-notice-text small{display:block;font-size:12px;color:#a07800;font-weight:400;margin-top:3px}
 .auth-notice-actions{display:flex;flex-direction:column;gap:8px;flex-shrink:0}
 .auth-notice-btn{padding:9px 20px;background:var(--blue);color:#fff;border:none;border-radius:10px;font-size:13px;font-weight:600;cursor:pointer;font-family:inherit;white-space:nowrap;text-decoration:none;display:block;text-align:center}
-.auth-notice-btn.secondary{background:transparent;color:var(--blue);border:1.5px solid var(--blue);padding:8px 20px}
 .auth-notice-btn:hover{opacity:.88}
-.profile-notice{display:none;background:#fff3e0;border:2px solid #ff9800;border-radius:14px;padding:16px 20px;margin-bottom:20px;align-items:flex-start;justify-content:space-between;gap:12px;flex-wrap:wrap}
+.profile-notice{display:none;background:#fff3e0;border:2px solid #ff9800;border-radius:14px;padding:16px 20px;margin-bottom:24px;align-items:flex-start;justify-content:space-between;gap:12px;flex-wrap:wrap}
 .profile-notice.show{display:flex}
 .profile-notice-text{font-size:14px;color:#7a4000;font-weight:500;line-height:1.5}
 .profile-notice-text small{display:block;font-size:12px;color:#9a5000;font-weight:400;margin-top:3px}
 .profile-notice-btn{padding:9px 20px;background:#ff9800;color:#fff;border:none;border-radius:10px;font-size:13px;font-weight:600;cursor:pointer;font-family:inherit;white-space:nowrap;text-decoration:none;display:block;text-align:center}
 @keyframes noticePulse{0%{box-shadow:0 0 0 0 rgba(245,166,0,.5)}60%{box-shadow:0 0 0 10px rgba(245,166,0,0)}100%{box-shadow:0 0 0 0 rgba(245,166,0,0)}}
 .auth-notice.pulse{animation:noticePulse .6s ease 3}
-.form-container{position:relative}
-.form-overlay{display:none;position:absolute;inset:0;z-index:10;cursor:not-allowed;border-radius:18px;-webkit-tap-highlight-color:transparent}
-.booking-info-card{
-  background:var(--bg2);border-radius:var(--radius2);padding:32px;
+
+/* STEP COUNTER */
+.step-counter{
+  font-size:13px;font-weight:600;color:var(--muted2);
+  text-align:right;margin-bottom:32px;letter-spacing:.01em;
 }
-.booking-info-title{font-size:20px;font-weight:700;letter-spacing:-.03em;color:var(--dark2);margin-bottom:24px}
-.info-row{display:flex;gap:14px;margin-bottom:20px;padding-bottom:20px;border-bottom:1px solid var(--border)}
-.info-row:last-child{border-bottom:none;margin-bottom:0;padding-bottom:0}
-.info-icon{
-  width:40px;height:40px;border-radius:10px;
-  background:#fff;display:flex;align-items:center;justify-content:center;
-  font-size:18px;flex-shrink:0;box-shadow:var(--shadow);
+
+/* WIZARD VIEWPORT */
+.wizard-viewport{overflow:hidden;position:relative}
+
+/* STEP */
+.wizard-step{
+  display:none;
+  animation-duration:.35s;
+  animation-timing-function:cubic-bezier(.4,0,.2,1);
+  animation-fill-mode:both;
 }
-.info-title{font-size:13px;font-weight:600;color:var(--dark2);margin-bottom:3px}
-.info-desc{font-size:12px;color:var(--muted);line-height:1.5}
+.wizard-step.active{display:block}
+.wizard-step.slide-in-right{animation-name:slideInRight}
+.wizard-step.slide-in-left{animation-name:slideInLeft}
+@keyframes slideInRight{from{transform:translateX(60px);opacity:0}to{transform:translateX(0);opacity:1}}
+@keyframes slideInLeft{from{transform:translateX(-60px);opacity:0}to{transform:translateX(0);opacity:1}}
+
+/* QUESTION */
+.step-question{
+  font-size:clamp(24px,5vw,32px);font-weight:700;
+  line-height:1.2;letter-spacing:-.03em;
+  color:var(--dark2);margin-bottom:8px;
+}
+.step-sub{font-size:14px;color:var(--muted);margin-bottom:28px;line-height:1.5}
+
+/* INPUTS */
+.wiz-input,.wiz-textarea{
+  width:100%;background:var(--bg2);border:2px solid var(--border);
+  border-radius:14px;padding:16px 20px;
+  color:var(--dark2);font-size:18px;font-family:inherit;
+  outline:none;transition:.2s;-webkit-appearance:none;
+  letter-spacing:.01em;
+}
+.wiz-input:focus,.wiz-textarea:focus{
+  border-color:var(--blue);background:#fff;
+  box-shadow:0 0 0 4px rgba(0,113,227,.1);
+}
+.wiz-input.invalid{border-color:#e53935!important;background:#fff5f5;box-shadow:0 0 0 4px rgba(229,57,53,.08)!important}
+.wiz-textarea{resize:vertical;min-height:120px;line-height:1.6;font-size:16px}
+.field-err{font-size:13px;color:#e53935;margin-top:8px;display:none;font-weight:500}
+.field-err.show{display:block}
+
+/* CARD GRID */
+.card-grid{
+  display:grid;
+  grid-template-columns:repeat(auto-fill,minmax(160px,1fr));
+  gap:12px;margin-bottom:4px;
+}
+.card-grid.days-grid{
+  grid-template-columns:repeat(auto-fill,minmax(120px,1fr));
+}
+.sel-card{
+  border:2px solid var(--border);border-radius:16px;
+  padding:20px 16px;cursor:pointer;
+  background:var(--bg2);transition:.2s;
+  text-align:center;user-select:none;
+  -webkit-tap-highlight-color:transparent;
+}
+.sel-card:hover{border-color:var(--blue);background:#f0f6ff}
+.sel-card.selected{
+  border-color:var(--blue);background:#e8f0fe;
+  box-shadow:0 0 0 3px rgba(0,113,227,.15);
+}
+.sel-card-icon{font-size:28px;margin-bottom:8px}
+.sel-card-label{font-size:13px;font-weight:600;color:var(--dark2);line-height:1.3}
+.days-grid .sel-card{padding:16px 12px}
+.days-grid .sel-card-label{font-size:14px;font-weight:700}
+
+/* STEPPER */
+.stepper{display:flex;align-items:center;gap:0;margin-bottom:4px}
+.stepper-btn{
+  width:52px;height:52px;border-radius:50%;border:2px solid var(--border);
+  background:var(--bg2);font-size:22px;font-weight:600;
+  cursor:pointer;display:flex;align-items:center;justify-content:center;
+  transition:.15s;color:var(--dark2);font-family:inherit;flex-shrink:0;
+  user-select:none;-webkit-tap-highlight-color:transparent;
+}
+.stepper-btn:hover{border-color:var(--blue);background:#f0f6ff;color:var(--blue)}
+.stepper-btn:active{transform:scale(.93)}
+.stepper-val{
+  font-size:36px;font-weight:700;min-width:80px;text-align:center;
+  color:var(--dark2);letter-spacing:-.03em;
+}
+.stepper-hint{font-size:13px;color:var(--muted);margin-top:10px}
+
+/* NAV BUTTONS */
+.wiz-nav{display:flex;align-items:center;gap:12px;margin-top:28px;flex-wrap:wrap}
+.btn-next{
+  flex:1;min-width:120px;padding:15px 28px;
+  background:var(--blue);color:#fff;border:none;
+  border-radius:14px;font-size:16px;font-weight:600;
+  cursor:pointer;font-family:inherit;transition:.18s;
+  display:flex;align-items:center;justify-content:center;gap:8px;
+}
+.btn-next:hover{background:var(--blue-hover)}
+.btn-next:disabled{opacity:.5;cursor:not-allowed}
+.btn-back{
+  padding:15px 20px;background:var(--bg2);color:var(--muted);
+  border:none;border-radius:14px;font-size:15px;font-weight:500;
+  cursor:pointer;font-family:inherit;transition:.18s;white-space:nowrap;
+}
+.btn-back:hover{background:var(--border);color:var(--dark2)}
+.btn-skip{
+  padding:15px 20px;background:transparent;color:var(--muted);
+  border:2px solid var(--border);border-radius:14px;font-size:15px;font-weight:500;
+  cursor:pointer;font-family:inherit;transition:.18s;white-space:nowrap;
+}
+.btn-skip:hover{border-color:var(--muted);color:var(--dark2)}
+
+/* SUMMARY CARD */
+.summary-card{
+  background:var(--bg2);border-radius:var(--radius2);padding:28px;
+  margin-bottom:4px;
+}
+.summary-row{
+  display:flex;gap:14px;align-items:flex-start;
+  padding:12px 0;border-bottom:1px solid var(--border);
+}
+.summary-row:last-child{border-bottom:none}
+.summary-label{font-size:12px;font-weight:600;color:var(--muted2);letter-spacing:.04em;text-transform:uppercase;min-width:100px;padding-top:2px}
+.summary-val{font-size:14px;font-weight:500;color:var(--dark2);line-height:1.4;flex:1}
+
+/* SUBMIT BTN */
+.btn-submit{
+  width:100%;padding:17px;background:var(--blue);color:#fff;
+  border:none;border-radius:14px;font-size:16px;font-weight:700;
+  cursor:pointer;font-family:inherit;transition:.2s;margin-top:20px;
+  letter-spacing:-.01em;
+}
+.btn-submit:hover{background:var(--blue-hover)}
+.btn-submit:disabled{opacity:.5;cursor:not-allowed}
 
 /* SUCCESS */
-.success-msg{display:none;text-align:center;padding:40px 20px}
-.success-icon{font-size:48px;margin-bottom:16px}
-.success-msg h3{font-size:22px;font-weight:700;color:var(--dark2);margin-bottom:12px}
-.success-msg p{font-size:15px;color:var(--muted);line-height:1.7}
-.share-btn{display:inline-flex;align-items:center;gap:8px;margin-top:20px;padding:12px 24px;background:var(--blue);color:#fff;border:none;border-radius:12px;font-size:14px;font-weight:600;cursor:pointer;font-family:inherit;transition:.2s}
+.success-screen{display:none;text-align:center;padding:48px 20px 20px}
+.success-icon{font-size:52px;margin-bottom:18px}
+.success-screen h3{font-size:24px;font-weight:700;color:var(--dark2);margin-bottom:14px;letter-spacing:-.03em}
+.success-screen p{font-size:15px;color:var(--muted);line-height:1.7;max-width:440px;margin:0 auto}
+.share-btn{display:inline-flex;align-items:center;gap:8px;margin-top:24px;padding:13px 26px;background:var(--blue);color:#fff;border:none;border-radius:12px;font-size:14px;font-weight:600;cursor:pointer;font-family:inherit;transition:.2s}
 .share-btn:hover{background:var(--blue-hover)}
-.share-copied{font-size:12px;color:var(--blue);margin-top:8px;display:none}
+.share-copied{font-size:12px;color:var(--blue);margin-top:10px;display:none}
 .share-copied.show{display:block}
 
 /* SKELETON */
 @keyframes sk-shimmer{0%{background-position:-600px 0}100%{background-position:600px 0}}
 .sk{background:linear-gradient(90deg,#e8e8ed 25%,#f2f2f5 50%,#e8e8ed 75%);background-size:1200px 100%;animation:sk-shimmer 1.4s infinite linear;border-radius:8px}
 #bookingSkeleton{padding:20px 0}
-.sk-form-title{height:28px;width:200px;margin-bottom:24px}
-.sk-form-input{height:44px;border-radius:10px;margin-bottom:14px}
-.sk-form-row{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:14px}
-@media(max-width:500px){.sk-form-row{grid-template-columns:1fr}}
-.sk-form-label{height:10px;width:80px;border-radius:5px;margin-bottom:8px}
-.sk-form-btn{height:48px;border-radius:14px;margin-top:8px}
+.sk-form-title{height:36px;width:260px;margin-bottom:32px;border-radius:10px}
+.sk-form-input{height:56px;border-radius:12px;margin-bottom:14px}
+.sk-form-btn{height:52px;border-radius:14px;margin-top:20px}
+
+/* WIZARD DISABLED */
+.wizard-disabled{position:relative}
+.wizard-disabled-overlay{
+  display:none;position:absolute;inset:0;z-index:10;
+  cursor:not-allowed;border-radius:18px;
+  background:rgba(255,255,255,.01);
+}
 
 /* FOOTER */
 footer{
@@ -175,6 +264,14 @@ footer{
 .footer-logo{font-size:16px;font-weight:700;letter-spacing:-.02em;color:var(--dark2);margin-bottom:6px}
 .footer-logo span{color:var(--blue)}
 .footer-copy{font-size:12px;color:var(--muted)}
+
+@media(max-width:500px){
+  .card-grid{grid-template-columns:1fr 1fr}
+  .days-grid{grid-template-columns:1fr 1fr}
+  .wiz-nav{gap:8px}
+  .btn-next{font-size:15px;padding:14px 20px}
+  .btn-back,.btn-skip{padding:14px 16px;font-size:14px}
+}
 </style>
 </head>
 <body>
@@ -185,222 +282,247 @@ footer{
   <a href="/" class="nav-back">← Буцах</a>
 </nav>
 
-<!-- HERO -->
-<div class="page-hero">
-  <div class="page-eyebrow">Хөтөч Захиалах</div>
-  <h1>Аяллаа эхлүүлэцгээе</h1>
-  <p>Мэдээллээ бөглөж, бид 24 цагийн дотор холбогдоно. Хөтөч тань аяллын өмнөөс эхлэн туслах болно.</p>
+<!-- PROGRESS BAR -->
+<div class="progress-bar-wrap">
+  <div class="progress-bar-fill" id="progressBar" style="width:10%"></div>
 </div>
 
-<!-- BOOKING FORM -->
-<div class="booking-wrap">
-  <!-- SKELETON -->
-  <div id="bookingSkeleton">
-    <div class="sk-form-title sk"></div>
-    <div class="sk-form-label sk"></div>
-    <div class="sk-form-input sk"></div>
-    <div class="sk-form-row">
-      <div><div class="sk-form-label sk"></div><div class="sk-form-input sk"></div></div>
-      <div><div class="sk-form-label sk"></div><div class="sk-form-input sk"></div></div>
-    </div>
-    <div class="sk-form-label sk"></div>
-    <div class="sk-form-input sk"></div>
-    <div class="sk-form-row">
-      <div><div class="sk-form-label sk"></div><div class="sk-form-input sk"></div></div>
-      <div><div class="sk-form-label sk"></div><div class="sk-form-input sk"></div></div>
-    </div>
-    <div class="sk-form-btn sk"></div>
-  </div>
+<!-- MAIN -->
+<div class="page-outer">
+  <div class="wizard-wrap">
 
-  <div id="bookingMain" style="display:none">
-    <div class="auth-notice" id="authNotice">
-      <div class="auth-notice-text">
-        🔒 Захиалга өгөхийн тулд нэвтэрнэ үү
-        <small>Захиалга илгээхийн өмнө эхлээд хаяг үүсгэх шаардлагатай</small>
-      </div>
-      <div class="auth-notice-actions">
-        <a href="/login?redirect=/booking" class="auth-notice-btn">Нэвтрэх / Бүртгүүлэх →</a>
-      </div>
+    <!-- SKELETON -->
+    <div id="bookingSkeleton">
+      <div class="sk sk-form-title"></div>
+      <div class="sk sk-form-input"></div>
+      <div class="sk sk-form-input"></div>
+      <div class="sk sk-form-btn"></div>
     </div>
 
-    <div class="profile-notice" id="profileNotice">
-      <div class="profile-notice-text">
-        ⚠️ Профайлаа бүрэн бөглөнө үү
-        <small>Захиалга өгөхийн өмнө нэр, утас, зураг болон бусад мэдээллээ бөглөх шаардлагатай</small>
-      </div>
-      <div>
-        <a href="/profile/" class="profile-notice-btn">Профайл бөглөх →</a>
-      </div>
-    </div>
+    <!-- WIZARD MAIN -->
+    <div id="bookingMain" style="display:none">
 
-    <div class="form-container">
-    <div class="form-overlay" id="formOverlay"></div>
-    <form id="bookingForm" onsubmit="submitBooking(event)">
-      <div class="form-error-msg" id="formErrorMsg">⚠️ Мэдээллээ бүрэн бөглөнө үү</div>
-      <div class="form-row">
-        <div class="form-group">
-          <label class="form-label">Нэр *</label>
-          <input class="form-input" type="text" id="b-name" placeholder="Таны нэр">
-          <div class="field-hint" id="hint-name">Нэрээ оруулна уу</div>
+      <!-- AUTH NOTICE -->
+      <div class="auth-notice" id="authNotice">
+        <div class="auth-notice-text">
+          🔒 Захиалга өгөхийн тулд нэвтэрнэ үү
+          <small>Захиалга илгээхийн өмнө эхлээд хаяг үүсгэх шаардлагатай</small>
         </div>
-        <div class="form-group">
-          <label class="form-label">Утас / WeChat *</label>
-          <input class="form-input" type="text" id="b-phone" placeholder="88887777">
-          <div class="field-hint" id="hint-phone">8 оронтой дугаар оруулна уу</div>
+        <div class="auth-notice-actions">
+          <a href="/login?redirect=/booking" class="auth-notice-btn">Нэвтрэх / Бүртгүүлэх →</a>
         </div>
       </div>
-      <div class="form-group">
-        <label class="form-label">И-мэйл *</label>
-        <input class="form-input" type="text" id="b-email" placeholder="example@gmail.com">
-        <div class="field-hint" id="hint-email">Зөв и-мэйл хаяг оруулна уу</div>
-      </div>
-      <div class="form-group">
-        <label class="form-label">Хүний тоо</label>
-        <select class="form-select" id="b-people">
-          <option value="">Сонгох...</option>
-          <option>1 хүн</option>
-          <option>2 хүн</option>
-          <option>3–4 хүн</option>
-          <option>5+ хүн</option>
-        </select>
-      </div>
-      <div class="form-group">
-        <label class="form-label">Үйлчилгээний төрөл *</label>
-        <select class="form-select" id="b-service">
-          <option value="">Сонгох...</option>
-          <option>🌟 VIP эрүүл мэндийн үйлчилгээтэй аялал</option>
-          <option>🩺 VIP Эрүүл мэндийн шинжилгээ</option>
-          <option>🏙️ Аялалын хөтөч</option>
-          <option>🛍️ Шоппинг дагалдах</option>
-          <option>✈️ Нисэх онгоцны угтаа</option>
-          <option>💼 Бизнесийн хэлмэрч</option>
-        </select>
-        <div class="field-hint" id="hint-service">Үйлчилгээний төрлөө сонгоно уу</div>
-      </div>
-      <div class="form-group">
-        <label class="form-label">Facebook / Instagram холбоос
-          <span id="social-help-btn" onclick="document.getElementById('social-help').classList.toggle('open')"
-            style="margin-left:6px;font-size:11px;font-weight:500;color:var(--blue);cursor:pointer;text-transform:none;letter-spacing:0">яаж авах? ▾</span>
-        </label>
-        <input class="form-input" type="text" id="b-social" placeholder="facebook.com/... эсвэл @username">
-        <div id="social-help" style="display:none;margin-top:10px;background:#f0f6ff;border:1px solid #cce0ff;border-radius:12px;padding:16px;font-size:13px;color:#1d1d1f;line-height:1.75">
 
-          <div style="font-weight:700;color:#0071e3;margin-bottom:10px">📘 Facebook холбоос авах</div>
-
-          <div style="font-weight:600;margin-bottom:4px">📱 Утасны апп</div>
-          1. Facebook аппыг нээж профайл хуудас руугаа орно<br>
-          2. "Профайл засах" товчны баруун талд байгаа <b>···</b> дарна<br>
-          3. Доош гүйлгэж <b>Холбоос хуулах</b> дарна<br>
-          4. "Профайлын холбоос хуулагдлаа" гэсэн мэдэгдэл гарна<br>
-
-          <div style="font-weight:600;margin-top:12px;margin-bottom:4px">💻 Компьютер</div>
-          1. facebook.com дээр орж профайл зургаа дарна<br>
-          2. Браузерын дээд хэсгийн хаягийн мөрийг дарна<br>
-          3. URL-г хуулна (Ctrl+C эсвэл Cmd+C)<br>
-          <span style="color:#86868b;font-size:12px">Жишээ: facebook.com/таны.нэр</span>
-
-          <div style="border-top:1px solid #cce0ff;margin:14px 0"></div>
-
-          <div style="font-weight:700;color:#c13584;margin-bottom:10px">📸 Instagram холбоос авах</div>
-
-          <div style="font-weight:600;margin-bottom:4px">📱 Утасны апп</div>
-          1. Instagram аппыг нээж профайл хуудас руугаа орно<br>
-          2. Биеийн доор байгаа <b>Профайл хуваалцах</b> товч дарна<br>
-          3. <b>Холбоос хуулах</b> дарна<br>
-
-          <div style="font-weight:600;margin-top:12px;margin-bottom:4px">💻 Компьютер</div>
-          1. Instagram.com дээр орж профайлаа нээнэ<br>
-          2. Браузерын хаягийн мөрөөс URL-г шууд хуулна<br>
-          <span style="color:#86868b;font-size:12px">Жишээ: instagram.com/таны_нэр</span>
-
+      <!-- PROFILE NOTICE -->
+      <div class="profile-notice" id="profileNotice">
+        <div class="profile-notice-text">
+          ⚠️ Профайлаа бүрэн бөглөнө үү
+          <small>Захиалга өгөхийн өмнө нэр, утас, зураг болон бусад мэдээллээ бөглөх шаардлагатай</small>
+        </div>
+        <div>
+          <a href="/profile/" class="profile-notice-btn">Профайл бөглөх →</a>
         </div>
       </div>
-      <div class="form-row">
-        <div class="form-group">
-          <label class="form-label">Аялалын эхлэх огноо *</label>
-          <input class="form-input" type="date" id="b-start">
-          <div class="field-hint" id="hint-start">Огноогоо сонгоно уу</div>
-        </div>
-        <div class="form-group">
-          <label class="form-label">Хэдэн өдөр *</label>
-          <select class="form-select" id="b-days">
-            <option value="">Сонгох...</option>
-            <option>1 өдөр</option>
-            <option>2 өдөр</option>
-            <option>3 өдөр</option>
-            <option>4–5 өдөр</option>
-            <option>7+ өдөр</option>
-          </select>
-          <div class="field-hint" id="hint-days">Хэдэн өдрийн аялал болохыг сонгоно уу</div>
-        </div>
-      </div>
-      <div class="form-group">
-        <label class="form-label">Бүлгийн хэмжээ</label>
-        <select class="form-select" id="b-group">
-          <option value="">Сонгох...</option>
-          <option>1 хүн (ганцаараа)</option>
-          <option>2 хүн (хосоороо)</option>
-          <option>3–4 хүн (гэр бүл)</option>
-          <option>5–10 хүн (бүлэг)</option>
-          <option>10+ хүн (том бүлэг)</option>
-        </select>
-      </div>
-      <div class="form-group">
-        <label class="form-label">Нэмэлт хүсэлт</label>
-        <textarea class="form-textarea" id="b-note" placeholder="Тусгай хүсэлт, асуулт байвал бичнэ үү..."></textarea>
-      </div>
-      <button type="submit" class="form-submit">Захиалга Илгээх →</button>
-    </form>
-    </div><!-- /form-container -->
-    <div class="success-msg" id="bookingSuccess">
-      <div class="success-icon">🎉</div>
-      <h3>Амжилттай илгээгдлээ!</h3>
-      <p>Таны захиалгыг хүлээн авлаа.<br>
-      Бид 24 цагийн дотор танд хандана.<br>
-      Баталгаажуулах и-мэйл таны хаяг руу илгээгдлээ.<br><br>
-      <a href="https://www.facebook.com/a.bileg.2025" target="_blank" style="color:var(--blue);font-weight:600">Facebook-ээр шууд холбогдож болно →</a></p>
-      <button class="share-btn" onclick="shareBooking()">🔗 Найздаа хуваалцах</button>
-      <div class="share-copied" id="shareCopied">Холбоос хуулагдлаа!</div>
-    </div>
-  </div>
-  </div><!-- /bookingMain -->
 
-  <div class="booking-info-card">
-    <div class="booking-info-title">Яагаад биднийг сонгох вэ?</div>
-    <div class="info-row">
-      <div class="info-icon">🗣️</div>
-      <div>
-        <div class="info-title">Монгол хэлтэй хөтөч</div>
-        <div class="info-desc">Хятад, Монгол, Англи хэл дээр чөлөөтэй харилцана. Хэлний саад байхгүй.</div>
+      <!-- STEP COUNTER -->
+      <div class="step-counter" id="stepCounter">1 / 10</div>
+
+      <!-- WIZARD BODY -->
+      <div class="wizard-disabled" id="wizardBody">
+        <div class="wizard-disabled-overlay" id="wizardOverlay"></div>
+        <div class="wizard-viewport" id="wizardViewport">
+
+          <!-- STEP 1: Name -->
+          <div class="wizard-step active" id="step-1">
+            <div class="step-question">Нэрээ бичнэ үү</div>
+            <div class="step-sub">Таны бодит нэрийг оруулна уу</div>
+            <input class="wiz-input" type="text" id="b-name" placeholder="Жишээ: Болд Бат" autocomplete="given-name">
+            <div class="field-err" id="err-name">Нэрээ оруулна уу</div>
+            <div class="wiz-nav">
+              <button class="btn-next" id="next-1" onclick="nextStep()">Дараах →</button>
+            </div>
+          </div>
+
+          <!-- STEP 2: Phone -->
+          <div class="wizard-step" id="step-2">
+            <div class="step-question">Утасны дугаар</div>
+            <div class="step-sub">Монгол 8 оронтой дугаар оруулна уу</div>
+            <input class="wiz-input" type="tel" id="b-phone" placeholder="88887777" maxlength="8" autocomplete="tel-national" inputmode="numeric">
+            <div class="field-err" id="err-phone">8 оронтой дугаар оруулна уу</div>
+            <div class="wiz-nav">
+              <button class="btn-back" onclick="prevStep()">← Буцах</button>
+              <button class="btn-next" onclick="nextStep()">Дараах →</button>
+            </div>
+          </div>
+
+          <!-- STEP 3: Email -->
+          <div class="wizard-step" id="step-3">
+            <div class="step-question">И-мэйл хаяг</div>
+            <div class="step-sub">Баталгаажуулах мэдээлэл илгээх болно</div>
+            <input class="wiz-input" type="email" id="b-email" placeholder="example@gmail.com" autocomplete="email" inputmode="email">
+            <div class="field-err" id="err-email">Зөв и-мэйл хаяг оруулна уу</div>
+            <div class="wiz-nav">
+              <button class="btn-back" onclick="prevStep()">← Буцах</button>
+              <button class="btn-next" onclick="nextStep()">Дараах →</button>
+            </div>
+          </div>
+
+          <!-- STEP 4: Service -->
+          <div class="wizard-step" id="step-4">
+            <div class="step-question">Үйлчилгээний төрөл</div>
+            <div class="step-sub">Нэгийг сонгоно уу — шууд дараагийн алхам руу шилжинэ</div>
+            <div class="card-grid" id="service-grid">
+              <div class="sel-card" data-val="🏥 Эрүүл мэндийн шинжилгээ" onclick="selectCard('service',this)">
+                <div class="sel-card-icon">🏥</div>
+                <div class="sel-card-label">Эрүүл мэндийн шинжилгээ</div>
+              </div>
+              <div class="sel-card" data-val="🗺️ Аяллын хөтөч" onclick="selectCard('service',this)">
+                <div class="sel-card-icon">🗺️</div>
+                <div class="sel-card-label">Аяллын хөтөч</div>
+              </div>
+              <div class="sel-card" data-val="🛍️ Шоппинг хөтөч" onclick="selectCard('service',this)">
+                <div class="sel-card-icon">🛍️</div>
+                <div class="sel-card-label">Шоппинг хөтөч</div>
+              </div>
+              <div class="sel-card" data-val="🍜 Ресторан & хоол" onclick="selectCard('service',this)">
+                <div class="sel-card-icon">🍜</div>
+                <div class="sel-card-label">Ресторан &amp; хоол</div>
+              </div>
+              <div class="sel-card" data-val="✈️ Нисэх онгоцны угтаа" onclick="selectCard('service',this)">
+                <div class="sel-card-icon">✈️</div>
+                <div class="sel-card-label">Нисэх онгоцны угтаа</div>
+              </div>
+              <div class="sel-card" data-val="💼 Бизнесийн хэлмэрч" onclick="selectCard('service',this)">
+                <div class="sel-card-icon">💼</div>
+                <div class="sel-card-label">Бизнесийн хэлмэрч</div>
+              </div>
+            </div>
+            <div class="field-err" id="err-service">Үйлчилгээний төрлөө сонгоно уу</div>
+            <div class="wiz-nav">
+              <button class="btn-back" onclick="prevStep()">← Буцах</button>
+              <button class="btn-next" onclick="nextStep()">Дараах →</button>
+            </div>
+          </div>
+
+          <!-- STEP 5: Start date -->
+          <div class="wizard-step" id="step-5">
+            <div class="step-question">Эхлэх огноо</div>
+            <div class="step-sub">Аялалын эхлэх өдрийг сонгоно уу</div>
+            <input class="wiz-input" type="text" id="b-start" placeholder="Огноо сонгох" readonly style="cursor:pointer">
+            <div class="field-err" id="err-start">Огноогоо сонгоно уу</div>
+            <div class="wiz-nav">
+              <button class="btn-back" onclick="prevStep()">← Буцах</button>
+              <button class="btn-next" onclick="nextStep()">Дараах →</button>
+            </div>
+          </div>
+
+          <!-- STEP 6: Days -->
+          <div class="wizard-step" id="step-6">
+            <div class="step-question">Хэдэн өдөр?</div>
+            <div class="step-sub">Аялалын үргэлжлэх хугацааг сонгоно уу</div>
+            <div class="card-grid days-grid" id="days-grid">
+              <div class="sel-card" data-val="1 өдөр" onclick="selectCard('days',this)">
+                <div class="sel-card-label">1 өдөр</div>
+              </div>
+              <div class="sel-card" data-val="2 өдөр" onclick="selectCard('days',this)">
+                <div class="sel-card-label">2 өдөр</div>
+              </div>
+              <div class="sel-card" data-val="3 өдөр" onclick="selectCard('days',this)">
+                <div class="sel-card-label">3 өдөр</div>
+              </div>
+              <div class="sel-card" data-val="4–5 өдөр" onclick="selectCard('days',this)">
+                <div class="sel-card-label">4–5 өдөр</div>
+              </div>
+              <div class="sel-card" data-val="7+ өдөр" onclick="selectCard('days',this)">
+                <div class="sel-card-label">7+ өдөр</div>
+              </div>
+            </div>
+            <div class="field-err" id="err-days">Өдрийн тоогоо сонгоно уу</div>
+            <div class="wiz-nav">
+              <button class="btn-back" onclick="prevStep()">← Буцах</button>
+              <button class="btn-next" onclick="nextStep()">Дараах →</button>
+            </div>
+          </div>
+
+          <!-- STEP 7: People stepper -->
+          <div class="wizard-step" id="step-7">
+            <div class="step-question">Хэдэн хүн?</div>
+            <div class="step-sub">Нийт хэдэн хүн аялах вэ?</div>
+            <div class="stepper">
+              <button class="stepper-btn" onclick="changePeople(-1)" aria-label="Хасах">−</button>
+              <div class="stepper-val" id="people-display">1</div>
+              <button class="stepper-btn" onclick="changePeople(1)" aria-label="Нэмэх">+</button>
+            </div>
+            <div class="stepper-hint">Хамгийн ихдээ 30 хүн</div>
+            <div class="wiz-nav">
+              <button class="btn-back" onclick="prevStep()">← Буцах</button>
+              <button class="btn-next" onclick="nextStep()">Дараах →</button>
+            </div>
+          </div>
+
+          <!-- STEP 8: Social (optional) -->
+          <div class="wizard-step" id="step-8">
+            <div class="step-question">Facebook / Instagram холбоос</div>
+            <div class="step-sub">Заавал биш — хуваалцахыг хүсвэл бичнэ үү</div>
+            <input class="wiz-input" type="text" id="b-social" placeholder="facebook.com/... эсвэл @username">
+            <div class="wiz-nav">
+              <button class="btn-back" onclick="prevStep()">← Буцах</button>
+              <button class="btn-skip" onclick="skipStep()">Алгасах →</button>
+              <button class="btn-next" onclick="nextStep()">Дараах →</button>
+            </div>
+          </div>
+
+          <!-- STEP 9: Note (optional) -->
+          <div class="wizard-step" id="step-9">
+            <div class="step-question">Нэмэлт хүсэлт</div>
+            <div class="step-sub">Заавал биш — тусгай хүсэлт, асуулт байвал бичнэ үү</div>
+            <textarea class="wiz-textarea" id="b-note" placeholder="Тусгай хүсэлт, асуулт байвал бичнэ үү..."></textarea>
+            <div class="wiz-nav">
+              <button class="btn-back" onclick="prevStep()">← Буцах</button>
+              <button class="btn-skip" onclick="skipStep()">Алгасах →</button>
+              <button class="btn-next" onclick="nextStep()">Дараах →</button>
+            </div>
+          </div>
+
+          <!-- STEP 10: Summary -->
+          <div class="wizard-step" id="step-10">
+            <div class="step-question">Захиалгаа шалгана уу</div>
+            <div class="step-sub">Бүх мэдээлэл зөв байвал илгээнэ үү</div>
+            <div class="summary-card" id="summaryCard">
+              <div class="summary-row"><div class="summary-label">Нэр</div><div class="summary-val" id="sum-name">—</div></div>
+              <div class="summary-row"><div class="summary-label">Утас</div><div class="summary-val" id="sum-phone">—</div></div>
+              <div class="summary-row"><div class="summary-label">И-мэйл</div><div class="summary-val" id="sum-email">—</div></div>
+              <div class="summary-row"><div class="summary-label">Үйлчилгээ</div><div class="summary-val" id="sum-service">—</div></div>
+              <div class="summary-row"><div class="summary-label">Огноо</div><div class="summary-val" id="sum-start">—</div></div>
+              <div class="summary-row"><div class="summary-label">Хугацаа</div><div class="summary-val" id="sum-days">—</div></div>
+              <div class="summary-row"><div class="summary-label">Хүний тоо</div><div class="summary-val" id="sum-people">—</div></div>
+              <div class="summary-row" id="sum-row-social" style="display:none"><div class="summary-label">Social</div><div class="summary-val" id="sum-social">—</div></div>
+              <div class="summary-row" id="sum-row-note" style="display:none"><div class="summary-label">Нэмэлт</div><div class="summary-val" id="sum-note">—</div></div>
+            </div>
+            <div class="wiz-nav">
+              <button class="btn-back" onclick="prevStep()">← Буцах</button>
+              <button class="btn-submit" id="submitBtn" onclick="submitBooking()">Захиалга Илгээх →</button>
+            </div>
+          </div>
+
+        </div><!-- /wizard-viewport -->
+      </div><!-- /wizard-body -->
+
+      <!-- SUCCESS SCREEN -->
+      <div class="success-screen" id="successScreen">
+        <div class="success-icon">🎉</div>
+        <h3>Амжилттай илгээгдлээ!</h3>
+        <p>Таны захиалгыг хүлээн авлаа.<br>
+        Бид 24 цагийн дотор танд хандана.<br>
+        Баталгаажуулах и-мэйл таны хаяг руу илгээгдлээ.<br><br>
+        <a href="https://www.facebook.com/a.bileg.2025" target="_blank" style="color:var(--blue);font-weight:600">Facebook-ээр шууд холбогдож болно →</a></p>
+        <button class="share-btn" onclick="shareBooking()">🔗 Найздаа хуваалцах</button>
+        <div class="share-copied" id="shareCopied">Холбоос хуулагдлаа!</div>
       </div>
-    </div>
-    <div class="info-row">
-      <div class="info-icon">⚡</div>
-      <div>
-        <div class="info-title">Хурдан & Дараалалгүй</div>
-        <div class="info-desc">VIP эмнэлэгт урьдчилан захиалга хийдэг тул 2–3 цагт бүтэн шинжилгээ дуусна.</div>
-      </div>
-    </div>
-    <div class="info-row">
-      <div class="info-icon">🌏</div>
-      <div>
-        <div class="info-title">Шанхайг гүнзгий мэднэ</div>
-        <div class="info-desc">Хотын нууц буланг, хамгийн сайн газруудыг, хэмнэлттэй арга замыг мэддэг хөтөч.</div>
-      </div>
-    </div>
-    <div class="info-row">
-      <div class="info-icon">📱</div>
-      <div>
-        <div class="info-title">Аяллын өмнө зөвлөгөө</div>
-        <div class="info-desc">Виз, VPN, мөнгөний бэлтгэл — аяллын өмнө бүхнийг тайлбарлаж өгнө.</div>
-      </div>
-    </div>
-    <a href="https://www.facebook.com/a.bileg.2025" target="_blank" style="display:flex;align-items:center;gap:8px;padding:13px 20px;background:#1877f2;color:#fff;border-radius:12px;text-decoration:none;font-size:14px;font-weight:500;margin-top:8px;justify-content:center">
-      <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"/></svg>
-      Facebook-ээр шууд холбогдох
-    </a>
-  </div>
-</div>
+
+    </div><!-- /bookingMain -->
+  </div><!-- /wizard-wrap -->
+</div><!-- /page-outer -->
 
 <footer>
   <div class="footer-logo">LFS <span>Shanghai</span></div>
@@ -411,237 +533,404 @@ footer{
 <script src="/js/calendar.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js"></script>
 <script>emailjs.init("jzbMLEF7IhbkS48RI");</script>
-<script type="module">
-  import { initializeApp } from "https://www.gstatic.com/firebasejs/11.7.1/firebase-app.js";
-  import { getFirestore, collection, addDoc, serverTimestamp, doc, getDoc } from "https://www.gstatic.com/firebasejs/11.7.1/firebase-firestore.js";
-  import { getAnalytics, logEvent } from "https://www.gstatic.com/firebasejs/11.7.1/firebase-analytics.js";
-  import { getAuth, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/11.7.1/firebase-auth.js";
 
-  const firebaseConfig = {
-    apiKey: "AIzaSyDixZdKwlrixRFokERCMQ5Ld1BMkhUttCQ",
-    authDomain: "lfs-shanghai.firebaseapp.com",
-    projectId: "lfs-shanghai",
-    storageBucket: "lfs-shanghai.firebasestorage.app",
-    messagingSenderId: "337508244675",
-    appId: "1:337508244675:web:f47b7e14417a0f1d129676",
-    measurementId: "G-81DTJ80VLR"
-  };
+<script>
+// ── WIZARD STATE ─────────────────────────────────────────────────
+const TOTAL_STEPS = 10;
+let currentStep = 1;
+let peopleCount = 1;
+let wizardData = {
+  name: '', phone: '', email: '', service: '',
+  start: '', days: '', people: 1, social: '', note: ''
+};
+let wizardLocked = false; // disabled when profile incomplete / not authed
 
-  const app = initializeApp(firebaseConfig);
-  const db = getFirestore(app);
-  const analytics = getAnalytics(app);
-  const auth = getAuth(app);
-  logEvent(analytics, 'page_view', { page_title: 'Booking Page' });
+function updateProgress() {
+  const pct = Math.round((currentStep / TOTAL_STEPS) * 100);
+  document.getElementById('progressBar').style.width = pct + '%';
+  document.getElementById('stepCounter').textContent = currentStep + ' / ' + TOTAL_STEPS;
+}
 
-  // Custom calendar — today or later only
-  initDatepicker('b-start', { minToday: true, placeholder: 'Огноо сонгох' });
-
-  async function checkProfileComplete(user) {
-    const form = document.getElementById('bookingForm');
-    const overlay = document.getElementById('formOverlay');
-    const profileNotice = document.getElementById('profileNotice');
-    try {
-      const snap = await getDoc(doc(db, 'users', user.uid));
-      const p = snap.exists() ? snap.data() : {};
-      const required = ['firstName','lastName','phone','birthday','gender','photoURL'];
-      const missing = required.filter(k => !p[k]);
-      if (missing.length > 0) {
-        profileNotice.classList.add('show');
-        form.style.opacity = '0.4';
-        form.style.pointerEvents = 'none';
-        overlay.style.display = 'block';
-        overlay.onclick = () => {
-          profileNotice.scrollIntoView({ behavior:'smooth', block:'nearest' });
-        };
-      } else {
-        profileNotice.classList.remove('show');
-        form.style.opacity = '';
-        form.style.pointerEvents = '';
-        overlay.style.display = 'none';
-      }
-    } catch(e) {
-      // On error, allow booking
-      form.style.opacity = '';
-      form.style.pointerEvents = '';
-      overlay.style.display = 'none';
-    }
+function showStep(n, direction) {
+  // direction: 'forward' | 'back'
+  const prev = document.getElementById('step-' + currentStep);
+  const next = document.getElementById('step-' + n);
+  if (prev) {
+    prev.classList.remove('active','slide-in-right','slide-in-left');
+    prev.style.display = 'none';
   }
-
-  function pulseNotice() {
-    const notice = document.getElementById('authNotice');
-    notice.classList.remove('pulse');
-    void notice.offsetWidth;
-    notice.classList.add('pulse');
-    notice.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
-    setTimeout(() => notice.classList.remove('pulse'), 1800);
-  }
-
-  const overlay = document.getElementById('formOverlay');
-  overlay.addEventListener('click', pulseNotice);
-  overlay.addEventListener('touchend', e => { e.preventDefault(); pulseNotice(); });
-
-  let currentUser = null;
-  onAuthStateChanged(auth, user => {
-    document.getElementById('bookingSkeleton').style.display = 'none';
-    document.getElementById('bookingMain').style.display = 'block';
-
-    currentUser = user;
-    const notice  = document.getElementById('authNotice');
-    const form    = document.getElementById('bookingForm');
-    const overlay = document.getElementById('formOverlay');
-    if (!user) {
-      notice.classList.add('show');
-      form.style.opacity = '0.4';
-      form.style.pointerEvents = 'none';
-      overlay.style.display = 'block';
-    } else {
-      notice.classList.remove('show');
-      overlay.style.display = 'none';
-      checkProfileComplete(user);
+  next.style.display = 'block';
+  next.classList.remove('slide-in-right','slide-in-left');
+  // Force reflow
+  void next.offsetWidth;
+  next.classList.add('active', direction === 'back' ? 'slide-in-left' : 'slide-in-right');
+  currentStep = n;
+  updateProgress();
+  // Focus first input in step
+  setTimeout(() => {
+    const inp = next.querySelector('input,textarea');
+    if (inp && inp.type !== 'hidden') {
+      try { inp.focus(); } catch(_) {}
     }
+  }, 380);
+  // Scroll to top of wizard
+  document.getElementById('wizardViewport').scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+}
+
+function validateCurrentStep() {
+  const s = currentStep;
+  if (s === 1) {
+    const v = document.getElementById('b-name').value.trim();
+    if (!v) { showErr('b-name','err-name'); return false; }
+    wizardData.name = v;
+    clearErr('b-name','err-name');
+    return true;
+  }
+  if (s === 2) {
+    const v = document.getElementById('b-phone').value.trim().replace(/\s/g,'');
+    if (!/^\d{8}$/.test(v)) { showErr('b-phone','err-phone'); return false; }
+    wizardData.phone = v;
+    clearErr('b-phone','err-phone');
+    return true;
+  }
+  if (s === 3) {
+    const v = document.getElementById('b-email').value.trim();
+    if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(v)) { showErr('b-email','err-email'); return false; }
+    wizardData.email = v;
+    clearErr('b-email','err-email');
+    return true;
+  }
+  if (s === 4) {
+    if (!wizardData.service) { document.getElementById('err-service').classList.add('show'); return false; }
+    document.getElementById('err-service').classList.remove('show');
+    return true;
+  }
+  if (s === 5) {
+    const v = document.getElementById('b-start').value.trim();
+    if (!v) { showErr('b-start','err-start'); return false; }
+    wizardData.start = v;
+    clearErr('b-start','err-start');
+    return true;
+  }
+  if (s === 6) {
+    if (!wizardData.days) { document.getElementById('err-days').classList.add('show'); return false; }
+    document.getElementById('err-days').classList.remove('show');
+    return true;
+  }
+  if (s === 7) {
+    wizardData.people = peopleCount;
+    return true;
+  }
+  // Steps 8, 9 optional — always valid
+  if (s === 8) { wizardData.social = document.getElementById('b-social').value.trim(); return true; }
+  if (s === 9) { wizardData.note = document.getElementById('b-note').value.trim(); return true; }
+  return true;
+}
+
+function showErr(inputId, errId) {
+  const el = document.getElementById(inputId);
+  if (el) el.classList.add('invalid');
+  const er = document.getElementById(errId);
+  if (er) er.classList.add('show');
+}
+function clearErr(inputId, errId) {
+  const el = document.getElementById(inputId);
+  if (el) el.classList.remove('invalid');
+  const er = document.getElementById(errId);
+  if (er) er.classList.remove('show');
+}
+
+function nextStep() {
+  if (wizardLocked) { pulseAuthNotice(); return; }
+  if (!validateCurrentStep()) return;
+  if (currentStep < TOTAL_STEPS) {
+    if (currentStep === 9) { populateSummary(); }
+    showStep(currentStep + 1, 'forward');
+  }
+}
+
+function prevStep() {
+  if (currentStep > 1) {
+    showStep(currentStep - 1, 'back');
+  }
+}
+
+function skipStep() {
+  if (currentStep === 8) { wizardData.social = ''; }
+  if (currentStep === 9) { wizardData.note = ''; }
+  if (currentStep === 9) { populateSummary(); }
+  if (currentStep < TOTAL_STEPS) {
+    showStep(currentStep + 1, 'forward');
+  }
+}
+
+// Card selection (service / days)
+function selectCard(type, el) {
+  const grid = el.closest('.card-grid');
+  grid.querySelectorAll('.sel-card').forEach(c => c.classList.remove('selected'));
+  el.classList.add('selected');
+  if (type === 'service') {
+    wizardData.service = el.dataset.val;
+    document.getElementById('err-service').classList.remove('show');
+  }
+  if (type === 'days') {
+    wizardData.days = el.dataset.val;
+    document.getElementById('err-days').classList.remove('show');
+  }
+  // Auto-advance after a short visual delay
+  setTimeout(() => nextStep(), 220);
+}
+
+// People stepper
+function changePeople(delta) {
+  const newVal = peopleCount + delta;
+  if (newVal < 1 || newVal > 30) return;
+  peopleCount = newVal;
+  document.getElementById('people-display').textContent = peopleCount;
+}
+
+// Summary
+function populateSummary() {
+  wizardData.social = document.getElementById('b-social').value.trim();
+  wizardData.note   = document.getElementById('b-note').value.trim();
+  wizardData.people = peopleCount;
+  document.getElementById('sum-name').textContent    = wizardData.name    || '—';
+  document.getElementById('sum-phone').textContent   = wizardData.phone   || '—';
+  document.getElementById('sum-email').textContent   = wizardData.email   || '—';
+  document.getElementById('sum-service').textContent = wizardData.service || '—';
+  document.getElementById('sum-start').textContent   = wizardData.start   || '—';
+  document.getElementById('sum-days').textContent    = wizardData.days    || '—';
+  document.getElementById('sum-people').textContent  = wizardData.people + ' хүн';
+  const rowSocial = document.getElementById('sum-row-social');
+  const rowNote   = document.getElementById('sum-row-note');
+  if (wizardData.social) {
+    rowSocial.style.display = 'flex';
+    document.getElementById('sum-social').textContent = wizardData.social;
+  } else { rowSocial.style.display = 'none'; }
+  if (wizardData.note) {
+    rowNote.style.display = 'flex';
+    document.getElementById('sum-note').textContent = wizardData.note;
+  } else { rowNote.style.display = 'none'; }
+}
+
+// Enter key on text/email/tel inputs
+['b-name','b-phone','b-email'].forEach(id => {
+  const el = document.getElementById(id);
+  if (!el) return;
+  el.addEventListener('keydown', e => {
+    if (e.key === 'Enter') { e.preventDefault(); nextStep(); }
   });
+});
+// Social — optional field, Enter still advances
+document.getElementById('b-social').addEventListener('keydown', e => {
+  if (e.key === 'Enter') { e.preventDefault(); nextStep(); }
+});
 
-  window.shareBooking = async function() {
-    const url  = 'https://bileg11.github.io/booking/';
-    const text = 'LFS Shanghai — Шанхай аялалын найдвартай хөтөч 🇨🇳';
-    if (navigator.share) {
-      try { await navigator.share({ title: 'LFS Shanghai', text, url }); return; } catch(_) {}
+// Clear invalid on input
+['b-name','b-phone','b-email','b-start'].forEach(id => {
+  const el = document.getElementById(id);
+  if (!el) return;
+  el.addEventListener('input', () => el.classList.remove('invalid'));
+});
+
+// Lock/unlock wizard
+function lockWizard() {
+  wizardLocked = true;
+  const ov = document.getElementById('wizardOverlay');
+  ov.style.display = 'block';
+  ov.onclick = pulseAuthNotice;
+}
+function unlockWizard() {
+  wizardLocked = false;
+  document.getElementById('wizardOverlay').style.display = 'none';
+}
+function pulseAuthNotice() {
+  const n = document.getElementById('authNotice');
+  n.classList.remove('pulse');
+  void n.offsetWidth;
+  n.classList.add('pulse');
+  n.scrollIntoView({ behavior:'smooth', block:'nearest' });
+  setTimeout(() => n.classList.remove('pulse'), 1800);
+}
+
+window.shareBooking = async function() {
+  const url  = 'https://bileg11.github.io/booking/';
+  const text = 'LFS Shanghai — Шанхай аялалын найдвартай хөтөч 🇨🇳';
+  if (navigator.share) {
+    try { await navigator.share({ title:'LFS Shanghai', text, url }); return; } catch(_) {}
+  }
+  try {
+    await navigator.clipboard.writeText(url);
+    const el = document.getElementById('shareCopied');
+    el.classList.add('show');
+    setTimeout(() => el.classList.remove('show'), 2500);
+  } catch(_) {}
+};
+
+// Initialize progress
+updateProgress();
+</script>
+
+<script type="module">
+import { initializeApp } from "https://www.gstatic.com/firebasejs/11.7.1/firebase-app.js";
+import { getFirestore, collection, addDoc, serverTimestamp, doc, getDoc } from "https://www.gstatic.com/firebasejs/11.7.1/firebase-firestore.js";
+import { getAnalytics, logEvent } from "https://www.gstatic.com/firebasejs/11.7.1/firebase-analytics.js";
+import { getAuth, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/11.7.1/firebase-auth.js";
+
+const firebaseConfig = {
+  apiKey: "AIzaSyDixZdKwlrixRFokERCMQ5Ld1BMkhUttCQ",
+  authDomain: "lfs-shanghai.firebaseapp.com",
+  projectId: "lfs-shanghai",
+  storageBucket: "lfs-shanghai.firebasestorage.app",
+  messagingSenderId: "337508244675",
+  appId: "1:337508244675:web:f47b7e14417a0f1d129676",
+  measurementId: "G-81DTJ80VLR"
+};
+
+const app  = initializeApp(firebaseConfig);
+const db   = getFirestore(app);
+const analytics = getAnalytics(app);
+const auth = getAuth(app);
+logEvent(analytics, 'page_view', { page_title: 'Booking Page' });
+
+// Custom calendar datepicker for step 5
+initDatepicker('b-start', { minToday: true, placeholder: 'Огноо сонгох' });
+
+// When datepicker picks a date, store it
+document.getElementById('b-start').addEventListener('change', () => {
+  const v = document.getElementById('b-start').value;
+  if (v) {
+    window.wizardData = window.wizardData || {};
+    window._wizardStartVal = v;
+  }
+});
+
+async function checkProfileComplete(user) {
+  const profileNotice = document.getElementById('profileNotice');
+  try {
+    const snap = await getDoc(doc(db, 'users', user.uid));
+    const p = snap.exists() ? snap.data() : {};
+    const required = ['firstName','lastName','phone','birthday','gender','photoURL'];
+    const missing = required.filter(k => !p[k]);
+    if (missing.length > 0) {
+      profileNotice.classList.add('show');
+      lockWizard();
+      document.getElementById('wizardOverlay').onclick = () => {
+        profileNotice.scrollIntoView({ behavior:'smooth', block:'nearest' });
+      };
+    } else {
+      profileNotice.classList.remove('show');
+      unlockWizard();
     }
-    try {
-      await navigator.clipboard.writeText(url);
-      const el = document.getElementById('shareCopied');
-      el.classList.add('show');
-      setTimeout(() => el.classList.remove('show'), 2500);
-    } catch(_) {}
+  } catch(e) {
+    // On error allow booking
+    unlockWizard();
+  }
+}
+
+let currentUser = null;
+onAuthStateChanged(auth, user => {
+  document.getElementById('bookingSkeleton').style.display = 'none';
+  document.getElementById('bookingMain').style.display = 'block';
+
+  currentUser = user;
+  const notice = document.getElementById('authNotice');
+  if (!user) {
+    notice.classList.add('show');
+    lockWizard();
+    document.getElementById('wizardOverlay').onclick = pulseAuthNotice;
+  } else {
+    notice.classList.remove('show');
+    checkProfileComplete(user);
+  }
+});
+
+async function sendConfirmEmail(toEmail, toName, d) {
+  try {
+    await window.emailjs.send("service_lr0xy9q", "template_o0e4529", {
+      to_email: toEmail,
+      to_name:  toName,
+      service:  d.service,
+      start:    d.start,
+      days:     d.days,
+      people:   d.people || '—',
+      phone:    d.phone,
+      group:    d.group  || '—',
+      note:     d.note   || '—'
+    });
+    console.log("Email sent to:", toEmail);
+  } catch(e) { console.error("EmailJS error:", e); }
+}
+
+const TELEGRAM_TOKEN   = "8799776564:AAEiPSe4iSLLae2FFvY02eHaoSfXC-Bw3t0";
+const TELEGRAM_CHAT_ID = "5541078218";
+
+async function sendTelegram(text) {
+  try {
+    await fetch(`https://api.telegram.org/bot${TELEGRAM_TOKEN}/sendMessage`, {
+      method:  "POST",
+      headers: { "Content-Type": "application/json" },
+      body:    JSON.stringify({ chat_id: TELEGRAM_CHAT_ID, text, parse_mode: "HTML" })
+    });
+  } catch(e) { console.error("Telegram:", e); }
+}
+
+window.submitBooking = async function() {
+  if (!currentUser) { pulseAuthNotice(); return; }
+
+  // Read latest values (user may have edited summary fields)
+  const d = {
+    name:    document.getElementById('b-name').value.trim()    || wizardData.name,
+    phone:   document.getElementById('b-phone').value.trim().replace(/\s/g,'') || wizardData.phone,
+    email:   document.getElementById('b-email').value.trim()   || wizardData.email,
+    service: wizardData.service,
+    start:   document.getElementById('b-start').value.trim()   || wizardData.start,
+    days:    wizardData.days,
+    people:  String(peopleCount),
+    social:  document.getElementById('b-social').value.trim()  || '',
+    group:   String(peopleCount),   // compat field
+    note:    document.getElementById('b-note').value.trim()    || '',
+    userId:  currentUser.uid,
+    createdAt: serverTimestamp()
   };
 
-  async function sendConfirmEmail(toEmail, toName, d) {
+  const btn = document.getElementById('submitBtn');
+  btn.disabled = true;
+  btn.textContent = 'Илгээж байна...';
+
+  try {
+    await addDoc(collection(db, "bookings"), d);
+    logEvent(analytics, 'booking_submitted', { service: d.service, people: d.people });
+
+    // Fetch user profile for Telegram
+    let p = {};
     try {
-      await window.emailjs.send("service_lr0xy9q", "template_o0e4529", {
-        to_email: toEmail,
-        to_name:  toName,
-        service:  d.service,
-        start:    d.start,
-        days:     d.days,
-        people:   d.people || '—',
-        phone:    d.phone,
-        group:    d.group  || '—',
-        note:     d.note   || '—'
-      });
-      console.log("Email sent to:", toEmail);
-    } catch(e) { console.error("EmailJS error:", e); }
-  }
+      const snap = await getDoc(doc(db, 'users', currentUser.uid));
+      if (snap.exists()) p = snap.data();
+    } catch(_) {}
 
-  const TELEGRAM_TOKEN   = "8799776564:AAEiPSe4iSLLae2FFvY02eHaoSfXC-Bw3t0";
-  const TELEGRAM_CHAT_ID = "5541078218";
-
-  async function sendTelegram(text) {
-    try {
-      await fetch(`https://api.telegram.org/bot${TELEGRAM_TOKEN}/sendMessage`, {
-        method:  "POST",
-        headers: { "Content-Type": "application/json" },
-        body:    JSON.stringify({ chat_id: TELEGRAM_CHAT_ID, text, parse_mode: "HTML" })
-      });
-    } catch(e) { console.error("Telegram:", e); }
-  }
-
-  function setInvalid(id, hintId) {
-    const el = document.getElementById(id);
-    el.classList.add('invalid');
-    el.addEventListener('input', () => { el.classList.remove('invalid'); document.getElementById(hintId).classList.remove('show'); }, { once: true });
-    el.addEventListener('change', () => { el.classList.remove('invalid'); document.getElementById(hintId).classList.remove('show'); }, { once: true });
-    document.getElementById(hintId).classList.add('show');
-  }
-
-  window.submitBooking = async function(e) {
-    e.preventDefault();
-
-    if (!currentUser) {
-      pulseNotice();
-      return;
+    const fullName = [p.lastName, p.firstName].filter(Boolean).join(' ') || '—';
+    let age = '—';
+    if (p.birthday) {
+      const bd = new Date(p.birthday), now = new Date();
+      let a = now.getFullYear() - bd.getFullYear();
+      if (now < new Date(now.getFullYear(), bd.getMonth(), bd.getDate())) a--;
+      if (a > 0 && a < 120) age = a + ' нас';
     }
 
-    const name    = document.getElementById('b-name').value.trim();
-    const phone   = document.getElementById('b-phone').value.trim().replace(/\s/g,'');
-    const email   = document.getElementById('b-email').value.trim();
-    const service = document.getElementById('b-service').value;
-    const start   = document.getElementById('b-start').value;
-    const days    = document.getElementById('b-days').value;
+    await sendConfirmEmail(d.email, d.name, d);
 
-    // Validation
-    let hasError = false;
-    const emailValid = /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
-    const phoneValid = /^\d{8}$/.test(phone);
-
-    if (!name)         { setInvalid('b-name', 'hint-name');       hasError = true; }
-    if (!phoneValid)   { setInvalid('b-phone', 'hint-phone');     hasError = true; }
-    if (!emailValid)   { setInvalid('b-email', 'hint-email');     hasError = true; }
-    if (!service)      { setInvalid('b-service', 'hint-service'); hasError = true; }
-    if (!start)        { setInvalid('b-start', 'hint-start');     hasError = true; }
-    if (!days)         { setInvalid('b-days', 'hint-days');       hasError = true; }
-
-    const errMsg = document.getElementById('formErrorMsg');
-    if (hasError) {
-      errMsg.classList.add('show');
-      errMsg.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
-      return;
-    }
-    errMsg.classList.remove('show');
-
-    const data = {
-      name,
-      phone,
-      email,
-      people:  document.getElementById('b-people').value,
-      service,
-      social:  document.getElementById('b-social').value,
-      start,
-      days,
-      group:   document.getElementById('b-group').value,
-      note:    document.getElementById('b-note').value,
-      userId:  currentUser.uid,
-      createdAt: serverTimestamp()
-    };
-
-    const btn = document.querySelector('.form-submit');
-    btn.disabled = true;
-    btn.textContent = 'Илгээж байна...';
-
-    try {
-      await addDoc(collection(db, "bookings"), data);
-      logEvent(analytics, 'booking_submitted', { service: data.service, people: data.people });
-
-      // Fetch user profile
-      let p = {};
-      try {
-        const snap = await getDoc(doc(db, 'users', currentUser.uid));
-        if (snap.exists()) p = snap.data();
-      } catch(_) {}
-
-      const fullName = [p.lastName, p.firstName].filter(Boolean).join(' ') || '—';
-      let age = '—';
-      if (p.birthday) {
-        const bd = new Date(p.birthday), now = new Date();
-        let a = now.getFullYear() - bd.getFullYear();
-        if (now < new Date(now.getFullYear(), bd.getMonth(), bd.getDate())) a--;
-        if (a > 0 && a < 120) age = a + ' нас';
-      }
-
-      // Confirmation email to customer
-      console.log("Sending email to:", data.email, "emailjs:", typeof window.emailjs);
-      await sendConfirmEmail(data.email, data.name, data);
-
-      await sendTelegram(
+    await sendTelegram(
 `📋 <b>Шинэ захиалга!</b>
 
-👤 <b>Нэр:</b> ${data.name}
-📞 <b>Утас:</b> ${data.phone}
-🛎 <b>Үйлчилгээ:</b> ${data.service}
-👥 <b>Хүн:</b> ${data.people||'—'}
-🗓 <b>Эхлэх:</b> ${data.start} · ${data.days}
-👨‍👩‍👧 <b>Бүлэг:</b> ${data.group||'—'}
-💬 <b>Нэмэлт:</b> ${data.note||'—'}
-📱 <b>Social:</b> ${data.social||'—'}
+👤 <b>Нэр:</b> ${d.name}
+📞 <b>Утас:</b> ${d.phone}
+🛎 <b>Үйлчилгээ:</b> ${d.service}
+👥 <b>Хүн:</b> ${d.people}
+🗓 <b>Эхлэх:</b> ${d.start} · ${d.days}
+👨‍👩‍👧 <b>Бүлэг:</b> ${d.group||'—'}
+💬 <b>Нэмэлт:</b> ${d.note||'—'}
+📱 <b>Social:</b> ${d.social||'—'}
 
 👤 <b>Хэрэглэгчийн мэдээлэл</b>
 🪪 <b>Нэр:</b> ${fullName}
@@ -650,90 +939,20 @@ footer{
 🎂 <b>Нас:</b> ${age}
 ⚥ <b>Хүйс:</b> ${p.gender||'—'}`);
 
-      document.getElementById('bookingForm').style.display = 'none';
-      document.getElementById('bookingSuccess').style.display = 'block';
-    } catch (err) {
-      console.error(err);
-      btn.disabled = false;
-      btn.textContent = 'Захиалга Илгээх →';
-      toast('Алдаа гарлаа', 'error', { subtitle: err.code || err.message || String(err) });
-    }
-  };
+    // Show success
+    document.getElementById('wizardBody').style.display = 'none';
+    document.getElementById('stepCounter').style.display = 'none';
+    document.getElementById('successScreen').style.display = 'block';
+    document.getElementById('progressBar').style.width = '100%';
+  } catch(err) {
+    console.error(err);
+    btn.disabled = false;
+    btn.textContent = 'Захиалга Илгээх →';
+    toast('Алдаа гарлаа', 'error', { subtitle: err.code || err.message || String(err) });
+  }
+};
 </script>
 
-<script>
-// ── ENTER KEY NAVIGATION ─────────────────────────────────────────
-(function () {
-  // Logical order of fields in the form
-  const ORDER = ['b-name','b-phone','b-email','b-people','b-service','b-social','b-start','b-days','b-group','b-note'];
-
-  // For datepicker fields the real input is hidden; we need to focus its trigger div
-  function getFocusTarget(id) {
-    const el = document.getElementById(id);
-    if (!el) return null;
-    if (el.type === 'date' || el.style.display === 'none') {
-      const wrap = el.closest ? el.closest('.dp-wrap') : null;
-      if (wrap) return wrap.querySelector('.dp-input-fake');
-    }
-    return el;
-  }
-
-  function focusNext(fromId) {
-    const idx = ORDER.indexOf(fromId);
-    for (let i = idx + 1; i < ORDER.length; i++) {
-      const t = getFocusTarget(ORDER[i]);
-      if (t) {
-        t.focus();
-        // Scroll into view smoothly on mobile
-        t.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
-        return;
-      }
-    }
-    // End of fields → focus submit
-    const btn = document.querySelector('.form-submit');
-    if (btn) { btn.focus(); btn.scrollIntoView({ behavior: 'smooth', block: 'nearest' }); }
-  }
-
-  // ── Text inputs: Enter → next ──────────────────────────────────
-  ['b-name', 'b-phone', 'b-email', 'b-social'].forEach(id => {
-    const el = document.getElementById(id);
-    if (!el) return;
-    el.addEventListener('keydown', e => {
-      if (e.key === 'Enter') { e.preventDefault(); focusNext(id); }
-    });
-  });
-
-  // ── Selects: pick → auto-advance ──────────────────────────────
-  // Also Enter on focused select (already has value) advances
-  ['b-people', 'b-service', 'b-days', 'b-group'].forEach(id => {
-    const el = document.getElementById(id);
-    if (!el) return;
-    el.addEventListener('change', () => { setTimeout(() => focusNext(id), 30); });
-    el.addEventListener('keydown', e => {
-      if (e.key === 'Enter' && el.value) { e.preventDefault(); focusNext(id); }
-    });
-  });
-
-  // ── Datepicker: date chosen → auto-advance ────────────────────
-  const startEl = document.getElementById('b-start');
-  if (startEl) {
-    startEl.addEventListener('change', () => { setTimeout(() => focusNext('b-start'), 60); });
-  }
-
-  // ── Textarea: Enter = newline (normal), Ctrl/Cmd+Enter = submit ─
-  const noteEl = document.getElementById('b-note');
-  if (noteEl) {
-    noteEl.addEventListener('keydown', e => {
-      if (e.key === 'Enter' && (e.ctrlKey || e.metaKey)) {
-        e.preventDefault();
-        document.querySelector('.form-submit')?.click();
-      }
-    });
-    // Also show hint in placeholder
-    noteEl.placeholder = 'Тусгай хүсэлт, асуулт байвал бичнэ үү...\n(Ctrl+Enter илгээх)';
-  }
-})();
-</script>
 <script>
 if ('serviceWorker' in navigator) {
   navigator.serviceWorker.register('/sw.js').catch(() => {});
