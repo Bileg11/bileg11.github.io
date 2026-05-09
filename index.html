@@ -4,6 +4,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>LFS Shanghai — Монгол Аялагчдын Найдвартай Хөтөч</title>
+<link rel="manifest" href="/manifest.json">
 <link rel="icon" type="image/svg+xml" href="/favicon.svg">
 <meta name="google-site-verification" content="35m0yyQrPQg0QEHh1WAqDF2aDlv8aAQIMmzYVPuKF6w">
 <link rel="sitemap" type="application/xml" href="/sitemap.xml">
@@ -2069,6 +2070,11 @@ function switchAuthTab(tab, btn) {
 window.openAuthModal = openAuthModal;
 window.closeAuthModal = closeAuthModal;
 window.switchAuthTab = switchAuthTab;
+</script>
+<script>
+if ('serviceWorker' in navigator) {
+  navigator.serviceWorker.register('/sw.js').catch(() => {});
+}
 </script>
 </body>
 </html>

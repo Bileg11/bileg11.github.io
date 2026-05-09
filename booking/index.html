@@ -4,6 +4,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Захиалга өгөх — LFS Shanghai</title>
+<link rel="manifest" href="/manifest.json">
 <link rel="icon" type="image/svg+xml" href="/favicon.svg">
 <meta name="description" content="Шанхайд аялах захиалгаа өгнө үү. 24 цагийн дотор холбогдоно.">
 <meta name="robots" content="index, follow">
@@ -150,6 +151,21 @@ body{
 .success-icon{font-size:48px;margin-bottom:16px}
 .success-msg h3{font-size:22px;font-weight:700;color:var(--dark2);margin-bottom:12px}
 .success-msg p{font-size:15px;color:var(--muted);line-height:1.7}
+.share-btn{display:inline-flex;align-items:center;gap:8px;margin-top:20px;padding:12px 24px;background:var(--blue);color:#fff;border:none;border-radius:12px;font-size:14px;font-weight:600;cursor:pointer;font-family:inherit;transition:.2s}
+.share-btn:hover{background:var(--blue-hover)}
+.share-copied{font-size:12px;color:var(--blue);margin-top:8px;display:none}
+.share-copied.show{display:block}
+
+/* SKELETON */
+@keyframes sk-shimmer{0%{background-position:-600px 0}100%{background-position:600px 0}}
+.sk{background:linear-gradient(90deg,#e8e8ed 25%,#f2f2f5 50%,#e8e8ed 75%);background-size:1200px 100%;animation:sk-shimmer 1.4s infinite linear;border-radius:8px}
+#bookingSkeleton{padding:20px 0}
+.sk-form-title{height:28px;width:200px;margin-bottom:24px}
+.sk-form-input{height:44px;border-radius:10px;margin-bottom:14px}
+.sk-form-row{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:14px}
+@media(max-width:500px){.sk-form-row{grid-template-columns:1fr}}
+.sk-form-label{height:10px;width:80px;border-radius:5px;margin-bottom:8px}
+.sk-form-btn{height:48px;border-radius:14px;margin-top:8px}
 
 /* FOOTER */
 footer{
@@ -178,7 +194,25 @@ footer{
 
 <!-- BOOKING FORM -->
 <div class="booking-wrap">
-  <div>
+  <!-- SKELETON -->
+  <div id="bookingSkeleton">
+    <div class="sk-form-title sk"></div>
+    <div class="sk-form-label sk"></div>
+    <div class="sk-form-input sk"></div>
+    <div class="sk-form-row">
+      <div><div class="sk-form-label sk"></div><div class="sk-form-input sk"></div></div>
+      <div><div class="sk-form-label sk"></div><div class="sk-form-input sk"></div></div>
+    </div>
+    <div class="sk-form-label sk"></div>
+    <div class="sk-form-input sk"></div>
+    <div class="sk-form-row">
+      <div><div class="sk-form-label sk"></div><div class="sk-form-input sk"></div></div>
+      <div><div class="sk-form-label sk"></div><div class="sk-form-input sk"></div></div>
+    </div>
+    <div class="sk-form-btn sk"></div>
+  </div>
+
+  <div id="bookingMain" style="display:none">
     <div class="auth-notice" id="authNotice">
       <div class="auth-notice-text">
         🔒 Захиалга өгөхийн тулд нэвтэрнэ үү
@@ -325,8 +359,11 @@ footer{
       Бид 24 цагийн дотор танд хандана.<br>
       Баталгаажуулах и-мэйл таны хаяг руу илгээгдлээ.<br><br>
       <a href="https://www.facebook.com/a.bileg.2025" target="_blank" style="color:var(--blue);font-weight:600">Facebook-ээр шууд холбогдож болно →</a></p>
+      <button class="share-btn" onclick="shareBooking()">🔗 Найздаа хуваалцах</button>
+      <div class="share-copied" id="shareCopied">Холбоос хуулагдлаа!</div>
     </div>
   </div>
+  </div><!-- /bookingMain -->
 
   <div class="booking-info-card">
     <div class="booking-info-title">Яагаад биднийг сонгох вэ?</div>
@@ -445,6 +482,9 @@ footer{
 
   let currentUser = null;
   onAuthStateChanged(auth, user => {
+    document.getElementById('bookingSkeleton').style.display = 'none';
+    document.getElementById('bookingMain').style.display = 'block';
+
     currentUser = user;
     const notice  = document.getElementById('authNotice');
     const form    = document.getElementById('bookingForm');
@@ -457,10 +497,23 @@ footer{
     } else {
       notice.classList.remove('show');
       overlay.style.display = 'none';
-      // Check profile completeness
       checkProfileComplete(user);
     }
   });
+
+  window.shareBooking = async function() {
+    const url  = 'https://bileg11.github.io/booking/';
+    const text = 'LFS Shanghai — Шанхай аялалын найдвартай хөтөч 🇨🇳';
+    if (navigator.share) {
+      try { await navigator.share({ title: 'LFS Shanghai', text, url }); return; } catch(_) {}
+    }
+    try {
+      await navigator.clipboard.writeText(url);
+      const el = document.getElementById('shareCopied');
+      el.classList.add('show');
+      setTimeout(() => el.classList.remove('show'), 2500);
+    } catch(_) {}
+  };
 
   async function sendConfirmEmail(toEmail, toName, d) {
     try {
@@ -680,6 +733,11 @@ footer{
     noteEl.placeholder = 'Тусгай хүсэлт, асуулт байвал бичнэ үү...\n(Ctrl+Enter илгээх)';
   }
 })();
+</script>
+<script>
+if ('serviceWorker' in navigator) {
+  navigator.serviceWorker.register('/sw.js').catch(() => {});
+}
 </script>
 </body>
 </html>
