@@ -425,8 +425,18 @@ footer{
     }
   });
 
-  // Telegram is now handled server-side via Cloud Function (functions/index.js)
-  // No token stored in client code.
+  const TELEGRAM_TOKEN   = "8799776564:AAEiPSe4iSLLae2FFvY02eHaoSfXC-Bw3t0";
+  const TELEGRAM_CHAT_ID = "5541078218";
+
+  async function sendTelegram(text) {
+    try {
+      await fetch(`https://api.telegram.org/bot${TELEGRAM_TOKEN}/sendMessage`, {
+        method:  "POST",
+        headers: { "Content-Type": "application/json" },
+        body:    JSON.stringify({ chat_id: TELEGRAM_CHAT_ID, text, parse_mode: "HTML" })
+      });
+    } catch(e) { console.error("Telegram:", e); }
+  }
 
   function setInvalid(id, hintId) {
     const el = document.getElementById(id);
@@ -493,7 +503,41 @@ footer{
     try {
       await addDoc(collection(db, "bookings"), data);
       logEvent(analytics, 'booking_submitted', { service: data.service, people: data.people });
-      // Telegram + confirmation email are handled by Cloud Function (server-side)
+
+      // Fetch user profile
+      let p = {};
+      try {
+        const snap = await getDoc(doc(db, 'users', currentUser.uid));
+        if (snap.exists()) p = snap.data();
+      } catch(_) {}
+
+      const fullName = [p.lastName, p.firstName].filter(Boolean).join(' ') || '—';
+      let age = '—';
+      if (p.birthday) {
+        const bd = new Date(p.birthday), now = new Date();
+        let a = now.getFullYear() - bd.getFullYear();
+        if (now < new Date(now.getFullYear(), bd.getMonth(), bd.getDate())) a--;
+        if (a > 0 && a < 120) age = a + ' нас';
+      }
+
+      await sendTelegram(
+`📋 <b>Шинэ захиалга!</b>
+
+👤 <b>Нэр:</b> ${data.name}
+📞 <b>Утас:</b> ${data.phone}
+🛎 <b>Үйлчилгээ:</b> ${data.service}
+👥 <b>Хүн:</b> ${data.people||'—'}
+🗓 <b>Эхлэх:</b> ${data.start} · ${data.days}
+👨‍👩‍👧 <b>Бүлэг:</b> ${data.group||'—'}
+💬 <b>Нэмэлт:</b> ${data.note||'—'}
+📱 <b>Social:</b> ${data.social||'—'}
+
+👤 <b>Хэрэглэгчийн мэдээлэл</b>
+🪪 <b>Нэр:</b> ${fullName}
+📞 <b>Утас:</b> ${p.phone||'—'}
+📧 <b>И-мэйл:</b> ${p.email||currentUser.email||'—'}
+🎂 <b>Нас:</b> ${age}
+⚥ <b>Хүйс:</b> ${p.gender||'—'}`);
 
       document.getElementById('bookingForm').style.display = 'none';
       document.getElementById('bookingSuccess').style.display = 'block';
