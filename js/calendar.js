@@ -27,16 +27,16 @@
     .dp-input-fake.open .dp-icon { transform: rotate(180deg); }
 
     .dp-panel {
-      position: absolute; top: calc(100% + 6px); left: 0;
+      position: fixed;
       background: #fff; border: 1px solid rgba(0,0,0,.1);
       border-radius: 18px; padding: 20px;
       box-shadow: 0 12px 48px rgba(0,0,0,.14);
-      z-index: 9000; width: 300px;
+      z-index: 9999; width: 300px;
       opacity: 0; transform: translateY(-6px) scale(.98);
       pointer-events: none;
       transition: opacity .18s ease, transform .18s ease;
     }
-    @media(max-width:400px) { .dp-panel { width: calc(100vw - 32px); left: 0; } }
+    @media(max-width:400px) { .dp-panel { width: calc(100vw - 32px); } }
     .dp-panel.open { opacity: 1; transform: translateY(0) scale(1); pointer-events: all; }
 
     /* Header */
@@ -172,7 +172,7 @@
         <button class="dp-clear-btn" id="${realInput.id}-dp-clear">Цэвэрлэх</button>
       </div>
     `;
-    wrap.appendChild(panel);
+    document.body.appendChild(panel);
 
     // ── Refs ──────────────────────────────────────────
     const labelEl  = wrap.querySelector(`#${realInput.id}-dp-label`);
@@ -283,7 +283,18 @@
       }
     }
 
+    function positionPanel() {
+      const r = trigger.getBoundingClientRect();
+      const panelW = 300;
+      let left = r.left;
+      if (left + panelW > window.innerWidth - 8) left = window.innerWidth - panelW - 8;
+      if (left < 8) left = 8;
+      panel.style.top  = (r.bottom + 6) + 'px';
+      panel.style.left = left + 'px';
+    }
+
     function open() {
+      positionPanel();
       panel.classList.add('open');
       trigger.classList.add('open');
       render();
