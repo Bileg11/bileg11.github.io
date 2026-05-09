@@ -491,12 +491,13 @@ footer{
 </div>`;
 
     try {
-      await emailjs.send("service_lr0xy9q", "template_ysnf5yx", {
+      await window.emailjs.send("service_lr0xy9q", "template_ysnf5yx", {
         to_email:     toEmail,
         to_name:      toName,
         html_message: html
       });
-    } catch(e) { console.error("EmailJS:", e); }
+      console.log("Email sent to:", toEmail);
+    } catch(e) { console.error("EmailJS error:", e); }
   }
 
   function erow(label, value) {
