@@ -4,6 +4,8 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Admin — LFS Shanghai</title>
+<link rel="icon" type="image/svg+xml" href="/favicon.svg">
+<meta name="robots" content="noindex, nofollow">
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
 <style>
 *{margin:0;padding:0;box-sizing:border-box}
@@ -153,6 +155,12 @@ body{font-family:'Inter',sans-serif;background:var(--bg);color:var(--text);min-h
 .btn-close{flex:1;padding:10px;background:var(--bg3);border:1px solid var(--border);border-radius:10px;color:var(--text);font-size:13px;font-weight:600;cursor:pointer;font-family:inherit;transition:.2s}
 .btn-close:hover{border-color:var(--muted)}
 
+.pagination{display:flex;align-items:center;justify-content:center;gap:8px;margin-top:20px;flex-wrap:wrap}
+.page-btn{padding:6px 12px;background:var(--bg3);border:1px solid var(--border);border-radius:8px;color:var(--text);font-size:13px;cursor:pointer;font-family:inherit;transition:.15s;min-width:36px;text-align:center}
+.page-btn:hover{border-color:var(--blue);color:var(--blue)}
+.page-btn.active{background:var(--blue);color:#fff;border-color:var(--blue)}
+.page-btn:disabled{opacity:.4;cursor:default;pointer-events:none}
+.page-info{font-size:13px;color:var(--muted);padding:0 8px}
 @media(max-width:800px){
   .table-header,.booking-row{grid-template-columns:1fr 1fr;gap:8px}
   .table-header .h-service,.table-header .h-date,.table-header .h-people,.table-header .h-status,
@@ -287,8 +295,8 @@ body{font-family:'Inter',sans-serif;background:var(--bg);color:var(--text);min-h
     </div>
 
     <div class="filters">
-      <input class="search-input" type="text" id="searchInput" placeholder="🔍 Нэр, утас хайх..." oninput="renderTable()">
-      <select class="filter-select" id="filterService" onchange="renderTable()">
+      <input class="search-input" type="text" id="searchInput" placeholder="🔍 Нэр, утас хайх..." oninput="currentPage=1;renderTable()">
+      <select class="filter-select" id="filterService" onchange="currentPage=1;renderTable()">
         <option value="">Бүх үйлчилгээ</option>
         <option>🌟 VIP эрүүл мэндийн үйлчилгээтэй аялал</option>
         <option>🩺 VIP Эрүүл мэндийн шинжилгээ</option>
@@ -297,7 +305,7 @@ body{font-family:'Inter',sans-serif;background:var(--bg);color:var(--text);min-h
         <option>✈️ Нисэх онгоцны угтаа</option>
         <option>💼 Бизнесийн хэлмэрч</option>
       </select>
-      <select class="filter-select" id="filterStatus" onchange="renderTable()">
+      <select class="filter-select" id="filterStatus" onchange="currentPage=1;renderTable()">
         <option value="">Бүх статус</option>
         <option value="new">Шинэ</option>
         <option value="contacted">Холбогдсон</option>
@@ -317,6 +325,7 @@ body{font-family:'Inter',sans-serif;background:var(--bg);color:var(--text);min-h
       </div>
       <div id="tableBody"><div class="loading-state">Ачаалж байна...</div></div>
     </div>
+    <div class="pagination" id="bookingPagination"></div>
     </div> <!-- end tab-bookings -->
   </div>
 </div>
@@ -356,6 +365,8 @@ const db = getFirestore(app);
 let allBookings = [];
 let allFinances = [];
 let currentDocId = null;
+let currentPage = 1;
+const PAGE_SIZE = 20;
 
 // AUTH STATE
 onAuthStateChanged(auth, user => {
@@ -501,12 +512,17 @@ window.renderTable = function() {
 
   if (!filtered.length) {
     document.getElementById('tableBody').innerHTML = '<div class="empty-state">Захиалга олдсонгүй</div>';
+    document.getElementById('bookingPagination').innerHTML = '';
     return;
   }
 
+  const totalPages = Math.ceil(filtered.length / PAGE_SIZE);
+  if (currentPage > totalPages) currentPage = totalPages;
+  const pageItems = filtered.slice((currentPage - 1) * PAGE_SIZE, currentPage * PAGE_SIZE);
+
   const statusLabel = {'new':'Шинэ','contacted':'Холбогдсон','done':'Дууссан'};
   const statusClass = {'new':'badge-new','contacted':'badge-contacted','done':'badge-done'};
-  document.getElementById('tableBody').innerHTML = filtered.map(b => {
+  document.getElementById('tableBody').innerHTML = pageItems.map(b => {
     const st = getStatus(b);
     return `<div class="booking-row" onclick="openModal('${b.id}')">
       <div class="row-name">${b.name || '—'}</div>
@@ -517,6 +533,35 @@ window.renderTable = function() {
       <div class="row-status"><span class="badge ${statusClass[st]||'badge-new'}">${statusLabel[st]||'Шинэ'}</span></div>
     </div>`;
   }).join('');
+
+  // Render pagination
+  const pag = document.getElementById('bookingPagination');
+  if (totalPages <= 1) { pag.innerHTML = ''; return; }
+  let html = `<button class="page-btn" onclick="goPage(${currentPage-1})" ${currentPage===1?'disabled':''}>← Өмнөх</button>`;
+  const makePagButtons = (cur, total) => {
+    const btns = [];
+    let start = Math.max(1, cur - 2);
+    let end = Math.min(total, cur + 2);
+    if (end - start < 4) {
+      if (start === 1) end = Math.min(total, start + 4);
+      else start = Math.max(1, end - 4);
+    }
+    if (start > 1) { btns.push(1); if (start > 2) btns.push('…'); }
+    for (let i = start; i <= end; i++) btns.push(i);
+    if (end < total) { if (end < total - 1) btns.push('…'); btns.push(total); }
+    return btns;
+  };
+  makePagButtons(currentPage, totalPages).forEach(p => {
+    if (p === '…') html += `<span class="page-info">…</span>`;
+    else html += `<button class="page-btn ${p===currentPage?'active':''}" onclick="goPage(${p})">${p}</button>`;
+  });
+  html += `<button class="page-btn" onclick="goPage(${currentPage+1})" ${currentPage===totalPages?'disabled':''}>Дараах →</button>`;
+  pag.innerHTML = html;
+};
+
+window.goPage = function(p) {
+  currentPage = p;
+  renderTable();
 };
 
 window.openModal = function(id) {
