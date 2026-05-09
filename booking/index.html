@@ -603,7 +603,8 @@ footer{
       }
 
       // Confirmation email to customer
-      sendConfirmEmail(data.email, data.name, data);
+      console.log("Sending email to:", data.email, "emailjs:", typeof window.emailjs);
+      await sendConfirmEmail(data.email, data.name, data);
 
       await sendTelegram(
 `📋 <b>Шинэ захиалга!</b>
