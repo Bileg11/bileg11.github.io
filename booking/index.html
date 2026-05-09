@@ -256,6 +256,23 @@ body{
   background:rgba(255,255,255,.01);
 }
 
+/* INLINE CALENDAR */
+.ical-wrap{background:var(--bg2);border-radius:16px;padding:16px;margin-bottom:12px}
+.ical-head{display:flex;align-items:center;justify-content:space-between;margin-bottom:14px}
+.ical-nav{width:34px;height:34px;border:none;background:#fff;border-radius:50%;font-size:22px;cursor:pointer;display:flex;align-items:center;justify-content:center;color:var(--dark2);box-shadow:0 1px 4px rgba(0,0,0,.1);transition:.15s}
+.ical-nav:hover{background:var(--blue);color:#fff}
+.ical-title{font-size:15px;font-weight:700;color:var(--dark2);letter-spacing:-.02em}
+.ical-daynames{display:grid;grid-template-columns:repeat(7,1fr);margin-bottom:4px}
+.ical-dn-cell{text-align:center;font-size:11px;font-weight:600;color:var(--muted2);padding:4px 0}
+.ical-grid{display:grid;grid-template-columns:repeat(7,1fr);gap:2px}
+.ical-day{aspect-ratio:1;display:flex;align-items:center;justify-content:center;font-size:13px;border-radius:50%;cursor:pointer;border:none;background:none;font-family:inherit;color:var(--dark2);transition:.12s;width:100%}
+.ical-day:hover:not(.ical-disabled):not(.ical-selected){background:rgba(0,113,227,.1);color:var(--blue)}
+.ical-day.ical-other{color:#c7c7cc}
+.ical-day.ical-today{font-weight:700;color:var(--blue)}
+.ical-day.ical-selected{background:var(--blue)!important;color:#fff!important;font-weight:700}
+.ical-day.ical-disabled{color:#d1d1d6;cursor:default;pointer-events:none}
+.ical-selected{text-align:center;font-size:14px;font-weight:600;color:var(--blue);padding:8px 0 4px;min-height:28px}
+
 /* FOOTER */
 footer{
   background:var(--bg2);border-top:1px solid var(--border);
@@ -407,8 +424,20 @@ footer{
           <!-- STEP 5: Start date -->
           <div class="wizard-step" id="step-5">
             <div class="step-question">Эхлэх огноо</div>
-            <div class="step-sub">Аялалын эхлэх өдрийг сонгоно уу</div>
-            <input type="date" id="b-start">
+            <input type="hidden" id="b-start">
+
+            <!-- Inline calendar -->
+            <div class="ical-wrap">
+              <div class="ical-head">
+                <button type="button" class="ical-nav" id="ical-prev">&#8249;</button>
+                <span class="ical-title" id="ical-title"></span>
+                <button type="button" class="ical-nav" id="ical-next">&#8250;</button>
+              </div>
+              <div class="ical-daynames" id="ical-dn"></div>
+              <div class="ical-grid" id="ical-grid"></div>
+              <div class="ical-selected" id="ical-selected">Огноо сонгоно уу</div>
+            </div>
+
             <div class="field-err" id="err-start">Огноогоо сонгоно уу</div>
             <div class="wiz-nav">
               <button class="btn-back" onclick="prevStep()">← Буцах</button>
@@ -793,17 +822,83 @@ const analytics = getAnalytics(app);
 const auth = getAuth(app);
 logEvent(analytics, 'page_view', { page_title: 'Booking Page' });
 
-// Custom calendar datepicker for step 5
-initDatepicker('b-start', { minToday: true, placeholder: 'Огноо сонгох' });
+// ── Inline calendar for step 5 ──────────────────────────────────
+(function() {
+  const MN_MONTHS = ['1-р сар','2-р сар','3-р сар','4-р сар','5-р сар','6-р сар',
+                     '7-р сар','8-р сар','9-р сар','10-р сар','11-р сар','12-р сар'];
+  const MN_DAYS   = ['Да','Мя','Лх','Пү','Ба','Бя','Ня'];
+  const pad = n => String(n).padStart(2,'0');
+  const toYMD = d => `${d.getFullYear()}-${pad(d.getMonth()+1)}-${pad(d.getDate())}`;
 
-// When datepicker picks a date, store it
-document.getElementById('b-start').addEventListener('change', () => {
-  const v = document.getElementById('b-start').value;
-  if (v) {
-    window.wizardData = window.wizardData || {};
-    window._wizardStartVal = v;
+  const today = new Date(); today.setHours(0,0,0,0);
+  let viewYear = today.getFullYear();
+  let viewMonth = today.getMonth();
+  let selected = null;
+
+  const realInput  = document.getElementById('b-start');
+  const titleEl    = document.getElementById('ical-title');
+  const gridEl     = document.getElementById('ical-grid');
+  const dnEl       = document.getElementById('ical-dn');
+  const selectedEl = document.getElementById('ical-selected');
+
+  // Day name headers
+  MN_DAYS.forEach(d => {
+    const el = document.createElement('div');
+    el.className = 'ical-dn-cell';
+    el.textContent = d;
+    dnEl.appendChild(el);
+  });
+
+  function render() {
+    titleEl.textContent = `${viewYear} · ${MN_MONTHS[viewMonth]}`;
+    gridEl.innerHTML = '';
+
+    const first = new Date(viewYear, viewMonth, 1);
+    const last  = new Date(viewYear, viewMonth+1, 0);
+    let dow = first.getDay() - 1; if (dow < 0) dow = 6;
+
+    // Prev month fillers
+    for (let i = 0; i < dow; i++) {
+      const d = new Date(viewYear, viewMonth, -dow + i + 1);
+      addCell(d, true);
+    }
+    // Current month
+    for (let i = 1; i <= last.getDate(); i++) addCell(new Date(viewYear, viewMonth, i), false);
+    // Next month fillers
+    const total = dow + last.getDate();
+    const rem = (7 - (total % 7)) % 7;
+    for (let i = 1; i <= rem; i++) addCell(new Date(viewYear, viewMonth+1, i), true);
   }
-});
+
+  function addCell(date, other) {
+    const btn = document.createElement('button');
+    btn.type = 'button';
+    btn.className = 'ical-day';
+    btn.textContent = date.getDate();
+    if (other)                           btn.classList.add('ical-other');
+    if (toYMD(date) === toYMD(today))    btn.classList.add('ical-today');
+    if (date < today)                    btn.classList.add('ical-disabled');
+    if (selected && toYMD(date) === toYMD(selected)) btn.classList.add('ical-selected');
+    btn.onclick = () => {
+      selected = date;
+      realInput.value = toYMD(date);
+      const label = `${date.getFullYear()}/${pad(date.getMonth()+1)}/${pad(date.getDate())}`;
+      selectedEl.textContent = '✓ ' + label + ' сонгогдлоо';
+      document.getElementById('err-start').style.display = 'none';
+      render();
+    };
+    gridEl.appendChild(btn);
+  }
+
+  document.getElementById('ical-prev').onclick = () => {
+    viewMonth--; if (viewMonth < 0) { viewMonth = 11; viewYear--; } render();
+  };
+  document.getElementById('ical-next').onclick = () => {
+    viewMonth++; if (viewMonth > 11) { viewMonth = 0; viewYear++; } render();
+  };
+
+  render();
+})();
 
 async function checkProfileComplete(user) {
   const profileNotice = document.getElementById('profileNotice');
