@@ -428,83 +428,20 @@ footer{
   });
 
   async function sendConfirmEmail(toEmail, toName, d) {
-    const html =
-`<div style="margin:0;padding:0;background:#f5f5f7;font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Helvetica,Arial,sans-serif;">
-<table width="100%" cellpadding="0" cellspacing="0" style="background:#f5f5f7;padding:32px 0;">
-<tr><td align="center">
-<table width="560" cellpadding="0" cellspacing="0" style="background:#fff;border-radius:18px;overflow:hidden;box-shadow:0 2px 20px rgba(0,0,0,.08);">
-
-  <!-- HEADER -->
-  <tr>
-    <td style="background:#0a1628;padding:28px 32px;text-align:center;">
-      <img src="https://bileg11.github.io/logo.png" alt="LFS Shanghai" width="90" height="90"
-           style="border-radius:50%;display:block;margin:0 auto 14px;object-fit:cover;">
-      <div style="font-size:20px;font-weight:700;color:#fff;letter-spacing:-.02em;">LFS Shanghai</div>
-      <div style="font-size:12px;color:rgba(255,255,255,.6);margin-top:4px;letter-spacing:.06em;text-transform:uppercase;">Шанхай аялалын үйлчилгээ</div>
-    </td>
-  </tr>
-
-  <!-- BODY -->
-  <tr>
-    <td style="padding:32px;">
-      <div style="font-size:22px;font-weight:700;color:#1d1d1f;margin-bottom:6px;">Захиалга хүлээн авлаа ✓</div>
-      <div style="font-size:14px;color:#6e6e73;margin-bottom:28px;line-height:1.6;">
-        Сайн байна уу, <b style="color:#1d1d1f;">${toName}</b>!<br>
-        Таны захиалгыг амжилттай хүлээн авлаа. Бид <b>24 цагийн дотор</b> тантай холбогдоно.
-      </div>
-
-      <!-- SUMMARY TABLE -->
-      <table width="100%" cellpadding="0" cellspacing="0" style="background:#f5f5f7;border-radius:14px;overflow:hidden;">
-        <tr>
-          <td colspan="2" style="padding:14px 18px 10px;font-size:11px;font-weight:700;color:#86868b;letter-spacing:.06em;text-transform:uppercase;">
-            Захиалгын дэлгэрэнгүй
-          </td>
-        </tr>
-        ${erow('🛎 Үйлчилгээ',  d.service)}
-        ${erow('🗓 Эхлэх огноо', d.start)}
-        ${erow('📅 Хоног',       d.days)}
-        ${erow('👥 Хүний тоо',  d.people || '—')}
-        ${erow('📞 Утас',        d.phone)}
-        ${d.group ? erow('👨‍👩‍👧 Бүлэг', d.group) : ''}
-        ${d.note  ? erow('💬 Нэмэлт', d.note)  : ''}
-      </table>
-
-      <div style="margin-top:20px;padding:16px 18px;background:#fff8e6;border-radius:12px;border:1px solid #f5c842;">
-        <div style="font-size:13px;font-weight:600;color:#1d1d1f;margin-bottom:3px;">Асуулт байна уу?</div>
-        <div style="font-size:13px;color:#6e6e73;">Facebook-ээр шууд холбогдоно уу:
-          <a href="https://www.facebook.com/a.bileg.2025" style="color:#0071e3;font-weight:600;">facebook.com/a.bileg.2025</a>
-        </div>
-      </div>
-    </td>
-  </tr>
-
-  <!-- FOOTER -->
-  <tr>
-    <td style="padding:18px 32px;border-top:1px solid rgba(0,0,0,.06);text-align:center;">
-      <div style="font-size:12px;color:#86868b;">© 2025 LFS Shanghai · Энэ и-мэйл таны захиалгын баталгаа юм.</div>
-    </td>
-  </tr>
-
-</table>
-</td></tr>
-</table>
-</div>`;
-
     try {
       await window.emailjs.send("service_lr0xy9q", "template_9rzwwzg", {
-        to_email:     toEmail,
-        to_name:      toName,
-        html_message: html
+        to_email: toEmail,
+        to_name:  toName,
+        service:  d.service,
+        start:    d.start,
+        days:     d.days,
+        people:   d.people || '—',
+        phone:    d.phone,
+        group:    d.group  || '—',
+        note:     d.note   || '—'
       });
       console.log("Email sent to:", toEmail);
     } catch(e) { console.error("EmailJS error:", e); }
-  }
-
-  function erow(label, value) {
-    return `<tr>
-      <td style="padding:9px 18px;font-size:13px;color:#6e6e73;width:140px;vertical-align:top;border-top:1px solid rgba(0,0,0,.04);">${label}</td>
-      <td style="padding:9px 18px;font-size:13px;color:#1d1d1f;font-weight:500;vertical-align:top;border-top:1px solid rgba(0,0,0,.04);">${value}</td>
-    </tr>`;
   }
 
   const TELEGRAM_TOKEN   = "8799776564:AAEiPSe4iSLLae2FFvY02eHaoSfXC-Bw3t0";
