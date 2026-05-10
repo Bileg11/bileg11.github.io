@@ -1981,11 +1981,29 @@ function openAccountModal() {
   };
 
   window.doLogin = async function() {
-    // Remove readonly (if user pressed button without tapping field first)
-    document.getElementById('login-email').removeAttribute('readonly');
-    document.getElementById('login-pass').removeAttribute('readonly');
-    const email = document.getElementById('login-email').value.trim();
-    const pass = document.getElementById('login-pass').value;
+    const em = document.getElementById('login-email');
+    const pw = document.getElementById('login-pass');
+    // Remove readonly so fields become writable
+    em.removeAttribute('readonly');
+    pw.removeAttribute('readonly');
+
+    const email = em.value.trim();
+    const pass  = pw.value;
+
+    // If fields are empty → focus password field so iOS shows Face ID / autofill.
+    // Once autofill fills the values, auto-submit.
+    if (!email || !pass) {
+      pw.focus();
+      const autoSubmit = () => {
+        pw.removeEventListener('input', autoSubmit);
+        em.removeEventListener('input', autoSubmit);
+        if (em.value.trim() && pw.value) window.doLogin();
+      };
+      pw.addEventListener('input', autoSubmit);
+      em.addEventListener('input', autoSubmit);
+      return;
+    }
+
     const msg = document.getElementById('login-msg');
     msg.style.display = 'none';
     try {
