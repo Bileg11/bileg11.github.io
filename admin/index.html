@@ -203,11 +203,11 @@ body{font-family:'Inter',sans-serif;background:var(--bg);color:var(--text);min-h
     <div class="login-sub">Admin панел — нэвтрэх</div>
     <div class="field">
       <label>Имэйл</label>
-      <input type="email" id="loginEmail" placeholder="admin@email.com" autocomplete="email">
+      <input type="email" id="loginEmail" placeholder="admin@email.com" autocomplete="off">
     </div>
     <div class="field">
       <label>Нууц үг</label>
-      <input type="password" id="loginPassword" placeholder="••••••••" autocomplete="current-password">
+      <input type="password" id="loginPassword" placeholder="••••••••" autocomplete="new-password">
     </div>
     <button class="login-btn" id="loginBtn" onclick="doLogin()">Нэвтрэх →</button>
     <div class="login-error" id="loginError">Имэйл эсвэл нууц үг буруу байна.</div>
@@ -217,7 +217,7 @@ body{font-family:'Inter',sans-serif;background:var(--bg);color:var(--text);min-h
 <!-- DASHBOARD -->
 <div class="dashboard" id="dashboard">
   <div class="topbar">
-    <div class="topbar-logo">LFS <span>Shanghai</span> · Admin</div>
+    <a class="topbar-logo" href="/" style="text-decoration:none;color:inherit">LFS <span>Shanghai</span> · Admin</a>
     <div class="topbar-right">
       <span class="topbar-email" id="adminEmail"></span>
       <button class="logout-btn" onclick="doLogout()">Гарах</button>
@@ -264,6 +264,18 @@ body{font-family:'Inter',sans-serif;background:var(--bg);color:var(--text);min-h
           <button class="finance-add-btn" onclick="addFinance()">+ Нэмэх</button>
         </div>
       </div>
+      <!-- Monthly Finance Chart -->
+      <div class="chart-section" style="margin-bottom:24px">
+        <div class="chart-title">Сарын орлого / зарлага (сүүлийн 6 сар)</div>
+        <div id="financeMonthlyChart" style="display:flex;gap:8px;align-items:flex-end;min-height:90px;padding-top:4px">
+          <div style="color:var(--muted);font-size:13px">Ачаалж байна...</div>
+        </div>
+        <div style="display:flex;gap:16px;margin-top:8px;font-size:11px">
+          <div style="display:flex;align-items:center;gap:5px"><div style="width:10px;height:10px;background:var(--green);border-radius:2px;opacity:.8"></div>Орлого</div>
+          <div style="display:flex;align-items:center;gap:5px"><div style="width:10px;height:10px;background:var(--red);border-radius:2px;opacity:.8"></div>Зарлага</div>
+        </div>
+      </div>
+
       <div class="finance-list">
         <div class="finance-list-header">
           <span>Огноо</span><span>Тайлбар</span><span>Дүн</span><span>Төрөл</span><span></span>
@@ -315,6 +327,10 @@ body{font-family:'Inter',sans-serif;background:var(--bg);color:var(--text);min-h
         <div class="chart-title">Үйлчилгээний төрлөөр</div>
         <div id="serviceChart"><div style="color:var(--muted);font-size:13px">Ачаалж байна...</div></div>
       </div>
+      <div class="chart-section">
+        <div class="chart-title">Хаанаас ирсэн (эх сурвалж)</div>
+        <div id="sourceChart"><div style="color:var(--muted);font-size:13px">Ачаалж байна...</div></div>
+      </div>
 
       <div class="chart-section">
         <div class="chart-title">Сарын захиалга (сүүлийн 6 сар)</div>
@@ -343,8 +359,11 @@ body{font-family:'Inter',sans-serif;background:var(--bg);color:var(--text);min-h
       </div>
     </div>
 
+    <div style="display:flex;justify-content:flex-end;margin-bottom:16px">
+      <button class="finance-add-btn" style="display:flex;align-items:center;gap:6px" onclick="openAddBookingModal()">+ Захиалга нэмэх</button>
+    </div>
     <div class="filters">
-      <input class="search-input" type="text" id="searchInput" placeholder="🔍 Нэр, утас хайх..." oninput="currentPage=1;renderTable()">
+      <input class="search-input" type="text" id="searchInput" placeholder="🔍 Нэр, утас, имэйл хайх..." oninput="currentPage=1;renderTable()">
       <select class="filter-select" id="filterService" onchange="currentPage=1;renderTable()">
         <option value="">Бүх үйлчилгээ</option>
         <option>🌟 VIP эрүүл мэндийн үйлчилгээтэй аялал</option>
@@ -380,6 +399,78 @@ body{font-family:'Inter',sans-serif;background:var(--bg);color:var(--text);min-h
   </div>
 </div>
 
+<!-- ADD BOOKING MODAL -->
+<div class="modal-bg" id="addModalBg" onclick="if(event.target===this)closeAddModal()">
+  <div class="modal" style="max-width:560px">
+    <div class="modal-title">Захиалга нэмэх</div>
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:14px" id="addBookingForm">
+      <div style="display:flex;flex-direction:column;gap:5px">
+        <label style="font-size:11px;color:var(--muted);text-transform:uppercase;letter-spacing:.04em">Нэр *</label>
+        <input class="finance-input" type="text" id="ab-name" placeholder="Овог Нэр">
+      </div>
+      <div style="display:flex;flex-direction:column;gap:5px">
+        <label style="font-size:11px;color:var(--muted);text-transform:uppercase;letter-spacing:.04em">Утас *</label>
+        <input class="finance-input" type="text" id="ab-phone" placeholder="+976 9999 9999">
+      </div>
+      <div style="display:flex;flex-direction:column;gap:5px;grid-column:1/-1">
+        <label style="font-size:11px;color:var(--muted);text-transform:uppercase;letter-spacing:.04em">И-мэйл</label>
+        <input class="finance-input" type="email" id="ab-email" placeholder="example@gmail.com">
+      </div>
+      <div style="display:flex;flex-direction:column;gap:5px;grid-column:1/-1">
+        <label style="font-size:11px;color:var(--muted);text-transform:uppercase;letter-spacing:.04em">Үйлчилгээ *</label>
+        <select class="finance-select" id="ab-service" style="width:100%">
+          <option value="">Сонгох...</option>
+          <option>🌟 VIP эрүүл мэндийн үйлчилгээтэй аялал</option>
+          <option>🩺 VIP Эрүүл мэндийн шинжилгээ</option>
+          <option>🏙️ Аялалын хөтөч</option>
+          <option>🛍️ Шоппинг дагалдах</option>
+          <option>✈️ Нисэх онгоцны угтаа</option>
+          <option>💼 Бизнесийн хэлмэрч</option>
+        </select>
+      </div>
+      <div style="display:flex;flex-direction:column;gap:5px">
+        <label style="font-size:11px;color:var(--muted);text-transform:uppercase;letter-spacing:.04em">Эхлэх огноо</label>
+        <input class="finance-input" type="date" id="ab-start">
+      </div>
+      <div style="display:flex;flex-direction:column;gap:5px">
+        <label style="font-size:11px;color:var(--muted);text-transform:uppercase;letter-spacing:.04em">Хэдэн өдөр</label>
+        <select class="finance-select" id="ab-days">
+          <option value="">—</option>
+          <option>1 өдөр</option><option>2 өдөр</option><option>3 өдөр</option>
+          <option>4–5 өдөр</option><option>7+ өдөр</option>
+        </select>
+      </div>
+      <div style="display:flex;flex-direction:column;gap:5px">
+        <label style="font-size:11px;color:var(--muted);text-transform:uppercase;letter-spacing:.04em">Хүний тоо</label>
+        <input class="finance-input" type="number" id="ab-people" min="1" max="50" placeholder="1">
+      </div>
+      <div style="display:flex;flex-direction:column;gap:5px">
+        <label style="font-size:11px;color:var(--muted);text-transform:uppercase;letter-spacing:.04em">Эх сурвалж</label>
+        <select class="finance-select" id="ab-source">
+          <option value="">Тодорхойгүй</option>
+          <option value="Instagram">Instagram</option>
+          <option value="Facebook">Facebook</option>
+          <option value="Website">Вэбсайт</option>
+          <option value="Найзаасаа">Найзаасаа</option>
+          <option value="Бусад">Бусад</option>
+        </select>
+      </div>
+      <div style="display:flex;flex-direction:column;gap:5px;grid-column:1/-1">
+        <label style="font-size:11px;color:var(--muted);text-transform:uppercase;letter-spacing:.04em">Facebook/Instagram холбоос</label>
+        <input class="finance-input" type="text" id="ab-social" placeholder="facebook.com/...">
+      </div>
+      <div style="display:flex;flex-direction:column;gap:5px;grid-column:1/-1">
+        <label style="font-size:11px;color:var(--muted);text-transform:uppercase;letter-spacing:.04em">Нэмэлт тэмдэглэл</label>
+        <textarea class="finance-input" id="ab-note" rows="2" placeholder="Тусгай хүсэлт..." style="resize:vertical"></textarea>
+      </div>
+    </div>
+    <div class="modal-actions" style="margin-top:24px;padding-top:20px;border-top:1px solid var(--border)">
+      <button class="btn-mark-done" onclick="saveManualBooking()" style="background:var(--blue);border-color:var(--blue);color:#fff">Хадгалах →</button>
+      <button class="btn-close" onclick="closeAddModal()">Болих</button>
+    </div>
+  </div>
+</div>
+
 <!-- MODAL -->
 <div class="modal-bg" id="modalBg" onclick="closeModal(event)">
   <div class="modal" id="modal">
@@ -396,7 +487,7 @@ body{font-family:'Inter',sans-serif;background:var(--bg);color:var(--text);min-h
 <script src="/js/toast.js"></script>
 <script type="module">
 import { initializeApp } from "https://www.gstatic.com/firebasejs/11.7.1/firebase-app.js";
-import { getAuth, signInWithEmailAndPassword, signOut, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/11.7.1/firebase-auth.js";
+import { getAuth, signInWithEmailAndPassword, signOut, onAuthStateChanged, inMemoryPersistence, setPersistence } from "https://www.gstatic.com/firebasejs/11.7.1/firebase-auth.js";
 import { getFirestore, collection, getDocs, addDoc, doc, updateDoc, deleteDoc, orderBy, query, serverTimestamp, onSnapshot, limit } from "https://www.gstatic.com/firebasejs/11.7.1/firebase-firestore.js";
 
 const firebaseConfig = {
@@ -411,6 +502,8 @@ const firebaseConfig = {
 const app = initializeApp(firebaseConfig);
 const auth = getAuth(app);
 const db = getFirestore(app);
+// Require fresh login on every page load (no session persistence)
+setPersistence(auth, inMemoryPersistence).catch(() => {});
 
 let allBookings = [];
 let allFinances = [];
@@ -617,11 +710,25 @@ window.switchTab = function(tab, btn) {
         <div class="bar-count">${c}</div>
       </div>`).join('');
 
+    // Source breakdown
+    const srcEl = document.getElementById('sourceChart');
+    if (srcEl) {
+      const srcMap = {};
+      allBookings.forEach(b => { const s = b.source || 'Тодорхойгүй'; srcMap[s] = (srcMap[s]||0)+1; });
+      const maxSrc = Math.max(...Object.values(srcMap), 1);
+      srcEl.innerHTML = Object.entries(srcMap).sort((a,b)=>b[1]-a[1]).map(([s,c]) => `
+        <div class="bar-row">
+          <div class="bar-label">${s}</div>
+          <div class="bar-track"><div class="bar-fill" style="width:${Math.round(c/maxSrc*100)}%;background:var(--green)"></div></div>
+          <div class="bar-count">${c}</div>
+        </div>`).join('');
+    }
+
     // Monthly trend (last 6 months)
     const months = [];
     for (let i = 5; i >= 0; i--) {
-      const d = new Date(); d.setMonth(d.getMonth() - i);
-      months.push({ label: d.toLocaleString('mn-MN',{month:'short'}), month: d.getMonth(), year: d.getFullYear(), count: 0 });
+      const d = new Date(); d.setDate(1); d.setMonth(d.getMonth() - i);
+      months.push({ label: (d.getMonth()+1)+'-р сар', month: d.getMonth(), year: d.getFullYear(), count: 0 });
     }
     allBookings.forEach(b => {
       const d = b.createdAt?.toDate?.();
@@ -792,6 +899,7 @@ async function loadFinance() {
 }
 
 function renderFinance() {
+  renderMonthlyFinanceChart();
   const income  = allFinances.filter(f=>f.type==='income').reduce((s,f)=>s+Number(f.amount),0);
   const expense = allFinances.filter(f=>f.type==='expense').reduce((s,f)=>s+Number(f.amount),0);
   const fmt = n => n.toLocaleString('mn-MN') + '₮';
@@ -839,6 +947,91 @@ window.deleteFinance = async function(id) {
   renderFinance();
   toast('Устгагдлаа', 'info');
 };
+
+// ── MANUAL BOOKING ADD ──
+window.openAddBookingModal = function() {
+  ['ab-name','ab-phone','ab-email','ab-social','ab-note'].forEach(id => {
+    const el = document.getElementById(id); if (el) el.value = '';
+  });
+  ['ab-service','ab-days','ab-source'].forEach(id => {
+    const el = document.getElementById(id); if (el) el.selectedIndex = 0;
+  });
+  const d = document.getElementById('ab-start');
+  if (d) d.value = '';
+  document.getElementById('ab-people').value = '1';
+  document.getElementById('addModalBg').classList.add('open');
+};
+window.closeAddModal = function() {
+  document.getElementById('addModalBg').classList.remove('open');
+};
+window.saveManualBooking = async function() {
+  const name    = document.getElementById('ab-name').value.trim();
+  const phone   = document.getElementById('ab-phone').value.trim();
+  const service = document.getElementById('ab-service').value;
+  if (!name || !phone || !service) { toast('Нэр, утас, үйлчилгээ заавал оруулна уу', 'warning'); return; }
+  const entry = {
+    name, phone,
+    email:   document.getElementById('ab-email').value.trim(),
+    service,
+    start:   document.getElementById('ab-start').value,
+    days:    document.getElementById('ab-days').value,
+    people:  Number(document.getElementById('ab-people').value) || 1,
+    social:  document.getElementById('ab-social').value.trim(),
+    note:    document.getElementById('ab-note').value.trim(),
+    source:  document.getElementById('ab-source').value || 'Admin',
+    status:  'new',
+    addedByAdmin: true,
+    createdAt: serverTimestamp()
+  };
+  try {
+    const ref = await addDoc(collection(db, 'bookings'), entry);
+    allBookings.unshift({ id: ref.id, ...entry });
+    updateStats();
+    renderTable();
+    closeAddModal();
+    toast('Захиалга амжилттай нэмэгдлээ', 'success');
+  } catch(err) {
+    toast('Алдаа гарлаа: ' + err.message, 'error');
+  }
+};
+
+// ── MONTHLY FINANCE CHART ──
+function renderMonthlyFinanceChart() {
+  const months = [];
+  for (let i = 5; i >= 0; i--) {
+    const d = new Date(); d.setDate(1); d.setMonth(d.getMonth() - i);
+    months.push({
+      label: (d.getMonth()+1) + '-р сар',
+      month: d.getMonth(), year: d.getFullYear(),
+      income: 0, expense: 0
+    });
+  }
+  allFinances.forEach(f => {
+    if (!f.date) return;
+    const [y,m] = f.date.split('-').map(Number);
+    const slot = months.find(x => x.year === y && x.month === m-1);
+    if (!slot) return;
+    if (f.type === 'income') slot.income += Number(f.amount)||0;
+    else slot.expense += Number(f.amount)||0;
+  });
+  const maxVal = Math.max(...months.map(m => Math.max(m.income, m.expense)), 1);
+  const fmt = n => n >= 1000000 ? (n/1000000).toFixed(1)+'M₮' : n >= 1000 ? (n/1000).toFixed(0)+'K₮' : n+'₮';
+  const container = document.getElementById('financeMonthlyChart');
+  if (!container) return;
+  container.innerHTML = months.map(m => `
+    <div style="text-align:center;flex:1">
+      <div style="font-size:10px;color:var(--green);font-weight:600;margin-bottom:2px">${m.income ? fmt(m.income) : ''}</div>
+      <div style="font-size:10px;color:var(--red);font-weight:600;margin-bottom:6px">${m.expense ? fmt(m.expense) : ''}</div>
+      <div style="display:flex;gap:3px;align-items:flex-end;justify-content:center;height:60px">
+        <div style="width:14px;background:var(--green);border-radius:3px 3px 0 0;opacity:.8;min-height:3px;height:${Math.round(m.income/maxVal*100)}%" title="Орлого: ${fmt(m.income)}"></div>
+        <div style="width:14px;background:var(--red);border-radius:3px 3px 0 0;opacity:.8;min-height:3px;height:${Math.round(m.expense/maxVal*100)}%" title="Зарлага: ${fmt(m.expense)}"></div>
+      </div>
+      <div style="font-size:10px;color:var(--muted);margin-top:5px">${m.label}</div>
+    </div>`).join('');
+}
+
+// Override renderFinance to also render monthly chart
+const _origRenderFinance = window.renderFinance;
 
 // Enter key login
 document.getElementById('loginPassword').addEventListener('keydown', e => {

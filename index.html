@@ -104,10 +104,17 @@ body{
 .hamburger{display:none;flex-direction:column;gap:4px;cursor:pointer;padding:6px}
 .hamburger span{display:block;width:18px;height:1px;background:var(--dark2);transition:.3s;border-radius:1px}
 @media(max-width:860px){
-  .nav-links{display:none;position:fixed;top:52px;left:0;right:0;bottom:0;height:auto;transform:none;z-index:499;background:var(--blue);flex-direction:column;align-items:flex-start;padding:24px 24px;gap:4px;border-top:1px solid rgba(255,255,255,.15);overflow-y:auto}
-  .nav-links.open{display:flex}
-  .nav-link{font-size:17px;font-weight:400;padding:12px 0;color:#fff;border-bottom:1px solid rgba(255,255,255,.15);width:100%}
-  .nav-link:hover,.nav-link.active{color:#fff;background:rgba(255,255,255,.12);border-radius:8px;padding-left:8px}
+  .nav-links{
+    display:flex;position:fixed;top:52px;left:0;right:0;bottom:0;
+    height:auto;transform:translateY(-18px);z-index:499;
+    background:var(--blue);flex-direction:column;align-items:flex-start;
+    padding:28px 24px;gap:4px;border-top:1px solid rgba(255,255,255,.15);overflow-y:auto;
+    opacity:0;pointer-events:none;
+    transition:opacity .42s ease, transform .42s cubic-bezier(.4,0,.2,1);
+  }
+  .nav-links.open{opacity:1;transform:translateY(0);pointer-events:auto}
+  .nav-link{font-size:17px;font-weight:400;padding:13px 0;color:#fff;border-bottom:1px solid rgba(255,255,255,.15);width:100%}
+  .nav-link:hover,.nav-link.active{color:#fff;background:rgba(255,255,255,.12);border-radius:8px;padding-left:10px}
   .hamburger{display:flex}
   .nav-btn{display:none}
 }
@@ -832,16 +839,16 @@ section,#booking-section{scroll-margin-top:60px}
 
     <!-- LOGIN -->
     <div id="auth-login">
-      <div class="auth-field"><label>И-мэйл</label><input class="auth-input" type="email" id="login-email" placeholder="example@gmail.com"></div>
-      <div class="auth-field"><label>Нууц үг</label><input class="auth-input" type="password" id="login-pass" placeholder="••••••••"></div>
+      <div class="auth-field"><label>И-мэйл</label><input class="auth-input" type="email" id="login-email" placeholder="example@gmail.com" autocomplete="off"></div>
+      <div class="auth-field"><label>Нууц үг</label><input class="auth-input" type="password" id="login-pass" placeholder="••••••••" autocomplete="new-password"></div>
       <button class="auth-btn" onclick="doLogin()">Нэвтрэх →</button>
       <div class="auth-msg" id="login-msg"></div>
     </div>
     <!-- REGISTER -->
     <div id="auth-register" style="display:none">
-      <div class="auth-field"><label>Нэр</label><input class="auth-input" type="text" id="reg-name" placeholder="Таны нэр"></div>
-      <div class="auth-field"><label>И-мэйл</label><input class="auth-input" type="email" id="reg-email" placeholder="example@gmail.com"></div>
-      <div class="auth-field"><label>Нууц үг</label><input class="auth-input" type="password" id="reg-pass" placeholder="8+ тэмдэгт"></div>
+      <div class="auth-field"><label>Нэр</label><input class="auth-input" type="text" id="reg-name" placeholder="Таны нэр" autocomplete="off"></div>
+      <div class="auth-field"><label>И-мэйл</label><input class="auth-input" type="email" id="reg-email" placeholder="example@gmail.com" autocomplete="off"></div>
+      <div class="auth-field"><label>Нууц үг</label><input class="auth-input" type="password" id="reg-pass" placeholder="8+ тэмдэгт" autocomplete="new-password"></div>
       <button class="auth-btn" onclick="doRegister()">Бүртгүүлэх →</button>
       <div class="auth-msg" id="reg-msg"></div>
     </div>
@@ -911,10 +918,10 @@ section,#booking-section{scroll-margin-top:60px}
 <!-- Mobile nav menu — outside nav to avoid backdrop-filter containing block issue -->
 <div class="nav-links" id="navLinks">
   <button class="nav-link active" onclick="scrollTo_(0);toggleMobileMenu()">Нүүр</button>
-  <button class="nav-link" onclick="scrollToId('services');toggleMobileMenu()">Үйлчилгээ</button>
   <button class="nav-link" onclick="scrollToId('medical');toggleMobileMenu()">Эрүүл мэнд</button>
-  <button class="nav-link" onclick="scrollToId('itineraries');toggleMobileMenu()">Маршрут</button>
-  <button class="nav-link" onclick="scrollToId('tips');toggleMobileMenu()">Зөвлөмж</button>
+  <button class="nav-link" onclick="window.location.href='/eruul-mend/';toggleMobileMenu()">Эрүүл мэндийн багц</button>
+  <button class="nav-link" onclick="window.location.href='/marshrut/';toggleMobileMenu()">Маршрут</button>
+  <button class="nav-link" onclick="window.location.href='/zuvlumj/';toggleMobileMenu()">Зөвлөмж</button>
   <button class="nav-link" onclick="scrollToId('pricing');toggleMobileMenu()">Үнэ</button>
   <button class="nav-link" onclick="window.location.href='/booking/';toggleMobileMenu()">Захиалах</button>
 </div>
@@ -924,7 +931,7 @@ section,#booking-section{scroll-margin-top:60px}
 <section class="hero" id="home">
   <div class="hero-eyebrow">Аялал · Монгол хөтөч · VIP Үйлчилгээ · Бүтэн биеийн оношлогоо</div>
   <h1><em>Шанхайд</em> хэрэгтэй бүхэн "<em>НЭГ ДОР</em>"</h1>
-  <p class="hero-sub">Нэг аяллаар хот үз, эрүүл мэндээ шалга, бизнесээ хий — бүгдийг Монгол хэлээр.</p>
+  <p class="hero-sub">Монгол хэлтэй хувийн хөтөч. Дараалалгүй. Санаа зовохгүй.<br>Зөвхөн аялалаа бүрэн мэдрэ.</p>
 
   <!-- IMAGE SLIDESHOW -->
   <div class="hero-slides" id="heroSlides">
@@ -952,13 +959,6 @@ section,#booking-section{scroll-margin-top:60px}
     <button class="btn-ghost" onclick="window.location.href='/booking/'">Хөтөч Захиалах</button>
   </div>
 
-  <!-- STATS -->
-  <div class="hero-stats">
-    <div><div class="hero-stat-num">Шанхай</div><div class="hero-stat-label">Хот хөтөч</div></div>
-    <div><div class="hero-stat-num">VIP</div><div class="hero-stat-label">Эрүүл мэнд</div></div>
-    <div><div class="hero-stat-num">MN</div><div class="hero-stat-label">Монгол хэлээр</div></div>
-    <div><div class="hero-stat-num">24/7</div><div class="hero-stat-label">Дэмжлэг</div></div>
-  </div>
 </section>
 </div>
 
@@ -987,41 +987,6 @@ section,#booking-section{scroll-margin-top:60px}
     </div>
   </div>
 </div>
-
-<!-- SERVICES -->
-<section class="services-section reveal" id="services">
-  <div class="section-max">
-    <div class="section-eyebrow reveal">Үйлчилгээ</div>
-    <div class="section-title reveal reveal-delay-1">Бид юу хийдэг вэ</div>
-    <div class="section-sub reveal reveal-delay-2">Мэргэжлийн Монгол хөтөч. Аяллын бүхий л хэрэгцээг нэг дороос шийднэ.</div>
-    <div class="services-grid reveal reveal-delay-3">
-      <div class="service-item">
-        <div class="service-emoji">🩺</div>
-        <div class="service-name">VIP Эрүүл мэнд</div>
-        <div class="service-desc">Олон улсын дээд зэрэглэлийн эмнэлэгт бүтэн биеийн иж бүрэн шинжилгээ. 2–3 цагт дараалалгүй.</div>
-        <button class="service-link" onclick="scrollToId('medical')">Дэлгэрэнгүй →</button>
-      </div>
-      <div class="service-item">
-        <div class="service-emoji">🏙️</div>
-        <div class="service-name">Хот хөтөч</div>
-        <div class="service-desc">The Bund, Yuyuan, Shanghai Tower болон бусад гол цэгүүдэд монгол хэлтэйгээ зочлоорой.</div>
-        <button class="service-link" onclick="scrollToId('itineraries')">Маршрут үзэх →</button>
-      </div>
-      <div class="service-item">
-        <div class="service-emoji">🛍️</div>
-        <div class="service-name">Шоппинг дагалдах</div>
-        <div class="service-desc">IFC, Plaza 66, Nanjing Road — хамгийн тохиромжтой дэлгүүрүүдийг монгол хэлтэйгээ туулаарай.</div>
-        <button class="service-link" onclick="window.location.href='/booking/'">Захиалах →</button>
-      </div>
-      <div class="service-item">
-        <div class="service-emoji">🍜</div>
-        <div class="service-name">Хоолны аялал</div>
-        <div class="service-desc">Xiaolongbao, 5 одтой буффет, орон нутгийн дуртай газруудаар дамжин Шанхайн хоолыг мэдрээрэй.</div>
-        <button class="service-link" onclick="window.location.href='/booking/'">Захиалах →</button>
-      </div>
-    </div>
-  </div>
-</section>
 
 <!-- MEDICAL DARK SECTION -->
 <section class="medical-section" id="medical">
@@ -1099,23 +1064,28 @@ section,#booking-section{scroll-margin-top:60px}
 <!-- WHY US -->
 <section class="why-section" id="why">
   <div class="section-max">
-    <div class="section-eyebrow reveal">Бид юу хийдэг вэ</div>
-    <div class="section-title reveal reveal-delay-1">Та чемоданаа бэлд<br>үлдсэнийг бидэнд даатга</div>
-    <div class="why-grid">
+    <div class="section-eyebrow reveal">Яагаад биднийг сонгох вэ</div>
+    <div class="section-title reveal reveal-delay-1">Та чемоданаа бэлд,<br>үлдсэнийг бидэнд даатга</div>
+    <div class="why-grid" style="grid-template-columns:repeat(auto-fit,minmax(200px,1fr))">
       <div class="why-card reveal reveal-delay-1">
-        <div class="why-num">★</div>
-        <div class="why-title">Эмнэлэгийн үйлчилгээ</div>
-        <div class="why-text">Эмнэлэгийн үйлчилгээ болон аялалыг нэг дор.</div>
+        <div class="why-num" style="font-size:34px;opacity:1">🩺</div>
+        <div class="why-title">Эмнэлэг + Аялал</div>
+        <div class="why-text">Эрүүл мэндийн үйлчилгээ болон хот аялалыг нэг удаагийн ирэлтэнд хамт зохион байгуулна.</div>
       </div>
       <div class="why-card reveal reveal-delay-2">
-        <div class="why-num">24/7</div>
-        <div class="why-title">Дэмжлэг</div>
-        <div class="why-text">Аяллын өмнө, явах үед болон буцсаны дараа ч гэсэн танд тусалж байх болно.</div>
+        <div class="why-num" style="font-size:34px;opacity:1">🤝</div>
+        <div class="why-title">Зөвхөн танитай</div>
+        <div class="why-text">Бүлгийн аялал биш — зөвхөн та болон танай хүмүүстэй. Ямар ч харийн хүнгүй, цэвэр хувийн үйлчилгээ.</div>
       </div>
       <div class="why-card reveal reveal-delay-3">
-        <div class="why-num">VIP</div>
-        <div class="why-title">Хувийн үйлчилгээ</div>
-        <div class="why-text">Бүлэг аялал биш учраас таньд илүү тав тух, тайван байдлыг мэдрүүлэх болно — Зөвхөн таньд зориулсан VIP үйлчилгээ.</div>
+        <div class="why-num" style="font-size:34px;opacity:1">⚡</div>
+        <div class="why-title">24/7 Дэмжлэг</div>
+        <div class="why-text">Аяллын өмнө зөвлөгөө, явах үедээ хамт, буцсаны дараа ч туслана. Утасдахад л хангалттай.</div>
+      </div>
+      <div class="why-card reveal reveal-delay-4">
+        <div class="why-num" style="font-size:34px;opacity:1">🏆</div>
+        <div class="why-title">Мэргэжлийн туршлага</div>
+        <div class="why-text">Шанхайд амьдарч, олон монгол аялагчтай ажилласан туршлагатай. Хотын нуугдмал газрууд, хамгийн сайн үнэ — бид мэднэ.</div>
       </div>
     </div>
   </div>

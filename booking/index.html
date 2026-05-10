@@ -581,8 +581,44 @@ footer{
             </div>
           </div>
 
-          <!-- STEP 10: Summary -->
+          <!-- STEP 10: Source (Хаанаас мэдсэн) -->
           <div class="wizard-step" id="step-10">
+            <div class="step-question">Биднийг хаанаас мэдсэн бэ?</div>
+            <div class="step-sub">Ойролцоогоор санаж байгаагаар хариулна уу</div>
+            <div class="card-grid">
+              <div class="sel-card" data-val="Instagram" onclick="selectSource(this)">
+                <div class="sel-card-icon">📸</div>
+                <div class="sel-card-label">Instagram</div>
+              </div>
+              <div class="sel-card" data-val="Facebook" onclick="selectSource(this)">
+                <div class="sel-card-icon">📘</div>
+                <div class="sel-card-label">Facebook</div>
+              </div>
+              <div class="sel-card" data-val="Найзаасаа" onclick="selectSource(this)">
+                <div class="sel-card-icon">🤝</div>
+                <div class="sel-card-label">Найзаасаа</div>
+              </div>
+              <div class="sel-card" data-val="Website" onclick="selectSource(this)">
+                <div class="sel-card-icon">🌐</div>
+                <div class="sel-card-label">Вэбсайт</div>
+              </div>
+              <div class="sel-card" data-val="Бусад" onclick="selectSource(this)">
+                <div class="sel-card-icon">💬</div>
+                <div class="sel-card-label">Бусад</div>
+              </div>
+            </div>
+            <div id="fb-page-wrap" style="display:none;margin-top:16px">
+              <input class="wiz-input" type="text" id="b-source-fb" placeholder="Аль Facebook хуудас/пост вэ? (санаж байгаа бол)">
+            </div>
+            <div class="field-err" id="err-source">Хариулт сонгоно уу</div>
+            <div class="wiz-nav">
+              <button class="btn-back" onclick="prevStep()">← Буцах</button>
+              <button class="btn-next" onclick="nextStep()">Дараах →</button>
+            </div>
+          </div>
+
+          <!-- STEP 11: Summary -->
+          <div class="wizard-step" id="step-11">
             <div class="step-question">Захиалгаа шалгана уу</div>
             <div class="step-sub">Бүх мэдээлэл зөв байвал илгээнэ үү</div>
             <div class="summary-card" id="summaryCard">
@@ -595,6 +631,7 @@ footer{
               <div class="summary-row"><div class="summary-label">Хүний тоо</div><div class="summary-val" id="sum-people">—</div></div>
               <div class="summary-row" id="sum-row-social"><div class="summary-label">Social</div><div class="summary-val" id="sum-social">—</div></div>
               <div class="summary-row" id="sum-row-note" style="display:none"><div class="summary-label">Нэмэлт</div><div class="summary-val" id="sum-note">—</div></div>
+              <div class="summary-row"><div class="summary-label">Хаанаас мэдсэн</div><div class="summary-val" id="sum-source">—</div></div>
             </div>
             <div class="wiz-nav">
               <button class="btn-back" onclick="prevStep()">← Буцах</button>
@@ -633,12 +670,13 @@ footer{
 
 <script>
 // ── WIZARD STATE ─────────────────────────────────────────────────
-const TOTAL_STEPS = 10;
+const TOTAL_STEPS = 11;
 let currentStep = 1;
 let peopleCount = 1;
 let wizardData = {
   name: '', phone: '', email: '', service: '',
-  start: '', days: '', people: 1, social: '', note: ''
+  start: '', days: '', people: 1, social: '', note: '',
+  source: '', sourceFb: ''
 };
 let wizardLocked = false; // disabled when profile incomplete / not authed
 
@@ -727,6 +765,12 @@ function validateCurrentStep() {
     return true;
   }
   if (s === 9) { wizardData.note = document.getElementById('b-note').value.trim(); return true; }
+  if (s === 10) {
+    if (!wizardData.source) { document.getElementById('err-source').classList.add('show'); return false; }
+    wizardData.sourceFb = document.getElementById('b-source-fb')?.value.trim() || '';
+    document.getElementById('err-source').classList.remove('show');
+    return true;
+  }
   return true;
 }
 
@@ -747,7 +791,7 @@ function nextStep() {
   if (wizardLocked) { pulseAuthNotice(); return; }
   if (!validateCurrentStep()) return;
   if (currentStep < TOTAL_STEPS) {
-    if (currentStep === 9) { populateSummary(); }
+    if (currentStep === 10) { populateSummary(); }
     showStep(currentStep + 1, 'forward');
   }
 }
@@ -759,10 +803,21 @@ function prevStep() {
 }
 
 function skipStep() {
-  if (currentStep === 9) { wizardData.note = ''; populateSummary(); }
+  if (currentStep === 9) { wizardData.note = ''; }
+  if (currentStep === 10) { populateSummary(); }
   if (currentStep < TOTAL_STEPS) {
     showStep(currentStep + 1, 'forward');
   }
+}
+
+function selectSource(el) {
+  const grid = el.closest('.card-grid');
+  grid.querySelectorAll('.sel-card').forEach(c => c.classList.remove('selected'));
+  el.classList.add('selected');
+  wizardData.source = el.dataset.val;
+  document.getElementById('err-source').classList.remove('show');
+  const fbWrap = document.getElementById('fb-page-wrap');
+  if (fbWrap) fbWrap.style.display = (wizardData.source === 'Facebook') ? 'block' : 'none';
 }
 
 function toggleTutorial() {
@@ -786,8 +841,8 @@ function selectCard(type, el) {
     wizardData.days = el.dataset.val;
     document.getElementById('err-days').classList.remove('show');
   }
-  // Auto-advance after a short visual delay
-  setTimeout(() => nextStep(), 220);
+  // Auto-advance after a visual confirmation delay
+  setTimeout(() => nextStep(), 680);
 }
 
 // People stepper
@@ -818,6 +873,12 @@ function populateSummary() {
     rowNote.style.display = 'flex';
     document.getElementById('sum-note').textContent = wizardData.note;
   } else { rowNote.style.display = 'none'; }
+  const srcEl = document.getElementById('sum-source');
+  if (srcEl) {
+    let srcText = wizardData.source || '—';
+    if (wizardData.source === 'Facebook' && wizardData.sourceFb) srcText += ' · ' + wizardData.sourceFb;
+    srcEl.textContent = srcText;
+  }
 }
 
 // Enter key on text/email/tel inputs
@@ -1063,6 +1124,8 @@ window.submitBooking = async function() {
     social:  document.getElementById('b-social').value.trim()  || '',
     group:   String(peopleCount),   // compat field
     note:    document.getElementById('b-note').value.trim()    || '',
+    source:  wizardData.source   || '',
+    sourceFb: wizardData.sourceFb || '',
     userId:  currentUser.uid,
     createdAt: serverTimestamp()
   };
