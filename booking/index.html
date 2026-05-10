@@ -409,6 +409,7 @@ footer{
           <div class="wizard-step" id="step-4">
             <div class="step-question">Үйлчилгээний төрөл</div>
             <div class="step-sub">Нэгийг сонгоно уу — шууд дараагийн алхам руу шилжинэ</div>
+            <div id="pkg-prefill-banner" style="display:none;margin-bottom:14px;padding:12px 16px;background:#f0f6ff;border:1.5px solid var(--blue);border-radius:12px;font-size:13px;font-weight:600;color:var(--blue)">✅ Сонгосон багц: <span id="pkg-prefill-label"></span></div>
             <div class="card-grid" id="service-grid">
               <div class="sel-card" data-val="🏥 Эрүүл мэндийн шинжилгээ" onclick="selectCard('service',this)">
                 <div class="sel-card-icon">🏥</div>
@@ -626,6 +627,7 @@ footer{
               <div class="summary-row"><div class="summary-label">Утас</div><div class="summary-val" id="sum-phone">—</div></div>
               <div class="summary-row"><div class="summary-label">И-мэйл</div><div class="summary-val" id="sum-email">—</div></div>
               <div class="summary-row"><div class="summary-label">Үйлчилгээ</div><div class="summary-val" id="sum-service">—</div></div>
+              <div class="summary-row" id="sum-row-package" style="display:none"><div class="summary-label">Багц</div><div class="summary-val" id="sum-package">—</div></div>
               <div class="summary-row"><div class="summary-label">Огноо</div><div class="summary-val" id="sum-start">—</div></div>
               <div class="summary-row"><div class="summary-label">Хугацаа</div><div class="summary-val" id="sum-days">—</div></div>
               <div class="summary-row"><div class="summary-label">Хүний тоо</div><div class="summary-val" id="sum-people">—</div></div>
@@ -676,9 +678,26 @@ let peopleCount = 1;
 let wizardData = {
   name: '', phone: '', email: '', service: '',
   start: '', days: '', people: 1, social: '', note: '',
-  source: '', sourceFb: ''
+  source: '', sourceFb: '', package: ''
 };
 let wizardLocked = false; // disabled when profile incomplete / not authed
+
+// ── PACKAGE PRE-FILL (from /health/?package=...) ─────────────────
+(function preSelectPackage() {
+  const PKG_MAP = {
+    mungun:   { service: '🏥 Эрүүл мэндийн шинжилгээ', label: '🥈 Мөнгөн багц — ₮950,000' },
+    altan:    { service: '🏥 Эрүүл мэндийн шинжилгээ', label: '🥇 Алтан багц — ₮2,050,000' },
+    '1800cny':  { service: '🏥 Эрүүл мэндийн шинжилгээ', label: '🔬 1,800¥ багц' },
+    '20000cny': { service: '🏥 Эрүүл мэндийн шинжилгээ', label: '💎 20,000¥ Premium' }
+  };
+  const p = new URLSearchParams(location.search).get('package');
+  if (!p || !PKG_MAP[p]) return;
+  const { service, label } = PKG_MAP[p];
+  wizardData.service  = service;
+  wizardData.package  = label;
+  // Show pre-selected banner at top of step 4
+  window.__prePackage = label;
+})();
 
 function updateProgress() {
   const pct = Math.round((currentStep / TOTAL_STEPS) * 100);
@@ -701,6 +720,18 @@ function showStep(n, direction) {
   next.classList.add('active', direction === 'back' ? 'slide-in-left' : 'slide-in-right');
   currentStep = n;
   updateProgress();
+  // Apply package pre-selection when step 4 (service) becomes visible
+  if (n === 4 && window.__prePackage) {
+    const banner = document.getElementById('pkg-prefill-banner');
+    document.getElementById('pkg-prefill-label').textContent = window.__prePackage;
+    banner.style.display = 'block';
+    // Highlight the health card
+    document.querySelectorAll('#service-grid .sel-card').forEach(c => {
+      if (c.dataset.val === wizardData.service) {
+        c.classList.add('selected');
+      }
+    });
+  }
   // Focus first input in step
   setTimeout(() => {
     const inp = next.querySelector('input,textarea');
@@ -842,7 +873,7 @@ function selectCard(type, el) {
     document.getElementById('err-days').classList.remove('show');
   }
   // Auto-advance after a visual confirmation delay
-  setTimeout(() => nextStep(), 680);
+  setTimeout(() => nextStep(), 380);
 }
 
 // People stepper
@@ -862,6 +893,11 @@ function populateSummary() {
   document.getElementById('sum-phone').textContent   = wizardData.phone   || '—';
   document.getElementById('sum-email').textContent   = wizardData.email   || '—';
   document.getElementById('sum-service').textContent = wizardData.service || '—';
+  const pkgRow = document.getElementById('sum-row-package');
+  if (wizardData.package) {
+    pkgRow.style.display = 'flex';
+    document.getElementById('sum-package').textContent = wizardData.package;
+  } else { pkgRow.style.display = 'none'; }
   document.getElementById('sum-start').textContent   = wizardData.start   || '—';
   document.getElementById('sum-days').textContent    = wizardData.days    || '—';
   document.getElementById('sum-people').textContent  = wizardData.people + ' хүн';

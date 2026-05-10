@@ -15,7 +15,14 @@
 <meta property="og:description" content="Шанхайд аялах Монгол хүмүүст зориулсан найдвартай хөтөч. VIP эрүүл мэнд, аялалын хөтөч, шоппинг үйлчилгээ.">
 <meta property="og:url" content="https://bileg11.github.io/">
 <meta property="og:locale" content="mn_MN">
-<link href="https://fonts.googleapis.com/css2?family=Inter:ital,wght@0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,300;1,400&display=swap" rel="stylesheet">
+<!-- Performance: preconnect to external origins -->
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="preconnect" href="https://www.gstatic.com" crossorigin>
+<!-- Font: preload critical weights, swap to avoid FOIT -->
+<link rel="preload" as="style" href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet" media="print" onload="this.media='all'">
+<noscript><link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet"></noscript>
 <style>
 *{margin:0;padding:0;box-sizing:border-box}
 
@@ -106,15 +113,28 @@ body{
 @media(max-width:860px){
   .nav-links{
     display:flex;position:fixed;top:52px;left:0;right:0;bottom:0;
-    height:auto;transform:translateY(-18px);z-index:499;
-    background:var(--blue);flex-direction:column;align-items:flex-start;
-    padding:28px 24px;gap:4px;border-top:1px solid rgba(255,255,255,.15);overflow-y:auto;
+    height:auto;transform:translateY(-28px) scale(0.98);z-index:499;
+    background:rgba(8,8,12,.92);
+    backdrop-filter:saturate(160%) blur(28px);
+    -webkit-backdrop-filter:saturate(160%) blur(28px);
+    flex-direction:column;align-items:flex-start;
+    padding:36px 28px 40px;gap:2px;
+    border-top:1px solid rgba(255,255,255,.07);overflow-y:auto;
     opacity:0;pointer-events:none;
-    transition:opacity .42s ease, transform .42s cubic-bezier(.4,0,.2,1);
+    transition:opacity .6s cubic-bezier(.4,0,.2,1),
+               transform .6s cubic-bezier(.4,0,.2,1);
   }
-  .nav-links.open{opacity:1;transform:translateY(0);pointer-events:auto}
-  .nav-link{font-size:17px;font-weight:400;padding:13px 0;color:#fff;border-bottom:1px solid rgba(255,255,255,.15);width:100%}
-  .nav-link:hover,.nav-link.active{color:#fff;background:rgba(255,255,255,.12);border-radius:8px;padding-left:10px}
+  .nav-links.open{opacity:1;transform:translateY(0) scale(1);pointer-events:auto}
+  .nav-link{
+    font-size:22px;font-weight:300;letter-spacing:-.01em;
+    padding:15px 0;color:rgba(255,255,255,.8);
+    border-bottom:1px solid rgba(255,255,255,.07);width:100%;
+    transition:color .2s,padding-left .25s;
+  }
+  .nav-link:hover,.nav-link.active{
+    color:#fff;background:none;border-radius:0;padding-left:10px;
+    font-weight:400;
+  }
   .hamburger{display:flex}
   .nav-btn{display:none}
 }
@@ -702,8 +722,8 @@ section,#booking-section{scroll-margin-top:60px}
    RESPONSIVE — TABLET (max 860px)
 ══════════════════════════════════════ */
 @media(max-width:860px){
-  .hero{padding:90px 24px 60px}
-  .hero-slides{aspect-ratio:16/9;max-height:360px}
+  .hero{padding:96px 20px 56px;text-align:center}
+  .hero-slides{aspect-ratio:16/9;max-height:380px}
   .hero-stats{gap:24px}
   .section{padding:72px 20px}
   .services-section,.tips-section,.itin-section,.why-section,.booking-section{padding:72px 20px}
@@ -719,12 +739,15 @@ section,#booking-section{scroll-margin-top:60px}
   .nav-user-btn{display:none}
 
   /* Hero */
-  .hero{padding:72px 20px 48px}
-  .hero-slides{aspect-ratio:4/3;max-height:280px;margin:28px 0 24px}
-  .hero-btns{flex-direction:column;align-items:stretch}
-  .btn-primary,.btn-ghost{justify-content:center;padding:15px 20px;font-size:15px}
-  .hero-stats{gap:0;border-top:1px solid var(--border)}
-  .hero-stat{flex:1 1 50%;padding:20px 0;text-align:center}
+  .hero{padding:80px 20px 52px;text-align:center}
+  .hero h1{font-size:clamp(36px,10vw,56px);letter-spacing:-.03em}
+  .hero-sub{font-size:16px;line-height:1.6}
+  .hero-slides{aspect-ratio:16/10;max-height:300px;margin:24px 0 20px;border-radius:16px}
+  .hero-btns{flex-direction:column;align-items:stretch;gap:10px}
+  .btn-primary{justify-content:center;padding:16px 20px;font-size:16px;font-weight:600;border-radius:14px}
+  .btn-ghost{justify-content:center;padding:15px 20px;font-size:15px;border-radius:14px}
+  .hero-stats{gap:0;border-top:1px solid var(--border);margin-top:28px}
+  .hero-stat{flex:1 1 50%;padding:18px 0;text-align:center}
   .hero-stat-num{font-size:26px}
 
   /* Intro band */
@@ -842,6 +865,7 @@ section,#booking-section{scroll-margin-top:60px}
       <div class="auth-field"><label>И-мэйл</label><input class="auth-input" type="email" id="login-email" placeholder="example@gmail.com" autocomplete="username" readonly></div>
       <div class="auth-field"><label>Нууц үг</label><input class="auth-input" type="password" id="login-pass" placeholder="••••••••" autocomplete="current-password" readonly></div>
       <button class="auth-btn" onclick="doLogin()">Нэвтрэх →</button>
+      <div style="text-align:center;margin-top:10px"><button onclick="doForgotPassword()" style="background:none;border:none;color:var(--blue);font-size:13px;cursor:pointer;font-family:inherit;text-decoration:underline">Нууц үгээ мартсан?</button></div>
       <div class="auth-msg" id="login-msg"></div>
     </div>
     <!-- REGISTER -->
@@ -876,6 +900,21 @@ section,#booking-section{scroll-margin-top:60px}
     <div class="auth-field"><label>Төрсөн огноо</label><input class="auth-input" type="date" id="profile-birthday"></div>
     <button class="auth-btn" onclick="doSaveProfile()">Хадгалах →</button>
     <div class="auth-msg" id="profile-msg"></div>
+    <hr style="margin:20px 0;border:none;border-top:1px solid var(--border)">
+    <button onclick="doSignOut()" style="width:100%;padding:11px;background:var(--bg2);border:1px solid var(--border);border-radius:12px;font-size:14px;font-weight:500;cursor:pointer;font-family:inherit;color:var(--muted)">Гарах →</button>
+    <button onclick="doDeleteAccount()" style="width:100%;padding:11px;margin-top:8px;background:none;border:1.5px solid #ff3b30;border-radius:12px;font-size:13px;font-weight:500;cursor:pointer;font-family:inherit;color:#ff3b30">Данс устгах</button>
+  </div>
+</div>
+
+<!-- DELETE ACCOUNT CONFIRM OVERLAY -->
+<div id="deleteConfirmOverlay" style="display:none;position:fixed;inset:0;background:rgba(0,0,0,.6);z-index:3000;align-items:center;justify-content:center;backdrop-filter:blur(6px)">
+  <div style="background:#fff;border-radius:20px;padding:32px 28px;width:100%;max-width:360px;margin:16px;box-shadow:0 20px 60px rgba(0,0,0,.2)">
+    <div style="font-size:22px;font-weight:700;letter-spacing:-.02em;margin-bottom:8px;color:#1d1d1f">Данс устгах</div>
+    <div style="font-size:14px;color:#6e6e73;line-height:1.6;margin-bottom:20px">Энэ үйлдлийг буцаах боломжгүй. Баталгаажуулахын тулд нууц үгээ оруулна уу.</div>
+    <input type="password" id="delete-confirm-pass" class="auth-input" placeholder="Нууц үг" autocomplete="current-password" style="margin-bottom:12px">
+    <div id="delete-err" style="font-size:13px;color:#ff3b30;margin-bottom:12px;display:none">Нууц үг буруу байна.</div>
+    <button onclick="confirmDeleteAccount()" style="width:100%;padding:13px;background:#ff3b30;color:#fff;border:none;border-radius:12px;font-size:15px;font-weight:600;cursor:pointer;font-family:inherit;margin-bottom:8px">Устгах</button>
+    <button onclick="document.getElementById('deleteConfirmOverlay').style.display='none'" style="width:100%;padding:12px;background:var(--bg2);border:1px solid var(--border);border-radius:12px;font-size:14px;cursor:pointer;font-family:inherit;color:var(--muted)">Цуцлах</button>
   </div>
 </div>
 
@@ -917,13 +956,13 @@ section,#booking-section{scroll-margin-top:60px}
 </nav>
 <!-- Mobile nav menu — outside nav to avoid backdrop-filter containing block issue -->
 <div class="nav-links" id="navLinks">
-  <button class="nav-link active" onclick="scrollTo_(0);toggleMobileMenu()">Нүүр</button>
-  <button class="nav-link" onclick="scrollToId('medical');toggleMobileMenu()">Эрүүл мэнд</button>
-  <button class="nav-link" onclick="window.location.href='/health/';toggleMobileMenu()">Эрүүл мэндийн багц</button>
-  <button class="nav-link" onclick="window.location.href='/routes/';toggleMobileMenu()">Маршрут</button>
-  <button class="nav-link" onclick="window.location.href='/tips/';toggleMobileMenu()">Зөвлөмж</button>
-  <button class="nav-link" onclick="scrollToId('pricing');toggleMobileMenu()">Үнэ</button>
-  <button class="nav-link" onclick="window.location.href='/booking/';toggleMobileMenu()">Захиалах</button>
+  <button class="nav-link active" onclick="scrollTo_(0);closeMobileMenu()">Нүүр</button>
+  <button class="nav-link" onclick="scrollToId('medical');closeMobileMenu()">Эрүүл мэнд</button>
+  <button class="nav-link" onclick="window.location.href='/health/';closeMobileMenu()">Эрүүл мэндийн багц</button>
+  <button class="nav-link" onclick="window.location.href='/routes/';closeMobileMenu()">Маршрут</button>
+  <button class="nav-link" onclick="window.location.href='/tips/';closeMobileMenu()">Зөвлөмж</button>
+  <button class="nav-link" onclick="scrollToId('pricing');closeMobileMenu()">Үнэ</button>
+  <button class="nav-link" onclick="window.location.href='/booking/';closeMobileMenu()">Захиалах</button>
 </div>
 
 <!-- HERO -->
@@ -933,13 +972,13 @@ section,#booking-section{scroll-margin-top:60px}
   <h1><em>Шанхайд</em> хэрэгтэй бүхэн "<em>НЭГ ДОР</em>"</h1>
   <p class="hero-sub">Монгол хэлтэй хувийн хөтөч. Дараалалгүй. Санаа зовохгүй.<br>Зөвхөн аялалаа бүрэн мэдрэ.</p>
 
-  <!-- IMAGE SLIDESHOW -->
+  <!-- IMAGE SLIDESHOW — first slide eager, rest lazy-loaded via JS -->
   <div class="hero-slides" id="heroSlides">
-    <div class="hero-slide active" style="background-image:url('https://images.unsplash.com/photo-1752662742861-fb76c71576d7?w=1600&q=85&auto=format&fit=crop')"></div>
-    <div class="hero-slide" style="background-image:url('https://images.unsplash.com/photo-1748078096034-46086f5b87da?w=1600&q=85&auto=format&fit=crop')"></div>
-    <div class="hero-slide" style="background-image:url('https://images.unsplash.com/photo-1647067151129-ac9991329a73?w=1600&q=85&auto=format&fit=crop')"></div>
-    <div class="hero-slide" style="background-image:url('https://images.unsplash.com/photo-1747479309766-37bbf669cffe?w=1600&q=85&auto=format&fit=crop')"></div>
-    <div class="hero-slide" style="background-image:url('https://images.unsplash.com/photo-1717400411765-0d6a4d0bc8db?w=1600&q=85&auto=format&fit=crop')"></div>
+    <div class="hero-slide active" style="background-image:url('https://images.unsplash.com/photo-1752662742861-fb76c71576d7?w=1200&q=80&auto=format&fit=crop')"></div>
+    <div class="hero-slide" data-bg="https://images.unsplash.com/photo-1748078096034-46086f5b87da?w=1200&q=80&auto=format&fit=crop"></div>
+    <div class="hero-slide" data-bg="https://images.unsplash.com/photo-1647067151129-ac9991329a73?w=1200&q=80&auto=format&fit=crop"></div>
+    <div class="hero-slide" data-bg="https://images.unsplash.com/photo-1747479309766-37bbf669cffe?w=1200&q=80&auto=format&fit=crop"></div>
+    <div class="hero-slide" data-bg="https://images.unsplash.com/photo-1717400411765-0d6a4d0bc8db?w=1200&q=80&auto=format&fit=crop"></div>
     <button class="slide-arrow slide-prev" onclick="goSlide(curSlide-1);startAuto()" aria-label="Өмнөх">&#8249;</button>
     <button class="slide-arrow slide-next" onclick="goSlide(curSlide+1);startAuto()" aria-label="Дараах">&#8250;</button>
   </div>
@@ -1761,8 +1800,23 @@ function scrollTo_(y) {
   window.scrollTo({top:y,behavior:'smooth'});
   document.getElementById('navLinks').classList.remove('open');
 }
+function setHamburger(open) {
+  const spans = document.querySelectorAll('.hamburger span');
+  if (open) {
+    spans[0].style.transform = 'translateY(5px) rotate(45deg)';
+    spans[1].style.opacity = '0';
+    spans[2].style.transform = 'translateY(-5px) rotate(-45deg)';
+  } else {
+    spans.forEach(s => { s.style.transform = ''; s.style.opacity = ''; });
+  }
+}
+function closeMobileMenu() {
+  document.getElementById('navLinks').classList.remove('open');
+  setHamburger(false);
+}
 function toggleMobileMenu() {
-  document.getElementById('navLinks').classList.toggle('open');
+  const isOpen = document.getElementById('navLinks').classList.toggle('open');
+  setHamburger(isOpen);
 }
 
 // ── SCROLL TO TOP ──
@@ -1776,12 +1830,24 @@ const slides = document.querySelectorAll('.hero-slide');
 const dots = document.querySelectorAll('.hero-dot');
 let autoTimer;
 
+// Lazy-load slide backgrounds — load next slide image just before showing
+function lazyLoadSlide(idx) {
+  const el = slides[idx];
+  if (el && el.dataset.bg && !el.style.backgroundImage) {
+    el.style.backgroundImage = `url('${el.dataset.bg}')`;
+  }
+}
+// Pre-load first two slides immediately
+lazyLoadSlide(0); lazyLoadSlide(1);
+
 function goSlide(n) {
   slides[curSlide].classList.remove('active');
   dots[curSlide].classList.remove('active');
   curSlide = (n + slides.length) % slides.length;
   slides[curSlide].classList.add('active');
   dots[curSlide].classList.add('active');
+  // Pre-load the next slide
+  lazyLoadSlide((curSlide + 1) % slides.length);
 }
 
 function startAuto() {
@@ -1881,7 +1947,7 @@ function openAccountModal() {
 <script type="module">
   import { initializeApp } from "https://www.gstatic.com/firebasejs/11.7.1/firebase-app.js";
   import { getAnalytics, logEvent } from "https://www.gstatic.com/firebasejs/11.7.1/firebase-analytics.js";
-  import { getAuth, createUserWithEmailAndPassword, signInWithEmailAndPassword, onAuthStateChanged, signOut, GoogleAuthProvider, FacebookAuthProvider, signInWithPopup } from "https://www.gstatic.com/firebasejs/11.7.1/firebase-auth.js";
+  import { getAuth, createUserWithEmailAndPassword, signInWithEmailAndPassword, onAuthStateChanged, signOut, GoogleAuthProvider, FacebookAuthProvider, signInWithPopup, sendPasswordResetEmail, deleteUser, reauthenticateWithCredential, EmailAuthProvider } from "https://www.gstatic.com/firebasejs/11.7.1/firebase-auth.js";
   import { getFirestore, doc, getDoc, setDoc } from "https://www.gstatic.com/firebasejs/11.7.1/firebase-firestore.js";
 
   const firebaseConfig = {
@@ -2047,6 +2113,58 @@ function openAccountModal() {
 
   window.doGoogleLogin = () => doSocialLogin(new GoogleAuthProvider());
   window.doFbLogin     = () => doSocialLogin(new FacebookAuthProvider());
+
+  // ── FORGOT PASSWORD ──
+  window.doForgotPassword = async function() {
+    const em = document.getElementById('login-email');
+    em.removeAttribute('readonly');
+    const email = em.value.trim();
+    const msg = document.getElementById('login-msg');
+    if (!email || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
+      msg.textContent = 'И-мэйл хаягаа оруулаад дахин дарна уу.';
+      msg.className = 'auth-msg error'; msg.style.display = 'block'; return;
+    }
+    try {
+      await sendPasswordResetEmail(auth, email);
+      msg.textContent = '✅ Нууц үг шинэчлэх холбоос ' + email + ' руу илгээгдлээ.';
+      msg.className = 'auth-msg success'; msg.style.display = 'block';
+    } catch(e) {
+      msg.textContent = 'Алдаа гарлаа: ' + (e.code === 'auth/user-not-found' ? 'И-мэйл олдсонгүй.' : e.message);
+      msg.className = 'auth-msg error'; msg.style.display = 'block';
+    }
+  };
+
+  // ── SIGN OUT ──
+  window.doSignOut = async function() {
+    await signOut(auth);
+    document.getElementById('profileOverlay').classList.remove('open');
+  };
+
+  // ── DELETE ACCOUNT ──
+  window.doDeleteAccount = function() {
+    document.getElementById('delete-confirm-pass').value = '';
+    document.getElementById('delete-err').style.display = 'none';
+    document.getElementById('deleteConfirmOverlay').style.display = 'flex';
+  };
+
+  window.confirmDeleteAccount = async function() {
+    const user = auth.currentUser;
+    if (!user) return;
+    const pass = document.getElementById('delete-confirm-pass').value;
+    const errEl = document.getElementById('delete-err');
+    errEl.style.display = 'none';
+    try {
+      const cred = EmailAuthProvider.credential(user.email, pass);
+      await reauthenticateWithCredential(user, cred);
+      await deleteUser(user);
+      document.getElementById('deleteConfirmOverlay').style.display = 'none';
+      document.getElementById('profileOverlay').classList.remove('open');
+      toast('Данс амжилттай устгагдлаа.', 'success');
+    } catch(e) {
+      errEl.textContent = e.code === 'auth/wrong-password' ? 'Нууц үг буруу байна.' : 'Алдаа гарлаа: ' + e.message;
+      errEl.style.display = 'block';
+    }
+  };
 </script>
 
 <script>

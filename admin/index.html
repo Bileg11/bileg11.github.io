@@ -502,29 +502,31 @@ const firebaseConfig = {
 const app = initializeApp(firebaseConfig);
 const auth = getAuth(app);
 const db = getFirestore(app);
-// Require fresh login on every page load (no session persistence)
-setPersistence(auth, inMemoryPersistence).catch(() => {});
-
 let allBookings = [];
 let allFinances = [];
 let currentDocId = null;
 let currentPage = 1;
 const PAGE_SIZE = 20;
 
-// AUTH STATE
-onAuthStateChanged(auth, user => {
-  if (user) {
-    document.getElementById('loginWrap').style.display = 'none';
-    document.getElementById('dashboard').style.display = 'block';
-    document.getElementById('adminEmail').textContent = user.email;
-    loadBookings();
-    startBookingListener();
-  } else {
-    document.getElementById('loginWrap').style.display = 'flex';
-    document.getElementById('dashboard').style.display = 'none';
-    if (unsubBooking) { unsubBooking(); unsubBooking = null; }
-  }
-});
+// Force fresh login every page load — no session persistence
+setPersistence(auth, inMemoryPersistence)
+  .then(() => signOut(auth))
+  .catch(() => {})
+  .finally(() => {
+    onAuthStateChanged(auth, user => {
+      if (user) {
+        document.getElementById('loginWrap').style.display = 'none';
+        document.getElementById('dashboard').style.display = 'block';
+        document.getElementById('adminEmail').textContent = user.email;
+        loadBookings();
+        startBookingListener();
+      } else {
+        document.getElementById('loginWrap').style.display = 'flex';
+        document.getElementById('dashboard').style.display = 'none';
+        if (unsubBooking) { unsubBooking(); unsubBooking = null; }
+      }
+    });
+  });
 
 let unsubBooking = null;
 let listenerReady = false;
