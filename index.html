@@ -839,8 +839,8 @@ section,#booking-section{scroll-margin-top:60px}
 
     <!-- LOGIN -->
     <div id="auth-login">
-      <div class="auth-field"><label>И-мэйл</label><input class="auth-input" type="email" id="login-email" placeholder="example@gmail.com" autocomplete="off"></div>
-      <div class="auth-field"><label>Нууц үг</label><input class="auth-input" type="password" id="login-pass" placeholder="••••••••" autocomplete="new-password"></div>
+      <div class="auth-field"><label>И-мэйл</label><input class="auth-input" type="email" id="login-email" placeholder="example@gmail.com" autocomplete="username" readonly></div>
+      <div class="auth-field"><label>Нууц үг</label><input class="auth-input" type="password" id="login-pass" placeholder="••••••••" autocomplete="current-password" readonly></div>
       <button class="auth-btn" onclick="doLogin()">Нэвтрэх →</button>
       <div class="auth-msg" id="login-msg"></div>
     </div>
@@ -919,9 +919,9 @@ section,#booking-section{scroll-margin-top:60px}
 <div class="nav-links" id="navLinks">
   <button class="nav-link active" onclick="scrollTo_(0);toggleMobileMenu()">Нүүр</button>
   <button class="nav-link" onclick="scrollToId('medical');toggleMobileMenu()">Эрүүл мэнд</button>
-  <button class="nav-link" onclick="window.location.href='/eruul-mend/';toggleMobileMenu()">Эрүүл мэндийн багц</button>
-  <button class="nav-link" onclick="window.location.href='/marshrut/';toggleMobileMenu()">Маршрут</button>
-  <button class="nav-link" onclick="window.location.href='/zuvlumj/';toggleMobileMenu()">Зөвлөмж</button>
+  <button class="nav-link" onclick="window.location.href='/health/';toggleMobileMenu()">Эрүүл мэндийн багц</button>
+  <button class="nav-link" onclick="window.location.href='/routes/';toggleMobileMenu()">Маршрут</button>
+  <button class="nav-link" onclick="window.location.href='/tips/';toggleMobileMenu()">Зөвлөмж</button>
   <button class="nav-link" onclick="scrollToId('pricing');toggleMobileMenu()">Үнэ</button>
   <button class="nav-link" onclick="window.location.href='/booking/';toggleMobileMenu()">Захиалах</button>
 </div>
@@ -1712,9 +1712,9 @@ section,#booking-section{scroll-margin-top:60px}
         <div class="footer-col-title">Хуудсууд</div>
         <button class="footer-link" onclick="window.scrollTo({top:0,behavior:'smooth'})">Нүүр</button>
         <button class="footer-link" onclick="scrollToId('medical')">Эрүүл мэнд</button>
-        <a class="footer-link" href="/eruul-mend/">Эрүүл мэндийн багц</a>
-        <a class="footer-link" href="/marshrut/">Маршрутууд</a>
-        <a class="footer-link" href="/zuvlumj/">Зөвлөмж</a>
+        <a class="footer-link" href="/health/">Эрүүл мэндийн багц</a>
+        <a class="footer-link" href="/routes/">Маршрутууд</a>
+        <a class="footer-link" href="/tips/">Зөвлөмж</a>
         <button class="footer-link" onclick="scrollToId('pricing')">Үнэ</button>
         <button class="footer-link" onclick="window.location.href='/booking/'">Захиалах</button>
       </div>
@@ -1981,6 +1981,9 @@ function openAccountModal() {
   };
 
   window.doLogin = async function() {
+    // Remove readonly (if user pressed button without tapping field first)
+    document.getElementById('login-email').removeAttribute('readonly');
+    document.getElementById('login-pass').removeAttribute('readonly');
     const email = document.getElementById('login-email').value.trim();
     const pass = document.getElementById('login-pass').value;
     const msg = document.getElementById('login-msg');
@@ -2029,7 +2032,22 @@ function openAccountModal() {
 </script>
 
 <script>
-function openAuthModal() { document.getElementById('authOverlay').classList.add('open'); }
+function openAuthModal() {
+  document.getElementById('authOverlay').classList.add('open');
+  // Prevent iOS Safari from auto-triggering Face ID when modal opens.
+  // Fields start as readonly; removed only on explicit user tap or login button press.
+  const em = document.getElementById('login-email');
+  const pw = document.getElementById('login-pass');
+  em.setAttribute('readonly', true);
+  pw.setAttribute('readonly', true);
+  em.value = ''; pw.value = '';
+  function unlockField(el) {
+    el.removeAttribute('readonly');
+    el.focus();
+  }
+  em.addEventListener('pointerdown', () => unlockField(em), { once: true });
+  pw.addEventListener('pointerdown', () => unlockField(pw), { once: true });
+}
 function closeAuthModal() { document.getElementById('authOverlay').classList.remove('open'); }
 function switchAuthTab(tab, btn) {
   document.querySelectorAll('.auth-tab').forEach(b => b.classList.remove('active'));
