@@ -947,7 +947,7 @@ section,#booking-section{scroll-margin-top:60px}
   <div class="nav-logo" onclick="window.scrollTo({top:0,behavior:'smooth'})">LFS <span>Shanghai</span></div>
   <div class="nav-actions">
     <div class="lang-switch"><a href="/" class="lang-btn lang-active">МН</a><a href="/en/" class="lang-btn">EN</a></div>
-    <button class="nav-user-btn" id="nav-auth-btn" onclick="openAuthModal()">Нэвтрэх 👤</button>
+    <a class="nav-user-btn" id="nav-auth-btn" href="/login/">Нэвтрэх 👤</a>
     <button class="nav-btn" onclick="window.location.href='/booking/'">Одоо Захиалах ↗</button>
   </div>
   <div class="hamburger" onclick="toggleMobileMenu()">
@@ -1947,7 +1947,7 @@ function openAccountModal() {
 <script type="module">
   import { initializeApp } from "https://www.gstatic.com/firebasejs/11.7.1/firebase-app.js";
   import { getAnalytics, logEvent } from "https://www.gstatic.com/firebasejs/11.7.1/firebase-analytics.js";
-  import { getAuth, createUserWithEmailAndPassword, signInWithEmailAndPassword, onAuthStateChanged, signOut, GoogleAuthProvider, FacebookAuthProvider, signInWithPopup, sendPasswordResetEmail, deleteUser, reauthenticateWithCredential, EmailAuthProvider } from "https://www.gstatic.com/firebasejs/11.7.1/firebase-auth.js";
+  import { getAuth, createUserWithEmailAndPassword, signInWithEmailAndPassword, onAuthStateChanged, signOut, GoogleAuthProvider, FacebookAuthProvider, signInWithPopup, signInWithRedirect, getRedirectResult, sendPasswordResetEmail, deleteUser, reauthenticateWithCredential, EmailAuthProvider } from "https://www.gstatic.com/firebasejs/11.7.1/firebase-auth.js";
   import { getFirestore, doc, getDoc, setDoc } from "https://www.gstatic.com/firebasejs/11.7.1/firebase-firestore.js";
 
   const firebaseConfig = {
@@ -1964,6 +1964,15 @@ function openAccountModal() {
   const auth = getAuth(app);
   const db = getFirestore(app);
   logEvent(analytics, 'page_view', { page_title: 'Home MN' });
+
+  // Handle redirect result from signInWithRedirect (mobile social login)
+  getRedirectResult(auth).then(result => {
+    if (result?.user) closeAuthModal();
+  }).catch(e => {
+    if (e.code && e.code !== 'auth/popup-closed-by-user') {
+      console.error('Social redirect error:', e.code, e.message);
+    }
+  });
 
   // Custom calendars
   if (document.getElementById('b-start'))     initDatepicker('b-start',    { minToday: true, placeholder: 'Огноо сонгох' });
@@ -1983,7 +1992,8 @@ function openAccountModal() {
     } else {
       btn.textContent = name.trim() + ' 👤';
     }
-    btn.onclick = () => { window.location.href = '/profile/'; };
+    btn.removeAttribute('href');
+    btn.onclick = (e) => { e.preventDefault(); window.location.href = '/profile/'; };
   }
 
   async function checkAndShowProfile(user) {
@@ -2017,7 +2027,8 @@ function openAccountModal() {
       checkAndShowProfile(user);
     } else {
       btn.innerHTML = 'Нэвтрэх 👤';
-      btn.onclick = () => { window.location.href = '/login'; };
+      btn.onclick = null;
+      btn.href = '/login/';
     }
   });
 
@@ -2100,13 +2111,29 @@ function openAccountModal() {
     }
   };
 
+  const isMobile = /Mobi|Android|iPhone|iPad|iPod/i.test(navigator.userAgent);
+
   async function doSocialLogin(provider) {
     try {
-      await signInWithPopup(auth, provider);
-      closeAuthModal();
+      if (isMobile) {
+        // Mobile browsers block popups — use redirect flow instead
+        await signInWithRedirect(auth, provider);
+        // Page redirects away; getRedirectResult() on return handles login
+      } else {
+        await signInWithPopup(auth, provider);
+        closeAuthModal();
+      }
     } catch(e) {
-      if (e.code !== 'auth/popup-closed-by-user') {
-        toast('Нэвтрэхэд алдаа гарлаа', 'error', { subtitle: e.code || e.message });
+      if (e.code === 'auth/popup-blocked') {
+        // Desktop popup blocked — fall back to redirect
+        try { await signInWithRedirect(auth, provider); } catch(_) {}
+      } else if (e.code !== 'auth/popup-closed-by-user') {
+        const msg = e.code === 'auth/operation-not-allowed'
+          ? 'Энэ нэвтрэх арга идэвхжүүлэгдээгүй байна (Firebase консол).'
+          : e.code === 'auth/unauthorized-domain'
+          ? 'Domain зөвшөөрөгдөөгүй байна (Firebase консол → Auth → Authorized domains).'
+          : (e.message || e.code);
+        toast('Нэвтрэхэд алдаа гарлаа', 'error', { subtitle: msg });
       }
     }
   }
