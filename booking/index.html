@@ -273,6 +273,27 @@ body{
 .ical-day.ical-disabled{color:#d1d1d6;cursor:default;pointer-events:none}
 .ical-selected{text-align:center;font-size:14px;font-weight:600;color:var(--blue);padding:8px 0 4px;min-height:28px}
 
+/* SOCIAL TUTORIAL */
+.social-tutorial-toggle{
+  display:flex;align-items:center;justify-content:space-between;
+  background:rgba(0,113,227,.06);border:1.5px solid rgba(0,113,227,.2);
+  border-radius:12px;padding:12px 16px;margin-bottom:12px;
+  font-size:13px;font-weight:600;color:var(--blue);cursor:pointer;
+  user-select:none;transition:.15s;-webkit-tap-highlight-color:transparent;
+}
+.social-tutorial-toggle:hover{background:rgba(0,113,227,.1)}
+.social-tutorial{
+  background:var(--bg2);border:1.5px solid var(--border);
+  border-radius:12px;padding:16px;margin-bottom:14px;
+}
+.tut-section{margin-bottom:16px}
+.tut-section:last-child{margin-bottom:0}
+.tut-platform{font-weight:700;color:var(--dark2);margin-bottom:10px;font-size:14px}
+.tut-block{margin-bottom:10px}
+.tut-method{font-weight:600;color:var(--muted);margin-bottom:5px;font-size:12px;text-transform:uppercase;letter-spacing:.03em}
+.tut-steps{padding-left:20px;color:var(--dark2);line-height:1.9;font-size:13px}
+.tut-steps li{margin-bottom:1px}
+
 /* FOOTER */
 footer{
   background:var(--bg2);border-top:1px solid var(--border);
@@ -489,14 +510,61 @@ footer{
             </div>
           </div>
 
-          <!-- STEP 8: Social (optional) -->
+          <!-- STEP 8: Social (REQUIRED) -->
           <div class="wizard-step" id="step-8">
             <div class="step-question">Facebook / Instagram холбоос</div>
-            <div class="step-sub">Заавал биш — хуваалцахыг хүсвэл бичнэ үү</div>
-            <input class="wiz-input" type="text" id="b-social" placeholder="facebook.com/... эсвэл @username">
+            <div class="step-sub">Профайл холбоосоо оруулна уу — таныг танихад тусална</div>
+            <div class="social-tutorial-toggle" onclick="toggleTutorial()">
+              💡 Холбоосоо яаж авах вэ? <span id="tutArrow">▼</span>
+            </div>
+            <div class="social-tutorial" id="socialTutorial" style="display:none">
+              <div class="tut-section">
+                <div class="tut-platform">📘 Facebook холбоос авах</div>
+                <div class="tut-block">
+                  <div class="tut-method">📱 Гар утаснаас:</div>
+                  <ol class="tut-steps">
+                    <li>Facebook апп нээ</li>
+                    <li>Профайл дүрс дээр дарж профайл руу орно</li>
+                    <li>Баруун дээд буланд "···" товчийг дарна</li>
+                    <li>"Профайлын холбоос хуулах" сонгоно</li>
+                    <li>Хуулсан холбоосоо доорх талбарт буул</li>
+                  </ol>
+                </div>
+                <div class="tut-block">
+                  <div class="tut-method">💻 Компьютероос:</div>
+                  <ol class="tut-steps">
+                    <li>facebook.com-д нэвтэрнэ</li>
+                    <li>Зүүн талд өөрийн нэр дээр дарна</li>
+                    <li>Хаягийн мөрийн URL-ыг хуулж буул (facebook.com/...)</li>
+                  </ol>
+                </div>
+              </div>
+              <div class="tut-section">
+                <div class="tut-platform">📸 Instagram холбоос авах</div>
+                <div class="tut-block">
+                  <div class="tut-method">📱 Гар утаснаас:</div>
+                  <ol class="tut-steps">
+                    <li>Instagram апп нээ</li>
+                    <li>Доод баруун буланд профайл дүрс дээр дарна</li>
+                    <li>Баруун дээд буланд "···" товчийг дарна</li>
+                    <li>"Профайлын холбоос хуулах" сонгоно</li>
+                    <li>Хуулсан холбоосоо доорх талбарт буул</li>
+                  </ol>
+                </div>
+                <div class="tut-block">
+                  <div class="tut-method">💻 Компьютероос:</div>
+                  <ol class="tut-steps">
+                    <li>instagram.com-д нэвтэрнэ</li>
+                    <li>Зүүн талд өөрийн нэр дээр дарна</li>
+                    <li>Хаягийн мөрийн URL-ыг хуулж буул</li>
+                  </ol>
+                </div>
+              </div>
+            </div>
+            <input class="wiz-input" type="text" id="b-social" placeholder="facebook.com/username эсвэл instagram.com/username">
+            <div class="field-err" id="err-social">Профайл холбоосоо оруулна уу</div>
             <div class="wiz-nav">
               <button class="btn-back" onclick="prevStep()">← Буцах</button>
-              <button class="btn-skip" onclick="skipStep()">Алгасах →</button>
               <button class="btn-next" onclick="nextStep()">Дараах →</button>
             </div>
           </div>
@@ -525,7 +593,7 @@ footer{
               <div class="summary-row"><div class="summary-label">Огноо</div><div class="summary-val" id="sum-start">—</div></div>
               <div class="summary-row"><div class="summary-label">Хугацаа</div><div class="summary-val" id="sum-days">—</div></div>
               <div class="summary-row"><div class="summary-label">Хүний тоо</div><div class="summary-val" id="sum-people">—</div></div>
-              <div class="summary-row" id="sum-row-social" style="display:none"><div class="summary-label">Social</div><div class="summary-val" id="sum-social">—</div></div>
+              <div class="summary-row" id="sum-row-social"><div class="summary-label">Social</div><div class="summary-val" id="sum-social">—</div></div>
               <div class="summary-row" id="sum-row-note" style="display:none"><div class="summary-label">Нэмэлт</div><div class="summary-val" id="sum-note">—</div></div>
             </div>
             <div class="wiz-nav">
@@ -650,8 +718,14 @@ function validateCurrentStep() {
     wizardData.people = peopleCount;
     return true;
   }
-  // Steps 8, 9 optional — always valid
-  if (s === 8) { wizardData.social = document.getElementById('b-social').value.trim(); return true; }
+  // Step 8 required, step 9 optional
+  if (s === 8) {
+    const v = document.getElementById('b-social').value.trim();
+    if (!v) { showErr('b-social','err-social'); return false; }
+    wizardData.social = v;
+    clearErr('b-social','err-social');
+    return true;
+  }
   if (s === 9) { wizardData.note = document.getElementById('b-note').value.trim(); return true; }
   return true;
 }
@@ -685,12 +759,18 @@ function prevStep() {
 }
 
 function skipStep() {
-  if (currentStep === 8) { wizardData.social = ''; }
-  if (currentStep === 9) { wizardData.note = ''; }
-  if (currentStep === 9) { populateSummary(); }
+  if (currentStep === 9) { wizardData.note = ''; populateSummary(); }
   if (currentStep < TOTAL_STEPS) {
     showStep(currentStep + 1, 'forward');
   }
+}
+
+function toggleTutorial() {
+  const tut = document.getElementById('socialTutorial');
+  const arrow = document.getElementById('tutArrow');
+  const open = tut.style.display !== 'none';
+  tut.style.display = open ? 'none' : 'block';
+  arrow.textContent = open ? '▼' : '▲';
 }
 
 // Card selection (service / days)
@@ -732,10 +812,8 @@ function populateSummary() {
   document.getElementById('sum-people').textContent  = wizardData.people + ' хүн';
   const rowSocial = document.getElementById('sum-row-social');
   const rowNote   = document.getElementById('sum-row-note');
-  if (wizardData.social) {
-    rowSocial.style.display = 'flex';
-    document.getElementById('sum-social').textContent = wizardData.social;
-  } else { rowSocial.style.display = 'none'; }
+  rowSocial.style.display = 'flex';
+  document.getElementById('sum-social').textContent = wizardData.social || '—';
   if (wizardData.note) {
     rowNote.style.display = 'flex';
     document.getElementById('sum-note').textContent = wizardData.note;
@@ -756,7 +834,7 @@ document.getElementById('b-social').addEventListener('keydown', e => {
 });
 
 // Clear invalid on input
-['b-name','b-phone','b-email','b-start'].forEach(id => {
+['b-name','b-phone','b-email','b-start','b-social'].forEach(id => {
   const el = document.getElementById(id);
   if (!el) return;
   el.addEventListener('input', () => el.classList.remove('invalid'));

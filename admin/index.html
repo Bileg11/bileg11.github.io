@@ -97,14 +97,15 @@ body{font-family:'Inter',sans-serif;background:var(--bg);color:var(--text);min-h
 .filter-count{font-size:12px;color:var(--muted);margin-left:auto}
 
 /* TABLE */
-.table-wrap{background:var(--bg2);border:1px solid var(--border);border-radius:var(--radius);overflow:hidden}
-.table-header{display:grid;grid-template-columns:180px 130px 1fr 140px 90px 80px;gap:12px;padding:12px 20px;border-bottom:1px solid var(--border);font-size:11px;font-weight:600;color:var(--muted);letter-spacing:.04em;text-transform:uppercase}
-.booking-row{display:grid;grid-template-columns:180px 130px 1fr 140px 90px 80px;gap:12px;padding:14px 20px;border-bottom:1px solid var(--border);align-items:center;transition:.15s;cursor:pointer}
+.table-wrap{background:var(--bg2);border:1px solid var(--border);border-radius:var(--radius);overflow-x:auto}
+.table-header{display:grid;grid-template-columns:150px 110px 150px 1fr 90px 50px 80px;gap:10px;padding:12px 20px;border-bottom:1px solid var(--border);font-size:11px;font-weight:600;color:var(--muted);letter-spacing:.04em;text-transform:uppercase;min-width:700px}
+.booking-row{display:grid;grid-template-columns:150px 110px 150px 1fr 90px 50px 80px;gap:10px;padding:14px 20px;border-bottom:1px solid var(--border);align-items:center;transition:.15s;cursor:pointer;min-width:700px}
 .booking-row:last-child{border-bottom:none}
 .booking-row:hover{background:var(--bg3)}
-.row-name{font-size:13px;font-weight:600;color:var(--text)}
+.row-name{font-size:13px;font-weight:600;color:var(--text);overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
 .row-phone{font-size:12px;color:var(--muted);font-family:monospace}
-.row-service{font-size:12px;color:var(--text)}
+.row-email{font-size:11px;color:var(--muted);overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.row-service{font-size:12px;color:var(--text);overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
 .row-date{font-size:12px;color:var(--muted)}
 .row-people{font-size:12px;color:var(--text);text-align:center}
 .badge{display:inline-flex;align-items:center;padding:3px 9px;border-radius:20px;font-size:11px;font-weight:600}
@@ -113,6 +114,31 @@ body{font-family:'Inter',sans-serif;background:var(--bg);color:var(--text);min-h
 .badge-done{background:rgba(48,209,88,.15);color:var(--green)}
 .empty-state{padding:60px 20px;text-align:center;color:var(--muted);font-size:14px}
 .loading-state{padding:60px 20px;text-align:center;color:var(--muted);font-size:14px}
+
+/* CALENDAR TAB */
+.cal-nav-row{display:flex;align-items:center;justify-content:space-between;margin-bottom:20px}
+.cal-nav-btn{padding:8px 20px;background:var(--bg2);border:1px solid var(--border);border-radius:8px;color:var(--text);font-size:14px;cursor:pointer;font-family:inherit;transition:.15s}
+.cal-nav-btn:hover{border-color:var(--blue);color:var(--blue)}
+.cal-month-title{font-size:18px;font-weight:700;letter-spacing:-.02em;color:var(--text)}
+.cal-wrap{background:var(--bg2);border:1px solid var(--border);border-radius:var(--radius);padding:20px;margin-bottom:20px}
+.cal-daynames{display:grid;grid-template-columns:repeat(7,1fr);margin-bottom:8px;text-align:center}
+.cal-daynames div{font-size:11px;font-weight:600;color:var(--muted);padding:6px 0;letter-spacing:.03em}
+.cal-grid{display:grid;grid-template-columns:repeat(7,1fr);gap:4px}
+.cal-cell{min-height:56px;border-radius:10px;display:flex;flex-direction:column;align-items:center;justify-content:center;border:1.5px solid transparent;transition:.15s;padding:4px;position:relative}
+.cal-cell:not(.cal-other-month){cursor:pointer}
+.cal-cell:hover:not(.cal-other-month){border-color:var(--blue);background:rgba(0,113,227,.08)}
+.cal-cell.cal-other-month{opacity:.25;cursor:default}
+.cal-cell.cal-today .cal-dn{color:var(--blue);font-weight:800}
+.cal-cell.cal-has-bookings{background:rgba(0,113,227,.1);border-color:rgba(0,113,227,.25)}
+.cal-cell.cal-selected{background:var(--blue)!important;border-color:var(--blue)!important}
+.cal-cell.cal-selected .cal-dn,.cal-cell.cal-selected .cal-cnt{color:#fff!important;background:transparent!important}
+.cal-dn{font-size:13px;font-weight:600;color:var(--text)}
+.cal-cnt{font-size:10px;font-weight:700;color:var(--blue);background:rgba(0,113,227,.18);border-radius:20px;padding:1px 6px;margin-top:3px;min-width:18px;text-align:center}
+.cal-day-detail{background:var(--bg2);border:1px solid var(--border);border-radius:var(--radius);padding:20px;margin-top:8px}
+.cal-day-header{display:flex;align-items:center;justify-content:space-between;margin-bottom:16px}
+.cal-day-title{font-size:15px;font-weight:600;color:var(--text)}
+.cal-close-btn{background:none;border:none;color:var(--muted);cursor:pointer;font-size:18px;line-height:1;padding:4px;transition:.15s}
+.cal-close-btn:hover{color:var(--text)}
 
 /* FINANCE */
 .finance-top{display:flex;gap:16px;margin-bottom:28px;flex-wrap:wrap}
@@ -162,9 +188,9 @@ body{font-family:'Inter',sans-serif;background:var(--bg);color:var(--text);min-h
 .page-btn:disabled{opacity:.4;cursor:default;pointer-events:none}
 .page-info{font-size:13px;color:var(--muted);padding:0 8px}
 @media(max-width:800px){
-  .table-header,.booking-row{grid-template-columns:1fr 1fr;gap:8px}
-  .table-header .h-service,.table-header .h-date,.table-header .h-people,.table-header .h-status,
-  .booking-row .row-service,.booking-row .row-date,.booking-row .row-people,.booking-row .row-status{display:none}
+  .table-header,.booking-row{grid-template-columns:1fr 1fr;gap:8px;min-width:unset}
+  .table-header .h-email,.table-header .h-service,.table-header .h-date,.table-header .h-people,.table-header .h-status,
+  .booking-row .row-email,.booking-row .row-service,.booking-row .row-date,.booking-row .row-people,.booking-row .row-status{display:none}
 }
 </style>
 </head>
@@ -200,6 +226,7 @@ body{font-family:'Inter',sans-serif;background:var(--bg);color:var(--text);min-h
   <div class="main">
     <div class="tabs">
       <button class="tab-btn active" onclick="switchTab('bookings',this)">📋 Захиалгууд</button>
+      <button class="tab-btn" onclick="switchTab('calendar',this)">📅 Календар</button>
       <button class="tab-btn" onclick="switchTab('finance',this)">💰 Орлого/Зарлага</button>
       <button class="tab-btn" onclick="switchTab('analytics',this)">📊 Analytics</button>
     </div>
@@ -242,6 +269,28 @@ body{font-family:'Inter',sans-serif;background:var(--bg);color:var(--text);min-h
           <span>Огноо</span><span>Тайлбар</span><span>Дүн</span><span>Төрөл</span><span></span>
         </div>
         <div id="financeBody"><div class="loading-state">Ачаалж байна...</div></div>
+      </div>
+    </div>
+
+    <!-- CALENDAR TAB -->
+    <div class="tab-content" id="tab-calendar">
+      <div class="cal-nav-row">
+        <button class="cal-nav-btn" onclick="calPrevMonth()">← Өмнөх</button>
+        <div class="cal-month-title" id="calTitle">—</div>
+        <button class="cal-nav-btn" onclick="calNextMonth()">Дараах →</button>
+      </div>
+      <div class="cal-wrap">
+        <div class="cal-daynames">
+          <div>Да</div><div>Мя</div><div>Лх</div><div>Пү</div><div>Ба</div><div>Бя</div><div>Ня</div>
+        </div>
+        <div class="cal-grid" id="calGrid"></div>
+      </div>
+      <div class="cal-day-detail" id="calDayDetail" style="display:none">
+        <div class="cal-day-header">
+          <div class="cal-day-title" id="calDayTitle"></div>
+          <button class="cal-close-btn" onclick="closeDayDetail()">✕</button>
+        </div>
+        <div id="calDayList"></div>
       </div>
     </div>
 
@@ -318,8 +367,9 @@ body{font-family:'Inter',sans-serif;background:var(--bg);color:var(--text);min-h
       <div class="table-header">
         <span>Нэр</span>
         <span>Утас</span>
+        <span class="h-email">И-мэйл</span>
         <span class="h-service">Үйлчилгээ</span>
-        <span class="h-date">Ирэх огноо</span>
+        <span class="h-date">Огноо</span>
         <span class="h-people">Хүн</span>
         <span class="h-status">Статус</span>
       </div>
@@ -431,6 +481,125 @@ window.switchTab = function(tab, btn) {
     document.getElementById('tab-' + tab).classList.add('active');
     if (tab === 'analytics') renderCharts();
     if (tab === 'finance') loadFinance();
+    if (tab === 'calendar') initCalendar();
+  };
+
+  // ── CALENDAR ──
+  const MN_MONTHS = ['1-р сар','2-р сар','3-р сар','4-р сар','5-р сар','6-р сар','7-р сар','8-р сар','9-р сар','10-р сар','11-р сар','12-р сар'];
+  let calYear, calMonth, calSelectedKey = null;
+
+  function initCalendar() {
+    if (calYear === undefined) {
+      const now = new Date();
+      calYear = now.getFullYear();
+      calMonth = now.getMonth();
+    }
+    renderCalendar();
+  }
+
+  window.calPrevMonth = function() {
+    calMonth--;
+    if (calMonth < 0) { calMonth = 11; calYear--; }
+    calSelectedKey = null;
+    document.getElementById('calDayDetail').style.display = 'none';
+    renderCalendar();
+  };
+  window.calNextMonth = function() {
+    calMonth++;
+    if (calMonth > 11) { calMonth = 0; calYear++; }
+    calSelectedKey = null;
+    document.getElementById('calDayDetail').style.display = 'none';
+    renderCalendar();
+  };
+
+  function renderCalendar() {
+    document.getElementById('calTitle').textContent = `${calYear} · ${MN_MONTHS[calMonth]}`;
+    const pad = n => String(n).padStart(2,'0');
+    const toKey = (y,m,d) => `${y}-${pad(m+1)}-${pad(d)}`;
+
+    // Count bookings by start date
+    const dayMap = {};
+    allBookings.forEach(b => {
+      if (!b.start) return;
+      dayMap[b.start] = (dayMap[b.start]||0) + 1;
+    });
+
+    const today = new Date(); today.setHours(0,0,0,0);
+    const todayKey = toKey(today.getFullYear(), today.getMonth(), today.getDate());
+    const first = new Date(calYear, calMonth, 1);
+    const last  = new Date(calYear, calMonth+1, 0);
+    let dow = first.getDay() - 1; if (dow < 0) dow = 6; // Mon-start
+
+    const cells = [];
+    for (let i = 0; i < dow; i++) {
+      const d = new Date(calYear, calMonth, i - dow + 1);
+      cells.push({ date: d, other: true });
+    }
+    for (let i = 1; i <= last.getDate(); i++) {
+      cells.push({ date: new Date(calYear, calMonth, i), other: false });
+    }
+    const rem = (7 - (cells.length % 7)) % 7;
+    for (let i = 1; i <= rem; i++) {
+      cells.push({ date: new Date(calYear, calMonth+1, i), other: true });
+    }
+
+    document.getElementById('calGrid').innerHTML = cells.map(({ date, other }) => {
+      if (other) return `<div class="cal-cell cal-other-month"><div class="cal-dn">${date.getDate()}</div></div>`;
+      const key = toKey(date.getFullYear(), date.getMonth(), date.getDate());
+      const cnt = dayMap[key] || 0;
+      const isToday = key === todayKey;
+      const isSelected = key === calSelectedKey;
+      const cls = [
+        isToday ? 'cal-today' : '',
+        cnt > 0  ? 'cal-has-bookings' : '',
+        isSelected ? 'cal-selected' : ''
+      ].filter(Boolean).join(' ');
+      return `<div class="cal-cell ${cls}" onclick="calClickDay('${key}', ${date.getDate()})">
+        <div class="cal-dn">${date.getDate()}</div>
+        ${cnt > 0 ? `<div class="cal-cnt">${cnt}</div>` : ''}
+      </div>`;
+    }).join('');
+  }
+
+  window.calClickDay = function(dateKey, dayNum) {
+    calSelectedKey = dateKey;
+    renderCalendar(); // re-render to show selected state
+    const bookingsOnDay = allBookings.filter(b => b.start === dateKey);
+    const pad = n => String(n).padStart(2,'0');
+    document.getElementById('calDayTitle').textContent =
+      `${calYear}/${pad(calMonth+1)}/${pad(dayNum)} — ${bookingsOnDay.length} захиалга`;
+
+    const stLabel = {'new':'Шинэ','contacted':'Холбогдсон','done':'Дууссан'};
+    const stClass = {'new':'badge-new','contacted':'badge-contacted','done':'badge-done'};
+
+    if (!bookingsOnDay.length) {
+      document.getElementById('calDayList').innerHTML =
+        '<div class="empty-state" style="padding:24px 0">Тухайн өдөр захиалга байхгүй</div>';
+    } else {
+      document.getElementById('calDayList').innerHTML = `
+        <div class="table-wrap" style="margin-top:0">
+          <div style="display:grid;grid-template-columns:1fr 1fr 1fr 90px;gap:10px;padding:10px 16px;border-bottom:1px solid var(--border);font-size:11px;font-weight:600;color:var(--muted);letter-spacing:.04em;text-transform:uppercase">
+            <span>Нэр</span><span>Утас</span><span>Үйлчилгээ</span><span>Статус</span>
+          </div>
+          ${bookingsOnDay.map(b => {
+            const st = b.status || (b.done ? 'done' : 'new');
+            return `<div style="display:grid;grid-template-columns:1fr 1fr 1fr 90px;gap:10px;padding:12px 16px;border-bottom:1px solid var(--border);align-items:center;cursor:pointer;transition:.15s" onmouseover="this.style.background='var(--bg3)'" onmouseout="this.style.background=''" onclick="openModal('${b.id}')">
+              <div style="font-size:13px;font-weight:600;overflow:hidden;text-overflow:ellipsis;white-space:nowrap">${b.name||'—'}</div>
+              <div style="font-size:12px;color:var(--muted);font-family:monospace">${b.phone||'—'}</div>
+              <div style="font-size:12px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap">${b.service||'—'}</div>
+              <div><span class="badge ${stClass[st]||'badge-new'}">${stLabel[st]||'Шинэ'}</span></div>
+            </div>`;
+          }).join('')}
+        </div>`;
+    }
+    document.getElementById('calDayDetail').style.display = 'block';
+    document.getElementById('calDayDetail').scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+  };
+
+  window.closeDayDetail = function() {
+    calSelectedKey = null;
+    renderCalendar();
+    document.getElementById('calDayDetail').style.display = 'none';
   };
 
   function renderCharts() {
@@ -502,7 +671,7 @@ window.renderTable = function() {
 
   const getStatus = b => b.status || (b.done ? 'done' : 'new');
   let filtered = allBookings.filter(b => {
-    const matchSearch = !search || b.name?.toLowerCase().includes(search) || b.phone?.includes(search);
+    const matchSearch = !search || b.name?.toLowerCase().includes(search) || b.phone?.includes(search) || b.email?.toLowerCase().includes(search);
     const matchSvc = !svc || b.service === svc;
     const matchStatus = !status || getStatus(b) === status;
     return matchSearch && matchSvc && matchStatus;
@@ -527,6 +696,7 @@ window.renderTable = function() {
     return `<div class="booking-row" onclick="openModal('${b.id}')">
       <div class="row-name">${b.name || '—'}</div>
       <div class="row-phone">${b.phone || '—'}</div>
+      <div class="row-email">${b.email || '—'}</div>
       <div class="row-service">${b.service || '—'}</div>
       <div class="row-date">${b.start || '—'}</div>
       <div class="row-people">${b.people || '—'}</div>
@@ -570,22 +740,25 @@ window.openModal = function(id) {
   currentDocId = id;
   const d = b.createdAt?.toDate?.();
   const dateStr = d ? d.toLocaleString('mn-MN') : '—';
+  const st = b.status || (b.done ? 'done' : 'new');
+  const stLabel = {'new':'Шинэ','contacted':'Холбогдсон','done':'Дууссан'};
+  const stClass = {'new':'badge-new','contacted':'badge-contacted','done':'badge-done'};
+  const socialLink = b.social
+    ? `<a href="${b.social.startsWith('http') ? b.social : 'https://'+b.social}" target="_blank" style="color:var(--blue);text-decoration:none;word-break:break-all">${b.social}</a>`
+    : '—';
   document.getElementById('modalContent').innerHTML = `
     <div class="detail-row"><span class="detail-label">Нэр</span><span class="detail-value">${b.name||'—'}</span></div>
-    <div class="detail-row"><span class="detail-label">Утас / WeChat</span><span class="detail-value">${b.phone||'—'}</span></div>
+    <div class="detail-row"><span class="detail-label">Утас</span><span class="detail-value"><a href="tel:${b.phone||''}" style="color:var(--blue);text-decoration:none">${b.phone||'—'}</a></span></div>
+    <div class="detail-row"><span class="detail-label">И-мэйл</span><span class="detail-value"><a href="mailto:${b.email||''}" style="color:var(--blue);text-decoration:none">${b.email||'—'}</a></span></div>
     <div class="detail-row"><span class="detail-label">Үйлчилгээ</span><span class="detail-value">${b.service||'—'}</span></div>
-    <div class="detail-row"><span class="detail-label">Хүний тоо</span><span class="detail-value">${b.people||'—'}</span></div>
-    <div class="detail-row"><span class="detail-label">Бүлэг</span><span class="detail-value">${b.group||'—'}</span></div>
-    <div class="detail-row"><span class="detail-label">Ирэх огноо</span><span class="detail-value">${b.arrival||'—'}</span></div>
-    <div class="detail-row"><span class="detail-label">Явах огноо</span><span class="detail-value">${b.departure||'—'}</span></div>
     <div class="detail-row"><span class="detail-label">Аялал эхлэх</span><span class="detail-value">${b.start||'—'}</span></div>
-    <div class="detail-row"><span class="detail-label">Хэдэн өдөр</span><span class="detail-value">${b.days||'—'}</span></div>
-    <div class="detail-row"><span class="detail-label">Social</span><span class="detail-value">${b.social||'—'}</span></div>
+    <div class="detail-row"><span class="detail-label">Хэдэн өдөр</span><span class="detail-value">${b.days ? b.days+' өдөр' : '—'}</span></div>
+    <div class="detail-row"><span class="detail-label">Хүний тоо</span><span class="detail-value">${b.people ? b.people+' хүн' : '—'}</span></div>
+    <div class="detail-row"><span class="detail-label">Facebook / Instagram</span><span class="detail-value">${socialLink}</span></div>
     <div class="detail-row"><span class="detail-label">Нэмэлт хүсэлт</span><span class="detail-value">${b.note||'—'}</span></div>
-    <div class="detail-row"><span class="detail-label">Огноо</span><span class="detail-value">${dateStr}</span></div>
-    <div class="detail-row"><span class="detail-label">Статус</span><span class="detail-value"><span class="badge ${b.done?'badge-done':'badge-new'}">${b.done?'Дууссан':'Шинэ'}</span></span></div>
+    <div class="detail-row"><span class="detail-label">Захиалгын огноо</span><span class="detail-value">${dateStr}</span></div>
+    <div class="detail-row"><span class="detail-label">Статус</span><span class="detail-value"><span class="badge ${stClass[st]||'badge-new'}">${stLabel[st]||'Шинэ'}</span></span></div>
   `;
-  const st = b.status || (b.done ? 'done' : 'new');
   document.getElementById('markContactedBtn').style.display = st === 'done' ? 'none' : 'block';
   document.getElementById('markDoneBtn').style.display = st === 'done' ? 'none' : 'block';
   document.getElementById('modalBg').classList.add('open');
