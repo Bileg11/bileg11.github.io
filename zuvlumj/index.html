@@ -1,0 +1,698 @@
+<!DOCTYPE html>
+<html lang="mn">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Зөвлөмж — LFS Shanghai | Шанхай Аяллын Зөвлөмжүүд</title>
+<link rel="icon" type="image/svg+xml" href="/favicon.svg">
+<meta name="description" content="Шанхайд аялахад хэрэгтэй бүх зөвлөмж. Виз, мөнгө, VPN, хэл, аюулгүй байдал, оюутанд зориулсан мэдээлэл.">
+<meta name="robots" content="index, follow">
+<meta property="og:type" content="website">
+<meta property="og:title" content="Зөвлөмж — LFS Shanghai">
+<meta property="og:description" content="Шанхайд аялахад хэрэгтэй бүх зөвлөмж. Виз, мөнгө, VPN, хэл, аюулгүй байдал.">
+<meta property="og:url" content="https://bileg11.github.io/zuvlumj/">
+<meta property="og:locale" content="mn_MN">
+<link href="https://fonts.googleapis.com/css2?family=Inter:ital,wght@0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,400&display=swap" rel="stylesheet">
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+
+:root{
+  --bg:#fff;
+  --bg2:#f5f5f7;
+  --bg3:#fbfbfd;
+  --card:#fff;
+  --text:#1d1d1f;
+  --muted:#6e6e73;
+  --muted2:#86868b;
+  --blue:#0071e3;
+  --blue-hover:#0077ed;
+  --blue-light:#e8f1fb;
+  --border:rgba(0,0,0,.08);
+  --border2:rgba(0,0,0,.05);
+  --shadow:0 2px 20px rgba(0,0,0,.08);
+  --shadow2:0 8px 40px rgba(0,0,0,.12);
+  --radius:18px;
+  --radius2:24px;
+  --dark:#000;
+  --dark2:#1d1d1f;
+}
+
+html{scroll-behavior:smooth}
+body{
+  font-family:'Inter',system-ui,-apple-system,BlinkMacSystemFont,'SF Pro Display','Segoe UI',sans-serif;
+  background:var(--bg);
+  color:var(--text);
+  overflow-x:hidden;
+  line-height:1.47059;
+  -webkit-font-smoothing:antialiased;
+}
+
+::-webkit-scrollbar{width:6px}
+::-webkit-scrollbar-track{background:var(--bg2)}
+::-webkit-scrollbar-thumb{background:#c7c7cc;border-radius:3px}
+
+/* ── NAV ── */
+.nav{
+  position:fixed;top:0;left:0;right:0;z-index:500;
+  height:52px;
+  display:flex;align-items:center;justify-content:space-between;
+  padding:0 22px;
+  background:rgba(255,255,255,.85);
+  backdrop-filter:saturate(180%) blur(20px);
+  -webkit-backdrop-filter:saturate(180%) blur(20px);
+  border-bottom:1px solid rgba(0,0,0,.06);
+  transition:background .3s;
+}
+.nav-logo{
+  font-size:17px;font-weight:700;
+  color:var(--dark2);
+  letter-spacing:-.02em;
+  text-decoration:none;
+  user-select:none;
+}
+.nav-logo span{color:var(--blue)}
+.nav-links{
+  display:flex;align-items:center;gap:0;
+  position:fixed;top:0;left:50%;transform:translateX(-50%);
+  height:52px;background:none;padding:0;z-index:490;
+}
+.nav-link{
+  padding:6px 14px;
+  font-size:12px;font-weight:400;
+  color:var(--muted);
+  cursor:pointer;border:none;background:none;
+  font-family:inherit;
+  transition:color .2s;
+  white-space:nowrap;
+  text-decoration:none;
+  display:inline-flex;align-items:center;
+}
+.nav-link:hover{color:var(--dark2)}
+.nav-link.active{color:var(--dark2);font-weight:500}
+.nav-actions{display:flex;align-items:center;gap:8px}
+.nav-btn{
+  padding:7px 16px;
+  background:var(--blue);
+  color:#fff;
+  border:none;border-radius:20px;
+  font-size:12px;font-weight:500;
+  cursor:pointer;font-family:inherit;
+  transition:background .2s,transform .15s;
+  text-decoration:none;
+}
+.nav-btn:hover{background:var(--blue-hover)}
+.hamburger{display:none;flex-direction:column;gap:4px;cursor:pointer;padding:6px;border:none;background:none}
+.hamburger span{display:block;width:18px;height:1px;background:var(--dark2);transition:.3s;border-radius:1px}
+
+@media(max-width:860px){
+  .nav-links{
+    display:flex;position:fixed;top:52px;left:0;right:0;bottom:0;
+    height:auto;transform:translateY(-18px);z-index:499;
+    background:var(--blue);flex-direction:column;align-items:flex-start;
+    padding:28px 24px;gap:4px;border-top:1px solid rgba(255,255,255,.15);overflow-y:auto;
+    opacity:0;pointer-events:none;
+    transition:opacity .42s ease,transform .42s cubic-bezier(.4,0,.2,1);
+  }
+  .nav-links.open{opacity:1;transform:translateY(0);pointer-events:auto}
+  .nav-link{font-size:17px;font-weight:400;padding:13px 0;color:#fff;border-bottom:1px solid rgba(255,255,255,.15);width:100%}
+  .nav-link:hover,.nav-link.active{color:#fff;background:rgba(255,255,255,.12);border-radius:8px;padding-left:10px}
+  .hamburger{display:flex}
+  .nav-btn{display:none}
+}
+
+/* ── HERO ── */
+.page-hero{
+  padding:110px 24px 64px;
+  max-width:860px;
+  margin:0 auto;
+  text-align:center;
+}
+.hero-eyebrow{
+  font-size:12px;font-weight:600;letter-spacing:.08em;text-transform:uppercase;
+  color:var(--blue);margin-bottom:16px;
+  animation:fadeUp .8s ease both;
+}
+.page-hero h1{
+  font-size:clamp(36px,6vw,72px);
+  font-weight:700;
+  line-height:1.06;
+  letter-spacing:-.04em;
+  color:var(--dark2);
+  margin-bottom:18px;
+  animation:fadeUp .8s ease .08s both;
+}
+.page-hero h1 em{font-style:normal;color:var(--blue)}
+.page-hero p{
+  font-size:clamp(15px,1.8vw,18px);
+  color:var(--muted);
+  max-width:520px;
+  margin:0 auto 32px;
+  line-height:1.65;
+  animation:fadeUp .8s ease .16s both;
+}
+.hero-chips{
+  display:flex;flex-wrap:wrap;gap:8px;justify-content:center;
+  animation:fadeUp .8s ease .24s both;
+}
+.hero-chip{
+  padding:7px 16px;
+  background:var(--bg2);
+  border:1px solid var(--border);
+  border-radius:20px;
+  font-size:13px;font-weight:500;
+  color:var(--dark2);
+  cursor:pointer;
+  text-decoration:none;
+  transition:background .2s,border-color .2s,transform .15s;
+  display:inline-flex;align-items:center;gap:6px;
+}
+.hero-chip:hover{background:var(--blue-light);border-color:rgba(0,113,227,.2);transform:translateY(-1px)}
+
+@keyframes fadeUp{from{opacity:0;transform:translateY(22px)}to{opacity:1;transform:translateY(0)}}
+
+/* ── SECTION DIVIDER ── */
+.section-divider{
+  height:1px;
+  background:var(--border);
+  max-width:1100px;
+  margin:0 auto;
+}
+
+/* ── TIPS GRID SECTION ── */
+.tips-section{
+  padding:72px 24px 100px;
+  max-width:1160px;
+  margin:0 auto;
+}
+.tips-section-label{
+  font-size:11px;font-weight:600;letter-spacing:.08em;text-transform:uppercase;
+  color:var(--muted2);
+  margin-bottom:48px;
+  text-align:center;
+}
+
+/* ── CATEGORY ANCHOR ── */
+.category-anchor{
+  scroll-margin-top:70px;
+}
+
+/* ── CARDS GRID ── */
+.cards-grid{
+  display:grid;
+  grid-template-columns:repeat(3,1fr);
+  gap:20px;
+}
+@media(max-width:960px){.cards-grid{grid-template-columns:repeat(2,1fr)}}
+@media(max-width:600px){.cards-grid{grid-template-columns:1fr;gap:16px}}
+
+/* ── TIP CARD ── */
+.tip-card{
+  background:var(--card);
+  border:1px solid var(--border);
+  border-radius:var(--radius2);
+  padding:30px 28px 28px;
+  transition:box-shadow .25s,transform .25s,border-color .25s;
+  cursor:default;
+  display:flex;
+  flex-direction:column;
+  gap:0;
+}
+.tip-card:hover{
+  box-shadow:var(--shadow2);
+  transform:translateY(-4px);
+  border-color:rgba(0,113,227,.14);
+}
+.tip-card-icon{
+  font-size:32px;
+  margin-bottom:14px;
+  display:block;
+  line-height:1;
+}
+.tip-card-title{
+  font-size:17px;font-weight:700;
+  letter-spacing:-.02em;
+  color:var(--dark2);
+  margin-bottom:4px;
+}
+.tip-card-sub{
+  font-size:12px;font-weight:500;letter-spacing:.04em;text-transform:uppercase;
+  color:var(--blue);
+  margin-bottom:18px;
+}
+.tip-list{
+  list-style:none;
+  display:flex;flex-direction:column;gap:11px;
+  flex:1;
+}
+.tip-list li{
+  font-size:14px;
+  color:var(--muted);
+  line-height:1.55;
+  padding-left:18px;
+  position:relative;
+}
+.tip-list li::before{
+  content:'';
+  position:absolute;left:0;top:7px;
+  width:5px;height:5px;
+  border-radius:50%;
+  background:var(--blue);
+  opacity:.6;
+}
+.tip-list li strong{
+  color:var(--dark2);
+  font-weight:600;
+}
+
+/* ── WIDE CARD (full-width) ── */
+.tip-card.wide{
+  grid-column:1 / -1;
+}
+@media(max-width:600px){.tip-card.wide{grid-column:auto}}
+
+/* ── CTA SECTION ── */
+.cta-section{
+  background:var(--dark2);
+  padding:80px 24px;
+  text-align:center;
+}
+.cta-inner{
+  max-width:640px;
+  margin:0 auto;
+}
+.cta-eyebrow{
+  font-size:12px;font-weight:600;letter-spacing:.08em;text-transform:uppercase;
+  color:rgba(255,255,255,.5);
+  margin-bottom:16px;
+}
+.cta-title{
+  font-size:clamp(28px,5vw,52px);
+  font-weight:700;
+  letter-spacing:-.04em;
+  color:#fff;
+  line-height:1.08;
+  margin-bottom:16px;
+}
+.cta-sub{
+  font-size:16px;
+  color:rgba(255,255,255,.6);
+  line-height:1.6;
+  margin-bottom:32px;
+}
+.cta-btns{
+  display:flex;gap:12px;flex-wrap:wrap;justify-content:center;
+}
+.btn-white{
+  padding:14px 28px;
+  background:#fff;
+  color:var(--dark2);
+  border:none;border-radius:28px;
+  font-size:15px;font-weight:600;
+  cursor:pointer;font-family:inherit;
+  transition:all .2s;
+  text-decoration:none;
+  display:inline-flex;align-items:center;gap:7px;
+}
+.btn-white:hover{background:rgba(255,255,255,.9);transform:scale(1.02)}
+.btn-outline-white{
+  padding:14px 28px;
+  background:transparent;
+  color:#fff;
+  border:1px solid rgba(255,255,255,.3);
+  border-radius:28px;
+  font-size:15px;font-weight:500;
+  cursor:pointer;font-family:inherit;
+  transition:all .2s;
+  text-decoration:none;
+  display:inline-flex;align-items:center;gap:7px;
+}
+.btn-outline-white:hover{background:rgba(255,255,255,.1);border-color:rgba(255,255,255,.5)}
+
+/* ── FOOTER ── */
+footer{
+  background:var(--bg2);
+  padding:56px 24px 32px;
+  border-top:1px solid var(--border);
+}
+.footer-inner{max-width:1000px;margin:0 auto}
+.footer-top{
+  display:grid;
+  grid-template-columns:1.6fr 1fr 1fr;
+  gap:48px;
+  margin-bottom:40px;
+}
+@media(max-width:700px){.footer-top{grid-template-columns:1fr;gap:32px}}
+.footer-logo{font-size:18px;font-weight:700;letter-spacing:-.02em;color:var(--dark2);margin-bottom:8px}
+.footer-logo span{color:var(--blue)}
+.footer-tagline{font-size:13px;color:var(--muted);line-height:1.6;max-width:280px;margin-bottom:20px}
+.footer-fb{
+  display:inline-flex;align-items:center;gap:8px;
+  padding:9px 16px;
+  background:var(--card);
+  border:1px solid var(--border);
+  border-radius:20px;
+  font-size:13px;font-weight:500;
+  color:var(--dark2);
+  text-decoration:none;
+  transition:box-shadow .2s;
+}
+.footer-fb:hover{box-shadow:var(--shadow2)}
+.footer-col-title{font-size:12px;font-weight:600;letter-spacing:.04em;text-transform:uppercase;color:var(--dark2);margin-bottom:16px}
+.footer-link{
+  display:block;
+  font-size:13px;color:var(--muted);
+  text-decoration:none;
+  margin-bottom:10px;
+  background:none;border:none;cursor:pointer;font-family:inherit;padding:0;
+  transition:color .15s;
+  text-align:left;
+}
+.footer-link:hover{color:var(--blue)}
+.footer-bottom{
+  display:flex;align-items:center;justify-content:space-between;
+  border-top:1px solid var(--border);
+  padding-top:24px;
+  font-size:12px;color:var(--muted2);
+  flex-wrap:wrap;gap:8px;
+}
+
+/* ── REVEAL ANIMATION ── */
+.reveal{
+  opacity:0;
+  transform:translateY(28px);
+  transition:opacity .6s ease,transform .6s ease;
+}
+.reveal.visible{opacity:1;transform:translateY(0)}
+.reveal-delay-1{transition-delay:.1s}
+.reveal-delay-2{transition-delay:.2s}
+.reveal-delay-3{transition-delay:.3s}
+.reveal-delay-4{transition-delay:.4s}
+.reveal-delay-5{transition-delay:.5s}
+.reveal-delay-6{transition-delay:.6s}
+
+/* ── STICKY TOC ── */
+.toc-bar{
+  position:sticky;top:52px;z-index:400;
+  background:rgba(245,245,247,.92);
+  backdrop-filter:saturate(180%) blur(16px);
+  -webkit-backdrop-filter:saturate(180%) blur(16px);
+  border-bottom:1px solid var(--border);
+  padding:0 24px;
+  overflow-x:auto;
+  scrollbar-width:none;
+}
+.toc-bar::-webkit-scrollbar{display:none}
+.toc-inner{
+  display:flex;gap:0;
+  max-width:1100px;
+  margin:0 auto;
+  white-space:nowrap;
+}
+.toc-link{
+  padding:12px 16px;
+  font-size:13px;font-weight:500;
+  color:var(--muted);
+  text-decoration:none;
+  border-bottom:2px solid transparent;
+  transition:color .2s,border-color .2s;
+  display:inline-flex;align-items:center;gap:6px;
+  flex-shrink:0;
+}
+.toc-link:hover{color:var(--dark2)}
+.toc-link.active{color:var(--blue);border-bottom-color:var(--blue)}
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav class="nav">
+  <a href="/" class="nav-logo">LFS <span>Shanghai</span></a>
+  <div class="nav-links" id="navLinks">
+    <a href="/" class="nav-link">Нүүр</a>
+    <a href="/#services" class="nav-link">Үйлчилгээ</a>
+    <a href="/marshrut/" class="nav-link">Маршрут</a>
+    <a href="/zuvlumj/" class="nav-link active">Зөвлөмж</a>
+    <a href="/booking/" class="nav-link">Захиалах</a>
+  </div>
+  <div class="nav-actions">
+    <a href="/booking/" class="nav-btn">Захиалах ↗</a>
+    <button class="hamburger" id="hamburger" aria-label="Цэс нээх" onclick="toggleMenu()">
+      <span></span><span></span><span></span>
+    </button>
+  </div>
+</nav>
+
+<!-- STICKY TOC -->
+<div class="toc-bar" id="tocBar">
+  <div class="toc-inner">
+    <a href="#viz" class="toc-link" data-target="viz">🛂 Виз</a>
+    <a href="#mongon" class="toc-link" data-target="mongon">💴 Мөнгө</a>
+    <a href="#hel" class="toc-link" data-target="hel">🗣️ Хэл</a>
+    <a href="#vpn" class="toc-link" data-target="vpn">🔒 VPN</a>
+    <a href="#ayuulgui" class="toc-link" data-target="ayuulgui">🛡️ Аюулгүй</a>
+    <a href="#oiuutan" class="toc-link" data-target="oiuutan">🎓 Оюутанд</a>
+    <a href="#tsag" class="toc-link" data-target="tsag">🌤️ Цаг агаар</a>
+  </div>
+</div>
+
+<!-- HERO -->
+<section class="page-hero">
+  <div class="hero-eyebrow">Аяллын Зөвлөмж</div>
+  <h1>Шанхайд <em>бэлэн</em> ирээрэй</h1>
+  <p>Монгол аялагчдад зориулсан бодит зөвлөмжүүд — виз, мөнгө, хэл, технологи, аюулгүй байдал.</p>
+  <div class="hero-chips">
+    <a href="#viz" class="hero-chip">🛂 Виз &amp; Бэлтгэл</a>
+    <a href="#mongon" class="hero-chip">💴 Мөнгө</a>
+    <a href="#hel" class="hero-chip">🗣️ Хэл</a>
+    <a href="#vpn" class="hero-chip">🔒 VPN</a>
+    <a href="#ayuulgui" class="hero-chip">🛡️ Аюулгүй байдал</a>
+    <a href="#oiuutan" class="hero-chip">🎓 Оюутанд</a>
+    <a href="#tsag" class="hero-chip">🌤️ Цаг агаар</a>
+  </div>
+</section>
+
+<div class="section-divider"></div>
+
+<!-- TIPS GRID -->
+<section class="tips-section">
+  <div class="tips-section-label">7 ангилал · 30+ зөвлөмж</div>
+
+  <div class="cards-grid">
+
+    <!-- 1. Виз & Бэлтгэл -->
+    <div class="tip-card reveal" id="viz">
+      <span class="tip-card-icon">🛂</span>
+      <div class="tip-card-title">Виз &amp; Бэлтгэл</div>
+      <div class="tip-card-sub">Visa &amp; Preparation</div>
+      <ul class="tip-list">
+        <li><strong>Монгол иргэд</strong> Хятадад виз шаардлагатай — урьдчилан авна уу</li>
+        <li>Паспорт <strong>6+ сар хүчинтэй</strong> байх шаардлагатай</li>
+        <li><strong>Цахим визний</strong> горим (e-Visa) ашиглах боломжтой — хурдан, хялбар</li>
+        <li>Аяллын <strong>даатгал заавал</strong> авах — Хятадын эмнэлэг үнэтэй</li>
+        <li>Аялах <strong>2–4 долоо хоног</strong> өмнө виз хийлгэж эхлэх зөвлөмтэй</li>
+      </ul>
+    </div>
+
+    <!-- 2. Мөнгө & Төлбөр -->
+    <div class="tip-card reveal reveal-delay-1" id="mongon">
+      <span class="tip-card-icon">💴</span>
+      <div class="tip-card-title">Мөнгө &amp; Төлбөр</div>
+      <div class="tip-card-sub">Money &amp; Payment</div>
+      <ul class="tip-list">
+        <li><strong>WeChat Pay</strong> ашиглах — Шанхайд хамгийн түгээмэл, хялбар</li>
+        <li><strong>Бэлэн юань</strong> авч явах — жижиг зах, хуучин газруудад карт авдаггүй</li>
+        <li><strong>Tax refund</strong> боломжтой — 500 юань-аас дээш худалдан авалтад</li>
+        <li><strong>ATM</strong>-аас юань авахад гадны банкны комисс нэмэгддэг</li>
+        <li>Их дэлгүүрүүдэд <strong>Alipay, UnionPay</strong> карт хүлээн авна</li>
+      </ul>
+    </div>
+
+    <!-- 3. Хэл & Харилцаа -->
+    <div class="tip-card reveal reveal-delay-2" id="hel">
+      <span class="tip-card-icon">🗣️</span>
+      <div class="tip-card-title">Хэл &amp; Харилцаа</div>
+      <div class="tip-card-sub">Language &amp; Communication</div>
+      <ul class="tip-list">
+        <li>Хятад хэл мэдэхгүй ч болно — <strong>Google Translate Camera</strong> ашиглана</li>
+        <li><strong>DeepL</strong> орчуулагч нь Google-аас илүү нарийн орчуулдаг</li>
+        <li>Дэлгүүр, зоогийн газрын <strong>ажилчид Англи мэдэхгүй</strong> байдаг — бичгээр харуулна</li>
+        <li>Такси: <strong>DiDi апп</strong> ашиглах — Uber биш, хямд, найдвартай</li>
+        <li>Хаягийг <strong>хятад үсгээр</strong> хадгалаад явбал жолооч луу ойлгуулахад хялбар</li>
+      </ul>
+    </div>
+
+    <!-- 4. VPN & Интернет -->
+    <div class="tip-card reveal reveal-delay-3" id="vpn">
+      <span class="tip-card-icon">🔒</span>
+      <div class="tip-card-title">VPN &amp; Интернет</div>
+      <div class="tip-card-sub">VPN &amp; Internet</div>
+      <ul class="tip-list">
+        <li><strong>Google, Facebook, Instagram</strong> Хятадад хориглогдсон</li>
+        <li>VPN-ийг <strong>Монголд татаж тохируулна</strong> — Хятадад татахад хүндрэлтэй</li>
+        <li>Зөвлөмж: <strong>NordVPN, ExpressVPN</strong> — найдвартай, хурдан</li>
+        <li><strong>Хятад SIM карт</strong> (China Unicom) эсвэл Монголын роуминг ашиглана</li>
+        <li>Зочид буудлын <strong>WiFi</strong> ихэвчлэн хурдан — VPN дээр ажиллана</li>
+      </ul>
+    </div>
+
+    <!-- 5. Аюулгүй байдал -->
+    <div class="tip-card reveal reveal-delay-4" id="ayuulgui">
+      <span class="tip-card-icon">🛡️</span>
+      <div class="tip-card-title">Аюулгүй байдал</div>
+      <div class="tip-card-sub">Safety</div>
+      <ul class="tip-list">
+        <li>Шанхай — <strong>аюулгүй хот</strong>, хулгай маш бага, гэмт хэрэг ховор</li>
+        <li>Хүн олон газруудад (Нанжин гудамж) <strong>анхаарч явах</strong></li>
+        <li><strong>Паспортын хуулбар</strong> тусад нь авч явах — эх хувийг зочид буудалд үлдээнэ</li>
+        <li>Эмнэлэгт орохдоо <strong>паспорт заавал</strong> шаардана — байнга дагаж явна</li>
+        <li>Яаралтай тусламж: <strong>110</strong> (цагдаа), <strong>120</strong> (түргэн тусламж)</li>
+      </ul>
+    </div>
+
+    <!-- 6. Оюутанд (wide) -->
+    <div class="tip-card wide reveal reveal-delay-5" id="oiuutan">
+      <span class="tip-card-icon">🎓</span>
+      <div class="tip-card-title">Шанхайд ирэх оюутанд</div>
+      <div class="tip-card-sub">For Students</div>
+      <ul class="tip-list" style="display:grid;grid-template-columns:1fr 1fr;gap:11px 32px">
+        <li>Шанхайд сурахыг хүсвэл <strong>Фудан, Тунжи, SJTU</strong> их сургуулиудад хандана</li>
+        <li><strong>Хятад хэлний сургалт</strong> (HSK бэлтгэл) — олон их сургуулийн дотор курс бий</li>
+        <li><strong>Оюутны виз</strong> (X1, X2) — сурлагын хугацаагаар тусгайлан гаргана</li>
+        <li>Хямд хороолол: <strong>Путуо, Баошань</strong> — хоол, унаа хямд, интернет хурдан</li>
+        <li><strong>WeChat бүртгэл</strong> — гадны утасны дугаар шаардана, Монгол дугаар болно</li>
+        <li><strong>Alipay</strong> гадаадын паспортоор бүртгүүлэх боломжтой болсон (2024)</li>
+        <li>Оюутны <strong>хоолны газар</strong> (食堂) — маш хямд, 10–20 юань/хоол</li>
+        <li>Их сургуулийн <strong>дотуур байр</strong> захиалга — элсэлтийн хамт авна</li>
+      </ul>
+    </div>
+
+    <!-- 7. Цаг агаар -->
+    <div class="tip-card reveal" id="tsag" style="grid-column:1/-1">
+      <span class="tip-card-icon">🌤️</span>
+      <div class="tip-card-title">Цаг агаар &amp; Хувцас</div>
+      <div class="tip-card-sub">Weather &amp; Clothing</div>
+      <ul class="tip-list" style="display:grid;grid-template-columns:repeat(4,1fr);gap:11px 28px">
+        <li><strong>Зун (6–8-р сар):</strong> халуун, чийглэг — нимгэн хувцас, нарнаас хамгаалах</li>
+        <li><strong>Намар (9–11-р сар):</strong> хамгийн тохилог цаг — аялахад хамгийн тохиромжтой</li>
+        <li><strong>Өвөл (12–2-р сар):</strong> хүйтэн, хур тунадас — дулаан дотуур хувцас авах</li>
+        <li><strong>Хавар (3–5-р сар):</strong> чийглэг, бороотой — усны цув авч явах</li>
+      </ul>
+    </div>
+
+  </div>
+</section>
+
+<!-- CTA -->
+<section class="cta-section">
+  <div class="cta-inner">
+    <div class="cta-eyebrow">Бэлэн болсон уу?</div>
+    <div class="cta-title">Монгол хэлтэй хөтөчтэй аялаарай</div>
+    <div class="cta-sub">Виз, маршрут, зочид буудал — бүх зүйлийг хамтдаа шийдэцгээе. Одоо захиалга өгөөд аяллаа эхлүүлэх цаг болсон.</div>
+    <div class="cta-btns">
+      <a href="/booking/" class="btn-white">Одоо Захиалах →</a>
+      <a href="https://www.facebook.com/a.bileg.2025" target="_blank" class="btn-outline-white">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"/></svg>
+        Facebook-ээр холбогдох
+      </a>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-inner">
+    <div class="footer-top">
+      <div>
+        <div class="footer-logo">LFS <span>Shanghai</span></div>
+        <div class="footer-tagline">Шанхайд мэргэшсэн монгол хэлтэй хөтөч. Таны аяллыг тусгайлан зохион байгуулна.</div>
+        <a href="https://www.facebook.com/a.bileg.2025" target="_blank" class="footer-fb">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="#1877f2"><path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"/></svg>
+          Facebook дагах
+        </a>
+      </div>
+      <div>
+        <div class="footer-col-title">Хуудсууд</div>
+        <a href="/" class="footer-link">Нүүр</a>
+        <a href="/#services" class="footer-link">Үйлчилгээ</a>
+        <a href="/marshrut/" class="footer-link">Маршрут</a>
+        <a href="/zuvlumj/" class="footer-link">Зөвлөмж</a>
+        <a href="/booking/" class="footer-link">Захиалах</a>
+      </div>
+      <div>
+        <div class="footer-col-title">Холбогдох</div>
+        <div style="font-size:13px;color:var(--muted);line-height:2.2">
+          <a href="https://www.facebook.com/a.bileg.2025" target="_blank" style="display:flex;align-items:center;gap:8px;color:var(--muted);text-decoration:none;margin-bottom:8px">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="#1877f2"><path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"/></svg>
+            Facebook
+          </a>
+          <div style="display:flex;align-items:center;gap:8px;margin-bottom:8px">💬 <strong style="color:var(--dark2)">WeChat:</strong> lfsshanghai</div>
+          <div style="display:flex;align-items:center;gap:8px">📞 <strong style="color:var(--dark2)">+976 XXXX XXXX</strong></div>
+        </div>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <div>© 2026 LFS Shanghai. Бүх эрх хуулиар хамгаалагдсан.</div>
+      <div>Shanghai, China 🇨🇳</div>
+    </div>
+  </div>
+</footer>
+
+<script>
+// ── MOBILE MENU ──
+function toggleMenu(){
+  document.getElementById('navLinks').classList.toggle('open');
+}
+document.addEventListener('click', e => {
+  const nav = document.getElementById('navLinks');
+  const btn = document.getElementById('hamburger');
+  if(nav.classList.contains('open') && !nav.contains(e.target) && !btn.contains(e.target)){
+    nav.classList.remove('open');
+  }
+});
+
+// ── REVEAL ON SCROLL ──
+const revealEls = document.querySelectorAll('.reveal');
+const revealObserver = new IntersectionObserver(entries => {
+  entries.forEach(e => {
+    if(e.isIntersecting){ e.target.classList.add('visible'); revealObserver.unobserve(e.target); }
+  });
+}, {threshold:0.08});
+revealEls.forEach(el => revealObserver.observe(el));
+
+// ── STICKY TOC ACTIVE STATE ──
+const sections = ['viz','mongon','hel','vpn','ayuulgui','oiuutan','tsag'];
+const tocLinks = document.querySelectorAll('.toc-link');
+
+function updateToc(){
+  let current = '';
+  sections.forEach(id => {
+    const el = document.getElementById(id);
+    if(el){
+      const rect = el.getBoundingClientRect();
+      if(rect.top <= 120) current = id;
+    }
+  });
+  tocLinks.forEach(link => {
+    link.classList.toggle('active', link.getAttribute('data-target') === current);
+  });
+}
+
+window.addEventListener('scroll', updateToc, {passive:true});
+updateToc();
+
+// ── SMOOTH ANCHOR SCROLL (offset for fixed nav + toc) ──
+document.querySelectorAll('a[href^="#"]').forEach(a => {
+  a.addEventListener('click', e => {
+    const id = a.getAttribute('href').slice(1);
+    const target = document.getElementById(id);
+    if(target){
+      e.preventDefault();
+      const offset = 52 + 44; // nav + toc
+      const top = target.getBoundingClientRect().top + window.scrollY - offset - 8;
+      window.scrollTo({top, behavior:'smooth'});
+    }
+  });
+});
+</script>
+</body>
+</html>

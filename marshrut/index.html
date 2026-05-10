@@ -1,0 +1,1674 @@
+<!DOCTYPE html>
+<html lang="mn">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Маршрутууд — LFS Shanghai</title>
+<link rel="icon" type="image/svg+xml" href="/favicon.svg">
+<meta name="description" content="Шанхайн бодитоор боловсруулсан аялалын маршрутууд. Монгол хэлтэй хөтөчтэй аялах хамгийн оновчтой хуваарь.">
+<meta property="og:title" content="Маршрутууд — LFS Shanghai">
+<meta property="og:description" content="Бодитоор боловсруулсан аялалын хуваарь. Монгол хэлтэй хөтөчтэй аялах — хамгийн оновчтой маршрут.">
+<meta property="og:url" content="https://bileg11.github.io/marshrut/">
+<meta property="og:locale" content="mn_MN">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+
+:root{
+  --bg:#fff;
+  --bg2:#f5f5f7;
+  --bg3:#fbfbfd;
+  --card:#fff;
+  --text:#1d1d1f;
+  --muted:#6e6e73;
+  --muted2:#86868b;
+  --blue:#0071e3;
+  --blue-hover:#0077ed;
+  --blue-light:#e8f1fb;
+  --border:rgba(0,0,0,.08);
+  --border2:rgba(0,0,0,.05);
+  --shadow:0 2px 20px rgba(0,0,0,.08);
+  --shadow2:0 8px 40px rgba(0,0,0,.12);
+  --radius:18px;
+  --radius2:24px;
+  --dark:#000;
+  --dark2:#1d1d1f;
+}
+
+html{scroll-behavior:smooth}
+body{
+  font-family:'Inter',system-ui,-apple-system,BlinkMacSystemFont,'SF Pro Display','Segoe UI',sans-serif;
+  background:var(--bg);
+  color:var(--text);
+  overflow-x:hidden;
+  line-height:1.47059;
+  -webkit-font-smoothing:antialiased;
+}
+
+::-webkit-scrollbar{width:6px}
+::-webkit-scrollbar-track{background:var(--bg2)}
+::-webkit-scrollbar-thumb{background:#c7c7cc;border-radius:3px}
+
+/* ── NAV ── */
+.nav{
+  position:fixed;top:0;left:0;right:0;z-index:500;
+  height:52px;
+  display:flex;align-items:center;justify-content:space-between;
+  padding:0 22px;
+  background:rgba(255,255,255,.85);
+  backdrop-filter:saturate(180%) blur(20px);
+  -webkit-backdrop-filter:saturate(180%) blur(20px);
+  border-bottom:1px solid rgba(0,0,0,.06);
+  transition:background .3s;
+}
+.nav-logo{
+  font-size:17px;font-weight:700;
+  color:var(--dark2);
+  letter-spacing:-.02em;
+  text-decoration:none;
+  user-select:none;
+}
+.nav-logo span{color:var(--blue)}
+.nav-links{
+  display:flex;align-items:center;gap:0;
+  position:fixed;top:0;left:50%;transform:translateX(-50%);
+  height:52px;background:none;padding:0;z-index:490;
+}
+.nav-link{
+  padding:6px 14px;
+  font-size:12px;font-weight:400;
+  color:var(--muted);
+  text-decoration:none;
+  cursor:pointer;border:none;background:none;
+  font-family:inherit;
+  transition:color .2s;
+  white-space:nowrap;
+}
+.nav-link:hover{color:var(--dark2)}
+.nav-link.active{color:var(--dark2);font-weight:500}
+.nav-actions{display:flex;align-items:center;gap:8px}
+.nav-btn{
+  padding:7px 16px;
+  background:var(--blue);
+  color:#fff;
+  border:none;border-radius:20px;
+  font-size:12px;font-weight:500;
+  cursor:pointer;font-family:inherit;
+  transition:background .2s,transform .15s;
+  text-decoration:none;
+  white-space:nowrap;
+}
+.nav-btn:hover{background:var(--blue-hover);transform:scale(1.03)}
+.hamburger{display:none;flex-direction:column;gap:4px;cursor:pointer;padding:6px;border:none;background:none}
+.hamburger span{display:block;width:18px;height:1.5px;background:var(--dark2);transition:.3s;border-radius:1px}
+@media(max-width:860px){
+  .nav-links{
+    display:flex;position:fixed;top:52px;left:0;right:0;bottom:0;
+    height:auto;transform:translateY(-18px);z-index:499;
+    background:var(--blue);flex-direction:column;align-items:flex-start;
+    padding:28px 24px;gap:4px;border-top:1px solid rgba(255,255,255,.15);overflow-y:auto;
+    opacity:0;pointer-events:none;
+    transition:opacity .42s ease, transform .42s cubic-bezier(.4,0,.2,1);
+  }
+  .nav-links.open{opacity:1;transform:translateY(0);pointer-events:auto}
+  .nav-link{font-size:17px;font-weight:400;padding:13px 0;color:#fff;border-bottom:1px solid rgba(255,255,255,.15);width:100%}
+  .nav-link:hover,.nav-link.active{color:#fff;background:rgba(255,255,255,.12);border-radius:8px;padding-left:10px}
+  .hamburger{display:flex}
+  .nav-btn{display:none}
+}
+
+/* ── HERO ── */
+.hero{
+  padding:120px 40px 64px;
+  text-align:center;
+  max-width:820px;
+  margin:0 auto;
+}
+.hero-eyebrow{
+  font-size:12px;font-weight:600;letter-spacing:.1em;text-transform:uppercase;
+  color:var(--blue);margin-bottom:18px;
+  animation:fadeUp .8s ease both;
+}
+.hero h1{
+  font-size:clamp(36px,6vw,68px);
+  font-weight:700;line-height:1.05;letter-spacing:-.04em;
+  color:var(--dark2);margin-bottom:20px;
+  animation:fadeUp .8s ease .08s both;
+}
+.hero h1 em{font-style:normal;color:var(--blue)}
+.hero-sub{
+  font-size:clamp(15px,1.8vw,18px);
+  font-weight:400;color:var(--muted);
+  max-width:580px;margin:0 auto;line-height:1.7;
+  animation:fadeUp .8s ease .16s both;
+}
+@keyframes fadeUp{from{opacity:0;transform:translateY(22px)}to{opacity:1;transform:translateY(0)}}
+@media(max-width:600px){.hero{padding:96px 20px 48px}}
+
+/* ── FILTERS ── */
+.filters-wrap{
+  position:sticky;top:52px;z-index:400;
+  background:rgba(255,255,255,.92);
+  backdrop-filter:saturate(180%) blur(16px);
+  -webkit-backdrop-filter:saturate(180%) blur(16px);
+  border-bottom:1px solid var(--border);
+  padding:14px 0;
+}
+.filters{
+  display:flex;gap:8px;justify-content:center;flex-wrap:wrap;
+  max-width:900px;margin:0 auto;padding:0 20px;
+}
+.filter-btn{
+  padding:9px 20px;
+  background:var(--bg2);
+  border:1px solid var(--border);
+  border-radius:50px;
+  font-size:13px;font-weight:500;
+  color:var(--muted);
+  cursor:pointer;font-family:inherit;
+  transition:all .2s;white-space:nowrap;
+}
+.filter-btn:hover{background:#e8e8ed;color:var(--dark2)}
+.filter-btn.active{
+  background:var(--blue);
+  border-color:var(--blue);
+  color:#fff;
+  box-shadow:0 4px 14px rgba(0,113,227,.3);
+}
+
+/* ── MAIN CONTENT ── */
+.main{max-width:1080px;margin:0 auto;padding:56px 24px 80px}
+
+/* ── SECTION TITLE ── */
+.section-head{margin-bottom:36px}
+.section-head h2{
+  font-size:clamp(26px,4vw,40px);
+  font-weight:700;letter-spacing:-.03em;
+  color:var(--dark2);margin-bottom:10px;
+}
+.section-head p{font-size:15px;color:var(--muted);line-height:1.65;max-width:580px}
+
+/* ── TAB PANELS ── */
+.tab-panel{display:none}
+.tab-panel.active{display:block;animation:fadeUp .5s ease both}
+
+/* ── CARD GRID ── */
+.cards-grid{
+  display:grid;
+  grid-template-columns:repeat(auto-fill,minmax(320px,1fr));
+  gap:24px;
+}
+.cards-grid.single{grid-template-columns:1fr}
+
+/* ── ITINERARY CARD ── */
+.itin-card{
+  background:var(--card);
+  border:1px solid var(--border);
+  border-radius:20px;
+  overflow:hidden;
+  box-shadow:var(--shadow);
+  transition:transform .25s, box-shadow .25s;
+  display:flex;flex-direction:column;
+}
+.itin-card:hover{transform:translateY(-4px);box-shadow:var(--shadow2)}
+
+.card-header{
+  padding:28px 28px 20px;
+  border-bottom:1px solid var(--border2);
+  background:linear-gradient(135deg,var(--bg3) 0%,var(--bg2) 100%);
+}
+.card-badge{
+  display:inline-flex;align-items:center;gap:5px;
+  padding:4px 12px;
+  background:var(--blue-light);
+  color:var(--blue);
+  border-radius:50px;
+  font-size:11px;font-weight:600;letter-spacing:.05em;text-transform:uppercase;
+  margin-bottom:12px;
+}
+.card-title{
+  font-size:20px;font-weight:700;letter-spacing:-.02em;
+  color:var(--dark2);margin-bottom:6px;
+}
+.card-subtitle{font-size:13px;color:var(--muted);line-height:1.55}
+.card-meta{
+  display:flex;gap:16px;flex-wrap:wrap;margin-top:14px;
+}
+.card-meta-item{
+  display:flex;align-items:center;gap:5px;
+  font-size:12px;font-weight:500;color:var(--muted);
+}
+.card-meta-item svg{flex-shrink:0}
+
+.card-body{padding:24px 28px;flex:1}
+
+/* ── DAY BLOCKS ── */
+.day-block{margin-bottom:24px}
+.day-block:last-child{margin-bottom:0}
+.day-label{
+  display:flex;align-items:center;gap:10px;
+  margin-bottom:12px;
+}
+.day-num{
+  min-width:32px;height:32px;
+  background:var(--blue);color:#fff;
+  border-radius:50%;
+  display:flex;align-items:center;justify-content:center;
+  font-size:12px;font-weight:700;flex-shrink:0;
+}
+.day-title{font-size:14px;font-weight:600;color:var(--dark2)}
+
+.stops-list{
+  list-style:none;
+  padding-left:16px;
+  border-left:2px solid var(--bg2);
+  display:flex;flex-direction:column;gap:10px;
+}
+.stop-item{
+  display:flex;gap:10px;align-items:flex-start;
+}
+.stop-time{
+  font-size:10px;font-weight:600;letter-spacing:.05em;text-transform:uppercase;
+  color:var(--blue);min-width:40px;padding-top:2px;
+}
+.stop-info{}
+.stop-name{font-size:13px;font-weight:600;color:var(--dark2)}
+.stop-desc{font-size:12px;color:var(--muted);margin-top:2px;line-height:1.5}
+
+/* ── CARD FOOTER ── */
+.card-footer{
+  padding:18px 28px;
+  border-top:1px solid var(--border2);
+  display:flex;align-items:center;justify-content:space-between;
+  gap:12px;
+  background:var(--bg3);
+}
+.card-price{
+  font-size:13px;color:var(--muted);
+}
+.card-price strong{
+  font-size:18px;font-weight:700;color:var(--dark2);
+  letter-spacing:-.02em;display:block;
+}
+.btn-card{
+  padding:10px 20px;
+  background:var(--blue);color:#fff;
+  border:none;border-radius:50px;
+  font-size:13px;font-weight:500;
+  cursor:pointer;font-family:inherit;
+  text-decoration:none;
+  transition:background .2s,transform .15s;
+  white-space:nowrap;
+}
+.btn-card:hover{background:var(--blue-hover);transform:scale(1.04)}
+
+/* ── HIGHLIGHT TAGS ── */
+.tags{display:flex;flex-wrap:wrap;gap:6px;margin-top:16px}
+.tag{
+  padding:4px 10px;
+  background:var(--bg2);
+  border:1px solid var(--border);
+  border-radius:50px;
+  font-size:11px;font-weight:500;color:var(--muted);
+}
+
+/* ── WIDE CARD (for detailed itineraries) ── */
+.itin-card.wide .card-body{
+  display:grid;
+  grid-template-columns:repeat(auto-fill,minmax(260px,1fr));
+  gap:24px;
+}
+@media(max-width:700px){
+  .itin-card.wide .card-body{grid-template-columns:1fr}
+}
+
+/* ── TIP BOX ── */
+.tip-box{
+  margin-top:24px;
+  padding:16px 20px;
+  background:var(--blue-light);
+  border-radius:14px;
+  border-left:3px solid var(--blue);
+  font-size:13px;color:var(--dark2);line-height:1.6;
+}
+.tip-box strong{color:var(--blue)}
+
+/* ── CTA SECTION ── */
+.cta-section{
+  margin-top:80px;
+  background:linear-gradient(135deg,#0a1628 0%,#003380 50%,#0071e3 100%);
+  border-radius:28px;
+  padding:64px 48px;
+  text-align:center;
+  position:relative;
+  overflow:hidden;
+}
+.cta-section::before{
+  content:'';position:absolute;inset:0;
+  background:radial-gradient(ellipse 60% 80% at 70% 30%,rgba(255,255,255,.06) 0%,transparent 70%);
+  pointer-events:none;
+}
+.cta-section h2{
+  font-size:clamp(26px,4vw,44px);
+  font-weight:700;letter-spacing:-.03em;
+  color:#fff;margin-bottom:14px;
+}
+.cta-section p{
+  font-size:16px;color:rgba(255,255,255,.72);
+  margin-bottom:36px;max-width:480px;margin-left:auto;margin-right:auto;
+  line-height:1.65;
+}
+.cta-btns{display:flex;gap:12px;justify-content:center;flex-wrap:wrap}
+.btn-cta{
+  padding:15px 32px;
+  background:#fff;color:var(--dark2);
+  border:none;border-radius:50px;
+  font-size:15px;font-weight:600;
+  cursor:pointer;font-family:inherit;
+  text-decoration:none;
+  transition:all .2s;
+}
+.btn-cta:hover{transform:scale(1.03);box-shadow:0 8px 30px rgba(0,0,0,.25)}
+.btn-cta-ghost{
+  padding:15px 32px;
+  background:rgba(255,255,255,.12);color:#fff;
+  border:1px solid rgba(255,255,255,.25);
+  border-radius:50px;
+  font-size:15px;font-weight:500;
+  cursor:pointer;font-family:inherit;
+  text-decoration:none;
+  transition:all .2s;
+}
+.btn-cta-ghost:hover{background:rgba(255,255,255,.2)}
+.cta-features{
+  display:flex;gap:32px;justify-content:center;flex-wrap:wrap;
+  margin-top:40px;padding-top:32px;
+  border-top:1px solid rgba(255,255,255,.12);
+}
+.cta-feat{
+  display:flex;align-items:center;gap:8px;
+  font-size:13px;color:rgba(255,255,255,.7);
+}
+.cta-feat span.icon{font-size:16px}
+
+@media(max-width:600px){
+  .cta-section{padding:44px 24px;border-radius:20px}
+  .cta-features{gap:18px}
+}
+
+/* ── FOOTER ── */
+footer{
+  background:var(--bg2);
+  border-top:1px solid var(--border);
+  padding:40px 24px;
+  text-align:center;
+  font-size:12px;color:var(--muted);
+  line-height:1.8;
+}
+footer a{color:var(--blue);text-decoration:none}
+footer a:hover{text-decoration:underline}
+.footer-nav{display:flex;gap:20px;justify-content:center;flex-wrap:wrap;margin-bottom:16px}
+</style>
+</head>
+<body>
+
+<!-- ── NAV ── -->
+<nav class="nav">
+  <a href="/" class="nav-logo">LFS <span>Shanghai</span></a>
+
+  <div class="nav-links" id="navLinks">
+    <a class="nav-link" href="/#services">Үйлчилгээ</a>
+    <a class="nav-link active" href="/marshrut/">Маршрут</a>
+    <a class="nav-link" href="/eruul-mend/">Эрүүл мэнд</a>
+    <a class="nav-link" href="/zuvlumj/">Зөвлөмж</a>
+    <a class="nav-link" href="/#contact">Холбоо барих</a>
+  </div>
+
+  <div class="nav-actions">
+    <a href="/booking/" class="nav-btn">Захиалах</a>
+    <button class="hamburger" id="hamburger" aria-label="Цэс нээх">
+      <span></span><span></span><span></span>
+    </button>
+  </div>
+</nav>
+
+<!-- ── HERO ── -->
+<section class="hero">
+  <div class="hero-eyebrow">Аялалын хуваарь</div>
+  <h1>Шанхайн <em>Маршрутууд</em></h1>
+  <p class="hero-sub">Бодитоор боловсруулсан аялалын хуваарь. Монгол хэлтэй хөтөчтэй аялах — хамгийн оновчтой маршрут.</p>
+</section>
+
+<!-- ── FILTER TABS ── -->
+<div class="filters-wrap">
+  <div class="filters">
+    <button class="filter-btn active" data-tab="classic">🏙️ Сонгодог</button>
+    <button class="filter-btn" data-tab="food">🍜 Хоол</button>
+    <button class="filter-btn" data-tab="shopping">🛍️ Шоппинг</button>
+    <button class="filter-btn" data-tab="culture">🎎 Соёл</button>
+    <button class="filter-btn" data-tab="health">🩺 Эрүүл мэнд</button>
+  </div>
+</div>
+
+<!-- ── MAIN ── -->
+<main class="main">
+
+  <!-- ════ СОНГОДОГ ════ -->
+  <div class="tab-panel active" id="tab-classic">
+    <div class="section-head">
+      <h2>🏙️ Сонгодог Шанхай</h2>
+      <p>Шанхайн гол дурсгалт газруудыг хамарсан шилдэг маршрутууд. Анх удаа очиж буй аялагчдад тохиромжтой.</p>
+    </div>
+
+    <div class="cards-grid">
+
+      <!-- Card 1 -->
+      <div class="itin-card">
+        <div class="card-header">
+          <div class="card-badge">⭐ Шилдэг сонголт</div>
+          <div class="card-title">Классик Шанхай — 3 өдөр</div>
+          <div class="card-subtitle">The Bund, Yuyuan, Shanghai Tower, Starbucks Roastery, Zhujiajiao усан хот</div>
+          <div class="card-meta">
+            <div class="card-meta-item">
+              <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>
+              3 өдөр / 2 шөнө
+            </div>
+            <div class="card-meta-item">
+              <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><circle cx="12" cy="12" r="10"/><path d="M12 6v6l4 2"/></svg>
+              Бүх насны аялагч
+            </div>
+            <div class="card-meta-item">
+              <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
+              1–8 хүн
+            </div>
+          </div>
+        </div>
+
+        <div class="card-body">
+          <div class="day-block">
+            <div class="day-label">
+              <div class="day-num">1</div>
+              <div class="day-title">Хот даяар — The Bund & Puxi</div>
+            </div>
+            <ul class="stops-list">
+              <li class="stop-item">
+                <span class="stop-time">09:00</span>
+                <div class="stop-info">
+                  <div class="stop-name">The Bund (外滩)</div>
+                  <div class="stop-desc">Хуанпу мөрний эрэгт алхаж, Шанхайн iconic skyline-г үзнэ</div>
+                </div>
+              </li>
+              <li class="stop-item">
+                <span class="stop-time">11:00</span>
+                <div class="stop-info">
+                  <div class="stop-name">Yuyuan Garden (豫园)</div>
+                  <div class="stop-desc">Минь гүрний үеийн хятад цэцэрлэг, Yuyuan Bazaar дээр хоол</div>
+                </div>
+              </li>
+              <li class="stop-item">
+                <span class="stop-time">14:00</span>
+                <div class="stop-info">
+                  <div class="stop-name">Xintiandi (新天地)</div>
+                  <div class="stop-desc">Загварлаг гудамж, кафе, Шанхайн орчин үеийн амьдрал</div>
+                </div>
+              </li>
+              <li class="stop-item">
+                <span class="stop-time">19:00</span>
+                <div class="stop-info">
+                  <div class="stop-name">The Bund орой үзэмж</div>
+                  <div class="stop-desc">Гэрэлтсэн skyline-г үзэхийн тулд буцаж очно — шөнийн тал нь өөр гоо</div>
+                </div>
+              </li>
+            </ul>
+          </div>
+
+          <div class="day-block">
+            <div class="day-label">
+              <div class="day-num">2</div>
+              <div class="day-title">Pudong — Shanghai Tower & Starbucks</div>
+            </div>
+            <ul class="stops-list">
+              <li class="stop-item">
+                <span class="stop-time">09:30</span>
+                <div class="stop-info">
+                  <div class="stop-name">Shanghai Tower (上海中心)</div>
+                  <div class="stop-desc">632м өндөр — дэлхийн 2-р өндөр барилга. 118-р давхарт observatory</div>
+                </div>
+              </li>
+              <li class="stop-item">
+                <span class="stop-time">11:30</span>
+                <div class="stop-info">
+                  <div class="stop-name">Starbucks Reserve Roastery</div>
+                  <div class="stop-desc">Дэлхийн хамгийн том Starbucks — 6 давхар. Instagrammable spot</div>
+                </div>
+              </li>
+              <li class="stop-item">
+                <span class="stop-time">14:00</span>
+                <div class="stop-info">
+                  <div class="stop-name">Oriental Pearl Tower (东方明珠)</div>
+                  <div class="stop-desc">Shanghai History Museum + skyline view</div>
+                </div>
+              </li>
+              <li class="stop-item">
+                <span class="stop-time">17:00</span>
+                <div class="stop-info">
+                  <div class="stop-name">IFC Mall шоппинг</div>
+                  <div class="stop-desc">Луксус брэндүүд, орой хоол Pudong-д</div>
+                </div>
+              </li>
+            </ul>
+          </div>
+
+          <div class="day-block">
+            <div class="day-label">
+              <div class="day-num">3</div>
+              <div class="day-title">Zhujiajiao усан хот</div>
+            </div>
+            <ul class="stops-list">
+              <li class="stop-item">
+                <span class="stop-time">08:30</span>
+                <div class="stop-info">
+                  <div class="stop-name">Zhujiajiao (朱家角) аялал</div>
+                  <div class="stop-desc">Хотоос 1 цагийн зайд — "Венецийн дэд хувилбар". Завиар голоор аялах</div>
+                </div>
+              </li>
+              <li class="stop-item">
+                <span class="stop-time">12:00</span>
+                <div class="stop-info">
+                  <div class="stop-name">Усан хотын хоол</div>
+                  <div class="stop-desc">Хятадын уламжлалт хоол — zongzi, braised pork бан дээр</div>
+                </div>
+              </li>
+              <li class="stop-item">
+                <span class="stop-time">15:00</span>
+                <div class="stop-info">
+                  <div class="stop-name">Чэнхуанмяо сүм (城隍庙)</div>
+                  <div class="stop-desc">Хуанпу голоор онгоцоор буцах замд зэрэг үзнэ</div>
+                </div>
+              </li>
+              <li class="stop-item">
+                <span class="stop-time">19:00</span>
+                <div class="stop-info">
+                  <div class="stop-name">Прощальный оройн хоол</div>
+                  <div class="stop-desc">Шанхайн алдарт xiaolongbao хийдэг газарт оройн хоол</div>
+                </div>
+              </li>
+            </ul>
+          </div>
+
+          <div class="tags">
+            <span class="tag">The Bund</span>
+            <span class="tag">Yuyuan</span>
+            <span class="tag">Shanghai Tower</span>
+            <span class="tag">Starbucks Roastery</span>
+            <span class="tag">Zhujiajiao</span>
+          </div>
+        </div>
+
+        <div class="card-footer">
+          <div class="card-price">
+            Үнийн санал авах
+            <strong>Холбоо барих →</strong>
+          </div>
+          <a href="/booking/" class="btn-card">Захиалах</a>
+        </div>
+      </div>
+
+      <!-- Card 2: VIP Health + City -->
+      <div class="itin-card">
+        <div class="card-header">
+          <div class="card-badge">🩺 VIP Хослол</div>
+          <div class="card-title">VIP Эрүүл мэнд + Хот — 2 өдөр</div>
+          <div class="card-subtitle">Шанхайн топ эмнэлэгт үзлэг хийж, хотын шилдэг газруудаар аялна</div>
+          <div class="card-meta">
+            <div class="card-meta-item">
+              <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>
+              2 өдөр / 1 шөнө
+            </div>
+            <div class="card-meta-item">
+              <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><circle cx="12" cy="12" r="10"/><path d="M12 6v6l4 2"/></svg>
+              30–70 насны хүн
+            </div>
+            <div class="card-meta-item">
+              <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/></svg>
+              1–4 хүн
+            </div>
+          </div>
+        </div>
+
+        <div class="card-body">
+          <div class="day-block">
+            <div class="day-label">
+              <div class="day-num">1</div>
+              <div class="day-title">VIP Эрүүл мэндийн үзлэг</div>
+            </div>
+            <ul class="stops-list">
+              <li class="stop-item">
+                <span class="stop-time">07:30</span>
+                <div class="stop-info">
+                  <div class="stop-name">Нисэх онгоцны буудлаас угтах</div>
+                  <div class="stop-desc">Монгол хэлтэй хөтөч таныг VIP машинаар угтан авна</div>
+                </div>
+              </li>
+              <li class="stop-item">
+                <span class="stop-time">09:00</span>
+                <div class="stop-info">
+                  <div class="stop-name">Ruijin эмнэлэг / Zhongshan эмнэлэг</div>
+                  <div class="stop-desc">VIP кабинет, Монгол орчуулагчтай, бүрэн дүрс оношилгоо</div>
+                </div>
+              </li>
+              <li class="stop-item">
+                <span class="stop-time">14:00</span>
+                <div class="stop-info">
+                  <div class="stop-name">Үр дүн авах + зөвлөгөө</div>
+                  <div class="stop-desc">Монгол хэл дээр тайлбарлах, Монголд авч очих эм захиалах</div>
+                </div>
+              </li>
+              <li class="stop-item">
+                <span class="stop-time">16:00</span>
+                <div class="stop-info">
+                  <div class="stop-name">Зочид буудалд хүргэх</div>
+                  <div class="stop-desc">5 оддын зочид буудалд байрлах эсвэл орой аялал</div>
+                </div>
+              </li>
+            </ul>
+          </div>
+
+          <div class="day-block">
+            <div class="day-label">
+              <div class="day-num">2</div>
+              <div class="day-title">Хотын аялал + Шоппинг</div>
+            </div>
+            <ul class="stops-list">
+              <li class="stop-item">
+                <span class="stop-time">09:00</span>
+                <div class="stop-info">
+                  <div class="stop-name">The Bund & Nanjing Road</div>
+                  <div class="stop-desc">Шанхайн хамгийн алдарт хоёр газар — хамтад нь 2 цаг</div>
+                </div>
+              </li>
+              <li class="stop-item">
+                <span class="stop-time">12:00</span>
+                <div class="stop-info">
+                  <div class="stop-name">Plaza 66 / IFC шоппинг</div>
+                  <div class="stop-desc">Луксус бэлэг, гоо сайхан, тэжээл — нэг дороос</div>
+                </div>
+              </li>
+              <li class="stop-item">
+                <span class="stop-time">15:00</span>
+                <div class="stop-info">
+                  <div class="stop-name">Нисэх онгоцны буудал хүргэх</div>
+                  <div class="stop-desc">VIP machine + check-in туслалцаа</div>
+                </div>
+              </li>
+            </ul>
+          </div>
+
+          <div class="tip-box">
+            <strong>💡 Зөвлөгөө:</strong> Эмнэлгийн цаг товлох хэрэгтэй тул дор хаяж 2 долоо хоногийн өмнө захиалга өгнө үү.
+          </div>
+
+          <div class="tags">
+            <span class="tag">Ruijin Hospital</span>
+            <span class="tag">VIP үзлэг</span>
+            <span class="tag">Нansord орчуулга</span>
+            <span class="tag">Шоппинг</span>
+          </div>
+        </div>
+
+        <div class="card-footer">
+          <div class="card-price">
+            Хувийн үнийн санал
+            <strong>Лавлах →</strong>
+          </div>
+          <a href="/booking/" class="btn-card">Захиалах</a>
+        </div>
+      </div>
+
+    </div><!-- /cards-grid -->
+  </div><!-- /tab-classic -->
+
+  <!-- ════ ХООЛ ════ -->
+  <div class="tab-panel" id="tab-food">
+    <div class="section-head">
+      <h2>🍜 Хоолны Аялал</h2>
+      <p>Шанхайн алдарт ресторан, гудамжны хоол, 5 оддын буфет — гурман аялагчдад зориулсан маршрут.</p>
+    </div>
+
+    <div class="cards-grid">
+
+      <div class="itin-card">
+        <div class="card-header">
+          <div class="card-badge">🥟 Шилдэг амт</div>
+          <div class="card-title">Шанхайн Хоолны Тойрог — 1 өдөр</div>
+          <div class="card-subtitle">Din Tai Fung, гудамжны хоол, 5 оддын буфет, Монгол хэлтэй хөтөчтэй</div>
+          <div class="card-meta">
+            <div class="card-meta-item">
+              <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>
+              1 өдөр
+            </div>
+            <div class="card-meta-item">
+              <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><circle cx="12" cy="12" r="10"/><path d="M12 6v6l4 2"/></svg>
+              09:00 – 21:00
+            </div>
+          </div>
+        </div>
+
+        <div class="card-body">
+          <div class="day-block">
+            <div class="day-label">
+              <div class="day-num">☀</div>
+              <div class="day-title">Өглөө — гудамжны хоол</div>
+            </div>
+            <ul class="stops-list">
+              <li class="stop-item">
+                <span class="stop-time">08:00</span>
+                <div class="stop-info">
+                  <div class="stop-name">Jian Bing (煎饼) — хятадын "блинчик"</div>
+                  <div class="stop-desc">Шанхайн өглөөний уламжлалт хоол. Гудамжны буудлаас</div>
+                </div>
+              </li>
+              <li class="stop-item">
+                <span class="stop-time">09:30</span>
+                <div class="stop-info">
+                  <div class="stop-name">Xiaolongbao мастар анги</div>
+                  <div class="stop-desc">Jia Jia Tang Bao — Шанхайн хамгийн алдарт xiaolongbao газар</div>
+                </div>
+              </li>
+            </ul>
+          </div>
+
+          <div class="day-block">
+            <div class="day-label">
+              <div class="day-num">🌤</div>
+              <div class="day-title">Өдрийн хоол — Din Tai Fung</div>
+            </div>
+            <ul class="stops-list">
+              <li class="stop-item">
+                <span class="stop-time">12:00</span>
+                <div class="stop-info">
+                  <div class="stop-name">Din Tai Fung (鼎泰豐)</div>
+                  <div class="stop-desc">Тайванийн алдарт ресторан — Michelin одтой. Truffle xiaolongbao заавал</div>
+                </div>
+              </li>
+              <li class="stop-item">
+                <span class="stop-time">14:30</span>
+                <div class="stop-info">
+                  <div class="stop-name">Yuyuan зах — гудамжны амттан</div>
+                  <div class="stop-desc">Tanghulu (чихэртэй жимс), scallion pancake, sheng jian bao</div>
+                </div>
+              </li>
+            </ul>
+          </div>
+
+          <div class="day-block">
+            <div class="day-label">
+              <div class="day-num">🌙</div>
+              <div class="day-title">Оройн хоол — 5 оддын буфет</div>
+            </div>
+            <ul class="stops-list">
+              <li class="stop-item">
+                <span class="stop-time">18:30</span>
+                <div class="stop-info">
+                  <div class="stop-name">Waldorf Astoria / Shangri-La буфет</div>
+                  <div class="stop-desc">Олон улсын хоол, Шанхайн skyline харагдах. Premium буфет</div>
+                </div>
+              </li>
+              <li class="stop-item">
+                <span class="stop-time">21:00</span>
+                <div class="stop-info">
+                  <div class="stop-name">Wujiang Road гудамжны хоол</div>
+                  <div class="stop-desc">Оройн цай — bubble tea, street snacks, нутгийн амьдралтай дотно</div>
+                </div>
+              </li>
+            </ul>
+          </div>
+
+          <div class="tip-box">
+            <strong>🍜 Мэдэх зүйл:</strong> Din Tai Fung-д цаг захиалах шаардлагатай. Бид урьдчилан захиалж өгнө.
+          </div>
+
+          <div class="tags">
+            <span class="tag">Din Tai Fung</span>
+            <span class="tag">Xiaolongbao</span>
+            <span class="tag">Michelin</span>
+            <span class="tag">Гудамжны хоол</span>
+            <span class="tag">5-star буфет</span>
+          </div>
+        </div>
+
+        <div class="card-footer">
+          <div class="card-price">Хоолны зардал тусдаа<strong>Тохиролцох →</strong></div>
+          <a href="/booking/" class="btn-card">Захиалах</a>
+        </div>
+      </div>
+
+      <div class="itin-card">
+        <div class="card-header">
+          <div class="card-badge">🌶️ Дайлага аялал</div>
+          <div class="card-title">Хятад хоолны бүс бүрт — 2 өдөр</div>
+          <div class="card-subtitle">Шанхайн Jiangnan хоол, Sichuan, Cantonese — хэв маягийн өргөн ертөнц</div>
+          <div class="card-meta">
+            <div class="card-meta-item">
+              <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>
+              2 өдөр
+            </div>
+            <div class="card-meta-item">
+              <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><circle cx="12" cy="12" r="10"/><path d="M12 6v6l4 2"/></svg>
+              Гурман аялагч
+            </div>
+          </div>
+        </div>
+
+        <div class="card-body">
+          <div class="day-block">
+            <div class="day-label">
+              <div class="day-num">1</div>
+              <div class="day-title">Шанхайн уламжлалт хоол</div>
+            </div>
+            <ul class="stops-list">
+              <li class="stop-item">
+                <span class="stop-time">09:00</span>
+                <div class="stop-info">
+                  <div class="stop-name">Fu 1088 (福1088)</div>
+                  <div class="stop-desc">Шанхайн Heritage mansion-д байрлах Jiangnan cuisine — тансаг орчин</div>
+                </div>
+              </li>
+              <li class="stop-item">
+                <span class="stop-time">13:00</span>
+                <div class="stop-info">
+                  <div class="stop-name">Yuyuan зах — хаалтгүй хоол аялал</div>
+                  <div class="stop-desc">20+ төрлийн гудамжны хоолны зах — цагаан мах, далайн хоол, амттан</div>
+                </div>
+              </li>
+              <li class="stop-item">
+                <span class="stop-time">19:00</span>
+                <div class="stop-info">
+                  <div class="stop-name">Hai Di Lao Hotpot (海底捞)</div>
+                  <div class="stop-desc">Хятадын алдарт hotpot — 24 цагийн ресторан, үйлчилгээ онцгой</div>
+                </div>
+              </li>
+            </ul>
+          </div>
+
+          <div class="day-block">
+            <div class="day-label">
+              <div class="day-num">2</div>
+              <div class="day-title">Sichuan & Cantonese Fusion</div>
+            </div>
+            <ul class="stops-list">
+              <li class="stop-item">
+                <span class="stop-time">10:00</span>
+                <div class="stop-info">
+                  <div class="stop-name">Dim Sum өглөө</div>
+                  <div class="stop-desc">Crystal har gow, char siu bao, egg tart — Cantonese традицийн дагуу</div>
+                </div>
+              </li>
+              <li class="stop-item">
+                <span class="stop-time">13:30</span>
+                <div class="stop-info">
+                  <div class="stop-name">Sichuan нудлэл — Mala Tang</div>
+                  <div class="stop-desc">Тархируун халуун шөл — зүрх зоригтой хүмүүст</div>
+                </div>
+              </li>
+              <li class="stop-item">
+                <span class="stop-time">19:00</span>
+                <div class="stop-info">
+                  <div class="stop-name">Ultraviolet by Paul Pairet</div>
+                  <div class="stop-desc">Дэлхийн рейтингт орсон — 1 ширээтэй, 10 хүн, 20 course. Хамгийн өвөрмөц</div>
+                </div>
+              </li>
+            </ul>
+          </div>
+
+          <div class="tags">
+            <span class="tag">Jiangnan</span>
+            <span class="tag">Dim Sum</span>
+            <span class="tag">Hotpot</span>
+            <span class="tag">Sichuan</span>
+            <span class="tag">Fine dining</span>
+          </div>
+        </div>
+
+        <div class="card-footer">
+          <div class="card-price">Ресторан захиалга багтана<strong>Бүрэн package →</strong></div>
+          <a href="/booking/" class="btn-card">Захиалах</a>
+        </div>
+      </div>
+
+    </div>
+  </div><!-- /tab-food -->
+
+  <!-- ════ ШОППИНГ ════ -->
+  <div class="tab-panel" id="tab-shopping">
+    <div class="section-head">
+      <h2>🛍️ Шоппинг Маршрут</h2>
+      <p>IFC, Plaza 66, Qipu Road, Yuyuan Bazaar — луксусаас хямд хүртэл Шанхайн бүх шоппингийн газрууд.</p>
+    </div>
+
+    <div class="cards-grid">
+
+      <div class="itin-card">
+        <div class="card-header">
+          <div class="card-badge">💎 Луксус</div>
+          <div class="card-title">Luxury Шоппинг — 1 өдөр</div>
+          <div class="card-subtitle">IFC Mall, Plaza 66, Nanjing West Road — дэлхийн шилдэг брэндүүд нэг дор</div>
+          <div class="card-meta">
+            <div class="card-meta-item">
+              <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>
+              1 өдөр
+            </div>
+            <div class="card-meta-item">
+              <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><circle cx="12" cy="12" r="10"/><path d="M12 6v6l4 2"/></svg>
+              10:00 – 22:00
+            </div>
+          </div>
+        </div>
+
+        <div class="card-body">
+          <div class="day-block">
+            <div class="day-label">
+              <div class="day-num">🌅</div>
+              <div class="day-title">Өглөө — Pudong IFC</div>
+            </div>
+            <ul class="stops-list">
+              <li class="stop-item">
+                <span class="stop-time">10:00</span>
+                <div class="stop-info">
+                  <div class="stop-name">IFC Mall (国金中心)</div>
+                  <div class="stop-desc">Chanel, Hermès, Louis Vuitton, Cartier — Pudong-ийн тансаг mall</div>
+                </div>
+              </li>
+              <li class="stop-item">
+                <span class="stop-time">12:30</span>
+                <div class="stop-info">
+                  <div class="stop-name">Super Brand Mall</div>
+                  <div class="stop-desc">6 давхар — Apple Store, спорт, гоо сайхан, tech</div>
+                </div>
+              </li>
+            </ul>
+          </div>
+
+          <div class="day-block">
+            <div class="day-label">
+              <div class="day-num">☀</div>
+              <div class="day-title">Өдрийн хоол + Puxi луксус</div>
+            </div>
+            <ul class="stops-list">
+              <li class="stop-item">
+                <span class="stop-time">14:00</span>
+                <div class="stop-info">
+                  <div class="stop-name">Plaza 66 (恒隆广场)</div>
+                  <div class="stop-desc">Nanjing West Rd-н дагуу — Gucci, Prada, Dior, Bulgari, Rolex</div>
+                </div>
+              </li>
+              <li class="stop-item">
+                <span class="stop-time">16:30</span>
+                <div class="stop-info">
+                  <div class="stop-name">Jing'an Kerry Centre</div>
+                  <div class="stop-desc">Загварлаг хувцас, Sephora, lifestyle брэндүүд</div>
+                </div>
+              </li>
+              <li class="stop-item">
+                <span class="stop-time">19:00</span>
+                <div class="stop-info">
+                  <div class="stop-name">Xintiandi Style Mall</div>
+                  <div class="stop-desc">Дизайнерийн нэр, арт, орой кафе</div>
+                </div>
+              </li>
+            </ul>
+          </div>
+
+          <div class="tip-box">
+            <strong>💡 Зөвлөгөө:</strong> Tax refund (VAT буцаалт) авах боломжтой — паспорт авчирна уу. Бид процессийг туслана.
+          </div>
+
+          <div class="tags">
+            <span class="tag">IFC Mall</span>
+            <span class="tag">Plaza 66</span>
+            <span class="tag">Louis Vuitton</span>
+            <span class="tag">Tax refund</span>
+            <span class="tag">VIP үйлчилгээ</span>
+          </div>
+        </div>
+
+        <div class="card-footer">
+          <div class="card-price">Хөтөчийн үйлчилгээ<strong>Тохиролцох →</strong></div>
+          <a href="/booking/" class="btn-card">Захиалах</a>
+        </div>
+      </div>
+
+      <div class="itin-card">
+        <div class="card-header">
+          <div class="card-badge">🧧 Хямдхан & Дотуур</div>
+          <div class="card-title">Qipu Road + Yuyuan Bazaar — 1 өдөр</div>
+          <div class="card-subtitle">Хямд хувцас, хятадын уламжлалт бэлэг, хуурамч биш оригинал бараа</div>
+          <div class="card-meta">
+            <div class="card-meta-item">
+              <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>
+              1 өдөр
+            </div>
+            <div class="card-meta-item">
+              <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><circle cx="12" cy="12" r="10"/><path d="M12 6v6l4 2"/></svg>
+              09:00 – 19:00
+            </div>
+          </div>
+        </div>
+
+        <div class="card-body">
+          <div class="day-block">
+            <div class="day-label">
+              <div class="day-num">1</div>
+              <div class="day-title">Qipu Road (七浦路) — хувцасны зах</div>
+            </div>
+            <ul class="stops-list">
+              <li class="stop-item">
+                <span class="stop-time">09:00</span>
+                <div class="stop-info">
+                  <div class="stop-name">Qipu Road хувцасны зах</div>
+                  <div class="stop-desc">10+ давхар барилган дотор хувцасны зах — та хэмжилттэй захиалж болно</div>
+                </div>
+              </li>
+              <li class="stop-item">
+                <span class="stop-time">11:30</span>
+                <div class="stop-info">
+                  <div class="stop-name">Нарийвчилсан тоо байршил</div>
+                  <div class="stop-desc">Monoglian хөтөч хамт байж хэлцлийг удирдана — чамнаас зориулсан үнэ</div>
+                </div>
+              </li>
+            </ul>
+          </div>
+
+          <div class="day-block">
+            <div class="day-label">
+              <div class="day-num">2</div>
+              <div class="day-title">Yuyuan Bazaar — уламжлалт бэлэг</div>
+            </div>
+            <ul class="stops-list">
+              <li class="stop-item">
+                <span class="stop-time">13:30</span>
+                <div class="stop-info">
+                  <div class="stop-name">Yuyuan Bazaar (豫园商城)</div>
+                  <div class="stop-desc">Хятадын уламжлалт гар урлал, торго, нефрит, чай, хуудасны ном</div>
+                </div>
+              </li>
+              <li class="stop-item">
+                <span class="stop-time">15:30</span>
+                <div class="stop-info">
+                  <div class="stop-name">South Bund Fabric Market</div>
+                  <div class="stop-desc">Тусгай захиалгаар хийгдсэн хувцас — 24–48 цагт бэлэн болно</div>
+                </div>
+              </li>
+              <li class="stop-item">
+                <span class="stop-time">17:30</span>
+                <div class="stop-info">
+                  <div class="stop-name">Taikang Road (田子坊)</div>
+                  <div class="stop-desc">Дизайнерийн сувенир, арт зургийн гарын ажил, уникал бэлгүүд</div>
+                </div>
+              </li>
+            </ul>
+          </div>
+
+          <div class="tip-box">
+            <strong>🧧 Хэлцлийн зөвлөгөө:</strong> Монгол хөтөч хамт байгаа тул хятадаар хэлцэл хийж, тань дор хаяж 40–60% хямд авна.
+          </div>
+
+          <div class="tags">
+            <span class="tag">Qipu Road</span>
+            <span class="tag">Yuyuan Bazaar</span>
+            <span class="tag">Fabric Market</span>
+            <span class="tag">Taikang Road</span>
+            <span class="tag">Хямд</span>
+          </div>
+        </div>
+
+        <div class="card-footer">
+          <div class="card-price">Хөтөч & хэлцэл туслалцаа<strong>Тохиролцох →</strong></div>
+          <a href="/booking/" class="btn-card">Захиалах</a>
+        </div>
+      </div>
+
+    </div>
+  </div><!-- /tab-shopping -->
+
+  <!-- ════ СОЁЛ ════ -->
+  <div class="tab-panel" id="tab-culture">
+    <div class="section-head">
+      <h2>🎎 Соёл & Түүхийн Аялал</h2>
+      <p>M50 урлагийн дүүрэг, Shanghai Museum, усан хот, Хятадын соёлыг гүнзгий таньж мэдэх маршрут.</p>
+    </div>
+
+    <div class="cards-grid">
+
+      <div class="itin-card">
+        <div class="card-header">
+          <div class="card-badge">🖼️ Урлаг & Соёл</div>
+          <div class="card-title">Соёлын Шанхай — 2 өдөр</div>
+          <div class="card-subtitle">M50 урлаг, Shanghai Museum, Тяньцзи сүм, усан хот — гүнзгий соёлын аялал</div>
+          <div class="card-meta">
+            <div class="card-meta-item">
+              <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>
+              2 өдөр
+            </div>
+            <div class="card-meta-item">
+              <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><circle cx="12" cy="12" r="10"/><path d="M12 6v6l4 2"/></svg>
+              Соёл сонирхогчид
+            </div>
+          </div>
+        </div>
+
+        <div class="card-body">
+          <div class="day-block">
+            <div class="day-label">
+              <div class="day-num">1</div>
+              <div class="day-title">M50 & Shanghai Museum</div>
+            </div>
+            <ul class="stops-list">
+              <li class="stop-item">
+                <span class="stop-time">09:00</span>
+                <div class="stop-info">
+                  <div class="stop-name">M50 Creative Park (M50创意园)</div>
+                  <div class="stop-desc">Хуучин үйлдвэрийн барилган дотор — 100+ gallery, contemporary Chinese art</div>
+                </div>
+              </li>
+              <li class="stop-item">
+                <span class="stop-time">12:00</span>
+                <div class="stop-info">
+                  <div class="stop-name">Suzhou Creek хэсэг алхах</div>
+                  <div class="stop-desc">Инпрессионист уур амьсгал — gallery hop, кафе</div>
+                </div>
+              </li>
+              <li class="stop-item">
+                <span class="stop-time">14:00</span>
+                <div class="stop-info">
+                  <div class="stop-name">Shanghai Museum (上海博物馆)</div>
+                  <div class="stop-desc">Хятадын эрт дээрх үеийн эрдэнэс — бронз, нефрит, будлага, каллиграфи</div>
+                </div>
+              </li>
+              <li class="stop-item">
+                <span class="stop-time">17:00</span>
+                <div class="stop-info">
+                  <div class="stop-name">People's Square (人民广场)</div>
+                  <div class="stop-desc">Хотын зүрх — орой алхах, Шанхайн нийгмийн амьдралтай танилцах</div>
+                </div>
+              </li>
+            </ul>
+          </div>
+
+          <div class="day-block">
+            <div class="day-label">
+              <div class="day-num">2</div>
+              <div class="day-title">Усан хот & Соёлын дүүрэг</div>
+            </div>
+            <ul class="stops-list">
+              <li class="stop-item">
+                <span class="stop-time">08:30</span>
+                <div class="stop-info">
+                  <div class="stop-name">Tongli / Wuzhen — усан хот</div>
+                  <div class="stop-desc">Хотоос 90 минутын зайд. 1000 жилийн настай усан хот — UNESCO</div>
+                </div>
+              </li>
+              <li class="stop-item">
+                <span class="stop-time">13:00</span>
+                <div class="stop-info">
+                  <div class="stop-name">Уламжлалт хоол усан хотод</div>
+                  <div class="stop-desc">Braised pork, freshwater fish, shan zhai tofu — нутгийн амт</div>
+                </div>
+              </li>
+              <li class="stop-item">
+                <span class="stop-time">15:30</span>
+                <div class="stop-info">
+                  <div class="stop-name">Буцах — Longhua Temple</div>
+                  <div class="stop-desc">Шанхайн хамгийн хуучин сүм — 3 метрийн буддийн хөрөг</div>
+                </div>
+              </li>
+              <li class="stop-item">
+                <span class="stop-time">18:00</span>
+                <div class="stop-info">
+                  <div class="stop-name">Tianzifang (田子坊)</div>
+                  <div class="stop-desc">Арт квартал — гар урлал, барна, рок кафе, Шанхайн bohemian тал</div>
+                </div>
+              </li>
+            </ul>
+          </div>
+
+          <div class="tags">
+            <span class="tag">M50</span>
+            <span class="tag">Shanghai Museum</span>
+            <span class="tag">Wuzhen</span>
+            <span class="tag">Longhua Temple</span>
+            <span class="tag">Tianzifang</span>
+          </div>
+        </div>
+
+        <div class="card-footer">
+          <div class="card-price">Дэлгэрэнгүй хуваарь<strong>Лавлах →</strong></div>
+          <a href="/booking/" class="btn-card">Захиалах</a>
+        </div>
+      </div>
+
+      <div class="itin-card">
+        <div class="card-header">
+          <div class="card-badge">🏯 Түүхийн маршрут</div>
+          <div class="card-title">Шанхайн Гүн Түүх — 1 өдөр</div>
+          <div class="card-subtitle">French Concession, Shikumen Museum, Xintiandi — Шанхайн колониал өв</div>
+          <div class="card-meta">
+            <div class="card-meta-item">
+              <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>
+              1 өдөр
+            </div>
+            <div class="card-meta-item">
+              <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><circle cx="12" cy="12" r="10"/><path d="M12 6v6l4 2"/></svg>
+              Түүхийн сонирхолтой
+            </div>
+          </div>
+        </div>
+
+        <div class="card-body">
+          <div class="day-block">
+            <div class="day-label">
+              <div class="day-num">☀</div>
+              <div class="day-title">French Concession дүүрэг</div>
+            </div>
+            <ul class="stops-list">
+              <li class="stop-item">
+                <span class="stop-time">09:30</span>
+                <div class="stop-info">
+                  <div class="stop-name">Wukang Road (武康路)</div>
+                  <div class="stop-desc">Платано модны дор европ байшин — Шанхайн хамгийн дурлалтай гудамж</div>
+                </div>
+              </li>
+              <li class="stop-item">
+                <span class="stop-time">11:00</span>
+                <div class="stop-info">
+                  <div class="stop-name">Shikumen Open House Museum</div>
+                  <div class="stop-desc">Шанхайн уламжлалт нийтийн байшингийн музей — 1920-аад оны амьдрал</div>
+                </div>
+              </li>
+              <li class="stop-item">
+                <span class="stop-time">13:00</span>
+                <div class="stop-info">
+                  <div class="stop-name">Xintiandi (新天地)</div>
+                  <div class="stop-desc">Хуучин байшингийг загварчилж өөрчилсөн — ресторан, дэлгүүр, арт</div>
+                </div>
+              </li>
+            </ul>
+          </div>
+
+          <div class="day-block">
+            <div class="day-label">
+              <div class="day-num">🌇</div>
+              <div class="day-title">Хуучин банк, порт дүүрэг</div>
+            </div>
+            <ul class="stops-list">
+              <li class="stop-item">
+                <span class="stop-time">15:00</span>
+                <div class="stop-info">
+                  <div class="stop-name">The Bund дахин — Art Deco барилгууд</div>
+                  <div class="stop-desc">HSBC, Customs House, Peace Hotel — 1930-аад оны Art Deco тансаг</div>
+                </div>
+              </li>
+              <li class="stop-item">
+                <span class="stop-time">17:30</span>
+                <div class="stop-info">
+                  <div class="stop-name">Peace Hotel Jazz Bar</div>
+                  <div class="stop-desc">1930-аад оноос хойш жаз тоглодог — орой архидан ялзрах хамгийн шигтэй</div>
+                </div>
+              </li>
+            </ul>
+          </div>
+
+          <div class="tags">
+            <span class="tag">French Concession</span>
+            <span class="tag">Wukang Road</span>
+            <span class="tag">Art Deco</span>
+            <span class="tag">Peace Hotel</span>
+            <span class="tag">Shikumen</span>
+          </div>
+        </div>
+
+        <div class="card-footer">
+          <div class="card-price">Хөтөч үйлчилгээ<strong>Захиалах →</strong></div>
+          <a href="/booking/" class="btn-card">Захиалах</a>
+        </div>
+      </div>
+
+    </div>
+  </div><!-- /tab-culture -->
+
+  <!-- ════ ЭРҮҮЛ МЭНД ════ -->
+  <div class="tab-panel" id="tab-health">
+    <div class="section-head">
+      <h2>🩺 Эрүүл Мэндийн Аялал</h2>
+      <p>VIP эрүүл мэндийн шалгалт + хотын аялал хослуулсан маршрут. Монгол хэлтэй орчуулагч, бүх шатанд туслалцаа.</p>
+    </div>
+
+    <div class="cards-grid">
+
+      <div class="itin-card">
+        <div class="card-header">
+          <div class="card-badge">🩺 VIP Эрүүл мэнд</div>
+          <div class="card-title">VIP Эрүүл мэндийн шалгалт — 3 өдөр</div>
+          <div class="card-subtitle">Бүрэн дүрс оношилгоо, мэргэжилтний зөвлөгөө, Монгол орчуулга, хотын аялал хослуулсан</div>
+          <div class="card-meta">
+            <div class="card-meta-item">
+              <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>
+              3 өдөр
+            </div>
+            <div class="card-meta-item">
+              <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><circle cx="12" cy="12" r="10"/><path d="M12 6v6l4 2"/></svg>
+              30–70 насны
+            </div>
+            <div class="card-meta-item">
+              <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/></svg>
+              1–6 хүн
+            </div>
+          </div>
+        </div>
+
+        <div class="card-body">
+          <div class="day-block">
+            <div class="day-label">
+              <div class="day-num">1</div>
+              <div class="day-title">Ирэх өдөр — Бэлтгэл</div>
+            </div>
+            <ul class="stops-list">
+              <li class="stop-item">
+                <span class="stop-time">Ирэх</span>
+                <div class="stop-info">
+                  <div class="stop-name">Нисэх онгоцны буудлаас угтах</div>
+                  <div class="stop-desc">VIP машин, Монгол хэлтэй хөтөч — зочид буудалд хүргэх</div>
+                </div>
+              </li>
+              <li class="stop-item">
+                <span class="stop-time">19:00</span>
+                <div class="stop-info">
+                  <div class="stop-name">Оройн зөвлөгөө уулзалт</div>
+                  <div class="stop-desc">Маргаашийн үзлэгийн бэлтгэл — ямар эд авчирсан, юу хийхгүй байх</div>
+                </div>
+              </li>
+            </ul>
+          </div>
+
+          <div class="day-block">
+            <div class="day-label">
+              <div class="day-num">2</div>
+              <div class="day-title">VIP Эрүүл мэндийн үзлэг</div>
+            </div>
+            <ul class="stops-list">
+              <li class="stop-item">
+                <span class="stop-time">07:30</span>
+                <div class="stop-info">
+                  <div class="stop-name">Ruijin / Zhongshan / Huashan эмнэлэг</div>
+                  <div class="stop-desc">Шанхайн топ 3 эмнэлгийн нэгт VIP орох — цуваанд зогсохгүй</div>
+                </div>
+              </li>
+              <li class="stop-item">
+                <span class="stop-time">08:00</span>
+                <div class="stop-info">
+                  <div class="stop-name">Цус шинжилгээ + дүрс оношилгоо</div>
+                  <div class="stop-desc">CT, MRI, хэт авиан шинжилгээ, ЭЦГ, нүд, шүд — бүрэн package</div>
+                </div>
+              </li>
+              <li class="stop-item">
+                <span class="stop-time">13:00</span>
+                <div class="stop-info">
+                  <div class="stop-name">Мэргэжилтний зөвлөгөө</div>
+                  <div class="stop-desc">Монгол хэл дээр тайлбар — биеийн байдал, цаашдын арга хэмжээ</div>
+                </div>
+              </li>
+              <li class="stop-item">
+                <span class="stop-time">15:00</span>
+                <div class="stop-info">
+                  <div class="stop-name">Эмийн дэлгүүр + Захиалга</div>
+                  <div class="stop-desc">Хятадын мэргэжлийн эм авах, Монголд авч очих зөвшөөрлийн баримт</div>
+                </div>
+              </li>
+            </ul>
+          </div>
+
+          <div class="day-block">
+            <div class="day-label">
+              <div class="day-num">3</div>
+              <div class="day-title">Хотын аялал + Буцах</div>
+            </div>
+            <ul class="stops-list">
+              <li class="stop-item">
+                <span class="stop-time">09:00</span>
+                <div class="stop-info">
+                  <div class="stop-name">Нанжин зам + The Bund</div>
+                  <div class="stop-desc">Шанхайн алдарт гол хоёр газраар зочлон явах</div>
+                </div>
+              </li>
+              <li class="stop-item">
+                <span class="stop-time">12:00</span>
+                <div class="stop-info">
+                  <div class="stop-name">Шоппинг + оройн хоол</div>
+                  <div class="stop-desc">Бэлэг, эм, бараа авах — хөтөч хамт</div>
+                </div>
+              </li>
+              <li class="stop-item">
+                <span class="stop-time">16:00</span>
+                <div class="stop-info">
+                  <div class="stop-name">Нисэх онгоцны буудал хүргэх</div>
+                  <div class="stop-desc">Check-in туслалцаа, бүх баримт бичгийн шалгалт</div>
+                </div>
+              </li>
+            </ul>
+          </div>
+
+          <div class="tip-box">
+            <strong>⚕️ Чухал:</strong> Эмнэлгийн цаг 2–3 долоо хоногийн өмнө захиална. Монголд авч болох эмийн тухай урьдчилан зөвлөнө. Бид тантай хамт эмнэлэгт орж орчуулга хийнэ.
+          </div>
+
+          <div class="tags">
+            <span class="tag">Ruijin Hospital</span>
+            <span class="tag">VIP кабинет</span>
+            <span class="tag">Монгол орчуулга</span>
+            <span class="tag">CT / MRI</span>
+            <span class="tag">Бүрэн package</span>
+          </div>
+        </div>
+
+        <div class="card-footer">
+          <div class="card-price">Хувийн үнийн санал<strong>Лавлах →</strong></div>
+          <a href="/booking/" class="btn-card">Захиалах</a>
+        </div>
+      </div>
+
+      <div class="itin-card">
+        <div class="card-header">
+          <div class="card-badge">🌿 Сэргээх аялал</div>
+          <div class="card-title">Сэргээх & Релакс — 2 өдөр</div>
+          <div class="card-subtitle">Дорно дахины эмчилгээ, усны байгалийн эмчилгээ, аромат массаж + хот</div>
+          <div class="card-meta">
+            <div class="card-meta-item">
+              <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>
+              2 өдөр
+            </div>
+            <div class="card-meta-item">
+              <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><circle cx="12" cy="12" r="10"/><path d="M12 6v6l4 2"/></svg>
+              Бүх нас
+            </div>
+          </div>
+        </div>
+
+        <div class="card-body">
+          <div class="day-block">
+            <div class="day-label">
+              <div class="day-num">1</div>
+              <div class="day-title">Дорно дахины эмчилгээ</div>
+            </div>
+            <ul class="stops-list">
+              <li class="stop-item">
+                <span class="stop-time">09:00</span>
+                <div class="stop-info">
+                  <div class="stop-name">Хятадын уламжлалт эмчилгээ (TCM)</div>
+                  <div class="stop-desc">Зүү тавих (акупунктур), хальс тавих (cupping), хятад дорно дахины эмч</div>
+                </div>
+              </li>
+              <li class="stop-item">
+                <span class="stop-time">14:00</span>
+                <div class="stop-info">
+                  <div class="stop-name">5 оддын SPA — Aroma массаж</div>
+                  <div class="stop-desc">Shangrila эсвэл Peninsula зочид буудлын SPA — 90 минут</div>
+                </div>
+              </li>
+              <li class="stop-item">
+                <span class="stop-time">19:00</span>
+                <div class="stop-info">
+                  <div class="stop-name">Эрүүл хоол</div>
+                  <div class="stop-desc">Vegetarian fine dining, хятад эмнэлгийн чайны ёслол</div>
+                </div>
+              </li>
+            </ul>
+          </div>
+
+          <div class="day-block">
+            <div class="day-label">
+              <div class="day-num">2</div>
+              <div class="day-title">Байгалийн рашаан + хот</div>
+            </div>
+            <ul class="stops-list">
+              <li class="stop-item">
+                <span class="stop-time">08:30</span>
+                <div class="stop-info">
+                  <div class="stop-name">Qingpu рашааны ус</div>
+                  <div class="stop-desc">Шанхайн захын байгалийн рашааны газар — усанд ороход мэдрэмж ер бусын</div>
+                </div>
+              </li>
+              <li class="stop-item">
+                <span class="stop-time">13:00</span>
+                <div class="stop-info">
+                  <div class="stop-name">Century Park</div>
+                  <div class="stop-desc">Шанхайн хамгийн том парк — нуурын усан завиар аялах</div>
+                </div>
+              </li>
+              <li class="stop-item">
+                <span class="stop-time">16:00</span>
+                <div class="stop-info">
+                  <div class="stop-name">Орой The Bund</div>
+                  <div class="stop-desc">Сэтгэл амарч буцах — гэрэлтсэн skyline-г сүүлчийн удаа харна</div>
+                </div>
+              </li>
+            </ul>
+          </div>
+
+          <div class="tags">
+            <span class="tag">TCM эмчилгээ</span>
+            <span class="tag">Акупунктур</span>
+            <span class="tag">5-star SPA</span>
+            <span class="tag">Рашаан</span>
+            <span class="tag">Релакс</span>
+          </div>
+        </div>
+
+        <div class="card-footer">
+          <div class="card-price">SPA нэмэлт зардал<strong>Лавлах →</strong></div>
+          <a href="/booking/" class="btn-card">Захиалах</a>
+        </div>
+      </div>
+
+    </div>
+  </div><!-- /tab-health -->
+
+  <!-- ── CTA ── -->
+  <div class="cta-section">
+    <h2>Таны Маршрутыг<br>Бид Бэлдэнэ</h2>
+    <p>Монгол хэлтэй хөтөчтэй, VIP үйлчилгээтэй — таны хүссэн маршрутыг бодитоор боловсруулна.</p>
+    <div class="cta-btns">
+      <a href="/booking/" class="btn-cta">Захиалга өгөх</a>
+      <a href="/#contact" class="btn-cta-ghost">Зөвлөгөө авах</a>
+    </div>
+    <div class="cta-features">
+      <div class="cta-feat"><span class="icon">🗣️</span> Монгол хэлтэй хөтөч</div>
+      <div class="cta-feat"><span class="icon">🚗</span> VIP машин угтах</div>
+      <div class="cta-feat"><span class="icon">🏨</span> Зочид буудал захиалга</div>
+      <div class="cta-feat"><span class="icon">📋</span> Хувийн хуваарь</div>
+      <div class="cta-feat"><span class="icon">⚕️</span> Эмнэлгийн цаг</div>
+    </div>
+  </div>
+
+</main>
+
+<!-- ── FOOTER ── -->
+<footer>
+  <div class="footer-nav">
+    <a href="/">Нүүр</a>
+    <a href="/#services">Үйлчилгээ</a>
+    <a href="/marshrut/">Маршрут</a>
+    <a href="/eruul-mend/">Эрүүл мэнд</a>
+    <a href="/booking/">Захиалга</a>
+  </div>
+  <div>© 2025 LFS Shanghai — Монгол Аялагчдын Найдвартай Хөтөч</div>
+  <div style="margin-top:4px"><a href="/">bileg11.github.io</a></div>
+</footer>
+
+<script>
+// ── Hamburger menu ──
+const hamburger = document.getElementById('hamburger');
+const navLinks = document.getElementById('navLinks');
+hamburger.addEventListener('click', () => {
+  navLinks.classList.toggle('open');
+  const spans = hamburger.querySelectorAll('span');
+  if (navLinks.classList.contains('open')) {
+    spans[0].style.transform = 'translateY(5.5px) rotate(45deg)';
+    spans[1].style.opacity = '0';
+    spans[2].style.transform = 'translateY(-5.5px) rotate(-45deg)';
+  } else {
+    spans[0].style.transform = '';
+    spans[1].style.opacity = '';
+    spans[2].style.transform = '';
+  }
+});
+// Close menu on nav-link click
+navLinks.querySelectorAll('.nav-link').forEach(link => {
+  link.addEventListener('click', () => {
+    navLinks.classList.remove('open');
+    const spans = hamburger.querySelectorAll('span');
+    spans[0].style.transform = '';
+    spans[1].style.opacity = '';
+    spans[2].style.transform = '';
+  });
+});
+
+// ── Filter tabs ──
+const filterBtns = document.querySelectorAll('.filter-btn');
+const tabPanels = document.querySelectorAll('.tab-panel');
+
+filterBtns.forEach(btn => {
+  btn.addEventListener('click', () => {
+    const tab = btn.dataset.tab;
+
+    // Update buttons
+    filterBtns.forEach(b => b.classList.remove('active'));
+    btn.classList.add('active');
+
+    // Update panels
+    tabPanels.forEach(p => p.classList.remove('active'));
+    const target = document.getElementById('tab-' + tab);
+    if (target) target.classList.add('active');
+
+    // Scroll to main content (below sticky filters)
+    const filtersWrap = document.querySelector('.filters-wrap');
+    const main = document.querySelector('.main');
+    if (main && filtersWrap) {
+      const top = main.getBoundingClientRect().top + window.scrollY - filtersWrap.offsetHeight - 52 - 16;
+      window.scrollTo({ top: Math.max(0, top), behavior: 'smooth' });
+    }
+  });
+});
+
+// ── Scroll: highlight active nav ──
+window.addEventListener('scroll', () => {
+  const nav = document.querySelector('.nav');
+  if (window.scrollY > 10) {
+    nav.style.background = 'rgba(255,255,255,.96)';
+  } else {
+    nav.style.background = 'rgba(255,255,255,.85)';
+  }
+}, { passive: true });
+</script>
+
+</body>
+</html>

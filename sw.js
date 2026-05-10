@@ -1,7 +1,10 @@
-const CACHE = 'lfs-v3';
+const CACHE = 'lfs-v4';
 const STATIC = [
   '/',
   '/booking/',
+  '/marshrut/',
+  '/zuvlumj/',
+  '/eruul-mend/',
   '/js/toast.js',
   '/js/calendar.js',
   '/logo.png',
