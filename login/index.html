@@ -336,27 +336,24 @@ async function doSocialLogin(provider, btnId) {
   if (btn.disabled) return;
   btn.disabled = true;
   const orig = btn.innerHTML;
-  btn.innerHTML = '<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><path d="M12 2v4M12 18v4M4.93 4.93l2.83 2.83M16.24 16.24l2.83 2.83M2 12h4M18 12h4M4.93 19.07l2.83-2.83M16.24 7.76l2.83-2.83"/></svg> &nbsp;Нэвтэрч байна...';
+  btn.innerHTML = '⏳ Нэвтэрч байна...';
   try {
-    if (isMobile) {
-      // Mobile: redirect flow (popup is blocked by mobile browsers)
-      await signInWithRedirect(auth, provider);
-      // Page navigates away — code below won't run
-    } else {
-      const res = await signInWithPopup(auth, provider);
-      await afterLogin(res.user);
-    }
+    // signInWithPopup works on all platforms.
+    // signInWithRedirect breaks on Safari (ITP blocks cross-domain cookies).
+    const res = await signInWithPopup(auth, provider);
+    await afterLogin(res.user);
   } catch(e) {
     btn.disabled = false;
     btn.innerHTML = orig;
     if (e.code === 'auth/popup-blocked') {
-      // Desktop popup blocked — fall back to redirect
+      // Popup was blocked (rare on mobile) — fall back to redirect
+      showMsg('social-msg', 'Popup блоклогдлоо. Redirect ашиглаж байна...');
       await signInWithRedirect(auth, provider);
     } else if (!ignoredPopupErrors.has(e.code)) {
       const friendly = e.code === 'auth/operation-not-allowed'
-        ? 'Энэ нэвтрэх арга Firebase консолд идэвхжүүлэгдээгүй байна.'
+        ? 'Google нэвтрэх Firebase консолд идэвхжүүлэгдээгүй байна.'
         : e.code === 'auth/unauthorized-domain'
-        ? 'Домайн зөвшөөрөгдөөгүй байна — Firebase консол → Auth → Authorized domains-д bileg11.github.io нэмнэ үү.'
+        ? 'bileg11.github.io домайн зөвшөөрөгдөөгүй — Firebase Console → Auth → Authorized domains-д нэмнэ үү.'
         : `Алдаа: ${e.code || e.message}`;
       showMsg('social-msg', friendly);
     }
