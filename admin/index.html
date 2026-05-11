@@ -518,7 +518,7 @@ setPersistence(auth, inMemoryPersistence)
   .then(() => signOut(auth))
   .catch(() => {})
   .finally(() => {
-    const ADMIN_UIDS = ['REPLACE_WITH_YOUR_UID'];
+    const ADMIN_UIDS = ['a7LqJ7UMMkSQS06WMjaNqHDv7Bk2'];
 
     onAuthStateChanged(auth, user => {
       if (user && ADMIN_UIDS.includes(user.uid)) {
