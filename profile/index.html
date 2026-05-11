@@ -169,7 +169,7 @@ body{font-family:'Inter',sans-serif;background:var(--bg);color:var(--dark2);min-
 </nav>
 
 <!-- ── SKELETON (shown immediately, hidden after auth resolves) ────── -->
-<div id="skeletonPage">
+<div id="skeletonPage" style="position:relative">
   <div class="sk-title sk"></div>
 
   <div class="sk-card">
@@ -202,6 +202,11 @@ body{font-family:'Inter',sans-serif;background:var(--bg);color:var(--dark2);min-
     <div class="sk-section-title sk"></div>
     <div class="sk-booking sk"></div>
     <div class="sk-booking sk"></div>
+  </div>
+
+  <!-- Fallback login link shown after 2s if skeleton persists -->
+  <div id="skFallback" style="display:none;text-align:center;padding:16px 0">
+    <a href="/login/?redirect=/profile/" style="color:#0071e3;font-size:14px;font-weight:500">Нэвтрэх →</a>
   </div>
 </div>
 
@@ -339,12 +344,18 @@ let currentProfile = {};
 // Init calendar for birthday (no min restriction)
 try { initDatepicker('edit-birthday', { placeholder: 'Огноо сонгох' }); } catch(e) {}
 
-// Safety timeout: if Firebase auth doesn't resolve in 7s, redirect to login
+// Show fallback link after 2s
+setTimeout(() => {
+  if (document.getElementById('skeletonPage').style.display !== 'none') {
+    document.getElementById('skFallback').style.display = 'block';
+  }
+}, 2000);
+// Safety timeout: if Firebase auth doesn't resolve in 5s, redirect to login
 const authTimeout = setTimeout(() => {
   if (document.getElementById('skeletonPage').style.display !== 'none') {
     window.location.href = '/login/?redirect=/profile/';
   }
-}, 7000);
+}, 5000);
 
 onAuthStateChanged(auth, async user => {
   clearTimeout(authTimeout);
