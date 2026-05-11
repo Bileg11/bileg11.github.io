@@ -666,14 +666,7 @@ window.doDeleteAccount = async function() {
       deletedAt:    Date.now()
     }).catch(() => {});
 
-    // 2. Delete all bookings for this user
-    if (currentUser.email) {
-      try {
-        const bSnap = await getDocs(query(collection(db, 'bookings'), where('email', '==', currentUser.email)));
-        await Promise.all(bSnap.docs.map(d => deleteDoc(doc(db, 'bookings', d.id))));
-      } catch(e2) { /* ignore booking delete errors */ }
-    }
-    // 3. Delete username doc
+    // 2. Delete username doc
     if (currentProfile.username) {
       await deleteDoc(doc(db, 'usernames', currentProfile.username)).catch(() => {});
     }
