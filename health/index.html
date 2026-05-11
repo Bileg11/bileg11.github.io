@@ -537,6 +537,17 @@ footer a:hover{color:#fff}
 .footer-logo span{color:var(--blue)}
 .footer-links{display:flex;gap:20px;justify-content:center;flex-wrap:wrap;margin-bottom:16px}
 
+/* ── PACKAGE DESCRIPTION & PHOTOS ── */
+.pkg-desc{font-size:14px;color:var(--muted);line-height:1.7;margin-bottom:16px}
+.pkg-photos{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-bottom:20px}
+.pkg-photos-single{grid-template-columns:1fr}
+.pkg-photo{border-radius:10px;overflow:hidden;aspect-ratio:4/3;position:relative;display:flex;align-items:center;justify-content:center}
+.pkg-photo-img{width:100%;height:100%;object-fit:cover;display:block;position:absolute;inset:0}
+.pkg-photo.no-img .pkg-photo-img{display:none}
+.pkg-photo-placeholder{font-size:28px;pointer-events:none;position:relative;z-index:1}
+.pkg-photo:not(.no-img) .pkg-photo-placeholder{display:none}
+.pkg-photo-label{position:absolute;bottom:0;left:0;right:0;padding:5px 8px;background:linear-gradient(to top,rgba(0,0,0,.65),transparent);color:#fff;font-size:10px;font-weight:600;text-align:center;z-index:2;letter-spacing:.02em}
+
 /* ── PACKAGE SCHEDULE ── */
 .packages-grid{align-items:start}
 .pkg-schedule{margin-top:20px;padding-top:20px;border-top:1px solid var(--border)}
@@ -644,89 +655,38 @@ footer a:hover{color:#fff}
 
     <div class="packages-grid">
 
-      <!-- CARD 1: Мөнгөн -->
-      <div class="pkg-card">
-        <span class="pkg-badge blue-badge">Хамгийн алдартай</span>
-        <div class="pkg-header">
-          <div class="pkg-name">🥈 Мөнгөн багц</div>
-          <div class="pkg-price"><span class="currency">₮</span>950,000</div>
-          <div class="pkg-tagline">2 өдрийн эмнэлгийн аялал</div>
-        </div>
-        <div class="pkg-divider"></div>
-        <ul class="pkg-features">
-          <li class="pkg-feature">
-            <span class="pkg-check"><svg viewBox="0 0 10 10" fill="none"><path d="M2 5l2.5 2.5L8 3" stroke="#0071e3" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
-            Цус, шээс, элэг, бөөр, бамбайн шинжилгээ
-          </li>
-          <li class="pkg-feature">
-            <span class="pkg-check"><svg viewBox="0 0 10 10" fill="none"><path d="M2 5l2.5 2.5L8 3" stroke="#0071e3" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
-            ЭКГ, биеийн индекс (BMI)
-          </li>
-          <li class="pkg-feature">
-            <span class="pkg-check"><svg viewBox="0 0 10 10" fill="none"><path d="M2 5l2.5 2.5L8 3" stroke="#0071e3" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
-            VIP тасаг, хувийн сувилагч
-          </li>
-          <li class="pkg-feature">
-            <span class="pkg-check"><svg viewBox="0 0 10 10" fill="none"><path d="M2 5l2.5 2.5L8 3" stroke="#0071e3" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
-            Монгол орчуулагч
-          </li>
-          <li class="pkg-feature">
-            <span class="pkg-check"><svg viewBox="0 0 10 10" fill="none"><path d="M2 5l2.5 2.5L8 3" stroke="#0071e3" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
-            Өглөөний цай орно
-          </li>
-        </ul>
-        <div class="pkg-schedule">
-          <div class="pkg-schedule-label">📅 2 өдрийн хуваарь</div>
-          <div class="pkg-day-row">
-            <span class="pkg-day-num">1-р өдөр</span>
-            <div>
-              <div class="pkg-day-title">Ирэлт · Эмнэлэгт хоно</div>
-              <div class="pkg-day-desc">Хувийн сувилагч угтаж авна. Маргаашийн шинжилгээнд бэлтгэнэ.</div>
-            </div>
-          </div>
-          <div class="pkg-day-row">
-            <span class="pkg-day-num">2-р өдөр</span>
-            <div>
-              <div class="pkg-day-title">VIP Шинжилгээ · Гэрийн зам</div>
-              <div class="pkg-day-desc">Өглөөний цайны дараа хувийн сувилагч, орчуулагчтайгаа шинжилгээнд ороод хариуг авна.</div>
-            </div>
-          </div>
-        </div>
-        <div class="pkg-note">👥 2-оос дээш хүн ирвэл үнийг тохиролцоно</div>
-        <a href="/booking/?package=mungun" class="pkg-btn">Захиалах →</a>
-      </div>
-
-      <!-- CARD 2: Алтан -->
+      <!-- CARD 1: Алтан (featured) -->
       <div class="pkg-card featured">
-        <span class="pkg-badge gold-badge">VIP · 5 өдөр</span>
+        <span class="pkg-badge gold-badge">Хамгийн алдартай</span>
         <div class="pkg-header">
           <div class="pkg-name">🥇 Алтан багц</div>
           <div class="pkg-price"><span class="currency">₮</span>2,050,000</div>
           <div class="pkg-tagline">Шинжилгээ + Шанхай хот аялал</div>
         </div>
         <div class="pkg-divider"></div>
-        <ul class="pkg-features">
-          <li class="pkg-feature">
-            <span class="pkg-check"><svg viewBox="0 0 10 10" fill="none"><path d="M2 5l2.5 2.5L8 3" stroke="#0071e3" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
-            Мөнгөн багцтай ижил шинжилгээ бүгд
-          </li>
-          <li class="pkg-feature">
-            <span class="pkg-check"><svg viewBox="0 0 10 10" fill="none"><path d="M2 5l2.5 2.5L8 3" stroke="#0071e3" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
-            Өнгөт ЭХО — хэвлий, бамбай, давсаг
-          </li>
-          <li class="pkg-feature">
-            <span class="pkg-check"><svg viewBox="0 0 10 10" fill="none"><path d="M2 5l2.5 2.5L8 3" stroke="#0071e3" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
-            Рентген — цээж
-          </li>
-          <li class="pkg-feature">
-            <span class="pkg-check"><svg viewBox="0 0 10 10" fill="none"><path d="M2 5l2.5 2.5L8 3" stroke="#0071e3" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
-            VIP тасаг, хувийн сувилагч, орчуулагч
-          </li>
-          <li class="pkg-feature">
-            <span class="pkg-check"><svg viewBox="0 0 10 10" fill="none"><path d="M2 5l2.5 2.5L8 3" stroke="#0071e3" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
-            Өглөөний цай орно
-          </li>
-        </ul>
+        <p class="pkg-desc">Шанхайн шилдэг VIP эмнэлэгт иж бүрэн шинжилгээ хийлгэж, хотын онцлох газруудаар аялах 5 өдрийн бүрэн пакет. Хувийн сувилагч, орчуулагч бүхий дэлхийн жишигт нийцсэн үйлчилгээ.</p>
+        <div class="pkg-photos">
+          <div class="pkg-photo" style="background:linear-gradient(135deg,#1055a0,#3d8ef0)">
+            <img src="/img/health/hospital.jpg" alt="光明中医院" class="pkg-photo-img" onerror="this.closest('.pkg-photo').classList.add('no-img')">
+            <div class="pkg-photo-placeholder">🏥</div>
+            <div class="pkg-photo-label">光明中医院 · VIP тасаг</div>
+          </div>
+          <div class="pkg-photo" style="background:linear-gradient(135deg,#071e3d,#1a4fa8)">
+            <img src="/img/health/bund.jpg" alt="The Bund" class="pkg-photo-img" onerror="this.closest('.pkg-photo').classList.add('no-img')">
+            <div class="pkg-photo-placeholder">🌃</div>
+            <div class="pkg-photo-label">The Bund · Shanghai Tower</div>
+          </div>
+          <div class="pkg-photo" style="background:linear-gradient(135deg,#0d4a1f,#1e8449)">
+            <img src="/img/health/zoo.jpg" alt="Shanghai Zoo" class="pkg-photo-img" onerror="this.closest('.pkg-photo').classList.add('no-img')">
+            <div class="pkg-photo-placeholder">🦁</div>
+            <div class="pkg-photo-label">Shanghai Zoo · Yu Garden</div>
+          </div>
+          <div class="pkg-photo" style="background:linear-gradient(135deg,#4a1060,#8e44ad)">
+            <img src="/img/health/xintiandi.jpg" alt="Xintiandi" class="pkg-photo-img" onerror="this.closest('.pkg-photo').classList.add('no-img')">
+            <div class="pkg-photo-placeholder">🛍️</div>
+            <div class="pkg-photo-label">Xintiandi · Louis Vuitton</div>
+          </div>
+        </div>
         <div class="pkg-schedule">
           <div class="pkg-schedule-label">📅 5 өдрийн хуваарь</div>
           <div class="pkg-day-row">
@@ -767,6 +727,43 @@ footer a:hover{color:#fff}
         </div>
         <div class="pkg-note">👥 2-оос дээш хүн ирвэл үнийг тохиролцоно</div>
         <a href="/booking/?package=altan" class="pkg-btn">Захиалах →</a>
+      </div>
+
+      <!-- CARD 2: Мөнгөн -->
+      <div class="pkg-card">
+        <div class="pkg-header" style="padding-top:16px">
+          <div class="pkg-name">🥈 Мөнгөн багц</div>
+          <div class="pkg-price"><span class="currency">₮</span>950,000</div>
+          <div class="pkg-tagline">2 өдрийн эмнэлгийн аялал</div>
+        </div>
+        <div class="pkg-divider"></div>
+        <p class="pkg-desc">Шанхайн шилдэг VIP эмнэлэгт хувийн сувилагч, орчуулагчтай иж бүрэн шинжилгээ хийлгэх 2 өдрийн аялал. Өглөөний цайны дараа шинжилгээнд орж, мөн өдрийн хариугаа авна.</p>
+        <div class="pkg-photos pkg-photos-single">
+          <div class="pkg-photo" style="background:linear-gradient(135deg,#1055a0,#3d8ef0)">
+            <img src="/img/health/hospital.jpg" alt="光明中医院" class="pkg-photo-img" onerror="this.closest('.pkg-photo').classList.add('no-img')">
+            <div class="pkg-photo-placeholder">🏥</div>
+            <div class="pkg-photo-label">光明中医院 · Xinchang Branch · Shanghai</div>
+          </div>
+        </div>
+        <div class="pkg-schedule">
+          <div class="pkg-schedule-label">📅 2 өдрийн хуваарь</div>
+          <div class="pkg-day-row">
+            <span class="pkg-day-num">1-р өдөр</span>
+            <div>
+              <div class="pkg-day-title">Ирэлт · Эмнэлэгт хоно</div>
+              <div class="pkg-day-desc">Хувийн сувилагч угтаж авна. Маргаашийн шинжилгээнд бэлтгэнэ.</div>
+            </div>
+          </div>
+          <div class="pkg-day-row">
+            <span class="pkg-day-num">2-р өдөр</span>
+            <div>
+              <div class="pkg-day-title">VIP Шинжилгээ · Гэрийн зам</div>
+              <div class="pkg-day-desc">Өглөөний цайны дараа хувийн сувилагч, орчуулагчтайгаа шинжилгээнд ороод хариуг авна.</div>
+            </div>
+          </div>
+        </div>
+        <div class="pkg-note">👥 2-оос дээш хүн ирвэл үнийг тохиролцоно</div>
+        <a href="/booking/?package=mungun" class="pkg-btn outline">Захиалах →</a>
       </div>
 
     </div>
