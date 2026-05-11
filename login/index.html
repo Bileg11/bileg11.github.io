@@ -280,16 +280,9 @@ logEvent(analytics, 'page_view', { page_title: 'Login Page' });
 // Redirect target (from ?redirect=/booking etc.)
 const redirectTo = new URLSearchParams(location.search).get('redirect') || '/profile/';
 
-const isMobile = /Mobi|Android|iPhone|iPad|iPod/i.test(navigator.userAgent);
-
-// Handle redirect result first (from signInWithRedirect on mobile)
-getRedirectResult(auth).then(async result => {
-  if (result?.user) {
-    await afterLogin(result.user);
-  }
-}).catch(e => {
+// Handle errors from signInWithRedirect (successful result handled by onAuthStateChanged)
+getRedirectResult(auth).catch(e => {
   if (e.code) showMsg('social-msg', `Алдаа: ${e.code}`);
-  document.getElementById('loader').classList.add('hidden');
 });
 
 // If already logged in → redirect immediately
@@ -325,27 +318,19 @@ async function afterLogin(user) {
   window.location.replace(redirectTo);
 }
 
-const ignoredPopupErrors = new Set([
-  'auth/popup-closed-by-user',
-  'auth/cancelled-popup-request',
-  'auth/user-cancelled'
-]);
-
 async function doSocialLogin(provider, btnId) {
   const btn = document.getElementById(btnId);
   if (btn.disabled) return;
   btn.disabled = true;
   const orig = btn.innerHTML;
-  btn.innerHTML = '⏳ Нэвтэрч байна...';
+  btn.innerHTML = '⏳ Шилжиж байна...';
   try {
-    const res = await signInWithPopup(auth, provider);
-    await afterLogin(res.user);
+    await signInWithRedirect(auth, provider);
+    // Page will redirect — code below won't run
   } catch(e) {
     btn.disabled = false;
     btn.innerHTML = orig;
-    if (!ignoredPopupErrors.has(e.code)) {
-      showMsg('social-msg', `Алдаа: ${e.code || e.message}`);
-    }
+    showMsg('social-msg', `Алдаа: ${e.code || e.message}`);
   }
 }
 

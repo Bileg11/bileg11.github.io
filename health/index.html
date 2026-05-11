@@ -537,6 +537,16 @@ footer a:hover{color:#fff}
 .footer-logo span{color:var(--blue)}
 .footer-links{display:flex;gap:20px;justify-content:center;flex-wrap:wrap;margin-bottom:16px}
 
+/* ── PACKAGE SCHEDULE ── */
+.packages-grid{align-items:start}
+.pkg-schedule{margin-top:20px;padding-top:20px;border-top:1px solid var(--border)}
+.pkg-schedule-label{font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.06em;color:var(--muted);margin-bottom:12px}
+.pkg-day-row{display:flex;gap:10px;margin-bottom:12px;align-items:flex-start}
+.pkg-day-num{min-width:54px;height:22px;background:var(--blue-light);border-radius:6px;display:inline-flex;align-items:center;justify-content:center;font-size:10px;font-weight:700;color:var(--blue);flex-shrink:0;letter-spacing:.02em;padding:0 6px;white-space:nowrap}
+.pkg-day-num.gd{background:#fff8e7;color:#9a6d00}
+.pkg-day-title{font-size:13px;font-weight:600;color:#1d1d1f;margin-bottom:2px;line-height:1.3}
+.pkg-day-desc{font-size:12px;color:var(--muted);line-height:1.5}
+
 /* ── UTILS ── */
 @keyframes fadeUp{from{opacity:0;transform:translateY(20px)}to{opacity:1;transform:translateY(0)}}
 .fade-up{animation:fadeUp .7s ease both}
@@ -587,7 +597,7 @@ footer a:hover{color:#fff}
       <div class="hero-stat-label">Дараалал</div>
     </div>
     <div class="hero-stat">
-      <div class="hero-stat-num">4 багц</div>
+      <div class="hero-stat-num">2 багц</div>
       <div class="hero-stat-label">Сонголт</div>
     </div>
   </div>
@@ -640,189 +650,123 @@ footer a:hover{color:#fff}
         <div class="pkg-header">
           <div class="pkg-name">🥈 Мөнгөн багц</div>
           <div class="pkg-price"><span class="currency">₮</span>950,000</div>
-          <div class="pkg-tagline">Суурь иж бүрэн шинжилгээ</div>
+          <div class="pkg-tagline">2 өдрийн эмнэлгийн аялал</div>
         </div>
         <div class="pkg-divider"></div>
         <ul class="pkg-features">
           <li class="pkg-feature">
-            <span class="pkg-check">
-              <svg viewBox="0 0 10 10" fill="none"><path d="M2 5l2.5 2.5L8 3" stroke="#0071e3" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
-            </span>
-            Цус, шээсний иж бүрэн шинжилгээ
+            <span class="pkg-check"><svg viewBox="0 0 10 10" fill="none"><path d="M2 5l2.5 2.5L8 3" stroke="#0071e3" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
+            Цус, шээс, элэг, бөөр, бамбайн шинжилгээ
           </li>
           <li class="pkg-feature">
-            <span class="pkg-check">
-              <svg viewBox="0 0 10 10" fill="none"><path d="M2 5l2.5 2.5L8 3" stroke="#0071e3" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
-            </span>
-            Элэг, бөөр, бамбайн шинжилгээ
+            <span class="pkg-check"><svg viewBox="0 0 10 10" fill="none"><path d="M2 5l2.5 2.5L8 3" stroke="#0071e3" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
+            ЭКГ, биеийн индекс (BMI)
           </li>
           <li class="pkg-feature">
-            <span class="pkg-check">
-              <svg viewBox="0 0 10 10" fill="none"><path d="M2 5l2.5 2.5L8 3" stroke="#0071e3" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
-            </span>
-            ЭКГ (зүрхний бичлэг)
+            <span class="pkg-check"><svg viewBox="0 0 10 10" fill="none"><path d="M2 5l2.5 2.5L8 3" stroke="#0071e3" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
+            VIP тасаг, хувийн сувилагч
           </li>
           <li class="pkg-feature">
-            <span class="pkg-check">
-              <svg viewBox="0 0 10 10" fill="none"><path d="M2 5l2.5 2.5L8 3" stroke="#0071e3" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
-            </span>
-            Биеийн индекс (BMI)
+            <span class="pkg-check"><svg viewBox="0 0 10 10" fill="none"><path d="M2 5l2.5 2.5L8 3" stroke="#0071e3" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
+            Монгол орчуулагч
           </li>
           <li class="pkg-feature">
-            <span class="pkg-check">
-              <svg viewBox="0 0 10 10" fill="none"><path d="M2 5l2.5 2.5L8 3" stroke="#0071e3" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
-            </span>
+            <span class="pkg-check"><svg viewBox="0 0 10 10" fill="none"><path d="M2 5l2.5 2.5L8 3" stroke="#0071e3" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
             Өглөөний цай орно
           </li>
         </ul>
+        <div class="pkg-schedule">
+          <div class="pkg-schedule-label">📅 2 өдрийн хуваарь</div>
+          <div class="pkg-day-row">
+            <span class="pkg-day-num">1-р өдөр</span>
+            <div>
+              <div class="pkg-day-title">Ирэлт · Эмнэлэгт хоно</div>
+              <div class="pkg-day-desc">Хувийн сувилагч угтаж авна. Маргаашийн шинжилгээнд бэлтгэнэ.</div>
+            </div>
+          </div>
+          <div class="pkg-day-row">
+            <span class="pkg-day-num">2-р өдөр</span>
+            <div>
+              <div class="pkg-day-title">VIP Шинжилгээ · Гэрийн зам</div>
+              <div class="pkg-day-desc">Өглөөний цайны дараа хувийн сувилагч, орчуулагчтайгаа шинжилгээнд ороод хариуг авна.</div>
+            </div>
+          </div>
+        </div>
         <div class="pkg-note">👥 2-оос дээш хүн ирвэл үнийг тохиролцоно</div>
         <a href="/booking/?package=mungun" class="pkg-btn">Захиалах →</a>
       </div>
 
       <!-- CARD 2: Алтан -->
       <div class="pkg-card featured">
-        <span class="pkg-badge gold-badge">VIP</span>
+        <span class="pkg-badge gold-badge">VIP · 5 өдөр</span>
         <div class="pkg-header">
           <div class="pkg-name">🥇 Алтан багц</div>
           <div class="pkg-price"><span class="currency">₮</span>2,050,000</div>
-          <div class="pkg-tagline">VIP тасаг — дараалалгүй иж бүрэн</div>
+          <div class="pkg-tagline">Шинжилгээ + Шанхай хот аялал</div>
         </div>
         <div class="pkg-divider"></div>
         <ul class="pkg-features">
           <li class="pkg-feature">
-            <span class="pkg-check">
-              <svg viewBox="0 0 10 10" fill="none"><path d="M2 5l2.5 2.5L8 3" stroke="#0071e3" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
-            </span>
-            Мөнгөн багцын бүх шинжилгээ
+            <span class="pkg-check"><svg viewBox="0 0 10 10" fill="none"><path d="M2 5l2.5 2.5L8 3" stroke="#0071e3" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
+            Мөнгөн багцтай ижил шинжилгээ бүгд
           </li>
           <li class="pkg-feature">
-            <span class="pkg-check">
-              <svg viewBox="0 0 10 10" fill="none"><path d="M2 5l2.5 2.5L8 3" stroke="#0071e3" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
-            </span>
+            <span class="pkg-check"><svg viewBox="0 0 10 10" fill="none"><path d="M2 5l2.5 2.5L8 3" stroke="#0071e3" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
             Өнгөт ЭХО — хэвлий, бамбай, давсаг
           </li>
           <li class="pkg-feature">
-            <span class="pkg-check">
-              <svg viewBox="0 0 10 10" fill="none"><path d="M2 5l2.5 2.5L8 3" stroke="#0071e3" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
-            </span>
+            <span class="pkg-check"><svg viewBox="0 0 10 10" fill="none"><path d="M2 5l2.5 2.5L8 3" stroke="#0071e3" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
             Рентген — цээж
           </li>
           <li class="pkg-feature">
-            <span class="pkg-check">
-              <svg viewBox="0 0 10 10" fill="none"><path d="M2 5l2.5 2.5L8 3" stroke="#0071e3" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
-            </span>
-            Биеийн бүтцийн оношилгоо
+            <span class="pkg-check"><svg viewBox="0 0 10 10" fill="none"><path d="M2 5l2.5 2.5L8 3" stroke="#0071e3" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
+            VIP тасаг, хувийн сувилагч, орчуулагч
           </li>
           <li class="pkg-feature">
-            <span class="pkg-check">
-              <svg viewBox="0 0 10 10" fill="none"><path d="M2 5l2.5 2.5L8 3" stroke="#0071e3" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
-            </span>
-            VIP тасаг, хувийн сувилагч
-          </li>
-          <li class="pkg-feature">
-            <span class="pkg-check">
-              <svg viewBox="0 0 10 10" fill="none"><path d="M2 5l2.5 2.5L8 3" stroke="#0071e3" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
-            </span>
-            2–3 цагт дараалалгүй дуусна
+            <span class="pkg-check"><svg viewBox="0 0 10 10" fill="none"><path d="M2 5l2.5 2.5L8 3" stroke="#0071e3" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
+            Өглөөний цай орно
           </li>
         </ul>
+        <div class="pkg-schedule">
+          <div class="pkg-schedule-label">📅 5 өдрийн хуваарь</div>
+          <div class="pkg-day-row">
+            <span class="pkg-day-num gd">1-р өдөр</span>
+            <div>
+              <div class="pkg-day-title">Ирэлт · Нисэх онгоцны буудлаас угтах</div>
+              <div class="pkg-day-desc">17:00 цагт нисэх онгоцны буудлаас угтаж, эмнэлэгт хүргэнэ. Анхдагч зөвлөгөө өгч, маргаашийн шинжилгээнд бэлтгэнэ.</div>
+            </div>
+          </div>
+          <div class="pkg-day-row">
+            <span class="pkg-day-num gd">2-р өдөр</span>
+            <div>
+              <div class="pkg-day-title">VIP Шинжилгээ · Хотын тойрон аялал</div>
+              <div class="pkg-day-desc">Өглөө шинжилгээнд орж, хариугаа орчуулагч, хувийн сувилагчтайгаа хамт авна. Дараа нь хотын төвөөр аялна — алдарт Nanjing Road, The Bund, голоор завиар явж, Shanghai Tower-ийн дээрээс гарч үзнэ.</div>
+            </div>
+          </div>
+          <div class="pkg-day-row">
+            <span class="pkg-day-num gd">3-р өдөр</span>
+            <div>
+              <div class="pkg-day-title">Амьтны хүрээлэн · Luxury буфет · Yu Garden</div>
+              <div class="pkg-day-desc">370 гаруй нэр төрлийн 10,000 гаруй амьтантай Shanghai Zoo-г үзнэ. Luxury дээд зэрэглэлийн буфет хоол идэж, Yu Garden-оор зочилно.</div>
+            </div>
+          </div>
+          <div class="pkg-day-row">
+            <span class="pkg-day-num gd">4-р өдөр</span>
+            <div>
+              <div class="pkg-day-title">Шоппинг · Xintiandi · LV · Starbucks үйлдвэр</div>
+              <div class="pkg-day-desc">Xintiandi Plaza-д орж, Louis Vuitton дэлгүүрийг үзэж, дэлхийд цорын ганц нээлттэй Starbucks үйлдвэр-т зочилно.</div>
+            </div>
+          </div>
+          <div class="pkg-day-row">
+            <span class="pkg-day-num gd">5-р өдөр</span>
+            <div>
+              <div class="pkg-day-title">Буцах · Нисэх онгоцны буудалд хүргэх</div>
+              <div class="pkg-day-desc">Өглөө нисэх онгоцны буудалд хүргэж, Монгол руу амжилттай буцна.</div>
+            </div>
+          </div>
+        </div>
         <div class="pkg-note">👥 2-оос дээш хүн ирвэл үнийг тохиролцоно</div>
         <a href="/booking/?package=altan" class="pkg-btn">Захиалах →</a>
-      </div>
-
-      <!-- CARD 3: 1800 юань -->
-      <div class="pkg-card">
-        <div class="pkg-header" style="padding-top:0">
-          <div class="pkg-name">🔬 1,800¥ багц</div>
-          <div class="pkg-price">1,800 <span class="unit">юань</span></div>
-          <div class="pkg-tagline">Бүтэн биеийн нарийн шинжилгээ</div>
-        </div>
-        <div class="pkg-divider"></div>
-        <ul class="pkg-features">
-          <li class="pkg-feature">
-            <span class="pkg-check">
-              <svg viewBox="0 0 10 10" fill="none"><path d="M2 5l2.5 2.5L8 3" stroke="#0071e3" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
-            </span>
-            Бүтэн биеийн иж бүрэн шинжилгээ
-          </li>
-          <li class="pkg-feature">
-            <span class="pkg-check">
-              <svg viewBox="0 0 10 10" fill="none"><path d="M2 5l2.5 2.5L8 3" stroke="#0071e3" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
-            </span>
-            MRI / CT нэмэлтээр авах боломжтой
-          </li>
-          <li class="pkg-feature">
-            <span class="pkg-check">
-              <svg viewBox="0 0 10 10" fill="none"><path d="M2 5l2.5 2.5L8 3" stroke="#0071e3" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
-            </span>
-            Хавдрын маркер шинжилгээ
-          </li>
-          <li class="pkg-feature">
-            <span class="pkg-check">
-              <svg viewBox="0 0 10 10" fill="none"><path d="M2 5l2.5 2.5L8 3" stroke="#0071e3" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
-            </span>
-            Нарийн мэргэжлийн эмчийн зөвлөгөө
-          </li>
-          <li class="pkg-feature">
-            <span class="pkg-check">
-              <svg viewBox="0 0 10 10" fill="none"><path d="M2 5l2.5 2.5L8 3" stroke="#0071e3" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
-            </span>
-            Шинжилгээний хариу Англи хэл дээр
-          </li>
-        </ul>
-        <div class="pkg-note">👥 2-оос дээш хүн ирвэл үнийг тохиролцоно</div>
-        <a href="/booking/?package=1800cny" class="pkg-btn outline">Захиалах →</a>
-      </div>
-
-      <!-- CARD 4: 20,000 юань Premium -->
-      <div class="pkg-card gold">
-        <span class="pkg-badge purple-badge">Иж бүрэн</span>
-        <div class="pkg-header">
-          <div class="pkg-name">💎 20,000¥ Premium багц</div>
-          <div class="pkg-price">20,000 <span class="unit">юань</span></div>
-          <div class="pkg-tagline">Дээд зэрэглэлийн бүхий л шинжилгээ</div>
-        </div>
-        <div class="pkg-divider"></div>
-        <ul class="pkg-features">
-          <li class="pkg-feature">
-            <span class="pkg-check">
-              <svg viewBox="0 0 10 10" fill="none"><path d="M2 5l2.5 2.5L8 3" stroke="#0071e3" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
-            </span>
-            Бүх шинжилгээг хамарсан дээд зэрэглэлийн иж бүрэн
-          </li>
-          <li class="pkg-feature">
-            <span class="pkg-check">
-              <svg viewBox="0 0 10 10" fill="none"><path d="M2 5l2.5 2.5L8 3" stroke="#0071e3" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
-            </span>
-            MRI толгой, нурuu, хэвлий
-          </li>
-          <li class="pkg-feature">
-            <span class="pkg-check">
-              <svg viewBox="0 0 10 10" fill="none"><path d="M2 5l2.5 2.5L8 3" stroke="#0071e3" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
-            </span>
-            PET-CT онкологийн иж бүрэн скан
-          </li>
-          <li class="pkg-feature">
-            <span class="pkg-check">
-              <svg viewBox="0 0 10 10" fill="none"><path d="M2 5l2.5 2.5L8 3" stroke="#0071e3" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
-            </span>
-            Зүрхний ЭХО, стрессийн тест
-          </li>
-          <li class="pkg-feature">
-            <span class="pkg-check">
-              <svg viewBox="0 0 10 10" fill="none"><path d="M2 5l2.5 2.5L8 3" stroke="#0071e3" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
-            </span>
-            Нарийн мэргэжилтэний цогц зөвлөгөө
-          </li>
-          <li class="pkg-feature">
-            <span class="pkg-check">
-              <svg viewBox="0 0 10 10" fill="none"><path d="M2 5l2.5 2.5L8 3" stroke="#0071e3" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
-            </span>
-            Шинжилгээний хариу 2 хоногт бэлэн
-          </li>
-        </ul>
-        <div class="pkg-note">👥 2-оос дээш хүн ирвэл үнийг тохиролцоно</div>
-        <a href="/booking/?package=20000cny" class="pkg-btn gold-btn">Захиалах →</a>
       </div>
 
     </div>
@@ -883,7 +827,7 @@ footer a:hover{color:#fff}
           </span>
         </button>
         <div class="faq-a">
-          Багцнаас хамааран 2–3 цаг болно. Мөнгөн багц нь хамгийн хурдан (ойролцоогоор 2 цаг), Premium багц нь MRI, PET-CT-тэй тул 3–4 цаг болж болно. VIP тасагт дараалалгүй тул уртасдаггүй.
+          Мөнгөн багц 2 цаг орчим болно. Алтан багц нь ЭХО, рентгентэй тул 2–3 цаг болно. Хоёул VIP тасагт дараалалгүй тул уртасдаггүй.
         </div>
       </div>
 
@@ -895,7 +839,7 @@ footer a:hover{color:#fff}
           </span>
         </button>
         <div class="faq-a">
-          Ихэнх шинжилгээний хариу мөн өдрийн эцэст гарна. Premium багцын MRI, PET-CT шинжилгээний хариу 2 ажлын өдрийн дотор бэлэн болно. Бүх хариуг Монгол болон Англи хэлээр PDF хэлбэрт хүргэнэ.
+          Ихэнх шинжилгээний хариу мөн өдрийн эцэст гарна. Бүх хариуг Монгол болон Англи хэлээр PDF хэлбэрт хүргэнэ.
         </div>
       </div>
 
