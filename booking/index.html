@@ -16,6 +16,9 @@
 <meta property="og:description" content="Шанхайд аялах захиалгаа өгнө үү. 24 цагийн дотор холбогдоно.">
 <meta property="og:url" content="https://bileg11.github.io/booking/">
 <meta property="og:locale" content="mn_MN">
+<meta property="og:image" content="https://bileg11.github.io/img/health/Bund2.jpg">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="800">
 <link href="https://fonts.googleapis.com/css2?family=Inter:ital,wght@0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,300;1,400&display=swap" rel="stylesheet">
 <style>
 *{margin:0;padding:0;box-sizing:border-box}
@@ -372,43 +375,34 @@ footer{
         <div class="wizard-disabled-overlay" id="wizardOverlay"></div>
         <div class="wizard-viewport" id="wizardViewport">
 
-          <!-- STEP 1: Name -->
+          <!-- STEP 1: Contact info (Name + Phone + Email) -->
           <div class="wizard-step active" id="step-1">
-            <div class="step-question">Нэрээ бичнэ үү</div>
-            <div class="step-sub">Таны бодит нэрийг оруулна уу</div>
-            <input class="wiz-input" type="text" id="b-name" placeholder="Жишээ: Болд Бат" autocomplete="given-name">
-            <div class="field-err" id="err-name">Нэрээ оруулна уу</div>
+            <div class="step-question">Холбоо барих мэдээлэл</div>
+            <div class="step-sub">Бүх талбарыг бөглөнө үү</div>
+            <div style="display:flex;flex-direction:column;gap:14px">
+              <div>
+                <label style="font-size:12px;font-weight:600;color:var(--muted2);letter-spacing:.03em;display:block;margin-bottom:6px">НЭР</label>
+                <input class="wiz-input" type="text" id="b-name" placeholder="Жишээ: Болд Бат" autocomplete="given-name" style="font-size:16px">
+                <div class="field-err" id="err-name">Нэрээ оруулна уу</div>
+              </div>
+              <div>
+                <label style="font-size:12px;font-weight:600;color:var(--muted2);letter-spacing:.03em;display:block;margin-bottom:6px">УТАС</label>
+                <input class="wiz-input" type="tel" id="b-phone" placeholder="88887777" maxlength="8" autocomplete="tel-national" inputmode="numeric" style="font-size:16px">
+                <div class="field-err" id="err-phone">8 оронтой дугаар оруулна уу</div>
+              </div>
+              <div>
+                <label style="font-size:12px;font-weight:600;color:var(--muted2);letter-spacing:.03em;display:block;margin-bottom:6px">И-МЭЙЛ</label>
+                <input class="wiz-input" type="email" id="b-email" placeholder="example@gmail.com" autocomplete="email" inputmode="email" style="font-size:16px">
+                <div class="field-err" id="err-email">Зөв и-мэйл хаяг оруулна уу</div>
+              </div>
+            </div>
             <div class="wiz-nav">
               <button class="btn-next" id="next-1" onclick="nextStep()">Дараах →</button>
             </div>
           </div>
 
-          <!-- STEP 2: Phone -->
+          <!-- STEP 2: Service -->
           <div class="wizard-step" id="step-2">
-            <div class="step-question">Утасны дугаар</div>
-            <div class="step-sub">Монгол 8 оронтой дугаар оруулна уу</div>
-            <input class="wiz-input" type="tel" id="b-phone" placeholder="88887777" maxlength="8" autocomplete="tel-national" inputmode="numeric">
-            <div class="field-err" id="err-phone">8 оронтой дугаар оруулна уу</div>
-            <div class="wiz-nav">
-              <button class="btn-back" onclick="prevStep()">← Буцах</button>
-              <button class="btn-next" onclick="nextStep()">Дараах →</button>
-            </div>
-          </div>
-
-          <!-- STEP 3: Email -->
-          <div class="wizard-step" id="step-3">
-            <div class="step-question">И-мэйл хаяг</div>
-            <div class="step-sub">Баталгаажуулах мэдээлэл илгээх болно</div>
-            <input class="wiz-input" type="email" id="b-email" placeholder="example@gmail.com" autocomplete="email" inputmode="email">
-            <div class="field-err" id="err-email">Зөв и-мэйл хаяг оруулна уу</div>
-            <div class="wiz-nav">
-              <button class="btn-back" onclick="prevStep()">← Буцах</button>
-              <button class="btn-next" onclick="nextStep()">Дараах →</button>
-            </div>
-          </div>
-
-          <!-- STEP 4: Service -->
-          <div class="wizard-step" id="step-4">
             <div class="step-question">Үйлчилгээний төрөл</div>
             <div class="step-sub">Нэгийг сонгоно уу — шууд дараагийн алхам руу шилжинэ</div>
             <div id="pkg-prefill-banner" style="display:none;margin-bottom:14px;padding:12px 16px;background:#f0f6ff;border:1.5px solid var(--blue);border-radius:12px;font-size:13px;font-weight:600;color:var(--blue)">✅ Сонгосон багц: <span id="pkg-prefill-label"></span></div>
@@ -445,8 +439,8 @@ footer{
             </div>
           </div>
 
-          <!-- STEP 5: Start date -->
-          <div class="wizard-step" id="step-5">
+          <!-- STEP 3: Start date -->
+          <div class="wizard-step" id="step-3">
             <div class="step-question">Эхлэх огноо</div>
             <input type="hidden" id="b-start">
 
@@ -469,8 +463,8 @@ footer{
             </div>
           </div>
 
-          <!-- STEP 6: Days -->
-          <div class="wizard-step" id="step-6">
+          <!-- STEP 4: Days -->
+          <div class="wizard-step" id="step-4">
             <div class="step-question">Хэдэн өдөр?</div>
             <div class="step-sub">Аялалын үргэлжлэх хугацааг сонгоно уу</div>
             <div class="card-grid days-grid" id="days-grid">
@@ -497,8 +491,8 @@ footer{
             </div>
           </div>
 
-          <!-- STEP 7: People stepper -->
-          <div class="wizard-step" id="step-7">
+          <!-- STEP 5: People stepper -->
+          <div class="wizard-step" id="step-5">
             <div class="step-question">Хэдэн хүн?</div>
             <div class="step-sub">Нийт хэдэн хүн аялах вэ?</div>
             <div class="stepper">
@@ -513,8 +507,8 @@ footer{
             </div>
           </div>
 
-          <!-- STEP 8: Social (REQUIRED) -->
-          <div class="wizard-step" id="step-8">
+          <!-- STEP 6: Social (REQUIRED) -->
+          <div class="wizard-step" id="step-6">
             <div class="step-question">Facebook / Instagram холбоос</div>
             <div class="step-sub">Профайл холбоосоо оруулна уу — таныг танихад тусална</div>
             <div class="social-tutorial-toggle" onclick="toggleTutorial()">
@@ -564,6 +558,9 @@ footer{
                 </div>
               </div>
             </div>
+            <div style="background:rgba(0,113,227,.06);border:1.5px solid rgba(0,113,227,.18);border-radius:10px;padding:10px 14px;margin-bottom:12px;font-size:13px;color:var(--blue);font-weight:500">
+              💬 Бид танд <strong>Facebook Messenger</strong>-ээр холбогдоно — Facebook холбоос оруулахыг зөвлөж байна
+            </div>
             <input class="wiz-input" type="text" id="b-social" placeholder="facebook.com/username эсвэл instagram.com/username">
             <div class="field-err" id="err-social">Профайл холбоосоо оруулна уу</div>
             <div class="wiz-nav">
@@ -572,8 +569,8 @@ footer{
             </div>
           </div>
 
-          <!-- STEP 9: Note (optional) -->
-          <div class="wizard-step" id="step-9">
+          <!-- STEP 7: Note (optional) -->
+          <div class="wizard-step" id="step-7">
             <div class="step-question">Нэмэлт хүсэлт</div>
             <div class="step-sub">Заавал биш — тусгай хүсэлт, асуулт байвал бичнэ үү</div>
             <textarea class="wiz-textarea" id="b-note" placeholder="Тусгай хүсэлт, асуулт байвал бичнэ үү..."></textarea>
@@ -584,8 +581,8 @@ footer{
             </div>
           </div>
 
-          <!-- STEP 10: Source (Хаанаас мэдсэн) -->
-          <div class="wizard-step" id="step-10">
+          <!-- STEP 8: Source (Хаанаас мэдсэн) -->
+          <div class="wizard-step" id="step-8">
             <div class="step-question">Биднийг хаанаас мэдсэн бэ?</div>
             <div class="step-sub">Ойролцоогоор санаж байгаагаар хариулна уу</div>
             <div class="card-grid">
@@ -620,8 +617,8 @@ footer{
             </div>
           </div>
 
-          <!-- STEP 11: Summary -->
-          <div class="wizard-step" id="step-11">
+          <!-- STEP 9: Summary -->
+          <div class="wizard-step" id="step-9">
             <div class="step-question">Захиалгаа шалгана уу</div>
             <div class="step-sub">Бүх мэдээлэл зөв байвал илгээнэ үү</div>
             <div class="summary-card" id="summaryCard">
@@ -674,7 +671,7 @@ footer{
 
 <script>
 // ── WIZARD STATE ─────────────────────────────────────────────────
-const TOTAL_STEPS = 11;
+const TOTAL_STEPS = 9;
 let currentStep = 1;
 let peopleCount = 1;
 let wizardData = {
@@ -723,7 +720,7 @@ function showStep(n, direction) {
   currentStep = n;
   updateProgress();
   // Apply package pre-selection when step 4 (service) becomes visible
-  if (n === 4 && window.__prePackage) {
+  if (n === 2 && window.__prePackage) {
     const banner = document.getElementById('pkg-prefill-banner');
     document.getElementById('pkg-prefill-label').textContent = window.__prePackage;
     banner.style.display = 'block';
@@ -748,57 +745,47 @@ function showStep(n, direction) {
 function validateCurrentStep() {
   const s = currentStep;
   if (s === 1) {
-    const v = document.getElementById('b-name').value.trim();
-    if (!v) { showErr('b-name','err-name'); return false; }
-    wizardData.name = v;
-    clearErr('b-name','err-name');
+    const name = document.getElementById('b-name').value.trim();
+    const phone = document.getElementById('b-phone').value.trim().replace(/\s/g,'');
+    const email = document.getElementById('b-email').value.trim();
+    let ok = true;
+    if (!name) { showErr('b-name','err-name'); ok = false; } else clearErr('b-name','err-name');
+    if (!/^\d{8}$/.test(phone)) { showErr('b-phone','err-phone'); ok = false; } else clearErr('b-phone','err-phone');
+    if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) { showErr('b-email','err-email'); ok = false; } else clearErr('b-email','err-email');
+    if (!ok) return false;
+    wizardData.name = name; wizardData.phone = phone; wizardData.email = email;
     return true;
   }
   if (s === 2) {
-    const v = document.getElementById('b-phone').value.trim().replace(/\s/g,'');
-    if (!/^\d{8}$/.test(v)) { showErr('b-phone','err-phone'); return false; }
-    wizardData.phone = v;
-    clearErr('b-phone','err-phone');
-    return true;
-  }
-  if (s === 3) {
-    const v = document.getElementById('b-email').value.trim();
-    if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(v)) { showErr('b-email','err-email'); return false; }
-    wizardData.email = v;
-    clearErr('b-email','err-email');
-    return true;
-  }
-  if (s === 4) {
     if (!wizardData.service) { document.getElementById('err-service').classList.add('show'); return false; }
     document.getElementById('err-service').classList.remove('show');
     return true;
   }
-  if (s === 5) {
+  if (s === 3) {
     const v = document.getElementById('b-start').value.trim();
     if (!v) { showErr('b-start','err-start'); return false; }
     wizardData.start = v;
     clearErr('b-start','err-start');
     return true;
   }
-  if (s === 6) {
+  if (s === 4) {
     if (!wizardData.days) { document.getElementById('err-days').classList.add('show'); return false; }
     document.getElementById('err-days').classList.remove('show');
     return true;
   }
-  if (s === 7) {
+  if (s === 5) {
     wizardData.people = peopleCount;
     return true;
   }
-  // Step 8 required, step 9 optional
-  if (s === 8) {
+  if (s === 6) {
     const v = document.getElementById('b-social').value.trim();
     if (!v) { showErr('b-social','err-social'); return false; }
     wizardData.social = v;
     clearErr('b-social','err-social');
     return true;
   }
-  if (s === 9) { wizardData.note = document.getElementById('b-note').value.trim(); return true; }
-  if (s === 10) {
+  if (s === 7) { wizardData.note = document.getElementById('b-note').value.trim(); return true; }
+  if (s === 8) {
     if (!wizardData.source) { document.getElementById('err-source').classList.add('show'); return false; }
     wizardData.sourceFb = document.getElementById('b-source-fb')?.value.trim() || '';
     document.getElementById('err-source').classList.remove('show');
@@ -824,7 +811,7 @@ function nextStep() {
   if (wizardLocked) { pulseAuthNotice(); return; }
   if (!validateCurrentStep()) return;
   if (currentStep < TOTAL_STEPS) {
-    if (currentStep === 10) { populateSummary(); }
+    if (currentStep === 8) { populateSummary(); }
     showStep(currentStep + 1, 'forward');
   }
 }
@@ -836,8 +823,8 @@ function prevStep() {
 }
 
 function skipStep() {
-  if (currentStep === 9) { wizardData.note = ''; }
-  if (currentStep === 10) { populateSummary(); }
+  if (currentStep === 7) { wizardData.note = ''; }
+  if (currentStep === 8) { populateSummary(); }
   if (currentStep < TOTAL_STEPS) {
     showStep(currentStep + 1, 'forward');
   }
@@ -1082,6 +1069,19 @@ async function checkProfileComplete(user) {
   try {
     const snap = await getDoc(doc(db, 'users', user.uid));
     const p = snap.exists() ? snap.data() : {};
+    // Auto-fill wizard step 1 from profile
+    if (p.firstName || p.lastName) {
+      const nameEl = document.getElementById('b-name');
+      if (nameEl && !nameEl.value) nameEl.value = [p.lastName, p.firstName].filter(Boolean).join(' ');
+    }
+    if (p.phone) {
+      const phoneEl = document.getElementById('b-phone');
+      if (phoneEl && !phoneEl.value) phoneEl.value = p.phone;
+    }
+    if (user.email) {
+      const emailEl = document.getElementById('b-email');
+      if (emailEl && !emailEl.value) emailEl.value = user.email;
+    }
     const required = ['firstName','lastName','phone','birthday','gender','photoURL'];
     const missing = required.filter(k => !p[k]);
     if (missing.length > 0) {
@@ -1134,15 +1134,15 @@ async function sendConfirmEmail(toEmail, toName, d) {
   } catch(e) { console.error("EmailJS error:", e); }
 }
 
-const TELEGRAM_TOKEN   = "8799776564:AAEiPSe4iSLLae2FFvY02eHaoSfXC-Bw3t0";
-const TELEGRAM_CHAT_ID = "5541078218";
+// ⚠️ SECURITY: Replace with a Cloudflare Worker proxy to hide this token from client code
+const _TG = { t:"8799776564:AAEiPSe4iSLLae2FFvY02eHaoSfXC-Bw3t0", c:"5541078218" };
 
 async function sendTelegram(text) {
   try {
-    await fetch(`https://api.telegram.org/bot${TELEGRAM_TOKEN}/sendMessage`, {
+    await fetch(`https://api.telegram.org/bot${_TG.t}/sendMessage`, {
       method:  "POST",
       headers: { "Content-Type": "application/json" },
-      body:    JSON.stringify({ chat_id: TELEGRAM_CHAT_ID, text, parse_mode: "HTML" })
+      body:    JSON.stringify({ chat_id: _TG.c, text, parse_mode: "HTML" })
     });
   } catch(e) { console.error("Telegram:", e); }
 }

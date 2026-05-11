@@ -8,6 +8,9 @@
 <link rel="icon" type="image/png" sizes="32x32" href="/favicon.png">
 <link rel="apple-touch-icon" href="/apple-touch-icon.png">
 <meta name="robots" content="noindex, nofollow">
+<meta property="og:image" content="https://bileg11.github.io/img/health/Bund2.jpg">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="800">
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
 <style>
 *{margin:0;padding:0;box-sizing:border-box}
@@ -578,7 +581,7 @@ window.saveProfile = async function() {
 async function loadBookings(email, uid) {
   const container = document.getElementById('myBookings');
   try {
-    const q = query(collection(db, 'bookings'), where('email', '==', email), orderBy('createdAt', 'desc'));
+    const q = query(collection(db, 'bookings'), where('userId', '==', uid), orderBy('createdAt', 'desc'));
     const snap = await getDocs(q);
     if (snap.empty) {
       container.innerHTML = '<div class="empty-bookings">Захиалга байхгүй байна<br><a href="/booking/" style="color:var(--blue);font-weight:600;margin-top:8px;display:inline-block">Захиалга өгөх →</a></div>';
@@ -602,7 +605,7 @@ async function loadBookings(email, uid) {
   } catch(e) {
     // Firestore index error — retry without orderBy
     try {
-      const q2 = query(collection(db, 'bookings'), where('email', '==', email));
+      const q2 = query(collection(db, 'bookings'), where('userId', '==', uid));
       const snap2 = await getDocs(q2);
       if (snap2.empty) {
         container.innerHTML = '<div class="empty-bookings">Одоогоор захиалга байхгүй байна<br><a href="/booking/" style="color:var(--blue);font-weight:600;margin-top:8px;display:inline-block">Захиалга өгөх →</a></div>';
