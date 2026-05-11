@@ -550,20 +550,6 @@ body{
 .bk-auth-gate-text small{display:block;font-size:12px;color:#a07800;font-weight:400;margin-top:2px}
 .bk-auth-gate-btn{padding:9px 18px;background:var(--blue);color:#fff;border:none;border-radius:10px;font-size:13px;font-weight:600;cursor:pointer;font-family:inherit;white-space:nowrap;text-decoration:none;display:inline-block;flex-shrink:0}
 .bk-auth-gate-btn:hover{opacity:.88}
-/* Package picker */
-.bk-pkg-wrap{margin-bottom:18px}
-.bk-pkg-lbl{font-size:12px;font-weight:600;color:var(--muted2);letter-spacing:.03em;display:block;margin-bottom:10px;text-transform:uppercase}
-.bk-pkg-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px}
-.bk-pkg-card{
-  border:2px solid var(--border);border-radius:14px;padding:16px 12px;
-  cursor:pointer;background:var(--bg2);transition:.2s;text-align:center;
-  user-select:none;-webkit-tap-highlight-color:transparent;
-}
-.bk-pkg-card:hover{border-color:var(--blue);background:#f0f6ff}
-.bk-pkg-card.selected{border-color:var(--blue);background:#e8f0fe;box-shadow:0 0 0 3px rgba(0,113,227,.12)}
-.bk-pkg-icon{font-size:22px;margin-bottom:6px}
-.bk-pkg-name{font-size:13px;font-weight:700;color:var(--dark2);margin-bottom:3px}
-.bk-pkg-price{font-size:12px;color:var(--muted);font-weight:500}
 /* Form lock overlay */
 .bk-form-relative{position:relative}
 .bk-form-lock{
@@ -1635,23 +1621,6 @@ section,#booking-section{scroll-margin-top:60px}
           <div class="bk-form-lock show" id="bkFormLock" onclick="document.getElementById('bkAuthGate').scrollIntoView({behavior:'smooth',block:'nearest'})"></div>
 
         <form id="bookingForm" onsubmit="submitBooking(event)">
-          <!-- Package selection -->
-          <div class="bk-pkg-wrap">
-            <span class="bk-pkg-lbl">Багц сонгох</span>
-            <div class="bk-pkg-grid">
-              <div class="bk-pkg-card selected" id="bkPkgAltan" onclick="selectBookingPkg('altan')">
-                <div class="bk-pkg-icon">🥇</div>
-                <div class="bk-pkg-name">Алтан багц</div>
-                <div class="bk-pkg-price">₮2,050,000</div>
-              </div>
-              <div class="bk-pkg-card" id="bkPkgMungun" onclick="selectBookingPkg('mungun')">
-                <div class="bk-pkg-icon">🥈</div>
-                <div class="bk-pkg-name">Мөнгөн багц</div>
-                <div class="bk-pkg-price">₮950,000</div>
-              </div>
-            </div>
-          </div>
-
           <div class="form-row">
             <div class="form-group">
               <label class="form-label">Нэр *</label>
@@ -1973,17 +1942,6 @@ function switchItin(id, btn) {
 }
 
 // ── BOOKING FORM ──
-// Booking form package selection
-let selectedBookingPkg = 'altan';
-function selectBookingPkg(pkg) {
-  selectedBookingPkg = pkg;
-  document.getElementById('bkPkgAltan').classList.toggle('selected', pkg === 'altan');
-  document.getElementById('bkPkgMungun').classList.toggle('selected', pkg === 'mungun');
-  // Update service dropdown to match
-  const svc = document.getElementById('b-service');
-  if (svc) svc.value = '🩺 VIP Эрүүл мэндийн шинжилгээ';
-}
-
 function submitBooking(e) {
   e.preventDefault();
   const name = document.getElementById('b-name').value;
