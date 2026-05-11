@@ -539,6 +539,38 @@ body{
   display:grid;grid-template-columns:1.1fr 1fr;gap:48px;
 }
 @media(max-width:700px){.booking-inner{grid-template-columns:1fr;gap:32px}}
+/* Auth gate */
+.bk-auth-gate{
+  display:flex;align-items:center;justify-content:space-between;gap:12px;flex-wrap:wrap;
+  background:#fff8e6;border:2px solid #f5c842;border-radius:14px;
+  padding:16px 20px;margin-bottom:20px;
+}
+.bk-auth-gate.hidden{display:none}
+.bk-auth-gate-text{font-size:14px;color:#7a5c00;font-weight:600;line-height:1.5}
+.bk-auth-gate-text small{display:block;font-size:12px;color:#a07800;font-weight:400;margin-top:2px}
+.bk-auth-gate-btn{padding:9px 18px;background:var(--blue);color:#fff;border:none;border-radius:10px;font-size:13px;font-weight:600;cursor:pointer;font-family:inherit;white-space:nowrap;text-decoration:none;display:inline-block;flex-shrink:0}
+.bk-auth-gate-btn:hover{opacity:.88}
+/* Package picker */
+.bk-pkg-wrap{margin-bottom:18px}
+.bk-pkg-lbl{font-size:12px;font-weight:600;color:var(--muted2);letter-spacing:.03em;display:block;margin-bottom:10px;text-transform:uppercase}
+.bk-pkg-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.bk-pkg-card{
+  border:2px solid var(--border);border-radius:14px;padding:16px 12px;
+  cursor:pointer;background:var(--bg2);transition:.2s;text-align:center;
+  user-select:none;-webkit-tap-highlight-color:transparent;
+}
+.bk-pkg-card:hover{border-color:var(--blue);background:#f0f6ff}
+.bk-pkg-card.selected{border-color:var(--blue);background:#e8f0fe;box-shadow:0 0 0 3px rgba(0,113,227,.12)}
+.bk-pkg-icon{font-size:22px;margin-bottom:6px}
+.bk-pkg-name{font-size:13px;font-weight:700;color:var(--dark2);margin-bottom:3px}
+.bk-pkg-price{font-size:12px;color:var(--muted);font-weight:500}
+/* Form lock overlay */
+.bk-form-relative{position:relative}
+.bk-form-lock{
+  display:none;position:absolute;inset:0;z-index:5;border-radius:14px;
+  background:rgba(255,255,255,.55);backdrop-filter:blur(3px);cursor:not-allowed;
+}
+.bk-form-lock.show{display:block}
 .form-label{font-size:12px;font-weight:600;color:var(--muted2);letter-spacing:.03em;display:block;margin-bottom:6px}
 .form-input,.form-select,.form-textarea{
   width:100%;
@@ -1589,7 +1621,37 @@ section,#booking-section{scroll-margin-top:60px}
     <div class="section-sub reveal reveal-delay-2">Мэдээллээ бөглөж, бид 24 цагийн дотор холбогдоно. Хөтөч тань аяллын өмнөөс эхлэн туслах болно.</div>
     <div class="booking-inner" style="margin-top:48px">
       <div>
+        <!-- Auth gate notice -->
+        <div class="bk-auth-gate" id="bkAuthGate">
+          <div class="bk-auth-gate-text">
+            🔒 Захиалга өгөхийн тулд нэвтэрнэ үү
+            <small>Нэвтэрсний дараа захиалга өгөх боломжтой</small>
+          </div>
+          <a href="/login/?redirect=/#booking" class="bk-auth-gate-btn">Нэвтрэх →</a>
+        </div>
+
+        <div class="bk-form-relative">
+          <!-- Form lock overlay (shown when not logged in) -->
+          <div class="bk-form-lock show" id="bkFormLock" onclick="document.getElementById('bkAuthGate').scrollIntoView({behavior:'smooth',block:'nearest'})"></div>
+
         <form id="bookingForm" onsubmit="submitBooking(event)">
+          <!-- Package selection -->
+          <div class="bk-pkg-wrap">
+            <span class="bk-pkg-lbl">Багц сонгох</span>
+            <div class="bk-pkg-grid">
+              <div class="bk-pkg-card selected" id="bkPkgAltan" onclick="selectBookingPkg('altan')">
+                <div class="bk-pkg-icon">🥇</div>
+                <div class="bk-pkg-name">Алтан багц</div>
+                <div class="bk-pkg-price">₮2,050,000</div>
+              </div>
+              <div class="bk-pkg-card" id="bkPkgMungun" onclick="selectBookingPkg('mungun')">
+                <div class="bk-pkg-icon">🥈</div>
+                <div class="bk-pkg-name">Мөнгөн багц</div>
+                <div class="bk-pkg-price">₮950,000</div>
+              </div>
+            </div>
+          </div>
+
           <div class="form-row">
             <div class="form-group">
               <label class="form-label">Нэр *</label>
@@ -1676,6 +1738,7 @@ section,#booking-section{scroll-margin-top:60px}
           <p>Таны захиалгыг хүлээн авлаа.<br>Бид 24 цагийн дотор танд хандана.<br><br>
           <a href="https://www.facebook.com/a.bileg.2025" target="_blank" style="color:var(--blue);font-weight:600">Facebook-ээр шууд холбогдож болно →</a></p>
         </div>
+        </div><!-- /bk-form-relative -->
       </div>
       <div class="booking-info-card reveal reveal-delay-2">
         <div class="booking-info-title">Яагаад биднийг сонгох вэ?</div>
@@ -1910,6 +1973,17 @@ function switchItin(id, btn) {
 }
 
 // ── BOOKING FORM ──
+// Booking form package selection
+let selectedBookingPkg = 'altan';
+function selectBookingPkg(pkg) {
+  selectedBookingPkg = pkg;
+  document.getElementById('bkPkgAltan').classList.toggle('selected', pkg === 'altan');
+  document.getElementById('bkPkgMungun').classList.toggle('selected', pkg === 'mungun');
+  // Update service dropdown to match
+  const svc = document.getElementById('b-service');
+  if (svc) svc.value = '🩺 VIP Эрүүл мэндийн шинжилгээ';
+}
+
 function submitBooking(e) {
   e.preventDefault();
   const name = document.getElementById('b-name').value;
@@ -2021,10 +2095,20 @@ function openAccountModal() {
     if (!btn) return;
     if (user) {
       checkAndShowProfile(user);
+      // Unlock booking form
+      const gate = document.getElementById('bkAuthGate');
+      const lock = document.getElementById('bkFormLock');
+      if (gate) gate.classList.add('hidden');
+      if (lock) lock.classList.remove('show');
     } else {
       btn.innerHTML = 'Нэвтрэх 👤';
       btn.onclick = null;
       btn.href = '/login/';
+      // Lock booking form
+      const gate = document.getElementById('bkAuthGate');
+      const lock = document.getElementById('bkFormLock');
+      if (gate) gate.classList.remove('hidden');
+      if (lock) lock.classList.add('show');
     }
   });
 
