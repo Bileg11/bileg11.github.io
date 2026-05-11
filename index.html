@@ -343,23 +343,17 @@ body{
 
 /* ── MEDICAL DARK SECTION ── */
 .medical-section{
-  background:#000;
-  color:#fff;
-  padding:120px 24px;
-  position:relative;
-  overflow:hidden;
+  background:#000;color:#fff;
+  padding:100px 24px;position:relative;overflow:hidden;
 }
 .medical-glow{
-  position:absolute;top:-200px;right:-100px;
-  width:600px;height:600px;
-  background:radial-gradient(circle,rgba(0,113,227,.2) 0%,transparent 70%);
+  position:absolute;top:-200px;left:50%;transform:translateX(-50%);
+  width:800px;height:600px;
+  background:radial-gradient(ellipse,rgba(0,113,227,.18) 0%,transparent 70%);
   pointer-events:none;
 }
-.medical-inner{
-  max-width:980px;margin:0 auto;
-  display:grid;grid-template-columns:1fr 1fr;gap:80px;align-items:center;
-}
-@media(max-width:700px){.medical-inner{grid-template-columns:1fr;gap:48px}}
+.medical-inner{max-width:1060px;margin:0 auto;}
+.medical-header{text-align:center;margin-bottom:52px;}
 .medical-tag{
   display:inline-flex;align-items:center;gap:6px;
   background:rgba(0,113,227,.15);border:1px solid rgba(0,113,227,.3);
@@ -370,36 +364,53 @@ body{
 .medical-title{
   font-size:clamp(32px,5vw,52px);
   font-weight:700;letter-spacing:-.04em;line-height:1.07;
-  margin-bottom:16px;
 }
-.medical-sub{font-size:17px;font-weight:300;color:rgba(255,255,255,.65);line-height:1.65;margin-bottom:32px}
-.medical-list{display:flex;flex-direction:column;gap:14px;margin-bottom:36px}
-.medical-item{
-  display:flex;align-items:flex-start;gap:12px;
-  font-size:14px;color:rgba(255,255,255,.8);line-height:1.5;
+.medical-cards{
+  display:grid;grid-template-columns:1fr 1fr;gap:20px;
 }
-.medical-check{
-  width:20px;height:20px;border-radius:50%;
-  background:rgba(0,113,227,.25);border:1px solid rgba(0,113,227,.5);
-  display:flex;align-items:center;justify-content:center;
-  flex-shrink:0;font-size:10px;color:#60b5ff;margin-top:1px;
-}
+@media(max-width:640px){.medical-cards{grid-template-columns:1fr;gap:16px}}
 .medical-card{
   background:rgba(255,255,255,.05);
   border:1px solid rgba(255,255,255,.1);
-  border-radius:var(--radius2);
-  padding:36px;
+  border-radius:22px;padding:32px;
+  display:flex;flex-direction:column;
+  transition:border-color .2s,background .2s;
 }
-.medical-card-title{font-size:13px;font-weight:600;letter-spacing:.04em;text-transform:uppercase;color:rgba(255,255,255,.4);margin-bottom:24px}
+.medical-card:hover{background:rgba(255,255,255,.08);border-color:rgba(0,113,227,.4)}
+.medical-card.gold{
+  background:rgba(0,113,227,.08);
+  border-color:rgba(0,113,227,.35);
+}
+.medical-card.gold:hover{background:rgba(0,113,227,.14);border-color:rgba(0,113,227,.6)}
+.medical-card-badge{
+  display:inline-flex;align-items:center;gap:5px;
+  font-size:10px;font-weight:700;letter-spacing:.07em;text-transform:uppercase;
+  padding:4px 10px;border-radius:20px;margin-bottom:16px;width:fit-content;
+}
+.badge-silver{background:rgba(255,255,255,.1);color:rgba(255,255,255,.6)}
+.badge-gold{background:rgba(0,113,227,.2);color:#60b5ff;border:1px solid rgba(0,113,227,.4)}
+.medical-card-name{font-size:20px;font-weight:700;letter-spacing:-.02em;margin-bottom:4px}
+.medical-card-price{font-size:26px;font-weight:800;letter-spacing:-.03em;color:#60b5ff;margin-bottom:20px}
+.medical-card-price span{font-size:14px;font-weight:400;color:rgba(255,255,255,.4);margin-left:4px}
 .medical-test{
-  display:flex;align-items:center;gap:12px;
-  padding:14px 0;
-  border-bottom:1px solid rgba(255,255,255,.06);
-  font-size:14px;color:rgba(255,255,255,.75);
+  display:flex;align-items:center;gap:10px;
+  padding:11px 0;border-bottom:1px solid rgba(255,255,255,.06);
+  font-size:13.5px;color:rgba(255,255,255,.75);
 }
-.medical-test:last-child{border-bottom:none}
-.medical-test-dot{width:6px;height:6px;border-radius:50%;background:#60b5ff;flex-shrink:0}
-.medical-cta-row{display:flex;gap:12px;flex-wrap:wrap}
+.medical-test:last-of-type{border-bottom:none}
+.medical-test-dot{width:5px;height:5px;border-radius:50%;background:#60b5ff;flex-shrink:0}
+.medical-card-btn{
+  display:block;margin-top:24px;padding:13px;
+  background:rgba(255,255,255,.08);border:1px solid rgba(255,255,255,.15);
+  border-radius:12px;font-size:14px;font-weight:600;
+  color:#fff;text-align:center;text-decoration:none;
+  transition:background .2s,border-color .2s;cursor:pointer;
+}
+.medical-card-btn:hover{background:rgba(255,255,255,.15);border-color:rgba(255,255,255,.3)}
+.medical-card.gold .medical-card-btn{
+  background:var(--blue);border-color:var(--blue);
+}
+.medical-card.gold .medical-card-btn:hover{background:var(--blue-hover)}
 
 /* ── WHY SECTION ── */
 .why-section{background:var(--bg2);padding:100px 24px}
@@ -1031,71 +1042,45 @@ section,#booking-section{scroll-margin-top:60px}
 <section class="medical-section" id="medical">
   <div class="medical-glow"></div>
   <div class="medical-inner">
-    <div>
-      <div class="medical-tag reveal">
-        <span>✨</span> 1 сумаар 2 туулай
-      </div>
-      <h2 class="medical-title reveal reveal-delay-1">
-        Шанхайд аялангаа<br>VIP оношилгоонд<br>ороорой
-      </h2>
-      <p class="medical-sub reveal reveal-delay-2">Аяллаа зөвхөн шоппинг, буулал, ресторанаар хязгаарлах хэрэггүй. Өөртөө хийж болох хамгийн үнэ цэнтэй хөрөнгө оруулалтаа энэ удаад "эрүүл мэнддээ" зориулаарай.</p>
-      <div class="medical-list reveal reveal-delay-3">
-        <div class="medical-item">
-          <div class="medical-check">✓</div>
-          <div>5 одтой буудал мэт VIP тасаг, хувийн сувилагч</div>
-        </div>
-        <div class="medical-item">
-          <div class="medical-check">✓</div>
-          <div>2–3 цагт бүтэн биеийн шинжилгээ — дараалалгүй</div>
-        </div>
-        <div class="medical-item">
-          <div class="medical-check">✓</div>
-          <div>Шинжилгээний хариу Англи хэл дээр, тайлбартай</div>
-        </div>
-        <div class="medical-item">
-          <div class="medical-check">✓</div>
-          <div>MRI · CT · Хавдрын маркер нэмэлтээр авах боломжтой</div>
-        </div>
-      </div>
-      <div class="medical-cta-row reveal reveal-delay-4">
-        <button class="btn-primary" onclick="window.location.href='/booking/'">Захиалах →</button>
-        <button class="btn-ghost" onclick="window.location.href='/booking/'">Дэлгэрэнгүй</button>
-      </div>
+
+    <!-- Header -->
+    <div class="medical-header reveal">
+      <div class="medical-tag"><span>✨</span> 1 сумаар 2 туулай</div>
+      <h2 class="medical-title">Шанхайд аялангаа<br>VIP оношилгоонд ороорой</h2>
     </div>
-    <div class="medical-card reveal reveal-delay-2">
-      <div class="medical-card-title">👑 Алтан VIP Багц — Шинжилгээнд багтах</div>
-      <div class="medical-test">
-        <div class="medical-test-dot"></div>
-        Цус, шээсний иж бүрэн шинжилгээ
+
+    <!-- 2 Package cards -->
+    <div class="medical-cards">
+
+      <!-- Мөнгөн -->
+      <div class="medical-card reveal reveal-delay-1">
+        <div class="medical-card-badge badge-silver">🥈 Мөнгөн багц</div>
+        <div class="medical-card-name">Мөнгөн багц</div>
+        <div class="medical-card-price">₮950,000 <span>/ хүн</span></div>
+        <div class="medical-test"><div class="medical-test-dot"></div>Цус, шээсний иж бүрэн шинжилгээ</div>
+        <div class="medical-test"><div class="medical-test-dot"></div>Элэг, бөөр, бамбайн үзлэг</div>
+        <div class="medical-test"><div class="medical-test-dot"></div>ЭКГ — зүрхний бичлэг</div>
+        <div class="medical-test"><div class="medical-test-dot"></div>Биеийн индекс (BMI)</div>
+        <div class="medical-test"><div class="medical-test-dot"></div>Өглөөний цай орно</div>
+        <div class="medical-test" style="color:rgba(255,255,255,.4);font-size:12px;border-bottom:none;padding-top:8px">👥 2+ хүн ирвэл үнийг тохиролцоно</div>
+        <a href="/health/" class="medical-card-btn">Дэлгэрэнгүй үзэх →</a>
       </div>
-      <div class="medical-test">
-        <div class="medical-test-dot"></div>
-        Элэг, бөөр, бамбайн үзлэг
+
+      <!-- Алтан -->
+      <div class="medical-card gold reveal reveal-delay-2">
+        <div class="medical-card-badge badge-gold">👑 Алтан VIP багц</div>
+        <div class="medical-card-name">Алтан багц</div>
+        <div class="medical-card-price">₮2,050,000 <span>/ хүн</span></div>
+        <div class="medical-test"><div class="medical-test-dot"></div>Мөнгөн багцын бүх шинжилгээ</div>
+        <div class="medical-test"><div class="medical-test-dot"></div>Өнгөт ЭХО — хэвлий, бамбай</div>
+        <div class="medical-test"><div class="medical-test-dot"></div>Рентген — цээж</div>
+        <div class="medical-test"><div class="medical-test-dot"></div>Биеийн бүтцийн оношилгоо</div>
+        <div class="medical-test"><div class="medical-test-dot"></div>VIP тасаг · хувийн сувилагч</div>
+        <div class="medical-test"><div class="medical-test-dot"></div>2–3 цагт дараалалгүй дуусна</div>
+        <div class="medical-test" style="color:rgba(255,255,255,.4);font-size:12px;border-bottom:none;padding-top:8px">👥 2+ хүн ирвэл үнийг тохиролцоно</div>
+        <a href="/health/" class="medical-card-btn">Дэлгэрэнгүй үзэх →</a>
       </div>
-      <div class="medical-test">
-        <div class="medical-test-dot"></div>
-        Өнгөт ЭХО — хэвлий, бамбай
-      </div>
-      <div class="medical-test">
-        <div class="medical-test-dot"></div>
-        Зүрхний бичлэг (ЭКГ)
-      </div>
-      <div class="medical-test">
-        <div class="medical-test-dot"></div>
-        Биеийн бүтцийн оношилгоо
-      </div>
-      <div class="medical-test">
-        <div class="medical-test-dot"></div>
-        Рентген — цээж
-      </div>
-      <div class="medical-test">
-        <div class="medical-test-dot"></div>
-        Өглөөний цай орно
-      </div>
-      <div style="margin-top:24px;padding-top:20px;border-top:1px solid rgba(255,255,255,.08)">
-        <div style="font-size:12px;color:rgba(255,255,255,.35);text-transform:uppercase;letter-spacing:.05em;margin-bottom:10px">Нэмэлтээр авах боломжтой</div>
-        <div style="font-size:13px;color:rgba(255,255,255,.6)">MRI · CT скан · Хавдрын маркер · Нарийн мэргэжлийн зөвлөгөө</div>
-      </div>
+
     </div>
   </div>
 </section>
