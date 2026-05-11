@@ -335,18 +335,17 @@ async function doSocialLogin(provider, btnId) {
   const btn = document.getElementById(btnId);
   if (btn.disabled) return;
   btn.disabled = true;
-  btn.innerHTML = '⏳ Шилжиж байна...';
+  const orig = btn.innerHTML;
+  btn.innerHTML = '⏳ Нэвтэрч байна...';
   try {
-    await signInWithRedirect(auth, provider);
-    // Page navigates away — nothing runs after this
+    const res = await signInWithPopup(auth, provider);
+    await afterLogin(res.user);
   } catch(e) {
     btn.disabled = false;
-    const friendly = e.code === 'auth/operation-not-allowed'
-      ? 'Google нэвтрэх Firebase консолд идэвхжүүлэгдээгүй байна.'
-      : e.code === 'auth/unauthorized-domain'
-      ? 'bileg11.github.io домайн зөвшөөрөгдөөгүй — Firebase Console → Auth → Authorized domains.'
-      : `Алдаа: ${e.code || e.message}`;
-    showMsg('social-msg', friendly);
+    btn.innerHTML = orig;
+    if (!ignoredPopupErrors.has(e.code)) {
+      showMsg('social-msg', `Алдаа: ${e.code || e.message}`);
+    }
   }
 }
 
