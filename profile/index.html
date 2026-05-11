@@ -337,9 +337,17 @@ let currentUser = null;
 let currentProfile = {};
 
 // Init calendar for birthday (no min restriction)
-initDatepicker('edit-birthday', { placeholder: 'Огноо сонгох' });
+try { initDatepicker('edit-birthday', { placeholder: 'Огноо сонгох' }); } catch(e) {}
+
+// Safety timeout: if Firebase auth doesn't resolve in 7s, redirect to login
+const authTimeout = setTimeout(() => {
+  if (document.getElementById('skeletonPage').style.display !== 'none') {
+    window.location.href = '/login/?redirect=/profile/';
+  }
+}, 7000);
 
 onAuthStateChanged(auth, async user => {
+  clearTimeout(authTimeout);
   // Always hide skeleton once Firebase resolves auth state
   document.getElementById('skeletonPage').style.display = 'none';
 
