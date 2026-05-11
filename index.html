@@ -108,6 +108,10 @@ body{
 .lang-btn{padding:4px 10px;border-radius:16px;font-size:11px;font-weight:600;color:var(--muted);text-decoration:none;transition:.15s}
 .lang-btn:hover{color:var(--dark2)}
 .lang-active{background:var(--card);color:var(--dark2);box-shadow:0 1px 3px rgba(0,0,0,.08)}
+.nav-page-links{display:flex;align-items:center;gap:2px}
+.nav-page-link{padding:5px 11px;font-size:12px;font-weight:500;color:var(--muted);text-decoration:none;border-radius:8px;transition:color .2s,background .2s;white-space:nowrap}
+.nav-page-link:hover{color:var(--dark2);background:var(--bg2)}
+@media(max-width:860px){.nav-page-links{display:none}}
 .hamburger{display:none;flex-direction:column;gap:4px;cursor:pointer;padding:6px}
 .hamburger span{display:block;width:18px;height:1px;background:var(--dark2);transition:.3s;border-radius:1px}
 @media(max-width:860px){
@@ -957,6 +961,11 @@ section,#booking-section{scroll-margin-top:60px}
 <nav class="nav" id="navbar">
   <div class="nav-logo" onclick="window.scrollTo({top:0,behavior:'smooth'})">LFS <span>Shanghai</span></div>
   <div class="nav-actions">
+    <div class="nav-page-links">
+      <a href="/routes/" class="nav-page-link">Маршрут</a>
+      <a href="/health/" class="nav-page-link">Эрүүл мэнд</a>
+      <a href="/tips/" class="nav-page-link">Зөвлөмж</a>
+    </div>
     <div class="lang-switch"><a href="/" class="lang-btn lang-active">МН</a><a href="/en/" class="lang-btn">EN</a></div>
     <a class="nav-user-btn" id="nav-auth-btn" href="/login/">Нэвтрэх 👤</a>
     <button class="nav-btn" onclick="window.location.href='/booking/'">Одоо Захиалах ↗</button>
