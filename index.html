@@ -258,6 +258,19 @@ body{
   display:inline-flex;align-items:center;gap:7px;
 }
 .btn-ghost:hover{background:var(--border)}
+.btn-outline{
+  padding:14px 28px;
+  background:transparent;
+  color:#fff;
+  border:2px solid rgba(255,255,255,.7);
+  border-radius:28px;
+  font-size:15px;font-weight:500;
+  cursor:pointer;font-family:inherit;
+  transition:all .2s;
+  text-decoration:none;
+  display:inline-flex;align-items:center;gap:7px;
+}
+.btn-outline:hover{background:rgba(255,255,255,.12);border-color:#fff}
 .hero-stats{
   display:flex;gap:40px;flex-wrap:wrap;justify-content:center;
   padding-top:32px;
@@ -1041,6 +1054,7 @@ section,#booking-section{scroll-margin-top:60px}
   <div class="hero-btns">
     <button class="btn-primary" onclick="scrollToId('medical')">🩺 Эрүүл мэндийн хөтөлбөр</button>
     <button class="btn-ghost" onclick="window.location.href='/booking/'">Хөтөч Захиалах</button>
+    <a href="https://m.me/a.bileg.2025" target="_blank" rel="noopener noreferrer" class="btn-outline">💬 Мессеж илгээх</a>
   </div>
 
 </section>
