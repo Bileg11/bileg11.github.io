@@ -987,6 +987,7 @@ section,#booking-section{scroll-margin-top:60px}
     <a href="/routes/" class="nav-center-link">Маршрут</a>
     <a href="/health/" class="nav-center-link">Эрүүл мэнд</a>
     <a href="/tips/" class="nav-center-link">Зөвлөмж</a>
+    <a href="/metro/" class="nav-center-link">🚇 Метро</a>
   </div>
   <div class="nav-actions">
 <div class="lang-switch"><a href="/" class="lang-btn lang-active">МН</a><a href="/en/" class="lang-btn">EN</a></div>
@@ -1004,6 +1005,7 @@ section,#booking-section{scroll-margin-top:60px}
   <button class="nav-link" onclick="window.location.href='/health/';closeMobileMenu()">Эрүүл мэндийн багц</button>
   <button class="nav-link" onclick="window.location.href='/routes/';closeMobileMenu()">Маршрут</button>
   <button class="nav-link" onclick="window.location.href='/tips/';closeMobileMenu()">Зөвлөмж</button>
+  <button class="nav-link" onclick="window.location.href='/metro/';closeMobileMenu()">🚇 Метро</button>
   <button class="nav-link" onclick="scrollToId('pricing');closeMobileMenu()">Үнэ</button>
   <button class="nav-link" onclick="window.location.href='/booking/';closeMobileMenu()">Захиалах</button>
 </div>
@@ -1785,6 +1787,8 @@ section,#booking-section{scroll-margin-top:60px}
         <a class="footer-link" href="/health/">Эрүүл мэндийн багц</a>
         <a class="footer-link" href="/routes/">Маршрутууд</a>
         <a class="footer-link" href="/tips/">Зөвлөмж</a>
+        <a class="footer-link" href="/metro/">Метро гарын авлага</a>
+        <a class="footer-link" href="/blog/">Блог</a>
         <button class="footer-link" onclick="scrollToId('pricing')">Үнэ</button>
         <button class="footer-link" onclick="window.location.href='/booking/'">Захиалах</button>
       </div>
@@ -1792,14 +1796,17 @@ section,#booking-section{scroll-margin-top:60px}
         <div class="footer-col-title">Холбогдох</div>
         <div style="font-size:13px;color:var(--muted);line-height:2.2">
           <a href="https://www.facebook.com/a.bileg.2025" target="_blank" style="display:flex;align-items:center;gap:8px;color:var(--muted);text-decoration:none;margin-bottom:8px"><svg width="14" height="14" viewBox="0 0 24 24" fill="#1877f2"><path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"/></svg> Facebook</a>
-          <div style="display:flex;align-items:center;gap:8px;margin-bottom:8px">💬 <strong style="color:var(--dark2)">WeChat:</strong> lfsshanghai</div>
-          <div style="display:flex;align-items:center;gap:8px">📞 <strong style="color:var(--dark2)">+976 XXXX XXXX</strong></div>
+          <div style="display:flex;align-items:center;gap:8px">💬 <strong style="color:var(--dark2)">WeChat:</strong> lfsshanghai</div>
         </div>
       </div>
     </div>
     <div class="footer-bottom">
       <div>© 2026 LFS Shanghai. Бүх эрх хуулиар хамгаалагдсан.</div>
-      <div>Shanghai, China 🇨🇳</div>
+      <div style="display:flex;align-items:center;gap:16px;flex-wrap:wrap;justify-content:center">
+        <a href="/privacy/" class="footer-link" style="font-size:12px">Нууцлалын бодлого</a>
+        <a href="/terms/" class="footer-link" style="font-size:12px">Үйлчилгээний нөхцөл</a>
+        <span>Shanghai, China 🇨🇳</span>
+      </div>
     </div>
   </div>
 </footer>
@@ -2156,26 +2163,14 @@ function openAccountModal() {
 
   async function doSocialLogin(provider) {
     try {
-      if (isMobile) {
-        // Mobile browsers block popups — use redirect flow instead
-        await signInWithRedirect(auth, provider);
-        // Page redirects away; getRedirectResult() on return handles login
-      } else {
-        await signInWithPopup(auth, provider);
-        closeAuthModal();
-      }
+      await signInWithRedirect(auth, provider);
     } catch(e) {
-      if (e.code === 'auth/popup-blocked') {
-        // Desktop popup blocked — fall back to redirect
-        try { await signInWithRedirect(auth, provider); } catch(_) {}
-      } else if (e.code !== 'auth/popup-closed-by-user') {
-        const msg = e.code === 'auth/operation-not-allowed'
-          ? 'Энэ нэвтрэх арга идэвхжүүлэгдээгүй байна (Firebase консол).'
-          : e.code === 'auth/unauthorized-domain'
-          ? 'Domain зөвшөөрөгдөөгүй байна (Firebase консол → Auth → Authorized domains).'
-          : (e.message || e.code);
-        toast('Нэвтрэхэд алдаа гарлаа', 'error', { subtitle: msg });
-      }
+      const msg = e.code === 'auth/operation-not-allowed'
+        ? 'Энэ нэвтрэх арга идэвхжүүлэгдээгүй байна (Firebase консол).'
+        : e.code === 'auth/unauthorized-domain'
+        ? 'Domain зөвшөөрөгдөөгүй байна (Firebase консол → Auth → Authorized domains).'
+        : (e.message || e.code);
+      toast('Нэвтрэхэд алдаа гарлаа', 'error', { subtitle: msg });
     }
   }
 
@@ -2279,5 +2274,6 @@ var Tawk_API=Tawk_API||{}, Tawk_LoadTime=new Date();
   s0.parentNode.insertBefore(s1,s0);
 })();
 </script>
+<script src="/js/messenger-btn.js"></script>
 </body>
 </html>

@@ -345,16 +345,6 @@ footer{
     <!-- WIZARD MAIN -->
     <div id="bookingMain" style="display:none">
 
-      <!-- AUTH NOTICE -->
-      <div class="auth-notice" id="authNotice">
-        <div class="auth-notice-text">
-          🔒 Захиалга өгөхийн тулд нэвтэрнэ үү
-          <small>Захиалга илгээхийн өмнө эхлээд хаяг үүсгэх шаардлагатай</small>
-        </div>
-        <div class="auth-notice-actions">
-          <a href="/login?redirect=/booking" class="auth-notice-btn">Нэвтрэх / Бүртгүүлэх →</a>
-        </div>
-      </div>
 
       <!-- PROFILE NOTICE -->
       <div class="profile-notice" id="profileNotice">
@@ -648,9 +638,36 @@ footer{
         <div class="success-icon">🎉</div>
         <h3>Амжилттай илгээгдлээ!</h3>
         <p>Таны захиалгыг хүлээн авлаа.<br>
-        Бид 24 цагийн дотор танд хандана.<br>
-        Баталгаажуулах и-мэйл таны хаяг руу илгээгдлээ.<br><br>
-        <a href="https://www.facebook.com/a.bileg.2025" target="_blank" style="color:var(--blue);font-weight:600">Facebook-ээр шууд холбогдож болно →</a></p>
+        Баталгаажуулах и-мэйл таны хаяг руу илгээгдлээ.</p>
+
+        <div style="background:#f5f5f7;border-radius:16px;padding:24px 20px;margin:24px auto;max-width:420px;text-align:left">
+          <div style="font-size:13px;font-weight:700;color:#1d1d1f;letter-spacing:-.01em;margin-bottom:16px">Дараа юу болох вэ?</div>
+          <div style="display:flex;flex-direction:column;gap:14px">
+            <div style="display:flex;gap:14px;align-items:flex-start">
+              <div style="width:28px;height:28px;border-radius:50%;background:#0071e3;color:#fff;font-size:12px;font-weight:700;display:flex;align-items:center;justify-content:center;flex-shrink:0">1</div>
+              <div>
+                <div style="font-size:13px;font-weight:600;color:#1d1d1f;margin-bottom:2px">24 цагийн дотор холбогдоно</div>
+                <div style="font-size:12px;color:#6e6e73;line-height:1.5">Бид таны захиалгыг хянаж, Facebook эсвэл и-мэйлээр хариу өгнө.</div>
+              </div>
+            </div>
+            <div style="display:flex;gap:14px;align-items:flex-start">
+              <div style="width:28px;height:28px;border-radius:50%;background:#0071e3;color:#fff;font-size:12px;font-weight:700;display:flex;align-items:center;justify-content:center;flex-shrink:0">2</div>
+              <div>
+                <div style="font-size:13px;font-weight:600;color:#1d1d1f;margin-bottom:2px">Дэлгэрэнгүй тохиролцоно</div>
+                <div style="font-size:12px;color:#6e6e73;line-height:1.5">Огноо, хуваарь, үнийг баталгаажуулж, төлбөрийн нөхцөл тохиролцоно.</div>
+              </div>
+            </div>
+            <div style="display:flex;gap:14px;align-items:flex-start">
+              <div style="width:28px;height:28px;border-radius:50%;background:#0071e3;color:#fff;font-size:12px;font-weight:700;display:flex;align-items:center;justify-content:center;flex-shrink:0">3</div>
+              <div>
+                <div style="font-size:13px;font-weight:600;color:#1d1d1f;margin-bottom:2px">Аяллаа эхлүүлнэ</div>
+                <div style="font-size:12px;color:#6e6e73;line-height:1.5">Бид Шанхайд тантай уулзаж, бүх зохион байгуулалтыг хариуцна.</div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <p style="margin-bottom:16px"><a href="https://www.facebook.com/a.bileg.2025" target="_blank" style="color:var(--blue);font-weight:600">Facebook-ээр шууд холбогдож болно →</a></p>
         <button class="share-btn" onclick="shareBooking()">🔗 Найздаа хуваалцах</button>
         <div class="share-copied" id="shareCopied">Холбоос хуулагдлаа!</div>
       </div>
@@ -661,7 +678,12 @@ footer{
 
 <footer>
   <div class="footer-logo">LFS <span>Shanghai</span></div>
-  <div class="footer-copy">© 2025 LFS Shanghai. Бүх эрх хуулиар хамгаалагдсан.</div>
+  <div class="footer-copy">© 2026 LFS Shanghai. Бүх эрх хуулиар хамгаалагдсан.</div>
+  <div style="margin-top:8px;font-size:11px;color:#86868b">
+    <a href="/privacy/" style="color:#86868b;text-decoration:none">Нууцлалын бодлого</a>
+    <span style="margin:0 8px">·</span>
+    <a href="/terms/" style="color:#86868b;text-decoration:none">Үйлчилгээний нөхцөл</a>
+  </div>
 </footer>
 
 <script src="/js/toast.js"></script>
@@ -808,7 +830,6 @@ function clearErr(inputId, errId) {
 }
 
 function nextStep() {
-  if (wizardLocked) { pulseAuthNotice(); return; }
   if (!validateCurrentStep()) return;
   if (currentStep < TOTAL_STEPS) {
     if (currentStep === 8) { populateSummary(); }
@@ -937,14 +958,7 @@ function unlockWizard() {
   wizardLocked = false;
   document.getElementById('wizardOverlay').style.display = 'none';
 }
-function pulseAuthNotice() {
-  const n = document.getElementById('authNotice');
-  n.classList.remove('pulse');
-  void n.offsetWidth;
-  n.classList.add('pulse');
-  n.scrollIntoView({ behavior:'smooth', block:'nearest' });
-  setTimeout(() => n.classList.remove('pulse'), 1800);
-}
+function pulseAuthNotice() {}
 
 window.shareBooking = async function() {
   const url  = 'https://bileg11.github.io/booking/';
@@ -1106,13 +1120,8 @@ onAuthStateChanged(auth, user => {
   document.getElementById('bookingMain').style.display = 'block';
 
   currentUser = user;
-  const notice = document.getElementById('authNotice');
-  if (!user) {
-    notice.classList.add('show');
-    lockWizard();
-    document.getElementById('wizardOverlay').onclick = pulseAuthNotice;
-  } else {
-    notice.classList.remove('show');
+  unlockWizard();
+  if (user) {
     checkProfileComplete(user);
   }
 });
@@ -1134,22 +1143,8 @@ async function sendConfirmEmail(toEmail, toName, d) {
   } catch(e) { console.error("EmailJS error:", e); }
 }
 
-// ⚠️ SECURITY: Replace with a Cloudflare Worker proxy to hide this token from client code
-const _TG = { t:"8799776564:AAEiPSe4iSLLae2FFvY02eHaoSfXC-Bw3t0", c:"5541078218" };
-
-async function sendTelegram(text) {
-  try {
-    await fetch(`https://api.telegram.org/bot${_TG.t}/sendMessage`, {
-      method:  "POST",
-      headers: { "Content-Type": "application/json" },
-      body:    JSON.stringify({ chat_id: _TG.c, text, parse_mode: "HTML" })
-    });
-  } catch(e) { console.error("Telegram:", e); }
-}
 
 window.submitBooking = async function() {
-  if (!currentUser) { pulseAuthNotice(); return; }
-
   // Read latest values (user may have edited summary fields)
   const d = {
     name:    document.getElementById('b-name').value.trim()    || wizardData.name,
@@ -1160,11 +1155,11 @@ window.submitBooking = async function() {
     days:    wizardData.days,
     people:  String(peopleCount),
     social:  document.getElementById('b-social').value.trim()  || '',
-    group:   String(peopleCount),   // compat field
+    group:   String(peopleCount),
     note:    document.getElementById('b-note').value.trim()    || '',
     source:  wizardData.source   || '',
     sourceFb: wizardData.sourceFb || '',
-    userId:  currentUser.uid,
+    userId:  currentUser ? currentUser.uid : '',
     createdAt: serverTimestamp()
   };
 
@@ -1176,42 +1171,7 @@ window.submitBooking = async function() {
     await addDoc(collection(db, "bookings"), d);
     logEvent(analytics, 'booking_submitted', { service: d.service, people: d.people });
 
-    // Fetch user profile for Telegram
-    let p = {};
-    try {
-      const snap = await getDoc(doc(db, 'users', currentUser.uid));
-      if (snap.exists()) p = snap.data();
-    } catch(_) {}
-
-    const fullName = [p.lastName, p.firstName].filter(Boolean).join(' ') || '—';
-    let age = '—';
-    if (p.birthday) {
-      const bd = new Date(p.birthday), now = new Date();
-      let a = now.getFullYear() - bd.getFullYear();
-      if (now < new Date(now.getFullYear(), bd.getMonth(), bd.getDate())) a--;
-      if (a > 0 && a < 120) age = a + ' нас';
-    }
-
     await sendConfirmEmail(d.email, d.name, d);
-
-    await sendTelegram(
-`📋 <b>Шинэ захиалга!</b>
-
-👤 <b>Нэр:</b> ${d.name}
-📞 <b>Утас:</b> ${d.phone}
-🛎 <b>Үйлчилгээ:</b> ${d.service}
-👥 <b>Хүн:</b> ${d.people}
-🗓 <b>Эхлэх:</b> ${d.start} · ${d.days}
-👨‍👩‍👧 <b>Бүлэг:</b> ${d.group||'—'}
-💬 <b>Нэмэлт:</b> ${d.note||'—'}
-📱 <b>Social:</b> ${d.social||'—'}
-
-👤 <b>Хэрэглэгчийн мэдээлэл</b>
-🪪 <b>Нэр:</b> ${fullName}
-📞 <b>Утас:</b> ${p.phone||'—'}
-📧 <b>И-мэйл:</b> ${p.email||currentUser.email||'—'}
-🎂 <b>Нас:</b> ${age}
-⚥ <b>Хүйс:</b> ${p.gender||'—'}`);
 
     // Show success
     document.getElementById('wizardBody').style.display = 'none';
@@ -1243,5 +1203,6 @@ var Tawk_API=Tawk_API||{}, Tawk_LoadTime=new Date();
   s0.parentNode.insertBefore(s1,s0);
 })();
 </script>
+<script src="/js/messenger-btn.js"></script>
 </body>
 </html>

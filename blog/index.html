@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="mn">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Блог — LFS Shanghai</title>
+<link rel="icon" type="image/svg+xml" href="/favicon.svg">
+<link rel="icon" type="image/png" sizes="32x32" href="/favicon.png">
+<link rel="apple-touch-icon" href="/apple-touch-icon.png">
+<meta name="robots" content="index, follow">
+<meta name="description" content="Шанхайд аялах монголчуудад зориулсан зөвлөмж, гарын авлага, нийтлэлүүд.">
+<meta property="og:title" content="Блог — LFS Shanghai">
+<meta property="og:description" content="Шанхайд аялах монголчуудад зориулсан зөвлөмж, гарын авлага, нийтлэлүүд.">
+<meta property="og:url" content="https://bileg11.github.io/blog/">
+<meta property="og:image" content="https://bileg11.github.io/img/health/Bund2.jpg">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-81DTJ80VLR"></script>
+<script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag("js",new Date());gtag("config","G-81DTJ80VLR");</script>
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+:root{
+  --bg:#fff;--bg2:#f5f5f7;--text:#1d1d1f;--muted:#6e6e73;
+  --blue:#0071e3;--border:rgba(0,0,0,.08);--radius:16px;
+}
+body{font-family:'Inter',system-ui,-apple-system,sans-serif;background:var(--bg2);color:var(--text);-webkit-font-smoothing:antialiased;min-height:100vh}
+.nav{position:sticky;top:0;z-index:100;height:52px;display:flex;align-items:center;justify-content:space-between;padding:0 24px;background:rgba(255,255,255,.9);backdrop-filter:saturate(180%) blur(20px);-webkit-backdrop-filter:saturate(180%) blur(20px);border-bottom:1px solid var(--border)}
+.nav-logo{font-size:17px;font-weight:700;color:var(--text);text-decoration:none;letter-spacing:-.02em}
+.nav-logo span{color:var(--blue)}
+.nav-links{display:flex;align-items:center;gap:4px}
+.nav-link{padding:6px 12px;font-size:13px;color:var(--muted);text-decoration:none;border-radius:8px;transition:color .15s}
+.nav-link:hover{color:var(--text)}
+.main{max-width:900px;margin:0 auto;padding:48px 24px 80px}
+.page-eyebrow{font-size:12px;font-weight:600;letter-spacing:.06em;text-transform:uppercase;color:var(--blue);margin-bottom:10px}
+.page-title{font-size:40px;font-weight:800;letter-spacing:-.04em;color:var(--text);margin-bottom:8px}
+.page-sub{font-size:15px;color:var(--muted);margin-bottom:48px;line-height:1.6}
+.posts-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:20px}
+.post-card{background:#fff;border-radius:var(--radius);border:1px solid var(--border);overflow:hidden;text-decoration:none;display:block;transition:box-shadow .2s,transform .2s}
+.post-card:hover{box-shadow:0 8px 32px rgba(0,0,0,.1);transform:translateY(-2px)}
+.post-card-img{width:100%;height:180px;background:linear-gradient(135deg,#0071e3 0%,#00c6ff 100%);display:flex;align-items:center;justify-content:center;font-size:48px}
+.post-card-body{padding:20px}
+.post-tag{font-size:11px;font-weight:600;letter-spacing:.05em;text-transform:uppercase;color:var(--blue);margin-bottom:8px}
+.post-title{font-size:17px;font-weight:700;color:var(--text);letter-spacing:-.02em;margin-bottom:8px;line-height:1.4}
+.post-excerpt{font-size:13px;color:var(--muted);line-height:1.6;margin-bottom:14px}
+.post-meta{font-size:12px;color:#86868b;display:flex;align-items:center;gap:8px}
+footer{text-align:center;padding:24px;font-size:12px;color:var(--muted)}
+footer a{color:var(--muted);text-decoration:none}
+footer a:hover{color:var(--blue)}
+@media(max-width:600px){.main{padding:32px 16px 60px}.page-title{font-size:28px}}
+</style>
+</head>
+<body>
+
+<nav class="nav">
+  <a href="/" class="nav-logo">LFS <span>Shanghai</span></a>
+  <div class="nav-links">
+    <a href="/routes/" class="nav-link">Маршрут</a>
+    <a href="/tips/" class="nav-link">Зөвлөмж</a>
+    <a href="/booking/" class="nav-link" style="background:var(--blue);color:#fff;border-radius:20px;padding:6px 14px">Захиалах</a>
+  </div>
+</nav>
+
+<main class="main">
+  <div class="page-eyebrow">LFS Shanghai блог</div>
+  <h1 class="page-title">Аялагчдын гарын авлага</h1>
+  <p class="page-sub">Шанхайд аялах монголчуудад зориулсан зөвлөмж, маршрут, туршлага.</p>
+
+  <div class="posts-grid">
+    <a href="/blog/shanghai-guide/" class="post-card">
+      <div class="post-card-img">🏙️</div>
+      <div class="post-card-body">
+        <div class="post-tag">Анхан шатны гарын авлага</div>
+        <div class="post-title">Шанхайд анх удаа ирэх Монголчуудад — мэдэх ёстой 10 зүйл</div>
+        <div class="post-excerpt">Визнаас эхлээд метро, хоол, орчуулга хүртэл — анхны аяллыг хялбар болгох бүрэн гарын авлага.</div>
+        <div class="post-meta">
+          <span>2026 оны 5-р сар</span>
+          <span>·</span>
+          <span>8 мин унших</span>
+        </div>
+      </div>
+    </a>
+
+    <a href="/metro/" class="post-card">
+      <div class="post-card-img">🚇</div>
+      <div class="post-card-body">
+        <div class="post-tag">Тээвэр</div>
+        <div class="post-title">Шанхайн метро — монголоор бүрэн гарын авлага</div>
+        <div class="post-excerpt">Карт авах, үнэ, гол шугамууд, нисэх буудлаас хот руу хэрхэн ирэх талаар дэлгэрэнгүй.</div>
+        <div class="post-meta">
+          <span>2026 оны 5-р сар</span>
+          <span>·</span>
+          <span>5 мин унших</span>
+        </div>
+      </div>
+    </a>
+  </div>
+</main>
+
+<footer>
+  © 2026 LFS Shanghai ·
+  <a href="/privacy/">Нууцлал</a> ·
+  <a href="/terms/">Нөхцөл</a>
+</footer>
+
+<script src="/js/messenger-btn.js"></script>
+</body>
+</html>
