@@ -1626,19 +1626,7 @@ section,#booking-section{scroll-margin-top:60px}
     <div class="section-sub reveal reveal-delay-2">Мэдээллээ бөглөж, бид 24 цагийн дотор холбогдоно. Хөтөч тань аяллын өмнөөс эхлэн туслах болно.</div>
     <div class="booking-inner" style="margin-top:48px">
       <div>
-        <!-- Auth gate notice -->
-        <div class="bk-auth-gate" id="bkAuthGate">
-          <div class="bk-auth-gate-text">
-            🔒 Захиалга өгөхийн тулд нэвтэрнэ үү
-            <small>Нэвтэрсний дараа захиалга өгөх боломжтой</small>
-          </div>
-          <a href="/login/?redirect=/#booking" class="bk-auth-gate-btn">Нэвтрэх →</a>
-        </div>
-
         <div class="bk-form-relative">
-          <!-- Form lock overlay (shown when not logged in) -->
-          <div class="bk-form-lock show" id="bkFormLock" onclick="document.getElementById('bkAuthGate').scrollIntoView({behavior:'smooth',block:'nearest'})"></div>
-
         <form id="bookingForm" onsubmit="submitBooking(event)">
           <div class="form-row">
             <div class="form-group">
@@ -2077,20 +2065,10 @@ function openAccountModal() {
     if (!btn) return;
     if (user) {
       checkAndShowProfile(user);
-      // Unlock booking form
-      const gate = document.getElementById('bkAuthGate');
-      const lock = document.getElementById('bkFormLock');
-      if (gate) gate.classList.add('hidden');
-      if (lock) lock.classList.remove('show');
     } else {
       btn.innerHTML = 'Нэвтрэх 👤';
       btn.onclick = null;
       btn.href = '/login/';
-      // Lock booking form
-      const gate = document.getElementById('bkAuthGate');
-      const lock = document.getElementById('bkFormLock');
-      if (gate) gate.classList.remove('hidden');
-      if (lock) lock.classList.add('show');
     }
   });
 
