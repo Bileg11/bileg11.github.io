@@ -484,26 +484,22 @@
   <div class="progress-bar" id="progressBar">
     <div class="step-dot active" data-step="1" onclick="goToStep(1)">
       <div class="dot-circle">1</div>
-      <span class="dot-label">Нэвтрэх</span>
+      <span class="dot-label">Огноо & Хүн</span>
     </div>
     <div class="step-dot" data-step="2" onclick="goToStep(2)">
       <div class="dot-circle">2</div>
-      <span class="dot-label">Огноо & Хүн</span>
+      <span class="dot-label">Сонирхол</span>
     </div>
     <div class="step-dot" data-step="3" onclick="goToStep(3)">
       <div class="dot-circle">3</div>
-      <span class="dot-label">Сонирхол</span>
+      <span class="dot-label">Цагийн хэв</span>
     </div>
     <div class="step-dot" data-step="4" onclick="goToStep(4)">
       <div class="dot-circle">4</div>
-      <span class="dot-label">Цагийн хэв</span>
+      <span class="dot-label">Газрууд</span>
     </div>
     <div class="step-dot" data-step="5" onclick="goToStep(5)">
       <div class="dot-circle">5</div>
-      <span class="dot-label">Газрууд</span>
-    </div>
-    <div class="step-dot" data-step="6" onclick="goToStep(6)">
-      <div class="dot-circle">6</div>
       <span class="dot-label">Төлөвлөгөө</span>
     </div>
   </div>
@@ -513,70 +509,11 @@
     <div class="psb-item" id="psb-dates"></div>
     <div class="psb-item" id="psb-people"></div>
     <div class="psb-item" id="psb-saved"></div>
-    <button class="psb-edit" onclick="goToStep(2)">Засах</button>
+    <button class="psb-edit" onclick="goToStep(1)">Засах</button>
   </div>
 
-  <!-- ══ STEP 1: AUTH ══ -->
+  <!-- ══ STEP 1: DATES & PEOPLE ══ -->
   <div class="step active" id="step-1">
-    <div class="card">
-      <div class="card-title">Нэвтрэх</div>
-      <div class="card-sub">Төлөвлөгөөгөө хадгалж, найзтайгаа хуваалцахын тулд нэвтэрнэ үү.</div>
-
-      <div id="auth-not-logged">
-        <div class="auth-options">
-          <button class="auth-btn" onclick="signInGoogle()">
-            <span class="auth-btn-icon">🔵</span>
-            <div>
-              <div style="font-weight:700">Google-ээр нэвтрэх</div>
-              <div style="font-size:.78rem;color:var(--sub);font-weight:400">Хурдан бөгөөд аюулгүй</div>
-            </div>
-          </button>
-          <div class="auth-divider">— эсвэл —</div>
-          <button class="auth-btn" onclick="signInFacebook()">
-            <span class="auth-btn-icon">🔷</span>
-            <div>
-              <div style="font-weight:700">Facebook-ээр нэвтрэх</div>
-              <div style="font-size:.78rem;color:var(--sub);font-weight:400">Facebook бүртгэлтэй нэвтрэх</div>
-            </div>
-          </button>
-          <div class="auth-divider">— эсвэл —</div>
-          <div style="background:var(--bg);border-radius:12px;padding:20px;">
-            <div style="font-weight:700;margin-bottom:14px;font-size:.93rem;">И-мэйлээр нэвтрэх / бүртгүүлэх</div>
-            <div style="display:flex;flex-direction:column;gap:10px;">
-              <input type="email" id="authEmail" placeholder="И-мэйл хаяг" />
-              <input type="password" id="authPass" placeholder="Нууц үг" />
-              <div style="display:flex;gap:10px;">
-                <button class="btn-next" style="flex:1;padding:11px;" onclick="emailSignIn()">Нэвтрэх</button>
-                <button class="btn-back" style="flex:1;padding:11px;" onclick="emailSignUp()">Бүртгүүлэх</button>
-              </div>
-            </div>
-          </div>
-        </div>
-        <p style="font-size:.78rem;color:var(--sub);margin-top:16px;text-align:center;">
-          Нэвтрэхгүйгээр үргэлжлүүлэх: <button onclick="continueAsGuest()" style="background:none;border:none;color:var(--primary);font-weight:600;cursor:pointer;font-size:.78rem;font-family:inherit;">Зочноор үзэх</button>
-        </p>
-      </div>
-
-      <div id="auth-logged" style="display:none;">
-        <div class="user-logged">
-          <div class="user-avatar" id="userAvatar">👤</div>
-          <div>
-            <div class="user-name" id="userName">—</div>
-            <div class="user-email" id="userEmail">—</div>
-          </div>
-        </div>
-        <p style="font-size:.85rem;color:var(--sub);margin-top:12px;">
-          Нэвтэрсэн байна. Аяллын төлөвлөгөө хийж эхлэх бэлэн.
-        </p>
-      </div>
-    </div>
-    <div class="btn-row">
-      <button class="btn-next" onclick="nextFromAuth()">Үргэлжлүүлэх →</button>
-    </div>
-  </div>
-
-  <!-- ══ STEP 2: DATES & PEOPLE ══ -->
-  <div class="step" id="step-2">
     <div class="card">
       <div class="card-title">Огноо & Хүмүүс</div>
       <div class="card-sub">Шанхайд хэзээ, хэдүүлээ, хэнтэй явах вэ?</div>
@@ -606,13 +543,12 @@
       </div>
     </div>
     <div class="btn-row">
-      <button class="btn-back" onclick="goToStep(1)">← Буцах</button>
       <button class="btn-next" onclick="nextFromDates()">Үргэлжлүүлэх →</button>
     </div>
   </div>
 
-  <!-- ══ STEP 3: INTERESTS ══ -->
-  <div class="step" id="step-3">
+  <!-- ══ STEP 2: INTERESTS ══ -->
+  <div class="step" id="step-2">
     <div class="card">
       <div class="card-title">Сонирхол</div>
       <div class="card-sub">Та юуг илүү их сонирхдог вэ? (олон сонгож болно)</div>
@@ -641,13 +577,13 @@
       </div>
     </div>
     <div class="btn-row">
-      <button class="btn-back" onclick="goToStep(2)">← Буцах</button>
+      <button class="btn-back" onclick="goToStep(1)">← Буцах</button>
       <button class="btn-next" onclick="nextFromInterests()">Үргэлжлүүлэх →</button>
     </div>
   </div>
 
-  <!-- ══ STEP 4: TIME PREFERENCES ══ -->
-  <div class="step" id="step-4">
+  <!-- ══ STEP 3: TIME PREFERENCES ══ -->
+  <div class="step" id="step-3">
     <div class="card">
       <div class="card-title">Цагийн хэв маяг</div>
       <div class="card-sub">Өдөр бүр хэдэд гараад, хэдэд буцах вэ?</div>
@@ -656,13 +592,13 @@
       </div>
     </div>
     <div class="btn-row">
-      <button class="btn-back" onclick="goToStep(3)">← Буцах</button>
+      <button class="btn-back" onclick="goToStep(2)">← Буцах</button>
       <button class="btn-next" onclick="nextFromTime()">Үргэлжлүүлэх →</button>
     </div>
   </div>
 
-  <!-- ══ STEP 5: PLACES ══ -->
-  <div class="step" id="step-5">
+  <!-- ══ STEP 4: PLACES ══ -->
+  <div class="step" id="step-4">
     <div class="card">
       <div class="card-title">Газрууд сонгох</div>
       <div class="card-sub">Явах газраа харж, дуртайгаа хадгал. Хожим автоматаар маршрутад орно.</div>
@@ -689,13 +625,13 @@
       </div>
     </div>
     <div class="btn-row">
-      <button class="btn-back" onclick="goToStep(4)">← Буцах</button>
+      <button class="btn-back" onclick="goToStep(3)">← Буцах</button>
       <button class="btn-next" onclick="nextFromPlaces()">Төлөвлөгөө гаргах →</button>
     </div>
   </div>
 
-  <!-- ══ STEP 6: ITINERARY ══ -->
-  <div class="step" id="step-6">
+  <!-- ══ STEP 5: ITINERARY ══ -->
+  <div class="step" id="step-5">
     <!-- ITINERARY -->
     <div class="card">
       <div class="card-title">Аяллын Төлөвлөгөө</div>
@@ -734,7 +670,7 @@
     </div>
 
     <div class="btn-row">
-      <button class="btn-back" onclick="goToStep(5)">← Засах</button>
+      <button class="btn-back" onclick="goToStep(4)">← Засах</button>
       <button class="btn-next" onclick="savePlan()">Хадгалах ✓</button>
     </div>
   </div>
@@ -744,9 +680,7 @@
 <!-- ══ FIREBASE ══ -->
 <script type="module">
 import { initializeApp } from 'https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js';
-import { getAuth, GoogleAuthProvider, FacebookAuthProvider,
-         signInWithPopup, createUserWithEmailAndPassword,
-         signInWithEmailAndPassword, onAuthStateChanged, signOut }
+import { getAuth, onAuthStateChanged }
   from 'https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js';
 import { getFirestore, doc, setDoc, getDoc, collection, addDoc, serverTimestamp }
   from 'https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js';
@@ -765,65 +699,13 @@ const app  = initializeApp(firebaseConfig);
 const auth = getAuth(app);
 const db   = getFirestore(app);
 
-window._auth = auth;
-window._db   = db;
-window._GoogleProvider   = new GoogleAuthProvider();
-window._FacebookProvider = new FacebookAuthProvider();
-window._authFunctions = { signInWithPopup, createUserWithEmailAndPassword,
-  signInWithEmailAndPassword, signOut, addDoc, setDoc, getDoc,
-  collection, doc, serverTimestamp };
+window._db = db;
+window._authFunctions = { addDoc, setDoc, getDoc, collection, doc, serverTimestamp };
 
+// Silently track login state — no gate, just record who the user is
 onAuthStateChanged(auth, user => {
   window._currentUser = user || null;
-  if (user) {
-    document.getElementById('auth-not-logged').style.display = 'none';
-    document.getElementById('auth-logged').style.display = 'block';
-    const av = document.getElementById('userAvatar');
-    const nm = document.getElementById('userName');
-    const em = document.getElementById('userEmail');
-    av.textContent = (user.displayName||user.email||'U')[0].toUpperCase();
-    nm.textContent = user.displayName || 'Хэрэглэгч';
-    em.textContent = user.email || '';
-  } else {
-    document.getElementById('auth-not-logged').style.display = 'block';
-    document.getElementById('auth-logged').style.display = 'none';
-  }
 });
-
-window.signInGoogle = async () => {
-  try {
-    await signInWithPopup(auth, window._GoogleProvider);
-    showToast('Google-ээр нэвтэрлээ!', 'success');
-  } catch(e) { showToast('Нэвтрэхэд алдаа: ' + e.message, 'error'); }
-};
-
-window.signInFacebook = async () => {
-  try {
-    await signInWithPopup(auth, window._FacebookProvider);
-    showToast('Facebook-ээр нэвтэрлээ!', 'success');
-  } catch(e) { showToast('Нэвтрэхэд алдаа: ' + e.message, 'error'); }
-};
-
-window.emailSignIn = async () => {
-  const e = document.getElementById('authEmail').value;
-  const p = document.getElementById('authPass').value;
-  if (!e||!p) { showToast('И-мэйл болон нууц үгийг оруулна уу', 'error'); return; }
-  try {
-    await signInWithEmailAndPassword(auth, e, p);
-    showToast('Нэвтэрлээ!', 'success');
-  } catch(err) { showToast('Алдаа: ' + err.message, 'error'); }
-};
-
-window.emailSignUp = async () => {
-  const e = document.getElementById('authEmail').value;
-  const p = document.getElementById('authPass').value;
-  if (!e||!p) { showToast('И-мэйл болон нууц үгийг оруулна уу', 'error'); return; }
-  if (p.length < 6) { showToast('Нууц үг 6+ тэмдэгт байх ёстой', 'error'); return; }
-  try {
-    await createUserWithEmailAndPassword(auth, e, p);
-    showToast('Бүртгэл амжилттай!', 'success');
-  } catch(err) { showToast('Алдаа: ' + err.message, 'error'); }
-};
 
 window.savePlan = async () => {
   const planData = {
@@ -1026,7 +908,7 @@ window.goToStep = function(n) {
 
 function updateSummaryBar() {
   const bar = document.getElementById('planSummaryBar');
-  if (currentStep < 3) { bar.classList.remove('visible'); return; }
+  if (currentStep < 2) { bar.classList.remove('visible'); return; }
   bar.classList.add('visible');
   const p = window._plan;
   document.getElementById('psb-dates').innerHTML =
@@ -1038,12 +920,6 @@ function updateSummaryBar() {
 }
 
 /* ─── STEP 1: AUTH ─── */
-window.continueAsGuest = function() {
-  window._currentUser = null;
-  showToast('Зочноор үргэлжлүүлж байна.','');
-  goToStep(2);
-};
-window.nextFromAuth = function() { goToStep(2); };
 
 /* ─── STEP 2: DATES & PEOPLE ─── */
 let people = [{ name: '' }];
@@ -1144,10 +1020,10 @@ window.nextFromDates = function() {
   window._plan.people = people;
   window._plan.hotel = document.getElementById('hotel').value;
   buildDayCards(arr, dep);
-  goToStep(3);
+  goToStep(2);
 };
 
-/* ─── STEP 3: INTERESTS ─── */
+/* ─── STEP 2: INTERESTS ─── */
 window.toggleChip = function(el) {
   el.classList.toggle('selected');
 };
@@ -1160,13 +1036,13 @@ window.nextFromInterests = function() {
   const bud = document.querySelector('#budgetChips .chip.selected');
   window._plan.interests = sel;
   window._plan.budget = bud ? bud.dataset.val : '';
-  goToStep(4);
+  goToStep(3);
 };
 
-/* ─── STEP 4: TIME ─── */
-window.nextFromTime = function() { goToStep(5); renderPlaces(); };
+/* ─── STEP 3: TIME ─── */
+window.nextFromTime = function() { goToStep(4); renderPlaces(); };
 
-/* ─── STEP 5: PLACES ─── */
+/* ─── STEP 4: PLACES ─── */
 let currentFilter = 'all';
 window.filterPlaces = function(cat, btn) {
   currentFilter = cat;
@@ -1249,10 +1125,10 @@ window.nextFromPlaces = function() {
     showToast('Дор хаяж 1 газар хадгална уу', 'error'); return;
   }
   buildItinerary();
-  goToStep(6);
+  goToStep(5);
 };
 
-/* ─── STEP 6: ITINERARY ─── */
+/* ─── STEP 5: ITINERARY ─── */
 function buildItinerary() {
   const p = window._plan;
   const saved = p.savedPlaces.map(id => PLACES.find(pl => pl.id === id)).filter(Boolean);
@@ -1431,7 +1307,7 @@ window.loadSharedPlan = function() {
   if (p.arrival && p.departure) buildDayCards(p.arrival, p.departure);
   renderPlaces();
   buildItinerary();
-  goToStep(6);
+  goToStep(5);
   showToast('Хуваалцсан төлөвлөгөө нээгдлээ!', 'success');
 };
 </script>
