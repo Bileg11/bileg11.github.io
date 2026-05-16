@@ -484,7 +484,17 @@ body{font-family:'Inter',sans-serif;background:var(--bg);color:var(--text);min-h
     <div class="modal-actions" style="flex-wrap:wrap;gap:8px">
       <button class="btn-mark-done" id="markContactedBtn" onclick="setStatus('contacted')" style="background:rgba(255,159,10,.15);border-color:rgba(255,159,10,.3);color:var(--orange)">📞 Холбогдсон</button>
       <button class="btn-mark-done" id="markDoneBtn" onclick="setStatus('done')">✓ Дууссан</button>
+      <button class="btn-mark-done" onclick="toggleMailCompose()" style="background:rgba(0,113,227,.15);border-color:rgba(0,113,227,.3);color:#4ca3f5">✉️ Mail бичих</button>
       <button class="btn-close" onclick="closeModal()">Хаах</button>
+    </div>
+    <!-- Mail compose panel -->
+    <div id="mailCompose" style="display:none;margin-top:16px;border-top:1px solid var(--border);padding-top:16px">
+      <div style="font-size:12px;color:var(--muted);margin-bottom:8px;font-weight:600;letter-spacing:.04em;text-transform:uppercase">Имэйл бичих</div>
+      <div style="font-size:12px;color:var(--muted);margin-bottom:6px">Хүлээн авагч: <span id="mailTo" style="color:var(--blue)"></span></div>
+      <input id="mailSubject" type="text" placeholder="Гарчиг..." style="width:100%;background:var(--bg3);border:1px solid var(--border);border-radius:8px;padding:9px 12px;font-size:13px;color:var(--text);font-family:inherit;margin-bottom:8px;outline:none">
+      <textarea id="mailBody" placeholder="Мессеж бичнэ үү..." style="width:100%;background:var(--bg3);border:1px solid var(--border);border-radius:8px;padding:9px 12px;font-size:13px;color:var(--text);font-family:inherit;resize:vertical;min-height:100px;outline:none;margin-bottom:8px"></textarea>
+      <button onclick="sendAdminMail()" style="background:var(--blue);color:#fff;border:none;border-radius:8px;padding:9px 18px;font-size:13px;font-weight:600;cursor:pointer;font-family:inherit">Илгээх →</button>
+      <span id="mailSendMsg" style="font-size:12px;margin-left:10px;color:var(--green)"></span>
     </div>
   </div>
 </div>
@@ -1054,22 +1064,41 @@ document.getElementById('loginPassword').addEventListener('keydown', e => {
 <script src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js"></script>
 <script>
 emailjs.init("jzbMLEF7IhbkS48RI");
-const _origSetStatus = window.setStatus;
-window.setStatus = async function(status) {
-  await _origSetStatus(status);
-  const b = allBookings.find(x => x.id === currentDocId || (x.status === status && x.email));
+
+window.toggleMailCompose = function() {
+  const panel = document.getElementById('mailCompose');
+  const booking = allBookings.find(x => x.id === currentDocId);
+  if (!booking?.email) { toast('Имэйл хаяг байхгүй', 'error'); return; }
+  document.getElementById('mailTo').textContent = booking.email;
+  document.getElementById('mailSubject').value = `LFS Shanghai — ${booking.service || 'Захиалга'}`;
+  document.getElementById('mailBody').value = '';
+  document.getElementById('mailSendMsg').textContent = '';
+  panel.style.display = panel.style.display === 'none' ? 'block' : 'none';
+};
+
+window.sendAdminMail = async function() {
   const booking = allBookings.find(x => x.id === currentDocId);
   if (!booking?.email) return;
-  const statusLabel = { new:'Шинэ', contacted:'Холбогдсон', done:'Дууссан' };
-  const statusMn = statusLabel[status] || status;
+  const subject = document.getElementById('mailSubject').value.trim();
+  const body    = document.getElementById('mailBody').value.trim();
+  if (!subject || !body) { toast('Гарчиг болон мессеж бичнэ үү', 'error'); return; }
+  const msg = document.getElementById('mailSendMsg');
+  msg.textContent = 'Илгээж байна...';
+  msg.style.color = 'var(--muted)';
   try {
     await emailjs.send("service_lr0xy9q", "template_o0e4529", {
       to_email: booking.email,
       to_name:  booking.name || 'Хэрэглэгч',
-      subject:  `Захиалгын төлөв шинэчлэгдлээ — ${statusMn}`,
-      message:  `Таны "${booking.service}" захиалгын төлөв "${statusMn}" болж шинэчлэгдлээ.\n\nЭхлэх огноо: ${booking.start || '—'}\nХоног: ${booking.days || '—'}\n\nАсуулт байвал холбогдоорой.`
+      subject:  subject,
+      message:  body
     });
-  } catch(e) { console.warn('Status email error:', e); }
+    msg.textContent = '✓ Амжилттай илгээгдлээ';
+    msg.style.color = 'var(--green)';
+    document.getElementById('mailBody').value = '';
+  } catch(e) {
+    msg.textContent = 'Алдаа: ' + (e.text || e.message || 'Илгээгдсэнгүй');
+    msg.style.color = 'var(--red)';
+  }
 };
 </script>
 </body>
