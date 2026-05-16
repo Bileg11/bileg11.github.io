@@ -1167,21 +1167,21 @@ window.submitBooking = async function() {
       const tgChat  = '5541078218';
 
       // Profile section
-      let profileLine = '👤 Бүртгэлгүй хэрэглэгч (account байхгүй)';
+      let profileLine = 'Бүртгэлгүй хэрэглэгч (account байхгүй)';
       if (currentUser) {
         try {
           const pSnap = await getDoc(doc(db, 'users', currentUser.uid));
           const p = pSnap.exists() ? pSnap.data() : {};
           const fullName = [p.lastName, p.firstName].filter(Boolean).join(' ') || '—';
           profileLine =
-`👤 Бүртгэлтэй хэрэглэгч
-🪪 Нэр: ${fullName}
-📞 Утас: ${p.phone || '—'}
-📧 И-мэйл: ${currentUser.email || '—'}
-🎂 Төрсөн: ${p.birthday || '—'}
-⚥ Хүйс: ${p.gender || '—'}`;
+`Бүртгэлтэй хэрэглэгч
+Нэр: ${fullName}
+Утас: ${p.phone || '—'}
+И-мэйл: ${currentUser.email || '—'}
+Төрсөн: ${p.birthday || '—'}
+Хүйс: ${p.gender || '—'}`;
         } catch(_) {
-          profileLine = `👤 Бүртгэлтэй: ${currentUser.email}`;
+          profileLine = `Бүртгэлтэй: ${currentUser.email}`;
         }
       }
 
@@ -1189,17 +1189,18 @@ window.submitBooking = async function() {
 `📋 Шинэ захиалга!
 
 ━━━ ЗАХИАЛГА ━━━
-🛎 Үйлчилгээ: ${d.service}
-🗓 Эхлэх огноо: ${d.start}
-⏱ Хоног: ${d.days}
-👥 Хүний тоо: ${d.people}
-💬 Нэмэлт: ${d.note || '—'}
+Үйлчилгээ: ${d.service}
+Эхлэх огноо: ${d.start}
+Хоног: ${d.days}
+Хүний тоо: ${d.people}
+Нэмэлт: ${d.note || '—'}
+Хаанаас мэдсэн: ${d.source || '—'}
 
 ━━━ ХОЛБОО БАРИХ ━━━
-👤 Нэр: ${d.name}
-📞 Утас: ${d.phone}
-📧 И-мэйл: ${d.email || '—'}
-📱 WeChat/Social: ${d.social || '—'}
+Нэр: ${d.name}
+Утас: ${d.phone}
+И-мэйл: ${d.email || '—'}
+WeChat/Social: ${d.social || '—'}
 
 ━━━ БҮРТГЭЛ ━━━
 ${profileLine}`;
