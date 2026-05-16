@@ -1051,5 +1051,26 @@ document.getElementById('loginPassword').addEventListener('keydown', e => {
   if (e.key === 'Enter') window.doLogin();
 });
 </script>
+<script src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js"></script>
+<script>
+emailjs.init("jzbMLEF7IhbkS48RI");
+const _origSetStatus = window.setStatus;
+window.setStatus = async function(status) {
+  await _origSetStatus(status);
+  const b = allBookings.find(x => x.id === currentDocId || (x.status === status && x.email));
+  const booking = allBookings.find(x => x.id === currentDocId);
+  if (!booking?.email) return;
+  const statusLabel = { new:'Шинэ', contacted:'Холбогдсон', done:'Дууссан' };
+  const statusMn = statusLabel[status] || status;
+  try {
+    await emailjs.send("service_lr0xy9q", "template_o0e4529", {
+      to_email: booking.email,
+      to_name:  booking.name || 'Хэрэглэгч',
+      subject:  `Захиалгын төлөв шинэчлэгдлээ — ${statusMn}`,
+      message:  `Таны "${booking.service}" захиалгын төлөв "${statusMn}" болж шинэчлэгдлээ.\n\nЭхлэх огноо: ${booking.start || '—'}\nХоног: ${booking.days || '—'}\n\nАсуулт байвал холбогдоорой.`
+    });
+  } catch(e) { console.warn('Status email error:', e); }
+};
+</script>
 </body>
 </html>
