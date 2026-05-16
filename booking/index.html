@@ -1161,6 +1161,28 @@ window.submitBooking = async function() {
     await addDoc(collection(db, "bookings"), d);
     logEvent(analytics, 'booking_submitted', { service: d.service, people: d.people });
 
+    // Telegram notification
+    try {
+      const tgToken = '8799776564:AAEiPSe4iSLLae2FFvY02eHaoSfXC-Bw3t0';
+      const tgChat  = '5541078218';
+      const tgMsg   =
+`📋 Шинэ захиалга!
+
+👤 Нэр: ${d.name}
+📞 Утас: ${d.phone}
+📧 И-мэйл: ${d.email || '—'}
+🛎 Үйлчилгээ: ${d.service}
+👥 Хүн: ${d.people}
+🗓 Эхлэх: ${d.start} · ${d.days}
+💬 Нэмэлт: ${d.note || '—'}
+📱 Social: ${d.social || '—'}`;
+      await fetch(`https://api.telegram.org/bot${tgToken}/sendMessage`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ chat_id: tgChat, text: tgMsg })
+      });
+    } catch(tgErr) { console.warn('Telegram:', tgErr); }
+
     await sendConfirmEmail(d.email, d.name, d);
 
     // Show success
