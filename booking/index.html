@@ -1097,18 +1097,7 @@ async function checkProfileComplete(user) {
       const emailEl = document.getElementById('b-email');
       if (emailEl && !emailEl.value) emailEl.value = user.email;
     }
-    const required = ['firstName','lastName','phone','birthday','gender','photoURL'];
-    const missing = required.filter(k => !p[k]);
-    if (missing.length > 0) {
-      profileNotice.classList.add('show');
-      lockWizard();
-      document.getElementById('wizardOverlay').onclick = () => {
-        profileNotice.scrollIntoView({ behavior:'smooth', block:'nearest' });
-      };
-    } else {
-      profileNotice.classList.remove('show');
-      unlockWizard();
-    }
+    profileNotice.classList.remove('show');
   } catch(e) {
     // On error allow booking
     unlockWizard();
