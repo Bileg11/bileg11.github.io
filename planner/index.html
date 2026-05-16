@@ -1,0 +1,1447 @@
+<!DOCTYPE html>
+<html lang="mn">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Аяллын Төлөвлөгч — LFS Shanghai</title>
+  <meta name="description" content="Шанхай аяллаа нарийн төлөвлө. Огноо, хүмүүс, сонирхол, цагийн хэв маяг бүгдийг нэг дор."/>
+  <link rel="canonical" href="https://bileg11.github.io/planner/"/>
+  <link rel="icon" href="/favicon.svg" type="image/svg+xml"/>
+  <link rel="apple-touch-icon" href="/apple-touch-icon.png"/>
+
+  <!-- OG -->
+  <meta property="og:title" content="LFS Shanghai — Аяллын Төлөвлөгч"/>
+  <meta property="og:description" content="Шанхайн аяллаа нарийн төлөвлө — газрууд, хуваарь, зардал, найзтайгаа хуваалц."/>
+  <meta property="og:type" content="website"/>
+  <meta property="og:url" content="https://bileg11.github.io/planner/"/>
+  <meta property="og:locale" content="mn_MN"/>
+  <meta property="og:site_name" content="LFS Shanghai"/>
+
+  <!-- Google Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com"/>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet"/>
+
+  <style>
+    /* ── RESET & BASE ── */
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    :root {
+      --primary: #e8392a;
+      --primary-d: #c42d1f;
+      --gold: #d4a843;
+      --bg: #f7f7f8;
+      --card: #ffffff;
+      --text: #1a1a2e;
+      --sub: #5a5a72;
+      --border: #e4e4ec;
+      --radius: 16px;
+      --shadow: 0 4px 20px rgba(0,0,0,.08);
+      --shadow-hover: 0 8px 32px rgba(0,0,0,.14);
+    }
+    html { scroll-behavior: smooth; }
+    body {
+      font-family: 'Inter', sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      min-height: 100vh;
+    }
+
+    /* ── NAV ── */
+    .nav {
+      background: #fff;
+      border-bottom: 1px solid var(--border);
+      position: sticky; top: 0; z-index: 100;
+    }
+    .nav-inner {
+      max-width: 1100px; margin: 0 auto;
+      display: flex; align-items: center; justify-content: space-between;
+      padding: 0 20px; height: 60px;
+    }
+    .nav-logo {
+      font-size: 1.1rem; font-weight: 800; color: var(--primary);
+      text-decoration: none; letter-spacing: -.5px;
+    }
+    .nav-links { display: flex; gap: 24px; list-style: none; }
+    .nav-links a {
+      color: var(--sub); text-decoration: none; font-size: .9rem; font-weight: 500;
+      transition: color .2s;
+    }
+    .nav-links a:hover { color: var(--primary); }
+    .nav-btn {
+      background: var(--primary); color: #fff; border: none;
+      padding: 8px 20px; border-radius: 50px; font-size: .88rem;
+      font-weight: 600; cursor: pointer; text-decoration: none;
+      transition: background .2s;
+    }
+    .nav-btn:hover { background: var(--primary-d); }
+
+    /* ── PLANNER WRAPPER ── */
+    .planner-wrap {
+      max-width: 820px; margin: 40px auto 80px;
+      padding: 0 20px;
+    }
+
+    /* ── HERO ── */
+    .hero-plan {
+      text-align: center; margin-bottom: 40px;
+    }
+    .hero-plan h1 {
+      font-size: 2rem; font-weight: 800; color: var(--text);
+      line-height: 1.2; margin-bottom: 10px;
+    }
+    .hero-plan h1 span { color: var(--primary); }
+    .hero-plan p { color: var(--sub); font-size: 1rem; }
+
+    /* ── PROGRESS BAR ── */
+    .progress-bar {
+      display: flex; gap: 0; margin-bottom: 36px;
+      background: var(--card); border-radius: var(--radius);
+      padding: 16px 20px; box-shadow: var(--shadow);
+      overflow-x: auto;
+    }
+    .step-dot {
+      display: flex; flex-direction: column; align-items: center;
+      flex: 1; position: relative; cursor: pointer;
+    }
+    .step-dot:not(:last-child)::after {
+      content: '';
+      position: absolute; top: 14px; left: 60%; width: 80%;
+      height: 2px; background: var(--border);
+      transition: background .3s;
+    }
+    .step-dot.done:not(:last-child)::after { background: var(--primary); }
+    .dot-circle {
+      width: 28px; height: 28px; border-radius: 50%;
+      background: var(--border); color: var(--sub);
+      display: flex; align-items: center; justify-content: center;
+      font-size: .78rem; font-weight: 700;
+      transition: all .3s; z-index: 1;
+    }
+    .step-dot.active .dot-circle { background: var(--primary); color: #fff; box-shadow: 0 0 0 4px rgba(232,57,42,.15); }
+    .step-dot.done .dot-circle { background: var(--primary); color: #fff; }
+    .dot-label { font-size: .7rem; color: var(--sub); margin-top: 5px; text-align: center; white-space: nowrap; }
+    .step-dot.active .dot-label { color: var(--primary); font-weight: 600; }
+
+    /* ── STEP CARDS ── */
+    .step { display: none; }
+    .step.active { display: block; animation: fadeUp .3s ease; }
+    @keyframes fadeUp {
+      from { opacity: 0; transform: translateY(12px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+    .card {
+      background: var(--card); border-radius: var(--radius);
+      box-shadow: var(--shadow); padding: 32px;
+      margin-bottom: 20px;
+    }
+    .card-title {
+      font-size: 1.2rem; font-weight: 700; margin-bottom: 6px;
+    }
+    .card-sub { color: var(--sub); font-size: .9rem; margin-bottom: 24px; }
+
+    /* ── FORM ELEMENTS ── */
+    .form-row { display: flex; gap: 16px; margin-bottom: 16px; flex-wrap: wrap; }
+    .form-group { flex: 1; min-width: 200px; display: flex; flex-direction: column; gap: 6px; }
+    label { font-size: .85rem; font-weight: 600; color: var(--text); }
+    input, select, textarea {
+      border: 1.5px solid var(--border); border-radius: 10px;
+      padding: 10px 14px; font-size: .93rem; font-family: inherit;
+      color: var(--text); background: #fff;
+      transition: border-color .2s, box-shadow .2s;
+      width: 100%;
+    }
+    input:focus, select:focus, textarea:focus {
+      outline: none; border-color: var(--primary);
+      box-shadow: 0 0 0 3px rgba(232,57,42,.1);
+    }
+
+    /* ── CHIPS ── */
+    .chips { display: flex; flex-wrap: wrap; gap: 10px; }
+    .chip {
+      padding: 8px 16px; border-radius: 50px;
+      border: 1.5px solid var(--border); background: #fff;
+      cursor: pointer; font-size: .88rem; font-weight: 500;
+      color: var(--sub); transition: all .2s; user-select: none;
+    }
+    .chip:hover { border-color: var(--primary); color: var(--primary); }
+    .chip.selected { background: var(--primary); border-color: var(--primary); color: #fff; }
+
+    /* ── PEOPLE LIST ── */
+    .people-list { display: flex; flex-direction: column; gap: 10px; margin-top: 10px; }
+    .person-row {
+      display: flex; gap: 10px; align-items: center;
+      background: var(--bg); border-radius: 10px; padding: 10px 12px;
+    }
+    .person-avatar {
+      width: 36px; height: 36px; border-radius: 50%;
+      background: linear-gradient(135deg, var(--primary), #ff7b6e);
+      display: flex; align-items: center; justify-content: center;
+      font-size: .85rem; font-weight: 700; color: #fff; flex-shrink: 0;
+    }
+    .person-row input { background: transparent; border-color: transparent; padding: 4px 8px; }
+    .person-row input:focus { background: #fff; border-color: var(--border); }
+    .btn-remove-person {
+      background: none; border: none; cursor: pointer;
+      color: #ccc; font-size: 1.2rem; padding: 0 4px;
+      line-height: 1; flex-shrink: 0;
+    }
+    .btn-remove-person:hover { color: var(--primary); }
+    .btn-add-person {
+      display: flex; align-items: center; gap: 8px;
+      background: none; border: 1.5px dashed var(--border);
+      border-radius: 10px; padding: 10px 16px; cursor: pointer;
+      color: var(--sub); font-size: .88rem; font-weight: 500;
+      font-family: inherit; transition: all .2s; width: 100%;
+    }
+    .btn-add-person:hover { border-color: var(--primary); color: var(--primary); }
+
+    /* ── DAY SCHEDULE ── */
+    .day-cards { display: flex; flex-direction: column; gap: 12px; }
+    .day-card {
+      background: var(--bg); border-radius: 12px; padding: 16px;
+      border-left: 3px solid var(--primary);
+    }
+    .day-card h4 { font-size: .95rem; font-weight: 700; margin-bottom: 12px; }
+    .time-options { display: flex; gap: 8px; flex-wrap: wrap; }
+    .time-chip {
+      padding: 6px 14px; border-radius: 50px;
+      border: 1.5px solid var(--border); background: #fff;
+      cursor: pointer; font-size: .82rem; font-weight: 500;
+      color: var(--sub); transition: all .2s;
+    }
+    .time-chip.selected { background: var(--gold); border-color: var(--gold); color: #fff; }
+
+    /* ── PLACES GRID ── */
+    .places-filter { display: flex; gap: 8px; margin-bottom: 20px; flex-wrap: wrap; }
+    .filter-btn {
+      padding: 7px 16px; border-radius: 50px;
+      border: 1.5px solid var(--border); background: #fff;
+      cursor: pointer; font-size: .83rem; font-weight: 500;
+      color: var(--sub); transition: all .2s;
+    }
+    .filter-btn:hover, .filter-btn.active {
+      background: var(--text); border-color: var(--text); color: #fff;
+    }
+    .places-grid {
+      display: grid; grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+      gap: 16px;
+    }
+    .place-card {
+      background: var(--card); border-radius: 14px; overflow: hidden;
+      box-shadow: var(--shadow); cursor: pointer;
+      transition: transform .2s, box-shadow .2s;
+      border: 2px solid transparent;
+    }
+    .place-card:hover { transform: translateY(-3px); box-shadow: var(--shadow-hover); }
+    .place-card.saved { border-color: var(--primary); }
+    .place-img {
+      width: 100%; height: 140px; object-fit: cover;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 3rem; background: #f0f0f5;
+    }
+    .place-img-gradient {
+      width: 100%; height: 140px;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 2.5rem;
+    }
+    .place-body { padding: 14px; }
+    .place-name { font-size: .95rem; font-weight: 700; margin-bottom: 4px; }
+    .place-cat {
+      display: inline-block; font-size: .72rem; padding: 2px 8px;
+      border-radius: 50px; margin-bottom: 8px; font-weight: 600;
+    }
+    .cat-culture { background: #fff3e0; color: #e65100; }
+    .cat-tech    { background: #e3f2fd; color: #0277bd; }
+    .cat-trad    { background: #f3e5f5; color: #6a1b9a; }
+    .cat-relax   { background: #e8f5e9; color: #2e7d32; }
+    .cat-food    { background: #fce4ec; color: #c62828; }
+    .place-desc  { font-size: .8rem; color: var(--sub); line-height: 1.5; margin-bottom: 10px; }
+    .place-meta { display: flex; justify-content: space-between; align-items: center; }
+    .place-cost { font-size: .8rem; font-weight: 600; color: var(--gold); }
+    .place-save {
+      width: 32px; height: 32px; border-radius: 50%;
+      border: 1.5px solid var(--border); background: #fff;
+      display: flex; align-items: center; justify-content: center;
+      cursor: pointer; font-size: 1rem; transition: all .2s;
+    }
+    .place-save:hover { border-color: var(--primary); }
+    .place-save.saved { background: var(--primary); border-color: var(--primary); color: #fff; }
+    .place-rating { font-size: .78rem; color: var(--gold); font-weight: 600; }
+
+    /* ── SAVED PLACES ── */
+    .saved-list { display: flex; flex-direction: column; gap: 12px; }
+    .saved-item {
+      display: flex; gap: 14px; align-items: center;
+      background: var(--bg); border-radius: 12px; padding: 12px 16px;
+      cursor: grab;
+    }
+    .saved-item-icon {
+      width: 44px; height: 44px; border-radius: 10px;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 1.4rem; flex-shrink: 0;
+    }
+    .saved-item-info { flex: 1; }
+    .saved-item-name { font-size: .92rem; font-weight: 600; }
+    .saved-item-sub { font-size: .78rem; color: var(--sub); }
+    .saved-item-rm {
+      background: none; border: none; cursor: pointer;
+      color: #ccc; font-size: 1.2rem; padding: 0;
+    }
+    .saved-item-rm:hover { color: var(--primary); }
+    .drag-hint { font-size: .78rem; color: var(--sub); margin-top: 6px; }
+
+    /* ── ITINERARY ── */
+    .itinerary-section { margin-bottom: 28px; }
+    .itin-day-header {
+      display: flex; align-items: center; gap: 12px; margin-bottom: 14px;
+    }
+    .itin-day-badge {
+      background: var(--primary); color: #fff;
+      border-radius: 50px; padding: 4px 14px;
+      font-size: .82rem; font-weight: 700;
+    }
+    .itin-day-date { color: var(--sub); font-size: .85rem; }
+    .itin-timeline { display: flex; flex-direction: column; gap: 0; }
+    .itin-item {
+      display: flex; gap: 0;
+    }
+    .itin-left {
+      width: 70px; text-align: right; padding-right: 16px; flex-shrink: 0;
+    }
+    .itin-time { font-size: .78rem; font-weight: 700; color: var(--sub); padding-top: 2px; }
+    .itin-center {
+      display: flex; flex-direction: column; align-items: center;
+      width: 20px; flex-shrink: 0;
+    }
+    .itin-dot {
+      width: 12px; height: 12px; border-radius: 50%;
+      background: var(--primary); flex-shrink: 0; margin-top: 4px;
+    }
+    .itin-line { width: 2px; background: var(--border); flex: 1; min-height: 24px; }
+    .itin-right { flex: 1; padding: 0 0 20px 16px; }
+    .itin-name { font-size: .93rem; font-weight: 600; }
+    .itin-sub { font-size: .78rem; color: var(--sub); margin-top: 2px; }
+
+    /* ── COST TABLE ── */
+    .cost-table { width: 100%; border-collapse: collapse; margin-top: 12px; }
+    .cost-table td { padding: 8px 12px; border-bottom: 1px solid var(--border); font-size: .88rem; }
+    .cost-table tr:last-child td { border-bottom: none; }
+    .cost-table .cost-total { font-weight: 700; font-size: 1rem; color: var(--primary); }
+    .cost-table .cost-label { color: var(--sub); }
+
+    /* ── SHARE ── */
+    .share-box {
+      background: linear-gradient(135deg, #1a1a2e, #2d2d4e);
+      border-radius: 14px; padding: 24px;
+      display: flex; gap: 12px; align-items: center; flex-wrap: wrap;
+    }
+    .share-link-input {
+      flex: 1; background: rgba(255,255,255,.1); border: 1px solid rgba(255,255,255,.2);
+      border-radius: 8px; padding: 10px 14px; color: #fff;
+      font-size: .85rem; min-width: 200px;
+    }
+    .share-link-input::placeholder { color: rgba(255,255,255,.4); }
+    .btn-copy {
+      background: var(--gold); border: none; border-radius: 8px;
+      padding: 10px 18px; color: #fff; font-weight: 700; cursor: pointer;
+      font-size: .88rem; font-family: inherit; transition: opacity .2s;
+    }
+    .btn-copy:hover { opacity: .9; }
+    .share-icons { display: flex; gap: 8px; margin-top: 12px; width: 100%; }
+    .share-icon-btn {
+      flex: 1; padding: 9px; border-radius: 8px; border: 1px solid rgba(255,255,255,.2);
+      background: rgba(255,255,255,.08); color: #fff; cursor: pointer;
+      font-size: .82rem; font-weight: 600; font-family: inherit;
+      transition: background .2s; text-align: center;
+    }
+    .share-icon-btn:hover { background: rgba(255,255,255,.18); }
+
+    /* ── BUTTONS ── */
+    .btn-row { display: flex; gap: 12px; justify-content: flex-end; margin-top: 24px; flex-wrap: wrap; }
+    .btn-back {
+      padding: 12px 24px; border-radius: 50px;
+      border: 1.5px solid var(--border); background: #fff;
+      color: var(--sub); font-size: .92rem; font-weight: 600;
+      cursor: pointer; font-family: inherit; transition: all .2s;
+    }
+    .btn-back:hover { border-color: var(--sub); color: var(--text); }
+    .btn-next {
+      padding: 12px 28px; border-radius: 50px;
+      border: none; background: var(--primary);
+      color: #fff; font-size: .92rem; font-weight: 700;
+      cursor: pointer; font-family: inherit; transition: background .2s;
+    }
+    .btn-next:hover { background: var(--primary-d); }
+    .btn-next:disabled { background: #ccc; cursor: not-allowed; }
+
+    /* ── AUTH STEP ── */
+    .auth-options { display: flex; flex-direction: column; gap: 12px; }
+    .auth-btn {
+      display: flex; align-items: center; gap: 12px;
+      padding: 14px 20px; border-radius: 12px;
+      border: 1.5px solid var(--border); background: #fff;
+      cursor: pointer; font-size: .93rem; font-weight: 600;
+      font-family: inherit; transition: all .2s; text-align: left;
+    }
+    .auth-btn:hover { border-color: var(--primary); box-shadow: var(--shadow); }
+    .auth-btn-icon { font-size: 1.4rem; }
+    .auth-divider { text-align: center; color: var(--sub); font-size: .85rem; margin: 4px 0; }
+    .user-logged {
+      display: flex; align-items: center; gap: 14px;
+      background: #f0fdf4; border: 1.5px solid #86efac;
+      border-radius: 12px; padding: 16px;
+    }
+    .user-avatar {
+      width: 48px; height: 48px; border-radius: 50%;
+      background: linear-gradient(135deg, #22c55e, #16a34a);
+      display: flex; align-items: center; justify-content: center;
+      font-size: 1.4rem; font-weight: 700; color: #fff;
+    }
+    .user-name { font-weight: 700; font-size: .97rem; }
+    .user-email { font-size: .8rem; color: #16a34a; }
+
+    /* ── TOAST ── */
+    .toast-container { position: fixed; bottom: 24px; right: 24px; z-index: 9999; display: flex; flex-direction: column; gap: 8px; }
+    .toast {
+      background: var(--text); color: #fff; padding: 12px 20px;
+      border-radius: 10px; font-size: .88rem; font-weight: 500;
+      animation: slideIn .3s ease; box-shadow: 0 4px 20px rgba(0,0,0,.2);
+      max-width: 320px;
+    }
+    .toast.success { background: #16a34a; }
+    .toast.error   { background: #dc2626; }
+    @keyframes slideIn {
+      from { opacity: 0; transform: translateX(20px); }
+      to   { opacity: 1; transform: translateX(0); }
+    }
+
+    /* ── EMPTY STATE ── */
+    .empty-state {
+      text-align: center; padding: 40px 20px;
+      color: var(--sub);
+    }
+    .empty-state .empty-icon { font-size: 3rem; margin-bottom: 12px; }
+    .empty-state p { font-size: .92rem; }
+
+    /* ── MOBILE ── */
+    @media (max-width: 600px) {
+      .hero-plan h1 { font-size: 1.5rem; }
+      .card { padding: 20px; }
+      .progress-bar { padding: 12px 16px; }
+      .dot-label { font-size: .62rem; }
+      .places-grid { grid-template-columns: 1fr 1fr; }
+      .nav-links { display: none; }
+    }
+    @media (max-width: 440px) {
+      .places-grid { grid-template-columns: 1fr; }
+    }
+
+    /* ── PLAN SUMMARY BADGE ── */
+    .plan-summary-bar {
+      background: var(--card); border-radius: var(--radius);
+      box-shadow: var(--shadow); padding: 14px 20px;
+      margin-bottom: 20px;
+      display: none; gap: 20px; flex-wrap: wrap; align-items: center;
+    }
+    .plan-summary-bar.visible { display: flex; }
+    .psb-item { font-size: .82rem; color: var(--sub); }
+    .psb-item strong { color: var(--text); font-weight: 700; }
+    .psb-edit {
+      margin-left: auto; font-size: .8rem; color: var(--primary);
+      text-decoration: none; font-weight: 600; cursor: pointer;
+      background: none; border: none; font-family: inherit;
+    }
+  </style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav class="nav">
+  <div class="nav-inner">
+    <a class="nav-logo" href="/">LFS Shanghai</a>
+    <ul class="nav-links">
+      <li><a href="/">Нүүр</a></li>
+      <li><a href="/routes/">Маршрут</a></li>
+      <li><a href="/tips/">Зөвлөмж</a></li>
+      <li><a href="/planner/" style="color:var(--primary)">Төлөвлөгч</a></li>
+    </ul>
+    <a class="nav-btn" href="/booking/">Захиалах</a>
+  </div>
+</nav>
+
+<!-- TOAST CONTAINER -->
+<div class="toast-container" id="toastContainer"></div>
+
+<!-- MAIN -->
+<main class="planner-wrap">
+
+  <!-- HERO -->
+  <div class="hero-plan">
+    <h1>Шанхай <span>Аяллын Төлөвлөгч</span></h1>
+    <p>Огноо, хүмүүс, сонирхол, газрууд — бүгдийг нэг дор. Найзтайгаа хуваалц.</p>
+  </div>
+
+  <!-- PROGRESS -->
+  <div class="progress-bar" id="progressBar">
+    <div class="step-dot active" data-step="1" onclick="goToStep(1)">
+      <div class="dot-circle">1</div>
+      <span class="dot-label">Нэвтрэх</span>
+    </div>
+    <div class="step-dot" data-step="2" onclick="goToStep(2)">
+      <div class="dot-circle">2</div>
+      <span class="dot-label">Огноо & Хүн</span>
+    </div>
+    <div class="step-dot" data-step="3" onclick="goToStep(3)">
+      <div class="dot-circle">3</div>
+      <span class="dot-label">Сонирхол</span>
+    </div>
+    <div class="step-dot" data-step="4" onclick="goToStep(4)">
+      <div class="dot-circle">4</div>
+      <span class="dot-label">Цагийн хэв</span>
+    </div>
+    <div class="step-dot" data-step="5" onclick="goToStep(5)">
+      <div class="dot-circle">5</div>
+      <span class="dot-label">Газрууд</span>
+    </div>
+    <div class="step-dot" data-step="6" onclick="goToStep(6)">
+      <div class="dot-circle">6</div>
+      <span class="dot-label">Төлөвлөгөө</span>
+    </div>
+  </div>
+
+  <!-- PLAN SUMMARY BAR -->
+  <div class="plan-summary-bar" id="planSummaryBar">
+    <div class="psb-item" id="psb-dates"></div>
+    <div class="psb-item" id="psb-people"></div>
+    <div class="psb-item" id="psb-saved"></div>
+    <button class="psb-edit" onclick="goToStep(2)">Засах</button>
+  </div>
+
+  <!-- ══ STEP 1: AUTH ══ -->
+  <div class="step active" id="step-1">
+    <div class="card">
+      <div class="card-title">Нэвтрэх</div>
+      <div class="card-sub">Төлөвлөгөөгөө хадгалж, найзтайгаа хуваалцахын тулд нэвтэрнэ үү.</div>
+
+      <div id="auth-not-logged">
+        <div class="auth-options">
+          <button class="auth-btn" onclick="signInGoogle()">
+            <span class="auth-btn-icon">🔵</span>
+            <div>
+              <div style="font-weight:700">Google-ээр нэвтрэх</div>
+              <div style="font-size:.78rem;color:var(--sub);font-weight:400">Хурдан бөгөөд аюулгүй</div>
+            </div>
+          </button>
+          <div class="auth-divider">— эсвэл —</div>
+          <button class="auth-btn" onclick="signInFacebook()">
+            <span class="auth-btn-icon">🔷</span>
+            <div>
+              <div style="font-weight:700">Facebook-ээр нэвтрэх</div>
+              <div style="font-size:.78rem;color:var(--sub);font-weight:400">Facebook бүртгэлтэй нэвтрэх</div>
+            </div>
+          </button>
+          <div class="auth-divider">— эсвэл —</div>
+          <div style="background:var(--bg);border-radius:12px;padding:20px;">
+            <div style="font-weight:700;margin-bottom:14px;font-size:.93rem;">И-мэйлээр нэвтрэх / бүртгүүлэх</div>
+            <div style="display:flex;flex-direction:column;gap:10px;">
+              <input type="email" id="authEmail" placeholder="И-мэйл хаяг" />
+              <input type="password" id="authPass" placeholder="Нууц үг" />
+              <div style="display:flex;gap:10px;">
+                <button class="btn-next" style="flex:1;padding:11px;" onclick="emailSignIn()">Нэвтрэх</button>
+                <button class="btn-back" style="flex:1;padding:11px;" onclick="emailSignUp()">Бүртгүүлэх</button>
+              </div>
+            </div>
+          </div>
+        </div>
+        <p style="font-size:.78rem;color:var(--sub);margin-top:16px;text-align:center;">
+          Нэвтрэхгүйгээр үргэлжлүүлэх: <button onclick="continueAsGuest()" style="background:none;border:none;color:var(--primary);font-weight:600;cursor:pointer;font-size:.78rem;font-family:inherit;">Зочноор үзэх</button>
+        </p>
+      </div>
+
+      <div id="auth-logged" style="display:none;">
+        <div class="user-logged">
+          <div class="user-avatar" id="userAvatar">👤</div>
+          <div>
+            <div class="user-name" id="userName">—</div>
+            <div class="user-email" id="userEmail">—</div>
+          </div>
+        </div>
+        <p style="font-size:.85rem;color:var(--sub);margin-top:12px;">
+          Нэвтэрсэн байна. Аяллын төлөвлөгөө хийж эхлэх бэлэн.
+        </p>
+      </div>
+    </div>
+    <div class="btn-row">
+      <button class="btn-next" onclick="nextFromAuth()">Үргэлжлүүлэх →</button>
+    </div>
+  </div>
+
+  <!-- ══ STEP 2: DATES & PEOPLE ══ -->
+  <div class="step" id="step-2">
+    <div class="card">
+      <div class="card-title">Огноо & Хүмүүс</div>
+      <div class="card-sub">Шанхайд хэзээ, хэдүүлээ, хэнтэй явах вэ?</div>
+
+      <div class="form-row">
+        <div class="form-group">
+          <label>Ирэх огноо</label>
+          <input type="date" id="dateArrival" onchange="updateDayCards()"/>
+        </div>
+        <div class="form-group">
+          <label>Явах огноо</label>
+          <input type="date" id="dateDeparture" onchange="updateDayCards()"/>
+        </div>
+      </div>
+
+      <div style="margin-top:20px;">
+        <label style="margin-bottom:10px;display:block;">Хамт явагчид</label>
+        <div class="people-list" id="peopleList"></div>
+        <button class="btn-add-person" onclick="addPerson()" style="margin-top:10px;">
+          ＋ Хүн нэмэх
+        </button>
+      </div>
+
+      <div style="margin-top:20px;">
+        <label style="margin-bottom:8px;display:block;">Байрлах газар (зочид буудал)</label>
+        <input type="text" id="hotel" placeholder="жш: Radisson Hotel, Hongkou"/>
+      </div>
+    </div>
+    <div class="btn-row">
+      <button class="btn-back" onclick="goToStep(1)">← Буцах</button>
+      <button class="btn-next" onclick="nextFromDates()">Үргэлжлүүлэх →</button>
+    </div>
+  </div>
+
+  <!-- ══ STEP 3: INTERESTS ══ -->
+  <div class="step" id="step-3">
+    <div class="card">
+      <div class="card-title">Сонирхол</div>
+      <div class="card-sub">Та юуг илүү их сонирхдог вэ? (олон сонгож болно)</div>
+
+      <div class="chips" id="interestChips">
+        <div class="chip" data-val="culture" onclick="toggleChip(this)">🏛 Соёл & Түүх</div>
+        <div class="chip" data-val="food" onclick="toggleChip(this)">🍜 Хоол & Ресторан</div>
+        <div class="chip" data-val="shopping" onclick="toggleChip(this)">🛍 Шоппинг</div>
+        <div class="chip" data-val="tech" onclick="toggleChip(this)">🏙 Технологи</div>
+        <div class="chip" data-val="tradition" onclick="toggleChip(this)">🏮 Уламжлал</div>
+        <div class="chip" data-val="relax" onclick="toggleChip(this)">🌿 Амрах & Парк</div>
+        <div class="chip" data-val="night" onclick="toggleChip(this)">🌙 Шөнийн амьдрал</div>
+        <div class="chip" data-val="photo" onclick="toggleChip(this)">📸 Зурагт тохиромжтой</div>
+        <div class="chip" data-val="family" onclick="toggleChip(this)">👨‍👩‍👧 Гэр бүлд зориулсан</div>
+        <div class="chip" data-val="budget" onclick="toggleChip(this)">💰 Хямд үнэ</div>
+      </div>
+
+      <div style="margin-top:24px;">
+        <label style="margin-bottom:8px;display:block;">Бюджет (нийт, ойролцоогоор)</label>
+        <div class="chips" id="budgetChips">
+          <div class="chip" data-val="low" data-group="budget" onclick="toggleSingleChip(this,'budgetChips')">$300 хүртэл</div>
+          <div class="chip" data-val="mid" data-group="budget" onclick="toggleSingleChip(this,'budgetChips')">$300–$700</div>
+          <div class="chip" data-val="high" data-group="budget" onclick="toggleSingleChip(this,'budgetChips')">$700–$1500</div>
+          <div class="chip" data-val="luxury" data-group="budget" onclick="toggleSingleChip(this,'budgetChips')">$1500+</div>
+        </div>
+      </div>
+    </div>
+    <div class="btn-row">
+      <button class="btn-back" onclick="goToStep(2)">← Буцах</button>
+      <button class="btn-next" onclick="nextFromInterests()">Үргэлжлүүлэх →</button>
+    </div>
+  </div>
+
+  <!-- ══ STEP 4: TIME PREFERENCES ══ -->
+  <div class="step" id="step-4">
+    <div class="card">
+      <div class="card-title">Цагийн хэв маяг</div>
+      <div class="card-sub">Өдөр бүр хэдэд гараад, хэдэд буцах вэ?</div>
+      <div class="day-cards" id="dayCards">
+        <!-- JS-ээр үүсгэнэ -->
+      </div>
+    </div>
+    <div class="btn-row">
+      <button class="btn-back" onclick="goToStep(3)">← Буцах</button>
+      <button class="btn-next" onclick="nextFromTime()">Үргэлжлүүлэх →</button>
+    </div>
+  </div>
+
+  <!-- ══ STEP 5: PLACES ══ -->
+  <div class="step" id="step-5">
+    <div class="card">
+      <div class="card-title">Газрууд сонгох</div>
+      <div class="card-sub">Явах газраа харж, дуртайгаа хадгал. Хожим автоматаар маршрутад орно.</div>
+
+      <div class="places-filter" id="placesFilter">
+        <button class="filter-btn active" onclick="filterPlaces('all', this)">Бүгд</button>
+        <button class="filter-btn" onclick="filterPlaces('culture', this)">🏛 Соёл</button>
+        <button class="filter-btn" onclick="filterPlaces('food', this)">🍜 Хоол</button>
+        <button class="filter-btn" onclick="filterPlaces('tech', this)">🏙 Технологи</button>
+        <button class="filter-btn" onclick="filterPlaces('tradition', this)">🏮 Уламжлал</button>
+        <button class="filter-btn" onclick="filterPlaces('relax', this)">🌿 Амрах</button>
+      </div>
+
+      <!-- SAVED COUNT -->
+      <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:14px;">
+        <span style="font-size:.85rem;color:var(--sub);">Нийт <strong id="totalPlacesCount">0</strong> газар</span>
+        <span style="font-size:.85rem;color:var(--primary);font-weight:600;">
+          <span id="savedCount">0</span> газар хадгалсан
+        </span>
+      </div>
+
+      <div class="places-grid" id="placesGrid">
+        <!-- JS render -->
+      </div>
+    </div>
+    <div class="btn-row">
+      <button class="btn-back" onclick="goToStep(4)">← Буцах</button>
+      <button class="btn-next" onclick="nextFromPlaces()">Төлөвлөгөө гаргах →</button>
+    </div>
+  </div>
+
+  <!-- ══ STEP 6: ITINERARY ══ -->
+  <div class="step" id="step-6">
+    <!-- ITINERARY -->
+    <div class="card">
+      <div class="card-title">Аяллын Төлөвлөгөө</div>
+      <div class="card-sub" id="itin-sub">Таны сонгосон газрууд өдрүүдэд хуваагдлаа.</div>
+      <div id="itinContent"></div>
+    </div>
+
+    <!-- SAVED PLACES (drag reorder) -->
+    <div class="card">
+      <div class="card-title">Хадгалсан газрууд</div>
+      <div class="card-sub">Дараалал өөрчлөхийн тулд чирч зөөнө үү.</div>
+      <div class="saved-list" id="savedList"></div>
+      <div class="drag-hint">☝ Чирч зөөж дараалал тохируулна</div>
+    </div>
+
+    <!-- COST -->
+    <div class="card">
+      <div class="card-title">Зардлын тооцоо</div>
+      <div class="card-sub">Нэг хүний ойролцоо зардал</div>
+      <table class="cost-table" id="costTable"></table>
+    </div>
+
+    <!-- SHARE -->
+    <div class="card">
+      <div class="card-title">Найзтайгаа хуваалц</div>
+      <div class="card-sub">Доорх линкийг хуулж найздаа илгээ.</div>
+      <div class="share-box">
+        <input class="share-link-input" id="shareLink" readonly value="Төлөвлөгөө хадгалж байна..."/>
+        <button class="btn-copy" onclick="copyLink()">Хуулах</button>
+        <div class="share-icons">
+          <button class="share-icon-btn" onclick="shareViaTelegram()">📨 Telegram</button>
+          <button class="share-icon-btn" onclick="shareViaEmail()">✉️ И-мэйл</button>
+          <button class="share-icon-btn" onclick="window.print()">🖨 Хэвлэх</button>
+        </div>
+      </div>
+    </div>
+
+    <div class="btn-row">
+      <button class="btn-back" onclick="goToStep(5)">← Засах</button>
+      <button class="btn-next" onclick="savePlan()">Хадгалах ✓</button>
+    </div>
+  </div>
+
+</main>
+
+<!-- ══ FIREBASE ══ -->
+<script type="module">
+import { initializeApp } from 'https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js';
+import { getAuth, GoogleAuthProvider, FacebookAuthProvider,
+         signInWithPopup, createUserWithEmailAndPassword,
+         signInWithEmailAndPassword, onAuthStateChanged, signOut }
+  from 'https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js';
+import { getFirestore, doc, setDoc, getDoc, collection, addDoc, serverTimestamp }
+  from 'https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js';
+
+const firebaseConfig = {
+  apiKey: "AIzaSyDixZdKwlrixRFokERCMQ5Ld1BMkhUttCQ",
+  authDomain: "lfs-shanghai.firebaseapp.com",
+  projectId: "lfs-shanghai",
+  storageBucket: "lfs-shanghai.firebasestorage.app",
+  messagingSenderId: "337508244675",
+  appId: "1:337508244675:web:f47b7e14417a0f1d129676",
+  measurementId: "G-81DTJ80VLR"
+};
+
+const app  = initializeApp(firebaseConfig);
+const auth = getAuth(app);
+const db   = getFirestore(app);
+
+window._auth = auth;
+window._db   = db;
+window._GoogleProvider   = new GoogleAuthProvider();
+window._FacebookProvider = new FacebookAuthProvider();
+window._authFunctions = { signInWithPopup, createUserWithEmailAndPassword,
+  signInWithEmailAndPassword, signOut, addDoc, setDoc, getDoc,
+  collection, doc, serverTimestamp };
+
+onAuthStateChanged(auth, user => {
+  window._currentUser = user || null;
+  if (user) {
+    document.getElementById('auth-not-logged').style.display = 'none';
+    document.getElementById('auth-logged').style.display = 'block';
+    const av = document.getElementById('userAvatar');
+    const nm = document.getElementById('userName');
+    const em = document.getElementById('userEmail');
+    av.textContent = (user.displayName||user.email||'U')[0].toUpperCase();
+    nm.textContent = user.displayName || 'Хэрэглэгч';
+    em.textContent = user.email || '';
+  } else {
+    document.getElementById('auth-not-logged').style.display = 'block';
+    document.getElementById('auth-logged').style.display = 'none';
+  }
+});
+
+window.signInGoogle = async () => {
+  try {
+    await signInWithPopup(auth, window._GoogleProvider);
+    showToast('Google-ээр нэвтэрлээ!', 'success');
+  } catch(e) { showToast('Нэвтрэхэд алдаа: ' + e.message, 'error'); }
+};
+
+window.signInFacebook = async () => {
+  try {
+    await signInWithPopup(auth, window._FacebookProvider);
+    showToast('Facebook-ээр нэвтэрлээ!', 'success');
+  } catch(e) { showToast('Нэвтрэхэд алдаа: ' + e.message, 'error'); }
+};
+
+window.emailSignIn = async () => {
+  const e = document.getElementById('authEmail').value;
+  const p = document.getElementById('authPass').value;
+  if (!e||!p) { showToast('И-мэйл болон нууц үгийг оруулна уу', 'error'); return; }
+  try {
+    await signInWithEmailAndPassword(auth, e, p);
+    showToast('Нэвтэрлээ!', 'success');
+  } catch(err) { showToast('Алдаа: ' + err.message, 'error'); }
+};
+
+window.emailSignUp = async () => {
+  const e = document.getElementById('authEmail').value;
+  const p = document.getElementById('authPass').value;
+  if (!e||!p) { showToast('И-мэйл болон нууц үгийг оруулна уу', 'error'); return; }
+  if (p.length < 6) { showToast('Нууц үг 6+ тэмдэгт байх ёстой', 'error'); return; }
+  try {
+    await createUserWithEmailAndPassword(auth, e, p);
+    showToast('Бүртгэл амжилттай!', 'success');
+  } catch(err) { showToast('Алдаа: ' + err.message, 'error'); }
+};
+
+window.savePlan = async () => {
+  const planData = {
+    dates: { arrival: window._plan.arrival, departure: window._plan.departure },
+    people: window._plan.people,
+    hotel: window._plan.hotel,
+    interests: window._plan.interests,
+    budget: window._plan.budget,
+    timePrefs: window._plan.timePrefs,
+    savedPlaces: window._plan.savedPlaces,
+    createdAt: new Date().toISOString(),
+    uid: window._currentUser ? window._currentUser.uid : 'guest'
+  };
+
+  try {
+    const { addDoc, collection, serverTimestamp } = window._authFunctions;
+    const ref = await addDoc(collection(db, 'planners'), planData);
+    const link = `https://bileg11.github.io/planner/?id=${ref.id}`;
+    document.getElementById('shareLink').value = link;
+    window._planId = ref.id;
+    showToast('Төлөвлөгөө хадгалагдлаа!', 'success');
+  } catch(e) {
+    // fallback: use local ID
+    const localId = 'local_' + Date.now();
+    localStorage.setItem('plan_' + localId, JSON.stringify(planData));
+    document.getElementById('shareLink').value = `https://bileg11.github.io/planner/?id=${localId}`;
+    showToast('Локал хадгалагдлаа.', 'success');
+  }
+};
+
+// Load shared plan from URL
+const urlParams = new URLSearchParams(location.search);
+const sharedId = urlParams.get('id');
+if (sharedId && !sharedId.startsWith('local_')) {
+  (async () => {
+    try {
+      const { getDoc, doc } = window._authFunctions;
+      const snap = await getDoc(doc(db, 'planners', sharedId));
+      if (snap.exists()) {
+        const d = snap.data();
+        window._plan = {
+          arrival: d.dates?.arrival, departure: d.dates?.departure,
+          people: d.people||[], hotel: d.hotel||'',
+          interests: d.interests||[], budget: d.budget||'',
+          timePrefs: d.timePrefs||{},
+          savedPlaces: d.savedPlaces||[]
+        };
+        loadSharedPlan();
+      }
+    } catch(e) { console.log('Shared plan load error:', e); }
+  })();
+}
+</script>
+
+<!-- ══ PLANNER LOGIC ══ -->
+<script>
+/* ─── DATA ─── */
+window._plan = {
+  arrival: '', departure: '', people: [], hotel: '',
+  interests: [], budget: '', timePrefs: {}, savedPlaces: []
+};
+
+const PLACES = [
+  // CULTURE
+  { id:'bund', name:'The Bund (Вайтань)', cat:'culture', catLabel:'Соёл/Түүх',
+    icon:'🌆', bg:'linear-gradient(135deg,#1a1a2e,#16213e)',
+    desc:'Шанхайн үзэмж тэгш хотын архитектур. Шөнийн гэрэл гайхалтай.',
+    cost:0, costLabel:'Үнэгүй', time:'2–3 цаг', rating:'4.9',
+    lfs:'LFS зөвлөмж: Шөнө 8–10 цагт очвол Пудун тийшээ гэрэлтэй байна.',
+    tags:['culture','photo','night'] },
+  { id:'yuyuan', name:'Ю Цэцэрлэг (Yu Garden)', cat:'culture', catLabel:'Соёл/Түүх',
+    icon:'🏯', bg:'linear-gradient(135deg,#2d5a27,#4a7c59)',
+    desc:'400 жилийн настай уламжлалт Хятад цэцэрлэг. Байгалийн дизайн.',
+    cost:40, costLabel:'¥40 (~$6)', time:'2 цаг', rating:'4.7',
+    lfs:'LFS зөвлөмж: Өглөө 9–11 цагт хүн цөөн байна.',
+    tags:['culture','tradition','family'] },
+  { id:'museum', name:'Шанхайн Музей', cat:'culture', catLabel:'Соёл/Түүх',
+    icon:'🏛', bg:'linear-gradient(135deg,#3d2c8d,#6a5acd)',
+    desc:'Хятадын урлаг, соёлын 120,000+ үзмэр. People\'s Square дээр.',
+    cost:0, costLabel:'Үнэгүй', time:'3 цаг', rating:'4.8',
+    lfs:'LFS зөвлөмж: Урьдчилан онлайн бүртгүүлэх шаардлагатай.',
+    tags:['culture','family','budget'] },
+  { id:'longhua', name:'Лунхуа Сүм', cat:'culture', catLabel:'Соёл/Түүх',
+    icon:'🛕', bg:'linear-gradient(135deg,#8b4513,#cd853f)',
+    desc:'Шанхайн хамгийн эртний буддын сүм. 1700 жилийн түүхтэй.',
+    cost:10, costLabel:'¥10 (~$1.5)', time:'1.5 цаг', rating:'4.6',
+    lfs:'LFS зөвлөмж: Лавай сар дахь наадмаар очвол тусгай.',
+    tags:['culture','tradition'] },
+
+  // TECH
+  { id:'tower', name:'Шанхай Цамхаг', cat:'tech', catLabel:'Технологи',
+    icon:'🗼', bg:'linear-gradient(135deg,#0a0a2e,#1a1a5e)',
+    desc:'Дэлхийн 2-р өндөр барилга. 632м. 118-р давхарт ажиглалтын тавцан.',
+    cost:180, costLabel:'¥180 (~$25)', time:'2 цаг', rating:'4.8',
+    lfs:'LFS зөвлөмж: Өглөө 9–11 цагт дараалал бага байна.',
+    tags:['tech','photo'] },
+  { id:'scitech', name:'Шинжлэх Ухаан & Технологийн Музей', cat:'tech', catLabel:'Технологи',
+    icon:'🔬', bg:'linear-gradient(135deg,#004d7a,#008793)',
+    desc:'Интерактив технологийн үзэсгэлэн. Хүүхэд, насанд хүрэгчид аль алинд.',
+    cost:60, costLabel:'¥60 (~$8)', time:'3 цаг', rating:'4.5',
+    lfs:'LFS зөвлөмж: Metro 2-р шугамаар Science & Technology Museum буудалд.',
+    tags:['tech','family'] },
+  { id:'aurora', name:'Aurora Centre Шоппинг', cat:'tech', catLabel:'Технологи',
+    icon:'🏬', bg:'linear-gradient(135deg,#1a0533,#6a0dad)',
+    desc:'Шанхайн хамгийн орчин үеийн шоппинг молл. Apple Store, брэнд дэлгүүр.',
+    cost:0, costLabel:'Үнэгүй (орох)', time:'2 цаг', rating:'4.4',
+    lfs:'LFS зөвлөмж: Nanjing Road-ын дэргэд. Хоолны газрууд олон.',
+    tags:['tech','shopping'] },
+
+  // TRADITION
+  { id:'xintiandi', name:'Синтяньди (Xintiandi)', cat:'tradition', catLabel:'Уламжлал',
+    icon:'🏮', bg:'linear-gradient(135deg,#8b1a1a,#cc4444)',
+    desc:'Уламжлалт ба орчин үеийн хослол. Кафе, ресторан, баар.',
+    cost:0, costLabel:'Үнэгүй (орох)', time:'2 цаг', rating:'4.6',
+    lfs:'LFS зөвлөмж: Оройн 6–9 цагт хамгийн амьд уур амьсгалтай.',
+    tags:['tradition','night','food','photo'] },
+  { id:'qibao', name:'Цибао Эртний Хот', cat:'tradition', catLabel:'Уламжлал',
+    icon:'🏘', bg:'linear-gradient(135deg,#5d4037,#8d6e63)',
+    desc:'1000 жилийн настай жижиг хот. Уламжлалт хоол, гар урлал.',
+    cost:0, costLabel:'Үнэгүй', time:'3 цаг', rating:'4.5',
+    lfs:'LFS зөвлөмж: Metro 9-р шугам Qibao буудалд. Тулар наадмаар очих бол хүн их байна.',
+    tags:['tradition','food','family'] },
+  { id:'zhujiajiao', name:'Жужяцяо Усан Хот', cat:'tradition', catLabel:'Уламжлал',
+    icon:'⛵', bg:'linear-gradient(135deg,#006064,#0097a7)',
+    desc:'Усан сувгаар алдартай 1800 жилийн настай жижиг хот. "Венец" хэмээн нэрлэдэг.',
+    cost:60, costLabel:'¥60 (~$8)', time:'4 цаг', rating:'4.7',
+    lfs:'LFS зөвлөмж: Зунхорц хорооны автобус 1567 буюу тусгай тур хамгийн хялбар.',
+    tags:['tradition','relax','photo'] },
+
+  // RELAX
+  { id:'century', name:'Century Park', cat:'relax', catLabel:'Амрах',
+    icon:'🌳', bg:'linear-gradient(135deg,#1b5e20,#388e3c)',
+    desc:'Шанхайн хамгийн том парк. Нуур, цэцэгт татам, дугуй унах боломжтой.',
+    cost:10, costLabel:'¥10 (~$1.5)', time:'2–4 цаг', rating:'4.5',
+    lfs:'LFS зөвлөмж: Metro 2-р шугам Century Park буудалд. Хоол авч очиж пикник хийж болно.',
+    tags:['relax','family','budget'] },
+  { id:'jingan-park', name:'Жиньань Хөшөөний Цэцэрлэг', cat:'relax', catLabel:'Амрах',
+    icon:'🗿', bg:'linear-gradient(135deg,#263238,#455a64)',
+    desc:'Уран барималуудаар чимэглэгдсэн хотын гол цэцэрлэг. Амрахад тохиромжтой.',
+    cost:0, costLabel:'Үнэгүй', time:'1 цаг', rating:'4.4',
+    lfs:'LFS зөвлөмж: Жиньань сүмийн хажуудах. Алхаж очиж болно.',
+    tags:['relax','budget','photo'] },
+
+  // FOOD
+  { id:'nanxiang', name:'Нанься Бяоз (Nanxiang Mantou)', cat:'food', catLabel:'Хоол',
+    icon:'🥟', bg:'linear-gradient(135deg,#b71c1c,#e53935)',
+    desc:'100 жилийн түүхтэй алдарт шяолунбао рестораны эх салбар. Yu Garden хажууд.',
+    cost:80, costLabel:'¥80 (~$11)', time:'1 цаг', rating:'4.8',
+    lfs:'LFS зөвлөмж: Дараалал их байна. Өглөө 10–11 цагт ок байдаг.',
+    tags:['food','culture'] },
+  { id:'huaihai', name:'Хуайхай Замын Хоолны Гудамж', cat:'food', catLabel:'Хоол',
+    icon:'🍱', bg:'linear-gradient(135deg,#e65100,#ff6d00)',
+    desc:'Street food, ресторан, кафе бүгд нэг дор. Монголчуудад дуртай газар.',
+    cost:50, costLabel:'¥50 (~$7)', time:'1.5 цаг', rating:'4.6',
+    lfs:'LFS зөвлөмж: Хот тойрч оройн хоол идэх хамгийн таатай газар.',
+    tags:['food','night','budget'] },
+  { id:'din-tai-fung', name:'Din Tai Fung', cat:'food', catLabel:'Хоол',
+    icon:'🍚', bg:'linear-gradient(135deg,#880e4f,#c2185b)',
+    desc:'Дэлхийн алдарт дим сам ресторан. Шяолунбао дэлхийн хамгийн сайн нь.',
+    cost:200, costLabel:'¥200 (~$28)', time:'1.5 цаг', rating:'4.9',
+    lfs:'LFS зөвлөмж: Урьдчилан захиалга хийх шаардлагатай. IAPM Mall-д байдаг.',
+    tags:['food'] },
+  { id:'french', name:'Францын Концесс', cat:'relax', catLabel:'Амрах',
+    icon:'🌸', bg:'linear-gradient(135deg,#6a1b9a,#9c27b0)',
+    desc:'Гоё кафе, галт тэрэгний замын мод, чилэх уур амьсгал. Алхаж тойрохоор.',
+    cost:0, costLabel:'Үнэгүй', time:'2 цаг', rating:'4.7',
+    lfs:'LFS зөвлөмж: Wukang Road хамгийн Instagram-able хэсэг.',
+    tags:['relax','photo','food','tradition'] }
+];
+
+/* ─── CURRENT STEP ─── */
+let currentStep = 1;
+
+function showToast(msg, type='') {
+  const c = document.getElementById('toastContainer');
+  const t = document.createElement('div');
+  t.className = 'toast ' + type;
+  t.textContent = msg;
+  c.appendChild(t);
+  setTimeout(() => t.remove(), 3500);
+}
+window.showToast = showToast;
+
+/* ─── STEP NAV ─── */
+window.goToStep = function(n) {
+  // Only allow going back, not skipping forward
+  if (n > currentStep + 1) return;
+  document.querySelectorAll('.step').forEach(s => s.classList.remove('active'));
+  document.getElementById('step-' + n).classList.add('active');
+  document.querySelectorAll('.step-dot').forEach(d => {
+    const s = parseInt(d.dataset.step);
+    d.classList.remove('active','done');
+    if (s < n)  d.classList.add('done');
+    if (s === n) d.classList.add('active');
+  });
+  currentStep = n;
+  updateSummaryBar();
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+};
+
+function updateSummaryBar() {
+  const bar = document.getElementById('planSummaryBar');
+  if (currentStep < 3) { bar.classList.remove('visible'); return; }
+  bar.classList.add('visible');
+  const p = window._plan;
+  document.getElementById('psb-dates').innerHTML =
+    p.arrival ? `<strong>${p.arrival}</strong> → <strong>${p.departure||'?'}</strong>` : '';
+  document.getElementById('psb-people').innerHTML =
+    p.people.length ? `<strong>${p.people.length}</strong> хүн` : '';
+  document.getElementById('psb-saved').innerHTML =
+    p.savedPlaces.length ? `<strong>${p.savedPlaces.length}</strong> газар хадгалсан` : '';
+}
+
+/* ─── STEP 1: AUTH ─── */
+window.continueAsGuest = function() {
+  window._currentUser = null;
+  showToast('Зочноор үргэлжлүүлж байна.','');
+  goToStep(2);
+};
+window.nextFromAuth = function() { goToStep(2); };
+
+/* ─── STEP 2: DATES & PEOPLE ─── */
+let people = [{ name: '' }];
+
+function renderPeople() {
+  const list = document.getElementById('peopleList');
+  list.innerHTML = '';
+  people.forEach((p, i) => {
+    const row = document.createElement('div');
+    row.className = 'person-row';
+    const colors = ['#e8392a','#3b82f6','#10b981','#f59e0b','#8b5cf6','#ec4899'];
+    const col = colors[i % colors.length];
+    row.innerHTML = `
+      <div class="person-avatar" style="background:linear-gradient(135deg,${col},${col}cc)">
+        ${p.name ? p.name[0].toUpperCase() : (i===0?'Та':'?')}
+      </div>
+      <input type="text" placeholder="${i===0?'Таны нэр (заавал биш)':'Найзын нэр'}"
+        value="${p.name}" oninput="people[${i}].name=this.value;updatePersonAvatar(this,${i})"/>
+      ${i>0 ? `<button class="btn-remove-person" onclick="removePerson(${i})">✕</button>` : ''}
+    `;
+    list.appendChild(row);
+  });
+}
+window.updatePersonAvatar = function(inp, i) {
+  const av = inp.parentElement.querySelector('.person-avatar');
+  av.textContent = inp.value ? inp.value[0].toUpperCase() : (i===0?'Та':'?');
+};
+window.addPerson = function() {
+  if (people.length >= 8) { showToast('Хамгийн ихдээ 8 хүн', ''); return; }
+  people.push({ name: '' });
+  renderPeople();
+};
+window.removePerson = function(i) {
+  people.splice(i, 1);
+  renderPeople();
+};
+renderPeople();
+
+window.updateDayCards = function() {
+  const arr = document.getElementById('dateArrival').value;
+  const dep = document.getElementById('dateDeparture').value;
+  if (arr && dep) buildDayCards(arr, dep);
+};
+
+function buildDayCards(arr, dep) {
+  const a = new Date(arr), b = new Date(dep);
+  const days = Math.max(1, Math.round((b-a)/(1000*60*60*24))+1);
+  const cont = document.getElementById('dayCards');
+  cont.innerHTML = '';
+  const MN_DAYS = ['Ня','Да','Мя','Лх','Пү','Ба','Бя'];
+  const MN_MONTHS = ['1-р сар','2-р сар','3-р сар','4-р сар','5-р сар','6-р сар',
+    '7-р сар','8-р сар','9-р сар','10-р сар','11-р сар','12-р сар'];
+  for (let d = 0; d < days; d++) {
+    const dt = new Date(a); dt.setDate(a.getDate() + d);
+    const label = `${dt.getDate()} ${MN_MONTHS[dt.getMonth()]} (${MN_DAYS[dt.getDay()]})`;
+    const card = document.createElement('div');
+    card.className = 'day-card';
+    const key = arr + '_d' + d;
+    const saved = window._plan.timePrefs[key] || {};
+    card.innerHTML = `
+      <h4>${d+1}-р өдөр · ${label}</h4>
+      <div style="margin-bottom:10px;">
+        <div style="font-size:.8rem;color:var(--sub);margin-bottom:6px;">Явах цаг:</div>
+        <div class="time-options">
+          ${['08:00 Эрт','09:00 Өглөө','10:00','11:00','12:00 Өдрийн дараа','13:00','14:00 Оройдоо']
+            .map(t => `<div class="time-chip ${saved.start===t?'selected':''}"
+              onclick="selectTime(this,'${key}','start')">${t}</div>`).join('')}
+        </div>
+      </div>
+      <div>
+        <div style="font-size:.8rem;color:var(--sub);margin-bottom:6px;">Буцах цаг:</div>
+        <div class="time-options">
+          ${['17:00 Эрт буцах','18:00','19:00','20:00','21:00','22:00 Оройтох','Хоног дуустал']
+            .map(t => `<div class="time-chip ${saved.end===t?'selected':''}"
+              onclick="selectTime(this,'${key}','end')">${t}</div>`).join('')}
+        </div>
+      </div>
+    `;
+    cont.appendChild(card);
+  }
+}
+
+window.selectTime = function(el, key, type) {
+  const parent = el.parentElement;
+  parent.querySelectorAll('.time-chip').forEach(c => c.classList.remove('selected'));
+  el.classList.add('selected');
+  if (!window._plan.timePrefs[key]) window._plan.timePrefs[key] = {};
+  window._plan.timePrefs[key][type] = el.textContent.trim();
+};
+
+window.nextFromDates = function() {
+  const arr = document.getElementById('dateArrival').value;
+  const dep = document.getElementById('dateDeparture').value;
+  if (!arr || !dep) { showToast('Ирэх болон явах огноог оруулна уу', 'error'); return; }
+  if (new Date(dep) < new Date(arr)) { showToast('Явах огноо ирэх огнооноос хожуу байх ёстой', 'error'); return; }
+  window._plan.arrival = arr;
+  window._plan.departure = dep;
+  window._plan.people = people;
+  window._plan.hotel = document.getElementById('hotel').value;
+  buildDayCards(arr, dep);
+  goToStep(3);
+};
+
+/* ─── STEP 3: INTERESTS ─── */
+window.toggleChip = function(el) {
+  el.classList.toggle('selected');
+};
+window.toggleSingleChip = function(el, groupId) {
+  document.querySelectorAll(`#${groupId} .chip`).forEach(c => c.classList.remove('selected'));
+  el.classList.add('selected');
+};
+window.nextFromInterests = function() {
+  const sel = [...document.querySelectorAll('#interestChips .chip.selected')].map(c => c.dataset.val);
+  const bud = document.querySelector('#budgetChips .chip.selected');
+  window._plan.interests = sel;
+  window._plan.budget = bud ? bud.dataset.val : '';
+  goToStep(4);
+};
+
+/* ─── STEP 4: TIME ─── */
+window.nextFromTime = function() { goToStep(5); renderPlaces(); };
+
+/* ─── STEP 5: PLACES ─── */
+let currentFilter = 'all';
+window.filterPlaces = function(cat, btn) {
+  currentFilter = cat;
+  document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
+  btn.classList.add('active');
+  renderPlaces();
+};
+
+function renderPlaces() {
+  const grid = document.getElementById('placesGrid');
+  const interests = window._plan.interests;
+  let filtered = PLACES;
+  if (currentFilter !== 'all') filtered = PLACES.filter(p => p.cat === currentFilter);
+
+  // Sort: interest-matching first
+  filtered = [...filtered].sort((a, b) => {
+    const aMatch = interests.length === 0 || a.tags.some(t => interests.includes(t));
+    const bMatch = interests.length === 0 || b.tags.some(t => interests.includes(t));
+    return (bMatch ? 1 : 0) - (aMatch ? 1 : 0);
+  });
+
+  document.getElementById('totalPlacesCount').textContent = filtered.length;
+  document.getElementById('savedCount').textContent = window._plan.savedPlaces.length;
+
+  grid.innerHTML = '';
+  filtered.forEach(p => {
+    const isSaved = window._plan.savedPlaces.includes(p.id);
+    const card = document.createElement('div');
+    card.className = 'place-card' + (isSaved ? ' saved' : '');
+    card.id = 'pc_' + p.id;
+    const catClass = { culture:'cat-culture', tech:'cat-tech', tradition:'cat-trad', relax:'cat-relax', food:'cat-food' }[p.cat] || '';
+    card.innerHTML = `
+      <div class="place-img-gradient" style="background:${p.bg}">${p.icon}</div>
+      <div class="place-body">
+        <div class="place-name">${p.name}</div>
+        <span class="place-cat ${catClass}">${p.catLabel}</span>
+        <div class="place-desc">${p.desc}</div>
+        <div style="font-size:.77rem;color:#e8392a;margin-bottom:8px;font-style:italic;">${p.lfs}</div>
+        <div class="place-meta">
+          <div>
+            <div class="place-cost">${p.costLabel}</div>
+            <div class="place-rating">⭐ ${p.rating} · ${p.time}</div>
+          </div>
+          <button class="place-save ${isSaved?'saved':''}" onclick="toggleSave('${p.id}',this)"
+            title="${isSaved?'Хасах':'Хадгалах'}">
+            ${isSaved ? '✓' : '♡'}
+          </button>
+        </div>
+      </div>
+    `;
+    card.addEventListener('click', (e) => {
+      if (e.target.classList.contains('place-save')) return;
+      toggleSave(p.id, card.querySelector('.place-save'));
+    });
+    grid.appendChild(card);
+  });
+}
+
+window.toggleSave = function(id, btn) {
+  const idx = window._plan.savedPlaces.indexOf(id);
+  if (idx >= 0) {
+    window._plan.savedPlaces.splice(idx, 1);
+    btn.textContent = '♡'; btn.classList.remove('saved');
+    const pc = document.getElementById('pc_' + id);
+    if (pc) pc.classList.remove('saved');
+    showToast('Хасагдлаа');
+  } else {
+    window._plan.savedPlaces.push(id);
+    btn.textContent = '✓'; btn.classList.add('saved');
+    const pc = document.getElementById('pc_' + id);
+    if (pc) pc.classList.add('saved');
+    showToast('Хадгалагдлаа ✓', 'success');
+  }
+  document.getElementById('savedCount').textContent = window._plan.savedPlaces.length;
+  updateSummaryBar();
+};
+
+window.nextFromPlaces = function() {
+  if (window._plan.savedPlaces.length === 0) {
+    showToast('Дор хаяж 1 газар хадгална уу', 'error'); return;
+  }
+  buildItinerary();
+  goToStep(6);
+};
+
+/* ─── STEP 6: ITINERARY ─── */
+function buildItinerary() {
+  const p = window._plan;
+  const saved = p.savedPlaces.map(id => PLACES.find(pl => pl.id === id)).filter(Boolean);
+
+  // Render saved list
+  const sl = document.getElementById('savedList');
+  sl.innerHTML = '';
+  if (saved.length === 0) {
+    sl.innerHTML = '<div class="empty-state"><div class="empty-icon">📍</div><p>Хадгалсан газар алга</p></div>';
+  } else {
+    saved.forEach((pl,i) => {
+      const item = document.createElement('div');
+      item.className = 'saved-item'; item.draggable = true;
+      item.dataset.id = pl.id;
+      const catClass = { culture:'cat-culture', tech:'cat-tech', tradition:'cat-trad', relax:'cat-relax', food:'cat-food' }[pl.cat] || '';
+      item.innerHTML = `
+        <div class="saved-item-icon" style="background:${pl.bg}">${pl.icon}</div>
+        <div class="saved-item-info">
+          <div class="saved-item-name">${pl.name}</div>
+          <div class="saved-item-sub">${pl.catLabel} · ${pl.costLabel} · ${pl.time}</div>
+        </div>
+        <button class="saved-item-rm" onclick="removeSaved('${pl.id}')">✕</button>
+      `;
+      sl.appendChild(item);
+    });
+    initDragDrop(sl);
+  }
+
+  // Build itinerary timeline
+  const arrival = p.arrival ? new Date(p.arrival) : new Date();
+  const departure = p.departure ? new Date(p.departure) : new Date(arrival.getTime() + 2*86400000);
+  const totalDays = Math.max(1, Math.round((departure - arrival)/(1000*60*60*24)) + 1);
+  const perDay = Math.ceil(saved.length / totalDays);
+
+  const MN_MONTHS = ['1-р сар','2-р сар','3-р сар','4-р сар','5-р сар','6-р сар',
+    '7-р сар','8-р сар','9-р сар','10-р сар','11-р сар','12-р сар'];
+
+  let html = '';
+  let idx = 0;
+  for (let d = 0; d < totalDays && idx < saved.length; d++) {
+    const dt = new Date(arrival); dt.setDate(arrival.getDate() + d);
+    const key = p.arrival + '_d' + d;
+    const pref = p.timePrefs[key] || {};
+    const startHour = parseInt((pref.start||'09:00').split(':')[0]) || 9;
+    const dateStr = `${dt.getDate()} ${MN_MONTHS[dt.getMonth()]}`;
+
+    html += `<div class="itinerary-section">
+      <div class="itin-day-header">
+        <div class="itin-day-badge">${d+1}-р өдөр</div>
+        <div class="itin-day-date">${dateStr}</div>
+      </div>
+      <div class="itin-timeline">`;
+
+    let hour = startHour;
+    const dayPlaces = saved.slice(idx, idx + perDay);
+    dayPlaces.forEach((pl, pi) => {
+      const isLast = (pi === dayPlaces.length - 1);
+      const timeStr = `${String(hour).padStart(2,'0')}:00`;
+      html += `
+        <div class="itin-item">
+          <div class="itin-left"><div class="itin-time">${timeStr}</div></div>
+          <div class="itin-center">
+            <div class="itin-dot"></div>
+            ${!isLast ? '<div class="itin-line"></div>' : ''}
+          </div>
+          <div class="itin-right">
+            <div class="itin-name">${pl.icon} ${pl.name}</div>
+            <div class="itin-sub">${pl.catLabel} · ${pl.time} · ${pl.costLabel}</div>
+          </div>
+        </div>`;
+      // estimate time: parse "2 цаг" → 2 hours
+      const h = parseInt(pl.time) || 2;
+      hour += h + 1; // +1 hr travel
+    });
+
+    html += '</div></div>';
+    idx += perDay;
+  }
+  document.getElementById('itinContent').innerHTML = html;
+  document.getElementById('itin-sub').textContent =
+    `${totalDays} өдөр · ${saved.length} газар · ${p.people.length||1} хүн`;
+
+  // Cost
+  buildCostTable(saved, p.people.length||1);
+
+  // Share link placeholder
+  document.getElementById('shareLink').value = 'Хадгалах товчийг дарна уу...';
+}
+
+function buildCostTable(places, numPeople) {
+  const entryCost = places.reduce((s, p) => s + p.cost, 0);
+  const metroEst = 30 * numPeople; // ¥30/day avg
+  const days = Math.max(1, Math.round((new Date(window._plan.departure) - new Date(window._plan.arrival))/(1000*60*60*24))+1);
+  const foodEst = 100 * days * numPeople;
+  const total = entryCost * numPeople + metroEst * days + foodEst;
+
+  const rows = [
+    ['Үзэмжийн хураамж', `¥${entryCost} × ${numPeople} хүн`, `¥${entryCost*numPeople}`],
+    ['Метро & тээвэр', `¥30/өдөр × ${days} өдөр × ${numPeople}`, `¥${metroEst*days}`],
+    ['Хоол (ойролцоо)', `¥100/хүн/өдөр × ${days} × ${numPeople}`, `¥${foodEst}`],
+    ['Нийт (CNY)', '', `<span class="cost-total">¥${total}</span>`],
+    ['Нийт (USD ойролцоо)', '', `<span class="cost-total">~$${Math.round(total/7.2)}</span>`],
+  ];
+
+  document.getElementById('costTable').innerHTML = rows.map(r =>
+    `<tr><td class="cost-label">${r[0]}</td><td style="color:var(--sub)">${r[1]}</td><td style="text-align:right">${r[2]}</td></tr>`
+  ).join('');
+}
+
+window.removeSaved = function(id) {
+  const idx = window._plan.savedPlaces.indexOf(id);
+  if (idx >= 0) window._plan.savedPlaces.splice(idx, 1);
+  buildItinerary();
+  updateSummaryBar();
+};
+
+/* ─── DRAG & DROP REORDER ─── */
+function initDragDrop(list) {
+  let dragged = null;
+  list.querySelectorAll('.saved-item').forEach(item => {
+    item.addEventListener('dragstart', () => { dragged = item; item.style.opacity='.4'; });
+    item.addEventListener('dragend',   () => { dragged = null; item.style.opacity='1'; });
+    item.addEventListener('dragover',  e => { e.preventDefault(); });
+    item.addEventListener('drop', () => {
+      if (!dragged || dragged === item) return;
+      const fromId = dragged.dataset.id, toId = item.dataset.id;
+      const savedArr = window._plan.savedPlaces;
+      const fi = savedArr.indexOf(fromId), ti = savedArr.indexOf(toId);
+      if (fi >= 0 && ti >= 0) {
+        savedArr.splice(fi, 1);
+        savedArr.splice(ti, 0, fromId);
+        buildItinerary();
+      }
+    });
+  });
+}
+
+/* ─── SHARE ─── */
+window.copyLink = function() {
+  const val = document.getElementById('shareLink').value;
+  if (val.includes('дарна') || val.includes('байна')) {
+    showToast('Эхлээд хадгалах товч дарна уу', 'error'); return;
+  }
+  navigator.clipboard.writeText(val).then(() => showToast('Линк хуулагдлаа!', 'success'));
+};
+
+window.shareViaTelegram = function() {
+  const val = document.getElementById('shareLink').value;
+  if (val.includes('дарна') || val.includes('байна')) {
+    showToast('Эхлээд хадгалах товч дарна уу', 'error'); return;
+  }
+  const msg = encodeURIComponent('LFS Shanghai аяллын төлөвлөгөө: ' + val);
+  window.open('https://t.me/share/url?url=' + encodeURIComponent(val) + '&text=' + msg);
+};
+
+window.shareViaEmail = function() {
+  const val = document.getElementById('shareLink').value;
+  const sub = encodeURIComponent('LFS Shanghai — Аяллын Төлөвлөгөө');
+  const body = encodeURIComponent('Манай аяллын төлөвлөгөөг харах:\n' + val);
+  window.open(`mailto:?subject=${sub}&body=${body}`);
+};
+
+/* ─── LOAD SHARED PLAN ─── */
+window.loadSharedPlan = function() {
+  const p = window._plan;
+  if (p.arrival) document.getElementById('dateArrival').value = p.arrival;
+  if (p.departure) document.getElementById('dateDeparture').value = p.departure;
+  if (p.hotel) document.getElementById('hotel').value = p.hotel;
+  people = p.people.length ? p.people : [{ name:'' }];
+  renderPeople();
+  if (p.interests.length) {
+    document.querySelectorAll('#interestChips .chip').forEach(c => {
+      if (p.interests.includes(c.dataset.val)) c.classList.add('selected');
+    });
+  }
+  if (p.arrival && p.departure) buildDayCards(p.arrival, p.departure);
+  renderPlaces();
+  buildItinerary();
+  goToStep(6);
+  showToast('Хуваалцсан төлөвлөгөө нээгдлээ!', 'success');
+};
+</script>
+
+<!-- Google Analytics -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-81DTJ80VLR"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date()); gtag('config', 'G-81DTJ80VLR');
+</script>
+</body>
+</html>
