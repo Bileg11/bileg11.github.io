@@ -250,9 +250,9 @@
       border-radius: 50px; margin-bottom: 8px; font-weight: 600;
     }
     .cat-culture { background: #fff3e0; color: #e65100; }
-    .cat-tech    { background: #e3f2fd; color: #0277bd; }
-    .cat-trad    { background: #f3e5f5; color: #6a1b9a; }
+    .cat-hidden  { background: #ede7f6; color: #4527a0; }
     .cat-relax   { background: #e8f5e9; color: #2e7d32; }
+    .cat-night   { background: #e8eaf6; color: #283593; }
     .cat-food    { background: #fce4ec; color: #c62828; }
     .place-desc  { font-size: .8rem; color: var(--sub); line-height: 1.5; margin-bottom: 10px; }
     .place-meta { display: flex; justify-content: space-between; align-items: center; }
@@ -605,11 +605,11 @@
 
       <div class="places-filter" id="placesFilter">
         <button class="filter-btn active" onclick="filterPlaces('all', this)">Бүгд</button>
-        <button class="filter-btn" onclick="filterPlaces('culture', this)">🏛 Соёл</button>
-        <button class="filter-btn" onclick="filterPlaces('food', this)">🍜 Хоол</button>
-        <button class="filter-btn" onclick="filterPlaces('tech', this)">🏙 Технологи</button>
-        <button class="filter-btn" onclick="filterPlaces('tradition', this)">🏮 Уламжлал</button>
+        <button class="filter-btn" onclick="filterPlaces('culture', this)">🏛 Үзэх ёстой</button>
+        <button class="filter-btn" onclick="filterPlaces('hidden', this)">💎 Нуугдмал</button>
         <button class="filter-btn" onclick="filterPlaces('relax', this)">🌿 Амрах</button>
+        <button class="filter-btn" onclick="filterPlaces('night', this)">🌙 Шөнө</button>
+        <button class="filter-btn" onclick="filterPlaces('food', this)">🍜 Хоол</button>
       </div>
 
       <!-- SAVED COUNT -->
@@ -769,111 +769,187 @@ window._plan = {
 };
 
 const PLACES = [
-  // CULTURE
-  { id:'bund', name:'The Bund (Вайтань)', cat:'culture', catLabel:'Соёл/Түүх',
+
+  // ── MUST SEE ──
+  { id:'bund', name:'The Bund', cat:'culture', catLabel:'Үзэх ёстой',
     icon:'🌆', bg:'linear-gradient(135deg,#1a1a2e,#16213e)',
-    desc:'Шанхайн үзэмж тэгш хотын архитектур. Шөнийн гэрэл гайхалтай.',
-    cost:0, costLabel:'Үнэгүй', time:'2–3 цаг', rating:'4.9',
-    lfs:'LFS зөвлөмж: Шөнө 8–10 цагт очвол Пудун тийшээ гэрэлтэй байна.',
+    metro:'Line 2/10 · Nanjing East Road',
+    desc:'Шанхайн хамгийн алдартай газар. Хуанпу мөрний дагуу 1.6 км явган тэрэгний зам. Колониал барилга + Пудунгийн панорама.',
+    cost:0, costLabel:'Үнэгүй', time:'1–3 цаг', rating:'4.8',
+    lfs:'LFS: Орой 20:00-аас очвол гэрэлт үзэмж гайхалтай. Завиар аялал бас боломжтой.',
+    tags:['culture','photo','night','budget'] },
+
+  { id:'oriental_pearl', name:'Oriental Pearl Tower', cat:'culture', catLabel:'Үзэх ёстой',
+    icon:'🔴', bg:'linear-gradient(135deg,#7b0000,#c0392b)',
+    metro:'Line 2 · Lujiazui',
+    desc:'468м өндөр Шанхайн тэмдэгт цамхаг. Тунгалаг ажиглалтын зам, Sky Walk, 360° панорама.',
+    cost:210, costLabel:'¥150–210 (~$21–29)', time:'1–2 цаг', rating:'4.7',
+    lfs:'LFS: Нарны жаргалтаас 30 мин өмнө орвол шилжилтийн гэрлийг харна.',
     tags:['culture','photo','night'] },
-  { id:'yuyuan', name:'Ю Цэцэрлэг (Yu Garden)', cat:'culture', catLabel:'Соёл/Түүх',
+
+  { id:'yu_garden', name:'Yu Garden', cat:'culture', catLabel:'Үзэх ёстой',
     icon:'🏯', bg:'linear-gradient(135deg,#2d5a27,#4a7c59)',
-    desc:'400 жилийн настай уламжлалт Хятад цэцэрлэг. Байгалийн дизайн.',
-    cost:40, costLabel:'¥40 (~$6)', time:'2 цаг', rating:'4.7',
-    lfs:'LFS зөвлөмж: Өглөө 9–11 цагт хүн цөөн байна.',
+    metro:'Line 10/14 · Yu Garden',
+    desc:'1559 оны Мин гүрний уламжлалт цэцэрлэг. Дэнж, цөөрөм, чулуун хашлага бүхий 2 га. Хажуудаа Yuyuan Bazaar.',
+    cost:30, costLabel:'¥30 (~$4)', time:'1–2 цаг', rating:'4.7',
+    lfs:'LFS: Өглөө 09:00 хүртэл хүн цөөн. Энтрэ онлайн авбал ¥15 хямдрал.',
     tags:['culture','tradition','family'] },
-  { id:'museum', name:'Шанхайн Музей', cat:'culture', catLabel:'Соёл/Түүх',
-    icon:'🏛', bg:'linear-gradient(135deg,#3d2c8d,#6a5acd)',
-    desc:'Хятадын урлаг, соёлын 120,000+ үзмэр. People\'s Square дээр.',
-    cost:0, costLabel:'Үнэгүй', time:'3 цаг', rating:'4.8',
-    lfs:'LFS зөвлөмж: Урьдчилан онлайн бүртгүүлэх шаардлагатай.',
-    tags:['culture','family','budget'] },
-  { id:'longhua', name:'Лунхуа Сүм', cat:'culture', catLabel:'Соёл/Түүх',
-    icon:'🛕', bg:'linear-gradient(135deg,#8b4513,#cd853f)',
-    desc:'Шанхайн хамгийн эртний буддын сүм. 1700 жилийн түүхтэй.',
-    cost:10, costLabel:'¥10 (~$1.5)', time:'1.5 цаг', rating:'4.6',
-    lfs:'LFS зөвлөмж: Лавай сар дахь наадмаар очвол тусгай.',
-    tags:['culture','tradition'] },
 
-  // TECH
-  { id:'tower', name:'Шанхай Цамхаг', cat:'tech', catLabel:'Технологи',
+  { id:'shanghai_tower', name:'Shanghai Tower', cat:'culture', catLabel:'Үзэх ёстой',
     icon:'🗼', bg:'linear-gradient(135deg,#0a0a2e,#1a1a5e)',
-    desc:'Дэлхийн 2-р өндөр барилга. 632м. 118-р давхарт ажиглалтын тавцан.',
-    cost:180, costLabel:'¥180 (~$25)', time:'2 цаг', rating:'4.8',
-    lfs:'LFS зөвлөмж: Өглөө 9–11 цагт дараалал бага байна.',
-    tags:['tech','photo'] },
-  { id:'scitech', name:'Шинжлэх Ухаан & Технологийн Музей', cat:'tech', catLabel:'Технологи',
-    icon:'🔬', bg:'linear-gradient(135deg,#004d7a,#008793)',
-    desc:'Интерактив технологийн үзэсгэлэн. Хүүхэд, насанд хүрэгчид аль алинд.',
-    cost:60, costLabel:'¥60 (~$8)', time:'3 цаг', rating:'4.5',
-    lfs:'LFS зөвлөмж: Metro 2-р шугамаар Science & Technology Museum буудалд.',
-    tags:['tech','family'] },
-  { id:'aurora', name:'Aurora Centre Шоппинг', cat:'tech', catLabel:'Технологи',
-    icon:'🏬', bg:'linear-gradient(135deg,#1a0533,#6a0dad)',
-    desc:'Шанхайн хамгийн орчин үеийн шоппинг молл. Apple Store, брэнд дэлгүүр.',
-    cost:0, costLabel:'Үнэгүй (орох)', time:'2 цаг', rating:'4.4',
-    lfs:'LFS зөвлөмж: Nanjing Road-ын дэргэд. Хоолны газрууд олон.',
-    tags:['tech','shopping'] },
+    metro:'Line 2 · Lujiazui',
+    desc:'Дэлхийн 2-р өндөр барилга (632м). 128-р давхарт ажиглалтын тавцан. Лифт 55 секундэд 120 давхар гарна.',
+    cost:180, costLabel:'¥120–180 (~$17–25)', time:'1–2 цаг', rating:'4.8',
+    lfs:'LFS: Өглөө 09:00–11:00 дараалал бага. Орой нарны жаргалт үед очвол хамгийн сайн.',
+    tags:['culture','photo','night'] },
 
-  // TRADITION
-  { id:'xintiandi', name:'Синтяньди (Xintiandi)', cat:'tradition', catLabel:'Уламжлал',
-    icon:'🏮', bg:'linear-gradient(135deg,#8b1a1a,#cc4444)',
-    desc:'Уламжлалт ба орчин үеийн хослол. Кафе, ресторан, баар.',
-    cost:0, costLabel:'Үнэгүй (орох)', time:'2 цаг', rating:'4.6',
-    lfs:'LFS зөвлөмж: Оройн 6–9 цагт хамгийн амьд уур амьсгалтай.',
-    tags:['tradition','night','food','photo'] },
-  { id:'qibao', name:'Цибао Эртний Хот', cat:'tradition', catLabel:'Уламжлал',
-    icon:'🏘', bg:'linear-gradient(135deg,#5d4037,#8d6e63)',
-    desc:'1000 жилийн настай жижиг хот. Уламжлалт хоол, гар урлал.',
-    cost:0, costLabel:'Үнэгүй', time:'3 цаг', rating:'4.5',
-    lfs:'LFS зөвлөмж: Metro 9-р шугам Qibao буудалд. Тулар наадмаар очих бол хүн их байна.',
-    tags:['tradition','food','family'] },
-  { id:'zhujiajiao', name:'Жужяцяо Усан Хот', cat:'tradition', catLabel:'Уламжлал',
+  { id:'shanghai_museum', name:'Shanghai Museum', cat:'culture', catLabel:'Үзэх ёстой',
+    icon:'🏛', bg:'linear-gradient(135deg,#3d2c8d,#6a5acd)',
+    metro:'Line 1/2/8 · People\'s Square',
+    desc:'Хятадын урлагийн нэн чухал музей. Хүрэл эдлэл, каллиграф, шаазан, нефрит — 120,000+ үзмэр.',
+    cost:0, costLabel:'Үнэгүй', time:'2–3 цаг', rating:'4.8',
+    lfs:'LFS: Урьдчилан онлайн бүртгүүлэх шаардлагатай. Өглөө орох хамгийн тохиромжтой.',
+    tags:['culture','family','budget'] },
+
+  // ── HIDDEN GEMS ──
+  { id:'tianzifang', name:'Tianzifang', cat:'hidden', catLabel:'Нуугдмал газар',
+    icon:'🎨', bg:'linear-gradient(135deg,#4a235a,#7d3c98)',
+    metro:'Line 9 · Dapuqiao',
+    desc:'1930-иад оны шикүмэн гудамж дунд байрлах урлаг, дизайны хороолол. Орон нутгийн уран бүтээлч, кофе шоп, гараар хийсэн бараа.',
+    cost:0, costLabel:'Үнэгүй', time:'1–2 цаг', rating:'4.6',
+    lfs:'LFS: Ажлын өдрийн өглөө хамгийн хүнгүй. Хоолны газрын үнэ боломжийн.',
+    tags:['hidden','photo','shopping','budget'] },
+
+  { id:'m50', name:'M50 Creative Park', cat:'hidden', catLabel:'Нуугдмал газар',
+    icon:'🖼', bg:'linear-gradient(135deg,#1a3a4a,#2e6f8e)',
+    metro:'Line 13 · Jiangning Road',
+    desc:'Хуучин нэхмэлийн үйлдвэрт байрлах 100+ орчин үеийн урлагийн галерей. ShanghART болон бусад олон улсын галерей.',
+    cost:0, costLabel:'Үнэгүй', time:'1–3 цаг', rating:'4.5',
+    lfs:'LFS: Мяг–Бям 10:00–17:00 нээлттэй. Сучжоу голын эрэгт алхахад сайхан.',
+    tags:['hidden','photo','budget'] },
+
+  { id:'wukang_road', name:'Wukang Road', cat:'hidden', catLabel:'Нуугдмал газар',
+    icon:'🌸', bg:'linear-gradient(135deg,#6a1b9a,#9c27b0)',
+    metro:'Line 11 · Jiaotong University',
+    desc:'1920–30-аад оны колониал барилга бүхий гудамж. Тренди кофе шоп, нарийн боов. Шанхайн залуусын дуртай citywalk маршрут.',
+    cost:0, costLabel:'Үнэгүй', time:'1–2 цаг', rating:'4.7',
+    lfs:'LFS: Wukang Mansion урд тал хамгийн Instagram-able цэг. Өглөө 10:00 хүртэл хүн цөөн.',
+    tags:['hidden','photo','food'] },
+
+  { id:'fuxing_park', name:'Fuxing Park', cat:'hidden', catLabel:'Нуугдмал газар',
+    icon:'🌿', bg:'linear-gradient(135deg,#1b5e20,#2e7d32)',
+    metro:'Line 10/13 · Xintiandi',
+    desc:'Францын хэв маягийн цэцэрлэг. Өглөөний тай чи, маажонг — орон нутгийн амьдралыг ажиглах хамгийн сайн газар.',
+    cost:0, costLabel:'Үнэгүй', time:'30–60 мин', rating:'4.6',
+    lfs:'LFS: 06:00–09:00 орчин тай чи харахад хамгийн тохиромжтой. Xintiandитай нийлүүл.',
+    tags:['hidden','relax','budget'] },
+
+  { id:'zhujiajiao', name:'Zhujiajiao Ancient Town', cat:'hidden', catLabel:'Нуугдмал газар',
     icon:'⛵', bg:'linear-gradient(135deg,#006064,#0097a7)',
-    desc:'Усан сувгаар алдартай 1800 жилийн настай жижиг хот. "Венец" хэмээн нэрлэдэг.',
-    cost:60, costLabel:'¥60 (~$8)', time:'4 цаг', rating:'4.7',
-    lfs:'LFS зөвлөмж: Зунхорц хорооны автобус 1567 буюу тусгай тур хамгийн хялбар.',
-    tags:['tradition','relax','photo'] },
+    metro:'Line 17 · Zhujiajiao + автобус',
+    desc:'Хотоос 42 км, сувагт усны Мин-Чин гүрний эртний хот. Чулуун гүүр, цайны газар, шөнийн гэрэлт үзэмж.',
+    cost:0, costLabel:'Үнэгүй (завь ¥20–60)', time:'3–4 цаг', rating:'4.6',
+    lfs:'LFS: Өглөө 09:00-д очвол хүн цөөн. Хотоос LFS тусгай тур зохицуулна.',
+    tags:['hidden','tradition','photo','relax'] },
 
-  // RELAX
-  { id:'century', name:'Century Park', cat:'relax', catLabel:'Амрах',
+  // ── RELAX & PARKS ──
+  { id:'west_bund', name:'West Bund (Xuhui Riverside)', cat:'relax', catLabel:'Амрах',
+    icon:'🌅', bg:'linear-gradient(135deg,#0d3349,#1565c0)',
+    metro:'Line 11 · Yunjin Road',
+    desc:'Хуанпу мөрний баруун эрэгт урлаг, соёлын бүс. West Bund Art Museum, кофе шоп, явган тэрэгний зам.',
+    cost:0, costLabel:'Үнэгүй', time:'1–3 цаг', rating:'4.7',
+    lfs:'LFS: Орой нарны жаргалтын үзэмж гайхалтай. Музей Мяг хаалттай.',
+    tags:['relax','photo','culture'] },
+
+  { id:'xintiandi', name:'Xintiandi', cat:'relax', catLabel:'Амрах',
+    icon:'🏮', bg:'linear-gradient(135deg,#8b1a1a,#cc4444)',
+    metro:'Line 10/13 · Xintiandi',
+    desc:'Шикүмэн барилгуудыг трендит бар, ресторан, кофе шопоор дүүргэсэн хороолол. Өдөр кофе, шөнө коктейль.',
+    cost:0, costLabel:'Үнэгүй (орох)', time:'2 цаг', rating:'4.6',
+    lfs:'LFS: Брunch-д орой 10:00–12:00, баар 21:00-аас. Fuxing Park-тай нийлүүл.',
+    tags:['relax','night','food','photo','tradition'] },
+
+  { id:'people_park', name:'People\'s Park', cat:'relax', catLabel:'Амрах',
     icon:'🌳', bg:'linear-gradient(135deg,#1b5e20,#388e3c)',
-    desc:'Шанхайн хамгийн том парк. Нуур, цэцэгт татам, дугуй унах боломжтой.',
-    cost:10, costLabel:'¥10 (~$1.5)', time:'2–4 цаг', rating:'4.5',
-    lfs:'LFS зөвлөмж: Metro 2-р шугам Century Park буудалд. Хоол авч очиж пикник хийж болно.',
-    tags:['relax','family','budget'] },
-  { id:'jingan-park', name:'Жиньань Хөшөөний Цэцэрлэг', cat:'relax', catLabel:'Амрах',
-    icon:'🗿', bg:'linear-gradient(135deg,#263238,#455a64)',
-    desc:'Уран барималуудаар чимэглэгдсэн хотын гол цэцэрлэг. Амрахад тохиромжтой.',
-    cost:0, costLabel:'Үнэгүй', time:'1 цаг', rating:'4.4',
-    lfs:'LFS зөвлөмж: Жиньань сүмийн хажуудах. Алхаж очиж болно.',
+    metro:'Line 1/2/8 · People\'s Square',
+    desc:'Хотын төвийн ногоон оазис. Амралтын өдөр "гэрлэлтийн зах" болдог — хүүхдийнхаа намтрыг авч ирсэн эцэг эхчүүд.',
+    cost:0, costLabel:'Үнэгүй', time:'1–2 цаг', rating:'4.5',
+    lfs:'LFS: Бямба, Ням гарагийн гэрлэлтийн зах Шанхайн ганцхан газар. Харахад сонирхолтой.',
     tags:['relax','budget','photo'] },
 
-  // FOOD
-  { id:'nanxiang', name:'Нанься Бяоз (Nanxiang Mantou)', cat:'food', catLabel:'Хоол',
+  { id:'expo_greenhouse', name:'Expo Culture Park Greenhouse', cat:'relax', catLabel:'Амрах',
+    icon:'🪴', bg:'linear-gradient(135deg,#004d40,#00897b)',
+    metro:'Line 13 · Yaohua Road',
+    desc:'2021 онд нээгдсэн. Хуучин ган үйлдвэр дотор тропик ой, усан хүрхрээ, цөлийн ургамал. Үүлэн хэлбэртэй шилэн бүтэц.',
+    cost:70, costLabel:'¥70–100 (~$10–14)', time:'2 цаг', rating:'4.8',
+    lfs:'LFS: Мяг хаалттай. Ажлын өдрийн өглөө хүн цөөн. Хаврын улирал хамгийн сайн.',
+    tags:['relax','photo','family'] },
+
+  { id:'yuyuan_bazaar', name:'Yuyuan Bazaar', cat:'relax', catLabel:'Амрах',
+    icon:'🏪', bg:'linear-gradient(135deg,#5d4037,#8d6e63)',
+    metro:'Line 10/14 · Yu Garden',
+    desc:'Yu Garden эргэн тойрон дахь захын хороолол. Сяолунбао, шэнцзяньбао, уламжлалт чайны газар.',
+    cost:0, costLabel:'Үнэгүй (хоол тусдаа)', time:'1 цаг', rating:'4.5',
+    lfs:'LFS: 09:00-ийн өмнө очвол хүн цөөн. Nanxiang Steamed Bun-д заавал очно уу.',
+    tags:['relax','food','tradition','budget'] },
+
+  // ── NIGHT LIFE ──
+  { id:'flair_bar', name:'Flair Rooftop Bar (Ritz-Carlton)', cat:'night', catLabel:'Шөнийн амьдрал',
+    icon:'🍸', bg:'linear-gradient(135deg,#1a0a00,#4a1000)',
+    metro:'Line 2 · Lujiazui',
+    desc:'Ritz-Carlton-ны 58 давхарт дээврийн бар. Бүнд + Пудунгийн панорама. Коктейль, шерри.',
+    cost:0, costLabel:'Ундаа ¥200–500/хүн', time:'2–3 цаг', rating:'4.8',
+    lfs:'LFS: Заавал урьдчилан захиалга хийнэ. 21:00-аас хамгийн сайхан.',
+    tags:['night','photo'] },
+
+  { id:'speak_low', name:'Speak Low', cat:'night', catLabel:'Шөнийн амьдрал',
+    icon:'🥃', bg:'linear-gradient(135deg,#1a1200,#3d2b00)',
+    metro:'Line 10/13 · Xintiandi',
+    desc:'Азийн шилдэг 50 барын нэгэн. Нуугдмал хаалгатай 3 давхар бар. Дэлхийн шилдэг 50 барын жагсаалтад орсон.',
+    cost:0, costLabel:'Коктейль ¥80–150', time:'2 цаг', rating:'4.7',
+    lfs:'LFS: Орохдоо доорх ширхэгийн дэлгүүрийн хаалгаар ор. 21:00-аас урьдчилан суудал захиал.',
+    tags:['night'] },
+
+  { id:'sober_company', name:'Sober Company', cat:'night', catLabel:'Шөнийн амьдрал',
+    icon:'🍹', bg:'linear-gradient(135deg,#0d0d2e,#1a1a5e)',
+    metro:'Line 1 · Hengshan Road',
+    desc:'Азийн хамгийн алдартай барийн нэгэн. "Drinking challenge" концепц. Тренди уур амьсгал.',
+    cost:0, costLabel:'Коктейль ¥80–120', time:'2–3 цаг', rating:'4.6',
+    lfs:'LFS: 20:00-аас орох нь тохиромжтой. Жил бүрийн шилдэг барын тэмцээнд авардаг.',
+    tags:['night'] },
+
+  { id:'fairmont_jazz', name:'Fairmont Peace Hotel Jazz Bar', cat:'night', catLabel:'Шөнийн амьдрал',
+    icon:'🎷', bg:'linear-gradient(135deg,#2c1810,#6b3a2a)',
+    metro:'Line 2/10 · Nanjing East Road',
+    desc:'1930-аад оноос тасралтгүй ажиллаж буй домогт жазз бар. Бүндийн Ар Деко барилган дотор. Ахмад хөгжимчид тогледог.',
+    cost:0, costLabel:'Ундаа ¥150–300 · 21:00–23:30', time:'2 цаг', rating:'4.9',
+    lfs:'LFS: Шанхайн ганцхан тийм газар. Смарт кэжуал хувцаслалт шаардлагатай. Захиалга зайлшгүй.',
+    tags:['night','culture','photo'] },
+
+  // ── FOOD ──
+  { id:'nanxiang', name:'Nanxiang Steamed Bun Restaurant', cat:'food', catLabel:'Хоол',
     icon:'🥟', bg:'linear-gradient(135deg,#b71c1c,#e53935)',
-    desc:'100 жилийн түүхтэй алдарт шяолунбао рестораны эх салбар. Yu Garden хажууд.',
-    cost:80, costLabel:'¥80 (~$11)', time:'1 цаг', rating:'4.8',
-    lfs:'LFS зөвлөмж: Дараалал их байна. Өглөө 10–11 цагт ок байдаг.',
-    tags:['food','culture'] },
-  { id:'huaihai', name:'Хуайхай Замын Хоолны Гудамж', cat:'food', catLabel:'Хоол',
-    icon:'🍱', bg:'linear-gradient(135deg,#e65100,#ff6d00)',
-    desc:'Street food, ресторан, кафе бүгд нэг дор. Монголчуудад дуртай газар.',
-    cost:50, costLabel:'¥50 (~$7)', time:'1.5 цаг', rating:'4.6',
-    lfs:'LFS зөвлөмж: Хот тойрч оройн хоол идэх хамгийн таатай газар.',
-    tags:['food','night','budget'] },
-  { id:'din-tai-fung', name:'Din Tai Fung', cat:'food', catLabel:'Хоол',
-    icon:'🍚', bg:'linear-gradient(135deg,#880e4f,#c2185b)',
-    desc:'Дэлхийн алдарт дим сам ресторан. Шяолунбао дэлхийн хамгийн сайн нь.',
-    cost:200, costLabel:'¥200 (~$28)', time:'1.5 цаг', rating:'4.9',
-    lfs:'LFS зөвлөмж: Урьдчилан захиалга хийх шаардлагатай. IAPM Mall-д байдаг.',
-    tags:['food'] },
-  { id:'french', name:'Францын Концесс', cat:'relax', catLabel:'Амрах',
-    icon:'🌸', bg:'linear-gradient(135deg,#6a1b9a,#9c27b0)',
-    desc:'Гоё кафе, галт тэрэгний замын мод, чилэх уур амьсгал. Алхаж тойрохоор.',
-    cost:0, costLabel:'Үнэгүй', time:'2 цаг', rating:'4.7',
-    lfs:'LFS зөвлөмж: Wukang Road хамгийн Instagram-able хэсэг.',
-    tags:['relax','photo','food','tradition'] }
+    metro:'Line 10/14 · Yu Garden',
+    desc:'Чин гүрний үеэс тасралтгүй үйлчилж буй сяолунбаогоор алдартай газар. Нимгэн арьс, шөлөн дүүрэн амт. Yu Garden хажууд.',
+    cost:50, costLabel:'¥50/хүн (~$7)', time:'1 цаг', rating:'4.6',
+    lfs:'LFS: 11:00-д очиж дараалалд ор. 3-р давхарт суух нь хамгийн тохиромжтой.',
+    tags:['food','culture','tradition'] },
+
+  { id:'jia_jia', name:'Jia Jia Tang Bao', cat:'food', catLabel:'Хоол',
+    icon:'🍱', bg:'linear-gradient(135deg,#4e342e,#795548)',
+    metro:'Line 1/2/8 · People\'s Square',
+    desc:'Орон нутгийн жинхэнэ таанбао газар — жуулчдынх биш, Шанхайн иргэдийн тогтмол ирдэг газар. Хямд, тансаг биш, шөлний амт гайхалтай.',
+    cost:30, costLabel:'¥30/хүн (~$4)', time:'45 мин', rating:'4.3',
+    lfs:'LFS: Cash-only. Өглөөний хоолоор хамгийн сайн. Орон нутгийн амт мэдэхийг хүсвэл заавал.',
+    tags:['food','budget'] },
+
+  { id:'da_hu_chun', name:'Da Hu Chun (Shengjian)', cat:'food', catLabel:'Хоол',
+    icon:'🫓', bg:'linear-gradient(135deg,#e65100,#ff6d00)',
+    metro:'Line 2/10 · Nanjing East Road',
+    desc:'90 гаруй жилийн түүхтэй Шанхайн шэнцзяньбао (шарсан боовтой адил) уламжлалт газар. Дэлгэр шөл, цагаан тамхи гаргасан гадна шарсан арьс.',
+    cost:30, costLabel:'¥20–30/хүн (~$3–4)', time:'45 мин', rating:'4.5',
+    lfs:'LFS: Хотын олон газарт салбар бий. Sichuan Road дахь эх салбар хамгийн жинхэнэ амттай.',
+    tags:['food','budget','tradition'] }
 ];
 
 /* ─── CURRENT STEP ─── */
@@ -1073,13 +1149,14 @@ function renderPlaces() {
     const card = document.createElement('div');
     card.className = 'place-card' + (isSaved ? ' saved' : '');
     card.id = 'pc_' + p.id;
-    const catClass = { culture:'cat-culture', tech:'cat-tech', tradition:'cat-trad', relax:'cat-relax', food:'cat-food' }[p.cat] || '';
+    const catClass = { culture:'cat-culture', hidden:'cat-hidden', relax:'cat-relax', night:'cat-night', food:'cat-food' }[p.cat] || '';
     card.innerHTML = `
       <div class="place-img-gradient" style="background:${p.bg}">${p.icon}</div>
       <div class="place-body">
         <div class="place-name">${p.name}</div>
         <span class="place-cat ${catClass}">${p.catLabel}</span>
         <div class="place-desc">${p.desc}</div>
+        ${p.metro ? `<div style="font-size:.73rem;color:var(--sub);margin-bottom:6px;">🚇 ${p.metro}</div>` : ''}
         <div style="font-size:.77rem;color:#e8392a;margin-bottom:8px;font-style:italic;">${p.lfs}</div>
         <div class="place-meta">
           <div>
@@ -1143,7 +1220,7 @@ function buildItinerary() {
       const item = document.createElement('div');
       item.className = 'saved-item'; item.draggable = true;
       item.dataset.id = pl.id;
-      const catClass = { culture:'cat-culture', tech:'cat-tech', tradition:'cat-trad', relax:'cat-relax', food:'cat-food' }[pl.cat] || '';
+      const catClass = { culture:'cat-culture', hidden:'cat-hidden', relax:'cat-relax', night:'cat-night', food:'cat-food' }[pl.cat] || '';
       item.innerHTML = `
         <div class="saved-item-icon" style="background:${pl.bg}">${pl.icon}</div>
         <div class="saved-item-info">
