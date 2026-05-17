@@ -326,6 +326,17 @@ footer{
   <a href="/" class="nav-back">← Буцах</a>
 </nav>
 
+<!-- TRUST BAR -->
+<div style="background:#f5f5f7;border-bottom:1px solid rgba(0,0,0,.06);padding:10px 20px;display:flex;align-items:center;justify-content:center;gap:20px;flex-wrap:wrap;font-size:12px;color:#6e6e73;font-weight:500">
+  <span>⚡ Дундажаар 1 цагийн дотор хариу</span>
+  <span style="color:#d1d1d6">·</span>
+  <span>✓ 200+ аялал зохион байгуулсан</span>
+  <span style="color:#d1d1d6">·</span>
+  <span>🇲🇳 Монгол хэлтэй хөтөч</span>
+  <span style="color:#d1d1d6">·</span>
+  <span>🔒 Аюулгүй, итгэлтэй</span>
+</div>
+
 <!-- PROGRESS BAR -->
 <div class="progress-bar-wrap">
   <div class="progress-bar-fill" id="progressBar" style="width:10%"></div>
@@ -647,8 +658,8 @@ footer{
             <div style="display:flex;gap:14px;align-items:flex-start">
               <div style="width:28px;height:28px;border-radius:50%;background:#0071e3;color:#fff;font-size:12px;font-weight:700;display:flex;align-items:center;justify-content:center;flex-shrink:0">1</div>
               <div>
-                <div style="font-size:13px;font-weight:600;color:#1d1d1f;margin-bottom:2px">24 цагийн дотор холбогдоно</div>
-                <div style="font-size:12px;color:#6e6e73;line-height:1.5">Бид таны захиалгыг хянаж, Facebook эсвэл и-мэйлээр хариу өгнө.</div>
+                <div style="font-size:13px;font-weight:600;color:#1d1d1f;margin-bottom:2px">⚡ 1 цагийн дотор холбогдоно</div>
+                <div style="font-size:12px;color:#6e6e73;line-height:1.5">Facebook, WeChat эсвэл и-мэйлээр хариу өгнө.</div>
               </div>
             </div>
             <div style="display:flex;gap:14px;align-items:flex-start">
@@ -668,7 +679,19 @@ footer{
           </div>
         </div>
 
-        <p style="margin-bottom:16px"><a href="https://www.facebook.com/a.bileg.2025" target="_blank" style="color:var(--blue);font-weight:600">Facebook-ээр шууд холбогдож болно →</a></p>
+        <!-- Direct contact buttons -->
+        <div style="display:flex;flex-direction:column;gap:10px;max-width:340px;margin:0 auto 20px">
+          <a href="https://www.facebook.com/a.bileg.2025" target="_blank"
+             style="display:flex;align-items:center;justify-content:center;gap:10px;padding:14px 20px;background:#1877f2;color:#fff;border-radius:14px;text-decoration:none;font-size:14px;font-weight:600">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="#fff"><path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"/></svg>
+            Facebook-ээр холбогдох
+          </a>
+          <a href="https://wa.me/message/lfsshanghai" target="_blank"
+             style="display:flex;align-items:center;justify-content:center;gap:10px;padding:14px 20px;background:#25d366;color:#fff;border-radius:14px;text-decoration:none;font-size:14px;font-weight:600">
+            💬 WeChat: lfsshanghai
+          </a>
+        </div>
+
         <button class="share-btn" onclick="shareBooking()">🔗 Найздаа хуваалцах</button>
         <div class="share-copied" id="shareCopied">Холбоос хуулагдлаа!</div>
       </div>
@@ -1213,6 +1236,21 @@ ${profileLine}`;
     } catch(tgErr) { console.warn('Telegram:', tgErr); }
 
     await sendConfirmEmail(d.email, d.name, d);
+
+    // Send admin notification email
+    try {
+      await window.emailjs.send("service_lr0xy9q", "template_o0e4529", {
+        to_email: "lfs.shanghai1@gmail.com",
+        to_name:  "LFS Admin",
+        service:  d.service,
+        start:    d.start,
+        days:     d.days,
+        people:   d.people || '—',
+        phone:    d.phone,
+        group:    d.group  || '—',
+        note:     `[ADMIN] Шинэ захиалга!\nНэр: ${d.name}\nУтас: ${d.phone}\nЭ-мэйл: ${d.email}\nWeChat: ${d.social||'—'}\n\n${d.note||'—'}`
+      });
+    } catch(_) { /* silent — Telegram covers this */ }
 
     // Show success
     document.getElementById('wizardBody').style.display = 'none';
