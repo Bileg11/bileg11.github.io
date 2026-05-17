@@ -249,11 +249,15 @@
       display: inline-block; font-size: .72rem; padding: 2px 8px;
       border-radius: 50px; margin-bottom: 8px; font-weight: 600;
     }
-    .cat-culture { background: #fff3e0; color: #e65100; }
-    .cat-hidden  { background: #ede7f6; color: #4527a0; }
-    .cat-relax   { background: #e8f5e9; color: #2e7d32; }
-    .cat-night   { background: #e8eaf6; color: #283593; }
-    .cat-food    { background: #fce4ec; color: #c62828; }
+    .cat-culture  { background: #fff3e0; color: #e65100; }
+    .cat-hidden   { background: #ede7f6; color: #4527a0; }
+    .cat-museum   { background: #e3f2fd; color: #0277bd; }
+    .cat-temple   { background: #fff8e1; color: #f57f17; }
+    .cat-shopping { background: #fce4ec; color: #880e4f; }
+    .cat-food     { background: #fbe9e7; color: #bf360c; }
+    .cat-relax    { background: #e8f5e9; color: #2e7d32; }
+    .cat-night    { background: #e8eaf6; color: #283593; }
+    .cat-daytrip  { background: #e0f7fa; color: #006064; }
     .place-desc  { font-size: .8rem; color: var(--sub); line-height: 1.5; margin-bottom: 10px; }
     .place-meta { display: flex; justify-content: space-between; align-items: center; }
     .place-cost { font-size: .8rem; font-weight: 600; color: var(--gold); }
@@ -604,12 +608,16 @@
       <div class="card-sub">Явах газраа харж, дуртайгаа хадгал. Хожим автоматаар маршрутад орно.</div>
 
       <div class="places-filter" id="placesFilter">
-        <button class="filter-btn active" onclick="filterPlaces('all', this)">Бүгд</button>
+        <button class="filter-btn active" onclick="filterPlaces('all', this)">🗺 Бүгд</button>
         <button class="filter-btn" onclick="filterPlaces('culture', this)">🏛 Үзэх ёстой</button>
         <button class="filter-btn" onclick="filterPlaces('hidden', this)">💎 Нуугдмал</button>
+        <button class="filter-btn" onclick="filterPlaces('museum', this)">🖼 Музей</button>
+        <button class="filter-btn" onclick="filterPlaces('temple', this)">⛩ Сүм</button>
+        <button class="filter-btn" onclick="filterPlaces('shopping', this)">🛍 Шоппинг</button>
+        <button class="filter-btn" onclick="filterPlaces('food', this)">🍜 Хоол</button>
         <button class="filter-btn" onclick="filterPlaces('relax', this)">🌿 Амрах</button>
         <button class="filter-btn" onclick="filterPlaces('night', this)">🌙 Шөнө</button>
-        <button class="filter-btn" onclick="filterPlaces('food', this)">🍜 Хоол</button>
+        <button class="filter-btn" onclick="filterPlaces('daytrip', this)">🚌 Аялал</button>
       </div>
 
       <!-- SAVED COUNT -->
@@ -760,6 +768,20 @@ if (sharedId && !sharedId.startsWith('local_')) {
 }
 </script>
 
+<!-- ══ PLACES DATA ══ -->
+<script type="module">
+import { PLACES, CATEGORIES } from './places.js';
+window.PLACES = PLACES;
+window.CATEGORIES = CATEGORIES;
+// Render filter buttons dynamically
+const fEl = document.getElementById('placesFilter');
+if (fEl) {
+  fEl.innerHTML = CATEGORIES.map((c,i) =>
+    `<button class="filter-btn${i===0?' active':''}" onclick="filterPlaces('${c.id}',this)">${c.icon} ${c.label}</button>`
+  ).join('');
+}
+</script>
+
 <!-- ══ PLANNER LOGIC ══ -->
 <script>
 /* ─── DATA ─── */
@@ -768,9 +790,8 @@ window._plan = {
   interests: [], budget: '', timePrefs: {}, savedPlaces: []
 };
 
-const PLACES = [
-
-  // ── MUST SEE ──
+// PLACES loaded from places.js module (window.PLACES)
+const _PLACES_STUB = [
   { id:'bund', name:'The Bund', cat:'culture', catLabel:'Үзэх ёстой',
     icon:'🌆', bg:'linear-gradient(135deg,#1a1a2e,#16213e)',
     metro:'Line 2/10 · Nanjing East Road',
@@ -951,6 +972,8 @@ const PLACES = [
     lfs:'LFS: Хотын олон газарт салбар бий. Sichuan Road дахь эх салбар хамгийн жинхэнэ амттай.',
     tags:['food','budget','tradition'] }
 ];
+// Use window.PLACES from module; fallback to stub if not loaded yet
+function getPlaces() { return window.PLACES || _PLACES_STUB; }
 
 /* ─── CURRENT STEP ─── */
 let currentStep = 1;
@@ -1130,8 +1153,8 @@ window.filterPlaces = function(cat, btn) {
 function renderPlaces() {
   const grid = document.getElementById('placesGrid');
   const interests = window._plan.interests;
-  let filtered = PLACES;
-  if (currentFilter !== 'all') filtered = PLACES.filter(p => p.cat === currentFilter);
+  let filtered = getPlaces();
+  if (currentFilter !== 'all') filtered = getPlaces().filter(p => p.cat === currentFilter);
 
   // Sort: interest-matching first
   filtered = [...filtered].sort((a, b) => {
@@ -1149,7 +1172,7 @@ function renderPlaces() {
     const card = document.createElement('div');
     card.className = 'place-card' + (isSaved ? ' saved' : '');
     card.id = 'pc_' + p.id;
-    const catClass = { culture:'cat-culture', hidden:'cat-hidden', relax:'cat-relax', night:'cat-night', food:'cat-food' }[p.cat] || '';
+    const catClass = { culture:'cat-culture', hidden:'cat-hidden', museum:'cat-museum', temple:'cat-temple', shopping:'cat-shopping', food:'cat-food', relax:'cat-relax', night:'cat-night', daytrip:'cat-daytrip' }[p.cat] || '';
     card.innerHTML = `
       <div class="place-img-gradient" style="background:${p.bg}">${p.icon}</div>
       <div class="place-body">
@@ -1208,7 +1231,7 @@ window.nextFromPlaces = function() {
 /* ─── STEP 5: ITINERARY ─── */
 function buildItinerary() {
   const p = window._plan;
-  const saved = p.savedPlaces.map(id => PLACES.find(pl => pl.id === id)).filter(Boolean);
+  const saved = p.savedPlaces.map(id => getPlaces().find(pl => pl.id === id)).filter(Boolean);
 
   // Render saved list
   const sl = document.getElementById('savedList');
