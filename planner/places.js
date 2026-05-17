@@ -15,7 +15,7 @@ window.CATEGORIES = [
   { id:'daytrip',  label:'Өдрийн аялал',  icon:'🚌' },
 ];
 
-export const PLACES = [
+window.PLACES = [
 
   // ══════════════════════════════════════════════
   // 🏛  ҮЗЭХ ЁСТОЙ — Must-See Attractions
