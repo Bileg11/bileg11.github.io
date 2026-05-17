@@ -22,6 +22,7 @@ window.PLACES = [
   // ══════════════════════════════════════════════
   {
     id:'bund', name:'The Bund', cat:'culture', catLabel:'Үзэх ёстой',
+    img:'https://images.unsplash.com/photo-1538428494232-9c0d8a3ab403?auto=format&fit=crop&w=400&h=280&q=80',
     icon:'🌆', bg:'linear-gradient(135deg,#1a1a2e,#16213e)',
     metro:'Line 2/10 · Nanjing East Road', cost:0, costLabel:'Үнэгүй',
     time:'1–3 цаг', rating:'4.8', reviews:'157,400',
@@ -31,6 +32,7 @@ window.PLACES = [
   },
   {
     id:'oriental_pearl', name:'Oriental Pearl Tower', cat:'culture', catLabel:'Үзэх ёстой',
+    img:'https://images.unsplash.com/photo-1506158669146-619067262a00?auto=format&fit=crop&w=400&h=280&q=80',
     icon:'🔴', bg:'linear-gradient(135deg,#7b0000,#c0392b)',
     metro:'Line 2 · Lujiazui', cost:210, costLabel:'¥150–210',
     time:'1–2 цаг', rating:'4.7', reviews:'176,800',
@@ -40,6 +42,7 @@ window.PLACES = [
   },
   {
     id:'yu_garden', name:'Yu Garden', cat:'culture', catLabel:'Үзэх ёстой',
+    img:'https://images.unsplash.com/photo-1645490431810-08d8e3c59e17?auto=format&fit=crop&w=400&h=280&q=80',
     icon:'🏯', bg:'linear-gradient(135deg,#2d5a27,#4a7c59)',
     metro:'Line 10/14 · Yu Garden', cost:30, costLabel:'¥30',
     time:'1–2 цаг', rating:'4.7', reviews:'53,600',
@@ -49,6 +52,7 @@ window.PLACES = [
   },
   {
     id:'shanghai_tower', name:'Shanghai Tower', cat:'culture', catLabel:'Үзэх ёстой',
+    img:'https://images.unsplash.com/photo-1574504500022-de9a6309a501?auto=format&fit=crop&w=400&h=280&q=80',
     icon:'🗼', bg:'linear-gradient(135deg,#0a0a2e,#1a1a5e)',
     metro:'Line 2 · Lujiazui', cost:180, costLabel:'¥120–180',
     time:'1–2 цаг', rating:'4.8', reviews:'45,000',
@@ -58,6 +62,7 @@ window.PLACES = [
   },
   {
     id:'jin_mao', name:'Jin Mao Tower', cat:'culture', catLabel:'Үзэх ёстой',
+    img:'https://images.unsplash.com/photo-1614221330834-9399e5631af3?auto=format&fit=crop&w=400&h=280&q=80',
     icon:'✨', bg:'linear-gradient(135deg,#1a3a00,#2e6f00)',
     metro:'Line 2 · Lujiazui', cost:120, costLabel:'¥120',
     time:'1 цаг', rating:'4.6', reviews:'28,000',
@@ -67,6 +72,7 @@ window.PLACES = [
   },
   {
     id:'swfc', name:'Shanghai World Financial Center', cat:'culture', catLabel:'Үзэх ёстой',
+    img:'https://images.unsplash.com/photo-1535356795203-50b2eb73f96c?auto=format&fit=crop&w=400&h=280&q=80',
     icon:'🏙', bg:'linear-gradient(135deg,#002244,#004488)',
     metro:'Line 2 · Lujiazui', cost:180, costLabel:'¥100–180',
     time:'1 цаг', rating:'4.6', reviews:'22,000',
@@ -76,6 +82,7 @@ window.PLACES = [
   },
   {
     id:'nanjing_road', name:'Nanjing Road (East)', cat:'culture', catLabel:'Үзэх ёстой',
+    img:'https://images.unsplash.com/photo-1506158278516-d720e72406fc?auto=format&fit=crop&w=400&h=280&q=80',
     icon:'🚶', bg:'linear-gradient(135deg,#8b0000,#dc143c)',
     metro:'Line 2/10 · Nanjing East Road', cost:0, costLabel:'Үнэгүй',
     time:'1–2 цаг', rating:'4.5', reviews:'85,000',
@@ -85,6 +92,7 @@ window.PLACES = [
   },
   {
     id:'peoples_square', name:"People's Square", cat:'culture', catLabel:'Үзэх ёстой',
+    img:'https://images.unsplash.com/photo-1548919973-5cef591cdbc9?auto=format&fit=crop&w=400&h=280&q=80',
     icon:'🏛', bg:'linear-gradient(135deg,#1565c0,#1e88e5)',
     metro:"Line 1/2/8 · People's Square", cost:0, costLabel:'Үнэгүй',
     time:'1 цаг', rating:'4.5', reviews:'40,000',
@@ -94,6 +102,7 @@ window.PLACES = [
   },
   {
     id:'lujiazui', name:'Lujiazui Financial District', cat:'culture', catLabel:'Үзэх ёстой',
+    img:'https://images.unsplash.com/photo-1612756336279-b9eb5b6b71d9?auto=format&fit=crop&w=400&h=280&q=80',
     icon:'🌃', bg:'linear-gradient(135deg,#0d1117,#1f2937)',
     metro:'Line 2 · Lujiazui', cost:0, costLabel:'Үнэгүй',
     time:'1–2 цаг', rating:'4.8', reviews:'60,000',
@@ -103,6 +112,7 @@ window.PLACES = [
   },
   {
     id:'former_french', name:'Former French Concession', cat:'culture', catLabel:'Үзэх ёстой',
+    img:'https://images.unsplash.com/photo-1523281855495-b46cf55b1e7e?auto=format&fit=crop&w=400&h=280&q=80',
     icon:'🌸', bg:'linear-gradient(135deg,#4a0e4e,#7b2d8b)',
     metro:'Line 1 · Hengshan Road / Changshu Road', cost:0, costLabel:'Үнэгүй',
     time:'2–3 цаг', rating:'4.7', reviews:'35,000',
@@ -112,6 +122,7 @@ window.PLACES = [
   },
   {
     id:'huangpu_river', name:'Huangpu River Cruise', cat:'culture', catLabel:'Үзэх ёстой',
+    img:'https://images.unsplash.com/photo-1508742066636-3b9fb738ee0e?auto=format&fit=crop&w=400&h=280&q=80',
     icon:'🚢', bg:'linear-gradient(135deg,#00305a,#005a99)',
     metro:'Line 2/10 · Nanjing East Road', cost:100, costLabel:'¥100–220',
     time:'1–2 цаг', rating:'4.6', reviews:'18,000',
@@ -121,6 +132,7 @@ window.PLACES = [
   },
   {
     id:'shanghai_disneyland', name:'Shanghai Disneyland', cat:'culture', catLabel:'Үзэх ёстой',
+    img:'https://images.unsplash.com/photo-1616680687799-ea36d6fb2173?auto=format&fit=crop&w=400&h=280&q=80',
     icon:'🏰', bg:'linear-gradient(135deg,#1a0050,#4b0082)',
     metro:'Line 11 · Disney Resort', cost:475, costLabel:'¥475–779',
     time:'8–12 цаг', rating:'4.7', reviews:'120,000',
@@ -134,6 +146,7 @@ window.PLACES = [
   // ══════════════════════════════════════════════
   {
     id:'tianzifang', name:'Tianzifang', cat:'hidden', catLabel:'Нуугдмал газар',
+    img:'https://images.unsplash.com/photo-1567762694593-134db1c4f131?auto=format&fit=crop&w=400&h=280&q=80',
     icon:'🎨', bg:'linear-gradient(135deg,#4a235a,#7d3c98)',
     metro:'Line 9 · Dapuqiao', cost:0, costLabel:'Үнэгүй',
     time:'1–2 цаг', rating:'4.6', reviews:'25,000',
@@ -143,6 +156,7 @@ window.PLACES = [
   },
   {
     id:'m50', name:'M50 Creative Park', cat:'hidden', catLabel:'Нуугдмал газар',
+    img:'https://images.unsplash.com/photo-1531973819741-e27a5ae2cc7b?auto=format&fit=crop&w=400&h=280&q=80',
     icon:'🖼', bg:'linear-gradient(135deg,#1a3a4a,#2e6f8e)',
     metro:'Line 13 · Jiangning Road', cost:0, costLabel:'Үнэгүй',
     time:'1–3 цаг', rating:'4.5', reviews:'15,000',
@@ -152,6 +166,7 @@ window.PLACES = [
   },
   {
     id:'wukang_road', name:'Wukang Road', cat:'hidden', catLabel:'Нуугдмал газар',
+    img:'https://images.unsplash.com/photo-1531969112524-ac37343c7941?auto=format&fit=crop&w=400&h=280&q=80',
     icon:'🌸', bg:'linear-gradient(135deg,#6a1b9a,#9c27b0)',
     metro:'Line 11 · Jiaotong University', cost:0, costLabel:'Үнэгүй',
     time:'1–2 цаг', rating:'4.7', reviews:'8,000',
@@ -161,6 +176,7 @@ window.PLACES = [
   },
   {
     id:'fuxing_park', name:'Fuxing Park', cat:'hidden', catLabel:'Нуугдмал газар',
+    img:'https://images.unsplash.com/photo-1645526629357-16bbd762c8d5?auto=format&fit=crop&w=400&h=280&q=80',
     icon:'🌿', bg:'linear-gradient(135deg,#1b5e20,#2e7d32)',
     metro:'Line 10/13 · Xintiandi', cost:0, costLabel:'Үнэгүй',
     time:'30–60 мин', rating:'4.6', reviews:'10,000',
@@ -170,6 +186,7 @@ window.PLACES = [
   },
   {
     id:'sinan_mansions', name:'Sinan Mansions', cat:'hidden', catLabel:'Нуугдмал газар',
+    img:'https://images.unsplash.com/photo-1618933198854-ee406476827c?auto=format&fit=crop&w=400&h=280&q=80',
     icon:'🏚', bg:'linear-gradient(135deg,#3e2723,#6d4c41)',
     metro:'Line 10/13 · Xintiandi', cost:0, costLabel:'Үнэгүй',
     time:'1 цаг', rating:'4.5', reviews:'5,000',
@@ -179,6 +196,7 @@ window.PLACES = [
   },
   {
     id:'1933_millfun', name:'1933 Old Millfun', cat:'hidden', catLabel:'Нуугдмал газар',
+    img:'https://images.unsplash.com/photo-1563678041155-ddb6ca6296af?auto=format&fit=crop&w=400&h=280&q=80',
     icon:'🏭', bg:'linear-gradient(135deg,#263238,#37474f)',
     metro:'Line 4 · Dalian Road', cost:0, costLabel:'Үнэгүй',
     time:'1 цаг', rating:'4.4', reviews:'6,000',
@@ -188,6 +206,7 @@ window.PLACES = [
   },
   {
     id:'duolun_road', name:'Duolun Road Cultural Street', cat:'hidden', catLabel:'Нуугдмал газар',
+    img:'https://images.unsplash.com/photo-1617550702778-ac78537dd90a?auto=format&fit=crop&w=400&h=280&q=80',
     icon:'📚', bg:'linear-gradient(135deg,#1a237e,#283593)',
     metro:'Line 3/8 · Hongkou Football Stadium', cost:0, costLabel:'Үнэгүй',
     time:'1–2 цаг', rating:'4.4', reviews:'4,000',
@@ -197,6 +216,7 @@ window.PLACES = [
   },
   {
     id:'qibao', name:'Qibao Ancient Town', cat:'hidden', catLabel:'Нуугдмал газар',
+    img:'https://images.unsplash.com/photo-1602997009277-72a4121380ac?auto=format&fit=crop&w=400&h=280&q=80',
     icon:'🏘', bg:'linear-gradient(135deg,#5d4037,#8d6e63)',
     metro:'Line 9 · Qibao', cost:0, costLabel:'Үнэгүй',
     time:'2–3 цаг', rating:'4.5', reviews:'30,000',
@@ -206,6 +226,7 @@ window.PLACES = [
   },
   {
     id:'zhujiajiao', name:'Zhujiajiao Ancient Town', cat:'hidden', catLabel:'Нуугдмал газар',
+    img:'https://images.unsplash.com/photo-1648530040338-c977397965ea?auto=format&fit=crop&w=400&h=280&q=80',
     icon:'⛵', bg:'linear-gradient(135deg,#006064,#0097a7)',
     metro:'Line 17 · Zhujiajiao + автобус', cost:0, costLabel:'Үнэгүй · завь ¥20–60',
     time:'3–4 цаг', rating:'4.6', reviews:'43,000',
@@ -215,6 +236,7 @@ window.PLACES = [
   },
   {
     id:'chongming', name:'Chongming Island', cat:'hidden', catLabel:'Нуугдмал газар',
+    img:'https://images.unsplash.com/photo-1550590947-302613e51d1a?auto=format&fit=crop&w=400&h=280&q=80',
     icon:'🌾', bg:'linear-gradient(135deg,#33691e,#558b2f)',
     metro:'Metro + Tunnel Bus', cost:0, costLabel:'Ойролцоо ¥50',
     time:'Бүтэн өдөр', rating:'4.4', reviews:'12,000',
@@ -224,6 +246,7 @@ window.PLACES = [
   },
   {
     id:'anfu_road', name:'Anfu Road Café Street', cat:'hidden', catLabel:'Нуугдмал газар',
+    img:'https://images.unsplash.com/photo-1517309230475-6736d926b979?auto=format&fit=crop&w=400&h=280&q=80',
     icon:'☕', bg:'linear-gradient(135deg,#4e342e,#6d4c41)',
     metro:'Line 1 · Changshu Road', cost:0, costLabel:'Үнэгүй',
     time:'1–2 цаг', rating:'4.6', reviews:'7,000',
@@ -233,6 +256,7 @@ window.PLACES = [
   },
   {
     id:'south_bund', name:'South Bund & Cool Docks', cat:'hidden', catLabel:'Нуугдмал газар',
+    img:'https://images.unsplash.com/photo-1474181487882-5abf3f0ba6c2?auto=format&fit=crop&w=400&h=280&q=80',
     icon:'🏗', bg:'linear-gradient(135deg,#1a1a2e,#2d2d5e)',
     metro:'Line 4 · Nanpu Bridge', cost:0, costLabel:'Үнэгүй',
     time:'1–2 цаг', rating:'4.5', reviews:'8,000',
@@ -242,6 +266,7 @@ window.PLACES = [
   },
   {
     id:'east_bund', name:'East Bund (Mingzhu Ring Road)', cat:'hidden', catLabel:'Нуугдмал газар',
+    img:'https://images.unsplash.com/photo-1627484986972-e544190b8abb?auto=format&fit=crop&w=400&h=280&q=80',
     icon:'🌉', bg:'linear-gradient(135deg,#0a2340,#1a4080)',
     metro:'Line 6 · Yuanshen Road', cost:0, costLabel:'Үнэгүй',
     time:'1–2 цаг', rating:'4.5', reviews:'5,000',
@@ -255,6 +280,7 @@ window.PLACES = [
   // ══════════════════════════════════════════════
   {
     id:'shanghai_museum', name:'Shanghai Museum', cat:'museum', catLabel:'Музей & Урлаг',
+    img:'https://images.unsplash.com/photo-1713006947005-70c6b2796b68?auto=format&fit=crop&w=400&h=280&q=80',
     icon:'🏛', bg:'linear-gradient(135deg,#3d2c8d,#6a5acd)',
     metro:"Line 1/2/8 · People's Square", cost:0, costLabel:'Үнэгүй',
     time:'2–3 цаг', rating:'4.8', reviews:'30,000',
@@ -264,6 +290,7 @@ window.PLACES = [
   },
   {
     id:'natural_history', name:'Shanghai Natural History Museum', cat:'museum', catLabel:'Музей & Урлаг',
+    img:'https://images.unsplash.com/photo-1585592221803-03d9d7f56e52?auto=format&fit=crop&w=400&h=280&q=80',
     icon:'🦕', bg:'linear-gradient(135deg,#1b5e20,#388e3c)',
     metro:'Line 13 · Natural History Museum', cost:30, costLabel:'¥30',
     time:'2–3 цаг', rating:'4.8', reviews:'15,000',
@@ -273,6 +300,7 @@ window.PLACES = [
   },
   {
     id:'urban_planning', name:'Shanghai Urban Planning Exhibition Center', cat:'museum', catLabel:'Музей & Урлаг',
+    img:'https://images.unsplash.com/photo-1567574446891-7aef076416ec?auto=format&fit=crop&w=400&h=280&q=80',
     icon:'🏙', bg:'linear-gradient(135deg,#006064,#00838f)',
     metro:"Line 1/2/8 · People's Square", cost:30, costLabel:'¥30',
     time:'1–2 цаг', rating:'4.5', reviews:'8,000',
@@ -282,6 +310,7 @@ window.PLACES = [
   },
   {
     id:'power_station_art', name:'Power Station of Art', cat:'museum', catLabel:'Музей & Урлаг',
+    img:'https://images.unsplash.com/photo-1589648619563-16386829d31c?auto=format&fit=crop&w=400&h=280&q=80',
     icon:'⚡', bg:'linear-gradient(135deg,#1a1a2e,#2d2d4e)',
     metro:'Line 4 · Luban Road', cost:0, costLabel:'Үнэгүй',
     time:'1–2 цаг', rating:'4.6', reviews:'10,000',
@@ -291,6 +320,7 @@ window.PLACES = [
   },
   {
     id:'rockbund_art', name:'Rockbund Art Museum', cat:'museum', catLabel:'Музей & Урлаг',
+    img:'https://images.unsplash.com/photo-1671882774388-3bc6070ed0f8?auto=format&fit=crop&w=400&h=280&q=80',
     icon:'🎭', bg:'linear-gradient(135deg,#8b0000,#a00000)',
     metro:"Line 2/10 · Nanjing East Road", cost:60, costLabel:'¥60',
     time:'1 цаг', rating:'4.5', reviews:'5,000',
@@ -300,6 +330,7 @@ window.PLACES = [
   },
   {
     id:'long_museum_west', name:'Long Museum West Bund', cat:'museum', catLabel:'Музей & Урлаг',
+    img:'https://images.unsplash.com/photo-1614636401882-aa1a36704629?auto=format&fit=crop&w=400&h=280&q=80',
     icon:'🖼', bg:'linear-gradient(135deg,#212121,#424242)',
     metro:'Line 11 · Yunjin Road', cost:50, costLabel:'¥50',
     time:'1–2 цаг', rating:'4.7', reviews:'7,000',
@@ -309,6 +340,7 @@ window.PLACES = [
   },
   {
     id:'yuz_museum', name:'Yuz Museum (Yu Zhu)', cat:'museum', catLabel:'Музей & Урлаг',
+    img:'https://images.unsplash.com/photo-1590274171261-3e14f2003541?auto=format&fit=crop&w=400&h=280&q=80',
     icon:'🎪', bg:'linear-gradient(135deg,#f57c00,#ef6c00)',
     metro:'Line 11 · Yunjin Road', cost:100, costLabel:'¥100',
     time:'1–2 цаг', rating:'4.5', reviews:'4,000',
@@ -318,6 +350,7 @@ window.PLACES = [
   },
   {
     id:'jewish_refugees', name:'Shanghai Jewish Refugees Museum', cat:'museum', catLabel:'Музей & Урлаг',
+    img:'https://images.unsplash.com/photo-1619435995099-f89dcf903622?auto=format&fit=crop&w=400&h=280&q=80',
     icon:'✡️', bg:'linear-gradient(135deg,#1a3a5c,#2a5a8c)',
     metro:'Line 12 · Linping Road', cost:50, costLabel:'¥50',
     time:'1 цаг', rating:'4.7', reviews:'6,000',
@@ -327,6 +360,7 @@ window.PLACES = [
   },
   {
     id:'china_art_museum', name:'China Art Museum', cat:'museum', catLabel:'Музей & Урлаг',
+    img:'https://images.unsplash.com/photo-1566972662411-fa488a405a0e?auto=format&fit=crop&w=400&h=280&q=80',
     icon:'🎨', bg:'linear-gradient(135deg,#c0392b,#e74c3c)',
     metro:'Line 7/8 · China Art Museum', cost:0, costLabel:'Үнэгүй',
     time:'2 цаг', rating:'4.5', reviews:'8,000',
@@ -340,6 +374,7 @@ window.PLACES = [
   // ══════════════════════════════════════════════
   {
     id:'jingan_temple', name:"Jing'an Temple", cat:'temple', catLabel:'Сүм & Шашин',
+    img:'https://images.unsplash.com/photo-1559305984-b6421217abff?auto=format&fit=crop&w=400&h=280&q=80',
     icon:'⛩', bg:'linear-gradient(135deg,#b7950b,#d4ac0d)',
     metro:"Line 2/7 · Jing'an Temple", cost:50, costLabel:'¥50',
     time:'1 цаг', rating:'4.6', reviews:'25,000',
@@ -349,6 +384,7 @@ window.PLACES = [
   },
   {
     id:'longhua_temple', name:'Longhua Temple', cat:'temple', catLabel:'Сүм & Шашин',
+    img:'https://images.unsplash.com/photo-1637225999435-b65b96e1c9b2?auto=format&fit=crop&w=400&h=280&q=80',
     icon:'🛕', bg:'linear-gradient(135deg,#8b4513,#cd853f)',
     metro:'Line 11/12 · Longhua', cost:10, costLabel:'¥10',
     time:'1–2 цаг', rating:'4.6', reviews:'15,000',
@@ -358,6 +394,7 @@ window.PLACES = [
   },
   {
     id:'jade_buddha', name:'Jade Buddha Temple', cat:'temple', catLabel:'Сүм & Шашин',
+    img:'https://images.unsplash.com/photo-1559049931-b99ecf20e679?auto=format&fit=crop&w=400&h=280&q=80',
     icon:'💚', bg:'linear-gradient(135deg,#004d00,#006600)',
     metro:'Line 7/13 · Changshou Road', cost:50, costLabel:'¥50',
     time:'1 цаг', rating:'4.6', reviews:'20,000',
@@ -367,6 +404,7 @@ window.PLACES = [
   },
   {
     id:'chenghuang_temple', name:'Chenghuang Miao (City God Temple)', cat:'temple', catLabel:'Сүм & Шашин',
+    img:'https://images.unsplash.com/photo-1614479830082-660569b8f78e?auto=format&fit=crop&w=400&h=280&q=80',
     icon:'🏮', bg:'linear-gradient(135deg,#8b0000,#b22222)',
     metro:'Line 10/14 · Yu Garden', cost:10, costLabel:'¥10',
     time:'30–60 мин', rating:'4.4', reviews:'12,000',
@@ -376,6 +414,7 @@ window.PLACES = [
   },
   {
     id:'qingpu_mosque', name:"Shanghai Mosque (Xiaotaoyuan)", cat:'temple', catLabel:'Сүм & Шашин',
+    img:'https://images.unsplash.com/photo-1645490431810-08d8e3c59e17?auto=format&fit=crop&w=400&h=280&q=80',
     icon:'🕌', bg:'linear-gradient(135deg,#004d00,#2e7d32)',
     metro:'Line 1 · People\'s Square', cost:0, costLabel:'Үнэгүй',
     time:'30 мин', rating:'4.4', reviews:'3,000',
@@ -389,6 +428,7 @@ window.PLACES = [
   // ══════════════════════════════════════════════
   {
     id:'nanjing_west', name:'Nanjing West Road (Luxury Strip)', cat:'shopping', catLabel:'Шоппинг',
+    img:'https://images.unsplash.com/photo-1506158278516-d720e72406fc?auto=format&fit=crop&w=400&h=280&q=80',
     icon:'💎', bg:'linear-gradient(135deg,#1a1a2e,#2d2d4e)',
     metro:"Line 2/7 · Nanjing West Road / Jing'an Temple", cost:0, costLabel:'Үнэгүй',
     time:'2–3 цаг', rating:'4.6', reviews:'30,000',
@@ -398,6 +438,7 @@ window.PLACES = [
   },
   {
     id:'plaza66', name:'Plaza 66', cat:'shopping', catLabel:'Шоппинг',
+    img:'https://images.unsplash.com/photo-1506158278516-d720e72406fc?auto=format&fit=crop&w=400&h=280&q=80',
     icon:'🏬', bg:'linear-gradient(135deg,#2c2c2c,#4a4a4a)',
     metro:"Line 2/7 · Nanjing West Road", cost:0, costLabel:'Үнэгүй',
     time:'2–3 цаг', rating:'4.5', reviews:'15,000',
@@ -407,6 +448,7 @@ window.PLACES = [
   },
   {
     id:'ifc_mall', name:'IFC Mall (International Finance Centre)', cat:'shopping', catLabel:'Шоппинг',
+    img:'https://images.unsplash.com/photo-1536238603907-1b919bddc1c0?auto=format&fit=crop&w=400&h=280&q=80',
     icon:'🛒', bg:'linear-gradient(135deg,#003366,#004d99)',
     metro:'Line 2 · Lujiazui', cost:0, costLabel:'Үнэгүй',
     time:'2–3 цаг', rating:'4.6', reviews:'20,000',
@@ -416,6 +458,7 @@ window.PLACES = [
   },
   {
     id:'grand_gateway', name:'Grand Gateway 66 (Xujiahui)', cat:'shopping', catLabel:'Шоппинг',
+    img:'https://images.unsplash.com/photo-1579970191855-a56029032cb5?auto=format&fit=crop&w=400&h=280&q=80',
     icon:'🏪', bg:'linear-gradient(135deg,#880000,#cc0000)',
     metro:'Line 1/9/11 · Xujiahui', cost:0, costLabel:'Үнэгүй',
     time:'2–3 цаг', rating:'4.5', reviews:'25,000',
@@ -425,6 +468,7 @@ window.PLACES = [
   },
   {
     id:'huaihai_road', name:'Huaihai Road (Shopping Street)', cat:'shopping', catLabel:'Шоппинг',
+    img:'https://images.unsplash.com/photo-1598522331265-6af1f4c81771?auto=format&fit=crop&w=400&h=280&q=80',
     icon:'🛍', bg:'linear-gradient(135deg,#4a0e4e,#7d3c98)',
     metro:'Line 1 · South Huangpi Road', cost:0, costLabel:'Үнэгүй',
     time:'2–3 цаг', rating:'4.5', reviews:'35,000',
@@ -434,6 +478,7 @@ window.PLACES = [
   },
   {
     id:'iapm_mall', name:'iapm Mall', cat:'shopping', catLabel:'Шоппинг',
+    img:'https://images.unsplash.com/photo-1602334478926-52606b6fb3ba?auto=format&fit=crop&w=400&h=280&q=80',
     icon:'🌟', bg:'linear-gradient(135deg,#1a0533,#4a0d6a)',
     metro:'Line 1 · South Huangpi Road', cost:0, costLabel:'Үнэгүй',
     time:'2–3 цаг', rating:'4.7', reviews:'18,000',
@@ -443,6 +488,7 @@ window.PLACES = [
   },
   {
     id:'yuyuan_bazaar_shop', name:'Yuyuan Bazaar (Shopping)', cat:'shopping', catLabel:'Шоппинг',
+    img:'https://images.unsplash.com/photo-1644611708972-5508a34357c6?auto=format&fit=crop&w=400&h=280&q=80',
     icon:'🧧', bg:'linear-gradient(135deg,#8b0000,#c0392b)',
     metro:'Line 10/14 · Yu Garden', cost:0, costLabel:'Үнэгүй',
     time:'1–2 цаг', rating:'4.4', reviews:'40,000',
@@ -452,6 +498,7 @@ window.PLACES = [
   },
   {
     id:'super_brand_mall', name:'Super Brand Mall (Lujiazui)', cat:'shopping', catLabel:'Шоппинг',
+    img:'https://images.unsplash.com/photo-1593616235572-815d800bc054?auto=format&fit=crop&w=400&h=280&q=80',
     icon:'🏟', bg:'linear-gradient(135deg,#1a237e,#283593)',
     metro:'Line 2 · Lujiazui', cost:0, costLabel:'Үнэгүй',
     time:'2 цаг', rating:'4.4', reviews:'12,000',
@@ -461,6 +508,7 @@ window.PLACES = [
   },
   {
     id:'xujiahui_electronics', name:'Xujiahui Electronics District', cat:'shopping', catLabel:'Шоппинг',
+    img:'https://images.unsplash.com/photo-1667412069346-db95deccc8a5?auto=format&fit=crop&w=400&h=280&q=80',
     icon:'💻', bg:'linear-gradient(135deg,#1a3a5c,#2e5a8e)',
     metro:'Line 1/9/11 · Xujiahui', cost:0, costLabel:'Үнэгүй',
     time:'2–3 цаг', rating:'4.3', reviews:'10,000',
@@ -474,6 +522,7 @@ window.PLACES = [
   // ══════════════════════════════════════════════
   {
     id:'nanxiang', name:'Nanxiang Steamed Bun Restaurant', cat:'food', catLabel:'Хоол',
+    img:'https://images.unsplash.com/photo-1678026582164-24a5460c447a?auto=format&fit=crop&w=400&h=280&q=80',
     icon:'🥟', bg:'linear-gradient(135deg,#b71c1c,#e53935)',
     metro:'Line 10/14 · Yu Garden', cost:50, costLabel:'¥50/хүн',
     time:'1 цаг', rating:'4.6', reviews:'15,000',
@@ -483,6 +532,7 @@ window.PLACES = [
   },
   {
     id:'jia_jia', name:'Jia Jia Tang Bao', cat:'food', catLabel:'Хоол',
+    img:'https://images.unsplash.com/photo-1694834589398-27b369c6f7a6?auto=format&fit=crop&w=400&h=280&q=80',
     icon:'🍱', bg:'linear-gradient(135deg,#4e342e,#795548)',
     metro:"Line 1/2/8 · People's Square", cost:30, costLabel:'¥30/хүн',
     time:'45 мин', rating:'4.3', reviews:'222',
@@ -492,6 +542,7 @@ window.PLACES = [
   },
   {
     id:'da_hu_chun', name:'Da Hu Chun (Shengjian)', cat:'food', catLabel:'Хоол',
+    img:'https://images.unsplash.com/photo-1657939728877-df03de19f9fe?auto=format&fit=crop&w=400&h=280&q=80',
     icon:'🫓', bg:'linear-gradient(135deg,#e65100,#ff6d00)',
     metro:"Line 2/10 · Nanjing East Road", cost:30, costLabel:'¥20–30/хүн',
     time:'45 мин', rating:'4.5', reviews:'2,700',
@@ -501,6 +552,7 @@ window.PLACES = [
   },
   {
     id:'din_tai_fung', name:'Din Tai Fung', cat:'food', catLabel:'Хоол',
+    img:'https://images.unsplash.com/photo-1550966871-3ed3cdb5ed0c?auto=format&fit=crop&w=400&h=280&q=80',
     icon:'🥢', bg:'linear-gradient(135deg,#880e4f,#c2185b)',
     metro:'Line 1 · South Huangpi Road', cost:200, costLabel:'¥200/хүн',
     time:'1.5 цаг', rating:'4.9', reviews:'12,000',
@@ -510,6 +562,7 @@ window.PLACES = [
   },
   {
     id:'lost_heaven', name:'Lost Heaven (Yunnan)', cat:'food', catLabel:'Хоол',
+    img:'https://images.unsplash.com/photo-1556742524-750f2ab99913?auto=format&fit=crop&w=400&h=280&q=80',
     icon:'🌶', bg:'linear-gradient(135deg,#4a1010,#8b2020)',
     metro:"Line 2/10 · Nanjing East Road", cost:200, costLabel:'¥150–200/хүн',
     time:'1.5 цаг', rating:'4.7', reviews:'5,000',
@@ -519,6 +572,7 @@ window.PLACES = [
   },
   {
     id:'fu_1088', name:'Fu 1088 (Fu He Hui)', cat:'food', catLabel:'Хоол',
+    img:'https://images.unsplash.com/photo-1563245372-f21724e3856d?auto=format&fit=crop&w=400&h=280&q=80',
     icon:'🏡', bg:'linear-gradient(135deg,#1a3a00,#2e6800)',
     metro:'Line 7 · Changshu Road', cost:400, costLabel:'¥300–500/хүн',
     time:'2 цаг', rating:'4.8', reviews:'3,000',
@@ -528,6 +582,7 @@ window.PLACES = [
   },
   {
     id:'mr_mrs_bund', name:'Mr & Mrs Bund', cat:'food', catLabel:'Хоол',
+    img:'https://images.unsplash.com/photo-1538428494232-9c0d8a3ab403?auto=format&fit=crop&w=400&h=280&q=80',
     icon:'🍽', bg:'linear-gradient(135deg,#1a1a2e,#16213e)',
     metro:"Line 2/10 · Nanjing East Road", cost:400, costLabel:'¥300–500/хүн',
     time:'2 цаг', rating:'4.7', reviews:'4,000',
@@ -537,6 +592,7 @@ window.PLACES = [
   },
   {
     id:'ultraviolet', name:'Ultraviolet by Paul Pairet', cat:'food', catLabel:'Хоол',
+    img:'https://images.unsplash.com/photo-1583475020831-fb4fbb497315?auto=format&fit=crop&w=400&h=280&q=80',
     icon:'🌌', bg:'linear-gradient(135deg,#0d0033,#1a0066)',
     metro:'Хаяг нуугдмал — захиалгаар', cost:6000, costLabel:'¥6000/хүн',
     time:'4–5 цаг', rating:'4.9', reviews:'500',
@@ -546,6 +602,7 @@ window.PLACES = [
   },
   {
     id:'hai_di_lao', name:'Haidilao Hot Pot', cat:'food', catLabel:'Хоол',
+    img:'https://images.unsplash.com/photo-1705636254195-60f1e917e05c?auto=format&fit=crop&w=400&h=280&q=80',
     icon:'🍲', bg:'linear-gradient(135deg,#cc0000,#ff0000)',
     metro:'Олон салбар бий', cost:150, costLabel:'¥100–200/хүн',
     time:'1.5–2 цаг', rating:'4.7', reviews:'50,000',
@@ -555,6 +612,7 @@ window.PLACES = [
   },
   {
     id:'spicy_joint', name:'Spicy Joint (Hunan)', cat:'food', catLabel:'Хоол',
+    img:'https://images.unsplash.com/photo-1523905330026-b8bd1f5f320e?auto=format&fit=crop&w=400&h=280&q=80',
     icon:'🌶', bg:'linear-gradient(135deg,#7b0000,#c62828)',
     metro:'Олон салбар бий', cost:100, costLabel:'¥80–120/хүн',
     time:'1.5 цаг', rating:'4.6', reviews:'20,000',
@@ -564,6 +622,7 @@ window.PLACES = [
   },
   {
     id:'noodle_bull', name:'Noodle Bull (Beef Noodles)', cat:'food', catLabel:'Хоол',
+    img:'https://images.unsplash.com/photo-1591214896508-22fc74d84a75?auto=format&fit=crop&w=400&h=280&q=80',
     icon:'🍜', bg:'linear-gradient(135deg,#4a2c00,#8b5e00)',
     metro:"Line 2/7 · Jing'an Temple", cost:60, costLabel:'¥40–80/хүн',
     time:'45 мин', rating:'4.5', reviews:'8,000',
@@ -573,6 +632,7 @@ window.PLACES = [
   },
   {
     id:'commune_social', name:'Commune Social', cat:'food', catLabel:'Хоол',
+    img:'https://images.unsplash.com/photo-1470114755716-3e1124c6c3bd?auto=format&fit=crop&w=400&h=280&q=80',
     icon:'🍷', bg:'linear-gradient(135deg,#2c1810,#5a3020)',
     metro:"Line 2/7 · Jing'an Temple", cost:300, costLabel:'¥200–400/хүн',
     time:'2 цаг', rating:'4.6', reviews:'3,000',
@@ -582,6 +642,7 @@ window.PLACES = [
   },
   {
     id:'yang_guofu', name:"Yang's Braised Mutton (Qing Zhen)", cat:'food', catLabel:'Хоол',
+    img:'https://images.unsplash.com/photo-1562613498-8abe16e8373b?auto=format&fit=crop&w=400&h=280&q=80',
     icon:'🐑', bg:'linear-gradient(135deg,#3e1f00,#6b3500)',
     metro:'Олон салбар бий', cost:50, costLabel:'¥30–60/хүн',
     time:'45 мин', rating:'4.4', reviews:'15,000',
@@ -591,6 +652,7 @@ window.PLACES = [
   },
   {
     id:'yuyuan_food', name:'Yuyuan Bazaar Street Food', cat:'food', catLabel:'Хоол',
+    img:'https://images.unsplash.com/photo-1644611708972-5508a34357c6?auto=format&fit=crop&w=400&h=280&q=80',
     icon:'🥮', bg:'linear-gradient(135deg,#5d4037,#8d6e63)',
     metro:'Line 10/14 · Yu Garden', cost:50, costLabel:'¥20–50/хүн',
     time:'1 цаг', rating:'4.5', reviews:'40,000',
@@ -600,6 +662,7 @@ window.PLACES = [
   },
   {
     id:'heji_crab', name:'He Ji Crab House (Hairy Crab)', cat:'food', catLabel:'Хоол',
+    img:'https://images.unsplash.com/photo-1625181581977-b910801d9b43?auto=format&fit=crop&w=400&h=280&q=80',
     icon:'🦀', bg:'linear-gradient(135deg,#004d3d,#007a60)',
     metro:'Line 10 · Xintiandi', cost:300, costLabel:'¥200–400/хүн',
     time:'1.5 цаг', rating:'4.6', reviews:'4,000',
@@ -609,6 +672,7 @@ window.PLACES = [
   },
   {
     id:'coffee_compound', name:'Coffee Compound / Manner Coffee', cat:'food', catLabel:'Хоол',
+    img:'https://images.unsplash.com/photo-1482859602406-7659b00979fb?auto=format&fit=crop&w=400&h=280&q=80',
     icon:'☕', bg:'linear-gradient(135deg,#1a0a00,#3d1f00)',
     metro:'Олон газар бий', cost:30, costLabel:'¥20–40',
     time:'30–60 мин', rating:'4.6', reviews:'30,000',
@@ -622,6 +686,7 @@ window.PLACES = [
   // ══════════════════════════════════════════════
   {
     id:'west_bund', name:'West Bund (Xuhui Riverside)', cat:'relax', catLabel:'Амрах',
+    img:'https://images.unsplash.com/photo-1474181487882-5abf3f0ba6c2?auto=format&fit=crop&w=400&h=280&q=80',
     icon:'🌅', bg:'linear-gradient(135deg,#0d3349,#1565c0)',
     metro:'Line 11 · Yunjin Road', cost:0, costLabel:'Үнэгүй',
     time:'1–3 цаг', rating:'4.7', reviews:'20,000',
@@ -631,6 +696,7 @@ window.PLACES = [
   },
   {
     id:'xintiandi', name:'Xintiandi', cat:'relax', catLabel:'Амрах',
+    img:'https://images.unsplash.com/photo-1618933198854-ee406476827c?auto=format&fit=crop&w=400&h=280&q=80',
     icon:'🏮', bg:'linear-gradient(135deg,#8b1a1a,#cc4444)',
     metro:'Line 10/13 · Xintiandi', cost:0, costLabel:'Үнэгүй',
     time:'2 цаг', rating:'4.6', reviews:'30,000',
@@ -640,6 +706,7 @@ window.PLACES = [
   },
   {
     id:'people_park', name:"People's Park", cat:'relax', catLabel:'Амрах',
+    img:'https://images.unsplash.com/photo-1705695373213-115c102714fd?auto=format&fit=crop&w=400&h=280&q=80',
     icon:'🌳', bg:'linear-gradient(135deg,#1b5e20,#388e3c)',
     metro:"Line 1/2/8 · People's Square", cost:0, costLabel:'Үнэгүй',
     time:'1–2 цаг', rating:'4.5', reviews:'12,000',
@@ -649,6 +716,7 @@ window.PLACES = [
   },
   {
     id:'century_park', name:'Century Park', cat:'relax', catLabel:'Амрах',
+    img:'https://images.unsplash.com/photo-1686933021138-dcf2ae971c26?auto=format&fit=crop&w=400&h=280&q=80',
     icon:'🌲', bg:'linear-gradient(135deg,#1b5e20,#2e7d32)',
     metro:'Line 2 · Century Park', cost:10, costLabel:'¥10',
     time:'2–4 цаг', rating:'4.5', reviews:'15,000',
@@ -658,6 +726,7 @@ window.PLACES = [
   },
   {
     id:'gongqing_forest', name:'Gongqing Forest Park', cat:'relax', catLabel:'Амрах',
+    img:'https://images.unsplash.com/photo-1700489610484-4f863812ac46?auto=format&fit=crop&w=400&h=280&q=80',
     icon:'🌾', bg:'linear-gradient(135deg,#1a3a00,#2e6800)',
     metro:'Line 8 · Nenjiang Road', cost:15, costLabel:'¥15',
     time:'2–4 цаг', rating:'4.5', reviews:'8,000',
@@ -667,6 +736,7 @@ window.PLACES = [
   },
   {
     id:'expo_greenhouse', name:'Expo Culture Park Greenhouse', cat:'relax', catLabel:'Амрах',
+    img:'https://images.unsplash.com/photo-1718114268138-4adae6613099?auto=format&fit=crop&w=400&h=280&q=80',
     icon:'🪴', bg:'linear-gradient(135deg,#004d40,#00897b)',
     metro:'Line 13 · Yaohua Road', cost:70, costLabel:'¥70–100',
     time:'2 цаг', rating:'4.8', reviews:'1,900',
@@ -676,6 +746,7 @@ window.PLACES = [
   },
   {
     id:'jing_an_sculpture', name:"Jing'an Sculpture Park", cat:'relax', catLabel:'Амрах',
+    img:'https://images.unsplash.com/photo-1694049555855-a4b8d52fbcc8?auto=format&fit=crop&w=400&h=280&q=80',
     icon:'🗿', bg:'linear-gradient(135deg,#263238,#455a64)',
     metro:"Line 2/7 · Jing'an Temple", cost:0, costLabel:'Үнэгүй',
     time:'1 цаг', rating:'4.4', reviews:'6,000',
@@ -685,6 +756,7 @@ window.PLACES = [
   },
   {
     id:'yuyuan_bazaar', name:'Yuyuan Bazaar Area', cat:'relax', catLabel:'Амрах',
+    img:'https://images.unsplash.com/photo-1645490431810-08d8e3c59e17?auto=format&fit=crop&w=400&h=280&q=80',
     icon:'🏪', bg:'linear-gradient(135deg,#5d4037,#8d6e63)',
     metro:'Line 10/14 · Yu Garden', cost:0, costLabel:'Үнэгүй',
     time:'1 цаг', rating:'4.5', reviews:'40,000',
@@ -694,6 +766,7 @@ window.PLACES = [
   },
   {
     id:'zhongshan_park', name:'Zhongshan Park', cat:'relax', catLabel:'Амрах',
+    img:'https://images.unsplash.com/photo-1483580220364-711991b69625?auto=format&fit=crop&w=400&h=280&q=80',
     icon:'🌼', bg:'linear-gradient(135deg,#1b5e20,#43a047)',
     metro:'Line 2/3/4 · Zhongshan Park', cost:0, costLabel:'Үнэгүй',
     time:'1 цаг', rating:'4.4', reviews:'10,000',
@@ -707,6 +780,7 @@ window.PLACES = [
   // ══════════════════════════════════════════════
   {
     id:'flair_bar', name:'Flair Rooftop Bar (Ritz-Carlton)', cat:'night', catLabel:'Шөнийн амьдрал',
+    img:'https://images.unsplash.com/photo-1614221330834-9399e5631af3?auto=format&fit=crop&w=400&h=280&q=80',
     icon:'🍸', bg:'linear-gradient(135deg,#1a0a00,#4a1000)',
     metro:'Line 2 · Lujiazui', cost:0, costLabel:'Ундаа ¥200–500/хүн',
     time:'2–3 цаг', rating:'4.8', reviews:'500',
@@ -716,6 +790,7 @@ window.PLACES = [
   },
   {
     id:'speak_low', name:'Speak Low', cat:'night', catLabel:'Шөнийн амьдрал',
+    img:'https://images.unsplash.com/photo-1548850174-4bf3a73dbc0b?auto=format&fit=crop&w=400&h=280&q=80',
     icon:'🥃', bg:'linear-gradient(135deg,#1a1200,#3d2b00)',
     metro:'Line 10/13 · Xintiandi', cost:0, costLabel:'Коктейль ¥80–150',
     time:'2 цаг', rating:'4.7', reviews:'800',
@@ -725,6 +800,7 @@ window.PLACES = [
   },
   {
     id:'sober_company', name:'Sober Company', cat:'night', catLabel:'Шөнийн амьдрал',
+    img:'https://images.unsplash.com/photo-1517422688858-c17ab068121c?auto=format&fit=crop&w=400&h=280&q=80',
     icon:'🍹', bg:'linear-gradient(135deg,#0d0d2e,#1a1a5e)',
     metro:'Line 1 · Hengshan Road', cost:0, costLabel:'Коктейль ¥80–120',
     time:'2–3 цаг', rating:'4.6', reviews:'600',
@@ -734,6 +810,7 @@ window.PLACES = [
   },
   {
     id:'fairmont_jazz', name:'Fairmont Peace Hotel Jazz Bar', cat:'night', catLabel:'Шөнийн амьдрал',
+    img:'https://images.unsplash.com/photo-1529458026081-439a0f7715b6?auto=format&fit=crop&w=400&h=280&q=80',
     icon:'🎷', bg:'linear-gradient(135deg,#2c1810,#6b3a2a)',
     metro:"Line 2/10 · Nanjing East Road", cost:0, costLabel:'Ундаа ¥150–300 · 21:00–23:30',
     time:'2 цаг', rating:'4.9', reviews:'500',
@@ -743,6 +820,7 @@ window.PLACES = [
   },
   {
     id:'bar_rouge', name:'Bar Rouge', cat:'night', catLabel:'Шөнийн амьдрал',
+    img:'https://images.unsplash.com/photo-1597531922242-823dbfca45bd?auto=format&fit=crop&w=400&h=280&q=80',
     icon:'💃', bg:'linear-gradient(135deg,#8b0000,#cc0000)',
     metro:"Line 2/10 · Nanjing East Road", cost:100, costLabel:'Entrance ¥100+ · Ундаа ¥100–200',
     time:'3–4 цаг', rating:'4.4', reviews:'1,200',
@@ -752,6 +830,7 @@ window.PLACES = [
   },
   {
     id:'shelter_club', name:'Shelter (Underground)', cat:'night', catLabel:'Шөнийн амьдрал',
+    img:'https://images.unsplash.com/photo-1652453738269-641352be3fbc?auto=format&fit=crop&w=400&h=280&q=80',
     icon:'🎵', bg:'linear-gradient(135deg,#0a0a0a,#1a1a1a)',
     metro:'Line 1 · Changshu Road', cost:50, costLabel:'Entrance ¥50–100',
     time:'3–5 цаг', rating:'4.5', reviews:'800',
@@ -761,6 +840,7 @@ window.PLACES = [
   },
   {
     id:'vue_bar', name:'Vue Bar (Grand Hyatt)', cat:'night', catLabel:'Шөнийн амьдрал',
+    img:'https://images.unsplash.com/photo-1612756336279-b9eb5b6b71d9?auto=format&fit=crop&w=400&h=280&q=80',
     icon:'🌃', bg:'linear-gradient(135deg,#1a0533,#2d0a5e)',
     metro:'Line 2 · Lujiazui', cost:0, costLabel:'Ундаа ¥150–250',
     time:'2 цаг', rating:'4.6', reviews:'700',
@@ -770,6 +850,7 @@ window.PLACES = [
   },
   {
     id:'long_bar', name:'Long Bar (Waldorf Astoria)', cat:'night', catLabel:'Шөнийн амьдрал',
+    img:'https://images.unsplash.com/photo-1563678041155-ddb6ca6296af?auto=format&fit=crop&w=400&h=280&q=80',
     icon:'🍾', bg:'linear-gradient(135deg,#1a0a00,#2a1500)',
     metro:"Line 2/10 · Nanjing East Road", cost:0, costLabel:'Коктейль ¥150–300',
     time:'2 цаг', rating:'4.7', reviews:'400',
@@ -779,6 +860,7 @@ window.PLACES = [
   },
   {
     id:'mint_club', name:'MINT (Rooftop Club)', cat:'night', catLabel:'Шөнийн амьдрал',
+    img:'https://images.unsplash.com/photo-1690471713214-6e26969b89ed?auto=format&fit=crop&w=400&h=280&q=80',
     icon:'🎶', bg:'linear-gradient(135deg,#003300,#006600)',
     metro:'Line 2 · Nanjing West Road', cost:100, costLabel:'Entrance ¥100–200',
     time:'3–5 цаг', rating:'4.3', reviews:'500',
@@ -792,6 +874,7 @@ window.PLACES = [
   // ══════════════════════════════════════════════
   {
     id:'suzhou', name:'Suzhou (1 hr train)', cat:'daytrip', catLabel:'Өдрийн аялал',
+    img:'https://images.unsplash.com/photo-1614765437824-f5433016b7b6?auto=format&fit=crop&w=400&h=280&q=80',
     icon:'🏛', bg:'linear-gradient(135deg,#1a3a5c,#2e6090)',
     metro:'Hongqiao Station → Suzhou North (35 min)', cost:120, costLabel:'Train ¥54–120',
     time:'Бүтэн өдөр', rating:'4.8', reviews:'80,000',
@@ -801,6 +884,7 @@ window.PLACES = [
   },
   {
     id:'hangzhou', name:'Hangzhou & West Lake (1.5 hr)', cat:'daytrip', catLabel:'Өдрийн аялал',
+    img:'https://images.unsplash.com/photo-1558422719-d6982435e4e4?auto=format&fit=crop&w=400&h=280&q=80',
     icon:'🏞', bg:'linear-gradient(135deg,#004d40,#00796b)',
     metro:'Hongqiao Station → Hangzhou East (1 hr)', cost:200, costLabel:'Train ¥73–200',
     time:'Бүтэн өдөр', rating:'4.8', reviews:'100,000',
@@ -810,6 +894,7 @@ window.PLACES = [
   },
   {
     id:'wuzhen', name:'Wuzhen Water Town', cat:'daytrip', catLabel:'Өдрийн аялал',
+    img:'https://images.unsplash.com/photo-1648530040338-c977397965ea?auto=format&fit=crop&w=400&h=280&q=80',
     icon:'⛵', bg:'linear-gradient(135deg,#1a1a2e,#2d2d5e)',
     metro:'Bus from Hongqiao → Wuzhen (2 hr)', cost:150, costLabel:'¥150 (оролт)',
     time:'Бүтэн өдөр', rating:'4.7', reviews:'40,000',
@@ -819,6 +904,7 @@ window.PLACES = [
   },
   {
     id:'tongli', name:'Tongli Ancient Town', cat:'daytrip', catLabel:'Өдрийн аялал',
+    img:'https://images.unsplash.com/photo-1602997009277-72a4121380ac?auto=format&fit=crop&w=400&h=280&q=80',
     icon:'🏮', bg:'linear-gradient(135deg,#5d4037,#8d6e63)',
     metro:'Train + Bus (Suzhou direction, 1.5 hr)', cost:100, costLabel:'¥100 (оролт)',
     time:'Бүтэн өдөр', rating:'4.6', reviews:'20,000',
@@ -828,6 +914,7 @@ window.PLACES = [
   },
   {
     id:'sheshan', name:'Sheshan National Forest Park', cat:'daytrip', catLabel:'Өдрийн аялал',
+    img:'https://images.unsplash.com/photo-1713552422841-21ee541b1d8f?auto=format&fit=crop&w=400&h=280&q=80',
     icon:'🌲', bg:'linear-gradient(135deg,#1b5e20,#33691e)',
     metro:'Line 9 · Sheshan', cost:30, costLabel:'¥30',
     time:'Хагас өдөр', rating:'4.4', reviews:'12,000',
@@ -837,6 +924,7 @@ window.PLACES = [
   },
   {
     id:'nanjing_trip', name:'Nanjing (1 hr 30 min train)', cat:'daytrip', catLabel:'Өдрийн аялал',
+    img:'https://images.unsplash.com/photo-1550590947-302613e51d1a?auto=format&fit=crop&w=400&h=280&q=80',
     icon:'🏯', bg:'linear-gradient(135deg,#8b0000,#b22222)',
     metro:'Hongqiao → Nanjing South (1h 30m)', cost:200, costLabel:'Train ¥134–200',
     time:'Бүтэн өдөр', rating:'4.7', reviews:'60,000',

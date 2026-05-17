@@ -1199,7 +1199,7 @@ function renderPlaces() {
     card.id = 'pc_' + p.id;
     const catClass = { culture:'cat-culture', hidden:'cat-hidden', museum:'cat-museum', temple:'cat-temple', shopping:'cat-shopping', food:'cat-food', relax:'cat-relax', night:'cat-night', daytrip:'cat-daytrip' }[p.cat] || '';
     card.innerHTML = `
-      <div class="place-img-gradient" style="background:${p.bg}">${p.icon}</div>
+      ${p.img ? `<img class="place-img" src="${p.img}" alt="${p.name}" loading="lazy" style="width:100%;height:140px;object-fit:cover;display:block;" onerror="this.style.display='none';this.nextElementSibling.style.display='flex'"><div class="place-img-gradient" style="background:${p.bg};display:none">${p.icon}</div>` : `<div class="place-img-gradient" style="background:${p.bg}">${p.icon}</div>`}
       <div class="place-body">
         <div class="place-name">${p.name}</div>
         <span class="place-cat ${catClass}">${p.catLabel}</span>
