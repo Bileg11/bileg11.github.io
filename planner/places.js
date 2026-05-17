@@ -1,8 +1,8 @@
 // LFS Shanghai — Place Database
-// 100+ Shanghai places, organized by category
+// 98+ Shanghai places, organized by category
 // Updated: 2026-05-17 | Source: trip.com + LFS local knowledge
 
-export const CATEGORIES = [
+window.CATEGORIES = [
   { id:'all',      label:'Бүгд',          icon:'🗺' },
   { id:'culture',  label:'Үзэх ёстой',    icon:'🏛' },
   { id:'hidden',   label:'Нуугдмал',      icon:'💎' },
@@ -845,4 +845,30 @@ export const PLACES = [
     tags:['daytrip','culture','history']
   }
 
-]; // end PLACES
+]; // end window.PLACES
+
+// Travel time estimates between place categories (minutes)
+// Used for realistic itinerary scheduling
+window.TRAVEL_TIMES = {
+  // [from_cat][to_cat] = { metro: min, walk: min, taxi: min }
+  // Default if not found: metro 20, walk 35, taxi 15
+  same_area: { metro: 5,  walk: 15, taxi: 8  },
+  adjacent:  { metro: 15, walk: 35, taxi: 12 },
+  cross_city:{ metro: 30, walk: 90, taxi: 22 },
+  daytrip:   { metro: 0,  walk: 0,  taxi: 0, bus: 60 }
+};
+
+// Place coordinates (approximate) for distance grouping
+window.PLACE_AREAS = {
+  // Area groups: places in same area = same_area travel
+  bund_area:    ['bund','yu_garden','chenghuang_temple','nanxiang','yuyuan_bazaar','yuyuan_food','yuyuan_bazaar_shop','da_hu_chun','nanjing_road','rockbund_art','long_bar','fairmont_jazz'],
+  pudong:       ['oriental_pearl','shanghai_tower','jin_mao','swfc','lujiazui','ifc_mall','super_brand_mall','flair_bar','vue_bar'],
+  peoples_sq:   ['shanghai_museum','urban_planning','people_park','peoples_square','jia_jia','nanjing_west','plaza66'],
+  jingan:       ['jingan_temple','jing_an_sculpture','noodle_bull','commune_social','sober_company','mint_club','nanjing_west'],
+  french_conc:  ['former_french','xintiandi','fuxing_park','sinan_mansions','tianzifang','speak_low','wukang_road','anfu_road','lost_heaven','yang_guofu'],
+  west_bund:    ['west_bund','long_museum_west','yuz_museum','expo_greenhouse'],
+  xujiahui:     ['grand_gateway','xujiahui_electronics'],
+  huaihai:      ['huaihai_road','iapm_mall','din_tai_fung'],
+  daytrips:     ['suzhou','hangzhou','wuzhen','tongli','sheshan','nanjing_trip','zhujiajiao','chongming'],
+};
+

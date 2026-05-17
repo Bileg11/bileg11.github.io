@@ -292,6 +292,16 @@
     }
     .saved-item-rm:hover { color: var(--primary); }
     .drag-hint { font-size: .78rem; color: var(--sub); margin-top: 6px; }
+    .day-assign-select {
+      font-size: .78rem; font-weight: 600; padding: 4px 10px;
+      border: 1.5px solid var(--border); border-radius: 8px;
+      background: #fff; color: var(--text); cursor: pointer;
+      transition: border-color .2s;
+      min-width: 90px;
+    }
+    .day-assign-select:hover, .day-assign-select:focus {
+      border-color: var(--primary); outline: none;
+    }
 
     /* ── ITINERARY ── */
     .itinerary-section { margin-bottom: 28px; }
@@ -667,12 +677,11 @@
       <div class="card-title">Найзтайгаа хуваалц</div>
       <div class="card-sub">Доорх линкийг хуулж найздаа илгээ.</div>
       <div class="share-box">
-        <input class="share-link-input" id="shareLink" readonly value="Төлөвлөгөө хадгалж байна..."/>
+        <input class="share-link-input" id="shareLink" readonly placeholder="↓ Эхлээд хадгалах товч дарна уу"/>
         <button class="btn-copy" onclick="copyLink()">Хуулах</button>
         <div class="share-icons">
-          <button class="share-icon-btn" onclick="shareViaTelegram()">📨 Telegram</button>
           <button class="share-icon-btn" onclick="shareViaEmail()">✉️ И-мэйл</button>
-          <button class="share-icon-btn" onclick="window.print()">🖨 Хэвлэх</button>
+          <button class="share-icon-btn" onclick="downloadPDF()" style="background:rgba(212,168,67,.18);border-color:rgba(212,168,67,.4);">📄 PDF татах</button>
         </div>
       </div>
     </div>
@@ -724,62 +733,76 @@ window.savePlan = async () => {
     budget: window._plan.budget,
     timePrefs: window._plan.timePrefs,
     savedPlaces: window._plan.savedPlaces,
+    dayAssignments: window._plan.dayAssignments || {},
     createdAt: new Date().toISOString(),
     uid: window._currentUser ? window._currentUser.uid : 'guest'
   };
 
+  const linkEl = document.getElementById('shareLink');
   try {
-    const { addDoc, collection, serverTimestamp } = window._authFunctions;
+    const { addDoc, collection } = window._authFunctions;
     const ref = await addDoc(collection(db, 'planners'), planData);
     const link = `https://bileg11.github.io/planner/?id=${ref.id}`;
-    document.getElementById('shareLink').value = link;
+    linkEl.value = link;
     window._planId = ref.id;
     showToast('Төлөвлөгөө хадгалагдлаа!', 'success');
   } catch(e) {
-    // fallback: use local ID
     const localId = 'local_' + Date.now();
     localStorage.setItem('plan_' + localId, JSON.stringify(planData));
-    document.getElementById('shareLink').value = `https://bileg11.github.io/planner/?id=${localId}`;
-    showToast('Локал хадгалагдлаа.', 'success');
+    const link = `https://bileg11.github.io/planner/?id=${localId}`;
+    linkEl.value = link;
+    showToast('Хадгалагдлаа.', 'success');
   }
 };
 
-// Load shared plan from URL
-const urlParams = new URLSearchParams(location.search);
-const sharedId = urlParams.get('id');
-if (sharedId && !sharedId.startsWith('local_')) {
+// Load shared plan from URL — wait for DOM ready
+window.addEventListener('DOMContentLoaded', () => {
+  const urlParams = new URLSearchParams(location.search);
+  const sharedId = urlParams.get('id');
+  if (!sharedId) return;
+
+  if (sharedId.startsWith('local_')) {
+    const raw = localStorage.getItem('plan_' + sharedId);
+    if (raw) { _applySharedPlan(JSON.parse(raw)); }
+    return;
+  }
+
   (async () => {
     try {
       const { getDoc, doc } = window._authFunctions;
       const snap = await getDoc(doc(db, 'planners', sharedId));
-      if (snap.exists()) {
-        const d = snap.data();
-        window._plan = {
-          arrival: d.dates?.arrival, departure: d.dates?.departure,
-          people: d.people||[], hotel: d.hotel||'',
-          interests: d.interests||[], budget: d.budget||'',
-          timePrefs: d.timePrefs||{},
-          savedPlaces: d.savedPlaces||[]
-        };
-        loadSharedPlan();
-      }
+      if (snap.exists()) { _applySharedPlan(snap.data()); }
+      else { showToast('Төлөвлөгөө олдсонгүй', 'error'); }
     } catch(e) { console.log('Shared plan load error:', e); }
   })();
-}
+});
+
+window._applySharedPlan = function(d) {
+  window._plan = {
+    arrival: d.dates?.arrival||'', departure: d.dates?.departure||'',
+    people: d.people||[], hotel: d.hotel||'',
+    interests: d.interests||[], budget: d.budget||'',
+    timePrefs: d.timePrefs||{},
+    savedPlaces: d.savedPlaces||[],
+    dayAssignments: d.dayAssignments||{}
+  };
+  if (window.loadSharedPlan) window.loadSharedPlan();
+  else window.addEventListener('plannerReady', () => window.loadSharedPlan());
+};
 </script>
 
-<!-- ══ PLACES DATA ══ -->
-<script type="module">
-import { PLACES, CATEGORIES } from './places.js';
-window.PLACES = PLACES;
-window.CATEGORIES = CATEGORIES;
-// Render filter buttons dynamically
-const fEl = document.getElementById('placesFilter');
-if (fEl) {
-  fEl.innerHTML = CATEGORIES.map((c,i) =>
-    `<button class="filter-btn${i===0?' active':''}" onclick="filterPlaces('${c.id}',this)">${c.icon} ${c.label}</button>`
-  ).join('');
-}
+<!-- ══ PLACES DATA — regular script so it's sync ══ -->
+<script src="./places.js"></script>
+<script>
+// Build filter buttons from CATEGORIES
+(function() {
+  const fEl = document.getElementById('placesFilter');
+  if (fEl && window.CATEGORIES) {
+    fEl.innerHTML = window.CATEGORIES.map((c,i) =>
+      `<button class="filter-btn${i===0?' active':''}" onclick="filterPlaces('${c.id}',this)">${c.icon} ${c.label}</button>`
+    ).join('');
+  }
+})();
 </script>
 
 <!-- ══ PLANNER LOGIC ══ -->
@@ -787,7 +810,9 @@ if (fEl) {
 /* ─── DATA ─── */
 window._plan = {
   arrival: '', departure: '', people: [], hotel: '',
-  interests: [], budget: '', timePrefs: {}, savedPlaces: []
+  interests: [], budget: '', timePrefs: {},
+  savedPlaces: [],   // array of place IDs
+  dayAssignments: {} // { placeId: dayNumber (1-based) }
 };
 
 // PLACES loaded from places.js module (window.PLACES)
@@ -1228,28 +1253,89 @@ window.nextFromPlaces = function() {
   goToStep(5);
 };
 
+/* ─── HELPERS ─── */
+const MN_MONTHS = ['1-р сар','2-р сар','3-р сар','4-р сар','5-р сар','6-р сар',
+  '7-р сар','8-р сар','9-р сар','10-р сар','11-р сар','12-р сар'];
+const MN_DAYS = ['Ня','Да','Мя','Лх','Пү','Ба','Бя'];
+
+function getDayCount() {
+  const p = window._plan;
+  if (!p.arrival || !p.departure) return 1;
+  return Math.max(1, Math.round((new Date(p.departure)-new Date(p.arrival))/(86400000))+1);
+}
+
+function getArrivalDate() {
+  return window._plan.arrival ? new Date(window._plan.arrival) : new Date();
+}
+
+// Get which area a place belongs to (for travel time calc)
+function getArea(placeId) {
+  const areas = window.PLACE_AREAS || {};
+  for (const [area, ids] of Object.entries(areas)) {
+    if (ids.includes(placeId)) return area;
+  }
+  return 'unknown';
+}
+
+function getTravelTime(fromId, toId) {
+  if (!fromId) return { metro: 0, walk: 0, taxi: 0 };
+  const aFrom = getArea(fromId), aTo = getArea(toId);
+  if (aFrom === 'daytrips' || aTo === 'daytrips') return { metro:0, walk:0, taxi:0, note:'Өдрийн аялал' };
+  if (aFrom === aTo) return { metro: 5, walk: 15, taxi: 8 };
+  // Pudong ↔ Bund area — ferry/metro
+  const pudong = ['pudong'];
+  const bund = ['bund_area'];
+  if ((pudong.includes(aFrom) && bund.includes(aTo)) || (bund.includes(aFrom) && pudong.includes(aTo)))
+    return { metro: 15, walk: 40, taxi: 12, ferry: 10 };
+  return { metro: 22, walk: 60, taxi: 16 };
+}
+
 /* ─── STEP 5: ITINERARY ─── */
 function buildItinerary() {
   const p = window._plan;
-  const saved = p.savedPlaces.map(id => getPlaces().find(pl => pl.id === id)).filter(Boolean);
+  const allPlaces = getPlaces();
+  const saved = p.savedPlaces.map(id => allPlaces.find(pl => pl.id === id)).filter(Boolean);
+  const totalDays = getDayCount();
+  const arrival = getArrivalDate();
+  if (!p.dayAssignments) p.dayAssignments = {};
 
-  // Render saved list
+  // Auto-assign unassigned places evenly across days
+  const unassigned = saved.filter(pl => !p.dayAssignments[pl.id]);
+  let dayIdx = 1;
+  unassigned.forEach(pl => {
+    // Find day with fewest places
+    const counts = {};
+    for (let d = 1; d <= totalDays; d++) counts[d] = 0;
+    saved.forEach(sp => { if (p.dayAssignments[sp.id]) counts[p.dayAssignments[sp.id]] = (counts[p.dayAssignments[sp.id]]||0)+1; });
+    const leastDay = Object.entries(counts).sort((a,b)=>a[1]-b[1])[0][0];
+    p.dayAssignments[pl.id] = parseInt(leastDay);
+  });
+
+  // ── RENDER SAVED LIST WITH DAY SELECTOR ──
   const sl = document.getElementById('savedList');
   sl.innerHTML = '';
   if (saved.length === 0) {
     sl.innerHTML = '<div class="empty-state"><div class="empty-icon">📍</div><p>Хадгалсан газар алга</p></div>';
   } else {
-    saved.forEach((pl,i) => {
+    // Day selector options
+    const dayOpts = Array.from({length:totalDays}, (_,i) =>
+      `<option value="${i+1}">${i+1}-р өдөр</option>`).join('');
+
+    saved.forEach(pl => {
+      const assignedDay = p.dayAssignments[pl.id] || 1;
       const item = document.createElement('div');
-      item.className = 'saved-item'; item.draggable = true;
-      item.dataset.id = pl.id;
-      const catClass = { culture:'cat-culture', hidden:'cat-hidden', relax:'cat-relax', night:'cat-night', food:'cat-food' }[pl.cat] || '';
+      item.className = 'saved-item'; item.draggable = true; item.dataset.id = pl.id;
       item.innerHTML = `
         <div class="saved-item-icon" style="background:${pl.bg}">${pl.icon}</div>
         <div class="saved-item-info">
           <div class="saved-item-name">${pl.name}</div>
-          <div class="saved-item-sub">${pl.catLabel} · ${pl.costLabel} · ${pl.time}</div>
+          <div class="saved-item-sub">${pl.costLabel} · ${pl.time}</div>
         </div>
+        <select class="day-assign-select" onchange="assignDay('${pl.id}',this.value)" title="Өдөр солих">
+          ${Array.from({length:totalDays}, (_,i) =>
+            `<option value="${i+1}"${assignedDay===i+1?' selected':''}>${i+1}-р өдөр</option>`
+          ).join('')}
+        </select>
         <button class="saved-item-rm" onclick="removeSaved('${pl.id}')">✕</button>
       `;
       sl.appendChild(item);
@@ -1257,36 +1343,47 @@ function buildItinerary() {
     initDragDrop(sl);
   }
 
-  // Build itinerary timeline
-  const arrival = p.arrival ? new Date(p.arrival) : new Date();
-  const departure = p.departure ? new Date(p.departure) : new Date(arrival.getTime() + 2*86400000);
-  const totalDays = Math.max(1, Math.round((departure - arrival)/(1000*60*60*24)) + 1);
-  const perDay = Math.ceil(saved.length / totalDays);
-
-  const MN_MONTHS = ['1-р сар','2-р сар','3-р сар','4-р сар','5-р сар','6-р сар',
-    '7-р сар','8-р сар','9-р сар','10-р сар','11-р сар','12-р сар'];
-
+  // ── RENDER TIMELINE ──
   let html = '';
-  let idx = 0;
-  for (let d = 0; d < totalDays && idx < saved.length; d++) {
-    const dt = new Date(arrival); dt.setDate(arrival.getDate() + d);
-    const key = p.arrival + '_d' + d;
+  for (let d = 1; d <= totalDays; d++) {
+    const dt = new Date(arrival); dt.setDate(arrival.getDate() + d - 1);
+    const dayLabel = `${dt.getDate()} ${MN_MONTHS[dt.getMonth()]} (${MN_DAYS[dt.getDay()]})`;
+    const key = p.arrival + '_d' + (d-1);
     const pref = p.timePrefs[key] || {};
     const startHour = parseInt((pref.start||'09:00').split(':')[0]) || 9;
-    const dateStr = `${dt.getDate()} ${MN_MONTHS[dt.getMonth()]}`;
+    const endHour   = parseInt((pref.end  ||'21:00').split(':')[0]) || 21;
+
+    const dayPlaces = saved.filter(pl => (p.dayAssignments[pl.id]||1) === d);
+    if (dayPlaces.length === 0) continue;
 
     html += `<div class="itinerary-section">
       <div class="itin-day-header">
-        <div class="itin-day-badge">${d+1}-р өдөр</div>
-        <div class="itin-day-date">${dateStr}</div>
+        <div class="itin-day-badge">${d}-р өдөр</div>
+        <div class="itin-day-date">${dayLabel}</div>
+        <div style="font-size:.75rem;color:var(--sub);margin-left:auto;">${pref.start||'09:00'} → ${pref.end||'21:00'}</div>
       </div>
       <div class="itin-timeline">`;
 
-    let hour = startHour;
-    const dayPlaces = saved.slice(idx, idx + perDay);
+    let hour = startHour, prevId = null;
     dayPlaces.forEach((pl, pi) => {
-      const isLast = (pi === dayPlaces.length - 1);
-      const timeStr = `${String(hour).padStart(2,'0')}:00`;
+      const isLast = pi === dayPlaces.length - 1;
+      const timeStr = `${String(Math.min(hour,23)).padStart(2,'0')}:00`;
+
+      // Travel time from previous place
+      let travelHtml = '';
+      if (prevId) {
+        const tt = getTravelTime(prevId, pl.id);
+        if (tt.metro || tt.walk) {
+          const parts = [];
+          if (tt.ferry) parts.push(`⛴ Завь ${tt.ferry}мин`);
+          else if (tt.metro) parts.push(`🚇 ${tt.metro}мин`);
+          if (tt.walk) parts.push(`🚶 ${tt.walk}мин`);
+          if (tt.taxi) parts.push(`🚕 ${tt.taxi}мин`);
+          if (tt.note) parts.push(tt.note);
+          travelHtml = `<div style="font-size:.72rem;color:var(--sub);padding:4px 0 4px 16px;opacity:.7;">${parts.join(' · ')}</div>`;
+        }
+      }
+
       html += `
         <div class="itin-item">
           <div class="itin-left"><div class="itin-time">${timeStr}</div></div>
@@ -1295,52 +1392,63 @@ function buildItinerary() {
             ${!isLast ? '<div class="itin-line"></div>' : ''}
           </div>
           <div class="itin-right">
+            ${travelHtml}
             <div class="itin-name">${pl.icon} ${pl.name}</div>
             <div class="itin-sub">${pl.catLabel} · ${pl.time} · ${pl.costLabel}</div>
+            ${pl.metro ? `<div style="font-size:.72rem;color:var(--sub);margin-top:2px;">🚇 ${pl.metro}</div>` : ''}
           </div>
         </div>`;
-      // estimate time: parse "2 цаг" → 2 hours
-      const h = parseInt(pl.time) || 2;
-      hour += h + 1; // +1 hr travel
+
+      const visitHrs = parseFloat(pl.time) || 2;
+      const tt = prevId ? getTravelTime(prevId, pl.id) : { metro: 0 };
+      const travelHrs = (tt.metro || 0) / 60;
+      hour += visitHrs + travelHrs + 0.25; // 15 min buffer
+      prevId = pl.id;
     });
 
     html += '</div></div>';
-    idx += perDay;
   }
+  if (!html) html = '<div class="empty-state"><div class="empty-icon">📋</div><p>Өдрүүдэд газар хуваарилаагүй байна</p></div>';
   document.getElementById('itinContent').innerHTML = html;
   document.getElementById('itin-sub').textContent =
     `${totalDays} өдөр · ${saved.length} газар · ${p.people.length||1} хүн`;
 
-  // Cost
   buildCostTable(saved, p.people.length||1);
-
-  // Share link placeholder
-  document.getElementById('shareLink').value = 'Хадгалах товчийг дарна уу...';
 }
 
+// Assign a place to a specific day
+window.assignDay = function(placeId, day) {
+  if (!window._plan.dayAssignments) window._plan.dayAssignments = {};
+  window._plan.dayAssignments[placeId] = parseInt(day);
+  buildItinerary();
+  showToast(`${day}-р өдөрт хуваарилагдлаа`, 'success');
+};
+
 function buildCostTable(places, numPeople) {
-  const entryCost = places.reduce((s, p) => s + p.cost, 0);
-  const metroEst = 30 * numPeople; // ¥30/day avg
-  const days = Math.max(1, Math.round((new Date(window._plan.departure) - new Date(window._plan.arrival))/(1000*60*60*24))+1);
-  const foodEst = 100 * days * numPeople;
-  const total = entryCost * numPeople + metroEst * days + foodEst;
+  const days = getDayCount();
+  const entryCost = places.reduce((s, p) => s + (p.cost||0), 0);
+  const metroEst = 35 * numPeople * days;
+  const foodEst  = 120 * days * numPeople;
+  const total = entryCost * numPeople + metroEst + foodEst;
 
   const rows = [
     ['Үзэмжийн хураамж', `¥${entryCost} × ${numPeople} хүн`, `¥${entryCost*numPeople}`],
-    ['Метро & тээвэр', `¥30/өдөр × ${days} өдөр × ${numPeople}`, `¥${metroEst*days}`],
-    ['Хоол (ойролцоо)', `¥100/хүн/өдөр × ${days} × ${numPeople}`, `¥${foodEst}`],
+    ['Метро & тэрэг', `¥35/хүн/өдөр × ${days}өд × ${numPeople}`, `¥${metroEst}`],
+    ['Хоол (ойролцоо)', `¥120/хүн/өдөр × ${days}өд × ${numPeople}`, `¥${foodEst}`],
     ['Нийт (CNY)', '', `<span class="cost-total">¥${total}</span>`],
-    ['Нийт (USD ойролцоо)', '', `<span class="cost-total">~$${Math.round(total/7.2)}</span>`],
+    ['Нийт (USD)', '', `<span class="cost-total">~$${Math.round(total/7.2)}</span>`],
+    ['Нийт (MNT)', '', `<span class="cost-total">~₮${(Math.round(total/7.2)*3450).toLocaleString()}</span>`],
   ];
 
   document.getElementById('costTable').innerHTML = rows.map(r =>
-    `<tr><td class="cost-label">${r[0]}</td><td style="color:var(--sub)">${r[1]}</td><td style="text-align:right">${r[2]}</td></tr>`
+    `<tr><td class="cost-label">${r[0]}</td><td style="color:var(--sub);font-size:.8rem;">${r[1]}</td><td style="text-align:right">${r[2]}</td></tr>`
   ).join('');
 }
 
 window.removeSaved = function(id) {
   const idx = window._plan.savedPlaces.indexOf(id);
   if (idx >= 0) window._plan.savedPlaces.splice(idx, 1);
+  delete window._plan.dayAssignments[id];
   buildItinerary();
   updateSummaryBar();
 };
@@ -1349,19 +1457,15 @@ window.removeSaved = function(id) {
 function initDragDrop(list) {
   let dragged = null;
   list.querySelectorAll('.saved-item').forEach(item => {
-    item.addEventListener('dragstart', () => { dragged = item; item.style.opacity='.4'; });
+    item.addEventListener('dragstart', e => { dragged = item; item.style.opacity='.4'; });
     item.addEventListener('dragend',   () => { dragged = null; item.style.opacity='1'; });
     item.addEventListener('dragover',  e => { e.preventDefault(); });
     item.addEventListener('drop', () => {
       if (!dragged || dragged === item) return;
       const fromId = dragged.dataset.id, toId = item.dataset.id;
-      const savedArr = window._plan.savedPlaces;
-      const fi = savedArr.indexOf(fromId), ti = savedArr.indexOf(toId);
-      if (fi >= 0 && ti >= 0) {
-        savedArr.splice(fi, 1);
-        savedArr.splice(ti, 0, fromId);
-        buildItinerary();
-      }
+      const arr = window._plan.savedPlaces;
+      const fi = arr.indexOf(fromId), ti = arr.indexOf(toId);
+      if (fi >= 0 && ti >= 0) { arr.splice(fi,1); arr.splice(ti,0,fromId); buildItinerary(); }
     });
   });
 }
@@ -1369,26 +1473,135 @@ function initDragDrop(list) {
 /* ─── SHARE ─── */
 window.copyLink = function() {
   const val = document.getElementById('shareLink').value;
-  if (val.includes('дарна') || val.includes('байна')) {
-    showToast('Эхлээд хадгалах товч дарна уу', 'error'); return;
-  }
+  if (!val || val.startsWith('↓')) { showToast('Эхлээд хадгалах товч дарна уу', 'error'); return; }
   navigator.clipboard.writeText(val).then(() => showToast('Линк хуулагдлаа!', 'success'));
 };
 
-window.shareViaTelegram = function() {
-  const val = document.getElementById('shareLink').value;
-  if (val.includes('дарна') || val.includes('байна')) {
-    showToast('Эхлээд хадгалах товч дарна уу', 'error'); return;
-  }
-  const msg = encodeURIComponent('LFS Shanghai аяллын төлөвлөгөө: ' + val);
-  window.open('https://t.me/share/url?url=' + encodeURIComponent(val) + '&text=' + msg);
+window.shareViaEmail = function() {
+  const val = document.getElementById('shareLink').value || location.href;
+  window.open(`mailto:?subject=${encodeURIComponent('LFS Shanghai — Аяллын Төлөвлөгөө')}&body=${encodeURIComponent('Манай аяллын төлөвлөгөөг харах:\n'+val)}`);
 };
 
-window.shareViaEmail = function() {
-  const val = document.getElementById('shareLink').value;
-  const sub = encodeURIComponent('LFS Shanghai — Аяллын Төлөвлөгөө');
-  const body = encodeURIComponent('Манай аяллын төлөвлөгөөг харах:\n' + val);
-  window.open(`mailto:?subject=${sub}&body=${body}`);
+/* ─── PDF DOWNLOAD ─── */
+window.downloadPDF = function() {
+  const p = window._plan;
+  const allPlaces = getPlaces();
+  const saved = p.savedPlaces.map(id => allPlaces.find(pl => pl.id === id)).filter(Boolean);
+  const totalDays = getDayCount();
+  const arrival = getArrivalDate();
+  const peopleNames = (p.people||[]).map(p=>p.name).filter(Boolean).join(', ') || 'Аялагчид';
+
+  let daysSections = '';
+  for (let d = 1; d <= totalDays; d++) {
+    const dt = new Date(arrival); dt.setDate(arrival.getDate() + d - 1);
+    const dayLabel = `${dt.getDate()} ${MN_MONTHS[dt.getMonth()]} (${MN_DAYS[dt.getDay()]})`;
+    const key = p.arrival + '_d' + (d-1);
+    const pref = p.timePrefs[key] || {};
+    const dayPlaces = saved.filter(pl => (p.dayAssignments[pl.id]||((saved.indexOf(pl)%totalDays)+1)) === d);
+    if (!dayPlaces.length) continue;
+
+    let hour = parseInt((pref.start||'09:00').split(':')[0])||9;
+    let prevId = null;
+    let rows = '';
+    dayPlaces.forEach(pl => {
+      const tt = prevId ? getTravelTime(prevId, pl.id) : {metro:0, walk:0, taxi:0};
+      const tStr = `${String(Math.min(hour,23)).padStart(2,'0')}:00`;
+      const trvl = tt.ferry ? `⛴ ${tt.ferry}мин` : tt.metro ? `🚇 Metro ${tt.metro}мин · 🚕 Такси ${tt.taxi}мин` : '';
+      rows += `
+        <tr class="place-row">
+          <td class="time-col">${tStr}</td>
+          <td class="icon-col">${pl.icon}</td>
+          <td class="name-col">
+            <strong>${pl.name}</strong><br>
+            <span class="sub">${pl.catLabel} · ${pl.time} · ${pl.costLabel}</span><br>
+            ${pl.metro ? `<span class="metro">🚇 ${pl.metro}</span>` : ''}
+            ${trvl ? `<span class="travel">${trvl} зорчих</span>` : ''}
+          </td>
+        </tr>`;
+      hour += (parseFloat(pl.time)||2) + (tt.metro||0)/60 + 0.25;
+      prevId = pl.id;
+    });
+    daysSections += `
+      <div class="day-block">
+        <div class="day-header"><span class="day-num">${d}-р өдөр</span><span class="day-date">${dayLabel}</span><span class="day-time">${pref.start||'09:00'} → ${pref.end||'21:00'}</span></div>
+        <table class="itin-table"><tbody>${rows}</tbody></table>
+      </div>`;
+  }
+
+  // Cost
+  const entryCost = saved.reduce((s,pl)=>s+(pl.cost||0),0);
+  const days = totalDays, numP = p.people.length||1;
+  const metro = 35*numP*days, food = 120*numP*days;
+  const total = entryCost*numP + metro + food;
+
+  const html = `<!DOCTYPE html><html lang="mn"><head><meta charset="UTF-8">
+  <title>LFS Shanghai — Аяллын Төлөвлөгөө</title>
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700;800&display=swap');
+    *{margin:0;padding:0;box-sizing:border-box}
+    body{font-family:'Inter',sans-serif;color:#1a1a2e;background:#fff;padding:0}
+    .cover{background:linear-gradient(135deg,#1a1a2e,#e8392a);color:#fff;padding:48px 40px 40px;text-align:center}
+    .cover-logo{font-size:13px;font-weight:700;letter-spacing:2px;text-transform:uppercase;opacity:.7;margin-bottom:12px}
+    .cover-title{font-size:28px;font-weight:800;letter-spacing:-.5px;margin-bottom:8px}
+    .cover-sub{font-size:13px;opacity:.8}
+    .meta-row{display:flex;gap:24px;justify-content:center;margin-top:20px;flex-wrap:wrap}
+    .meta-chip{background:rgba(255,255,255,.15);border-radius:50px;padding:6px 16px;font-size:12px;font-weight:600}
+    .body{padding:32px 40px}
+    .day-block{margin-bottom:32px;border-radius:12px;overflow:hidden;border:1px solid #e4e4ec}
+    .day-header{display:flex;align-items:center;gap:12px;background:#f7f7f8;padding:12px 20px;border-bottom:1px solid #e4e4ec}
+    .day-num{background:#e8392a;color:#fff;border-radius:50px;padding:3px 14px;font-size:12px;font-weight:700}
+    .day-date{font-size:13px;font-weight:600;color:#1a1a2e}
+    .day-time{margin-left:auto;font-size:12px;color:#5a5a72}
+    .itin-table{width:100%;border-collapse:collapse}
+    .place-row td{padding:12px 16px;border-bottom:1px solid #f0f0f5;vertical-align:top}
+    .place-row:last-child td{border-bottom:none}
+    .time-col{width:56px;font-size:13px;font-weight:700;color:#e8392a;white-space:nowrap}
+    .icon-col{width:32px;font-size:20px}
+    .name-col strong{font-size:14px;font-weight:700}
+    .sub{font-size:11px;color:#5a5a72;display:block;margin-top:2px}
+    .metro{font-size:11px;color:#0277bd;display:inline-block;margin-top:3px}
+    .travel{font-size:11px;color:#5a5a72;display:block;background:#f7f7f8;border-radius:4px;padding:2px 8px;margin-top:4px;display:inline-block}
+    .cost-section{background:#1a1a2e;color:#fff;border-radius:12px;padding:24px;margin-top:24px}
+    .cost-title{font-size:14px;font-weight:700;margin-bottom:16px;opacity:.7;text-transform:uppercase;letter-spacing:1px}
+    .cost-row{display:flex;justify-content:space-between;padding:8px 0;border-bottom:1px solid rgba(255,255,255,.1);font-size:13px}
+    .cost-row:last-child{border-bottom:none;padding-top:16px}
+    .cost-total{font-size:18px;font-weight:800;color:#d4a843}
+    .footer{text-align:center;margin-top:32px;font-size:11px;color:#5a5a72;padding-bottom:24px}
+    @media print{
+      @page{margin:15mm;size:A4}
+      .cover{-webkit-print-color-adjust:exact;print-color-adjust:exact}
+      .day-block{break-inside:avoid}
+      .cost-section{-webkit-print-color-adjust:exact;print-color-adjust:exact}
+    }
+  </style></head><body>
+  <div class="cover">
+    <div class="cover-logo">LFS Shanghai · Аяллын Компани</div>
+    <div class="cover-title">Аяллын Төлөвлөгөө</div>
+    <div class="cover-sub">${peopleNames}</div>
+    <div class="meta-row">
+      <div class="meta-chip">📅 ${p.arrival||'—'} → ${p.departure||'—'}</div>
+      <div class="meta-chip">👥 ${numP} хүн</div>
+      <div class="meta-chip">📍 ${saved.length} газар</div>
+      ${p.hotel ? `<div class="meta-chip">🏨 ${p.hotel}</div>` : ''}
+    </div>
+  </div>
+  <div class="body">
+    ${daysSections}
+    <div class="cost-section">
+      <div class="cost-title">Зардлын тооцоо</div>
+      <div class="cost-row"><span>Үзэмжийн хураамж</span><span>¥${entryCost} × ${numP} = ¥${entryCost*numP}</span></div>
+      <div class="cost-row"><span>Метро & тэрэг</span><span>¥35/хүн/өдөр × ${days}өд × ${numP} = ¥${metro}</span></div>
+      <div class="cost-row"><span>Хоол (ойролцоо)</span><span>¥120/хүн/өдөр × ${days}өд × ${numP} = ¥${food}</span></div>
+      <div class="cost-row"><span style="font-weight:700">Нийт</span><span class="cost-total">¥${total} · ~$${Math.round(total/7.2)} · ~₮${(Math.round(total/7.2)*3450).toLocaleString()}</span></div>
+    </div>
+    <div class="footer">LFS Shanghai · bileg11.github.io · lfs.shanghai1@gmail.com · WeChat: lfsshanghai</div>
+  </div>
+  <script>window.onload=()=>{window.print();}<\/script>
+  </body></html>`;
+
+  const w = window.open('','_blank');
+  if (w) { w.document.write(html); w.document.close(); }
+  else showToast('Попап блоклогдсон. Браузерийн тохиргоог шалгана уу.', 'error');
 };
 
 /* ─── LOAD SHARED PLAN ─── */
@@ -1410,6 +1623,9 @@ window.loadSharedPlan = function() {
   goToStep(5);
   showToast('Хуваалцсан төлөвлөгөө нээгдлээ!', 'success');
 };
+
+// Signal that planner logic is fully loaded
+window.dispatchEvent(new Event('plannerReady'));
 </script>
 
 <!-- Google Analytics -->
