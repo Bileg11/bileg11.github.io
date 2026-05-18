@@ -396,6 +396,65 @@ footer{
 .reveal-delay-5{transition-delay:.5s}
 .reveal-delay-6{transition-delay:.6s}
 
+/* ── FEATURED STUDENT CARD ── */
+.student-feature{
+  max-width:1160px;
+  margin:0 auto 0;
+  padding:0 24px 0;
+}
+.student-card{
+  background:linear-gradient(135deg,#0071e3 0%,#005bb5 100%);
+  border-radius:28px;
+  padding:40px 44px;
+  color:#fff;
+  display:grid;
+  grid-template-columns:auto 1fr;
+  gap:0 36px;
+  align-items:start;
+}
+@media(max-width:700px){
+  .student-card{grid-template-columns:1fr;gap:20px 0;padding:28px 24px}
+}
+.student-card-left{
+  display:flex;flex-direction:column;align-items:flex-start;gap:6px;
+  min-width:180px;
+}
+.student-card-icon{font-size:44px;line-height:1;margin-bottom:8px}
+.student-card-eyebrow{
+  font-size:11px;font-weight:600;letter-spacing:.1em;text-transform:uppercase;
+  color:rgba(255,255,255,.65);
+}
+.student-card-title{
+  font-size:22px;font-weight:700;letter-spacing:-.02em;
+  color:#fff;line-height:1.2;
+}
+.student-card-title em{font-style:normal;color:rgba(255,255,255,.7)}
+.student-list{
+  list-style:none;
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:12px 32px;
+  margin:0;padding:0;
+}
+@media(max-width:600px){.student-list{grid-template-columns:1fr}}
+.student-list li{
+  font-size:14px;
+  color:rgba(255,255,255,.85);
+  line-height:1.55;
+  padding-left:18px;
+  position:relative;
+}
+.student-list li::before{
+  content:'';
+  position:absolute;left:0;top:7px;
+  width:5px;height:5px;
+  border-radius:50%;
+  background:rgba(255,255,255,.55);
+}
+.student-list li strong{
+  color:#fff;font-weight:600;
+}
+
 /* ── STICKY TOC ── */
 .toc-bar{
   position:sticky;top:52px;z-index:400;
@@ -468,6 +527,27 @@ footer{
 </section>
 
 <div class="section-divider"></div>
+
+<!-- FEATURED STUDENT CARD -->
+<section class="student-feature reveal" style="padding-top:64px">
+  <div class="student-card" id="oiuutan">
+    <div class="student-card-left">
+      <div class="student-card-icon">🎓</div>
+      <div class="student-card-eyebrow">FOR STUDENTS</div>
+      <div class="student-card-title">Шанхайд ирэх<br><em>оюутанд</em></div>
+    </div>
+    <ul class="student-list">
+      <li>Шанхайд сурахыг хүсвэл <strong>Фудан, Тунжи, SJTU</strong> их сургуулиудад хандана</li>
+      <li><strong>Хятад хэлний сургалт</strong> (HSK бэлтгэл) — олон их сургуулийн дотор курс бий</li>
+      <li><strong>Оюутны виз</strong> (X1, X2) — сурлагын хугацаагаар тусгайлан гаргана</li>
+      <li>Хямд хороолол: <strong>Путуо, Баошань</strong> — хоол, унаа хямд, интернет хурдан</li>
+      <li><strong>WeChat бүртгэл</strong> — гадны утасны дугаар шаардана, Монгол дугаар болно</li>
+      <li><strong>Alipay</strong> гадаадын паспортоор бүртгүүлэх боломжтой болсон (2024)</li>
+      <li>Оюутны <strong>хоолны газар</strong> (食堂) — маш хямд, 10–20 юань/хоол</li>
+      <li>Их сургуулийн <strong>дотуур байр</strong> захиалга — элсэлтийн хамт авна</li>
+    </ul>
+  </div>
+</section>
 
 <!-- TIPS GRID -->
 <section class="tips-section">
@@ -556,23 +636,6 @@ footer{
         <li><strong>Паспортын хуулбар</strong> тусад нь авч явах — эх хувийг зочид буудалд үлдээнэ</li>
         <li>Эмнэлэгт орохдоо <strong>паспорт заавал</strong> шаардана — байнга дагаж явна</li>
         <li>Яаралтай тусламж: <strong>110</strong> (цагдаа), <strong>120</strong> (түргэн тусламж)</li>
-      </ul>
-    </div>
-
-    <!-- 6. Оюутанд (wide) -->
-    <div class="tip-card wide reveal reveal-delay-5" id="oiuutan">
-      <span class="tip-card-icon">🎓</span>
-      <div class="tip-card-title">Шанхайд ирэх оюутанд</div>
-      <div class="tip-card-sub">For Students</div>
-      <ul class="tip-list" style="display:grid;grid-template-columns:1fr 1fr;gap:11px 32px">
-        <li>Шанхайд сурахыг хүсвэл <strong>Фудан, Тунжи, SJTU</strong> их сургуулиудад хандана</li>
-        <li><strong>Хятад хэлний сургалт</strong> (HSK бэлтгэл) — олон их сургуулийн дотор курс бий</li>
-        <li><strong>Оюутны виз</strong> (X1, X2) — сурлагын хугацаагаар тусгайлан гаргана</li>
-        <li>Хямд хороолол: <strong>Путуо, Баошань</strong> — хоол, унаа хямд, интернет хурдан</li>
-        <li><strong>WeChat бүртгэл</strong> — гадны утасны дугаар шаардана, Монгол дугаар болно</li>
-        <li><strong>Alipay</strong> гадаадын паспортоор бүртгүүлэх боломжтой болсон (2024)</li>
-        <li>Оюутны <strong>хоолны газар</strong> (食堂) — маш хямд, 10–20 юань/хоол</li>
-        <li>Их сургуулийн <strong>дотуур байр</strong> захиалга — элсэлтийн хамт авна</li>
       </ul>
     </div>
 
