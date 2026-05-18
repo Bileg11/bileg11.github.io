@@ -455,6 +455,88 @@ footer{
   color:#fff;font-weight:600;
 }
 
+/* ── 20K GUIDE CARD ── */
+.guide-feature{
+  max-width:1160px;
+  margin:0 auto;
+  padding:20px 24px 0;
+}
+.guide-card{
+  background:var(--dark2);
+  border-radius:28px;
+  padding:44px 44px 40px;
+  color:#fff;
+}
+@media(max-width:700px){.guide-card{padding:28px 22px 28px}}
+.guide-top{
+  display:flex;align-items:flex-start;justify-content:space-between;
+  flex-wrap:wrap;gap:12px;
+  margin-bottom:32px;
+}
+.guide-eyebrow{
+  font-size:11px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;
+  color:rgba(255,255,255,.45);
+  margin-bottom:6px;
+}
+.guide-title{
+  font-size:clamp(20px,3vw,28px);font-weight:700;letter-spacing:-.03em;
+  color:#fff;line-height:1.15;
+}
+.guide-badge{
+  background:var(--blue);
+  color:#fff;
+  font-size:12px;font-weight:700;letter-spacing:.02em;
+  padding:6px 14px;border-radius:20px;
+  white-space:nowrap;align-self:flex-start;
+  flex-shrink:0;
+}
+.guide-cols{
+  display:grid;
+  grid-template-columns:repeat(3,1fr);
+  gap:28px 36px;
+}
+@media(max-width:860px){.guide-cols{grid-template-columns:1fr 1fr}}
+@media(max-width:560px){.guide-cols{grid-template-columns:1fr}}
+.guide-col-title{
+  font-size:11px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;
+  color:rgba(255,255,255,.4);
+  margin-bottom:14px;
+  display:flex;align-items:center;gap:7px;
+}
+.guide-col-title span{font-size:16px}
+.guide-list{
+  list-style:none;
+  display:flex;flex-direction:column;gap:10px;
+  margin:0;padding:0;
+}
+.guide-list li{
+  font-size:13.5px;
+  color:rgba(255,255,255,.78);
+  line-height:1.55;
+  padding-left:18px;
+  position:relative;
+}
+.guide-list li::before{
+  content:'';
+  position:absolute;left:0;top:7px;
+  width:4px;height:4px;
+  border-radius:50%;
+  background:rgba(255,255,255,.35);
+}
+.guide-list li strong{color:#fff;font-weight:600}
+.guide-list li .tag{
+  display:inline-block;
+  background:rgba(255,255,255,.1);
+  color:rgba(255,255,255,.75);
+  font-size:11px;font-weight:600;
+  padding:1px 7px;border-radius:8px;
+  margin-left:4px;vertical-align:middle;
+}
+.guide-divider{
+  height:1px;background:rgba(255,255,255,.1);
+  margin:28px 0;
+}
+
 /* ── STICKY TOC ── */
 .toc-bar{
   position:sticky;top:52px;z-index:400;
@@ -546,6 +628,72 @@ footer{
       <li>Оюутны <strong>хоолны газар</strong> (食堂) — маш хямд, 10–20 юань/хоол</li>
       <li>Их сургуулийн <strong>дотуур байр</strong> захиалга — элсэлтийн хамт авна</li>
     </ul>
+  </div>
+</section>
+
+<!-- 20K GUIDE CARD -->
+<section class="guide-feature reveal">
+  <div class="guide-card">
+
+    <div class="guide-top">
+      <div>
+        <div class="guide-eyebrow">Дэлгэрэнгүй заавар</div>
+        <div class="guide-title">Бүгдийг зураг бичлэгээр зааварлана</div>
+      </div>
+      <div class="guide-badge">20К зөвлөмж</div>
+    </div>
+
+    <div class="guide-cols">
+
+      <!-- Col 1: Apps -->
+      <div>
+        <div class="guide-col-title"><span>📱</span> Апп &amp; Тохиргоо</div>
+        <ul class="guide-list">
+          <li><strong>Alipay</strong> холбох — гадаадын паспортоор бүртгэл</li>
+          <li><strong>WeChat</strong> — батлагаажуулж өгнө<span class="tag">+тусламж</span></li>
+          <li><strong>Amap (高德地图)</strong> татах — офлайн газрын зураг</li>
+          <li><strong>eSIM</strong> авах — Хятадад ирэхэд автоматаар идэвхждэг. Эсвэл <strong>LIME SIM</strong></li>
+          <li><strong>Metro</strong> — бүх шугамын зураг бичлэг тайлбар</li>
+          <li><strong>Airport → Metro</strong> заавар алхам алхмаар</li>
+          <li><strong>Meituan (美团)</strong> — хоол хүргэлт, дэлгүүр. Хятад дугаар хэрэгтэй</li>
+          <li><strong>小红书 (Xiaohongshu)</strong> — Хятадын IG маягийн app, trend, хоол, газар</li>
+          <li><strong>去哪儿 (Qunar)</strong> — нислэг, зочид буудал хайх app</li>
+          <li><strong>Train Chinese</strong> — хэл суралцах app</li>
+          <li><strong>TaoBao, Pinduoduo</strong> холбох заавар. <strong>得物 (Poizon)</strong> — оригинал брэнд барааны app</li>
+          <li><strong>NordVPN, Aox VPN</strong> — ирэхийн өмнө суулгаж ирэх</li>
+        </ul>
+      </div>
+
+      <!-- Col 2: Things to bring -->
+      <div>
+        <div class="guide-col-title"><span>🎒</span> Авчрах зүйлс</div>
+        <ul class="guide-list">
+          <li>Ирэхийн өмнө <strong>дотуур байрнаасаа</strong> гал тогоотой эсэх, өрөөндөө хоол хийж болох эсэхийг лавлаарай</li>
+          <li><strong>Борц</strong> — уургийн нөөц</li>
+          <li><strong>Ааруул</strong></li>
+          <li><strong>Талын монгол</strong></li>
+          <li><strong>Сүүтэй цай</strong></li>
+          <li><strong>Alpen Gold</strong> шоколад</li>
+          <li><strong>Жамц давс</strong></li>
+          <li><strong>Эм</strong> — монгол хүнд монгол эм тохирдог. Толгой өвдөх, харшил, гэдэс өвдөх гэх мэт эм заавал авчрах</li>
+          <li><strong>Цагаан найруулдаг ханиадны</strong> (орос нэртэй) эм</li>
+          <li><strong>Боорцог</strong></li>
+        </ul>
+      </div>
+
+      <!-- Col 3: After arrival tips -->
+      <div>
+        <div class="guide-col-title"><span>💡</span> Ирсний дараа</div>
+        <ul class="guide-list">
+          <li><strong>Ус</strong> — цэвэр ус байнга худалдаж авна. Дотуур байрны краны ус ууж болохгүй</li>
+          <li><strong>Дотуур байрны дүрэм</strong> маш чанд мөрдөх — хятадууд зарчимч, дүрэм зөрчвөл шууд хөөдөг</li>
+          <li>Хүн <strong>юм шидэж өгвөл</strong> буруугаар ойлгоорой — соёлын онцлог, тогтсон зан заншил</li>
+          <li>Хятадууд <strong>чангаар ярьдаг</strong> — уурлаж байна гэж бодохгүй байх</li>
+          <li><strong>Өвлийн хувцас:</strong> цас ордоггүй ч маш чийглэг. Монголын хавар-намрын нимгэн куртик хангалттай</li>
+        </ul>
+      </div>
+
+    </div>
   </div>
 </section>
 
