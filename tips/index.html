@@ -262,7 +262,7 @@ body{
   position:absolute;left:0;top:7px;
   width:5px;height:5px;
   border-radius:50%;
-  background:var(--blue);
+  background:var(--bullet,var(--blue));
   opacity:.6;
 }
 .tip-list li strong{
@@ -789,14 +789,14 @@ footer{
     </div>
 
     <!-- 7. Цаг агаар -->
-    <div class="tip-card reveal" id="tsag" style="grid-column:1/-1">
-      <div class="tip-card-title">Цаг агаар &amp; Хувцас</div>
-      <div class="tip-card-sub">Weather &amp; Clothing</div>
-      <ul class="tip-list" style="display:grid;grid-template-columns:repeat(4,1fr);gap:11px 28px">
-        <li><strong>Зун (6–8-р сар):</strong> халуун, чийглэг — нимгэн хувцас, нарнаас хамгаалах</li>
-        <li><strong>Намар (9–11-р сар):</strong> хамгийн тохилог цаг — аялахад хамгийн тохиромжтой</li>
-        <li><strong>Өвөл (12–2-р сар):</strong> хүйтэн, хур тунадас — дулаан дотуур хувцас авах</li>
-        <li><strong>Хавар (3–5-р сар):</strong> чийглэг, бороотой — усны цув авч явах</li>
+    <div class="tip-card reveal" id="tsag" style="grid-column:1/-1;background:#0071e3;border-color:#0071e3">
+      <div class="tip-card-title" style="color:#fff">Цаг агаар &amp; Хувцас</div>
+      <div class="tip-card-sub" style="color:rgba(255,255,255,.7)">Weather &amp; Clothing</div>
+      <ul class="tip-list" style="display:grid;grid-template-columns:repeat(4,1fr);gap:11px 28px;--bullet:#fff">
+        <li style="color:rgba(255,255,255,.85)"><strong style="color:#fff">Зун (6–8-р сар):</strong> халуун, чийглэг — нимгэн хувцас, нарнаас хамгаалах</li>
+        <li style="color:rgba(255,255,255,.85)"><strong style="color:#fff">Намар (9–11-р сар):</strong> хамгийн тохилог цаг — аялахад хамгийн тохиромжтой</li>
+        <li style="color:rgba(255,255,255,.85)"><strong style="color:#fff">Өвөл (12–2-р сар):</strong> хүйтэн, хур тунадас — дулаан дотуур хувцас авах</li>
+        <li style="color:rgba(255,255,255,.85)"><strong style="color:#fff">Хавар (3–5-р сар):</strong> чийглэг, бороотой — усны цув авч явах</li>
       </ul>
     </div>
 
