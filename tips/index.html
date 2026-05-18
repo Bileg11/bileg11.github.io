@@ -464,74 +464,83 @@ footer{
 .guide-card{
   background:var(--dark2);
   border-radius:28px;
-  padding:44px 44px 40px;
+  padding:44px 48px 44px;
   color:#fff;
+  display:grid;
+  grid-template-columns:1fr 1.15fr;
+  gap:0 56px;
+  align-items:start;
 }
-@media(max-width:700px){.guide-card{padding:28px 22px 28px}}
-.guide-top{
-  display:flex;align-items:flex-start;justify-content:space-between;
-  flex-wrap:wrap;gap:12px;
-  margin-bottom:32px;
-}
+@media(max-width:860px){.guide-card{grid-template-columns:1fr;gap:36px 0;padding:32px 24px}}
+.guide-left{}
 .guide-eyebrow{
   font-size:11px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;
-  color:rgba(255,255,255,.45);
-  margin-bottom:6px;
+  color:rgba(255,255,255,.4);
+  margin-bottom:10px;
 }
 .guide-title{
-  font-size:clamp(20px,3vw,28px);font-weight:700;letter-spacing:-.03em;
+  font-size:clamp(22px,3.2vw,32px);font-weight:700;letter-spacing:-.03em;
   color:#fff;line-height:1.15;
+  margin-bottom:12px;
 }
-.guide-badge{
-  background:var(--blue);
-  color:#fff;
-  font-size:12px;font-weight:700;letter-spacing:.02em;
-  padding:6px 14px;border-radius:20px;
-  white-space:nowrap;align-self:flex-start;
-  flex-shrink:0;
+.guide-desc{
+  font-size:14px;color:rgba(255,255,255,.55);line-height:1.65;
+  margin-bottom:32px;
+  max-width:340px;
 }
-.guide-cols{
-  display:grid;
-  grid-template-columns:repeat(3,1fr);
-  gap:28px 36px;
+.guide-price-row{
+  display:flex;align-items:flex-end;gap:10px;
+  margin-bottom:8px;
 }
-@media(max-width:860px){.guide-cols{grid-template-columns:1fr 1fr}}
-@media(max-width:560px){.guide-cols{grid-template-columns:1fr}}
-.guide-col-title{
-  font-size:11px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;
-  color:rgba(255,255,255,.4);
+.guide-price{
+  font-size:52px;font-weight:800;letter-spacing:-.04em;
+  color:#fff;line-height:1;
+}
+.guide-price-unit{
+  font-size:16px;font-weight:400;color:rgba(255,255,255,.45);
+  margin-bottom:6px;
+}
+.guide-price-note{
+  font-size:12px;color:rgba(255,255,255,.35);
+  margin-bottom:28px;
+}
+.guide-cta{
+  display:inline-flex;align-items:center;gap:8px;
+  background:#fff;color:var(--dark2);
+  padding:14px 28px;border-radius:28px;
+  font-size:15px;font-weight:700;font-family:inherit;
+  text-decoration:none;border:none;cursor:pointer;
+  transition:opacity .2s,transform .15s;
   margin-bottom:14px;
-  display:flex;align-items:center;gap:7px;
 }
-.guide-col-title span{font-size:16px}
-.guide-list{
+.guide-cta:hover{opacity:.92;transform:scale(1.02)}
+.guide-cta-note{
+  font-size:12px;color:rgba(255,255,255,.3);
+  display:block;
+}
+.guide-right{}
+.guide-includes-title{
+  font-size:11px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;
+  color:rgba(255,255,255,.35);
+  margin-bottom:18px;
+}
+.guide-includes{
   list-style:none;
-  display:flex;flex-direction:column;gap:10px;
-  margin:0;padding:0;
+  display:flex;flex-direction:column;
+  gap:0;margin:0;padding:0;
 }
-.guide-list li{
-  font-size:13.5px;
-  color:rgba(255,255,255,.78);
+.guide-includes li{
+  display:flex;align-items:flex-start;gap:12px;
+  font-size:14px;color:rgba(255,255,255,.8);
   line-height:1.55;
-  padding-left:18px;
-  position:relative;
+  padding:13px 0;
+  border-bottom:1px solid rgba(255,255,255,.07);
 }
-.guide-list li::before{
-  content:'';
-  position:absolute;left:0;top:7px;
-  width:4px;height:4px;
-  border-radius:50%;
-  background:rgba(255,255,255,.35);
+.guide-includes li:last-child{border-bottom:none}
+.guide-includes li .gi-icon{
+  font-size:17px;flex-shrink:0;margin-top:1px;
 }
-.guide-list li strong{color:#fff;font-weight:600}
-.guide-list li .tag{
-  display:inline-block;
-  background:rgba(255,255,255,.1);
-  color:rgba(255,255,255,.75);
-  font-size:11px;font-weight:600;
-  padding:1px 7px;border-radius:8px;
-  margin-left:4px;vertical-align:middle;
-}
+.guide-includes li strong{color:#fff;font-weight:600}
 .guide-divider{
   height:1px;background:rgba(255,255,255,.1);
   margin:28px 0;
@@ -635,66 +644,64 @@ footer{
 <section class="guide-feature reveal">
   <div class="guide-card">
 
-    <div class="guide-top">
-      <div>
-        <div class="guide-eyebrow">Оюутнуудад · Залуустаа</div>
-        <div class="guide-title">Анх удаа Хятадад суралцахаар<br>төлөвлөж буй залуустаа</div>
-        <div style="font-size:14px;color:rgba(255,255,255,.55);margin-top:8px;line-height:1.55">Утсаар ярьж, Хятад явахаасаа өмнө хэрэгтэй бүхнээ бэлдэхэд тусална.</div>
+    <!-- LEFT: pitch + price + CTA -->
+    <div class="guide-left">
+      <div class="guide-eyebrow">Оюутнуудад · Залуустаа</div>
+      <div class="guide-title">Анх удаа Хятадад суралцахаар төлөвлөж буй залуустаа</div>
+      <div class="guide-desc">Утсаар ярьж, зураг бичлэгээр ойлгомжтой тайлбарлана. Хятад явахаасаа өмнө хэрэгтэй бүхнээ бэлдэхэд тусална.</div>
+
+      <div class="guide-price-row">
+        <div class="guide-price">20,000</div>
+        <div class="guide-price-unit">₮</div>
       </div>
-      <div class="guide-badge">20К зөвлөмж</div>
+      <div class="guide-price-note">Нэг удаагийн зөвлөгөө · Хугацаагүй дэмжлэг</div>
+
+      <a href="https://www.facebook.com/a.bileg.2025" target="_blank" class="guide-cta">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"/></svg>
+        Одоо захиалах →
+      </a>
+      <span class="guide-cta-note">Facebook Messenger-ээр холбогдоно</span>
     </div>
 
-    <div class="guide-cols">
-
-      <!-- Col 1: Apps -->
-      <div>
-        <div class="guide-col-title"><span>📱</span> Апп &amp; Тохиргоо</div>
-        <ul class="guide-list">
-          <li><strong>Alipay</strong> холбох — гадаадын паспортоор бүртгэл</li>
-          <li><strong>WeChat</strong> — батлагаажуулж өгнө<span class="tag">+тусламж</span></li>
-          <li><strong>Amap (高德地图)</strong> татах — офлайн газрын зураг</li>
-          <li><strong>eSIM</strong> авах — Хятадад ирэхэд автоматаар идэвхждэг. Эсвэл <strong>LIME SIM</strong></li>
-          <li><strong>Metro</strong> — бүх шугамын зураг бичлэг тайлбар</li>
-          <li><strong>Airport → Metro</strong> заавар алхам алхмаар</li>
-          <li><strong>Meituan (美团)</strong> — хоол хүргэлт, дэлгүүр. Хятад дугаар хэрэгтэй</li>
-          <li><strong>小红书 (Xiaohongshu)</strong> — Хятадын IG маягийн app, trend, хоол, газар</li>
-          <li><strong>去哪儿 (Qunar)</strong> — нислэг, зочид буудал хайх app</li>
-          <li><strong>Train Chinese</strong> — хэл суралцах app</li>
-          <li><strong>TaoBao, Pinduoduo</strong> холбох заавар. <strong>得物 (Poizon)</strong> — оригинал брэнд барааны app</li>
-          <li><strong>NordVPN, Aox VPN</strong> — ирэхийн өмнө суулгаж ирэх</li>
-        </ul>
-      </div>
-
-      <!-- Col 2: Things to bring -->
-      <div>
-        <div class="guide-col-title"><span>🎒</span> Авчрах зүйлс</div>
-        <ul class="guide-list">
-          <li>Ирэхийн өмнө <strong>дотуур байрнаасаа</strong> гал тогоотой эсэх, өрөөндөө хоол хийж болох эсэхийг лавлаарай</li>
-          <li><strong>Борц</strong> — уургийн нөөц</li>
-          <li><strong>Ааруул</strong></li>
-          <li><strong>Талын монгол</strong></li>
-          <li><strong>Сүүтэй цай</strong></li>
-          <li><strong>Alpen Gold</strong> шоколад</li>
-          <li><strong>Жамц давс</strong></li>
-          <li><strong>Эм</strong> — монгол хүнд монгол эм тохирдог. Толгой өвдөх, харшил, гэдэс өвдөх гэх мэт эм заавал авчрах</li>
-          <li><strong>Цагаан найруулдаг ханиадны</strong> (орос нэртэй) эм</li>
-          <li><strong>Боорцог</strong></li>
-        </ul>
-      </div>
-
-      <!-- Col 3: After arrival tips -->
-      <div>
-        <div class="guide-col-title"><span>💡</span> Ирсний дараа</div>
-        <ul class="guide-list">
-          <li><strong>Ус</strong> — цэвэр ус байнга худалдаж авна. Дотуур байрны краны ус ууж болохгүй</li>
-          <li><strong>Дотуур байрны дүрэм</strong> маш чанд мөрдөх — хятадууд зарчимч, дүрэм зөрчвөл шууд хөөдөг</li>
-          <li>Хүн <strong>юм шидэж өгвөл</strong> буруугаар ойлгоорой — соёлын онцлог, тогтсон зан заншил</li>
-          <li>Хятадууд <strong>чангаар ярьдаг</strong> — уурлаж байна гэж бодохгүй байх</li>
-          <li><strong>Өвлийн хувцас:</strong> цас ордоггүй ч маш чийглэг. Монголын хавар-намрын нимгэн куртик хангалттай</li>
-        </ul>
-      </div>
-
+    <!-- RIGHT: what's included -->
+    <div class="guide-right">
+      <div class="guide-includes-title">Багцад багтах зүйлс</div>
+      <ul class="guide-includes">
+        <li>
+          <span class="gi-icon">📱</span>
+          <span>Хятад явахаасаа өмнө <strong>ямар аппууд бэлдэх</strong> — Alipay, WeChat, Amap, eSIM, VPN бүгдийг тохируулна</span>
+        </li>
+        <li>
+          <span class="gi-icon">💳</span>
+          <span><strong>Карт холбох заавар</strong> — Alipay, WeChat Pay гадаадын паспортоор яаж бүртгүүлэх</span>
+        </li>
+        <li>
+          <span class="gi-icon">⚡</span>
+          <span>Хятадын <strong>мэдээлэл түргэн авах аппууд</strong> — 小红书, 去哪儿, Meituan, TaoBao, 得物 бүгдийг тайлбарлана</span>
+        </li>
+        <li>
+          <span class="gi-icon">🚄</span>
+          <span><strong>Хурдны галт тэрэг болон нислэгийн тасалбарыг хямд үнээр авах арга</strong> — 12306, Qunar заавар</span>
+        </li>
+        <li>
+          <span class="gi-icon">🏠</span>
+          <span>Хятадад <strong>ирсний дараа юу хийх</strong> — ус, SIM, банк, дотуур байрны дүрэм, хоол</span>
+        </li>
+        <li>
+          <span class="gi-icon">🗓️</span>
+          <span><strong>Өдөр тутмын амьдрал</strong> — хоолны газар, метро, хямд дэлгүүр, найзтай болох арга</span>
+        </li>
+        <li>
+          <span class="gi-icon">🛂</span>
+          <span><strong>Виза хэрхэн мэдүүлэх</strong> — X1, X2 оюутны виз бүрдүүлэх баримт, алхам алхмаар</span>
+        </li>
+        <li>
+          <span class="gi-icon">📋</span>
+          <span><strong>Гадаад иргэн оршин суух эрх</strong> (Residence Permit) яаж авах — бичиг баримт, хугацаа, зардал</span>
+        </li>
+      </ul>
     </div>
+
   </div>
 </section>
 
