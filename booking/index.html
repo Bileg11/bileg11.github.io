@@ -1181,8 +1181,13 @@ window.submitBooking = async function() {
   btn.textContent = 'Илгээж байна...';
 
   try {
-    await addDoc(collection(db, "bookings"), d);
-    logEvent(analytics, 'booking_submitted', { service: d.service, people: d.people });
+    // Save to Firestore (best-effort — continues even if rules deny)
+    try {
+      await addDoc(collection(db, "bookings"), d);
+      logEvent(analytics, 'booking_submitted', { service: d.service, people: d.people });
+    } catch(fsErr) {
+      console.warn('Firestore write skipped:', fsErr.code || fsErr.message);
+    }
 
     // Telegram notification
     try {
