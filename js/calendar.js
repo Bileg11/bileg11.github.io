@@ -176,14 +176,14 @@
 
     // ── Refs ──────────────────────────────────────────
     const labelEl  = wrap.querySelector(`#${realInput.id}-dp-label`);
-    const myEl     = wrap.querySelector(`#${realInput.id}-dp-my`);
-    const prevBtn  = wrap.querySelector(`#${realInput.id}-dp-prev`);
-    const nextBtn  = wrap.querySelector(`#${realInput.id}-dp-next`);
-    const gridEl   = wrap.querySelector(`#${realInput.id}-dp-grid`);
-    const dnEl     = wrap.querySelector(`#${realInput.id}-dp-dn`);
-    const mpickEl  = wrap.querySelector(`#${realInput.id}-dp-mpick`);
-    const todayBtn = wrap.querySelector(`#${realInput.id}-dp-today`);
-    const clearBtn = wrap.querySelector(`#${realInput.id}-dp-clear`);
+    const myEl     = panel.querySelector(`#${realInput.id}-dp-my`);
+    const prevBtn  = panel.querySelector(`#${realInput.id}-dp-prev`);
+    const nextBtn  = panel.querySelector(`#${realInput.id}-dp-next`);
+    const gridEl   = panel.querySelector(`#${realInput.id}-dp-grid`);
+    const dnEl     = panel.querySelector(`#${realInput.id}-dp-dn`);
+    const mpickEl  = panel.querySelector(`#${realInput.id}-dp-mpick`);
+    const todayBtn = panel.querySelector(`#${realInput.id}-dp-today`);
+    const clearBtn = panel.querySelector(`#${realInput.id}-dp-clear`);
 
     // ── Render ──────────────────────────────────────────
     function render() {
