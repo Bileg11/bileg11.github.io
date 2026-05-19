@@ -376,8 +376,8 @@ function vcLoad()   { try { return JSON.parse(sessionStorage.getItem('_vc')||'nu
 
 async function sendCode(email, name, code) {
   await emailjs.send('service_lr0xy9q', 'template_tb03qyj', {
-    to_email: email, to_name: name, name, email, code,
-    service:'', start:'', days:'', people:'', phone:'', group:'', note:''
+    to_email: email, from_name: name, email, code,
+    phone:'', facebook:'', message:''
   });
 }
 
