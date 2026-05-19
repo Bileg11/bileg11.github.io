@@ -627,6 +627,7 @@ function submitForm(e){
     .then(() => {
       btn.textContent = 'Илгээсэн ✓';
       msg.className = 'form-msg success';
+      msg.style.display = 'block';
       msg.textContent = 'Мессеж амжилттай илгээгдлээ. Бид удахгүй хариулах болно!';
       form.reset();
       setTimeout(() => {
