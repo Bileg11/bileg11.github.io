@@ -705,36 +705,6 @@ footer{
 .nav-user-btn:hover{background:var(--border)}
 .nav-user-avatar{width:22px;height:22px;border-radius:50%;background:var(--blue);color:#fff;font-size:10px;display:flex;align-items:center;justify-content:center;font-weight:600}
 
-/* ── AUTH MODAL ── */
-.auth-overlay{display:none;position:fixed;inset:0;background:rgba(0,0,0,.5);z-index:2000;align-items:center;justify-content:center;backdrop-filter:blur(4px)}
-.auth-overlay.open{display:flex}
-.auth-modal{background:var(--card);border-radius:20px;padding:36px 32px;width:100%;max-width:400px;margin:16px;box-shadow:0 20px 60px rgba(0,0,0,.15);position:relative}
-.auth-close{position:absolute;top:16px;right:16px;background:none;border:none;font-size:20px;cursor:pointer;color:var(--muted);line-height:1;padding:4px 8px;border-radius:8px}
-.auth-close:hover{background:var(--bg2)}
-.auth-tabs{display:flex;gap:0;border-bottom:1px solid var(--border);margin-bottom:24px}
-.auth-tab{flex:1;padding:10px;background:none;border:none;font-size:14px;font-weight:500;color:var(--muted);cursor:pointer;border-bottom:2px solid transparent;margin-bottom:-1px;transition:.15s;font-family:inherit}
-.auth-tab.active{color:var(--blue);border-bottom-color:var(--blue)}
-.auth-title{font-size:22px;font-weight:700;letter-spacing:-.02em;color:var(--dark2);margin-bottom:4px}
-.auth-sub{font-size:13px;color:var(--muted);margin-bottom:24px}
-.auth-field{margin-bottom:14px}
-.auth-field label{display:block;font-size:12px;font-weight:600;color:var(--muted2);margin-bottom:6px;text-transform:uppercase;letter-spacing:.04em}
-.auth-input{width:100%;padding:10px 14px;border:1px solid var(--border);border-radius:10px;font-size:14px;font-family:inherit;color:var(--dark2);background:var(--bg);transition:.15s;outline:none}
-.auth-input:focus{border-color:var(--blue);box-shadow:0 0 0 3px rgba(0,113,227,.08)}
-.auth-btn{width:100%;padding:12px;background:var(--blue);color:#fff;border:none;border-radius:12px;font-size:14px;font-weight:600;cursor:pointer;font-family:inherit;margin-top:8px;transition:.2s}
-.auth-btn:hover{background:var(--blue-hover)}
-.auth-divider{text-align:center;font-size:12px;color:var(--muted);margin:16px 0;position:relative}
-.auth-divider::before,.auth-divider::after{content:'';position:absolute;top:50%;width:42%;height:1px;background:var(--border)}
-.auth-divider::before{left:0}.auth-divider::after{right:0}
-.auth-social-btn{width:100%;padding:11px 14px;border-radius:12px;font-size:14px;font-weight:500;cursor:pointer;font-family:inherit;display:flex;align-items:center;justify-content:center;gap:10px;transition:.15s;margin-bottom:10px}
-.auth-google-btn{background:#fff;color:#3c4043;border:1px solid #dadce0}
-.auth-google-btn:hover{background:#f8f9fa;border-color:#c6c9cb}
-.auth-apple-btn{background:#000;color:#fff;border:1px solid #000}
-.auth-apple-btn:hover{background:#1a1a1a}
-.auth-fb-btn{background:#1877f2;color:#fff;border:none}
-.auth-fb-btn:hover{background:#166fe5}
-.auth-msg{font-size:12px;padding:10px 14px;border-radius:8px;margin-top:12px;display:none}
-.auth-msg.error{background:#fff0f0;color:#c0392b;border:1px solid #fcc}
-.auth-msg.success{background:#f0fff4;color:#27ae60;border:1px solid #b2f0c8}
 
 /* ── PROFILE MODAL ── */
 .profile-overlay{display:none;position:fixed;inset:0;background:rgba(0,0,0,.55);z-index:2001;align-items:center;justify-content:center;backdrop-filter:blur(4px)}
@@ -895,51 +865,6 @@ section,#booking-section{scroll-margin-top:60px}
 <body>
 
 <!-- LOADER -->
-<!-- AUTH MODAL -->
-<div class="auth-overlay" id="authOverlay" onclick="if(event.target===this)closeAuthModal()">
-  <div class="auth-modal">
-    <button class="auth-close" onclick="closeAuthModal()">✕</button>
-    <div class="auth-title">Нэвтрэх / Бүртгүүлэх</div>
-    <div class="auth-sub">Захиалгаа харах, хадгалахын тулд нэвтэрнэ үү</div>
-
-    <!-- Social buttons -->
-    <button class="auth-social-btn auth-google-btn" onclick="doGoogleLogin()">
-      <svg width="18" height="18" viewBox="0 0 48 48"><path fill="#EA4335" d="M24 9.5c3.54 0 6.71 1.22 9.21 3.6l6.85-6.85C35.9 2.38 30.47 0 24 0 14.62 0 6.51 5.38 2.56 13.22l7.98 6.19C12.43 13.08 17.74 9.5 24 9.5z"/><path fill="#4285F4" d="M46.98 24.55c0-1.57-.15-3.09-.38-4.55H24v9.02h12.94c-.58 2.96-2.26 5.48-4.78 7.18l7.73 6c4.51-4.18 7.09-10.36 7.09-17.65z"/><path fill="#FBBC05" d="M10.53 28.59c-.48-1.45-.76-2.99-.76-4.59s.27-3.14.76-4.59l-7.98-6.19C.92 16.46 0 20.12 0 24c0 3.88.92 7.54 2.56 10.78l7.97-6.19z"/><path fill="#34A853" d="M24 48c6.48 0 11.93-2.13 15.89-5.81l-7.73-6c-2.18 1.48-4.97 2.31-8.16 2.31-6.26 0-11.57-3.59-13.46-8.91l-7.98 6.19C6.51 42.62 14.62 48 24 48z"/></svg>
-      Google-ээр нэвтрэх
-    </button>
-
-    <button class="auth-social-btn auth-fb-btn" onclick="doFbLogin()">
-      <svg width="18" height="18" viewBox="0 0 24 24" fill="white"><path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"/></svg>
-      Facebook-ээр нэвтрэх
-    </button>
-
-    <div class="auth-divider">эсвэл и-мэйлээр</div>
-
-    <!-- Email tabs -->
-    <div class="auth-tabs">
-      <button class="auth-tab active" onclick="switchAuthTab('login',this)">Нэвтрэх</button>
-      <button class="auth-tab" onclick="switchAuthTab('register',this)">Бүртгүүлэх</button>
-    </div>
-
-    <!-- LOGIN -->
-    <div id="auth-login">
-      <div class="auth-field"><label>И-мэйл</label><input class="auth-input" type="email" id="login-email" placeholder="example@gmail.com" autocomplete="username" readonly></div>
-      <div class="auth-field"><label>Нууц үг</label><input class="auth-input" type="password" id="login-pass" placeholder="••••••••" autocomplete="current-password" readonly></div>
-      <button class="auth-btn" onclick="doLogin()">Нэвтрэх →</button>
-      <div style="text-align:center;margin-top:10px"><button onclick="doForgotPassword()" style="background:none;border:none;color:var(--blue);font-size:13px;cursor:pointer;font-family:inherit;text-decoration:underline">Нууц үгээ мартсан?</button></div>
-      <div class="auth-msg" id="login-msg"></div>
-    </div>
-    <!-- REGISTER -->
-    <div id="auth-register" style="display:none">
-      <div class="auth-field"><label>Нэр</label><input class="auth-input" type="text" id="reg-name" placeholder="Таны нэр" autocomplete="off"></div>
-      <div class="auth-field"><label>И-мэйл</label><input class="auth-input" type="email" id="reg-email" placeholder="example@gmail.com" autocomplete="off"></div>
-      <div class="auth-field"><label>Нууц үг</label><input class="auth-input" type="password" id="reg-pass" placeholder="8+ тэмдэгт" autocomplete="new-password"></div>
-      <button class="auth-btn" onclick="doRegister()">Бүртгүүлэх →</button>
-      <div class="auth-msg" id="reg-msg"></div>
-    </div>
-  </div>
-</div>
-
 <!-- PROFILE MODAL -->
 <div class="profile-overlay" id="profileOverlay">
   <div class="profile-modal">
@@ -1425,41 +1350,43 @@ section,#booking-section{scroll-margin-top:60px}
         <div class="tip-text">Монгол паспорттай бол 30 хоног хүртэл визгүй орох боломжтой. Паспортны дуусах хугацаа 6 сараас дээш эсэхийг шалгаарай.</div>
         <div class="tip-tag">Мэдэх ёстой</div>
       </div>
-      <div class="tip-card reveal reveal-delay-1">
-        <div class="tip-icon">📡</div>
-        <div class="tip-title">Sim карт эсвэл Pocket WiFi</div>
-        <div class="tip-text">Хятадын дотоодын sim эсвэл pocket WiFi авч яв. Нисэх буудалд авах боломжтой. Монгол sim роуминг үнэтэй байдаг.</div>
-        <div class="tip-tag">Зөвлөмж</div>
+    </div>
+    <div style="text-align:center;margin-top:40px">
+      <a href="/tips/" style="display:inline-flex;align-items:center;gap:6px;padding:12px 28px;border:1.5px solid var(--border);border-radius:50px;font-size:14px;font-weight:500;color:var(--dark2);text-decoration:none;transition:.2s" onmouseover="this.style.borderColor='var(--blue)';this.style.color='var(--blue)'" onmouseout="this.style.borderColor='var(--border)';this.style.color='var(--dark2)'">Бүх зөвлөмж үзэх →</a>
+    </div>
+  </div>
+</section>
+
+<!-- TESTIMONIALS -->
+<section style="background:var(--bg);padding:100px 24px" id="reviews">
+  <div style="max-width:980px;margin:0 auto">
+    <div class="section-eyebrow reveal">Үйлчлүүлэгчид</div>
+    <div class="section-title reveal reveal-delay-1">Манай үйлчлүүлэгчид ярьж байна</div>
+    <div class="section-sub reveal reveal-delay-2">Жинхэнэ туршлага, жинхэнэ үнэлгээ.</div>
+    <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:20px;margin-top:48px" class="gallery-grid-wrap">
+      <div class="reveal reveal-delay-1" style="background:var(--bg2);border-radius:20px;padding:28px;display:flex;flex-direction:column;gap:16px">
+        <div style="display:flex;gap:3px;color:#f59e0b;font-size:15px">★★★★★</div>
+        <p style="font-size:14px;line-height:1.7;color:var(--dark2);flex:1">"Эрүүл мэндийн шинжилгээ авахаар явсан. Бүх зохицуулалтыг LFS хийсэн — эмнэлэг, орчуулга, тээвэр. Ямар ч санаа зовох зүйлгүй явж ирлээ."</p>
+        <div style="display:flex;align-items:center;gap:10px">
+          <div style="width:38px;height:38px;border-radius:50%;background:var(--blue);color:#fff;display:flex;align-items:center;justify-content:center;font-weight:700;font-size:14px">Б</div>
+          <div><div style="font-size:13px;font-weight:600;color:var(--dark2)">Б. Мөнхбаяр</div><div style="font-size:12px;color:var(--muted)">Эрүүл мэндийн багц</div></div>
+        </div>
       </div>
-      <div class="tip-card reveal reveal-delay-2">
-        <div class="tip-icon">🏥</div>
-        <div class="tip-title">Эрүүл мэндийн даатгал</div>
-        <div class="tip-text">Яаралтай тусламжийн зардал Хятадад маш өндөр байдаг. Аялалын даатгал заавал авч явах хэрэгтэй. VIP шинжилгээ авах гэж байгаа бол урьдчилан мэдэгдэх.</div>
-        <div class="tip-tag">Аюулгүй байдал</div>
+      <div class="reveal reveal-delay-2" style="background:var(--bg2);border-radius:20px;padding:28px;display:flex;flex-direction:column;gap:16px">
+        <div style="display:flex;gap:3px;color:#f59e0b;font-size:15px">★★★★★</div>
+        <p style="font-size:14px;line-height:1.7;color:var(--dark2);flex:1">"Анх удаа Шанхайд очсон. Нисэх буудлаас тосоод, шоппинг, хоол, бүгдийг монголоор зохицуулсан. Дараагийн удаад ч заавал ашиглана."</p>
+        <div style="display:flex;align-items:center;gap:10px">
+          <div style="width:38px;height:38px;border-radius:50%;background:#30d158;color:#fff;display:flex;align-items:center;justify-content:center;font-weight:700;font-size:14px">О</div>
+          <div><div style="font-size:13px;font-weight:600;color:var(--dark2)">О. Солонго</div><div style="font-size:12px;color:var(--muted)">Аялалын хөтөч</div></div>
+        </div>
       </div>
-      <div class="tip-card reveal reveal-delay-2">
-        <div class="tip-icon">🗺️</div>
-        <div class="tip-title">Газрын зураг</div>
-        <div class="tip-text">Google Maps Хятадад ажиллахгүй. Baidu Maps эсвэл Apple Maps ашиглаарай. Gaode Maps (高德地图) хамгийн нарийн газрын зурагтай.</div>
-        <div class="tip-tag">Навигац</div>
-      </div>
-      <div class="tip-card reveal reveal-delay-3">
-        <div class="tip-icon">🚇</div>
-        <div class="tip-title">Метро</div>
-        <div class="tip-text">Шанхайн метро хямд, хурдан, найдвартай. Jiaotong карт авахад л хүрнэ — бүх буудалд, автобусанд ашиглана. Карт 20 юань барьцаатай.</div>
-        <div class="tip-tag">Тээвэр</div>
-      </div>
-      <div class="tip-card reveal reveal-delay-1">
-        <div class="tip-icon">🌐</div>
-        <div class="tip-title">Хэл</div>
-        <div class="tip-text">Хятадад Англи хэл бага таних тул хэцүү байж болно. Google Translate-ийн camera орчуулга маш хэрэгтэй. Монгол хөтөчтэй бол хэлний саад байхгүй.</div>
-        <div class="tip-tag">Харилцаа</div>
-      </div>
-      <div class="tip-card reveal reveal-delay-2">
-        <div class="tip-icon">🏨</div>
-        <div class="tip-title">Буудал</div>
-        <div class="tip-text">Буудал захиалахдаа паспортын мэдээлэл шаардагдана. Гадаадын иргэдийг хүлээн авдаг буудал сонгох нь чухал — Airbnb Хятадад хязгаарлагдмал.</div>
-        <div class="tip-tag">Байрлал</div>
+      <div class="reveal reveal-delay-3" style="background:var(--bg2);border-radius:20px;padding:28px;display:flex;flex-direction:column;gap:16px">
+        <div style="display:flex;gap:3px;color:#f59e0b;font-size:15px">★★★★★</div>
+        <p style="font-size:14px;line-height:1.7;color:var(--dark2);flex:1">"Бизнесийн уулзалтад орчуулагч авсан. Мэргэжлийн, цаг баримталсан. Хэлмэрч үйлчилгээ үнэхээр чанартай байлаа."</p>
+        <div style="display:flex;align-items:center;gap:10px">
+          <div style="width:38px;height:38px;border-radius:50%;background:#e8392a;color:#fff;display:flex;align-items:center;justify-content:center;font-weight:700;font-size:14px">Д</div>
+          <div><div style="font-size:13px;font-weight:600;color:var(--dark2)">Д. Батзориг</div><div style="font-size:12px;color:var(--muted)">Бизнесийн хэлмэрч</div></div>
+        </div>
       </div>
     </div>
   </div>
@@ -1868,6 +1795,47 @@ section,#booking-section{scroll-margin-top:60px}
   </div>
 </section>
 
+<!-- BLOG PREVIEW -->
+<section style="background:var(--bg2);padding:100px 24px" id="blog-preview">
+  <div style="max-width:980px;margin:0 auto">
+    <div class="section-eyebrow reveal">Блог</div>
+    <div class="section-title reveal reveal-delay-1">Аялагчдын гарын авлага</div>
+    <div class="section-sub reveal reveal-delay-2">Шанхайд амжилттай аялахад шаардлагатай мэдээлэл.</div>
+    <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:20px;margin-top:48px" class="gallery-grid-wrap">
+      <a href="/blog/shanghai-guide/" style="text-decoration:none;background:var(--bg);border-radius:20px;overflow:hidden;display:flex;flex-direction:column;transition:transform .2s,box-shadow .2s" class="reveal reveal-delay-1" onmouseover="this.style.transform='translateY(-4px)';this.style.boxShadow='0 12px 40px rgba(0,0,0,.1)'" onmouseout="this.style.transform='';this.style.boxShadow=''">
+        <div style="background:linear-gradient(135deg,#1a1a2e,#0f3460);padding:32px;font-size:2.5rem;text-align:center">🏙️</div>
+        <div style="padding:20px;flex:1;display:flex;flex-direction:column;gap:8px">
+          <div style="font-size:11px;font-weight:600;letter-spacing:.06em;text-transform:uppercase;color:var(--blue)">Анхан шатны гарын авлага</div>
+          <div style="font-size:15px;font-weight:700;color:var(--dark2);line-height:1.4">Шанхайд анх удаа ирэх Монголчуудад — мэдэх ёстой 10 зүйл</div>
+          <div style="font-size:13px;color:var(--muted);line-height:1.6;flex:1">Визнаас эхлээд метро, хоол, орчуулга хүртэл — анхны аяллыг хялбар болгох бүрэн гарын авлага.</div>
+          <div style="font-size:12px;color:var(--muted2);margin-top:4px">8 мин унших →</div>
+        </div>
+      </a>
+      <a href="/blog/shanghai-visa/" style="text-decoration:none;background:var(--bg);border-radius:20px;overflow:hidden;display:flex;flex-direction:column;transition:transform .2s,box-shadow .2s" class="reveal reveal-delay-2" onmouseover="this.style.transform='translateY(-4px)';this.style.boxShadow='0 12px 40px rgba(0,0,0,.1)'" onmouseout="this.style.transform='';this.style.boxShadow=''">
+        <div style="background:linear-gradient(135deg,#1e3a5f,#2d6a9f);padding:32px;font-size:2.5rem;text-align:center">🛂</div>
+        <div style="padding:20px;flex:1;display:flex;flex-direction:column;gap:8px">
+          <div style="font-size:11px;font-weight:600;letter-spacing:.06em;text-transform:uppercase;color:var(--blue)">Виз & Баримт бичиг</div>
+          <div style="font-size:15px;font-weight:700;color:var(--dark2);line-height:1.4">Монголоос Шанхайд виз авах 2026 — алхам алхмаар гарын авлага</div>
+          <div style="font-size:13px;color:var(--muted);line-height:1.6;flex:1">Шаардлагатай бичиг баримт, хугацаа, зардал. 2026 оны шинэчлэгдсэн мэдээлэл.</div>
+          <div style="font-size:12px;color:var(--muted2);margin-top:4px">6 мин унших →</div>
+        </div>
+      </a>
+      <a href="/blog/shanghai-wechat-pay/" style="text-decoration:none;background:var(--bg);border-radius:20px;overflow:hidden;display:flex;flex-direction:column;transition:transform .2s,box-shadow .2s" class="reveal reveal-delay-3" onmouseover="this.style.transform='translateY(-4px)';this.style.boxShadow='0 12px 40px rgba(0,0,0,.1)'" onmouseout="this.style.transform='';this.style.boxShadow=''">
+        <div style="background:linear-gradient(135deg,#064e3b,#065f46);padding:32px;font-size:2.5rem;text-align:center">💳</div>
+        <div style="padding:20px;flex:1;display:flex;flex-direction:column;gap:8px">
+          <div style="font-size:11px;font-weight:600;letter-spacing:.06em;text-transform:uppercase;color:var(--blue)">Төлбөр & Технологи</div>
+          <div style="font-size:15px;font-weight:700;color:var(--dark2);line-height:1.4">Шанхайд WeChat Pay & Alipay тохируулах — монгол картаар 2026</div>
+          <div style="font-size:13px;color:var(--muted);line-height:1.6;flex:1">Монгол банкны картаар WeChat Pay, Alipay тохируулах алхам алхмаар зааварчилгаа.</div>
+          <div style="font-size:12px;color:var(--muted2);margin-top:4px">5 мин унших →</div>
+        </div>
+      </a>
+    </div>
+    <div style="text-align:center;margin-top:40px">
+      <a href="/blog/" style="display:inline-flex;align-items:center;gap:6px;padding:12px 28px;border:1.5px solid var(--border);border-radius:50px;font-size:14px;font-weight:500;color:var(--dark2);text-decoration:none;transition:.2s" onmouseover="this.style.borderColor='var(--blue)';this.style.color='var(--blue)'" onmouseout="this.style.borderColor='var(--border)';this.style.color='var(--dark2)'">Бүх нийтлэл үзэх →</a>
+    </div>
+  </div>
+</section>
+
 <!-- CTA BANNER -->
 <section class="cta-section">
   <div class="section-max">
@@ -2218,98 +2186,6 @@ function openAccountModal() {
     }
   };
 
-  window.doLogin = async function() {
-    const em = document.getElementById('login-email');
-    const pw = document.getElementById('login-pass');
-    // Remove readonly so fields become writable
-    em.removeAttribute('readonly');
-    pw.removeAttribute('readonly');
-
-    const email = em.value.trim();
-    const pass  = pw.value;
-
-    // If fields are empty → focus password field so iOS shows Face ID / autofill.
-    // Once autofill fills the values, auto-submit.
-    if (!email || !pass) {
-      pw.focus();
-      const autoSubmit = () => {
-        pw.removeEventListener('input', autoSubmit);
-        em.removeEventListener('input', autoSubmit);
-        if (em.value.trim() && pw.value) window.doLogin();
-      };
-      pw.addEventListener('input', autoSubmit);
-      em.addEventListener('input', autoSubmit);
-      return;
-    }
-
-    const msg = document.getElementById('login-msg');
-    msg.style.display = 'none';
-    try {
-      await signInWithEmailAndPassword(auth, email, pass);
-      closeAuthModal();
-    } catch(e) {
-      msg.textContent = 'И-мэйл эсвэл нууц үг буруу байна.';
-      msg.className = 'auth-msg error';
-      msg.style.display = 'block';
-    }
-  };
-
-  window.doRegister = async function() {
-    const email = document.getElementById('reg-email').value.trim();
-    const pass = document.getElementById('reg-pass').value;
-    const msg = document.getElementById('reg-msg');
-    msg.style.display = 'none';
-    if (pass.length < 6) {
-      msg.textContent = 'Нууц үг хамгийн багадаа 6 тэмдэгт байх ёстой.';
-      msg.className = 'auth-msg error'; msg.style.display = 'block'; return;
-    }
-    try {
-      await createUserWithEmailAndPassword(auth, email, pass);
-      closeAuthModal();
-    } catch(e) {
-      msg.textContent = e.code === 'auth/email-already-in-use' ? 'Энэ и-мэйл аль хэдийн бүртгэлтэй байна.' : 'Алдаа гарлаа. Дахин оролдоно уу.';
-      msg.className = 'auth-msg error'; msg.style.display = 'block';
-    }
-  };
-
-  const isMobile = /Mobi|Android|iPhone|iPad|iPod/i.test(navigator.userAgent);
-
-  async function doSocialLogin(provider) {
-    try {
-      await signInWithRedirect(auth, provider);
-    } catch(e) {
-      const msg = e.code === 'auth/operation-not-allowed'
-        ? 'Энэ нэвтрэх арга идэвхжүүлэгдээгүй байна (Firebase консол).'
-        : e.code === 'auth/unauthorized-domain'
-        ? 'Domain зөвшөөрөгдөөгүй байна (Firebase консол → Auth → Authorized domains).'
-        : (e.message || e.code);
-      toast('Нэвтрэхэд алдаа гарлаа', 'error', { subtitle: msg });
-    }
-  }
-
-  window.doGoogleLogin = () => doSocialLogin(new GoogleAuthProvider());
-  window.doFbLogin     = () => doSocialLogin(new FacebookAuthProvider());
-
-  // ── FORGOT PASSWORD ──
-  window.doForgotPassword = async function() {
-    const em = document.getElementById('login-email');
-    em.removeAttribute('readonly');
-    const email = em.value.trim();
-    const msg = document.getElementById('login-msg');
-    if (!email || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
-      msg.textContent = 'И-мэйл хаягаа оруулаад дахин дарна уу.';
-      msg.className = 'auth-msg error'; msg.style.display = 'block'; return;
-    }
-    try {
-      await sendPasswordResetEmail(auth, email);
-      msg.textContent = '✅ Нууц үг шинэчлэх холбоос ' + email + ' руу илгээгдлээ.';
-      msg.className = 'auth-msg success'; msg.style.display = 'block';
-    } catch(e) {
-      msg.textContent = 'Алдаа гарлаа: ' + (e.code === 'auth/user-not-found' ? 'И-мэйл олдсонгүй.' : e.message);
-      msg.className = 'auth-msg error'; msg.style.display = 'block';
-    }
-  };
-
   // ── SIGN OUT ──
   window.doSignOut = async function() {
     await signOut(auth);
@@ -2343,34 +2219,6 @@ function openAccountModal() {
   };
 </script>
 
-<script>
-function openAuthModal() {
-  document.getElementById('authOverlay').classList.add('open');
-  // Prevent iOS Safari from auto-triggering Face ID when modal opens.
-  // Fields start as readonly; removed only on explicit user tap or login button press.
-  const em = document.getElementById('login-email');
-  const pw = document.getElementById('login-pass');
-  em.setAttribute('readonly', true);
-  pw.setAttribute('readonly', true);
-  em.value = ''; pw.value = '';
-  function unlockField(el) {
-    el.removeAttribute('readonly');
-    el.focus();
-  }
-  em.addEventListener('pointerdown', () => unlockField(em), { once: true });
-  pw.addEventListener('pointerdown', () => unlockField(pw), { once: true });
-}
-function closeAuthModal() { document.getElementById('authOverlay').classList.remove('open'); }
-function switchAuthTab(tab, btn) {
-  document.querySelectorAll('.auth-tab').forEach(b => b.classList.remove('active'));
-  btn.classList.add('active');
-  document.getElementById('auth-login').style.display = tab === 'login' ? 'block' : 'none';
-  document.getElementById('auth-register').style.display = tab === 'register' ? 'block' : 'none';
-}
-window.openAuthModal = openAuthModal;
-window.closeAuthModal = closeAuthModal;
-window.switchAuthTab = switchAuthTab;
-</script>
 <script>
 if ('serviceWorker' in navigator) {
   navigator.serviceWorker.register('/service-worker.js').catch(() => {});
