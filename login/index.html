@@ -294,7 +294,7 @@ getRedirectResult(auth).catch(e => {
 // If already logged in → redirect immediately
 onAuthStateChanged(auth, async user => {
   if (user) {
-    await ensureProfile(user);
+    try { await ensureProfile(user); } catch(e) { console.warn('profile:', e); }
     window.location.replace(redirectTo);
   } else {
     document.getElementById('loader').classList.add('hidden');
