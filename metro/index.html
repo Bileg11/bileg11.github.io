@@ -103,6 +103,10 @@ footer a:hover{color:var(--blue)}
 
 <main class="main">
 
+  <div class="card" style="margin-bottom:32px;border-left:4px solid var(--blue)">
+    <p>Шанхайн метро нь дэлхийн хамгийн том метроны сүлжээнүүдийн нэг. Хот дотор явахад хамгийн хурдан, хямд, ойлгомжтой тээвэр учраас жуулчид хамгийн их ашигладаг.</p>
+  </div>
+
   <!-- НИСЭХ БУУДЛААС -->
   <div class="section">
     <div class="section-title">✈️ Нисэх буудлаас хот руу</div>
@@ -111,36 +115,37 @@ footer a:hover{color:var(--blue)}
         <div class="airport-name">Пудун нисэх буудал</div>
         <div class="airport-code">PVG · Олон улсын</div>
         <div class="airport-route">
-          <div class="route-row"><span class="route-label">Шугам</span><span class="route-value">2-р шугам</span></div>
-          <div class="route-row"><span class="route-label">Хугацаа</span><span class="route-value">~50 мин</span></div>
-          <div class="route-row"><span class="route-label">Үнэ</span><span class="route-value">9 юань</span></div>
+          <div class="route-row"><span class="route-label">Шугам</span><span class="route-value">Line 2</span></div>
+          <div class="route-row"><span class="route-label">Хугацаа</span><span class="route-value">~60 мин</span></div>
+          <div class="route-row"><span class="route-label">Үнэ</span><span class="route-value">7–9 юань</span></div>
           <div class="route-row"><span class="route-label">Маглев</span><span class="route-value">50 юань · 8 мин</span></div>
         </div>
+        <p style="margin-top:12px;font-size:12px;color:var(--muted);background:var(--bg2);border-radius:8px;padding:8px 10px;line-height:1.55">⚠️ Маглев нь хотын төв хүртэл шууд хүргэдэггүй. Longyang Road дээр буугаад Line 2, 7 эсвэл 16 руу шилжинэ.</p>
       </div>
       <div class="airport-card">
         <div class="airport-name">Хунцяо нисэх буудал</div>
         <div class="airport-code">SHA · Дотоод + Азийн</div>
         <div class="airport-route">
-          <div class="route-row"><span class="route-label">Шугам</span><span class="route-value">2, 10-р шугам</span></div>
-          <div class="route-row"><span class="route-label">Хугацаа</span><span class="route-value">~35 мин</span></div>
-          <div class="route-row"><span class="route-label">Үнэ</span><span class="route-value">6 юань</span></div>
-          <div class="route-row"><span class="route-label">Тайлбар</span><span class="route-value">T1 ↔ T2 ялгаатай</span></div>
+          <div class="route-row"><span class="route-label">Шугам</span><span class="route-value">Line 2, Line 10</span></div>
+          <div class="route-row"><span class="route-label">Хугацаа</span><span class="route-value">~35–45 мин</span></div>
+          <div class="route-row"><span class="route-label">Үнэ</span><span class="route-value">5–8 юань</span></div>
         </div>
+        <p style="margin-top:12px;font-size:12px;color:var(--muted);background:var(--bg2);border-radius:8px;padding:8px 10px;line-height:1.55">⚠️ T1, T2 терминалууд өөр байрлалтай тул аль терминалд буухаа урьдчилан шалгаарай.</p>
       </div>
     </div>
   </div>
 
   <!-- КАРТ -->
   <div class="section">
-    <div class="section-title">💳 Карт авах</div>
+    <div class="section-title">💳 Метроны карт авах</div>
     <div class="card">
       <div class="card-title">Shanghai Public Transportation Card (交通卡)</div>
-      <p style="margin-bottom:12px">Метро, автобус, ферри зэрэг бүх нийтийн тээврийг нэг картаар унах боломжтой. Депозит <strong>30 юань</strong>, хэдэн мөнгө ч нэмж болно.</p>
+      <p style="margin-bottom:12px">Метро, автобус, ферри, зарим дэлгүүрт хүртэл ашиглаж болдог. Депозит <strong>20 юань</strong>, дурын хэмжээгээр мөнгө цэнэглэж болно.</p>
       <ul>
         <li>Метрогийн бүх өртөөний <strong>Customer Service Center</strong>-с авна</li>
         <li>Паспорт хэрэггүй — шууд мөнгө өгөөд авна</li>
-        <li>Явахдаа депозитаа <strong>буцаан авч болно</strong> (өртөөний тоолуурт)</li>
-        <li>Alipay, WeChat Pay QR-аар ч метро унах боломжтой</li>
+        <li>Явахдаа депозитоо <strong>буцааж авч болно</strong></li>
+        <li>WeChat Pay, Alipay QR-аар ч метро унах боломжтой</li>
       </ul>
     </div>
   </div>
@@ -151,22 +156,18 @@ footer a:hover{color:var(--blue)}
     <div class="card" style="padding:0;overflow:hidden">
       <table class="price-table">
         <thead>
-          <tr>
-            <th>Зай</th>
-            <th>Үнэ (юань)</th>
-            <th>Монгол төгрөгөөр</th>
-          </tr>
+          <tr><th>Зай</th><th>Үнэ</th></tr>
         </thead>
         <tbody>
-          <tr><td>0–4 км</td><td>3 юань</td><td>≈ 1,500 ₮</td></tr>
-          <tr><td>4–12 км</td><td>4 юань</td><td>≈ 2,000 ₮</td></tr>
-          <tr><td>12–22 км</td><td>5 юань</td><td>≈ 2,500 ₮</td></tr>
-          <tr><td>22–32 км</td><td>6 юань</td><td>≈ 3,000 ₮</td></tr>
-          <tr><td>32+ км</td><td>7–10 юань</td><td>≈ 3,500–5,000 ₮</td></tr>
+          <tr><td>0–6 км</td><td>3 юань</td></tr>
+          <tr><td>6–16 км</td><td>4 юань</td></tr>
+          <tr><td>16–26 км</td><td>5 юань</td></tr>
+          <tr><td>26–36 км</td><td>6 юань</td></tr>
+          <tr><td>Цааш</td><td>1 юаньгаар нэмэгдэнэ</td></tr>
         </tbody>
       </table>
     </div>
-    <p style="margin-top:8px;font-size:13px;color:var(--muted)">* Хүүхэд 1.3м-с доош үнэгүй. Карт ашиглавал 10–15% хямдрал байдаг.</p>
+    <p style="margin-top:8px;font-size:13px;color:var(--muted)">Ихэнх хүмүүсийн өдөр тутмын явалт 3–6 юаний хооронд гардаг. Хүүхэд 1.3м-с доош үнэгүй.</p>
   </div>
 
   <!-- ГОЛ ШУГАМУУД -->
@@ -176,85 +177,36 @@ footer a:hover{color:var(--blue)}
       <div class="line-card">
         <div class="line-badge" style="background:#e4171e">1</div>
         <div>
-          <div class="line-info-name">1-р шугам (Улаан)</div>
-          <div class="line-info-desc">People's Square → Xinzhuang. Хотын гол тэнхлэг.</div>
+          <div class="line-info-name">1-р шугам</div>
+          <div class="line-info-desc">People's Square, Xujiahui зэрэг төв хэсгээр дайрдаг.</div>
         </div>
       </div>
       <div class="line-card">
         <div class="line-badge" style="background:#97c024">2</div>
         <div>
-          <div class="line-info-name">2-р шугам (Ногоон)</div>
-          <div class="line-info-desc">Пудун нисэх буудал ↔ Хунцяо. Хамгийн чухал шугам.</div>
+          <div class="line-info-name">2-р шугам</div>
+          <div class="line-info-desc">Хамгийн чухал — Pudong Airport ↔ Lujiazui ↔ Nanjing Rd ↔ Hongqiao.</div>
         </div>
       </div>
       <div class="line-card">
-        <div class="line-badge" style="background:#ffd800;color:#333">3</div>
+        <div class="line-badge" style="background:#009999">4</div>
         <div>
-          <div class="line-info-name">3-р шугам (Шар)</div>
-          <div class="line-info-desc">Хойд-өмнөд чиглэл. Shanghai South станц.</div>
-        </div>
-      </div>
-      <div class="line-card">
-        <div class="line-badge" style="background:#461d82">4</div>
-        <div>
-          <div class="line-info-name">4-р шугам (Нил ягаан)</div>
-          <div class="line-info-desc">Дугуй шугам — хотын голыг тойрсон.</div>
+          <div class="line-info-name">4-р шугам</div>
+          <div class="line-info-desc">Хотын төвийг тойрдог дугуй шугам.</div>
         </div>
       </div>
       <div class="line-card">
         <div class="line-badge" style="background:#8b368b">10</div>
         <div>
-          <div class="line-info-name">10-р шугам (Ягаан)</div>
-          <div class="line-info-desc">Хунцяо нисэх буудал, Old French Concession.</div>
+          <div class="line-info-name">10-р шугам</div>
+          <div class="line-info-desc">Old French Concession, Hongqiao Airport чиглэлд тохиромжтой.</div>
         </div>
       </div>
       <div class="line-card">
         <div class="line-badge" style="background:#dd5c37">16</div>
         <div>
           <div class="line-info-name">16-р шугам</div>
-          <div class="line-info-desc">Пудун зүүн хэсэг — Disney Resort.</div>
-        </div>
-      </div>
-    </div>
-  </div>
-
-  <!-- АШИГТАЙ ЗӨВЛӨМЖ -->
-  <div class="section">
-    <div class="section-title">💡 Ашигтай зөвлөмж</div>
-    <div class="card">
-      <div class="tip-row">
-        <div class="tip-icon">📱</div>
-        <div>
-          <div class="tip-text-title">MetroMan апп татах</div>
-          <div class="tip-text-desc">Офлайн ажилладаг, Шанхайн метроны бүрэн газрын зураг. App Store болон Google Play-с үнэгүй.</div>
-        </div>
-      </div>
-      <div class="tip-row">
-        <div class="tip-icon">⏰</div>
-        <div>
-          <div class="tip-text-title">Өглөөний оргил цаг: 7:30–9:00</div>
-          <div class="tip-text-desc">Оргил цагт маш дүүрэн байдаг. Нисэх буудлаас явах бол цаг алдахгүйн тулд нэмэлт 20 мин нөөц тооц.</div>
-        </div>
-      </div>
-      <div class="tip-row">
-        <div class="tip-icon">🔁</div>
-        <div>
-          <div class="tip-text-title">Солих өртөөнүүд</div>
-          <div class="tip-text-desc">People's Square (1,2,8-р шугам), Xujiahui (1,9,11-р шугам) — хамгийн гол солих цэгүүд.</div>
-        </div>
-      </div>
-      <div class="tip-row">
-        <div class="tip-icon">🌙</div>
-        <div>
-          <div class="tip-text-title">Метроны цаг</div>
-          <div class="tip-text-desc">Өглөө 5:30–6:00-д нэгдүгээр галт тэрэг гарна. Шөнийн 22:30–23:30-д сүүлчийн тэрэг явна (шугамаар ялгаатай).</div>
-        </div>
-      </div>
-      <div class="tip-row">
-        <div class="tip-icon">🧳</div>
-        <div>
-          <div class="tip-text-title">Том чемодан</div>
-          <div class="tip-text-desc">Том тээш авч метро унах боломжтой ч оргил цагт хэцүү. Нисэх буудлаас DiDi такси авах нь тухтай байдаг.</div>
+          <div class="line-info-desc">Pudong зүүн хэсэг — Disney Resort руу явна.</div>
         </div>
       </div>
     </div>
@@ -266,62 +218,47 @@ footer a:hover{color:var(--blue)}
     <div class="card" style="padding:0;overflow:hidden">
       <table class="price-table">
         <thead>
-          <tr>
-            <th>Газар</th>
-            <th>Шугам</th>
-            <th>Буух өртөө</th>
-            <th>Хотын төвөөс</th>
-          </tr>
+          <tr><th>Газар</th><th>Шугам</th><th>Буух өртөө</th></tr>
         </thead>
         <tbody>
-          <tr><td>The Bund (外滩)</td><td style="color:var(--blue);font-weight:700">2, 10</td><td>Nanjing Road E.</td><td>~10 мин</td></tr>
-          <tr><td>Nanjing Road (南京路)</td><td style="color:var(--blue);font-weight:700">1, 2</td><td>People's Square</td><td>— төв</td></tr>
-          <tr><td>Yu Garden (豫园)</td><td style="color:#8b368b;font-weight:700">10</td><td>Yuyuan Garden</td><td>~15 мин</td></tr>
-          <tr><td>People's Square (人民广场)</td><td style="color:var(--blue);font-weight:700">1, 2, 8</td><td>People's Square</td><td>— төв</td></tr>
-          <tr><td>French Concession (法租界)</td><td style="color:#8b368b;font-weight:700">10</td><td>Xintiandi / Jiashan Rd</td><td>~20 мин</td></tr>
-          <tr><td>Lujiazui (финансын тойрог)</td><td style="color:#97c024;font-weight:700">2</td><td>Lujiazui</td><td>~12 мин</td></tr>
-          <tr><td>Shanghai Tower (шилэн цамхаг)</td><td style="color:#97c024;font-weight:700">2</td><td>Lujiazui</td><td>~12 мин</td></tr>
-          <tr><td>Disney Resort</td><td style="color:#dd5c37;font-weight:700">16</td><td>Disney Resort</td><td>~50 мин</td></tr>
-          <tr><td>Tianzifang (тянзыфан)</td><td style="color:#97c024;font-weight:700">9</td><td>Dapuqiao</td><td>~25 мин</td></tr>
-          <tr><td>Shanghai Zoo</td><td style="color:#97c024;font-weight:700">2, 10</td><td>Shanghai Zoo</td><td>~35 мин</td></tr>
-          <tr><td>Zhujiajiao (усан хот)</td><td style="color:var(--blue);font-weight:700">17</td><td>Zhujiajiao</td><td>~60 мин</td></tr>
+          <tr><td>The Bund (外滩)</td><td style="color:var(--blue);font-weight:700">2, 10</td><td>Nanjing Road E.</td></tr>
+          <tr><td>Nanjing Road (南京路)</td><td style="color:var(--blue);font-weight:700">1, 2</td><td>People's Square</td></tr>
+          <tr><td>Yu Garden (豫园)</td><td style="color:#8b368b;font-weight:700">10</td><td>Yuyuan Garden</td></tr>
+          <tr><td>French Concession</td><td style="color:#8b368b;font-weight:700">10</td><td>Xintiandi</td></tr>
+          <tr><td>Lujiazui / Shanghai Tower</td><td style="color:#97c024;font-weight:700">2</td><td>Lujiazui</td></tr>
+          <tr><td>Tianzifang (田子坊)</td><td style="color:#87ceeb;font-weight:700">9</td><td>Dapuqiao</td></tr>
+          <tr><td>Shanghai Zoo</td><td style="color:#97c024;font-weight:700">2, 10</td><td>Shanghai Zoo</td></tr>
+          <tr><td>Disney Resort</td><td style="color:#dd5c37;font-weight:700">16</td><td>Disney Resort</td></tr>
+          <tr><td>Zhujiajiao (усан хот)</td><td style="color:var(--blue);font-weight:700">17</td><td>Zhujiajiao</td></tr>
         </tbody>
       </table>
     </div>
-    <p style="margin-top:8px;font-size:13px;color:var(--muted)">* People's Square — хотын хамгийн төв цэг. Ихэнх газрууд энд солино.</p>
   </div>
 
   <!-- QR КОД-ООР УНАХ -->
   <div class="section">
     <div class="section-title">📱 WeChat / Alipay-р метро унах</div>
     <div class="card">
-      <p style="margin-bottom:16px">Транспортны карт авахгүйгээр <strong>WeChat Pay эсвэл Alipay QR код</strong>-оор метро унах боломжтой — хурдан, хялбар.</p>
+      <p style="margin-bottom:16px">Карт авахгүйгээр <strong>WeChat Pay эсвэл Alipay</strong>-р метро унах боломжтой.</p>
       <div class="tip-row">
-        <div class="tip-icon" style="background:#07C160;color:#fff;font-size:14px;font-weight:700">1</div>
+        <div class="tip-icon" style="background:#1d1d1f;color:#fff;font-size:13px;font-weight:700">1</div>
         <div>
-          <div class="tip-text-title">WeChat Pay → "Metro" нэмэх</div>
-          <div class="tip-text-desc">WeChat → Pay → City Services → Public Transit → Shanghai → Metro QR дар. Эсвэл Alipay → Transport Card.</div>
+          <div class="tip-text-title">Идэвхжүүлэх</div>
+          <div class="tip-text-desc"><strong>WeChat:</strong> Pay → City Services → Transport → Shanghai Metro.<br><strong>Alipay:</strong> Transport Card → Shanghai Metro.</div>
         </div>
       </div>
       <div class="tip-row">
-        <div class="tip-icon" style="background:#07C160;color:#fff;font-size:14px;font-weight:700">2</div>
+        <div class="tip-icon" style="background:#1d1d1f;color:#fff;font-size:13px;font-weight:700">2</div>
         <div>
-          <div class="tip-text-title">Турникет дээр QR уншуулах</div>
-          <div class="tip-text-desc">Турникет дээрх QR скайнер дээр утасны дэлгэцийг зуу. Ногоон гэрэл асч нэвтрэх боломжтой болно.</div>
-        </div>
-      </div>
-      <div class="tip-row">
-        <div class="tip-icon" style="background:#07C160;color:#fff;font-size:14px;font-weight:700">3</div>
-        <div>
-          <div class="tip-text-title">Буух үед дахин скан хийх</div>
-          <div class="tip-text-desc">Буух өртөөний гаралтын турникет дээр мөн QR скан хийнэ. Зай тооцоолж автоматаар тооцно.</div>
+          <div class="tip-text-title">Орохдоо QR уншуулна</div>
+          <div class="tip-text-desc">Турникет дээрх уншигч дээр утасны дэлгэцийг тавина. Ногоон гэрэл асч нэвтрэх боломжтой болно.</div>
         </div>
       </div>
       <div class="tip-row" style="border-bottom:none">
-        <div class="tip-icon">⚠️</div>
+        <div class="tip-icon" style="background:#1d1d1f;color:#fff;font-size:13px;font-weight:700">3</div>
         <div>
-          <div class="tip-text-title">Анхаарах зүйл</div>
-          <div class="tip-text-desc">WeChat / Alipay дансанд мөнгө байх шаардлагатай. Гадаадын картаар тэжээсэн байвал ажиллана.</div>
+          <div class="tip-text-title">Гарахдаа дахин уншуулна</div>
+          <div class="tip-text-desc">Гаралтын турникет дээр мөн QR уншуулна. Зайг тооцоолж мөнгөийг автоматаар хасна. WeChat / Alipay дээр мөнгө байх шаардлагатай.</div>
         </div>
       </div>
     </div>
@@ -329,55 +266,47 @@ footer a:hover{color:var(--blue)}
 
   <!-- ХУРДНЫ ГАЛТ ТЭРЭГ -->
   <div class="section">
-    <div class="section-title">🚄 Хурдны галт тэрэг (高铁) — бусад хот руу</div>
-    <p style="margin-bottom:16px;font-size:14px;color:var(--muted)">Шанхайгаас хурдны галт тэрэгээр <strong>2–5 цагт</strong> Хятадын гол хотуудад хүрнэ. Метроноос хямд, нисэх онгоцноос хурдан.</p>
+    <div class="section-title">🚄 Хурдны галт тэрэг (高铁)</div>
+    <p style="margin-bottom:16px;font-size:14px;color:var(--muted)">Шанхайгаас бусад хот руу явахад хамгийн тухтай сонголт. Ихэнх галт тэрэг <strong>Hongqiao Railway Station</strong>-аас хөдөлдөг.</p>
     <div class="card" style="padding:0;overflow:hidden">
       <table class="price-table">
         <thead>
-          <tr>
-            <th>Хот</th>
-            <th>Хугацаа</th>
-            <th>Үнэ (юань)</th>
-            <th>Хаанаас явах</th>
-          </tr>
+          <tr><th>Хот</th><th>Хугацаа</th></tr>
         </thead>
         <tbody>
-          <tr><td><strong>Бээжин (Beijing)</strong></td><td>~4.5 цаг</td><td>553–935¥</td><td>Hongqiao / Shanghai</td></tr>
-          <tr><td><strong>Ханжоу (Hangzhou)</strong></td><td>~45 мин</td><td>73–98¥</td><td>Hongqiao</td></tr>
-          <tr><td><strong>Сужоу (Suzhou)</strong></td><td>~25 мин</td><td>39–54¥</td><td>Hongqiao</td></tr>
-          <tr><td><strong>Нанжин (Nanjing)</strong></td><td>~1.5 цаг</td><td>134–168¥</td><td>Hongqiao</td></tr>
-          <tr><td><strong>Гуанжоу (Guangzhou)</strong></td><td>~8 цаг</td><td>465–870¥</td><td>Hongqiao</td></tr>
-          <tr><td><strong>Хөнхөн (Hong Kong)</strong></td><td>~9 цаг</td><td>600–900¥</td><td>Hongqiao</td></tr>
+          <tr><td><strong>Ханжоу (Hangzhou)</strong></td><td>~45 мин</td></tr>
+          <tr><td><strong>Сужоу (Suzhou)</strong></td><td>~25 мин</td></tr>
+          <tr><td><strong>Нанжин (Nanjing)</strong></td><td>~1.5 цаг</td></tr>
+          <tr><td><strong>Бээжин (Beijing)</strong></td><td>~4.5 цаг</td></tr>
         </tbody>
       </table>
     </div>
     <div class="card" style="margin-top:12px">
       <div class="card-title">Тасалбар хэрхэн авах</div>
       <ul>
-        <li><strong>12306.cn</strong> — Хятадын хурдны галт тэрэгний албан ёсны сайт. Гадаадын паспортоор бүртгүүлэх боломжтой.</li>
+        <li><strong>12306.cn</strong> — Хятадын албан ёсны сайт. Гадаадын паспортоор бүртгүүлэх боломжтой.</li>
         <li><strong>Trip.com</strong> — Англи хэлтэй, гадаадын карт хүлээн авна. Арай үнэтэй боловч хялбар.</li>
-        <li><strong>Hongqiao өртөө</strong> — Хунцяо нисэх буудалтай залгаа. Метро Line 2, 10-р шугамаар хүрнэ.</li>
-        <li>Паспортоо авч явах — өртөөний гаралтанд паспортаар нэвтэрнэ.</li>
+        <li>Паспортоо заавал авч явах — өртөөний гаралтанд шаардана.</li>
       </ul>
     </div>
   </div>
 
   <!-- ГОЛ СОЛИХ ӨРТӨӨНҮҮД -->
   <div class="section">
-    <div class="section-title">🔁 Гол солих өртөөнүүдийн дэлгэрэнгүй</div>
+    <div class="section-title">🔁 Гол солих буудлууд</div>
     <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px">
       <div class="card">
         <div class="card-title">People's Square (人民广场)</div>
-        <p style="margin-bottom:8px">Хотын <strong>хамгийн гол цэг</strong>. 3 шугам огтлолцдог.</p>
+        <p style="margin-bottom:8px">Хотын хамгийн том солих цэг.</p>
         <ul>
           <li><span style="background:#e4171e;color:#fff;padding:1px 7px;border-radius:10px;font-size:11px;font-weight:700">1</span> Улаан шугам</li>
-          <li><span style="background:#97c024;color:#fff;padding:1px 7px;border-radius:10px;font-size:11px;font-weight:700">2</span> Ногоон шугам (нисэх буудал)</li>
+          <li><span style="background:#97c024;color:#fff;padding:1px 7px;border-radius:10px;font-size:11px;font-weight:700">2</span> Ногоон шугам</li>
           <li><span style="background:#0055a5;color:#fff;padding:1px 7px;border-radius:10px;font-size:11px;font-weight:700">8</span> Цэнхэр шугам</li>
         </ul>
       </div>
       <div class="card">
         <div class="card-title">Xujiahui (徐家汇)</div>
-        <p style="margin-bottom:8px">Өмнөд Шанхайн худалдааны төв.</p>
+        <p style="margin-bottom:8px">Шоппинг, ресторан ихтэй бүс.</p>
         <ul>
           <li><span style="background:#e4171e;color:#fff;padding:1px 7px;border-radius:10px;font-size:11px;font-weight:700">1</span> Улаан шугам</li>
           <li><span style="background:#87ceeb;color:#333;padding:1px 7px;border-radius:10px;font-size:11px;font-weight:700">9</span> Цайвар цэнхэр</li>
@@ -386,9 +315,9 @@ footer a:hover{color:var(--blue)}
       </div>
       <div class="card">
         <div class="card-title">Century Avenue (世纪大道)</div>
-        <p style="margin-bottom:8px">Пудун талын хамгийн том солих цэг.</p>
+        <p style="margin-bottom:8px">Pudong талын хамгийн том солих буудал.</p>
         <ul>
-          <li><span style="background:#97c024;color:#fff;padding:1px 7px;border-radius:10px;font-size:11px;font-weight:700">2</span> Нисэх буудлын шугам</li>
+          <li><span style="background:#97c024;color:#fff;padding:1px 7px;border-radius:10px;font-size:11px;font-weight:700">2</span> Ногоон шугам</li>
           <li><span style="background:#009999;color:#fff;padding:1px 7px;border-radius:10px;font-size:11px;font-weight:700">4</span> Дугуй шугам</li>
           <li><span style="background:#5b2d8e;color:#fff;padding:1px 7px;border-radius:10px;font-size:11px;font-weight:700">6</span> Нил ягаан</li>
           <li><span style="background:#f5a623;color:#fff;padding:1px 7px;border-radius:10px;font-size:11px;font-weight:700">9</span> Шар хүрэн</li>
@@ -396,48 +325,83 @@ footer a:hover{color:var(--blue)}
       </div>
       <div class="card">
         <div class="card-title">Hongqiao (虹桥枢纽)</div>
-        <p style="margin-bottom:8px">Нисэх буудал + хурдны галт тэрэг.</p>
+        <p style="margin-bottom:8px">Нисэх буудал + хурдны галт тэрэгний төв.</p>
         <ul>
-          <li><span style="background:#97c024;color:#fff;padding:1px 7px;border-radius:10px;font-size:11px;font-weight:700">2</span> Нисэх буудлын шугам</li>
+          <li><span style="background:#97c024;color:#fff;padding:1px 7px;border-radius:10px;font-size:11px;font-weight:700">2</span> Ногоон шугам</li>
           <li><span style="background:#8b368b;color:#fff;padding:1px 7px;border-radius:10px;font-size:11px;font-weight:700">10</span> Ягаан шугам</li>
-          <li>🚄 Хурдны галт тэрэгний өртөө залгаа</li>
+          <li>🚄 Hongqiao Railway Station залгаа</li>
         </ul>
       </div>
     </div>
-    <style>@media(max-width:600px){.section > div[style*="grid-template-columns:1fr 1fr"]{grid-template-columns:1fr!important}}</style>
+    <style>@media(max-width:600px){.transfer-grid{grid-template-columns:1fr!important}}</style>
   </div>
 
   <!-- ШӨНИЙН ТЭЭВЭР -->
   <div class="section">
-    <div class="section-title">🌙 Шөнийн тээвэр — метро хаасны дараа</div>
+    <div class="section-title">🌙 Метро хаасны дараа яах вэ?</div>
     <div class="card">
-      <p style="margin-bottom:16px">Метро <strong>23:00–23:30 орчим хаагддаг</strong> (шугамаар ялгаатай). Шөнийн тээврийн сонголтууд:</p>
+      <p style="margin-bottom:16px">Шанхайн метро ихэнхдээ <strong>22:30–23:30 хооронд хаагддаг</strong>. Шугам бүрийн цаг өөр байдаг.</p>
       <div class="tip-row">
         <div class="tip-icon">🚗</div>
         <div>
-          <div class="tip-text-title">DiDi такси — хамгийн тохиромжтой</div>
-          <div class="tip-text-desc">Хятадын Uber. DiDi апп татаж, гадаадын дугаараар бүртгүүлнэ. Шөнийн үнэ өдрийнхөөс 20–30% өндөр. Эхлэх үнэ ~13¥ + км тооцоолол.</div>
+          <div class="tip-text-title">DiDi — хамгийн тохиромжтой</div>
+          <div class="tip-text-desc">Гадаад дугаараар бүртгүүлж болно. Шөнийн тариф арай өндөр. WeChat Pay, Alipay ажиллана. Нисэх буудлаас хот төв рүү ~150–250 юань гарна.</div>
         </div>
       </div>
       <div class="tip-row">
         <div class="tip-icon">🚕</div>
         <div>
           <div class="tip-text-title">Гудамжны такси</div>
-          <div class="tip-text-desc">Улаан такси хаана ч зогсоож болно. Тоолуурын үнэ ашиглана. Жолооч Хятад хэлгүй байж болзошгүй — хаягаа WeChat-ааар орчуулж харуул.</div>
+          <div class="tip-text-desc">Улаан такси замаас зогсооно. Тоолуурын үнэ. Зарим жолооч англи хэл мэдэхгүй — хаягаа хятадаар бэлдэчихвэл амар.</div>
         </div>
       </div>
       <div class="tip-row">
         <div class="tip-icon">🚌</div>
         <div>
-          <div class="tip-text-title">Шөнийн автобас (夜宵公交)</div>
-          <div class="tip-text-desc">Шанхайд шөнийн автобасны сүлжээ бий. Үнэ 2¥. Гол чиглэлүүд People's Square-ээс гарна. Amap апп-ааас маршрут хайна.</div>
+          <div class="tip-text-title">Шөнийн автобус (夜宵公交)</div>
+          <div class="tip-text-desc">Үнэ 2 юань. Гол шугамууд People's Square орчмоос гарна. Amap апп дээрээс маршрут хайна.</div>
         </div>
       </div>
       <div class="tip-row" style="border-bottom:none">
         <div class="tip-icon">🛵</div>
         <div>
-          <div class="tip-text-title">Meituan / Hellobike дугуй</div>
-          <div class="tip-text-desc">Ойрхон зайнд шөнийн дугуй түрээс. 1.5¥/30 мин. QR скан хийж суна, буух газраа орхино.</div>
+          <div class="tip-text-title">Hellobike / Meituan дугуй</div>
+          <div class="tip-text-desc">Ойрхон газар явахад хамгийн хямд. ~1.5 юань / 30 мин. QR уншуулж ашиглана.</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- АШИГТАЙ АППУУД + ЗӨВЛӨМЖ -->
+  <div class="section">
+    <div class="section-title">💡 Аппууд & зөвлөгөө</div>
+    <div class="card">
+      <div class="tip-row">
+        <div class="tip-icon">📱</div>
+        <div>
+          <div class="tip-text-title">MetroMan апп</div>
+          <div class="tip-text-desc">Офлайн ажилладаг метроны зурагтай. Маршрут тооцоолоход амар. App Store болон Google Play-с үнэгүй.</div>
+        </div>
+      </div>
+      <div class="tip-row">
+        <div class="tip-icon">🗺️</div>
+        <div>
+          <div class="tip-text-title">Amap (高德地图)</div>
+          <div class="tip-text-desc">Хятадад Google Maps-аас хавьгүй сайн ажилладаг. Метро, автобас, DiDi бүгдийг нэг дор харуулна.</div>
+        </div>
+      </div>
+      <div class="tip-row">
+        <div class="tip-icon">⏰</div>
+        <div>
+          <div class="tip-text-title">Оргил цаг</div>
+          <div class="tip-text-desc">07:30–09:00 ба 17:00–19:00 — метро маш их хүнтэй. Нисэх буудлаас явах бол нэмэлт цаг нөөцлөөрэй.</div>
+        </div>
+      </div>
+      <div class="tip-row" style="border-bottom:none">
+        <div class="tip-icon">🧳</div>
+        <div>
+          <div class="tip-text-title">Том чемодантай бол</div>
+          <div class="tip-text-desc">Метро унах боломжтой ч оргил цагт хэцүү. DiDi такси илүү тухтай. Метроны тэмдэглэгээ англи + хятадаар байдаг тул төөрөх нь харьцангуй бага.</div>
         </div>
       </div>
     </div>
