@@ -205,7 +205,7 @@ body{
 
     <!-- REGISTER -->
     <div id="paneReg" style="display:none">
-      <div id="regForm">
+      <div id="regStep1">
         <div class="field">
           <label>Нэр</label>
           <input type="text" id="reg-name" placeholder="Таны нэр" autocomplete="name">
@@ -223,12 +223,21 @@ body{
         </div>
         <button class="submit-btn" id="btnReg">Бүртгүүлэх →</button>
       </div>
-      <div id="verifyNotice" style="display:none;text-align:center;padding:8px 0">
-        <div style="font-size:40px;margin-bottom:12px">📧</div>
-        <div style="font-size:15px;font-weight:600;color:#1d1d1f;margin-bottom:8px">Имэйлээ баталгаажуулна уу</div>
-        <div style="font-size:13px;color:#6e6e73;margin-bottom:20px;line-height:1.5">Баталгаажуулах холбоос <strong id="sentEmail"></strong> хаяг руу илгээгдлээ.<br>Имэйлдээ орж холбоос дээр дарна уу.</div>
-        <button class="submit-btn" id="btnResend" style="background:#f5f5f7;color:#1d1d1f">Дахин илгээх</button>
-        <div style="font-size:12px;color:#86868b;margin-top:12px">Баталгаажуулсны дараа <a href="#" onclick="switchTab('login');return false" style="color:#0071e3">нэвтрэх</a> табыг нээнэ үү</div>
+      <div id="regStep2" style="display:none">
+        <div style="text-align:center;margin-bottom:20px">
+          <div style="font-size:40px;margin-bottom:10px">📧</div>
+          <div style="font-size:15px;font-weight:600;color:#1d1d1f;margin-bottom:6px">Баталгаажуулах код</div>
+          <div style="font-size:13px;color:#6e6e73;line-height:1.5"><strong id="sentEmail"></strong> хаяг руу 6 оронтой код илгээгдлээ</div>
+        </div>
+        <div class="field">
+          <label>Код оруулах</label>
+          <input type="text" id="verify-code" placeholder="000000" maxlength="6" inputmode="numeric" autocomplete="one-time-code" style="letter-spacing:.3em;font-size:24px;font-weight:700;text-align:center">
+        </div>
+        <button class="submit-btn" id="btnVerify">Баталгаажуулах →</button>
+        <button class="submit-btn" id="btnResend" style="background:#f5f5f7;color:#1d1d1f;margin-top:8px">Дахин илгээх</button>
+        <div style="text-align:center;margin-top:10px">
+          <button style="background:none;border:none;color:#6e6e73;font-size:12px;cursor:pointer;font-family:inherit" onclick="document.getElementById('regStep1').style.display='block';document.getElementById('regStep2').style.display='none'">← Буцах</button>
+        </div>
       </div>
       <div class="msg" id="reg-msg"></div>
     </div>
@@ -238,6 +247,8 @@ body{
 <div class="page-footer">© 2025 LFS Shanghai</div>
 
 <script src="/js/toast.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js"></script>
+<script>emailjs.init('sNQGhTi3wnQtOH6qQ');</script>
 <script>
 function switchTab(t) {
   document.getElementById('tabLogin').classList.toggle('active', t==='login');
@@ -265,7 +276,6 @@ import { getAnalytics, logEvent } from "https://www.gstatic.com/firebasejs/11.7.
 import {
   getAuth, onAuthStateChanged, signOut,
   signInWithEmailAndPassword, createUserWithEmailAndPassword,
-  sendEmailVerification,
   GoogleAuthProvider, signInWithPopup
 } from "https://www.gstatic.com/firebasejs/11.7.1/firebase-auth.js";
 import { getFirestore, doc, getDoc, setDoc } from "https://www.gstatic.com/firebasejs/11.7.1/firebase-firestore.js";
@@ -289,14 +299,10 @@ logEvent(analytics, 'page_view', { page_title: 'Login Page' });
 // Redirect target (from ?redirect=/booking etc.)
 const redirectTo = new URLSearchParams(location.search).get('redirect') || '/profile/';
 
-// If already logged in and email verified → redirect
 onAuthStateChanged(auth, async user => {
-  if (user && (user.emailVerified || user.providerData[0]?.providerId !== 'password')) {
+  if (user) {
     try { await ensureProfile(user); } catch(e) { console.warn('profile:', e); }
     window.location.replace(redirectTo);
-  } else if (user) {
-    await signOut(auth);
-    document.getElementById('loader').classList.add('hidden');
   } else {
     document.getElementById('loader').classList.add('hidden');
   }
@@ -351,7 +357,7 @@ document.getElementById('btnGoogle').addEventListener('click', () =>
 
 // EMAIL LOGIN
 document.getElementById('btnLogin').addEventListener('click', async () => {
-  const btn   = document.getElementById('btnLogin');
+  const btn = document.getElementById('btnLogin');
   const email = document.getElementById('login-email').value.trim();
   const pass  = document.getElementById('login-pass').value;
   msg_clear('login-msg');
@@ -359,12 +365,6 @@ document.getElementById('btnLogin').addEventListener('click', async () => {
   btn.disabled = true; btn.textContent = 'Нэвтэрч байна...';
   try {
     const res = await signInWithEmailAndPassword(auth, email, pass);
-    if (!res.user.emailVerified) {
-      await signOut(auth);
-      btn.disabled = false; btn.textContent = 'Нэвтрэх →';
-      showMsg('login-msg', 'Имэйлээ баталгаажуулаагүй байна. Имэйлдээ орж холбоос дээр дарна уу.');
-      return;
-    }
     await afterLogin(res.user);
   } catch(e) {
     btn.disabled = false; btn.textContent = 'Нэвтрэх →';
@@ -376,7 +376,18 @@ document.getElementById('btnLogin').addEventListener('click', async () => {
   document.getElementById(id).addEventListener('keydown', e => { if(e.key==='Enter') document.getElementById('btnLogin').click(); })
 );
 
-// EMAIL REGISTER
+// ── REGISTER — 6-digit code ──────────────────────────────────────────
+function genCode() { return Math.floor(100000 + Math.random() * 900000).toString(); }
+function vcSave(d)  { sessionStorage.setItem('_vc', JSON.stringify({ ...d, exp: Date.now() + 10*60*1000 })); }
+function vcLoad()   { try { return JSON.parse(sessionStorage.getItem('_vc')||'null'); } catch { return null; } }
+
+async function sendCode(email, name, code) {
+  await emailjs.send('service_lr0xy9q', 'template_tb03qyj', {
+    to_email: email, to_name: name, code,
+    from_name: name, service:'', start:'', days:'', people:'', phone:'', group:'', note:'', message:''
+  });
+}
+
 document.getElementById('btnReg').addEventListener('click', async () => {
   const btn   = document.getElementById('btnReg');
   const name  = document.getElementById('reg-name').value.trim();
@@ -386,34 +397,60 @@ document.getElementById('btnReg').addEventListener('click', async () => {
   if (!name)           { showMsg('reg-msg','Нэрээ оруулна уу.'); return; }
   if (!email)          { showMsg('reg-msg','И-мэйл оруулна уу.'); return; }
   if (pass.length < 6) { showMsg('reg-msg','Нууц үг хамгийн багадаа 6 тэмдэгт байх ёстой.'); return; }
-  btn.disabled = true; btn.textContent = 'Бүртгүүлж байна...';
+  btn.disabled = true; btn.textContent = 'Код илгээж байна...';
   try {
-    const res = await createUserWithEmailAndPassword(auth, email, pass);
-    await sendEmailVerification(res.user);
-    await signOut(auth);
-    logEvent(analytics, 'sign_up', { method: 'email' });
+    const code = genCode();
+    await sendCode(email, name, code);
+    vcSave({ code, email, name, pass });
     document.getElementById('sentEmail').textContent = email;
-    document.getElementById('regForm').style.display = 'none';
-    document.getElementById('verifyNotice').style.display = 'block';
-    window._pendingEmail = email; window._pendingPass = pass;
+    document.getElementById('regStep1').style.display = 'none';
+    document.getElementById('regStep2').style.display = 'block';
+    document.getElementById('verify-code').focus();
   } catch(e) {
-    btn.disabled = false; btn.textContent = 'Бүртгүүлэх →';
-    showMsg('reg-msg', e.code === 'auth/email-already-in-use'
-      ? 'Энэ и-мэйл аль хэдийн бүртгэлтэй байна.' : 'Алдаа гарлаа: ' + (e.code || e.message));
+    showMsg('reg-msg', 'Код илгээхэд алдаа гарлаа. Дахин оролдоно уу.');
   }
+  btn.disabled = false; btn.textContent = 'Бүртгүүлэх →';
 });
 ['reg-name','reg-email','reg-pass'].forEach(id =>
   document.getElementById(id).addEventListener('keydown', e => { if(e.key==='Enter') document.getElementById('btnReg').click(); })
 );
 
-// Resend verification email
+document.getElementById('btnVerify').addEventListener('click', async () => {
+  const btn     = document.getElementById('btnVerify');
+  const entered = document.getElementById('verify-code').value.trim();
+  msg_clear('reg-msg');
+  const s = vcLoad();
+  if (!s)                 { showMsg('reg-msg','Сесс дууссан. Дахин бүртгүүлнэ үү.'); return; }
+  if (Date.now() > s.exp) { sessionStorage.removeItem('_vc'); showMsg('reg-msg','Кодын хугацаа дууссан (10 мин). Дахин илгээнэ үү.'); return; }
+  if (entered !== s.code) { showMsg('reg-msg','Код буруу байна.'); return; }
+  btn.disabled = true; btn.textContent = 'Бүртгүүлж байна...';
+  try {
+    const res = await createUserWithEmailAndPassword(auth, s.email, s.pass);
+    await setDoc(doc(db,'users',res.user.uid), {
+      firstName:'', lastName:'', email: s.email,
+      photoURL:'', phone:'', birthday:'', gender:'', createdAt: Date.now()
+    });
+    sessionStorage.removeItem('_vc');
+    logEvent(analytics, 'sign_up', { method: 'email' });
+    window.location.replace(redirectTo);
+  } catch(e) {
+    btn.disabled = false; btn.textContent = 'Баталгаажуулах →';
+    showMsg('reg-msg', e.code === 'auth/email-already-in-use'
+      ? 'Энэ и-мэйл аль хэдийн бүртгэлтэй байна.' : 'Алдаа: ' + (e.code||e.message));
+  }
+});
+document.getElementById('verify-code').addEventListener('keydown', e => {
+  if(e.key==='Enter') document.getElementById('btnVerify').click();
+});
+
 document.getElementById('btnResend').addEventListener('click', async () => {
   const btn = document.getElementById('btnResend');
+  const s = vcLoad(); if (!s) return;
   btn.disabled = true; btn.textContent = 'Илгээж байна...';
   try {
-    const res = await signInWithEmailAndPassword(auth, window._pendingEmail, window._pendingPass);
-    await sendEmailVerification(res.user);
-    await signOut(auth);
+    const code = genCode();
+    await sendCode(s.email, s.name, code);
+    vcSave({ ...s, code });
     btn.textContent = 'Илгээгдлээ ✓';
     setTimeout(() => { btn.disabled = false; btn.textContent = 'Дахин илгээх'; }, 30000);
   } catch(e) {
