@@ -481,6 +481,37 @@ footer{
             <input class="form-input" type="text" id="contact-phone" name="phone" placeholder="+976 XXXX XXXX" required>
           </div>
         </div>
+        <div class="form-row">
+          <div class="form-group">
+            <label class="form-label" for="contact-email">И-мэйл *</label>
+            <input class="form-input" type="email" id="contact-email" name="reply_to" placeholder="tanii@email.com" required>
+          </div>
+          <div class="form-group">
+            <label class="form-label" for="contact-fb">Facebook холбоос <span style="font-weight:400;color:var(--muted)">(заавал биш)</span></label>
+            <input class="form-input" type="text" id="contact-fb" name="facebook" placeholder="facebook.com/tanii.ner">
+            <div style="margin-top:8px">
+              <button type="button" onclick="toggleFbTutorial()" style="background:none;border:none;cursor:pointer;font-size:12px;color:var(--blue);font-family:inherit;padding:0;display:flex;align-items:center;gap:4px">
+                💡 Холбоосоо яаж авах вэ? <span id="fbTutArrow">▼</span>
+              </button>
+              <div id="fbTutorial" style="display:none;margin-top:10px;background:#f0f6ff;border-radius:10px;padding:14px 16px;font-size:12px;color:var(--muted);line-height:1.8">
+                <strong style="color:var(--dark2);display:block;margin-bottom:6px">📱 Гар утаснаас:</strong>
+                <ol style="padding-left:16px;margin-bottom:10px">
+                  <li>Facebook апп нээ</li>
+                  <li>Профайл дүрс дээр дарж профайл руу орно</li>
+                  <li>Баруун дээд буланд "···" товчийг дарна</li>
+                  <li>"Профайлын холбоос хуулах" сонгоно</li>
+                  <li>Хуулсан холбоосоо буул</li>
+                </ol>
+                <strong style="color:var(--dark2);display:block;margin-bottom:6px">💻 Компьютероос:</strong>
+                <ol style="padding-left:16px">
+                  <li>facebook.com-д нэвтэрнэ</li>
+                  <li>Зүүн талд өөрийн нэр дээр дарна</li>
+                  <li>Хаягийн мөрийн URL-ыг хуулж буул</li>
+                </ol>
+              </div>
+            </div>
+          </div>
+        </div>
         <div class="form-group">
           <label class="form-label" for="contact-message">Мессеж *</label>
           <textarea class="form-textarea" id="contact-message" name="message" placeholder="Асуулт, хүсэлт эсвэл захиалгын мэдээллээ бичнэ үү..." required></textarea>
@@ -571,6 +602,15 @@ document.addEventListener('click', e => {
     nav.classList.remove('open');
   }
 });
+
+// ── FB tutorial toggle ──
+function toggleFbTutorial(){
+  const t = document.getElementById('fbTutorial');
+  const a = document.getElementById('fbTutArrow');
+  const open = t.style.display === 'block';
+  t.style.display = open ? 'none' : 'block';
+  a.textContent = open ? '▼' : '▲';
+}
 
 // ── Contact form ──
 function submitForm(e){
