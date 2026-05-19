@@ -1,6 +1,6 @@
 (function () {
   const btn = document.createElement('a');
-  btn.href = 'https://m.me/a.bileg.2025';
+  btn.href = 'https://m.me/100076380514835';
   btn.target = '_blank';
   btn.rel = 'noopener noreferrer';
   btn.setAttribute('aria-label', 'Facebook Messenger-ээр холбогдох');
