@@ -390,11 +390,6 @@ document.getElementById('btnReg').addEventListener('click', async () => {
   try {
     const res = await createUserWithEmailAndPassword(auth, email, pass);
     await sendEmailVerification(res.user);
-    await setDoc(doc(db,'users',res.user.uid), {
-      firstName: '', lastName: '', email,
-      photoURL: '', phone: '', birthday: '', gender: '',
-      createdAt: Date.now()
-    });
     await signOut(auth);
     logEvent(analytics, 'sign_up', { method: 'email' });
     document.getElementById('sentEmail').textContent = email;
