@@ -634,11 +634,14 @@ function submitForm(e){
         btn.innerHTML = '<svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M2.01 21L23 12 2.01 3 2 10l15 2-15 2z"/></svg> Илгээх';
       }, 3000);
     })
-    .catch(() => {
+    .catch((err) => {
       btn.disabled = false;
       btn.innerHTML = '<svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M2.01 21L23 12 2.01 3 2 10l15 2-15 2z"/></svg> Илгээх';
       msg.className = 'form-msg error';
-      msg.textContent = 'Алдаа гарлаа. Дахин оролдох эсвэл Facebook Messenger-ээр холбогдоно уу.';
+      msg.style.display = 'block';
+      const errText = err && (err.text || err.message || JSON.stringify(err));
+      msg.textContent = 'Алдаа: ' + (errText || 'Тодорхойгүй');
+      console.error('EmailJS error:', err);
     });
 }
 </script>
