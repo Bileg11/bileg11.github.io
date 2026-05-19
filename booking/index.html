@@ -337,16 +337,49 @@ footer{
   <span>🔒 Аюулгүй, итгэлтэй</span>
 </div>
 
-<!-- PRICING SUMMARY -->
-<div style="background:#fff;border-bottom:1px solid rgba(0,0,0,.08);padding:14px 20px;display:flex;align-items:center;justify-content:center;gap:24px;flex-wrap:wrap;font-size:13px;color:#1d1d1f">
-  <span style="font-weight:600;color:#6e6e73;font-size:11px;text-transform:uppercase;letter-spacing:.07em">Үнэ:</span>
-  <span>🧑‍💼 Хөтөч — <strong>500 юань/өдөр</strong></span>
-  <span style="color:#d1d1d6">·</span>
-  <span>🏨 Буудал захиалах — <strong>50 юань</strong></span>
-  <span style="color:#d1d1d6">·</span>
-  <span>🚗 Угтах — <strong>200 юань</strong></span>
-  <span style="color:#d1d1d6">·</span>
-  <a href="/pricing/" style="color:#0071e3;font-weight:600;text-decoration:none;white-space:nowrap">Бүх үнэ харах →</a>
+<!-- PRICING PANEL -->
+<div style="background:#fff;border-bottom:1px solid rgba(0,0,0,.08)">
+  <div style="max-width:720px;margin:0 auto;padding:0 20px">
+    <!-- Toggle -->
+    <button onclick="togglePricing()" id="pricingToggleBtn"
+      style="width:100%;display:flex;align-items:center;justify-content:space-between;padding:14px 0;border:none;background:none;cursor:pointer;font-family:inherit">
+      <span style="font-size:13px;font-weight:600;color:#1d1d1f">💰 Үнийн жагсаалт харах</span>
+      <span id="pricingArrow" style="font-size:12px;color:#6e6e73">▼</span>
+    </button>
+    <!-- Expandable -->
+    <div id="pricingPanel" style="display:none;padding-bottom:20px">
+      <!-- Gold package -->
+      <div style="background:linear-gradient(135deg,#1d1d1f,#3a3a3c);border-radius:14px;padding:20px;margin-bottom:12px;color:#fff">
+        <div style="font-size:11px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;opacity:.5;margin-bottom:6px">🥇 Алтан багц — Бүгдийг нэг дороос</div>
+        <div style="font-size:32px;font-weight:800;letter-spacing:-.03em;line-height:1">2,050,000<span style="font-size:16px;font-weight:400;opacity:.5">₮</span></div>
+        <div style="font-size:12px;opacity:.4;margin-top:4px">5 хоног · 4 шөнө · 1 хүн</div>
+      </div>
+      <!-- Individual services -->
+      <div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(160px,1fr));gap:10px;margin-bottom:12px">
+        <div style="background:#f5f5f7;border-radius:12px;padding:16px">
+          <div style="font-size:11px;color:#6e6e73;font-weight:600;margin-bottom:4px">🧑‍💼 ХӨТӨЧ</div>
+          <div style="font-size:22px;font-weight:700;color:#1d1d1f">500<span style="font-size:12px;font-weight:400;color:#6e6e73"> юань/өдөр</span></div>
+        </div>
+        <div style="background:#f5f5f7;border-radius:12px;padding:16px">
+          <div style="font-size:11px;color:#6e6e73;font-weight:600;margin-bottom:4px">💬 ОРЧУУЛАГЧ</div>
+          <div style="font-size:22px;font-weight:700;color:#1d1d1f">500<span style="font-size:12px;font-weight:400;color:#6e6e73"> юань/өдөр</span></div>
+        </div>
+        <div style="background:#f5f5f7;border-radius:12px;padding:16px">
+          <div style="font-size:11px;color:#6e6e73;font-weight:600;margin-bottom:4px">🏨 БУУДАЛ ЗАХИАЛГА</div>
+          <div style="font-size:22px;font-weight:700;color:#1d1d1f">50<span style="font-size:12px;font-weight:400;color:#6e6e73"> юань/удаа</span></div>
+        </div>
+        <div style="background:#f5f5f7;border-radius:12px;padding:16px">
+          <div style="font-size:11px;color:#6e6e73;font-weight:600;margin-bottom:4px">✈️ НИСЭХ БУУДАЛ УГТАХ</div>
+          <div style="font-size:22px;font-weight:700;color:#1d1d1f">200<span style="font-size:12px;font-weight:400;color:#6e6e73"> юань/удаа</span></div>
+        </div>
+        <div style="background:#f5f5f7;border-radius:12px;padding:16px">
+          <div style="font-size:11px;color:#6e6e73;font-weight:600;margin-bottom:4px">📚 ОЮУТНЫ ЗӨВЛӨГӨӨ</div>
+          <div style="font-size:22px;font-weight:700;color:#1d1d1f">20,000<span style="font-size:12px;font-weight:400;color:#6e6e73"> ₮/удаа</span></div>
+        </div>
+      </div>
+      <a href="/pricing/" style="font-size:13px;color:#0071e3;font-weight:600;text-decoration:none">Дэлгэрэнгүй үнийн хуудас харах →</a>
+    </div>
+  </div>
 </div>
 
 <!-- PROGRESS BAR -->
@@ -525,64 +558,14 @@ footer{
             </div>
           </div>
 
-          <!-- STEP 6: Social (REQUIRED) -->
+          <!-- STEP 6: Social (OPTIONAL) -->
           <div class="wizard-step" id="step-6">
-            <div class="step-question">Facebook / Instagram холбоос</div>
-            <div class="step-sub">Профайл холбоосоо оруулна уу — таныг танихад тусална</div>
-            <div class="social-tutorial-toggle" onclick="toggleTutorial()">
-              💡 Холбоосоо яаж авах вэ? <span id="tutArrow">▼</span>
-            </div>
-            <div class="social-tutorial" id="socialTutorial" style="display:none">
-              <div class="tut-section">
-                <div class="tut-platform">📘 Facebook холбоос авах</div>
-                <div class="tut-block">
-                  <div class="tut-method">📱 Гар утаснаас:</div>
-                  <ol class="tut-steps">
-                    <li>Facebook апп нээ</li>
-                    <li>Профайл дүрс дээр дарж профайл руу орно</li>
-                    <li>Баруун дээд буланд "···" товчийг дарна</li>
-                    <li>"Профайлын холбоос хуулах" сонгоно</li>
-                    <li>Хуулсан холбоосоо доорх талбарт буул</li>
-                  </ol>
-                </div>
-                <div class="tut-block">
-                  <div class="tut-method">💻 Компьютероос:</div>
-                  <ol class="tut-steps">
-                    <li>facebook.com-д нэвтэрнэ</li>
-                    <li>Зүүн талд өөрийн нэр дээр дарна</li>
-                    <li>Хаягийн мөрийн URL-ыг хуулж буул (facebook.com/...)</li>
-                  </ol>
-                </div>
-              </div>
-              <div class="tut-section">
-                <div class="tut-platform">📸 Instagram холбоос авах</div>
-                <div class="tut-block">
-                  <div class="tut-method">📱 Гар утаснаас:</div>
-                  <ol class="tut-steps">
-                    <li>Instagram апп нээ</li>
-                    <li>Доод баруун буланд профайл дүрс дээр дарна</li>
-                    <li>Баруун дээд буланд "···" товчийг дарна</li>
-                    <li>"Профайлын холбоос хуулах" сонгоно</li>
-                    <li>Хуулсан холбоосоо доорх талбарт буул</li>
-                  </ol>
-                </div>
-                <div class="tut-block">
-                  <div class="tut-method">💻 Компьютероос:</div>
-                  <ol class="tut-steps">
-                    <li>instagram.com-д нэвтэрнэ</li>
-                    <li>Зүүн талд өөрийн нэр дээр дарна</li>
-                    <li>Хаягийн мөрийн URL-ыг хуулж буул</li>
-                  </ol>
-                </div>
-              </div>
-            </div>
-            <div style="background:rgba(0,113,227,.06);border:1.5px solid rgba(0,113,227,.18);border-radius:10px;padding:10px 14px;margin-bottom:12px;font-size:13px;color:var(--blue);font-weight:500">
-              💬 Бид танд <strong>Facebook Messenger</strong>-ээр холбогдоно — Facebook холбоос оруулахыг зөвлөж байна
-            </div>
-            <input class="wiz-input" type="text" id="b-social" placeholder="facebook.com/username эсвэл instagram.com/username">
-            <div class="field-err" id="err-social">Профайл холбоосоо оруулна уу</div>
+            <div class="step-question">Social холбоос <span style="font-size:14px;font-weight:400;color:var(--muted)">(заавал биш)</span></div>
+            <div class="step-sub">Facebook эсвэл Instagram холбоосоо оруулбал Messenger-ээр холбогдоход хялбар болно</div>
+            <input class="wiz-input" type="text" id="b-social" placeholder="facebook.com/username (заавал биш)">
             <div class="wiz-nav">
               <button class="btn-back" onclick="prevStep()">← Буцах</button>
+              <button class="btn-skip" onclick="skipStep()">Алгасах →</button>
               <button class="btn-next" onclick="nextStep()">Дараах →</button>
             </div>
           </div>
@@ -840,10 +823,7 @@ function validateCurrentStep() {
     return true;
   }
   if (s === 6) {
-    const v = document.getElementById('b-social').value.trim();
-    if (!v) { showErr('b-social','err-social'); return false; }
-    wizardData.social = v;
-    clearErr('b-social','err-social');
+    wizardData.social = document.getElementById('b-social').value.trim();
     return true;
   }
   if (s === 7) { wizardData.note = document.getElementById('b-note').value.trim(); return true; }
@@ -1016,6 +996,16 @@ window.shareBooking = async function() {
 
 // Initialize progress
 updateProgress();
+
+function togglePricing() {
+  const panel = document.getElementById('pricingPanel');
+  const arrow = document.getElementById('pricingArrow');
+  const btn   = document.getElementById('pricingToggleBtn');
+  const open  = panel.style.display !== 'none';
+  panel.style.display = open ? 'none' : 'block';
+  arrow.textContent   = open ? '▼' : '▲';
+  btn.querySelector('span:first-child').textContent = open ? '💰 Үнийн жагсаалт харах' : '💰 Үнийн жагсаалт хаах';
+}
 </script>
 
 <script type="module">
