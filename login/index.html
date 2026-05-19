@@ -329,14 +329,17 @@ async function doSocialLogin(provider, btnId) {
   if (btn.disabled) return;
   btn.disabled = true;
   const orig = btn.innerHTML;
-  btn.innerHTML = '⏳ Шилжиж байна...';
+  btn.innerHTML = '⏳ Нэвтэрч байна...';
   try {
-    await signInWithRedirect(auth, provider);
-    // Page will redirect — code below won't run
+    const result = await signInWithPopup(auth, provider);
+    await ensureProfile(result.user).catch(e => console.warn('profile:', e));
+    window.location.replace(redirectTo);
   } catch(e) {
     btn.disabled = false;
     btn.innerHTML = orig;
-    showMsg('social-msg', `Алдаа: ${e.code || e.message}`);
+    if (e.code !== 'auth/popup-closed-by-user') {
+      showMsg('social-msg', `Алдаа: ${e.code || e.message}`);
+    }
   }
 }
 
