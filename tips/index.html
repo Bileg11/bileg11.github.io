@@ -606,18 +606,34 @@ footer{
   <h1>Шанхайд <em>бэлэн</em> ирээрэй</h1>
   <p>Монгол аялагчдад зориулсан бодит зөвлөмжүүд — виз, мөнгө, хэл, технологи, аюулгүй байдал.</p>
   <div class="hero-chips">
+    <a href="#guide20k" class="hero-chip" style="background:#0071e3;color:#fff;border-color:#0071e3">📚 Оюутны 20К зөвлөмж</a>
+    <a href="#oiuutan" class="hero-chip">Оюутанд</a>
     <a href="#viz" class="hero-chip">Виз &amp; Бэлтгэл</a>
     <a href="#mongon" class="hero-chip">Мөнгө</a>
     <a href="#hel" class="hero-chip">Хэл</a>
     <a href="#vpn" class="hero-chip">VPN</a>
     <a href="#metro" class="hero-chip">Метро</a>
     <a href="#ayuulgui" class="hero-chip">Аюулгүй байдал</a>
-    <a href="#oiuutan" class="hero-chip">Оюутанд</a>
     <a href="#tsag" class="hero-chip">Цаг агаар</a>
   </div>
 </section>
 
 <div class="section-divider"></div>
+
+<!-- STICKY TOC BAR -->
+<nav class="toc-bar">
+  <div class="toc-inner">
+    <a href="#guide20k" class="toc-link" data-target="guide20k">📚 20К Зөвлөмж</a>
+    <a href="#oiuutan" class="toc-link" data-target="oiuutan">Оюутанд</a>
+    <a href="#viz" class="toc-link" data-target="viz">Виз</a>
+    <a href="#mongon" class="toc-link" data-target="mongon">Мөнгө</a>
+    <a href="#hel" class="toc-link" data-target="hel">Хэл</a>
+    <a href="#vpn" class="toc-link" data-target="vpn">VPN</a>
+    <a href="#metro" class="toc-link" data-target="metro">Метро</a>
+    <a href="#ayuulgui" class="toc-link" data-target="ayuulgui">Аюулгүй байдал</a>
+    <a href="#tsag" class="toc-link" data-target="tsag">Цаг агаар</a>
+  </div>
+</nav>
 
 <!-- FEATURED STUDENT CARD -->
 <section class="student-feature reveal" style="padding-top:64px">
@@ -640,7 +656,7 @@ footer{
 </section>
 
 <!-- 20K GUIDE CARD -->
-<section class="guide-feature reveal">
+<section class="guide-feature reveal" id="guide20k">
   <div class="guide-card">
 
     <!-- LEFT: pitch + price + CTA -->
@@ -880,7 +896,7 @@ const revealObserver = new IntersectionObserver(entries => {
 revealEls.forEach(el => revealObserver.observe(el));
 
 // ── STICKY TOC ACTIVE STATE ──
-const sections = ['viz','mongon','hel','vpn','metro','ayuulgui','oiuutan','tsag'];
+const sections = ['guide20k','oiuutan','viz','mongon','hel','vpn','metro','ayuulgui','tsag'];
 const tocLinks = document.querySelectorAll('.toc-link');
 
 function updateToc(){
