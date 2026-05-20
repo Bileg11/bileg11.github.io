@@ -436,6 +436,37 @@
     .empty-state .empty-icon { font-size: 3rem; margin-bottom: 12px; }
     .empty-state p { font-size: .92rem; }
 
+    /* ── FRIEND SEARCH ── */
+    .friend-search-wrap { margin-top:20px; }
+    .friend-search-label { font-size:.85rem;font-weight:600;color:var(--text);display:block;margin-bottom:8px; }
+    .friend-search-box { position:relative; }
+    .friend-search-box input { width:100%;padding:10px 14px 10px 38px;border:1.5px solid var(--border);border-radius:10px;font-size:.9rem;font-family:inherit;color:var(--text);transition:border-color .2s,box-shadow .2s; }
+    .friend-search-box input:focus { outline:none;border-color:var(--primary);box-shadow:0 0 0 3px rgba(232,57,42,.1); }
+    .friend-search-icon { position:absolute;left:12px;top:50%;transform:translateY(-50%);font-size:.9rem;pointer-events:none; }
+    .friend-results { margin-top:8px;border:1.5px solid var(--border);border-radius:12px;overflow:hidden;display:none; }
+    .friend-results.open { display:block; }
+    .friend-result-item { display:flex;align-items:center;gap:10px;padding:10px 14px;cursor:pointer;transition:background .15s; }
+    .friend-result-item:hover { background:rgba(232,57,42,.05); }
+    .friend-result-item:not(:last-child) { border-bottom:1px solid var(--border); }
+    .friend-result-avatar { width:34px;height:34px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:.85rem;font-weight:700;color:#fff;flex-shrink:0;overflow:hidden; }
+    .friend-result-avatar img { width:100%;height:100%;object-fit:cover; }
+    .friend-result-info { flex:1;min-width:0; }
+    .friend-result-name { font-size:.88rem;font-weight:600; }
+    .friend-result-username { font-size:.75rem;color:var(--sub);margin-top:1px; }
+    .friend-result-add { font-size:.78rem;font-weight:600;color:var(--primary);flex-shrink:0; }
+    .friend-results-empty { padding:14px;text-align:center;font-size:.83rem;color:var(--sub); }
+    .friend-results-loading { padding:14px;text-align:center;font-size:.83rem;color:var(--sub); }
+    .added-collabs { margin-top:12px;display:flex;flex-direction:column;gap:8px; }
+    .added-collab-item { display:flex;align-items:center;gap:10px;background:var(--bg);border-radius:10px;padding:8px 12px; }
+    .added-collab-avatar { width:30px;height:30px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:.78rem;font-weight:700;color:#fff;flex-shrink:0; }
+    .added-collab-name { flex:1;font-size:.85rem;font-weight:600; }
+    .added-collab-role { font-size:.72rem;padding:3px 10px;border-radius:20px;cursor:pointer;border:1.5px solid transparent;transition:all .2s;font-weight:600; }
+    .added-collab-role.editor { background:rgba(52,199,89,.12);color:#27ae60;border-color:rgba(52,199,89,.25); }
+    .added-collab-role.viewer { background:rgba(90,90,114,.08);color:var(--sub);border-color:var(--border); }
+    .added-collab-role:hover { opacity:.75; }
+    .btn-rm-added { background:none;border:none;cursor:pointer;color:#ccc;font-size:.9rem;padding:2px 4px;transition:color .2s; }
+    .btn-rm-added:hover { color:var(--primary); }
+
     /* ── VIEWER BANNER ── */
     .viewer-banner{background:linear-gradient(135deg,#1a1a2e,#2d2d4e);color:#fff;border-radius:var(--radius);padding:14px 20px;margin-bottom:16px;display:none;align-items:center;gap:14px;flex-wrap:wrap}
     .viewer-banner.visible{display:flex}
@@ -734,6 +765,17 @@
       <div style="margin-top:20px;">
         <label style="margin-bottom:8px;display:block;">Төлөвлөгөөний нэр <span style="color:var(--sub);font-weight:400;">(заавал биш)</span></label>
         <input type="text" id="planTitle" placeholder="жш: Гэр бүлийн Шанхай 2026 🏙"/>
+      </div>
+
+      <!-- FRIEND SEARCH -->
+      <div class="friend-search-wrap" id="friendSearchSection">
+        <label class="friend-search-label">👥 Найз нэмэх <span style="color:var(--sub);font-weight:400;">(хэрэглэгчийн нэр эсвэл и-мэйл)</span></label>
+        <div class="friend-search-box">
+          <span class="friend-search-icon">🔍</span>
+          <input type="text" id="friendSearchInput" placeholder="username эсвэл email хайх..." autocomplete="off" oninput="searchFriends(this.value)"/>
+        </div>
+        <div class="friend-results" id="friendResults"></div>
+        <div class="added-collabs" id="addedCollabs"></div>
       </div>
     </div>
     <div class="btn-row">
@@ -1243,6 +1285,15 @@ window.savePlan = async () => {
   const titleEl = document.getElementById('planTitle');
   const title   = titleEl?.value.trim() || 'Шанхай аялал';
   const uid = window._currentUser ? window._currentUser.uid : 'guest';
+
+  // Merge pending collaborators into access/accessMeta
+  const access     = { ...(window._plan.access || {}) };
+  const accessMeta = { ...(window._plan.accessMeta || {}) };
+  (window._pendingCollabs || []).forEach(c => {
+    access[c.uid]     = c.role;
+    accessMeta[c.uid] = { email: c.email, name: c.name, username: c.username||'', joinedAt: new Date().toISOString() };
+  });
+
   const planData = {
     title,
     dates:        { arrival: window._plan.arrival, departure: window._plan.departure },
@@ -1253,9 +1304,9 @@ window.savePlan = async () => {
     timePrefs:    window._plan.timePrefs,
     savedPlaces:  window._plan.savedPlaces,
     dayAssignments: window._plan.dayAssignments || {},
-    access:       window._plan.access || {},
+    access,
     inviteTokens: window._plan.inviteTokens || {},
-    accessMeta:   window._plan.accessMeta || {},
+    accessMeta,
     createdAt:    window._plan.createdAt || new Date().toISOString(),
     uid
   };
@@ -1274,6 +1325,8 @@ window.savePlan = async () => {
       startLiveSync(ref.id);
       showFloatingShare(true);
       showToast('Хадгалагдлаа! 🎉', 'success');
+      window._pendingCollabs = [];
+      document.getElementById('addedCollabs') && (document.getElementById('addedCollabs').innerHTML = '');
       if (window._currentUser) loadMyPlans(window._currentUser);
     }
     setSyncBadge('saved');
@@ -1530,12 +1583,131 @@ window.startNewPlan = function() {
   if (_unsubSnapshot) { _unsubSnapshot(); _unsubSnapshot = null; }
   window._plan = { arrival:'', departure:'', people:[], hotel:'', interests:[], budget:'', timePrefs:{}, savedPlaces:[], dayAssignments:{}, access:{}, inviteTokens:{}, accessMeta:{}, uid:'', title:'', createdAt:'' };
   window._planId = null; window._currentRole = 'owner';
-  ['planTitle','hotel','dateArrival','dateDeparture'].forEach(id => { const el=document.getElementById(id); if(el) el.value=''; });
+  window._pendingCollabs = [];
+  ['planTitle','hotel','dateArrival','dateDeparture','friendSearchInput'].forEach(id => { const el=document.getElementById(id); if(el) el.value=''; });
   document.querySelectorAll('.chip').forEach(c => c.classList.remove('selected'));
   document.getElementById('viewerBanner')?.classList.remove('visible');
+  document.getElementById('friendResults')?.classList.remove('open');
+  document.getElementById('addedCollabs') && (document.getElementById('addedCollabs').innerHTML = '');
   showFloatingShare(false); setSyncBadge('hide');
   window.goToStep(1);
   window.showToast && window.showToast('Шинэ төлөвлөгөө', 'success');
+};
+
+/* ── FRIEND SEARCH ── */
+window._pendingCollabs = []; // [{ uid, name, email, username, photoURL, role }]
+let _searchTimer = null;
+const AVATAR_COLORS = ['#e8392a','#3b82f6','#10b981','#f59e0b','#8b5cf6','#ec4899','#06b6d4'];
+
+window.searchFriends = function(val) {
+  clearTimeout(_searchTimer);
+  val = val.trim();
+  const results = document.getElementById('friendResults');
+  if (!results) return;
+  if (!val || val.length < 2) { results.classList.remove('open'); return; }
+  results.classList.add('open');
+  results.innerHTML = '<div class="friend-results-loading">🔍 Хайж байна...</div>';
+
+  _searchTimer = setTimeout(async () => {
+    try {
+      const found = [];
+      const myUid = window._currentUser?.uid;
+
+      if (val.includes('@')) {
+        // Search by email
+        const q = query(collection(db,'users'), where('email','==',val.toLowerCase()), limit(5));
+        const snap = await getDocs(q);
+        snap.forEach(d => { if (d.id !== myUid) found.push({ uid: d.id, ...d.data() }); });
+      } else {
+        // Search by username prefix
+        const vLow = val.toLowerCase();
+        const q = query(collection(db,'users'),
+          where('username','>=',vLow),
+          where('username','<=',vLow+''),
+          limit(6));
+        const snap = await getDocs(q);
+        snap.forEach(d => { if (d.id !== myUid) found.push({ uid: d.id, ...d.data() }); });
+      }
+
+      // Filter out already added
+      const addedUids = window._pendingCollabs.map(c => c.uid);
+      const filtered = found.filter(u => !addedUids.includes(u.uid));
+
+      if (filtered.length === 0) {
+        results.innerHTML = '<div class="friend-results-empty">Хэрэглэгч олдсонгүй 😕<br><span style="font-size:.75rem;color:var(--sub);">Username эсвэл бүтэн и-мэйл оруулна уу</span></div>';
+        return;
+      }
+
+      results.innerHTML = '';
+      filtered.forEach(u => {
+        const name = [u.lastName, u.firstName].filter(Boolean).join(' ') || u.username || u.email?.split('@')[0] || '—';
+        const uname = u.username ? '@'+u.username : u.email || '';
+        const col = AVATAR_COLORS[(u.uid.charCodeAt(0)||0) % AVATAR_COLORS.length];
+        const avatarHtml = u.photoURL
+          ? `<div class="friend-result-avatar"><img src="${u.photoURL}" onerror="this.parentElement.textContent='${name[0].toUpperCase()}'"/></div>`
+          : `<div class="friend-result-avatar" style="background:${col}">${name[0].toUpperCase()}</div>`;
+
+        const item = document.createElement('div');
+        item.className = 'friend-result-item';
+        item.innerHTML = `${avatarHtml}
+          <div class="friend-result-info">
+            <div class="friend-result-name">${name}</div>
+            <div class="friend-result-username">${uname}</div>
+          </div>
+          <span class="friend-result-add">+ Нэмэх</span>`;
+        item.addEventListener('click', () => addFriend({ uid: u.uid, name, email: u.email||'', username: u.username||'', photoURL: u.photoURL||'', col }));
+        results.appendChild(item);
+      });
+    } catch(e) {
+      results.innerHTML = '<div class="friend-results-empty">Хайхад алдаа гарлаа</div>';
+      console.warn('searchFriends:', e);
+    }
+  }, 420);
+};
+
+function addFriend(user) {
+  // Default role: editor
+  if (window._pendingCollabs.find(c => c.uid === user.uid)) return;
+  window._pendingCollabs.push({ ...user, role: 'editor' });
+  renderAddedCollabs();
+  // Clear search
+  const inp = document.getElementById('friendSearchInput');
+  const res = document.getElementById('friendResults');
+  if (inp) inp.value = '';
+  if (res) res.classList.remove('open');
+  window.showToast && window.showToast(`${user.name} нэмэгдлээ ✓`, 'success');
+}
+
+function renderAddedCollabs() {
+  const container = document.getElementById('addedCollabs');
+  if (!container) return;
+  if (window._pendingCollabs.length === 0) { container.innerHTML = ''; return; }
+  container.innerHTML = window._pendingCollabs.map((c, i) => {
+    const isEditor = c.role === 'editor';
+    const avatarHtml = c.photoURL
+      ? `<div class="added-collab-avatar" style="overflow:hidden"><img src="${c.photoURL}" style="width:100%;height:100%;object-fit:cover" onerror="this.parentElement.style.background='${c.col||'#3b82f6'}';this.remove()"/></div>`
+      : `<div class="added-collab-avatar" style="background:${c.col||'#3b82f6'}">${c.name[0].toUpperCase()}</div>`;
+    return `<div class="added-collab-item">
+      ${avatarHtml}
+      <div class="added-collab-name">${c.name}${c.username?' <span style="color:var(--sub);font-weight:400;font-size:.75rem">@'+c.username+'</span>':''}</div>
+      <button class="added-collab-role ${c.role}" onclick="toggleCollabRole(${i})" title="Эрх солих">
+        ${isEditor ? '✏️ Засах' : '👁 Харах'}
+      </button>
+      <button class="btn-rm-added" onclick="removeAddedCollab(${i})">✕</button>
+    </div>`;
+  }).join('');
+}
+
+window.toggleCollabRole = function(i) {
+  const c = window._pendingCollabs[i];
+  if (!c) return;
+  c.role = c.role === 'editor' ? 'viewer' : 'editor';
+  renderAddedCollabs();
+};
+
+window.removeAddedCollab = function(i) {
+  window._pendingCollabs.splice(i, 1);
+  renderAddedCollabs();
 };
 </script>
 
