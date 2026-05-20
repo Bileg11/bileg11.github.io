@@ -636,6 +636,91 @@
       text-decoration: none; font-weight: 600; cursor: pointer;
       background: none; border: none; font-family: inherit;
     }
+
+    /* ── HOTEL CHIPS ── */
+    .hotel-chips { display:flex; flex-direction:column; gap:10px; }
+    .hotel-chip {
+      display:flex; align-items:center; gap:12px;
+      border:1.5px solid var(--border); border-radius:12px;
+      padding:12px 14px; cursor:pointer; transition:all .18s;
+      background:var(--bg);
+    }
+    .hotel-chip:hover { border-color:var(--primary); }
+    .hotel-chip.selected { border-color:var(--primary); background:rgba(232,57,42,.06); }
+    .hotel-chip-icon { font-size:1.5rem; flex-shrink:0; }
+    .hotel-chip-info { flex:1; }
+    .hotel-chip-name { font-size:.9rem; font-weight:700; color:var(--text); }
+    .hotel-chip-metro { font-size:.75rem; color:var(--sub); margin-top:2px; }
+    .hotel-chip-check { width:20px;height:20px;border-radius:50%;border:2px solid var(--border);
+      display:flex;align-items:center;justify-content:center;font-size:.7rem;
+      flex-shrink:0;transition:all .18s; }
+    .hotel-chip.selected .hotel-chip-check { background:var(--primary);border-color:var(--primary);color:#fff; }
+    .hotel-other-wrap { margin-top:8px; }
+    .hotel-other-input {
+      width:100%;padding:10px 14px;border:1.5px solid var(--border);
+      border-radius:10px;font-size:.9rem;font-family:inherit;
+      background:var(--bg);color:var(--text);box-sizing:border-box;
+      transition:border-color .18s;
+    }
+    .hotel-other-input:focus { outline:none;border-color:var(--primary); }
+
+    /* ── GUIDE TAB ── */
+    .guide-tabs { display:flex;gap:8px;margin-bottom:18px;flex-wrap:wrap; }
+    .guide-tab {
+      padding:7px 16px;border-radius:50px;font-size:.82rem;font-weight:600;
+      border:1.5px solid var(--border);cursor:pointer;transition:all .18s;
+      background:var(--bg);color:var(--sub);font-family:inherit;
+    }
+    .guide-tab.active { background:var(--primary);border-color:var(--primary);color:#fff; }
+    .guide-section { display:none; }
+    .guide-section.active { display:block; }
+    .guide-day-title {
+      font-size:.72rem;font-weight:700;text-transform:uppercase;letter-spacing:.06em;
+      color:var(--sub);margin:18px 0 10px;
+    }
+    .guide-day-title:first-child { margin-top:0; }
+    .food-card {
+      border:1.5px solid var(--border);border-radius:12px;
+      padding:12px 14px;margin-bottom:10px;background:var(--bg);
+      display:flex;align-items:flex-start;gap:12px;
+    }
+    .food-card-meal {
+      font-size:1.2rem;flex-shrink:0;margin-top:1px;
+    }
+    .food-card-body { flex:1;min-width:0; }
+    .food-card-name { font-size:.88rem;font-weight:700;color:var(--text);line-height:1.3; }
+    .food-card-meta { font-size:.75rem;color:var(--sub);margin-top:3px;display:flex;flex-wrap:wrap;gap:6px; }
+    .food-meta-tag {
+      background:var(--card-hover,rgba(0,0,0,.04));border-radius:50px;
+      padding:2px 8px;font-size:.72rem;
+    }
+    .food-card-desc { font-size:.78rem;color:var(--sub);margin-top:5px;line-height:1.45; }
+    .food-card-actions { display:flex;gap:6px;margin-top:8px; }
+    .btn-amap {
+      display:inline-flex;align-items:center;gap:5px;
+      padding:5px 12px;border-radius:50px;font-size:.75rem;font-weight:600;
+      background:var(--primary);color:#fff;border:none;cursor:pointer;
+      font-family:inherit;text-decoration:none;transition:opacity .18s;
+    }
+    .btn-amap:hover { opacity:.85; }
+    .menu-badge {
+      display:inline-flex;align-items:center;gap:4px;
+      padding:4px 10px;border-radius:50px;font-size:.72rem;font-weight:600;
+      border:1.5px solid var(--border);color:var(--sub);
+    }
+    .menu-badge.yes { border-color:#16a34a;color:#16a34a; }
+    .menu-badge.photo { border-color:#d97706;color:#d97706; }
+    .guide-empty {
+      text-align:center;padding:40px 20px;color:var(--sub);font-size:.88rem;
+    }
+    .guide-hotel-badge {
+      display:flex;align-items:center;gap:10px;
+      background:rgba(232,57,42,.06);border:1.5px solid rgba(232,57,42,.2);
+      border-radius:12px;padding:12px 14px;margin-bottom:16px;
+    }
+    .guide-hotel-badge-text { font-size:.85rem; }
+    .guide-hotel-badge-name { font-weight:700;color:var(--text); }
+    .guide-hotel-badge-metro { font-size:.75rem;color:var(--sub);margin-top:1px; }
   </style>
 </head>
 <body>
@@ -722,6 +807,10 @@
       <div class="dot-circle">5</div>
       <span class="dot-label">Төлөвлөгөө</span>
     </div>
+    <div class="step-dot" data-step="6" onclick="goToStep(6)">
+      <div class="dot-circle">6</div>
+      <span class="dot-label">🗺 Гарын авлага</span>
+    </div>
   </div>
 
   <!-- PLAN SUMMARY BAR -->
@@ -758,8 +847,52 @@
       </div>
 
       <div style="margin-top:20px;">
-        <label style="margin-bottom:8px;display:block;">Байрлах газар (зочид буудал)</label>
-        <input type="text" id="hotel" placeholder="жш: Radisson Hotel, Hongkou"/>
+        <label style="margin-bottom:10px;display:block;">Байрлах буудал</label>
+        <div class="hotel-chips" id="hotelChips">
+          <div class="hotel-chip" data-hotel-id="renaissance" onclick="selectHotel(this)">
+            <div class="hotel-chip-icon">🏨</div>
+            <div class="hotel-chip-info">
+              <div class="hotel-chip-name">Renaissance Lujiazui</div>
+              <div class="hotel-chip-metro">🚇 Lujiazui Station · Line 2</div>
+            </div>
+            <div class="hotel-chip-check">✓</div>
+          </div>
+          <div class="hotel-chip" data-hotel-id="yunrui" onclick="selectHotel(this)">
+            <div class="hotel-chip-icon">🏨</div>
+            <div class="hotel-chip-info">
+              <div class="hotel-chip-name">Yunrui Hotel (Zhongshan Park)</div>
+              <div class="hotel-chip-metro">🚇 Zhongshan Park · Line 2/3/4</div>
+            </div>
+            <div class="hotel-chip-check">✓</div>
+          </div>
+          <div class="hotel-chip" data-hotel-id="home-inn" onclick="selectHotel(this)">
+            <div class="hotel-chip-icon">🏨</div>
+            <div class="hotel-chip-info">
+              <div class="hotel-chip-name">Home Inn Selected (Expo Park)</div>
+              <div class="hotel-chip-metro">🚇 Houtan Station · Line 7</div>
+            </div>
+            <div class="hotel-chip-check">✓</div>
+          </div>
+          <div class="hotel-chip" data-hotel-id="yitel" onclick="selectHotel(this)">
+            <div class="hotel-chip-icon">🏨</div>
+            <div class="hotel-chip-info">
+              <div class="hotel-chip-name">Yitel Hotel (Pudian Road)</div>
+              <div class="hotel-chip-metro">🚇 Pudian Road Station · Line 4/6</div>
+            </div>
+            <div class="hotel-chip-check">✓</div>
+          </div>
+          <div class="hotel-chip" data-hotel-id="other" onclick="selectHotel(this)">
+            <div class="hotel-chip-icon">📍</div>
+            <div class="hotel-chip-info">
+              <div class="hotel-chip-name">Бусад буудал</div>
+              <div class="hotel-chip-metro">Нэрийг гараар оруулна</div>
+            </div>
+            <div class="hotel-chip-check">✓</div>
+          </div>
+        </div>
+        <div class="hotel-other-wrap" id="hotelOtherWrap" style="display:none;">
+          <input type="text" id="hotel" class="hotel-other-input" placeholder="жш: Radisson Hotel, Hongkou"/>
+        </div>
       </div>
 
       <div style="margin-top:20px;">
@@ -931,6 +1064,7 @@
     <div class="btn-row">
       <button class="btn-back" onclick="goToStep(4)">← Засах</button>
       <button class="btn-next" onclick="savePlan()">Хадгалах ✓</button>
+      <button class="btn-next" style="background:#16a34a;border-color:#16a34a;" onclick="goToStep(6)">🗺 Гарын авлага →</button>
     </div>
   </div>
 
@@ -1011,6 +1145,34 @@
   </div>
 </div>
 
+<!-- ══ STEP 6: GUIDE ══ -->
+<div class="step" id="step-6">
+  <div class="card">
+    <div class="card-title">🗺 Газрын гарын авлага</div>
+    <div class="card-sub">Өдөр бүр хаана хоол идэх, кофе уух, метроны аль гарцаар явах</div>
+
+    <!-- Hotel badge -->
+    <div class="guide-hotel-badge" id="guideHotelBadge" style="display:none">
+      <div style="font-size:1.4rem">🏨</div>
+      <div class="guide-hotel-badge-text">
+        <div class="guide-hotel-badge-name" id="guideHotelName"></div>
+        <div class="guide-hotel-badge-metro" id="guideHotelMetro"></div>
+      </div>
+    </div>
+
+    <!-- Tabs: Өглөө / Өдрүүд -->
+    <div class="guide-tabs" id="guideTabs"></div>
+
+    <!-- Tab content -->
+    <div id="guideContent"></div>
+  </div>
+
+  <div class="btn-row">
+    <button class="btn-back" onclick="goToStep(5)">← Буцах</button>
+    <button class="btn-next" onclick="downloadPDF()">📄 PDF татах</button>
+  </div>
+</div>
+
 <!-- ══ FIREBASE ══ -->
 <script type="module">
 import { initializeApp } from 'https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js';
@@ -1072,6 +1234,7 @@ window.autoSave = function() {
         'dates.departure':  window._plan.departure,
         people:    window._plan.people,
         hotel:     window._plan.hotel,
+        hotelId:   window._plan.hotelId || window._selectedHotelId || 'other',
         interests: window._plan.interests,
         budget:    window._plan.budget,
         timePrefs: window._plan.timePrefs,
@@ -1096,6 +1259,8 @@ function startLiveSync(planId) {
     window._plan.departure = d.dates?.departure || '';
     window._plan.people    = d.people    || [];
     window._plan.hotel     = d.hotel     || '';
+    window._plan.hotelId   = d.hotelId   || 'other';
+    window._selectedHotelId = d.hotelId  || 'other';
     window._plan.interests = d.interests || [];
     window._plan.budget    = d.budget    || '';
     window._plan.timePrefs = d.timePrefs || {};
@@ -1316,6 +1481,7 @@ window.savePlan = async () => {
     dates:        { arrival: window._plan.arrival, departure: window._plan.departure },
     people:       window._plan.people,
     hotel:        window._plan.hotel,
+    hotelId:      window._plan.hotelId || window._selectedHotelId || 'other',
     interests:    window._plan.interests,
     budget:       window._plan.budget,
     timePrefs:    window._plan.timePrefs,
@@ -1592,6 +1758,17 @@ window._applySharedPlan = function(d) {
   const h = document.getElementById('hotel');     if (h && d.hotel) h.value = d.hotel;
   const a = document.getElementById('dateArrival');    if (a && d.dates?.arrival)   a.value = d.dates.arrival;
   const dep = document.getElementById('dateDeparture'); if (dep && d.dates?.departure) dep.value = d.dates.departure;
+  // Restore hotel chip selection
+  if (d.hotelId) {
+    window._selectedHotelId = d.hotelId;
+    window._plan.hotelId = d.hotelId;
+    const chip = document.querySelector(`.hotel-chip[data-hotel-id="${d.hotelId}"]`);
+    if (chip) {
+      document.querySelectorAll('.hotel-chip').forEach(c => c.classList.remove('selected'));
+      chip.classList.add('selected');
+      document.getElementById('hotelOtherWrap').style.display = d.hotelId === 'other' ? 'block' : 'none';
+    }
+  }
   if (window.loadSharedPlan) window.loadSharedPlan();
   else window.addEventListener('plannerReady', () => window.loadSharedPlan());
 };
@@ -1730,6 +1907,8 @@ window.removeAddedCollab = function(i) {
 
 <!-- ══ PLACES DATA — regular script so it's sync ══ -->
 <script src="./places.js"></script>
+<!-- ══ FOOD DATABASE ══ -->
+<script src="./foodDB.js"></script>
 <script>
 // Build filter buttons from CATEGORIES
 (function() {
@@ -1964,6 +2143,7 @@ window.goToStep = function(n) {
   });
   currentStep = n;
   updateSummaryBar();
+  if (n === 6) { setTimeout(() => window.buildGuide && window.buildGuide(), 50); }
   window.scrollTo({ top: 0, behavior: 'smooth' });
 };
 
@@ -2034,6 +2214,25 @@ window.selectGlobalTime = function(type, el) {
   else                  window._plan.globalEndTime   = val;
 };
 
+/* ─── HOTEL SELECTION ─── */
+window._selectedHotelId = null;
+
+window.selectHotel = function(el) {
+  document.querySelectorAll('.hotel-chip').forEach(c => c.classList.remove('selected'));
+  el.classList.add('selected');
+  const hotelId = el.dataset.hotelId;
+  window._selectedHotelId = hotelId;
+  const otherWrap = document.getElementById('hotelOtherWrap');
+  if (hotelId === 'other') {
+    otherWrap.style.display = 'block';
+    window._plan.hotel = document.getElementById('hotel')?.value || '';
+  } else {
+    otherWrap.style.display = 'none';
+    const h = (window.FOOD_DB?.hotels || []).find(h => h.id === hotelId);
+    window._plan.hotel = h ? h.nameShort : hotelId;
+  }
+};
+
 window.nextFromDates = function() {
   const arr = document.getElementById('dateArrival').value;
   const dep = document.getElementById('dateDeparture').value;
@@ -2042,9 +2241,145 @@ window.nextFromDates = function() {
   window._plan.arrival = arr;
   window._plan.departure = dep;
   window._plan.people = people;
-  window._plan.hotel = document.getElementById('hotel').value;
+  // Save hotel from chip or text input
+  if (window._selectedHotelId && window._selectedHotelId !== 'other') {
+    const h = (window.FOOD_DB?.hotels || []).find(h => h.id === window._selectedHotelId);
+    window._plan.hotel = h ? h.nameShort : window._selectedHotelId;
+    window._plan.hotelId = window._selectedHotelId;
+  } else {
+    window._plan.hotel = document.getElementById('hotel')?.value || '';
+    window._plan.hotelId = 'other';
+  }
   goToStep(2);
 };
+
+/* ─── GUIDE BUILDER ─── */
+window.buildGuide = function() {
+  const db = window.FOOD_DB;
+  if (!db) return;
+
+  const hotelId = window._plan.hotelId || window._selectedHotelId;
+  const hotel   = db.hotels.find(h => h.id === hotelId);
+  const savedIds = window._plan.savedPlaces || [];
+  const allPlaces = getPlaces();
+
+  // Hotel badge
+  const badge = document.getElementById('guideHotelBadge');
+  const hName = document.getElementById('guideHotelName');
+  const hMetro = document.getElementById('guideHotelMetro');
+  if (hotel) {
+    badge.style.display = 'flex';
+    hName.textContent  = hotel.name;
+    hMetro.textContent = hotel.metro;
+  } else { badge.style.display = 'none'; }
+
+  // Build tabs
+  const tabsEl   = document.getElementById('guideTabs');
+  const contentEl = document.getElementById('guideContent');
+  tabsEl.innerHTML = '';
+  contentEl.innerHTML = '';
+
+  // Tab 0: Morning
+  const morningBtn = document.createElement('button');
+  morningBtn.className = 'guide-tab active';
+  morningBtn.textContent = '☀️ Өглөө';
+  morningBtn.onclick = () => switchGuideTab(0);
+  tabsEl.appendChild(morningBtn);
+
+  // Morning section
+  const morningSection = document.createElement('div');
+  morningSection.className = 'guide-section active';
+  morningSection.id = 'guide-sec-0';
+  if (hotel && hotel.places.length > 0) {
+    const bfPlaces  = hotel.places.filter(p => p.meal === 'breakfast');
+    const cofPlaces = hotel.places.filter(p => p.meal === 'coffee');
+    let html = '';
+    if (bfPlaces.length) {
+      html += `<div class="guide-day-title">🥟 Өглөөний хоол</div>`;
+      html += bfPlaces.map(p => renderFoodCard(p)).join('');
+    }
+    if (cofPlaces.length) {
+      html += `<div class="guide-day-title">☕ Кофе шоп</div>`;
+      html += cofPlaces.map(p => renderFoodCard(p)).join('');
+    }
+    morningSection.innerHTML = html;
+  } else {
+    morningSection.innerHTML = `<div class="guide-empty">Буудлаа Step 1-д сонгоно уу.</div>`;
+  }
+  contentEl.appendChild(morningSection);
+
+  // Tabs per attraction (saved places)
+  const savedPlaces = savedIds.map(id => allPlaces.find(p => p.id === id)).filter(Boolean);
+  savedPlaces.forEach((place, i) => {
+    const attraction = db.getAttractionForPlace(place.id);
+    if (!attraction) return;
+
+    const tabIdx = i + 1;
+    const btn = document.createElement('button');
+    btn.className = 'guide-tab';
+    btn.textContent = place.name;
+    btn.onclick = () => switchGuideTab(tabIdx);
+    tabsEl.appendChild(btn);
+
+    const sec = document.createElement('div');
+    sec.className = 'guide-section';
+    sec.id = `guide-sec-${tabIdx}`;
+
+    const lunch   = attraction.places.filter(p => p.meal === 'lunch');
+    const coffee  = attraction.places.filter(p => p.meal === 'coffee');
+    const dinner  = attraction.places.filter(p => p.meal === 'dinner');
+
+    let html = `<div style="font-size:.78rem;color:var(--sub);margin-bottom:12px;">📍 ${attraction.name}</div>`;
+    if (lunch.length)  { html += `<div class="guide-day-title">🍜 Өдрийн хоол</div>` + lunch.map(renderFoodCard).join(''); }
+    if (coffee.length) { html += `<div class="guide-day-title">☕ Кофе / Цай</div>` + coffee.map(renderFoodCard).join(''); }
+    if (dinner.length) { html += `<div class="guide-day-title">🌙 Оройн хоол</div>` + dinner.map(renderFoodCard).join(''); }
+    sec.innerHTML = html;
+    contentEl.appendChild(sec);
+  });
+
+  if (savedPlaces.filter(p => db.getAttractionForPlace(p.id)).length === 0) {
+    const tip = document.createElement('div');
+    tip.className = 'guide-empty';
+    tip.innerHTML = 'Step 4-д газруудаа нэмсний дараа гарын авлага харагдана.';
+    contentEl.appendChild(tip);
+  }
+};
+
+window.switchGuideTab = function(idx) {
+  document.querySelectorAll('.guide-tab').forEach((btn, i) => {
+    btn.classList.toggle('active', i === idx);
+  });
+  document.querySelectorAll('.guide-section').forEach((sec, i) => {
+    sec.classList.toggle('active', i === idx);
+  });
+};
+
+function renderFoodCard(p) {
+  const mealIcon = { breakfast:'🥢', lunch:'🍜', dinner:'🌙', coffee:'☕' }[p.meal] || '🍽';
+  const menuLabel = p.menu === 'yes' ? '✓ Англи меню' : p.menu === 'photo' ? '📷 Зургийн меню' : '— Монгол меню байхгүй';
+  const menuClass = p.menu === 'yes' ? 'yes' : p.menu === 'photo' ? 'photo' : '';
+  const amapUrl = window.FOOD_DB.amapLink(p.keyword);
+  return `
+  <div class="food-card">
+    <div class="food-card-meal">${mealIcon}</div>
+    <div class="food-card-body">
+      <div class="food-card-name">${p.name}</div>
+      <div class="food-card-meta">
+        <span class="food-meta-tag">🚶 ${p.walk} мин</span>
+        <span class="food-meta-tag">¥${p.price}/хүн (~₮${Math.round(p.price*535).toLocaleString()})</span>
+        <span class="food-meta-tag">🕐 ${p.hours}</span>
+      </div>
+      <div class="food-card-meta" style="margin-top:4px">
+        <span class="food-meta-tag" style="font-size:.7rem;color:var(--sub)">🚇 ${p.metro}</span>
+      </div>
+      <div class="food-card-desc">${p.desc}</div>
+      <div class="food-card-actions">
+        <a class="btn-amap" href="${amapUrl}" target="_blank" rel="noopener">🗺 Amap</a>
+        <span class="menu-badge ${menuClass}">${menuLabel}</span>
+      </div>
+    </div>
+  </div>`;
+}
 
 /* ─── STEP 2: INTERESTS ─── */
 window.toggleChip = function(el) {
@@ -2327,14 +2662,14 @@ window.assignDay = function(placeId, day) {
 function buildCostTable(places, numPeople) {
   const days = getDayCount();
   const entryCost = places.reduce((s, p) => s + (p.cost||0), 0);
-  const metroEst = 35 * numPeople * days;
-  const foodEst  = 120 * days * numPeople;
+  const metroEst = 20 * numPeople * days;   // ¥15–25/хүн/өдөр, дундаж ¥20
+  const foodEst  = 100 * days * numPeople;  // ¥80–120/хүн/өдөр, дундаж ¥100
   const total = entryCost * numPeople + metroEst + foodEst;
 
   const rows = [
     ['Үзэмжийн хураамж', `¥${entryCost} × ${numPeople} хүн`, `¥${entryCost*numPeople}`],
-    ['Метро & тэрэг', `¥35/хүн/өдөр × ${days}өд × ${numPeople}`, `¥${metroEst}`],
-    ['Хоол (ойролцоо)', `¥120/хүн/өдөр × ${days}өд × ${numPeople}`, `¥${foodEst}`],
+    ['Метро & тэрэг', `¥20/хүн/өдөр × ${days}өд × ${numPeople}`, `¥${metroEst}`],
+    ['Хоол (ойролцоо)', `¥100/хүн/өдөр × ${days}өд × ${numPeople}`, `¥${foodEst}`],
     ['Нийт (CNY)', '', `<span class="cost-total">¥${total}</span>`],
     ['Нийт (₮)', '', `<span class="cost-total">~₮${Math.round(total*535).toLocaleString()}</span>`],
   ];
@@ -2430,7 +2765,7 @@ window.downloadPDF = function() {
   // Cost
   const entryCost = saved.reduce((s,pl)=>s+(pl.cost||0),0);
   const days = totalDays, numP = p.people.length||1;
-  const metro = 35*numP*days, food = 120*numP*days;
+  const metro = 20*numP*days, food = 100*numP*days;
   const total = entryCost*numP + metro + food;
 
   const html = `<!DOCTYPE html><html lang="mn"><head><meta charset="UTF-8">
@@ -2489,8 +2824,8 @@ window.downloadPDF = function() {
     <div class="cost-section">
       <div class="cost-title">Зардлын тооцоо</div>
       <div class="cost-row"><span>Үзэмжийн хураамж</span><span>¥${entryCost} × ${numP} = ¥${entryCost*numP}</span></div>
-      <div class="cost-row"><span>Метро & тэрэг</span><span>¥35/хүн/өдөр × ${days}өд × ${numP} = ¥${metro}</span></div>
-      <div class="cost-row"><span>Хоол (ойролцоо)</span><span>¥120/хүн/өдөр × ${days}өд × ${numP} = ¥${food}</span></div>
+      <div class="cost-row"><span>Метро & тэрэг</span><span>¥20/хүн/өдөр × ${days}өд × ${numP} = ¥${metro}</span></div>
+      <div class="cost-row"><span>Хоол (ойролцоо)</span><span>¥100/хүн/өдөр × ${days}өд × ${numP} = ¥${food}</span></div>
       <div class="cost-row"><span style="font-weight:700">Нийт</span><span class="cost-total">¥${total} · ~₮${Math.round(total*535).toLocaleString()}</span></div>
     </div>
     <div class="footer">LFS Shanghai · bileg11.github.io · lfs.shanghai1@gmail.com</div>
