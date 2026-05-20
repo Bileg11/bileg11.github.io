@@ -562,7 +562,40 @@ footer{
           <div class="wizard-step" id="step-6">
             <div class="step-question">Social холбоос <span style="font-size:14px;font-weight:400;color:var(--muted)">(заавал биш)</span></div>
             <div class="step-sub">Facebook эсвэл Instagram холбоосоо оруулбал Messenger-ээр холбогдоход хялбар болно</div>
-            <input class="wiz-input" type="text" id="b-social" placeholder="facebook.com/username (заавал биш)">
+
+            <!-- Tutorial toggle -->
+            <div class="social-tutorial-toggle" onclick="toggleSocialTutorial()">
+              <span>📖 Facebook / Instagram холбоос хэрхэн олох?</span>
+              <span id="tutArrow">▼</span>
+            </div>
+            <div class="social-tutorial" id="socialTutorial" style="display:none">
+              <div class="tut-section">
+                <div class="tut-platform">📘 Facebook холбоос олох</div>
+                <div class="tut-block">
+                  <div class="tut-method">Утасны аппаар:</div>
+                  <div class="tut-step">1. Facebook апп нээнэ → Өөрийн профайл руу орно</div>
+                  <div class="tut-step">2. <strong>···</strong> товч дарна → <strong>"Профайлын холбоос хуулах"</strong> сонгоно</div>
+                  <div class="tut-step">3. Хуулсан холбоосоо доорх талбарт буулгана</div>
+                </div>
+                <div class="tut-block">
+                  <div class="tut-method">Компьютерээр:</div>
+                  <div class="tut-step">1. facebook.com → Өөрийн нэр дарж профайл руу орно</div>
+                  <div class="tut-step">2. Хөтчийн URL мөрнөөс холбоосоо хуулна</div>
+                  <div class="tut-step">Жишээ: <code style="background:var(--bg);padding:2px 6px;border-radius:5px;font-size:12px">facebook.com/username</code></div>
+                </div>
+              </div>
+              <div class="tut-section">
+                <div class="tut-platform">📸 Instagram холбоос олох</div>
+                <div class="tut-block">
+                  <div class="tut-method">Утасны аппаар:</div>
+                  <div class="tut-step">1. Instagram апп нээнэ → Профайл таб руу орно (доод баруун)</div>
+                  <div class="tut-step">2. Хэрэглэгчийн нэрээ (<strong>@username</strong>) тэмдэглэж авна</div>
+                  <div class="tut-step">Жишээ: <code style="background:var(--bg);padding:2px 6px;border-radius:5px;font-size:12px">instagram.com/username</code></div>
+                </div>
+              </div>
+            </div>
+
+            <input class="wiz-input" type="text" id="b-social" placeholder="facebook.com/username эсвэл instagram.com/username">
             <div class="wiz-nav">
               <button class="btn-back" onclick="prevStep()">← Буцах</button>
               <button class="btn-skip" onclick="skipStep()">Алгасах →</button>
@@ -881,7 +914,7 @@ function selectSource(el) {
   if (fbWrap) fbWrap.style.display = (wizardData.source === 'Facebook') ? 'block' : 'none';
 }
 
-function toggleTutorial() {
+function toggleSocialTutorial() {
   const tut = document.getElementById('socialTutorial');
   const arrow = document.getElementById('tutArrow');
   const open = tut.style.display !== 'none';
