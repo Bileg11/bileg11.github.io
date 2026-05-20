@@ -4,3 +4,4 @@ functions/node_modules/
 .env.local
 *.log
 .DS_Store
+pdf/codes.txt
