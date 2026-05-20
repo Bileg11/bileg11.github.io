@@ -1246,6 +1246,25 @@ ${profileLine}`;
       });
     } catch(tgErr) { console.warn('Telegram:', tgErr); }
 
+    // ── Notion Захиалгын хуваарь (Make.com webhook-оор) ──
+    try {
+      const MAKE_WEBHOOK = 'https://hook.us2.make.com/9g9h5g4md1i55pkk9k9o615q0gwvsiih';
+      await fetch(MAKE_WEBHOOK, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          name:    d.name,
+          phone:   d.phone,
+          email:   d.email,
+          service: d.service,
+          start:   d.start,
+          days:    parseInt(d.days)   || 1,
+          people:  parseInt(d.people) || 1,
+          note:    d.note || ''
+        })
+      });
+    } catch(notionErr) { console.warn('Notion sync:', notionErr); }
+
     await sendConfirmEmail(d.email, d.name, d);
 
     // Send admin notification email
