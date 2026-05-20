@@ -1,0 +1,775 @@
+<!DOCTYPE html>
+<html lang="mn">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Шанхайн Гарын Авлага 2026 — LFS Shanghai</title>
+<link rel="icon" type="image/svg+xml" href="/favicon.svg">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+:root{
+  --blue:#0071e3;--blue2:#004aad;--green:#34c759;--orange:#ff6b35;--red:#e8392a;
+  --gold:#b8860b;--gold-bg:#fffbea;
+  --text:#1d1d1f;--muted:#6e6e73;--bg:#fff;--bg2:#f5f5f7;
+  --border:rgba(0,0,0,.08);--radius:16px;--shadow:0 4px 24px rgba(0,0,0,.1);
+}
+body{font-family:'Inter',system-ui,sans-serif;background:var(--bg);color:var(--text);line-height:1.6;-webkit-font-smoothing:antialiased}
+
+/* NAV */
+.nav{position:sticky;top:0;z-index:100;height:52px;display:flex;align-items:center;justify-content:space-between;padding:0 28px;background:rgba(255,255,255,.92);backdrop-filter:blur(20px);border-bottom:1px solid var(--border)}
+.nav-logo{font-size:17px;font-weight:700;color:var(--text);text-decoration:none;letter-spacing:-.02em}
+.nav-logo span{color:var(--blue)}
+.nav-cta{padding:8px 20px;background:var(--blue);color:#fff;border-radius:20px;font-size:13px;font-weight:600;text-decoration:none;transition:.2s}
+.nav-cta:hover{opacity:.88}
+
+/* HERO */
+.hero{position:relative;min-height:520px;display:flex;align-items:center;overflow:hidden}
+.hero-bg{position:absolute;inset:0;background-image:url('/img/health/Bund2.jpg');background-size:cover;background-position:center;filter:brightness(.45)}
+.hero-content{position:relative;z-index:2;max-width:680px;margin:0 auto;padding:80px 28px;text-align:center;color:#fff}
+.hero-badge{display:inline-block;background:rgba(255,255,255,.15);border:1px solid rgba(255,255,255,.3);padding:6px 18px;border-radius:20px;font-size:12px;font-weight:600;letter-spacing:.08em;text-transform:uppercase;margin-bottom:22px}
+.hero h1{font-size:clamp(32px,5vw,52px);font-weight:800;letter-spacing:-.04em;line-height:1.1;margin-bottom:18px}
+.hero h1 span{color:#60b4ff}
+.hero-sub{font-size:16px;color:rgba(255,255,255,.8);line-height:1.7;max-width:500px;margin:0 auto 32px}
+.hero-btns{display:flex;gap:12px;justify-content:center;flex-wrap:wrap}
+.btn-primary{padding:14px 28px;background:var(--blue);color:#fff;border-radius:28px;font-weight:700;font-size:15px;text-decoration:none;display:inline-flex;align-items:center;gap:8px;transition:.2s}
+.btn-primary:hover{background:#005bbf}
+.btn-outline{padding:14px 28px;background:rgba(255,255,255,.15);border:1px solid rgba(255,255,255,.4);color:#fff;border-radius:28px;font-weight:600;font-size:15px;text-decoration:none;transition:.2s}
+.btn-outline:hover{background:rgba(255,255,255,.25)}
+
+/* INTRO STRIP */
+.intro-strip{background:var(--blue2);color:#fff;padding:20px 28px;text-align:center;font-size:14px;line-height:1.7}
+
+/* CHAPTER */
+.chapter{max-width:820px;margin:0 auto;padding:60px 28px}
+.chapter-num{font-size:11px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--blue);margin-bottom:8px}
+.chapter-title{font-size:clamp(24px,4vw,34px);font-weight:800;letter-spacing:-.03em;margin-bottom:14px}
+.chapter-sub{font-size:15px;color:var(--muted);line-height:1.7;margin-bottom:36px;max-width:600px}
+
+/* CHAPTER BG COLORS */
+.bg-white{background:#fff}
+.bg-gray{background:var(--bg2)}
+.bg-blue{background:linear-gradient(135deg,#001f5e 0%,#003a9e 100%);color:#fff}
+.bg-blue .chapter-num{color:#60b4ff}
+.bg-blue .chapter-title{color:#fff}
+.bg-blue .chapter-sub{color:rgba(255,255,255,.75)}
+
+/* HERO IMAGE SECTION */
+.img-full{width:100%;height:280px;object-fit:cover;display:block}
+.img-half{width:100%;height:200px;object-fit:cover;border-radius:12px}
+
+/* INFO CARDS */
+.cards-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(220px,1fr));gap:16px;margin-top:8px}
+.card{background:#fff;border-radius:var(--radius);padding:22px;border:1px solid var(--border);box-shadow:var(--shadow)}
+.card-icon{font-size:28px;margin-bottom:12px}
+.card-title{font-size:15px;font-weight:700;margin-bottom:6px}
+.card-body{font-size:13px;color:var(--muted);line-height:1.7}
+.card-body strong{color:var(--text)}
+
+/* on dark bg */
+.bg-blue .card{background:rgba(255,255,255,.1);border-color:rgba(255,255,255,.15)}
+.bg-blue .card-title{color:#fff}
+.bg-blue .card-body{color:rgba(255,255,255,.75)}
+.bg-blue .card-body strong{color:#fff}
+
+/* HIGHLIGHT BOX */
+.highlight{background:var(--gold-bg);border-left:4px solid var(--gold);border-radius:12px;padding:20px 24px;margin:20px 0;font-size:14px;line-height:1.8}
+.highlight strong{color:#7a5c00}
+.alert{background:#fff0f0;border-left:4px solid var(--red);border-radius:12px;padding:18px 22px;margin:20px 0;font-size:13px;line-height:1.8;color:#5a0000}
+.tip-green{background:#f0fff4;border-left:4px solid var(--green);border-radius:12px;padding:18px 22px;margin:20px 0;font-size:13px;line-height:1.8}
+
+/* TWO COL */
+.two-col{display:grid;grid-template-columns:1fr 1fr;gap:28px;align-items:start}
+@media(max-width:640px){.two-col{grid-template-columns:1fr}}
+
+/* PRICE TABLE */
+.price-table{width:100%;border-collapse:collapse;margin:16px 0;font-size:13px}
+.price-table th{background:var(--blue);color:#fff;padding:10px 14px;text-align:left;font-weight:600}
+.price-table th:first-child{border-radius:8px 0 0 0}
+.price-table th:last-child{border-radius:0 8px 0 0}
+.price-table td{padding:10px 14px;border-bottom:1px solid var(--border)}
+.price-table tr:last-child td{border-bottom:none}
+.price-table tr:nth-child(even) td{background:var(--bg2)}
+
+/* FOOD GRID */
+.food-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(180px,1fr));gap:14px;margin-top:8px}
+.food-card{border-radius:12px;overflow:hidden;border:1px solid var(--border);background:#fff}
+.food-img{width:100%;height:120px;object-fit:cover}
+.food-info{padding:12px}
+.food-num{font-size:10px;font-weight:700;letter-spacing:.06em;text-transform:uppercase;color:var(--blue)}
+.food-name{font-size:14px;font-weight:700;margin:2px 0 4px}
+.food-desc{font-size:12px;color:var(--muted);line-height:1.5}
+
+/* CHECKLIST */
+.checklist{list-style:none;margin:16px 0}
+.checklist li{display:flex;align-items:flex-start;gap:10px;padding:8px 0;border-bottom:1px solid var(--border);font-size:14px}
+.checklist li:last-child{border-bottom:none}
+.checklist li::before{content:'☐';font-size:16px;color:var(--blue);flex-shrink:0;margin-top:1px}
+
+/* PHRASE TABLE */
+.phrase-table{width:100%;border-collapse:collapse;font-size:13px;margin:16px 0}
+.phrase-table td{padding:10px 14px;border-bottom:1px solid var(--border);vertical-align:top}
+.phrase-table tr:first-child td{font-weight:700;background:var(--bg2)}
+.phrase-table td:nth-child(2){color:var(--blue);font-weight:600}
+.phrase-table td:nth-child(3){color:var(--muted)}
+
+/* CTA SECTION */
+.cta-section{background:linear-gradient(135deg,#001f5e 0%,#0071e3 100%);color:#fff;padding:80px 28px}
+.cta-inner{max-width:820px;margin:0 auto}
+.cta-label{font-size:11px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:#60b4ff;margin-bottom:12px}
+.cta-title{font-size:clamp(28px,4vw,42px);font-weight:800;letter-spacing:-.04em;line-height:1.15;margin-bottom:16px}
+.cta-sub{font-size:16px;color:rgba(255,255,255,.8);line-height:1.7;margin-bottom:40px;max-width:580px}
+.services-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(200px,1fr));gap:16px;margin-bottom:40px}
+.service-card{background:rgba(255,255,255,.1);border:1px solid rgba(255,255,255,.2);border-radius:14px;padding:22px;transition:.2s}
+.service-card:hover{background:rgba(255,255,255,.18)}
+.service-icon{font-size:26px;margin-bottom:10px}
+.service-name{font-size:15px;font-weight:700;color:#fff;margin-bottom:6px}
+.service-price{font-size:13px;color:#60b4ff;font-weight:600;margin-bottom:6px}
+.service-desc{font-size:12px;color:rgba(255,255,255,.7);line-height:1.6}
+.cta-btns{display:flex;gap:14px;flex-wrap:wrap}
+.btn-white{padding:15px 32px;background:#fff;color:var(--blue);border-radius:28px;font-weight:700;font-size:15px;text-decoration:none;display:inline-flex;align-items:center;gap:8px;transition:.2s}
+.btn-white:hover{background:#e5e5ea}
+.btn-ghost{padding:15px 32px;background:rgba(255,255,255,.12);border:1px solid rgba(255,255,255,.3);color:#fff;border-radius:28px;font-weight:600;font-size:15px;text-decoration:none;display:inline-flex;align-items:center;gap:8px;transition:.2s}
+.btn-ghost:hover{background:rgba(255,255,255,.22)}
+
+/* FOOTER */
+footer{background:#1d1d1f;color:rgba(255,255,255,.6);padding:40px 28px;text-align:center;font-size:13px}
+footer a{color:rgba(255,255,255,.6);text-decoration:none}
+footer a:hover{color:#fff}
+.footer-logo{font-size:18px;font-weight:700;color:#fff;margin-bottom:12px}
+.footer-logo span{color:var(--blue)}
+
+/* DIVIDER */
+.divider{height:1px;background:var(--border);max-width:820px;margin:0 auto}
+
+@media(max-width:600px){
+  .chapter{padding:44px 20px}
+  .cards-grid{grid-template-columns:1fr}
+  .food-grid{grid-template-columns:1fr 1fr}
+  .services-grid{grid-template-columns:1fr 1fr}
+}
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav class="nav">
+  <a href="/" class="nav-logo">LFS <span>Shanghai</span></a>
+  <a href="/booking/" class="nav-cta">Захиалах →</a>
+</nav>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="hero-bg"></div>
+  <div class="hero-content">
+    <div class="hero-badge">✈️ Монгол аялагчдад зориулсан</div>
+    <h1>Шанхайн Гарын <span>Авлага</span> 2026</h1>
+    <p class="hero-sub">Бэлтгэл, тээвэр, мөнгө, хоол, аюулгүй байдал — аяллын бүх мэдээлэл нэг дор.</p>
+    <div class="hero-btns">
+      <a href="/booking/" class="btn-primary">🗓️ Захиалга өгөх</a>
+      <a href="#services" class="btn-outline">Үйлчилгээ үзэх</a>
+    </div>
+  </div>
+</section>
+
+<div class="intro-strip">
+  Энэхүү гарын авлага нь Шанхайд анх удаа зорчих Монгол аялагчдад зориулсан практик мэдээлэл, бэлтгэл, тээвэр, төлбөр, байр, хоол, аюулгүй байдал, хэрэгтэй хаяг, холбоо барих мэдээллийг нэг дор цэгцэлсэн болно.
+</div>
+
+<!-- 01 ВИЗ -->
+<section class="bg-white">
+  <div class="chapter">
+    <div class="chapter-num">01 — Нэвтрэх</div>
+    <h2 class="chapter-title">🛂 Виз & Гааль</h2>
+    <p class="chapter-sub">Монгол иргэд БНХАУ руу 30 хоног хүртэл визгүй зорчих боломжтой. Гэхдээ зорчих зорилго, паспортын хүчинтэй хугацаа, хил дээрх шаардлагыг явахаасаа өмнө дахин шалгаарай.</p>
+
+    <div class="highlight">
+      <strong>⚠️ Паспортоо үргэлж авч яваарай</strong> — аялалын туршид хэрэгтэй байна. Паспортынхаа хуулбарыг тусад нь хадгалах нь зөв.
+    </div>
+
+    <div class="cards-grid" style="margin-top:28px">
+      <div class="card">
+        <div class="card-icon">💰</div>
+        <div class="card-title">Бэлэн мөнгө</div>
+        <div class="card-body">RMB 20,000 (≈10,700,000₮) эсвэл USD 5,000 ба түүнээс дээш бол гааль дээр мэдүүлнэ.</div>
+      </div>
+      <div class="card">
+        <div class="card-icon">🚬</div>
+        <div class="card-title">Тамхи</div>
+        <div class="card-body">400 ширхэг ба түүнээс дээш авч явах бол гааль дээр мэдүүлнэ.</div>
+      </div>
+      <div class="card">
+        <div class="card-icon">🍾</div>
+        <div class="card-title">Архи</div>
+        <div class="card-body">12%-иас дээш спиртийн агууламжтай 1,500 мл ба түүнээс дээш авч явах бол мэдүүлнэ.</div>
+      </div>
+      <div class="card">
+        <div class="card-icon">👜</div>
+        <div class="card-title">Дуурайлган хийсэн бараа</div>
+        <div class="card-body">Монголын гааль дамнуулалтыг таслан зогсоодог. Худалдан авахдаа болгоомжтой байх хэрэгтэй.</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<!-- 02 НИСЭХ БУУДАЛ -->
+<section class="bg-gray">
+  <div class="chapter">
+    <div class="chapter-num">02 — Тээвэр</div>
+    <h2 class="chapter-title">✈️ Нисэх буудлаас хот руу</h2>
+    <p class="chapter-sub">Шанхайд Пудун (PVG) болон Хунцяо (SHA) гэсэн 2 олон улсын нисэх буудал бий. Монголоос ирэх нислэгүүд ихэвчлэн Пудунд буудаг.</p>
+
+    <table class="price-table">
+      <tr>
+        <th>Тээврийн хэрэгсэл</th>
+        <th>Хугацаа</th>
+        <th>Үнэ</th>
+        <th>Тайлбар</th>
+      </tr>
+      <tr>
+        <td><strong>Maglev</strong></td>
+        <td>~8 мин</td>
+        <td>50¥ (≈26,750₮)</td>
+        <td>Longyang Road хүртэл, тэндээс Line 2-т шилжинэ</td>
+      </tr>
+      <tr>
+        <td><strong>Метро Line 2</strong></td>
+        <td>60–70 мин</td>
+        <td>8¥ (≈4,280₮)</td>
+        <td>Хямд, Nanjing Road хүртэл шууд</td>
+      </tr>
+      <tr>
+        <td><strong>Такси / Didi</strong></td>
+        <td>40–60 мин</td>
+        <td>150–200¥ (≈80,250–107,000₮)</td>
+        <td>Зочид буудалд шууд хүргэнэ</td>
+      </tr>
+    </table>
+
+    <div class="tip-green">
+      💡 <strong>Зөвлөгөө:</strong> Буудлын хаягийг Хятад хэлээр хадгалж явах нь такси болон Didi-д их тустай. Жолоочид Англи хэл мэддэггүй тохиолдол байна.
+    </div>
+  </div>
+</section>
+
+<img src="/img/health/pexels-bingqian-li-230971044-36064465.jpg" alt="Shanghai metro" class="img-full">
+
+<!-- 03 МӨНГӨ -->
+<section class="bg-white">
+  <div class="chapter">
+    <div class="chapter-num">03 — Мөнгө</div>
+    <h2 class="chapter-title">💳 Төлбөр & Мөнгө</h2>
+    <p class="chapter-sub">Шанхайд цахим төлбөр маш өргөн хэрэглэгддэг. Alipay болон Weixin Pay хамгийн түгээмэл. <strong>1 юань ≈ 535₮</strong></p>
+
+    <div class="two-col">
+      <div>
+        <div class="card" style="margin-bottom:16px">
+          <div class="card-icon">📱</div>
+          <div class="card-title">Alipay тохируулах</div>
+          <div class="card-body">
+            1. App Store / Google Play-с татна<br>
+            2. Гадаадын дугаараар бүртгүүлнэ<br>
+            3. Гадаадын банкны карт холбоно<br>
+            4. Явахаасаа өмнө апп-аа шинэчилнэ
+          </div>
+        </div>
+        <div class="card">
+          <div class="card-icon">💚</div>
+          <div class="card-title">Weixin Pay (WeChat)</div>
+          <div class="card-body">
+            1. WeChat татаж авна<br>
+            2. Дугаараар бүртгүүлнэ<br>
+            3. "Pay" хэсэгт карт холбоно<br>
+            4. Шинэчлэлийг шалгана
+          </div>
+        </div>
+      </div>
+      <div>
+        <div class="highlight">
+          <strong>Анхаарах зүйл</strong><br><br>
+          Гадаад карт холбох боломж зарим нөхцөлд байдаг тул явахаасаа өмнө апп-ын хамгийн сүүлийн зааврыг нягтална уу.<br><br>
+          <strong>Бага хэмжээний бэлэн юань</strong> авч явах нь мөн хэрэгтэй — зарим жижиг газарт зөвхөн бэлэн мөнгө хүлээн авна.<br><br>
+          Шанхайн банкуудаас (ICBC, Bank of China) паспортоор юань авч болно.
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<!-- 04 ИНТЕРНЕТ -->
+<section class="bg-gray">
+  <div class="chapter">
+    <div class="chapter-num">04 — Интернет</div>
+    <h2 class="chapter-title">📱 Интернет & Холбоо</h2>
+    <p class="chapter-sub">Хятадад зарим олон улсын апп, вебсайт хязгаарлалттай байдаг. Тиймээс хэрэгтэй апп, газрын зургийн офлайн хувилбар, холбоо барих аргаа урьдчилан бэлдэх нь зөв.</p>
+
+    <div class="cards-grid">
+      <div class="card">
+        <div class="card-icon">🌐</div>
+        <div class="card-title">eSIM</div>
+        <div class="card-body">Монголд байхдаа Airalo зэрэг платформоос Хятадын eSIM авна.<br><br><strong>1GB ≈ $4.5 (≈15,750₮)</strong><br><strong>3GB ≈ $9 (≈31,500₮)</strong><br><strong>5GB ≈ $13 (≈45,500₮)</strong><br><br>Үйлчилгээний нөхцөл постачагч бүрээр ялгаатай тул худалдан авахаасаа өмнө шалгаарай.</div>
+      </div>
+      <div class="card">
+        <div class="card-icon">🔒</div>
+        <div class="card-title">VPN</div>
+        <div class="card-body">Хэрэгтэй бол <strong>Монголд байхдаа</strong> урьдчилан суулгаж явах хэрэгтэй. Хятадад очсоны дараа татаж авах боломжгүй байж болно.</div>
+      </div>
+    </div>
+
+    <div style="margin-top:28px">
+      <div style="font-size:14px;font-weight:700;margin-bottom:14px">📲 Монголд байхдаа татаж авах апп-ууд:</div>
+      <div class="cards-grid">
+        <div class="card" style="padding:16px">
+          <div style="font-size:20px;margin-bottom:6px">🚖</div>
+          <div class="card-title" style="font-size:13px">Didi</div>
+          <div class="card-body">Такси захиалах апп</div>
+        </div>
+        <div class="card" style="padding:16px">
+          <div style="font-size:20px;margin-bottom:6px">💙</div>
+          <div class="card-title" style="font-size:13px">Alipay</div>
+          <div class="card-body">Төлбөр хийх</div>
+        </div>
+        <div class="card" style="padding:16px">
+          <div style="font-size:20px;margin-bottom:6px">💚</div>
+          <div class="card-title" style="font-size:13px">WeChat</div>
+          <div class="card-body">Харилцаа, төлбөр</div>
+        </div>
+        <div class="card" style="padding:16px">
+          <div style="font-size:20px;margin-bottom:6px">🗺️</div>
+          <div class="card-title" style="font-size:13px">Baidu Maps</div>
+          <div class="card-body">Газрын зураг (офлайн)</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<img src="/img/health/pexels-tkirkgoz-15278918.jpg" alt="Shanghai night" class="img-full">
+
+<!-- 05 МЕТРО -->
+<section class="bg-white">
+  <div class="chapter">
+    <div class="chapter-num">05 — Хот дотор</div>
+    <h2 class="chapter-title">🚇 Метро & Тээвэр</h2>
+    <p class="chapter-sub">Шанхайн метро хотын ямар ч цэгт хүргэдэг өргөн тогтолцоо. Буудлын нэр, очих газрын хаягаа Хятад хэлээр хадгалж явах нь метро, такси, буудалд их тустай.</p>
+
+    <table class="price-table">
+      <tr>
+        <th>Шугам</th>
+        <th>Чиглэл</th>
+      </tr>
+      <tr>
+        <td><strong>Line 2</strong></td>
+        <td>Нисэх буудал ↔ Nanjing Road (хот төв)</td>
+      </tr>
+      <tr>
+        <td><strong>Line 1</strong></td>
+        <td>Хот хөндлөн гарах</td>
+      </tr>
+      <tr>
+        <td><strong>Line 10</strong></td>
+        <td>Yu Yuan, Xintiandi, French Concession</td>
+      </tr>
+    </table>
+
+    <div class="tip-green" style="margin-top:20px">
+      💳 <strong>Метро карт:</strong> Буудлын касст Transportation Card авна. Барьцаа 20¥ (≈10,700₮) + цэнэглэлт. Метро, автобус, зарим таксид хэрэглэнэ.<br>
+      📱 <strong>QR төлбөр:</strong> Шанхайн метрод Alipay / Weixin Pay QR-оор орох боломж бий.
+    </div>
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<!-- 06 БАЙРШИЛ -->
+<section class="bg-gray">
+  <div class="chapter">
+    <div class="chapter-num">06 — Байршил</div>
+    <h2 class="chapter-title">🏨 Хаана байрлах</h2>
+    <p class="chapter-sub">Шанхайн дүүрэг бүр өөрийн гэсэн онцлогтой. Зорилгоосоо хамааран байршлаа сонгоорой.</p>
+
+    <table class="price-table">
+      <tr>
+        <th>Дүүрэг</th>
+        <th>Онцлог</th>
+        <th>Үнэ / шөнө</th>
+      </tr>
+      <tr>
+        <td><strong>Хуанпу</strong> (The Bund)</td>
+        <td>Түүхэн төв, Bund ойролцоо</td>
+        <td>32,000–160,000₮</td>
+      </tr>
+      <tr>
+        <td><strong>Жинъань</strong> (Jing'an)</td>
+        <td>Хотын төв, метро ойр. Анхны аяллд</td>
+        <td>26,750–107,000₮</td>
+      </tr>
+      <tr>
+        <td><strong>Сюйхуэй</strong> (French Concession)</td>
+        <td>Тайвширсан орчин, кафе, гудамж</td>
+        <td>21,400–96,300₮</td>
+      </tr>
+      <tr>
+        <td><strong>Пудун</strong> (Lujiazui)</td>
+        <td>Skyline, орчин үеийн барилгууд</td>
+        <td>42,800–267,500₮</td>
+      </tr>
+    </table>
+
+    <div class="tip-green">
+      🏨 Зочид буудал захиалахдаа <strong>Trip.com</strong> ашиглаарай — Монгол карт хүлээн авдаг, үнэгүй цуцлалттай сонголтууд олон байна. → <strong>lfsshanghai.com/tips</strong>
+    </div>
+  </div>
+</section>
+
+<!-- 07 ХООЛ -->
+<section class="bg-white">
+  <div class="chapter">
+    <div class="chapter-num">07 — Хоол</div>
+    <h2 class="chapter-title">🍜 Заавал амтлах хоолнууд</h2>
+    <p class="chapter-sub">Шанхайн хоол нь Хятадын хоолны хамгийн олон янз, боловсронгуй хэлбэрийн нэг.</p>
+
+    <div class="food-grid">
+      <div class="food-card">
+        <img src="/img/health/pexels-christiana-dj-2160372921-36675533.jpg" alt="food" class="food-img">
+        <div class="food-info">
+          <div class="food-num">01</div>
+          <div class="food-name">Xiaolongbao 小笼包</div>
+          <div class="food-desc">Уурын боов, дотор нь шөл. Хазахаасаа өмнө болгоомжтой — маш халуун.</div>
+        </div>
+      </div>
+      <div class="food-card">
+        <img src="/img/health/pexels-olivia-cai-2152171456-32062049.jpg" alt="food" class="food-img">
+        <div class="food-info">
+          <div class="food-num">02</div>
+          <div class="food-name">Shengjianbao 生煎包</div>
+          <div class="food-desc">Доороос шарсан боов. Yang's дэлгүүр алдартай.</div>
+        </div>
+      </div>
+      <div class="food-card">
+        <img src="/img/health/pexels-keeper-32467111.jpg" alt="food" class="food-img">
+        <div class="food-info">
+          <div class="food-num">03</div>
+          <div class="food-name">Hongshao Rou 红烧肉</div>
+          <div class="food-desc">Улаанаар жигнэсэн гахайн мах. Шанхайн уламжлалт хоол.</div>
+        </div>
+      </div>
+      <div class="food-card">
+        <img src="/img/health/pexels-nazmiazmir-33826186.jpg" alt="food" class="food-img">
+        <div class="food-info">
+          <div class="food-num">04</div>
+          <div class="food-name">Scallion Noodles 葱油拌面</div>
+          <div class="food-desc">Сонгины тосоор хийсэн гоймон. Энгийн, онцгой амттай.</div>
+        </div>
+      </div>
+      <div class="food-card">
+        <img src="/img/health/pexels-danielreynaga-337914704-35521663.jpg" alt="food" class="food-img" onerror="this.src='/img/health/pexels-daniel-reynaga-337914704-35521663.jpg'">
+        <div class="food-info">
+          <div class="food-num">05</div>
+          <div class="food-name">Wonton Soup 馄饨</div>
+          <div class="food-desc">Шанхайн өөрийн гэсэн дүүрэгтэй гүнтэй боов.</div>
+        </div>
+      </div>
+      <div class="food-card">
+        <img src="/img/health/pexels-daciana-cristina-visan-2149801141-35049458.jpg" alt="food" class="food-img">
+        <div class="food-info">
+          <div class="food-num">06</div>
+          <div class="food-name">Hairy Crab 大闸蟹</div>
+          <div class="food-desc">Намрын улиралд (9–11 сар) авах далайн хоол.</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="highlight" style="margin-top:24px">
+      🍽️ <strong>Хямд идэх газрууд:</strong> Yunnan South Road (хоолны гудамж), Chenghuang Miao (хуучин хотын зах), Jiashan Market (орон нутгийн амттан)
+    </div>
+  </div>
+</section>
+
+<img src="/img/health/pexels-brunafisantos-35132188.jpg" alt="Shanghai food street" class="img-full">
+
+<!-- 08 ШОППИНГ -->
+<section class="bg-gray">
+  <div class="chapter">
+    <div class="chapter-num">08 — Шоппинг</div>
+    <h2 class="chapter-title">🛍️ Шоппингийн газрууд</h2>
+
+    <div class="cards-grid">
+      <div class="card">
+        <div class="card-icon">🏪</div>
+        <div class="card-title">Qipu Road 七浦路</div>
+        <div class="card-body">Хэдэн мянган жижиг дэлгүүр нэг дор. Хувцас, гутал, цүнх.<br><br><strong>Метро:</strong> Line 12, Tiantong Road<br><strong>Цаг:</strong> 09:00–18:00</div>
+      </div>
+      <div class="card">
+        <div class="card-icon">🚶</div>
+        <div class="card-title">Nanjing Road 南京路</div>
+        <div class="card-body">6 км урт пешеходийн гудамж. Zara, H&M, Uniqlo, Nike, Adidas.<br><br><strong>Метро:</strong> Line 2, Nanjing East Road<br><strong>Цаг:</strong> 22:00 хүртэл</div>
+      </div>
+      <div class="card">
+        <div class="card-icon">✨</div>
+        <div class="card-title">Xintiandi</div>
+        <div class="card-body">Ресторан, дизайнерын дэлгүүр. Гэрэл зурагт тааламжтай орчин.</div>
+      </div>
+      <div class="card">
+        <div class="card-icon">💎</div>
+        <div class="card-title">IAPM / Réel Mall</div>
+        <div class="card-body">Олон улсын болон люкс брэндийн жинхэнэ дэлгүүрүүд.</div>
+      </div>
+    </div>
+
+    <div class="alert" style="margin-top:20px">
+      ⚠️ Хятадад брэндийн дуурайлган хийсэн бараа элбэг байдаг. Монголын гааль таслан зогсоодог тул худалдан авахдаа болгоомжтой байх хэрэгтэй.
+    </div>
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<!-- 09 ҮЗМЭР -->
+<section class="bg-white">
+  <div class="chapter">
+    <div class="chapter-num">09 — Үзвэр</div>
+    <h2 class="chapter-title">🏛️ Заавал үзэх газрууд</h2>
+
+    <table class="price-table">
+      <tr>
+        <th>Газар</th>
+        <th>Үнэ</th>
+        <th>Тайлбар</th>
+      </tr>
+      <tr>
+        <td><strong>The Bund 外滩</strong></td>
+        <td>Үнэгүй</td>
+        <td>Шанхайн эрэг, шөнийн гэрэлтүүлэг</td>
+      </tr>
+      <tr>
+        <td><strong>Yu Yuan Garden 豫园</strong></td>
+        <td>30¥ (≈16,050₮)</td>
+        <td>400 жилийн уламжлалт цэцэрлэг. Урьдчилан захиалах зүйтэй.</td>
+      </tr>
+      <tr>
+        <td><strong>Shanghai Tower 上海中心</strong></td>
+        <td>180¥ (≈96,300₮)</td>
+        <td>Шанхайн хамгийн өндөр барилга. Дэлхийн хамгийн өндрийн нэг.</td>
+      </tr>
+      <tr>
+        <td><strong>Shanghai Museum</strong></td>
+        <td>Үнэгүй</td>
+        <td>People's Square салбар reservation шаардахгүй болсон (2025.9-аас). Тусгай үзэсгэлэн нөхцөл өөр байж болно.</td>
+      </tr>
+      <tr>
+        <td><strong>French Concession</strong></td>
+        <td>Үнэгүй</td>
+        <td>Хуучин Францын хороолол, кафе, гудамж</td>
+      </tr>
+      <tr>
+        <td><strong>Zhujiajiao</strong></td>
+        <td>60–100¥ (≈32,100–53,500₮)</td>
+        <td>Усан хот. Шанхайгаас ~1 цаг.</td>
+      </tr>
+      <tr>
+        <td><strong>Tianzifang</strong></td>
+        <td>Үнэгүй</td>
+        <td>Урлагийн дүүрэг, гар урлал, кафе</td>
+      </tr>
+      <tr>
+        <td><strong>Disney Resort</strong></td>
+        <td>475–719¥ (≈254,125–384,665₮)</td>
+        <td>Азийн томоохон Disney. Тасалбар урьдчилан авах шаардлагатай.</td>
+      </tr>
+      <tr>
+        <td><strong>Jade Buddha Temple</strong></td>
+        <td>50¥ (≈26,750₮)</td>
+        <td>100 жилийн түүхтэй Буддын сүм</td>
+      </tr>
+    </table>
+  </div>
+</section>
+
+<img src="/img/health/Bund1.jpg" alt="The Bund Shanghai" class="img-full">
+
+<!-- 10 АЮУЛГҮЙ БАЙДАЛ -->
+<section class="bg-gray">
+  <div class="chapter">
+    <div class="chapter-num">10 — Аюулгүй байдал</div>
+    <h2 class="chapter-title">🔒 Аюулгүй байдал</h2>
+    <p class="chapter-sub">Шанхай нь ерөнхийдөө аялахад аюулгүй хотод тооцогддог ч их хүнтэй газруудад болгоомжтой байх хэрэгтэй.</p>
+
+    <div class="cards-grid">
+      <div class="card">
+        <div class="card-icon">👜</div>
+        <div class="card-title">Халааснаас хулгай</div>
+        <div class="card-body">Nanjing Road, Yu Yuan зэрэг нилэнх хурдтай газарт утас, түрийвчийг урд халааснаасаа хийж явах нь зөв.</div>
+      </div>
+      <div class="card">
+        <div class="card-icon">🚖</div>
+        <div class="card-title">Такси</div>
+        <div class="card-body">Зөвхөн <strong>Didi апп</strong>-аар захиалах. Хуурамч такси байдаг тул хаалганы дэргэдээс суухаас зайлсхийх.</div>
+      </div>
+      <div class="card">
+        <div class="card-icon">🍵</div>
+        <div class="card-title">"Tea ceremony" урилга</div>
+        <div class="card-body">Танихгүй хүн чай уухыг уривал болгоомжил — маш өндөр үнэ нэхэмжлэх тохиолдол байдаг.</div>
+      </div>
+      <div class="card">
+        <div class="card-icon">🏨</div>
+        <div class="card-title">Зочид буудал</div>
+        <div class="card-body">Trip.com, Booking.com зэрэг итгэлтэй платформоос л захиалах нь зөв.</div>
+      </div>
+    </div>
+
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-top:20px">
+      <div class="highlight">
+        <strong>📞 Яаралтай утас (Шанхай)</strong><br><br>
+        Цагдаа: <strong>110</strong><br>
+        Яаралтай тусламж: <strong>120</strong><br>
+        Гал унтраах: <strong>119</strong>
+      </div>
+      <div class="highlight">
+        <strong>🇲🇳 Консулын газар</strong><br><br>
+        Монгол Улсаас БНХАУ-ын Шанхай хотод суугаа Ерөнхий консулын газар<br><br>
+        📞 <strong>+86 21 6275 9947</strong><br>
+        🌐 shanghai.consul.mn
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- 11 ХЭЛНИЙ ТОВЧ -->
+<section class="bg-white">
+  <div class="chapter">
+    <div class="chapter-num">11 — Хэл</div>
+    <h2 class="chapter-title">🗣️ Хэрэгтэй Хятад үгс</h2>
+
+    <table class="phrase-table">
+      <tr>
+        <td>Монгол</td>
+        <td>Хятад дуудлага</td>
+        <td>Бичиг</td>
+      </tr>
+      <tr><td>Сайн байна уу</td><td>Нихао</td><td>你好</td></tr>
+      <tr><td>Баярлалаа</td><td>Сесие</td><td>谢谢</td></tr>
+      <tr><td>Хэд вэ?</td><td>Дошао циан?</td><td>多少钱？</td></tr>
+      <tr><td>Хямдруул</td><td>Пяньи идяр</td><td>便宜一点</td></tr>
+      <tr><td>Нэхэмжлэл</td><td>Май дань</td><td>买单</td></tr>
+      <tr><td>Ариун цэврийн өрөө хаана?</td><td>Чэшо цзай нали?</td><td>厕所在哪里？</td></tr>
+      <tr><td>Эмнэлэг хаана?</td><td>Ийюань цзай нали?</td><td>医院在哪里？</td></tr>
+      <tr><td>Би Монгол хүн</td><td>Во ши Мэнгу жэн</td><td>我是蒙古人</td></tr>
+      <tr><td>Энэ хэрэгтэй</td><td>Во яо жэгэ</td><td>我要这个</td></tr>
+    </table>
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<!-- 12 ШАЛГАЛТ -->
+<section class="bg-gray">
+  <div class="chapter">
+    <div class="chapter-num">12 — Бэлтгэл</div>
+    <h2 class="chapter-title">📋 Явахаас өмнөх шалгалтын жагсаалт</h2>
+
+    <div class="two-col">
+      <div>
+        <div style="font-size:14px;font-weight:700;margin-bottom:12px;color:var(--blue)">2 долоо хоногийн өмнө</div>
+        <ul class="checklist">
+          <li>Паспортын хугацаа шалгах (6+ сар)</li>
+          <li>Нисэх тийз захиалах (Trip.com)</li>
+          <li>Зочид буудал захиалах</li>
+          <li>eSIM эсвэл VPN урьдчилан бэлдэх</li>
+          <li>LFS Shanghai-д захиалга өгөх</li>
+          <li>Disney, Tower тасалбар урьдчилан авах</li>
+        </ul>
+      </div>
+      <div>
+        <div style="font-size:14px;font-weight:700;margin-bottom:12px;color:var(--blue)">Явахын өмнө</div>
+        <ul class="checklist">
+          <li>Alipay / Weixin Pay тохируулах</li>
+          <li>Банкны картаа гадаадад идэвхжүүлэх</li>
+          <li>Didi, Baidu Maps апп татах</li>
+          <li>Буудлын хаягийг Хятад хэлээр хадгалах</li>
+          <li>Бага хэмжээний бэлэн юань авах</li>
+          <li>Паспортынхаа хуулбарыг тусад нь хадгалах</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CTA -->
+<section class="cta-section" id="services">
+  <div class="cta-inner">
+    <div class="cta-label">✨ LFS Shanghai үйлчилгээ</div>
+    <h2 class="cta-title">Шанхай аяллаа биднээр зохион байгуулаарай</h2>
+    <p class="cta-sub">Монгол хэлтэй мэргэжлийн баг таны аяллыг эхнээс дуустал хариуцна. Виз, буудал, тээвэр, орчуулга, эмнэлэг — бүгдийг нэг дороос.</p>
+
+    <div class="services-grid">
+      <div class="service-card">
+        <div class="service-icon">🗺️</div>
+        <div class="service-name">Аяллын хөтөч</div>
+        <div class="service-price">Үнийг тохиролцоно</div>
+        <div class="service-desc">Монгол хэлтэй мэргэшсэн хөтөч. Хот, үзмэр, хоол бүгдийг хамт хийнэ.</div>
+      </div>
+      <div class="service-card">
+        <div class="service-icon">🗣️</div>
+        <div class="service-name">Монгол орчуулагч</div>
+        <div class="service-price">Үнийг тохиролцоно</div>
+        <div class="service-desc">Эмнэлэг, дэлгүүр, байгууллагад Монгол хэлтэй орчуулагчтай явна.</div>
+      </div>
+      <div class="service-card">
+        <div class="service-icon">🚗</div>
+        <div class="service-name">Буудлаас өгч авах</div>
+        <div class="service-price">Үнийг тохиролцоно</div>
+        <div class="service-desc">Нисэх буудал болон эмнэлгээс зочид буудалд хүргэх, угтах үйлчилгээ.</div>
+      </div>
+      <div class="service-card">
+        <div class="service-icon">🏥</div>
+        <div class="service-name">Алтан эрүүл мэндийн багц</div>
+        <div class="service-price">950,000₮</div>
+        <div class="service-desc">Иж бүрэн шинжилгээ, VIP тасаг, Монгол орчуулагч, эмнэлгийн тайлан.</div>
+      </div>
+      <div class="service-card">
+        <div class="service-icon">🏅</div>
+        <div class="service-name">Мөнгөн эрүүл мэндийн багц</div>
+        <div class="service-price">700,000₮</div>
+        <div class="service-desc">Үндсэн шинжилгээ, Монгол орчуулагч, хүлээн авалт.</div>
+      </div>
+      <div class="service-card">
+        <div class="service-icon">📅</div>
+        <div class="service-name">Бүрэн аяллын зохион байгуулалт</div>
+        <div class="service-price">Үнийг тохиролцоно</div>
+        <div class="service-desc">Буудал захиалга, маршрут, тийз, эмнэлэг — бүгдийг нэг дороос шийднэ.</div>
+      </div>
+    </div>
+
+    <div class="cta-btns">
+      <a href="/booking/" class="btn-white">🗓️ Одоо захиалах →</a>
+      <a href="https://www.facebook.com/profile.php?id=100076380514835" target="_blank" class="btn-ghost">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"/></svg>
+        Facebook-ээр асуух
+      </a>
+      <a href="mailto:lfs.shanghai1@gmail.com" class="btn-ghost">✉️ И-мэйл</a>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-logo">LFS <span>Shanghai</span></div>
+  <p style="margin-bottom:12px">lfsshanghai.com · lfs.shanghai1@gmail.com</p>
+  <p style="margin-bottom:16px">
+    <a href="/">Нүүр</a> ·
+    <a href="/health/">Эрүүл мэнд</a> ·
+    <a href="/tips/">Зөвлөмж</a> ·
+    <a href="/booking/">Захиалах</a> ·
+    <a href="/blog/">Блог</a>
+  </p>
+  <p>© 2026 LFS Shanghai. Бүх эрх хуулиар хамгаалагдсан.</p>
+</footer>
+
+<script src="/js/messenger-btn.js"></script>
+</body>
+</html>
