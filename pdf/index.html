@@ -153,6 +153,56 @@ footer a:hover{color:#fff}
 </head>
 <body>
 
+<!-- ACCESS GATE -->
+<div id="gate" style="display:none;position:fixed;inset:0;z-index:9999;background:linear-gradient(135deg,#001f5e 0%,#0071e3 100%);display:flex;align-items:center;justify-content:center;padding:24px">
+  <div style="background:#fff;border-radius:24px;padding:48px 40px;max-width:420px;width:100%;text-align:center;box-shadow:0 24px 80px rgba(0,0,0,.3)">
+    <div style="font-size:48px;margin-bottom:16px">🔐</div>
+    <div style="font-size:22px;font-weight:800;letter-spacing:-.03em;margin-bottom:8px">Нэвтрэх код</div>
+    <div style="font-size:14px;color:#6e6e73;margin-bottom:28px;line-height:1.6">Гарын авлагад нэвтрэхийн тулд<br>худалдан авалтын дараа ирсэн кодоо оруулна уу.</div>
+    <input id="codeInput" type="text" placeholder="Кодоо оруулна уу" maxlength="20"
+      style="width:100%;padding:14px 18px;border:2px solid #e5e5ea;border-radius:14px;font-size:16px;font-family:inherit;outline:none;text-align:center;letter-spacing:.1em;margin-bottom:12px;transition:border-color .2s"
+      onfocus="this.style.borderColor='#0071e3'" onblur="this.style.borderColor='#e5e5ea'"
+      onkeydown="if(event.key==='Enter')checkCode()">
+    <div id="codeError" style="color:#e8392a;font-size:13px;min-height:20px;margin-bottom:8px"></div>
+    <button onclick="checkCode()" style="width:100%;padding:14px;background:#0071e3;color:#fff;border:none;border-radius:14px;font-size:15px;font-weight:700;cursor:pointer;font-family:inherit;transition:.2s" onmouseover="this.style.background='#005bbf'" onmouseout="this.style.background='#0071e3'">
+      Нэвтрэх →
+    </button>
+    <div style="margin-top:24px;padding-top:20px;border-top:1px solid #f0f0f0;font-size:13px;color:#6e6e73">
+      Код байхгүй бол Facebook-ээр холбогдоно уу:<br>
+      <a href="https://www.facebook.com/profile.php?id=100076380514835" target="_blank" style="color:#0071e3;font-weight:600;text-decoration:none">LFS Shanghai →</a>
+    </div>
+  </div>
+</div>
+
+<script>
+// Access codes — өөрчлөх боломжтой
+const VALID_CODES = ['LFS2026','SHANGHAI26','LFSGUIDE'];
+
+function checkCode(){
+  const input = document.getElementById('codeInput').value.trim().toUpperCase();
+  const validUpper = VALID_CODES.map(c=>c.toUpperCase());
+  if(validUpper.includes(input)){
+    localStorage.setItem('lfs_guide_access','granted');
+    document.getElementById('gate').style.display='none';
+  } else {
+    document.getElementById('codeError').textContent='Код буруу байна. Дахин оролдоно уу.';
+    document.getElementById('codeInput').style.borderColor='#e8392a';
+    setTimeout(()=>{
+      document.getElementById('codeInput').style.borderColor='#e5e5ea';
+    },1500);
+  }
+}
+
+// Page load check
+(function(){
+  if(localStorage.getItem('lfs_guide_access')==='granted'){
+    document.getElementById('gate').style.display='none';
+  } else {
+    document.getElementById('gate').style.display='flex';
+  }
+})();
+</script>
+
 <!-- NAV -->
 <nav class="nav">
   <a href="/" class="nav-logo">LFS <span>Shanghai</span></a>
@@ -312,7 +362,7 @@ footer a:hover{color:#fff}
       <div class="card">
         <div class="card-icon">🌐</div>
         <div class="card-title">eSIM</div>
-        <div class="card-body">Монголд байхдаа Airalo зэрэг платформоос Хятадын eSIM авна.<br><br><strong>1GB ≈ $4.5 (≈15,750₮)</strong><br><strong>3GB ≈ $9 (≈31,500₮)</strong><br><strong>5GB ≈ $13 (≈45,500₮)</strong><br><br>Үйлчилгээний нөхцөл постачагч бүрээр ялгаатай тул худалдан авахаасаа өмнө шалгаарай.</div>
+        <div class="card-body">Монголд байхдаа Airalo зэрэг платформоос Хятадын eSIM авна.<br><br><strong>1GB ≈ $4.5 (≈15,750₮)</strong><br><strong>3GB ≈ $9 (≈31,500₮)</strong><br><strong>5GB ≈ $13 (≈45,500₮)</strong><br><br>7 хоногийн аяллын хувьд 3GB хангалттай.</div>
       </div>
       <div class="card">
         <div class="card-icon">🔒</div>
@@ -549,8 +599,8 @@ footer a:hover{color:#fff}
       </tr>
       <tr>
         <td><strong>Yu Yuan Garden 豫园</strong></td>
-        <td>30¥ (≈16,050₮)</td>
-        <td>400 жилийн уламжлалт цэцэрлэг. Урьдчилан захиалах зүйтэй.</td>
+        <td>Үнэгүй</td>
+        <td>400 жилийн уламжлалт цэцэрлэг. Ойролцоо хоолны зах бий.</td>
       </tr>
       <tr>
         <td><strong>Shanghai Tower 上海中心</strong></td>
@@ -560,7 +610,7 @@ footer a:hover{color:#fff}
       <tr>
         <td><strong>Shanghai Museum</strong></td>
         <td>Үнэгүй</td>
-        <td>People's Square салбар reservation шаардахгүй болсон (2025.9-аас). Тусгай үзэсгэлэн нөхцөл өөр байж болно.</td>
+        <td>People's Square салбарт нэвтрэхэд reservation шаардахгүй. Тусгай үзэсгэлэнд нөхцөл өөр байж болно.</td>
       </tr>
       <tr>
         <td><strong>French Concession</strong></td>
@@ -602,24 +652,24 @@ footer a:hover{color:#fff}
 
     <div class="cards-grid">
       <div class="card">
-        <div class="card-icon">👜</div>
-        <div class="card-title">Халааснаас хулгай</div>
-        <div class="card-body">Nanjing Road, Yu Yuan зэрэг нилэнх хурдтай газарт утас, түрийвчийг урд халааснаасаа хийж явах нь зөв.</div>
+        <div class="card-icon">🏥</div>
+        <div class="card-title">Эрүүл мэндийн даатгал</div>
+        <div class="card-body">Шанхайд эмнэлгийн үнэ харьцангуй хямд боловч яаралтай тохиолдолд зардал гарч болно. Аяллын даатгал авч явах нь зөв.</div>
       </div>
       <div class="card">
-        <div class="card-icon">🚖</div>
-        <div class="card-title">Такси</div>
-        <div class="card-body">Зөвхөн <strong>Didi апп</strong>-аар захиалах. Хуурамч такси байдаг тул хаалганы дэргэдээс суухаас зайлсхийх.</div>
+        <div class="card-icon">🌡️</div>
+        <div class="card-title">Цаг уур & Хувцас</div>
+        <div class="card-body">Зун (6–8 сар): маш халуун, чийглэг. 35°C хүрнэ. Намар (9–11 сар): хамгийн тааламжтай. Өвөл (12–2 сар): 0–8°C, хүйтэн.</div>
       </div>
       <div class="card">
-        <div class="card-icon">🍵</div>
-        <div class="card-title">"Tea ceremony" урилга</div>
-        <div class="card-body">Танихгүй хүн чай уухыг уривал болгоомжил — маш өндөр үнэ нэхэмжлэх тохиолдол байдаг.</div>
+        <div class="card-icon">📋</div>
+        <div class="card-title">Паспорт алдсан тохиолдолд</div>
+        <div class="card-body">Монгол Улсын Шанхай дахь Ерөнхий консулын газарт хандана. Утас: <strong>+86 21 6275 9947</strong></div>
       </div>
       <div class="card">
-        <div class="card-icon">🏨</div>
-        <div class="card-title">Зочид буудал</div>
-        <div class="card-body">Trip.com, Booking.com зэрэг итгэлтэй платформоос л захиалах нь зөв.</div>
+        <div class="card-icon">💊</div>
+        <div class="card-title">Эм, эмнэлэг</div>
+        <div class="card-body">Шанхайд олон улсын эмнэлгүүд байдаг. LFS Shanghai-н хөтөч орчуулагчтай эмнэлэгт явах боломжтой.</div>
       </div>
     </div>
 
