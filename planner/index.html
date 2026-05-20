@@ -436,6 +436,67 @@
     .empty-state .empty-icon { font-size: 3rem; margin-bottom: 12px; }
     .empty-state p { font-size: .92rem; }
 
+    /* ── VIEWER BANNER ── */
+    .viewer-banner{background:linear-gradient(135deg,#1a1a2e,#2d2d4e);color:#fff;border-radius:var(--radius);padding:14px 20px;margin-bottom:16px;display:none;align-items:center;gap:14px;flex-wrap:wrap}
+    .viewer-banner.visible{display:flex}
+    .viewer-banner-info{flex:1;min-width:180px}
+    .viewer-banner-title{font-weight:700;font-size:.9rem;margin-bottom:2px}
+    .viewer-banner-sub{font-size:.78rem;opacity:.8;line-height:1.4}
+    .btn-copy-plan{background:var(--primary);color:#fff;border:none;padding:8px 18px;border-radius:50px;font-size:.82rem;font-weight:700;cursor:pointer;font-family:inherit;white-space:nowrap;transition:background .2s}
+    .btn-copy-plan:hover{background:var(--primary-d)}
+
+    /* ── SYNC INDICATOR ── */
+    .sync-badge{display:inline-flex;align-items:center;gap:5px;font-size:.72rem;color:var(--sub);padding:4px 10px;border-radius:20px;background:var(--bg);border:1px solid var(--border);transition:all .3s}
+    .sync-badge.saved{color:#27ae60;border-color:rgba(52,199,89,.3);background:rgba(52,199,89,.06)}
+    .sync-badge.saving{color:#f59e0b;border-color:rgba(245,158,11,.3);background:rgba(245,158,11,.06)}
+    .sync-dot{width:7px;height:7px;border-radius:50%;background:currentColor;flex-shrink:0}
+
+    /* ── SHARE MODAL ── */
+    .modal-overlay{display:none;position:fixed;inset:0;background:rgba(0,0,0,.5);z-index:2000;align-items:center;justify-content:center;backdrop-filter:blur(6px);-webkit-backdrop-filter:blur(6px);padding:16px}
+    .modal-overlay.open{display:flex}
+    .modal-sheet{background:#fff;border-radius:20px;padding:28px;width:100%;max-width:460px;max-height:88vh;overflow-y:auto;box-shadow:0 20px 60px rgba(0,0,0,.3);animation:fadeUp .25s ease;position:relative}
+    .modal-header{display:flex;align-items:flex-start;justify-content:space-between;margin-bottom:18px}
+    .modal-title{font-size:1.1rem;font-weight:800;margin-bottom:3px}
+    .modal-sub{font-size:.82rem;color:var(--sub);line-height:1.5}
+    .modal-close{background:none;border:none;font-size:1.2rem;cursor:pointer;color:var(--sub);padding:2px 6px;border-radius:6px;line-height:1;flex-shrink:0;transition:all .2s}
+    .modal-close:hover{background:var(--bg);color:var(--text)}
+    .role-card{border:1.5px solid var(--border);border-radius:14px;padding:16px;margin-bottom:12px}
+    .role-card-header{display:flex;align-items:center;gap:10px;margin-bottom:10px}
+    .role-icon{font-size:1.3rem}
+    .role-name{font-size:.9rem;font-weight:700}
+    .role-desc{font-size:.78rem;color:var(--sub);margin-top:1px}
+    .link-row{display:flex;gap:6px}
+    .link-row input{flex:1;font-size:.76rem;padding:8px 10px;border:1.5px solid var(--border);border-radius:8px;background:var(--bg);color:var(--text);cursor:text;font-family:inherit}
+    .link-row input:focus{outline:none;border-color:var(--primary)}
+    .btn-gen{background:var(--bg);color:var(--text);border:1.5px solid var(--border);padding:8px 12px;border-radius:8px;font-size:.78rem;font-weight:600;cursor:pointer;font-family:inherit;white-space:nowrap;transition:all .2s}
+    .btn-gen:hover{border-color:var(--primary);color:var(--primary)}
+    .btn-copy-link{background:var(--text);color:#fff;border:none;padding:8px 14px;border-radius:8px;font-size:.78rem;font-weight:600;cursor:pointer;font-family:inherit;white-space:nowrap;transition:all .2s}
+    .btn-copy-link:hover{background:var(--primary)}
+    .steps-box{background:var(--bg);border-radius:12px;padding:14px 16px;margin:14px 0}
+    .steps-box-title{font-size:.75rem;font-weight:700;color:var(--sub);text-transform:uppercase;letter-spacing:.05em;margin-bottom:10px}
+    .step-row{display:flex;gap:10px;align-items:flex-start;margin-bottom:8px}
+    .step-row:last-child{margin-bottom:0}
+    .step-num{width:22px;height:22px;border-radius:50%;background:var(--primary);color:#fff;font-size:.7rem;font-weight:700;display:flex;align-items:center;justify-content:center;flex-shrink:0;margin-top:1px}
+    .step-text{font-size:.82rem;color:var(--text);line-height:1.45}
+    .collab-list{margin-top:16px}
+    .collab-section-title{font-size:.75rem;font-weight:700;color:var(--sub);text-transform:uppercase;letter-spacing:.05em;margin-bottom:10px}
+    .collab-item{display:flex;align-items:center;gap:10px;padding:8px 10px;border-radius:10px;background:var(--bg);margin-bottom:6px}
+    .collab-avatar{width:30px;height:30px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:.78rem;font-weight:700;color:#fff;flex-shrink:0}
+    .collab-name{flex:1;font-size:.85rem;font-weight:600}
+    .collab-email{font-size:.72rem;color:var(--sub);margin-top:1px}
+    .role-badge{font-size:.68rem;font-weight:700;padding:2px 8px;border-radius:20px}
+    .role-badge.owner{background:rgba(212,168,67,.2);color:#a07810}
+    .role-badge.editor{background:rgba(52,199,89,.15);color:#27ae60}
+    .role-badge.viewer{background:rgba(90,90,114,.1);color:var(--sub)}
+    .btn-rm-collab{background:none;border:none;cursor:pointer;color:#ccc;font-size:.85rem;padding:2px 4px;transition:color .2s}
+    .btn-rm-collab:hover{color:var(--primary)}
+    .no-collab{font-size:.82rem;color:var(--sub);text-align:center;padding:12px}
+
+    /* ── FLOATING SHARE BTN ── */
+    .float-share{position:fixed;bottom:24px;right:24px;z-index:90;background:var(--text);color:#fff;border:none;padding:12px 20px;border-radius:50px;font-size:.88rem;font-weight:700;cursor:pointer;font-family:inherit;box-shadow:0 4px 24px rgba(0,0,0,.25);display:none;align-items:center;gap:8px;transition:all .2s}
+    .float-share.visible{display:flex}
+    .float-share:hover{background:var(--primary);transform:translateY(-2px)}
+
     /* ── MOBILE ── */
     @media (max-width: 600px) {
       .hero-plan h1 { font-size: 1.5rem; }
@@ -558,7 +619,11 @@
       <li><a href="/tips/">Зөвлөмж</a></li>
       <li><a href="/planner/" style="color:var(--primary)">Төлөвлөгч</a></li>
     </ul>
-    <div id="navAuth"><a href="/login/?redirect=/planner/" class="nav-login-btn">Нэвтрэх</a></div>
+    <div style="display:flex;align-items:center;gap:10px;">
+      <div id="syncBadge" class="sync-badge" style="display:none"><div class="sync-dot"></div><span id="syncText">Хадгалсан</span></div>
+      <button id="btnShareFloat2" class="nav-btn" style="display:none;background:var(--text);" onclick="openShareModal()">🔗 Хуваалцах</button>
+      <div id="navAuth"><a href="/login/?redirect=/planner/" class="nav-login-btn">Нэвтрэх</a></div>
+    </div>
   </div>
 </nav>
 
@@ -572,6 +637,15 @@
   <div class="hero-plan">
     <h1>Шанхай <span>Аяллын Төлөвлөгч</span></h1>
     <p>Огноо, хүмүүс, сонирхол, газрууд — бүгдийг нэг дор. Найзтайгаа хуваалц.</p>
+  </div>
+
+  <!-- VIEWER BANNER -->
+  <div class="viewer-banner" id="viewerBanner">
+    <div class="viewer-banner-info">
+      <div class="viewer-banner-title">👁 Зөвхөн харах горим</div>
+      <div class="viewer-banner-sub">Та энэ төлөвлөгөөг харах эрхтэй. Засахын тулд хуулж авна уу.</div>
+    </div>
+    <button class="btn-copy-plan" onclick="forkPlan()">Хуулж засах ✏️</button>
   </div>
 
   <!-- MY PLANS PANEL -->
@@ -803,13 +877,88 @@
 
 </main>
 
+<!-- ══ FLOATING SHARE ══ -->
+<button class="float-share" id="floatShareBtn" onclick="openShareModal()">🔗 Хуваалцах</button>
+
+<!-- ══ SHARE MODAL ══ -->
+<div class="modal-overlay" id="shareModal" onclick="if(event.target===this)closeShareModal()">
+  <div class="modal-sheet">
+    <div class="modal-header">
+      <div>
+        <div class="modal-title">🔗 Хуваалцах & Хандах эрх</div>
+        <div class="modal-sub">Найздаа линк илгээж хамтран төлөвлө</div>
+      </div>
+      <button class="modal-close" onclick="closeShareModal()">✕</button>
+    </div>
+
+    <!-- EDITOR INVITE -->
+    <div class="role-card">
+      <div class="role-card-header">
+        <div class="role-icon">✏️</div>
+        <div>
+          <div class="role-name">Засах боломжтой</div>
+          <div class="role-desc">Найз нь нэмэх, хасах, огноо өөрчлөх бүгдийг хийж болно</div>
+        </div>
+      </div>
+      <div class="link-row">
+        <input type="text" id="editorLinkInput" readonly placeholder="Линк үүсгэхийн тулд товч дарна уу"/>
+        <button class="btn-gen" onclick="generateInvite('editor')">Үүсгэх</button>
+        <button class="btn-copy-link" onclick="copyInviteLink('editor')" id="copyEditorBtn" style="display:none">Хуулах</button>
+      </div>
+    </div>
+
+    <!-- VIEWER INVITE -->
+    <div class="role-card">
+      <div class="role-card-header">
+        <div class="role-icon">👁</div>
+        <div>
+          <div class="role-name">Зөвхөн харах</div>
+          <div class="role-desc">Найз нь төлөвлөгөөг харах, хуулж авах боломжтой</div>
+        </div>
+      </div>
+      <div class="link-row">
+        <input type="text" id="viewerLinkInput" readonly placeholder="Линк үүсгэхийн тулд товч дарна уу"/>
+        <button class="btn-gen" onclick="generateInvite('viewer')">Үүсгэх</button>
+        <button class="btn-copy-link" onclick="copyInviteLink('viewer')" id="copyViewerBtn" style="display:none">Хуулах</button>
+      </div>
+    </div>
+
+    <!-- HOW TO -->
+    <div class="steps-box">
+      <div class="steps-box-title">📖 Наизаа нэмэх заавар</div>
+      <div class="step-row">
+        <div class="step-num">1</div>
+        <div class="step-text">Дээрх товчны аль нэгийг дарж линк <strong>үүсгэнэ</strong> — засах эсвэл зөвхөн харах эрхтэй</div>
+      </div>
+      <div class="step-row">
+        <div class="step-num">2</div>
+        <div class="step-text">Линкийг <strong>хуулж</strong> найддаа Messenger, WhatsApp, и-мэйлээр илгээнэ</div>
+      </div>
+      <div class="step-row">
+        <div class="step-num">3</div>
+        <div class="step-text">Найз нь линк дарж нэвтрэхэд <strong>автоматаар</strong> хамтран ажиллагч болно — тэр даруй харагдана</div>
+      </div>
+      <div class="step-row">
+        <div class="step-num">4</div>
+        <div class="step-text">Өөрчлөлт хийхэд <strong>шууд синхрончлогдоно</strong> — хоёул нэг дор харах боломжтой</div>
+      </div>
+    </div>
+
+    <!-- COLLABORATORS -->
+    <div class="collab-list" id="collabList" style="display:none">
+      <div class="collab-section-title">👥 Хамтран ажиллагчид</div>
+      <div id="collabItems"></div>
+    </div>
+  </div>
+</div>
+
 <!-- ══ FIREBASE ══ -->
 <script type="module">
 import { initializeApp } from 'https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js';
 import { getAuth, onAuthStateChanged }
   from 'https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js';
 import { getFirestore, doc, setDoc, getDoc, collection, addDoc, getDocs,
-         query, where, orderBy, limit, serverTimestamp }
+         onSnapshot, query, where, orderBy, limit, serverTimestamp, updateDoc, deleteField }
   from 'https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js';
 
 const firebaseConfig = {
@@ -827,14 +976,167 @@ const auth = getAuth(app);
 const db   = getFirestore(app);
 
 window._db = db;
-window._authFunctions = { addDoc, setDoc, getDoc, getDocs, collection, doc, query, where, orderBy, limit, serverTimestamp };
+window._authFunctions = { addDoc, setDoc, getDoc, getDocs, collection, doc, query, where, orderBy, limit, serverTimestamp, updateDoc };
+
+/* ── STATE ── */
+let _unsubSnapshot = null;
+let _autoSaveTimer = null;
+let _isSaving = false;
+window._currentRole = null; // 'owner' | 'editor' | 'viewer' | null
+
+/* ── SYNC BADGE ── */
+function setSyncBadge(state) { // 'saving' | 'saved' | 'hide'
+  const b = document.getElementById('syncBadge');
+  const t = document.getElementById('syncText');
+  if (!b) return;
+  if (state === 'hide') { b.style.display = 'none'; return; }
+  b.style.display = 'inline-flex';
+  b.className = 'sync-badge ' + (state === 'saving' ? 'saving' : 'saved');
+  t.textContent = state === 'saving' ? 'Хадгалж байна...' : '✓ Хадгалагдсан';
+}
+
+/* ── AUTO SAVE (debounce 900ms) ── */
+window.autoSave = function() {
+  if (!window._planId || window._currentRole === 'viewer') return;
+  clearTimeout(_autoSaveTimer);
+  setSyncBadge('saving');
+  _autoSaveTimer = setTimeout(async () => {
+    if (!window._planId || window._planId.startsWith('local_')) return;
+    _isSaving = true;
+    try {
+      const titleEl = document.getElementById('planTitle');
+      await updateDoc(doc(db,'planners',window._planId), {
+        title:          titleEl?.value.trim() || window._plan.title || 'Шанхай аялал',
+        savedPlaces:    window._plan.savedPlaces,
+        dayAssignments: window._plan.dayAssignments || {},
+        'dates.arrival':    window._plan.arrival,
+        'dates.departure':  window._plan.departure,
+        people:    window._plan.people,
+        hotel:     window._plan.hotel,
+        interests: window._plan.interests,
+        budget:    window._plan.budget,
+        timePrefs: window._plan.timePrefs,
+        updatedAt: new Date().toISOString(),
+      });
+      setSyncBadge('saved');
+    } catch(e) { console.warn('autoSave:', e); setSyncBadge('hide'); }
+    setTimeout(() => { _isSaving = false; }, 600);
+  }, 900);
+};
+
+/* ── LIVE SYNC (onSnapshot) ── */
+function startLiveSync(planId) {
+  if (_unsubSnapshot) { _unsubSnapshot(); _unsubSnapshot = null; }
+  _unsubSnapshot = onSnapshot(doc(db,'planners',planId), snap => {
+    if (!snap.exists() || _isSaving) return;
+    const d = snap.data();
+    // Update in-memory plan
+    window._plan.savedPlaces    = d.savedPlaces    || [];
+    window._plan.dayAssignments = d.dayAssignments || {};
+    window._plan.arrival   = d.dates?.arrival   || '';
+    window._plan.departure = d.dates?.departure || '';
+    window._plan.people    = d.people    || [];
+    window._plan.hotel     = d.hotel     || '';
+    window._plan.interests = d.interests || [];
+    window._plan.budget    = d.budget    || '';
+    window._plan.timePrefs = d.timePrefs || {};
+    // Refresh UI if on places/itinerary step
+    if (window.currentStep >= 4) {
+      window._renderPlacesGrid && window._renderPlacesGrid();
+      document.getElementById('savedCount') && (document.getElementById('savedCount').textContent = window._plan.savedPlaces.length);
+    }
+    if (window.currentStep === 5) {
+      window.buildItinerary && window.buildItinerary();
+    }
+    window.updateSummaryBar && window.updateSummaryBar();
+    setSyncBadge('saved');
+    // Update share modal collab list if open
+    if (document.getElementById('shareModal')?.classList.contains('open')) {
+      renderCollabList(d);
+    }
+  }, err => { console.warn('onSnapshot:', err); });
+}
+
+/* ── ROLE DETERMINATION ── */
+function getRole(data, uid) {
+  if (!uid) return 'viewer';
+  if (data.uid === uid) return 'owner';
+  const access = data.access || {};
+  if (access[uid]) return access[uid]; // 'editor' | 'viewer'
+  return null; // no access
+}
+
+function applyRole(role) {
+  window._currentRole = role;
+  const viewerBanner = document.getElementById('viewerBanner');
+  const editControls = document.querySelectorAll('.btn-next, .btn-back, .chip, .place-save, .btn-add-person, .btn-remove-person');
+
+  if (role === 'viewer') {
+    viewerBanner?.classList.add('visible');
+    editControls.forEach(el => { el.style.pointerEvents='none'; el.style.opacity='.5'; });
+    document.querySelectorAll('input, select, textarea').forEach(el => el.setAttribute('disabled',''));
+  } else {
+    viewerBanner?.classList.remove('visible');
+    editControls.forEach(el => { el.style.pointerEvents=''; el.style.opacity=''; });
+    document.querySelectorAll('input[disabled], select[disabled], textarea[disabled]').forEach(el => el.removeAttribute('disabled'));
+  }
+}
+
+/* ── INVITE TOKEN HANDLING ── */
+async function checkInviteToken(planId, token, user) {
+  if (!user) {
+    // Save intent, redirect to login
+    sessionStorage.setItem('inviteIntent', JSON.stringify({ planId, token }));
+    window.location.href = `/login/?redirect=${encodeURIComponent('/planner/?id='+planId+'&token='+token)}`;
+    return;
+  }
+  try {
+    const snap = await getDoc(doc(db,'planners',planId));
+    if (!snap.exists()) { window.showToast('Төлөвлөгөө олдсонгүй', 'error'); return; }
+    const data = snap.data();
+    const tokens = data.inviteTokens || {};
+    let role = null;
+    if (tokens.editor === token) role = 'editor';
+    if (tokens.viewer === token) role = 'viewer';
+    if (!role) { window.showToast('Урилгын линк хүчингүй байна', 'error'); return; }
+    // Already has access?
+    const existing = getRole(data, user.uid);
+    if (existing === 'owner' || existing === role) {
+      // Already has equal or better access, just open
+    } else {
+      // Add to access map
+      await updateDoc(doc(db,'planners',planId), {
+        [`access.${user.uid}`]: role,
+        [`accessMeta.${user.uid}`]: { email: user.email||'', name: user.displayName||user.email?.split('@')[0]||'', joinedAt: new Date().toISOString() }
+      });
+    }
+    // Clean URL
+    window.history.replaceState({}, '', `/planner/?id=${planId}`);
+    window.showToast(`Амжилттай нэмэгдлээ! Эрх: ${role === 'editor' ? 'Засах' : 'Харах'} ✓`, 'success');
+  } catch(e) { console.warn('checkInviteToken:', e); }
+}
 
 /* ── AUTH STATE ── */
-onAuthStateChanged(auth, user => {
+onAuthStateChanged(auth, async user => {
   window._currentUser = user || null;
   updateNavAuth(user);
+
+  const params = new URLSearchParams(location.search);
+  const planId = params.get('id');
+  const token  = params.get('token');
+
+  // Handle invite token first
+  if (planId && token) {
+    await checkInviteToken(planId, token, user);
+  }
+
   if (user) {
     loadMyPlans(user);
+    // If a plan is already loaded, check role
+    if (window._planId) {
+      const snap = await getDoc(doc(db,'planners',window._planId));
+      if (snap.exists()) applyRole(getRole(snap.data(), user.uid));
+    }
   } else {
     const panel = document.getElementById('myPlansPanel');
     const list  = document.getElementById('myPlansList');
@@ -904,31 +1206,43 @@ async function loadMyPlans(user) {
 function openSavedPlan(id, data) {
   window._applySharedPlan(data);
   window._planId = id;
+  const uid = window._currentUser?.uid;
+  const role = getRole(data, uid);
+  applyRole(role);
+  startLiveSync(id);
+  showFloatingShare(true);
   const linkEl = document.getElementById('shareLink');
   if (linkEl) linkEl.value = `https://bileg11.github.io/planner/?id=${id}`;
-  // show toast
-  const title = data.title || 'Төлөвлөгөө';
-  window.showToast && window.showToast(`"${title}" нээгдлээ ✓`, 'success');
+  setSyncBadge('saved');
+  window.showToast && window.showToast(`"${data.title||'Төлөвлөгөө'}" нээгдлээ ✓`, 'success');
 }
 
 window.copyShareLink = function(id) {
   const link = `https://bileg11.github.io/planner/?id=${id}`;
-  navigator.clipboard.writeText(link).catch(() => {
+  navigator.clipboard.writeText(link).then(() => {
+    window.showToast && window.showToast('Линк хуулагдлаа! 📋', 'success');
+  }).catch(() => {
     const el = document.createElement('textarea');
     el.value = link; document.body.appendChild(el); el.select();
     document.execCommand('copy'); document.body.removeChild(el);
-  }).finally(() => {
     window.showToast && window.showToast('Линк хуулагдлаа! 📋', 'success');
   });
-  navigator.clipboard.writeText(link).then(() => {
-    window.showToast && window.showToast('Линк хуулагдлаа! 📋', 'success');
-  }).catch(() => {});
 };
+
+function showFloatingShare(show) {
+  const fb = document.getElementById('floatShareBtn');
+  const nb = document.getElementById('btnShareFloat2');
+  if (fb) fb.classList.toggle('visible', show);
+  if (nb) nb.style.display = show ? '' : 'none';
+  const sb = document.getElementById('syncBadge');
+  if (sb) sb.style.display = show ? '' : 'none';
+}
 
 /* ── SAVE PLAN ── */
 window.savePlan = async () => {
   const titleEl = document.getElementById('planTitle');
   const title   = titleEl?.value.trim() || 'Шанхай аялал';
+  const uid = window._currentUser ? window._currentUser.uid : 'guest';
   const planData = {
     title,
     dates:        { arrival: window._plan.arrival, departure: window._plan.departure },
@@ -939,11 +1253,15 @@ window.savePlan = async () => {
     timePrefs:    window._plan.timePrefs,
     savedPlaces:  window._plan.savedPlaces,
     dayAssignments: window._plan.dayAssignments || {},
-    createdAt:    new Date().toISOString(),
-    uid:          window._currentUser ? window._currentUser.uid : 'guest'
+    access:       window._plan.access || {},
+    inviteTokens: window._plan.inviteTokens || {},
+    accessMeta:   window._plan.accessMeta || {},
+    createdAt:    window._plan.createdAt || new Date().toISOString(),
+    uid
   };
   const linkEl = document.getElementById('shareLink');
   try {
+    setSyncBadge('saving');
     if (window._planId && !window._planId.startsWith('local_')) {
       await setDoc(doc(db,'planners',window._planId), planData, { merge:true });
       if (linkEl) linkEl.value = `https://bileg11.github.io/planner/?id=${window._planId}`;
@@ -952,25 +1270,30 @@ window.savePlan = async () => {
       const ref = await addDoc(collection(db,'planners'), planData);
       if (linkEl) linkEl.value = `https://bileg11.github.io/planner/?id=${ref.id}`;
       window._planId = ref.id;
+      window._currentRole = 'owner';
+      startLiveSync(ref.id);
+      showFloatingShare(true);
       showToast('Хадгалагдлаа! 🎉', 'success');
       if (window._currentUser) loadMyPlans(window._currentUser);
     }
-    if (linkEl) {
-      linkEl.select();
-      document.getElementById('shareHint') && (document.getElementById('shareHint').style.display = 'block');
-    }
+    setSyncBadge('saved');
+    if (linkEl) { linkEl.select(); }
+    document.getElementById('shareHint') && (document.getElementById('shareHint').style.display='block');
   } catch(e) {
     const localId = 'local_' + Date.now();
     localStorage.setItem('plan_' + localId, JSON.stringify(planData));
     if (linkEl) linkEl.value = `https://bileg11.github.io/planner/?id=${localId}`;
     window._planId = localId;
+    setSyncBadge('hide');
     showToast('Хадгалагдлаа (offline)', 'success');
   }
 };
 
 /* ── SHARED PLAN LOAD ── */
 window.addEventListener('DOMContentLoaded', () => {
-  const sharedId = new URLSearchParams(location.search).get('id');
+  const params   = new URLSearchParams(location.search);
+  const sharedId = params.get('id');
+  const token    = params.get('token');
   if (!sharedId) return;
 
   if (sharedId.startsWith('local_')) {
@@ -981,8 +1304,28 @@ window.addEventListener('DOMContentLoaded', () => {
   (async () => {
     try {
       const snap = await getDoc(doc(db,'planners',sharedId));
-      if (snap.exists()) showSharedBanner(snap.data(), sharedId);
-      else window.showToast && window.showToast('Төлөвлөгөө олдсонгүй', 'error');
+      if (!snap.exists()) { window.showToast && window.showToast('Төлөвлөгөө олдсонгүй', 'error'); return; }
+      const data = snap.data();
+      window._planId = sharedId;
+      window._plan.access       = data.access       || {};
+      window._plan.inviteTokens = data.inviteTokens || {};
+      window._plan.accessMeta   = data.accessMeta   || {};
+      window._plan.createdAt    = data.createdAt     || '';
+      window._plan.uid          = data.uid           || '';
+      // Determine role (may update after auth resolves)
+      const uid  = window._currentUser?.uid;
+      const role = getRole(data, uid);
+      if (role === null) {
+        showSharedBanner(data, sharedId); // no access — show copy banner
+      } else {
+        // Has access — load directly
+        window._applySharedPlan(data);
+        applyRole(role);
+        startLiveSync(sharedId);
+        showFloatingShare(true);
+        setSyncBadge('saved');
+        window.showToast && window.showToast(role==='owner'?'Төлөвлөгөө нээгдлээ ✓':(role==='editor'?'Засах эрхтэйгээр нээгдлээ ✓':'Харах горимд нээгдлээ'), 'success');
+      }
     } catch(e) { console.warn('Shared plan load:', e); }
   })();
 });
@@ -1006,8 +1349,10 @@ function showSharedBanner(data, id) {
 
 window.copyAndEditPlan = function() {
   if (!window._sharedPlanData) return;
-  window._applySharedPlan(window._sharedPlanData);
-  window._planId = null;
+  const copy = JSON.parse(JSON.stringify(window._sharedPlanData));
+  copy.access = {}; copy.inviteTokens = {}; copy.accessMeta = {}; copy.uid = window._currentUser?.uid || 'guest';
+  window._applySharedPlan(copy);
+  window._planId = null; window._currentRole = 'owner';
   document.getElementById('sharedBanner')?.classList.remove('visible');
   window.showToast && window.showToast('Хуулагдлаа. Засаад хадгал! ✏️', 'success');
   if (window.loadSharedPlan) window.loadSharedPlan();
@@ -1015,6 +1360,138 @@ window.copyAndEditPlan = function() {
 
 window.dismissSharedBanner = function() {
   document.getElementById('sharedBanner')?.classList.remove('visible');
+};
+
+/* ── FORK (viewer copies to own plan) ── */
+window.forkPlan = function() {
+  if (!window._planId) return;
+  const copy = JSON.parse(JSON.stringify(window._plan));
+  copy.access = {}; copy.inviteTokens = {}; copy.accessMeta = {};
+  copy.uid = window._currentUser?.uid || 'guest';
+  copy.title = (copy.title || 'Шанхай аялал') + ' (хуулбар)';
+  window._plan = { ...window._plan, ...copy };
+  window._planId = null; window._currentRole = 'owner';
+  if (_unsubSnapshot) { _unsubSnapshot(); _unsubSnapshot = null; }
+  document.getElementById('viewerBanner')?.classList.remove('visible');
+  window.showToast && window.showToast('Хуулбар үүслээ. Хадгалахаа мартуузай!', 'success');
+};
+
+/* ── SHARE MODAL ── */
+window.openShareModal = function() {
+  if (!window._planId) { window.showToast('Эхлээд төлөвлөгөөгөө хадгална уу', 'error'); return; }
+  document.getElementById('shareModal').classList.add('open');
+  // Pre-fill existing tokens
+  const tokens = window._plan.inviteTokens || {};
+  if (tokens.editor) {
+    const link = `${location.origin}/planner/?id=${window._planId}&token=${tokens.editor}`;
+    document.getElementById('editorLinkInput').value = link;
+    document.getElementById('copyEditorBtn').style.display = '';
+  }
+  if (tokens.viewer) {
+    const link = `${location.origin}/planner/?id=${window._planId}&token=${tokens.viewer}`;
+    document.getElementById('viewerLinkInput').value = link;
+    document.getElementById('copyViewerBtn').style.display = '';
+  }
+  // Load collabs if owner/editor
+  if (window._currentRole === 'owner' || window._currentRole === 'editor') {
+    getDoc(doc(db,'planners',window._planId)).then(snap => {
+      if (snap.exists()) renderCollabList(snap.data());
+    });
+  }
+};
+window.closeShareModal = function() {
+  document.getElementById('shareModal').classList.remove('open');
+};
+
+function renderCollabList(data) {
+  const section = document.getElementById('collabList');
+  const container = document.getElementById('collabItems');
+  if (!section || !container) return;
+  section.style.display = 'block';
+  const access = data.access || {};
+  const meta   = data.accessMeta || {};
+  const uid    = window._currentUser?.uid;
+
+  // Owner row
+  let html = `<div class="collab-item">
+    <div class="collab-avatar" style="background:var(--primary)">${(data.uid||'?')[0].toUpperCase()}</div>
+    <div style="flex:1"><div class="collab-name">Та (эзэмшигч)</div></div>
+    <span class="role-badge owner">Эзэмшигч</span>
+  </div>`;
+
+  Object.entries(access).forEach(([memberId, role]) => {
+    const m = meta[memberId] || {};
+    const name  = m.name  || m.email?.split('@')[0] || 'Хэрэглэгч';
+    const email = m.email || '';
+    const initial = name[0].toUpperCase();
+    const colors = ['#3b82f6','#10b981','#f59e0b','#8b5cf6','#ec4899'];
+    const col = colors[memberId.charCodeAt(0) % colors.length];
+    const canRemove = window._currentRole === 'owner';
+    html += `<div class="collab-item">
+      <div class="collab-avatar" style="background:${col}">${initial}</div>
+      <div style="flex:1;min-width:0">
+        <div class="collab-name">${name}</div>
+        ${email?`<div style="font-size:.72rem;color:var(--sub);margin-top:1px">${email}</div>`:''}
+      </div>
+      <span class="role-badge ${role}">${role==='editor'?'Засах':'Харах'}</span>
+      ${canRemove?`<button class="btn-rm-collab" onclick="removeCollaborator('${memberId}')" title="Хасах">✕</button>`:''}
+    </div>`;
+  });
+
+  if (Object.keys(access).length === 0) {
+    html += `<div class="no-collab">Одоогоор хамтран ажиллагч байхгүй</div>`;
+  }
+  container.innerHTML = html;
+}
+
+window.generateInvite = async function(role) {
+  if (!window._planId || window._planId.startsWith('local_')) {
+    window.showToast('Эхлээд төлөвлөгөөгөө хадгална уу', 'error'); return;
+  }
+  if (window._currentRole !== 'owner' && window._currentRole !== 'editor') {
+    window.showToast('Зөвхөн эзэмшигч / засагч линк үүсгэж болно', 'error'); return;
+  }
+  const token = Math.random().toString(36).slice(2,10) + Math.random().toString(36).slice(2,10);
+  try {
+    await updateDoc(doc(db,'planners',window._planId), { [`inviteTokens.${role}`]: token });
+    window._plan.inviteTokens = window._plan.inviteTokens || {};
+    window._plan.inviteTokens[role] = token;
+    const link = `${location.origin}/planner/?id=${window._planId}&token=${token}`;
+    const inputId = role === 'editor' ? 'editorLinkInput' : 'viewerLinkInput';
+    const btnId   = role === 'editor' ? 'copyEditorBtn'   : 'copyViewerBtn';
+    document.getElementById(inputId).value = link;
+    document.getElementById(btnId).style.display = '';
+    window.showToast(`${role==='editor'?'Засах':'Харах'} линк үүслээ ✓`, 'success');
+  } catch(e) { window.showToast('Алдаа гарлаа', 'error'); }
+};
+
+window.copyInviteLink = function(role) {
+  const inputId = role === 'editor' ? 'editorLinkInput' : 'viewerLinkInput';
+  const val = document.getElementById(inputId)?.value;
+  if (!val) return;
+  navigator.clipboard.writeText(val).then(() => {
+    window.showToast('Линк хуулагдлаа! Найддаа илгээнэ үү 📋', 'success');
+  }).catch(() => {
+    const el = document.createElement('textarea');
+    el.value = val; document.body.appendChild(el); el.select();
+    document.execCommand('copy'); document.body.removeChild(el);
+    window.showToast('Линк хуулагдлаа! 📋', 'success');
+  });
+};
+
+window.removeCollaborator = async function(memberId) {
+  if (!window._planId || window._currentRole !== 'owner') return;
+  try {
+    await updateDoc(doc(db,'planners',window._planId), {
+      [`access.${memberId}`]: deleteField(),
+      [`accessMeta.${memberId}`]: deleteField()
+    });
+    delete (window._plan.access||{})[memberId];
+    delete (window._plan.accessMeta||{})[memberId];
+    // Refresh collab list
+    getDoc(doc(db,'planners',window._planId)).then(snap => { if(snap.exists()) renderCollabList(snap.data()); });
+    window.showToast('Хамтран ажиллагч хасагдлаа', 'success');
+  } catch(e) { window.showToast('Алдаа гарлаа', 'error'); }
 };
 
 window.startNewPlan = function() {
@@ -1036,14 +1513,29 @@ window._applySharedPlan = function(d) {
     interests: d.interests||[], budget: d.budget||'',
     timePrefs: d.timePrefs||{},
     savedPlaces: d.savedPlaces||[],
-    dayAssignments: d.dayAssignments||{}
+    dayAssignments: d.dayAssignments||{},
+    access: d.access||{}, inviteTokens: d.inviteTokens||{},
+    accessMeta: d.accessMeta||{}, uid: d.uid||'', title: d.title||'',
+    createdAt: d.createdAt||''
   };
-  const t = document.getElementById('planTitle'); if (t && d.title) t.value = d.title;
+  const t = document.getElementById('planTitle'); if (t) t.value = d.title||'';
   const h = document.getElementById('hotel');     if (h && d.hotel) h.value = d.hotel;
   const a = document.getElementById('dateArrival');    if (a && d.dates?.arrival)   a.value = d.dates.arrival;
   const dep = document.getElementById('dateDeparture'); if (dep && d.dates?.departure) dep.value = d.dates.departure;
   if (window.loadSharedPlan) window.loadSharedPlan();
   else window.addEventListener('plannerReady', () => window.loadSharedPlan());
+};
+
+window.startNewPlan = function() {
+  if (_unsubSnapshot) { _unsubSnapshot(); _unsubSnapshot = null; }
+  window._plan = { arrival:'', departure:'', people:[], hotel:'', interests:[], budget:'', timePrefs:{}, savedPlaces:[], dayAssignments:{}, access:{}, inviteTokens:{}, accessMeta:{}, uid:'', title:'', createdAt:'' };
+  window._planId = null; window._currentRole = 'owner';
+  ['planTitle','hotel','dateArrival','dateDeparture'].forEach(id => { const el=document.getElementById(id); if(el) el.value=''; });
+  document.querySelectorAll('.chip').forEach(c => c.classList.remove('selected'));
+  document.getElementById('viewerBanner')?.classList.remove('visible');
+  showFloatingShare(false); setSyncBadge('hide');
+  window.goToStep(1);
+  window.showToast && window.showToast('Шинэ төлөвлөгөө', 'success');
 };
 </script>
 
@@ -1499,6 +1991,7 @@ window.toggleSave = function(id, btn) {
   }
   document.getElementById('savedCount').textContent = window._plan.savedPlaces.length;
   updateSummaryBar();
+  window.autoSave && window.autoSave();
 };
 
 window.nextFromPlaces = function() {
