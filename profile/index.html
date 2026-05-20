@@ -131,6 +131,18 @@ body{font-family:'Inter',sans-serif;background:var(--bg);color:var(--dark2);min-
 .del-btn-cancel{width:100%;padding:11px;background:none;border:1px solid var(--border);border-radius:12px;font-size:14px;color:var(--muted);cursor:pointer;font-family:inherit;transition:.2s}
 .del-btn-cancel:hover{background:var(--bg2)}
 
+/* PLAN ITEMS */
+.plan-item-row{display:flex;align-items:center;gap:12px;padding:12px 14px;border-radius:12px;border:1px solid var(--border);margin-bottom:10px;transition:.15s;cursor:pointer;}
+.plan-item-row:last-child{margin-bottom:0}
+.plan-item-row:hover{border-color:var(--blue);background:rgba(0,113,227,.02)}
+.plan-item-row-icon{font-size:1.3rem;flex-shrink:0}
+.plan-item-row-info{flex:1;min-width:0}
+.plan-item-row-title{font-size:14px;font-weight:600;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.plan-item-row-meta{font-size:12px;color:var(--muted2);margin-top:2px}
+.plan-item-row-actions{display:flex;gap:6px;flex-shrink:0}
+.plan-row-btn{background:none;border:1px solid var(--border);color:var(--muted);padding:5px 10px;border-radius:8px;font-size:11px;font-weight:600;cursor:pointer;font-family:inherit;transition:.15s;}
+.plan-row-btn:hover{border-color:var(--blue);color:var(--blue)}
+
 /* NOT LOGGED IN */
 .not-logged{text-align:center;padding:80px 20px}
 .not-logged h2{font-size:22px;font-weight:700;margin-bottom:8px}
@@ -298,6 +310,15 @@ body{font-family:'Inter',sans-serif;background:var(--bg);color:var(--dark2);min-
     <div class="save-msg" id="save-msg"></div>
   </div>
 
+  <!-- PLANS CARD -->
+  <div class="bookings-card" style="margin-bottom:20px;">
+    <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:16px;">
+      <div class="section-title" style="margin-bottom:0;">Миний аяллын төлөвлөгөөнүүд</div>
+      <a href="/planner/" style="font-size:12px;font-weight:600;color:var(--blue);text-decoration:none;">＋ Шинэ</a>
+    </div>
+    <div id="myPlans"><div class="empty-bookings">Ачаалж байна...</div></div>
+  </div>
+
   <!-- BOOKINGS CARD -->
   <div class="bookings-card">
     <div class="section-title">Миний захиалгууд</div>
@@ -381,6 +402,7 @@ onAuthStateChanged(auth, async user => {
   currentProfile = snap.exists() ? snap.data() : {};
   fillForm(currentProfile, user);
   loadBookings(user.email, user.uid);
+  loadPlans(user.uid);
 });
 
 function fillForm(p, user) {
@@ -631,6 +653,47 @@ async function loadBookings(email, uid) {
     } catch(e2) {
       container.innerHTML = '<div class="empty-bookings">Одоогоор захиалга байхгүй байна<br><a href="/booking/" style="color:var(--blue);font-weight:600;margin-top:8px;display:inline-block">Захиалга өгөх →</a></div>';
     }
+  }
+}
+
+async function loadPlans(uid) {
+  const container = document.getElementById('myPlans');
+  if (!container) return;
+  try {
+    const q = query(collection(db,'planners'), where('uid','==',uid), orderBy('createdAt','desc'));
+    const snap = await getDocs(q);
+    if (snap.empty) {
+      container.innerHTML = '<div class="empty-bookings">Төлөвлөгөө байхгүй байна<br><a href="/planner/" style="color:var(--blue);font-weight:600;margin-top:8px;display:inline-block">Төлөвлөгөө үүсгэх →</a></div>';
+      return;
+    }
+    container.innerHTML = '';
+    snap.docs.slice(0,6).forEach(docSnap => {
+      const d = docSnap.data(), id = docSnap.id;
+      const title   = d.title || 'Нэргүй төлөвлөгөө';
+      const arrival = d.dates?.arrival || '';
+      const dep     = d.dates?.departure || '';
+      const places  = (d.savedPlaces || []).length;
+      const people  = (d.people || []).length;
+      const meta    = [arrival?(arrival+(dep?' → '+dep:'')):'', people?people+' хүн':'', places?places+' газар':''].filter(Boolean).join(' · ');
+      const link    = `https://bileg11.github.io/planner/?id=${id}`;
+      const row = document.createElement('div');
+      row.className = 'plan-item-row';
+      row.innerHTML = `
+        <div class="plan-item-row-icon">🗺</div>
+        <div class="plan-item-row-info">
+          <div class="plan-item-row-title">${title}</div>
+          <div class="plan-item-row-meta">${meta}</div>
+        </div>
+        <div class="plan-item-row-actions">
+          <button class="plan-row-btn" onclick="event.stopPropagation();navigator.clipboard.writeText('${link}').then(()=>toast('Линк хуулагдлаа','success'))">📋</button>
+          <a href="${link}" class="plan-row-btn" style="text-decoration:none;display:inline-flex;align-items:center;" onclick="event.stopPropagation()">Нээх</a>
+        </div>
+      `;
+      row.addEventListener('click', () => window.location.href = link);
+      container.appendChild(row);
+    });
+  } catch(e) {
+    container.innerHTML = '<div class="empty-bookings">Уншихад алдаа гарлаа</div>';
   }
 }
 

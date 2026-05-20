@@ -449,6 +449,86 @@
       .places-grid { grid-template-columns: 1fr; }
     }
 
+    /* ── AUTH NAV ── */
+    .nav-user { display:flex;align-items:center;gap:8px;text-decoration:none;cursor:pointer; }
+    .nav-user-avatar {
+      width:32px;height:32px;border-radius:50%;
+      background:var(--primary);color:#fff;
+      display:flex;align-items:center;justify-content:center;
+      font-size:.82rem;font-weight:700;flex-shrink:0;overflow:hidden;
+    }
+    .nav-user-avatar img { width:100%;height:100%;object-fit:cover; }
+    .nav-user-name { font-size:.85rem;font-weight:600;color:var(--text);max-width:100px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap; }
+    .nav-login-btn {
+      background:none;border:1.5px solid var(--border);color:var(--text);
+      padding:6px 16px;border-radius:50px;font-size:.85rem;font-weight:600;
+      cursor:pointer;font-family:inherit;text-decoration:none;transition:all .2s;
+    }
+    .nav-login-btn:hover { border-color:var(--primary);color:var(--primary); }
+
+    /* ── MY PLANS PANEL ── */
+    .my-plans-panel {
+      background:var(--card);border-radius:var(--radius);
+      box-shadow:var(--shadow);padding:20px 24px;
+      margin-bottom:20px;display:none;
+    }
+    .my-plans-panel.visible { display:block; }
+    .my-plans-header { display:flex;align-items:center;justify-content:space-between;margin-bottom:14px; }
+    .my-plans-title { font-size:.95rem;font-weight:700; }
+    .btn-new-plan {
+      background:var(--primary);color:#fff;border:none;
+      padding:7px 16px;border-radius:50px;font-size:.82rem;
+      font-weight:600;cursor:pointer;font-family:inherit;transition:background .2s;
+    }
+    .btn-new-plan:hover { background:var(--primary-d); }
+    .my-plans-list { display:flex;flex-direction:column;gap:8px; }
+    .plan-item {
+      display:flex;align-items:center;gap:12px;
+      padding:12px 14px;border-radius:12px;
+      border:1.5px solid var(--border);cursor:pointer;
+      transition:all .2s;background:var(--bg);
+    }
+    .plan-item:hover { border-color:var(--primary);background:rgba(232,57,42,.04); }
+    .plan-item-icon { font-size:1.4rem;flex-shrink:0; }
+    .plan-item-info { flex:1;min-width:0; }
+    .plan-item-title { font-size:.9rem;font-weight:700;white-space:nowrap;overflow:hidden;text-overflow:ellipsis; }
+    .plan-item-meta { font-size:.76rem;color:var(--sub);margin-top:2px; }
+    .plan-item-share {
+      background:none;border:1.5px solid var(--border);color:var(--sub);
+      padding:5px 12px;border-radius:50px;font-size:.76rem;font-weight:600;
+      cursor:pointer;font-family:inherit;flex-shrink:0;transition:all .2s;
+    }
+    .plan-item-share:hover { border-color:var(--primary);color:var(--primary); }
+    .plans-loading { text-align:center;padding:12px;color:var(--sub);font-size:.85rem; }
+    .plans-login-prompt {
+      text-align:center;padding:16px;color:var(--sub);font-size:.88rem;
+    }
+    .plans-login-prompt a { color:var(--primary);font-weight:600;text-decoration:none; }
+
+    /* ── SHARED PLAN BANNER ── */
+    .shared-banner {
+      background:linear-gradient(135deg,#1a1a2e,#e8392a);
+      color:#fff;border-radius:var(--radius);
+      padding:20px 24px;margin-bottom:20px;display:none;
+    }
+    .shared-banner.visible { display:block; }
+    .shared-banner h3 { font-size:1.05rem;margin-bottom:5px; }
+    .shared-banner p { font-size:.85rem;opacity:.85;margin-bottom:14px;line-height:1.5; }
+    .shared-banner-btns { display:flex;gap:10px;flex-wrap:wrap; }
+    .btn-use-plan {
+      background:#fff;color:var(--primary);border:none;
+      padding:9px 20px;border-radius:50px;font-size:.88rem;
+      font-weight:700;cursor:pointer;font-family:inherit;transition:all .2s;
+    }
+    .btn-use-plan:hover { background:rgba(255,255,255,.9); }
+    .btn-view-only {
+      background:rgba(255,255,255,.15);color:#fff;
+      border:1.5px solid rgba(255,255,255,.35);
+      padding:9px 20px;border-radius:50px;font-size:.88rem;
+      font-weight:600;cursor:pointer;font-family:inherit;transition:all .2s;
+    }
+    .btn-view-only:hover { background:rgba(255,255,255,.25); }
+
     /* ── PLAN SUMMARY BADGE ── */
     .plan-summary-bar {
       background: var(--card); border-radius: var(--radius);
@@ -478,7 +558,7 @@
       <li><a href="/tips/">Зөвлөмж</a></li>
       <li><a href="/planner/" style="color:var(--primary)">Төлөвлөгч</a></li>
     </ul>
-    <a class="nav-btn" href="/booking/">Захиалах</a>
+    <div id="navAuth"><a href="/login/?redirect=/planner/" class="nav-login-btn">Нэвтрэх</a></div>
   </div>
 </nav>
 
@@ -492,6 +572,27 @@
   <div class="hero-plan">
     <h1>Шанхай <span>Аяллын Төлөвлөгч</span></h1>
     <p>Огноо, хүмүүс, сонирхол, газрууд — бүгдийг нэг дор. Найзтайгаа хуваалц.</p>
+  </div>
+
+  <!-- MY PLANS PANEL -->
+  <div class="my-plans-panel" id="myPlansPanel">
+    <div class="my-plans-header">
+      <span class="my-plans-title">📋 Миний Төлөвлөгөөнүүд</span>
+      <button class="btn-new-plan" onclick="startNewPlan()">＋ Шинэ</button>
+    </div>
+    <div class="my-plans-list" id="myPlansList">
+      <div class="plans-loading">Уншиж байна...</div>
+    </div>
+  </div>
+
+  <!-- SHARED PLAN BANNER -->
+  <div class="shared-banner" id="sharedBanner">
+    <h3 id="sharedBannerTitle">🗺 Найзын төлөвлөгөөг харж байна</h3>
+    <p id="sharedBannerDesc">Энэ төлөвлөгөөг өөрийн болгож засах боломжтой.</p>
+    <div class="shared-banner-btns">
+      <button class="btn-use-plan" onclick="copyAndEditPlan()">Хуулж засах ✏️</button>
+      <button class="btn-view-only" onclick="dismissSharedBanner()">Зүгээр харах</button>
+    </div>
   </div>
 
   <!-- PROGRESS -->
@@ -554,6 +655,11 @@
       <div style="margin-top:20px;">
         <label style="margin-bottom:8px;display:block;">Байрлах газар (зочид буудал)</label>
         <input type="text" id="hotel" placeholder="жш: Radisson Hotel, Hongkou"/>
+      </div>
+
+      <div style="margin-top:20px;">
+        <label style="margin-bottom:8px;display:block;">Төлөвлөгөөний нэр <span style="color:var(--sub);font-weight:400;">(заавал биш)</span></label>
+        <input type="text" id="planTitle" placeholder="жш: Гэр бүлийн Шанхай 2026 🏙"/>
       </div>
     </div>
     <div class="btn-row">
@@ -674,11 +780,14 @@
 
     <!-- SHARE -->
     <div class="card">
-      <div class="card-title">Найзтайгаа хуваалц</div>
-      <div class="card-sub">Доорх линкийг хуулж найздаа илгээ.</div>
+      <div class="card-title">Найзтайгаа хуваалц 🔗</div>
+      <div class="card-sub">Хадгалсны дараа линк үүснэ. Найздаа илгээхэд найз нь дарж орж, хуулж өөрийн болгон засах боломжтой.</div>
       <div class="share-box">
-        <input class="share-link-input" id="shareLink" readonly placeholder="↓ Эхлээд хадгалах товч дарна уу"/>
+        <input class="share-link-input" id="shareLink" readonly placeholder="↓ Эхлээд 'Хадгалах' товч дарна уу"/>
         <button class="btn-copy" onclick="copyLink()">Хуулах</button>
+        <div id="shareHint" style="display:none;font-size:.8rem;color:#16a34a;margin-top:8px;padding:8px 12px;background:#f0fff4;border-radius:8px;">
+          ✓ Линк бэлэн боллоо! Найздаа илгээхэд тэр нь дарж орж төлөвлөгөөг харж, өөрийн болгон хуулж болно.
+        </div>
         <div class="share-icons">
           <button class="share-icon-btn" onclick="shareViaEmail()">✉️ И-мэйл</button>
           <button class="share-icon-btn" onclick="downloadPDF()" style="background:rgba(212,168,67,.18);border-color:rgba(212,168,67,.4);">📄 PDF татах</button>
@@ -699,7 +808,8 @@
 import { initializeApp } from 'https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js';
 import { getAuth, onAuthStateChanged }
   from 'https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js';
-import { getFirestore, doc, setDoc, getDoc, collection, addDoc, serverTimestamp }
+import { getFirestore, doc, setDoc, getDoc, collection, addDoc, getDocs,
+         query, where, orderBy, limit, serverTimestamp }
   from 'https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js';
 
 const firebaseConfig = {
@@ -717,65 +827,207 @@ const auth = getAuth(app);
 const db   = getFirestore(app);
 
 window._db = db;
-window._authFunctions = { addDoc, setDoc, getDoc, collection, doc, serverTimestamp };
+window._authFunctions = { addDoc, setDoc, getDoc, getDocs, collection, doc, query, where, orderBy, limit, serverTimestamp };
 
-// Silently track login state — no gate, just record who the user is
+/* ── AUTH STATE ── */
 onAuthStateChanged(auth, user => {
   window._currentUser = user || null;
+  updateNavAuth(user);
+  if (user) {
+    loadMyPlans(user);
+  } else {
+    const panel = document.getElementById('myPlansPanel');
+    const list  = document.getElementById('myPlansList');
+    if (panel) panel.classList.add('visible');
+    if (list)  list.innerHTML = `<div class="plans-login-prompt">Төлөвлөгөөгөө хадгалахын тулд <a href="/login/?redirect=/planner/">нэвтэрнэ үү</a>.</div>`;
+  }
 });
 
-window.savePlan = async () => {
-  const planData = {
-    dates: { arrival: window._plan.arrival, departure: window._plan.departure },
-    people: window._plan.people,
-    hotel: window._plan.hotel,
-    interests: window._plan.interests,
-    budget: window._plan.budget,
-    timePrefs: window._plan.timePrefs,
-    savedPlaces: window._plan.savedPlaces,
-    dayAssignments: window._plan.dayAssignments || {},
-    createdAt: new Date().toISOString(),
-    uid: window._currentUser ? window._currentUser.uid : 'guest'
-  };
+function updateNavAuth(user) {
+  const navAuth = document.getElementById('navAuth');
+  if (!navAuth) return;
+  if (user) {
+    const name = user.displayName || user.email?.split('@')[0] || 'Хэрэглэгч';
+    const initial = name[0].toUpperCase();
+    const photoHtml = user.photoURL
+      ? `<div class="nav-user-avatar"><img src="${user.photoURL}" alt="${initial}"/></div>`
+      : `<div class="nav-user-avatar">${initial}</div>`;
+    navAuth.innerHTML = `<a href="/profile/" class="nav-user">${photoHtml}<span class="nav-user-name">${name}</span></a>`;
+  } else {
+    navAuth.innerHTML = `<a href="/login/?redirect=/planner/" class="nav-login-btn">Нэвтрэх</a>`;
+  }
+}
 
+async function loadMyPlans(user) {
+  const panel = document.getElementById('myPlansPanel');
+  const list  = document.getElementById('myPlansList');
+  if (!panel || !list) return;
+  panel.classList.add('visible');
+  list.innerHTML = '<div class="plans-loading">⏳ Уншиж байна...</div>';
+  try {
+    const q = query(collection(db,'planners'), where('uid','==',user.uid), orderBy('createdAt','desc'), limit(6));
+    const snap = await getDocs(q);
+    if (snap.empty) {
+      list.innerHTML = '<div class="plans-loading">Одоогоор хадгалсан төлөвлөгөө байхгүй. Шинэ үүсгэж эхэл!</div>';
+      return;
+    }
+    list.innerHTML = '';
+    snap.forEach(docSnap => {
+      const d = docSnap.data(), id = docSnap.id;
+      const title   = d.title || 'Нэргүй төлөвлөгөө';
+      const arrival = d.dates?.arrival || '';
+      const dep     = d.dates?.departure || '';
+      const places  = (d.savedPlaces || []).length;
+      const people  = (d.people || []).length;
+      const dateStr = arrival ? `${arrival}${dep?' → '+dep:''}` : '';
+      const meta    = [dateStr, people?people+' хүн':'', places?places+' газар':''].filter(Boolean).join(' · ');
+
+      const item = document.createElement('div');
+      item.className = 'plan-item';
+      item.innerHTML = `
+        <div class="plan-item-icon">🗺</div>
+        <div class="plan-item-info">
+          <div class="plan-item-title">${title}</div>
+          <div class="plan-item-meta">${meta}</div>
+        </div>
+        <button class="plan-item-share" onclick="event.stopPropagation();copyShareLink('${id}')">📋 Линк</button>
+      `;
+      item.addEventListener('click', () => openSavedPlan(id, d));
+      list.appendChild(item);
+    });
+  } catch(e) {
+    list.innerHTML = '<div class="plans-loading">Уншихад алдаа гарлаа.</div>';
+    console.warn('loadMyPlans:', e);
+  }
+}
+
+function openSavedPlan(id, data) {
+  window._applySharedPlan(data);
+  window._planId = id;
+  const linkEl = document.getElementById('shareLink');
+  if (linkEl) linkEl.value = `https://bileg11.github.io/planner/?id=${id}`;
+  // show toast
+  const title = data.title || 'Төлөвлөгөө';
+  window.showToast && window.showToast(`"${title}" нээгдлээ ✓`, 'success');
+}
+
+window.copyShareLink = function(id) {
+  const link = `https://bileg11.github.io/planner/?id=${id}`;
+  navigator.clipboard.writeText(link).catch(() => {
+    const el = document.createElement('textarea');
+    el.value = link; document.body.appendChild(el); el.select();
+    document.execCommand('copy'); document.body.removeChild(el);
+  }).finally(() => {
+    window.showToast && window.showToast('Линк хуулагдлаа! 📋', 'success');
+  });
+  navigator.clipboard.writeText(link).then(() => {
+    window.showToast && window.showToast('Линк хуулагдлаа! 📋', 'success');
+  }).catch(() => {});
+};
+
+/* ── SAVE PLAN ── */
+window.savePlan = async () => {
+  const titleEl = document.getElementById('planTitle');
+  const title   = titleEl?.value.trim() || 'Шанхай аялал';
+  const planData = {
+    title,
+    dates:        { arrival: window._plan.arrival, departure: window._plan.departure },
+    people:       window._plan.people,
+    hotel:        window._plan.hotel,
+    interests:    window._plan.interests,
+    budget:       window._plan.budget,
+    timePrefs:    window._plan.timePrefs,
+    savedPlaces:  window._plan.savedPlaces,
+    dayAssignments: window._plan.dayAssignments || {},
+    createdAt:    new Date().toISOString(),
+    uid:          window._currentUser ? window._currentUser.uid : 'guest'
+  };
   const linkEl = document.getElementById('shareLink');
   try {
-    const { addDoc, collection } = window._authFunctions;
-    const ref = await addDoc(collection(db, 'planners'), planData);
-    const link = `https://bileg11.github.io/planner/?id=${ref.id}`;
-    linkEl.value = link;
-    window._planId = ref.id;
-    showToast('Төлөвлөгөө хадгалагдлаа!', 'success');
+    if (window._planId && !window._planId.startsWith('local_')) {
+      await setDoc(doc(db,'planners',window._planId), planData, { merge:true });
+      if (linkEl) linkEl.value = `https://bileg11.github.io/planner/?id=${window._planId}`;
+      showToast('Шинэчлэгдлээ ✓', 'success');
+    } else {
+      const ref = await addDoc(collection(db,'planners'), planData);
+      if (linkEl) linkEl.value = `https://bileg11.github.io/planner/?id=${ref.id}`;
+      window._planId = ref.id;
+      showToast('Хадгалагдлаа! 🎉', 'success');
+      if (window._currentUser) loadMyPlans(window._currentUser);
+    }
+    if (linkEl) {
+      linkEl.select();
+      document.getElementById('shareHint') && (document.getElementById('shareHint').style.display = 'block');
+    }
   } catch(e) {
     const localId = 'local_' + Date.now();
     localStorage.setItem('plan_' + localId, JSON.stringify(planData));
-    const link = `https://bileg11.github.io/planner/?id=${localId}`;
-    linkEl.value = link;
-    showToast('Хадгалагдлаа.', 'success');
+    if (linkEl) linkEl.value = `https://bileg11.github.io/planner/?id=${localId}`;
+    window._planId = localId;
+    showToast('Хадгалагдлаа (offline)', 'success');
   }
 };
 
-// Load shared plan from URL — wait for DOM ready
+/* ── SHARED PLAN LOAD ── */
 window.addEventListener('DOMContentLoaded', () => {
-  const urlParams = new URLSearchParams(location.search);
-  const sharedId = urlParams.get('id');
+  const sharedId = new URLSearchParams(location.search).get('id');
   if (!sharedId) return;
 
   if (sharedId.startsWith('local_')) {
     const raw = localStorage.getItem('plan_' + sharedId);
-    if (raw) { _applySharedPlan(JSON.parse(raw)); }
+    if (raw) showSharedBanner(JSON.parse(raw), sharedId);
     return;
   }
-
   (async () => {
     try {
-      const { getDoc, doc } = window._authFunctions;
-      const snap = await getDoc(doc(db, 'planners', sharedId));
-      if (snap.exists()) { _applySharedPlan(snap.data()); }
-      else { showToast('Төлөвлөгөө олдсонгүй', 'error'); }
-    } catch(e) { console.log('Shared plan load error:', e); }
+      const snap = await getDoc(doc(db,'planners',sharedId));
+      if (snap.exists()) showSharedBanner(snap.data(), sharedId);
+      else window.showToast && window.showToast('Төлөвлөгөө олдсонгүй', 'error');
+    } catch(e) { console.warn('Shared plan load:', e); }
   })();
 });
+
+function showSharedBanner(data, id) {
+  const banner = document.getElementById('sharedBanner');
+  if (!banner) { window._applySharedPlan(data); return; }
+  const title  = data.title || 'Шанхай аялал';
+  const places = (data.savedPlaces||[]).length;
+  const people = (data.people||[]).length;
+  const arr    = data.dates?.arrival || '';
+  const meta   = [arr, people?people+' хүн':'', places?places+' газар байна':''].filter(Boolean).join(' · ');
+  document.getElementById('sharedBannerTitle').textContent = `🗺 "${title}"`;
+  document.getElementById('sharedBannerDesc').textContent  = meta + ' — Найзын хуваалцсан төлөвлөгөө';
+  banner.classList.add('visible');
+  window._sharedPlanData = data;
+  window._sharedPlanId   = id;
+  window._applySharedPlan(data);
+  window._planId = null;
+}
+
+window.copyAndEditPlan = function() {
+  if (!window._sharedPlanData) return;
+  window._applySharedPlan(window._sharedPlanData);
+  window._planId = null;
+  document.getElementById('sharedBanner')?.classList.remove('visible');
+  window.showToast && window.showToast('Хуулагдлаа. Засаад хадгал! ✏️', 'success');
+  if (window.loadSharedPlan) window.loadSharedPlan();
+};
+
+window.dismissSharedBanner = function() {
+  document.getElementById('sharedBanner')?.classList.remove('visible');
+};
+
+window.startNewPlan = function() {
+  window._plan = { arrival:'', departure:'', people:[], hotel:'', interests:[], budget:'', timePrefs:{}, savedPlaces:[], dayAssignments:{} };
+  window._planId = null;
+  const t = document.getElementById('planTitle'); if (t) t.value = '';
+  const h = document.getElementById('hotel');     if (h) h.value = '';
+  const a = document.getElementById('dateArrival');    if (a) a.value = '';
+  const dep = document.getElementById('dateDeparture'); if (dep) dep.value = '';
+  document.querySelectorAll('.chip').forEach(c => c.classList.remove('selected'));
+  window.goToStep(1);
+  window.showToast && window.showToast('Шинэ төлөвлөгөө', 'success');
+};
 
 window._applySharedPlan = function(d) {
   window._plan = {
@@ -786,6 +1038,10 @@ window._applySharedPlan = function(d) {
     savedPlaces: d.savedPlaces||[],
     dayAssignments: d.dayAssignments||{}
   };
+  const t = document.getElementById('planTitle'); if (t && d.title) t.value = d.title;
+  const h = document.getElementById('hotel');     if (h && d.hotel) h.value = d.hotel;
+  const a = document.getElementById('dateArrival');    if (a && d.dates?.arrival)   a.value = d.dates.arrival;
+  const dep = document.getElementById('dateDeparture'); if (dep && d.dates?.departure) dep.value = d.dates.departure;
   if (window.loadSharedPlan) window.loadSharedPlan();
   else window.addEventListener('plannerReady', () => window.loadSharedPlan());
 };
