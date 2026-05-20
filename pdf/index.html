@@ -175,7 +175,6 @@ footer a:hover{color:#fff}
 </div>
 
 <script>
-// Unique per-buyer codes — нэг код нэг хүнд
 const VALID_CODES = [
   'SH-6IJF-OYKZ','SH-WNM7-MGDN','SH-KUEY-O8SZ','SH-LW9U-VIKW','SH-UIWP-WMXU',
   'SH-GXYI-RLRM','SH-HPND-704P','SH-95EW-9550','SH-63IO-OJS7','SH-ZZ98-OQBO',
@@ -201,20 +200,17 @@ const VALID_CODES = [
 
 function checkCode(){
   const input = document.getElementById('codeInput').value.trim().toUpperCase();
-  const validUpper = VALID_CODES.map(c=>c.toUpperCase());
-  if(validUpper.includes(input)){
+  if(!input){ document.getElementById('codeError').textContent='Код оруулна уу.'; return; }
+  if(VALID_CODES.includes(input)){
     localStorage.setItem('lfs_guide_access','granted');
     document.getElementById('gate').style.display='none';
   } else {
     document.getElementById('codeError').textContent='Код буруу байна. Дахин оролдоно уу.';
     document.getElementById('codeInput').style.borderColor='#e8392a';
-    setTimeout(()=>{
-      document.getElementById('codeInput').style.borderColor='#e5e5ea';
-    },1500);
+    setTimeout(()=>document.getElementById('codeInput').style.borderColor='#e5e5ea',1500);
   }
 }
 
-// Page load check
 (function(){
   if(localStorage.getItem('lfs_guide_access')==='granted'){
     document.getElementById('gate').style.display='none';
