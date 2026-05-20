@@ -822,9 +822,26 @@
   <div class="step" id="step-3">
     <div class="card">
       <div class="card-title">Цагийн хэв маяг</div>
-      <div class="card-sub">Өдөр бүр хэдэд гараад, хэдэд буцах вэ?</div>
-      <div class="day-cards" id="dayCards">
-        <!-- JS-ээр үүсгэнэ -->
+      <div class="card-sub">Бүх өдөрт адилхан цаг хэрэглэнэ.</div>
+
+      <div style="margin-bottom:24px;">
+        <div style="font-size:.85rem;font-weight:600;margin-bottom:10px;">🌅 Өглөө хэдэд гарах вэ?</div>
+        <div class="chips" id="startTimeChips">
+          <div class="chip" data-val="08:00" onclick="selectGlobalTime('start',this)">08:00 Эрт</div>
+          <div class="chip selected" data-val="09:00" onclick="selectGlobalTime('start',this)">09:00 Өглөө</div>
+          <div class="chip" data-val="10:00" onclick="selectGlobalTime('start',this)">10:00</div>
+          <div class="chip" data-val="11:00" onclick="selectGlobalTime('start',this)">11:00 Хожуу</div>
+        </div>
+      </div>
+
+      <div>
+        <div style="font-size:.85rem;font-weight:600;margin-bottom:10px;">🌙 Орой хэдэд буцах вэ?</div>
+        <div class="chips" id="endTimeChips">
+          <div class="chip" data-val="18:00" onclick="selectGlobalTime('end',this)">18:00 Эрт</div>
+          <div class="chip" data-val="20:00" onclick="selectGlobalTime('end',this)">20:00</div>
+          <div class="chip selected" data-val="21:00" onclick="selectGlobalTime('end',this)">21:00 Стандарт</div>
+          <div class="chip" data-val="23:00" onclick="selectGlobalTime('end',this)">23:00+ Оройтох</div>
+        </div>
       </div>
     </div>
     <div class="btn-row">
@@ -2002,56 +2019,19 @@ window.removePerson = function(i) {
 };
 renderPeople();
 
-window.updateDayCards = function() {
-  const arr = document.getElementById('dateArrival').value;
-  const dep = document.getElementById('dateDeparture').value;
-  if (arr && dep) buildDayCards(arr, dep);
-};
+window.updateDayCards = function() {}; // no-op — replaced by global time
 
-function buildDayCards(arr, dep) {
-  const a = new Date(arr), b = new Date(dep);
-  const days = Math.max(1, Math.round((b-a)/(1000*60*60*24))+1);
-  const cont = document.getElementById('dayCards');
-  cont.innerHTML = '';
-  const MN_DAYS = ['Ня','Да','Мя','Лх','Пү','Ба','Бя'];
-  const MN_MONTHS = ['1-р сар','2-р сар','3-р сар','4-р сар','5-р сар','6-р сар',
-    '7-р сар','8-р сар','9-р сар','10-р сар','11-р сар','12-р сар'];
-  for (let d = 0; d < days; d++) {
-    const dt = new Date(a); dt.setDate(a.getDate() + d);
-    const label = `${dt.getDate()} ${MN_MONTHS[dt.getMonth()]} (${MN_DAYS[dt.getDay()]})`;
-    const card = document.createElement('div');
-    card.className = 'day-card';
-    const key = arr + '_d' + d;
-    const saved = window._plan.timePrefs[key] || {};
-    card.innerHTML = `
-      <h4>${d+1}-р өдөр · ${label}</h4>
-      <div style="margin-bottom:10px;">
-        <div style="font-size:.8rem;color:var(--sub);margin-bottom:6px;">Явах цаг:</div>
-        <div class="time-options">
-          ${['08:00 Эрт','09:00 Өглөө','10:00','11:00','12:00 Өдрийн дараа','13:00','14:00 Оройдоо']
-            .map(t => `<div class="time-chip ${saved.start===t?'selected':''}"
-              onclick="selectTime(this,'${key}','start')">${t}</div>`).join('')}
-        </div>
-      </div>
-      <div>
-        <div style="font-size:.8rem;color:var(--sub);margin-bottom:6px;">Буцах цаг:</div>
-        <div class="time-options">
-          ${['17:00 Эрт буцах','18:00','19:00','20:00','21:00','22:00 Оройтох','Хоног дуустал']
-            .map(t => `<div class="time-chip ${saved.end===t?'selected':''}"
-              onclick="selectTime(this,'${key}','end')">${t}</div>`).join('')}
-        </div>
-      </div>
-    `;
-    cont.appendChild(card);
-  }
-}
+/* global time defaults */
+window._plan.globalStartTime = window._plan.globalStartTime || '09:00';
+window._plan.globalEndTime   = window._plan.globalEndTime   || '21:00';
 
-window.selectTime = function(el, key, type) {
-  const parent = el.parentElement;
-  parent.querySelectorAll('.time-chip').forEach(c => c.classList.remove('selected'));
+window.selectGlobalTime = function(type, el) {
+  const groupId = type === 'start' ? 'startTimeChips' : 'endTimeChips';
+  document.querySelectorAll(`#${groupId} .chip`).forEach(c => c.classList.remove('selected'));
   el.classList.add('selected');
-  if (!window._plan.timePrefs[key]) window._plan.timePrefs[key] = {};
-  window._plan.timePrefs[key][type] = el.textContent.trim();
+  const val = el.dataset.val;
+  if (type === 'start') window._plan.globalStartTime = val;
+  else                  window._plan.globalEndTime   = val;
 };
 
 window.nextFromDates = function() {
@@ -2063,7 +2043,6 @@ window.nextFromDates = function() {
   window._plan.departure = dep;
   window._plan.people = people;
   window._plan.hotel = document.getElementById('hotel').value;
-  buildDayCards(arr, dep);
   goToStep(2);
 };
 
@@ -2357,8 +2336,7 @@ function buildCostTable(places, numPeople) {
     ['Метро & тэрэг', `¥35/хүн/өдөр × ${days}өд × ${numPeople}`, `¥${metroEst}`],
     ['Хоол (ойролцоо)', `¥120/хүн/өдөр × ${days}өд × ${numPeople}`, `¥${foodEst}`],
     ['Нийт (CNY)', '', `<span class="cost-total">¥${total}</span>`],
-    ['Нийт (USD)', '', `<span class="cost-total">~$${Math.round(total/7.2)}</span>`],
-    ['Нийт (MNT)', '', `<span class="cost-total">~₮${(Math.round(total/7.2)*3450).toLocaleString()}</span>`],
+    ['Нийт (₮)', '', `<span class="cost-total">~₮${Math.round(total*535).toLocaleString()}</span>`],
   ];
 
   document.getElementById('costTable').innerHTML = rows.map(r =>
@@ -2513,7 +2491,7 @@ window.downloadPDF = function() {
       <div class="cost-row"><span>Үзэмжийн хураамж</span><span>¥${entryCost} × ${numP} = ¥${entryCost*numP}</span></div>
       <div class="cost-row"><span>Метро & тэрэг</span><span>¥35/хүн/өдөр × ${days}өд × ${numP} = ¥${metro}</span></div>
       <div class="cost-row"><span>Хоол (ойролцоо)</span><span>¥120/хүн/өдөр × ${days}өд × ${numP} = ¥${food}</span></div>
-      <div class="cost-row"><span style="font-weight:700">Нийт</span><span class="cost-total">¥${total} · ~$${Math.round(total/7.2)} · ~₮${(Math.round(total/7.2)*3450).toLocaleString()}</span></div>
+      <div class="cost-row"><span style="font-weight:700">Нийт</span><span class="cost-total">¥${total} · ~₮${Math.round(total*535).toLocaleString()}</span></div>
     </div>
     <div class="footer">LFS Shanghai · bileg11.github.io · lfs.shanghai1@gmail.com</div>
   </div>
