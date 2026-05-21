@@ -821,9 +821,11 @@ section,#booking-section{scroll-margin-top:60px}
   .medical-inner{gap:36px}
   .medical-card{padding:24px}
 
-  /* Itineraries */
+  /* Itineraries — hide content, show CTA card */
+  .itin-content{display:none!important}
+  .itin-mobile-cta{display:block!important}
   .itin-panel{padding:24px 20px}
-  .itin-tabs{gap:6px}
+  .itin-tabs{gap:6px;display:none}
   .itin-tab{padding:7px 14px;font-size:12px}
 
   /* Tips */
@@ -971,18 +973,16 @@ section,#booking-section{scroll-margin-top:60px}
 </nav>
 <!-- Mobile nav menu — outside nav to avoid backdrop-filter containing block issue -->
 <div class="nav-links" id="navLinks">
-  <button onclick="closeMobileMenu()" style="position:absolute;top:16px;right:20px;background:none;border:none;color:rgba(255,255,255,.6);font-size:24px;cursor:pointer;padding:8px;line-height:1;">✕</button>
   <button class="nav-link active" onclick="scrollTo_(0);closeMobileMenu()">Нүүр</button>
-  <button class="nav-link" onclick="scrollToId('medical');closeMobileMenu()">Эрүүл мэнд</button>
-  <button class="nav-link" onclick="window.location.href='/health/';closeMobileMenu()">Эрүүл мэндийн багц</button>
-  <button class="nav-link" onclick="window.location.href='/routes/';closeMobileMenu()">Маршрут</button>
-  <button class="nav-link" onclick="window.location.href='/tips/';closeMobileMenu()">Зөвлөмж</button>
-  <button class="nav-link" onclick="window.location.href='/metro/';closeMobileMenu()">Метро</button>
-  <button class="nav-link" onclick="window.location.href='/contact/';closeMobileMenu()">Холбогдох</button>
-  <button class="nav-link" onclick="scrollToId('pricing');closeMobileMenu()">Үнэ</button>
+  <button class="nav-link" onclick="window.location.href='/health/';closeMobileMenu()">Эрүүл мэнд 🩺</button>
+  <button class="nav-link" onclick="window.location.href='/routes/';closeMobileMenu()">Маршрут 🗺️</button>
+  <button class="nav-link" onclick="window.location.href='/tips/';closeMobileMenu()">Зөвлөмж 💡</button>
+  <button class="nav-link" onclick="window.location.href='/metro/';closeMobileMenu()">Метро 🚇</button>
   <button class="nav-link" onclick="window.location.href='/planner/';closeMobileMenu()" style="color:#e8392a;">✦ Аяллын Төлөвлөгч</button>
+  <button class="nav-link" onclick="scrollToId('pricing');closeMobileMenu()">Үнэ 💰</button>
+  <button class="nav-link" onclick="window.location.href='/contact/';closeMobileMenu()">Холбогдох 📩</button>
   <button class="nav-link" id="mob-auth-btn" onclick="window.location.href='/login/';closeMobileMenu()">Нэвтрэх 👤</button>
-  <button class="nav-link" onclick="window.location.href='/booking/';closeMobileMenu()">Захиалах</button>
+  <a href="/booking/" class="nav-link" style="color:#0071e3;font-weight:600">Захиалах →</a>
 </div>
 
 <!-- HERO — full bleed cinematic -->
@@ -1032,7 +1032,7 @@ section,#booking-section{scroll-margin-top:60px}
       <div class="hero-stat-label">Аялагч</div>
     </div>
     <div class="hero-stat">
-      <div class="hero-stat-num" data-count="5" data-suffix=" жил">5 жил</div>
+      <div class="hero-stat-num" data-count="3" data-suffix=" жил">3 жил</div>
       <div class="hero-stat-label">Туршлага</div>
     </div>
     <div class="hero-stat">
@@ -1162,6 +1162,13 @@ section,#booking-section{scroll-margin-top:60px}
       <button class="itin-tab" onclick="switchItin('shopping',this)">🛍️ Шоппинг</button>
       <button class="itin-tab" onclick="switchItin('culture',this)">🎎 Соёл</button>
     </div>
+    <!-- Mobile: show CTA instead of full content -->
+    <a href="/routes/" class="itin-mobile-cta reveal reveal-delay-3" style="display:none;text-decoration:none;margin:8px 0 0;padding:24px 20px;background:var(--bg2);border-radius:20px;text-align:center;border:1px solid var(--border)">
+      <div style="font-size:36px;margin-bottom:10px">🗺️</div>
+      <div style="font-size:17px;font-weight:700;color:var(--dark2);margin-bottom:6px">Бүх маршрутыг харах</div>
+      <div style="font-size:13px;color:var(--muted);margin-bottom:14px">Сонгодог · Хоол · Шоппинг · Соёл · Эрүүл мэнд</div>
+      <div style="display:inline-block;background:var(--blue);color:#fff;padding:10px 24px;border-radius:20px;font-size:14px;font-weight:600">Маршрут харах →</div>
+    </a>
 
     <div class="itin-content active" id="itin-classic">
       <div class="itin-panel">

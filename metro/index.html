@@ -32,8 +32,13 @@ body{font-family:'Inter',system-ui,-apple-system,sans-serif;background:var(--bg2
 .nav{position:sticky;top:0;z-index:100;height:52px;display:flex;align-items:center;justify-content:space-between;padding:0 24px;background:rgba(255,255,255,.9);backdrop-filter:saturate(180%) blur(20px);-webkit-backdrop-filter:saturate(180%) blur(20px);border-bottom:1px solid var(--border)}
 .nav-logo{font-size:17px;font-weight:700;color:var(--text);text-decoration:none;letter-spacing:-.02em}
 .nav-logo span{color:var(--blue)}
-.nav-back{padding:7px 16px;background:var(--bg2);color:var(--text);border:none;border-radius:20px;font-size:12px;font-weight:500;cursor:pointer;text-decoration:none;display:inline-flex;align-items:center;gap:5px;transition:background .2s}
-.nav-back:hover{background:#e5e5ea}
+.hamburger{display:flex;flex-direction:column;gap:4px;cursor:pointer;padding:6px;min-width:44px;min-height:44px;align-items:center;justify-content:center;border:none;background:none}
+.hamburger span{display:block;width:18px;height:1px;background:var(--text);transition:.3s;border-radius:1px}
+.nav-menu{display:none;position:fixed;top:52px;left:0;right:0;bottom:0;z-index:499;background:rgba(8,8,12,.92);backdrop-filter:blur(28px);-webkit-backdrop-filter:blur(28px);flex-direction:column;align-items:flex-start;padding:36px 28px 40px;gap:2px;overflow-y:auto;opacity:0;pointer-events:none;transform:translateY(-20px) scale(.98);transition:opacity .5s cubic-bezier(.4,0,.2,1),transform .5s cubic-bezier(.4,0,.2,1)}
+.nav-menu.open{display:flex;opacity:1;transform:translateY(0) scale(1);pointer-events:auto}
+.nav-menu a{font-size:22px;font-weight:300;letter-spacing:-.01em;padding:18px 0;color:rgba(255,255,255,.8);border-bottom:1px solid rgba(255,255,255,.07);width:100%;text-decoration:none;display:flex;align-items:center;min-height:48px;transition:color .2s,padding-left .25s}
+.nav-menu a:hover,.nav-menu a.active{color:#fff;padding-left:10px}
+.nav-menu a:last-child{border-bottom:none}
 .hero{background:linear-gradient(135deg,#1a1a2e 0%,#16213e 50%,#0f3460 100%);padding:56px 24px 48px;text-align:center;color:#fff}
 .hero-icon{font-size:56px;margin-bottom:16px}
 .hero-title{font-size:clamp(26px,5vw,38px);font-weight:800;letter-spacing:-.04em;margin-bottom:10px}
@@ -92,8 +97,20 @@ footer a:hover{color:var(--blue)}
 
 <nav class="nav">
   <a href="/" class="nav-logo">LFS <span>Shanghai</span></a>
-  <a href="/tips/" class="nav-back">← Зөвлөмж</a>
+  <button class="hamburger" id="hamburger" aria-label="Цэс нээх" onclick="toggleNav()">
+    <span></span><span></span><span></span>
+  </button>
 </nav>
+<div class="nav-menu" id="navMenu">
+  <a href="/">Нүүр</a>
+  <a href="/health/">Эрүүл мэнд 🩺</a>
+  <a href="/routes/">Маршрут 🗺️</a>
+  <a href="/tips/">Зөвлөмж 💡</a>
+  <a href="/metro/" class="active">Метро 🚇</a>
+  <a href="/planner/" style="color:#e8392a">✦ Аяллын Төлөвлөгч</a>
+  <a href="/contact/">Холбогдох 📩</a>
+  <a href="/booking/" style="color:#0071e3;font-weight:600">Захиалах →</a>
+</div>
 
 <div class="hero">
   <div class="hero-icon">🚇</div>
@@ -423,5 +440,29 @@ footer a:hover{color:var(--blue)}
 </footer>
 
 <script src="/js/messenger-btn.js"></script>
+<script>
+function toggleNav() {
+  const menu = document.getElementById('navMenu');
+  const btn = document.getElementById('hamburger');
+  const spans = btn.querySelectorAll('span');
+  const open = menu.classList.toggle('open');
+  if (open) {
+    spans[0].style.transform = 'translateY(5px) rotate(45deg)';
+    spans[1].style.opacity = '0';
+    spans[2].style.transform = 'translateY(-5px) rotate(-45deg)';
+  } else {
+    spans[0].style.transform = '';
+    spans[1].style.opacity = '';
+    spans[2].style.transform = '';
+  }
+}
+document.addEventListener('click', e => {
+  const menu = document.getElementById('navMenu');
+  const btn = document.getElementById('hamburger');
+  if (!menu.contains(e.target) && !btn.contains(e.target) && menu.classList.contains('open')) {
+    toggleNav();
+  }
+});
+</script>
 </body>
 </html>
