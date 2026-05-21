@@ -774,6 +774,24 @@
     .guide-hotel-badge-text { font-size:.85rem; }
     .guide-hotel-badge-name { font-weight:700;color:var(--text); }
     .guide-hotel-badge-metro { font-size:.75rem;color:var(--sub);margin-top:1px; }
+    /* Place card budget dim */
+    .place-card.budget-dim { opacity:.45; }
+    .place-card.budget-dim:hover { opacity:.85; }
+    /* Place card sub-info lines */
+    .pc-metro { font-size:.76rem;color:var(--sub);margin-bottom:5px; }
+    .pc-lfs   { font-size:.78rem;color:#e8392a;margin-bottom:8px;font-style:italic;line-height:1.4; }
+    /* Mobile: readable font floors */
+    @media (max-width:600px) {
+      .place-name { font-size:.97rem; }
+      .place-desc { font-size:.82rem; }
+      .pc-metro   { font-size:.79rem; }
+      .pc-lfs     { font-size:.8rem; }
+      .place-cost { font-size:.82rem; }
+      .itin-name  { font-size:.88rem; }
+      .itin-sub   { font-size:.75rem; }
+      .food-card-name { font-size:.84rem; }
+      .ag-step    { font-size:.78rem; }
+    }
   </style>
 </head>
 <body>
@@ -2541,17 +2559,31 @@ window.filterPlaces = function(cat, btn) {
   renderPlaces();
 };
 
+// Returns true if place fits the selected budget
+function placeMatchesBudget(p) {
+  const budget = window._plan.budget;
+  if (!budget || budget === 'luxury') return true;
+  const cost = p.cost || 0;
+  if (budget === 'low')  return cost <= 50  || p.tags.includes('budget');
+  if (budget === 'mid')  return cost <= 200;
+  if (budget === 'high') return cost <= 500;
+  return true;
+}
+
 function renderPlaces() {
   const grid = document.getElementById('placesGrid');
   const interests = window._plan.interests;
   let filtered = getPlaces();
   if (currentFilter !== 'all') filtered = getPlaces().filter(p => p.cat === currentFilter);
 
-  // Sort: interest-matching first
+  // Sort: budget + interest score (higher = better match)
   filtered = [...filtered].sort((a, b) => {
-    const aMatch = interests.length === 0 || a.tags.some(t => interests.includes(t));
-    const bMatch = interests.length === 0 || b.tags.some(t => interests.includes(t));
-    return (bMatch ? 1 : 0) - (aMatch ? 1 : 0);
+    const score = p => {
+      const budgetOk  = placeMatchesBudget(p) ? 2 : 0;
+      const interestOk = (interests.length === 0 || p.tags.some(t => interests.includes(t))) ? 1 : 0;
+      return budgetOk + interestOk;
+    };
+    return score(b) - score(a);
   });
 
   document.getElementById('totalPlacesCount').textContent = filtered.length;
@@ -2559,19 +2591,31 @@ function renderPlaces() {
 
   grid.innerHTML = '';
   filtered.forEach(p => {
-    const isSaved = window._plan.savedPlaces.includes(p.id);
+    const isSaved      = window._plan.savedPlaces.includes(p.id);
+    const budgetMatch  = placeMatchesBudget(p);
     const card = document.createElement('div');
-    card.className = 'place-card' + (isSaved ? ' saved' : '');
+    card.className = 'place-card' + (isSaved ? ' saved' : '') + (!budgetMatch ? ' budget-dim' : '');
     card.id = 'pc_' + p.id;
     const catClass = { culture:'cat-culture', hidden:'cat-hidden', museum:'cat-museum', temple:'cat-temple', shopping:'cat-shopping', food:'cat-food', relax:'cat-relax', night:'cat-night', daytrip:'cat-daytrip' }[p.cat] || '';
+    // Arrival guide collapsible for Step 4
+    const agHtml = p.arrivalGuide && p.arrivalGuide.length ? `
+      <div class="arrival-guide-wrap" id="ag4_${p.id}">
+        <button class="arrival-guide-btn" onclick="event.stopPropagation();toggleArrivalGuide('ag4_${p.id}')">
+          📍 Хэрхэн очих? <span class="ag-chevron">›</span>
+        </button>
+        <div class="arrival-guide-steps" style="display:none;">
+          ${p.arrivalGuide.map(s => `<div class="ag-step">${s}</div>`).join('')}
+        </div>
+      </div>` : '';
     card.innerHTML = `
       ${p.img ? `<img class="place-img" src="${p.img}" alt="${p.name}" loading="lazy" style="width:100%;height:140px;object-fit:cover;display:block;" onerror="this.style.display='none';this.nextElementSibling.style.display='flex'"><div class="place-img-gradient" style="background:${p.bg};display:none">${p.icon}</div>` : `<div class="place-img-gradient" style="background:${p.bg}">${p.icon}</div>`}
       <div class="place-body">
         <div class="place-name">${p.name}</div>
         <span class="place-cat ${catClass}">${p.catLabel}</span>
         <div class="place-desc">${p.desc}</div>
-        ${p.metro ? `<div style="font-size:.73rem;color:var(--sub);margin-bottom:6px;">🚇 ${p.metro}</div>` : ''}
-        <div style="font-size:.77rem;color:#e8392a;margin-bottom:8px;font-style:italic;">${p.lfs}</div>
+        ${p.metro ? `<div class="pc-metro">🚇 ${p.metro}</div>` : ''}
+        <div class="pc-lfs">${p.lfs}</div>
+        ${agHtml}
         <div class="place-meta">
           <div>
             <div class="place-cost">${p.costLabel}</div>
