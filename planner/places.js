@@ -93,20 +93,34 @@ window.PLACES = [
     id:'jin_mao', name:'Jin Mao Tower', cat:'culture', catLabel:'Үзэх ёстой',
     img:'https://images.unsplash.com/photo-1614221330834-9399e5631af3?auto=format&fit=crop&w=400&h=280&q=80',
     icon:'✨', bg:'linear-gradient(135deg,#1a3a00,#2e6f00)',
-    metro:'Line 2 · Lujiazui', cost:120, costLabel:'¥120',
+    metro:'Line 2 · Lujiazui · Exit 3', cost:120, costLabel:'¥120',
     time:'1 цаг', rating:'4.6', reviews:'28,000',
     desc:'88 давхар алтан цамхаг. 88-р давхарт ажиглалтын тавцан — Shanghai Tower, SWFC-тэй зэрэгцэн.',
     lfs:'LFS: Луцзяцуйн 3 цамхагийг зэрэг харахын тулд эхлээд Jin Mao-д гар.',
+    arrivalGuide:[
+      '🚇 Lujiazui буудал, Exit 3-аар гарна',
+      '🚶 Shanghai Tower-ийн баруун талд байх алтан цамхаг — ~200м',
+      '🎫 Гол хаалгаар орж 1-р давхарт тасалбар авна (¥120)',
+      '⏫ Лифтээр 88-р давхарт — 3 цамхагийн дунд ажиглалтын тавцан',
+      '⏰ Өдөр бүр 08:30–21:00 нээлттэй'
+    ],
     tags:['culture','photo']
   },
   {
     id:'swfc', name:'Shanghai World Financial Center', cat:'culture', catLabel:'Үзэх ёстой',
     img:'https://images.unsplash.com/photo-1535356795203-50b2eb73f96c?auto=format&fit=crop&w=400&h=280&q=80',
     icon:'🏙', bg:'linear-gradient(135deg,#002244,#004488)',
-    metro:'Line 2 · Lujiazui', cost:180, costLabel:'¥100–180',
+    metro:'Line 2 · Lujiazui · Exit 6', cost:180, costLabel:'¥100–180',
     time:'1 цаг', rating:'4.6', reviews:'22,000',
     desc:'"Лааз нээгч" хэлбэртэй 492м цамхаг. 100-р давхарт шилэн ажиглалтын тавцан.',
     lfs:'LFS: Орой 21:00-ийн өмнө очвол Бүндийн гэрэл хоёуланд харагдана.',
+    arrivalGuide:[
+      '🚇 Lujiazui буудал, Exit 6-аар гарна (Shanghai Tower-тай ижил гарц)',
+      '🚶 Exit 6-аас зүүн тийш ~100м — SWFC-ийн үүдэнд хүрнэ',
+      '🎫 1-р давхарт тасалбар авна: 94F (¥100) эсвэл 100F Sky Walk (¥180)',
+      '🪟 100-р давхарт шилэн ажиглалтын тавцан — гишгэхэд дороо хот харагдана',
+      '⏰ Өдөр бүр 08:00–22:00 нээлттэй'
+    ],
     tags:['culture','photo']
   },
   {
