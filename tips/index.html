@@ -553,20 +553,17 @@ footer{
   backdrop-filter:saturate(180%) blur(16px);
   -webkit-backdrop-filter:saturate(180%) blur(16px);
   border-bottom:1px solid var(--border);
-  padding:0 24px;
-  overflow-x:auto;
-  scrollbar-width:none;
+  padding:0 16px;
 }
-.toc-bar::-webkit-scrollbar{display:none}
 .toc-inner{
-  display:flex;gap:0;
+  display:flex;flex-wrap:wrap;gap:0;
   max-width:1100px;
   margin:0 auto;
-  white-space:nowrap;
 }
 .toc-link{
-  padding:12px 16px;
+  padding:10px 12px;
   font-size:13px;font-weight:500;
+  white-space:nowrap;
   color:var(--muted);
   text-decoration:none;
   border-bottom:2px solid transparent;
@@ -623,8 +620,8 @@ footer{
 <!-- TRIP.COM SEARCH BOX -->
 <div style="background:#f5f5f7;padding:28px 24px;text-align:center">
   <div style="font-size:11px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:#0071e3;margin-bottom:10px">🔍 Шанхайн зочид буудал хайх</div>
-  <div style="max-width:820px;margin:0 auto;overflow-x:auto">
-    <iframe border="0" src="https://www.trip.com/partners/ad/S17189979?Allianceid=8256109&SID=313419324&trip_sub1=searchbox-hotels" style="width:800px;height:177px;max-width:100%;display:block;margin:0 auto" frameborder="0" scrolling="no" id="S17189979"></iframe>
+  <div style="max-width:820px;margin:0 auto;overflow:hidden;border-radius:12px">
+    <iframe border="0" src="https://www.trip.com/partners/ad/S17189979?Allianceid=8256109&SID=313419324&trip_sub1=searchbox-hotels" style="width:100%;min-width:300px;height:177px;display:block" frameborder="0" scrolling="no" id="S17189979"></iframe>
   </div>
 </div>
 
