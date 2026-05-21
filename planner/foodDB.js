@@ -61,7 +61,7 @@ window.FOOD_DB = {
     {
       key: 'bund',
       name: 'The Bund (外滩)',
-      placeIds: ['bund', 'fairmont_jazz'],
+      placeIds: ['bund', 'fairmont_jazz', 'huangpu_river', 'south_bund', 'mr_mrs_bund', 'long_bar', 'bar_rouge'],
       places: [
         { name:"Shanghai Lao Lao (外滩姥姥家常菜)", walk:5, metro:"East Nanjing Road Station, Exit 2", price:85, hours:"11:00–14:00, 17:00–21:30", menu:"photo", desc:"Тухтай гэр ахуйн хоол — чихэрлэг гахайн өвдөгний мах.", keyword:"外滩姥姥家常菜", meal:"lunch" },
         { name:"Lost Heaven Yunnan (花马天堂 外滩店)", walk:8, metro:"East Nanjing Road Station, Exit 3", price:180, hours:"11:30–14:00, 17:30–22:30", menu:"yes", desc:"Юнань мужийн үндэстний хоол — Англи менютэй, уур амьсгал гайхалтай.", keyword:"花马天堂云南餐厅 (外滩店)", meal:"lunch" },
@@ -75,7 +75,7 @@ window.FOOD_DB = {
     {
       key: 'yu-garden',
       name: 'Yu Garden (豫园)',
-      placeIds: ['yu_garden', 'yuyuan_bazaar', 'nanxiang'],
+      placeIds: ['yu_garden', 'yuyuan_bazaar', 'yuyuan_bazaar_shop', 'yuyuan_food', 'chenghuang_temple', 'nanxiang'],
       places: [
         { name:"Nanxiang Steamed Bun (南翔馒头店)", walk:2, metro:"Yuyuan Garden Station, Exit 1", price:90, hours:"08:00–21:30", menu:"photo", desc:"Шанхайн таанбао-гийн эх нутаг — зайны дэлгүүрт байрлах домогт газар.", keyword:"南翔馒头店 (豫园店)", meal:"lunch" },
         { name:"Shanghai Lao Fandian (上海老饭店)", walk:3, metro:"Yuyuan Garden Station, Exit 1", price:200, hours:"10:00–22:00", menu:"yes", desc:"100 жилийн түүхтэй — Eight-Treasure Duck шиг уламжлалт хоол.", keyword:"上海老饭店 (豫园店)", meal:"lunch" },
@@ -89,7 +89,7 @@ window.FOOD_DB = {
     {
       key: 'lujiazui',
       name: 'Shanghai Tower / Lujiazui (上海中心大厦)',
-      placeIds: ['shanghai_tower', 'oriental_pearl', 'flair_bar'],
+      placeIds: ['shanghai_tower', 'oriental_pearl', 'flair_bar', 'lujiazui', 'jin_mao', 'swfc', 'ifc_mall', 'super_brand_mall', 'vue_bar'],
       places: [
         { name:"Din Tai Fung (鼎泰丰 上海国金中心店)", walk:4, metro:"Lujiazui Station, Exit 6", price:160, hours:"11:00–14:30, 17:00–21:30", menu:"yes", desc:"Олон улсад алдартай — нарийн таанбао, маш сайн үйлчилгээ.", keyword:"鼎泰丰 (上海国金中心商场店)", meal:"lunch" },
         { name:"Jade Garden (翠园 国金中心店)", walk:4, metro:"Lujiazui Station, Exit 6", price:260, hours:"11:00–14:30, 17:30–21:30", menu:"yes", desc:"Хүрхрийн гялбаатай гахайн хавиргатай Кантоны хоол.", keyword:"翠园 (上海国金中心商场店)", meal:"lunch" },
@@ -103,7 +103,7 @@ window.FOOD_DB = {
     {
       key: 'xintiandi',
       name: 'Xintiandi (新天地)',
-      placeIds: ['xintiandi', 'fuxing_park', 'speak_low'],
+      placeIds: ['xintiandi', 'fuxing_park', 'speak_low', 'sinan_mansions', 'huaihai_road', 'iapm_mall', 'sober_company', 'heji_crab', 'west_bund', 'long_museum_west', 'yuz_museum', 'longhua_temple', 'expo_greenhouse', 'china_art_museum'],
       places: [
         { name:"Crystal Jade (翡翠酒家 新天地店)", walk:3, metro:"Xintiandi Station, Exit 6", price:190, hours:"11:00–14:30, 17:00–21:30", menu:"yes", desc:"Шикүмэн байшинд байрлах — нарийн Кантоны dim sum.", keyword:"翡翠酒家 (新天地店)", meal:"lunch" },
         { name:"Simply Thai (天泰餐厅 新天地店)", walk:2, metro:"Xintiandi Station, Exit 6", price:150, hours:"11:00–22:00", menu:"yes", desc:"Урт жилийн туршлагатай Тайландын хоол — Англи хэлтэй үйлчлэгч.", keyword:"Simply Thai天泰 (新天地店)", meal:"lunch" },
@@ -117,7 +117,7 @@ window.FOOD_DB = {
     {
       key: 'tianzifang',
       name: 'Tianzifang / French Concession (田子坊)',
-      placeIds: ['tianzifang', 'wukang_road'],
+      placeIds: ['tianzifang', 'wukang_road', 'former_french', 'anfu_road', 'm50', 'power_station_art'],
       places: [
         { name:"Lotus Land Indian (莲池印度餐厅 田子坊店)", walk:2, metro:"Dapuqiao Station, Exit 1", price:125, hours:"11:00–22:00", menu:"yes", desc:"Гудамжны лабиринт дотор — butter chicken, garlic naan.", keyword:"莲池印度餐厅 (田子坊店)", meal:"lunch" },
         { name:"Teddy Bear Thai (泰迪之家 田子坊店)", walk:1, metro:"Dapuqiao Station, Exit 1", price:110, hours:"11:00–21:30", menu:"yes", desc:"Баавгайн тоглоомоор дүүрэн Тайландын хоол — pineapple fried rice.", keyword:"泰迪之家泰式料理 (田子坊店)", meal:"lunch" },
@@ -131,7 +131,7 @@ window.FOOD_DB = {
     {
       key: 'peoples-square',
       name: "People's Square / Shanghai Museum (人民广场)",
-      placeIds: ['shanghai_museum', 'people_park', 'jia_jia'],
+      placeIds: ['peoples_square', 'shanghai_museum', 'people_park', 'jia_jia', 'urban_planning', 'century_park', 'din_tai_fung', 'hai_di_lao', 'spicy_joint', 'yang_guofu', 'lost_heaven', 'coffee_compound', 'qingpu_mosque'],
       places: [
         { name:"Barbarossa Restaurant (芭芭露莎)", walk:3, metro:"People's Square Station, Exit 9", price:170, hours:"11:00–23:00", menu:"yes", desc:"Нуурт тавьсан Мароккийн шилэн павильон — Газар дундын тэнгисийн хоол.", keyword:"Barbarossa芭芭露莎餐厅", meal:"lunch" },
         { name:"Jia Jia Tang Bao (佳家汤包 黄河路店)", walk:6, metro:"People's Square Station, Exit 8", price:45, hours:"06:30–20:30", menu:"photo", desc:"Хялгасан арьс, хайрцаг дүүрэн шөл — хамгийн жинхэнэ таанбао.", keyword:"佳家汤包 (黄河路店)", meal:"lunch" },
@@ -145,7 +145,7 @@ window.FOOD_DB = {
     {
       key: 'jingan',
       name: "Jing'an Temple (静安寺)",
-      placeIds: [],
+      placeIds: ['jingan_temple', 'nanjing_west', 'plaza66', 'jing_an_sculpture', 'jade_buddha', 'natural_history', 'commune_social', 'noodle_bull', 'fu_1088', 'grand_gateway', 'xujiahui_electronics', 'zhongshan_park', 'gongqing_forest'],
       places: [
         { name:"Din Tai Fung (鼎泰丰 芮欧百货店)", walk:3, metro:"Jing'an Temple Station, Exit 4", price:160, hours:"11:00–14:30, 17:00–21:30", menu:"yes", desc:"Шилэн гал тогоотой — хэрхэн таанбао хийхийг харна.", keyword:"鼎泰丰 (芮欧百货店)", meal:"lunch" },
         { name:"Crystal Jade (翡翠酒家 久光百货店)", walk:2, metro:"Jing'an Temple Station, Exit 2", price:155, hours:"11:00–14:30, 17:00–21:30", menu:"yes", desc:"Хонконгийн Кантоны хоол — шарсан нугас, dim sum.", keyword:"翡翠酒家 (久光百货店)", meal:"lunch" },
@@ -159,7 +159,7 @@ window.FOOD_DB = {
     {
       key: 'disneyland',
       name: 'Shanghai Disneyland (上海迪士尼乐园)',
-      placeIds: [],
+      placeIds: ['shanghai_disneyland'],
       places: [
         { name:"Barbossa Grilled BBQ (巴波萨烧烤)", walk:5, metro:"Disney Resort Station, Exit 2", price:100, hours:"11:00–20:00", menu:"yes", desc:"Паркийн доторх — BBQ хавирга, тахиа.", keyword:"巴波萨烧烤", meal:"lunch" },
         { name:"Pinocchio Flatbread Kitchen (皮诺丘乡村厨房)", walk:5, metro:"Disney Resort Station, Exit 2", price:95, hours:"11:00–20:00", menu:"yes", desc:"Mickey хэлбэртэй pizza, халуун нудел — Fantasyland дотор.", keyword:"皮诺丘乡村厨房", meal:"lunch" },
@@ -173,7 +173,7 @@ window.FOOD_DB = {
     {
       key: 'zhujiajiao',
       name: 'Zhujiajiao Water Town (朱家角)',
-      placeIds: ['zhujiajiao'],
+      placeIds: ['zhujiajiao', 'qibao', 'chongming', 'sheshan'],
       places: [
         { name:"Ah Po Cha Lou Teahouse (阿婆茶楼)", walk:4, metro:"Zhujiajiao Station, Exit 1", price:85, hours:"09:00–19:30", menu:"photo", desc:"Сувгийн дэргэдх — голын загас, ногоон цай.", keyword:"阿婆茶楼", meal:"lunch" },
         { name:"Linjia Grandma Restaurant (临家老大娘)", walk:3, metro:"Zhujiajiao Station, Exit 1", price:75, hours:"10:00–20:30", menu:"photo", desc:"Хулсан навчаар ороосон гахайн хөлийн хоол — орон нутгийн амт.", keyword:"临家老大娘", meal:"lunch" },
@@ -187,7 +187,7 @@ window.FOOD_DB = {
     {
       key: 'nanjing-road',
       name: 'Nanjing Road (南京路步行街)',
-      placeIds: ['da_hu_chun'],
+      placeIds: ['nanjing_road', 'da_hu_chun', 'rockbund_art', 'east_bund', '1933_millfun', 'duolun_road', 'jewish_refugees', 'mint_club', 'shelter_club', 'ultraviolet'],
       places: [
         { name:"Shen Da Cheng (沈大成 南京东路总店)", walk:2, metro:"People's Square Station, Exit 14", price:40, hours:"06:30–21:00", menu:"photo", desc:"1875 оноос — нудел, цагаан будааны зууш, хурдан.", keyword:"沈大成 (南京东路总店)", meal:"lunch" },
         { name:"Bi Feng Tang Dim Sum (避风塘 第一食品店)", walk:3, metro:"People's Square Station, Exit 19", price:95, hours:"10:00–22:00", menu:"photo", desc:"Хонконгийн haa gaw, BBQ pork bun — том заал.", keyword:"避风塘 (第一食品商店店)", meal:"lunch" },
