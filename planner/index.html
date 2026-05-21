@@ -759,6 +759,13 @@
     .guide-empty {
       text-align:center;padding:40px 20px;color:var(--sub);font-size:.88rem;
     }
+    /* Drag ghost + overload warning */
+    .sortable-ghost { opacity:.35; background:var(--bg); }
+    .day-overload {
+      background:rgba(234,179,8,.1);border:1.5px solid rgba(234,179,8,.55);
+      border-radius:10px;padding:8px 12px;font-size:.8rem;color:#92400e;
+      margin-bottom:10px;display:flex;align-items:center;gap:7px;
+    }
     .guide-hotel-badge {
       display:flex;align-items:center;gap:10px;
       background:rgba(232,57,42,.06);border:1.5px solid rgba(232,57,42,.2);
@@ -2011,6 +2018,9 @@ window.removeAddedCollab = function(i) {
 })();
 </script>
 
+<!-- SortableJS — touch-friendly drag & drop -->
+<script src="https://cdn.jsdelivr.net/npm/sortablejs@1.15.2/Sortable.min.js"></script>
+
 <!-- ══ PLANNER LOGIC ══ -->
 <script>
 /* ─── DATA ─── */
@@ -2343,40 +2353,39 @@ window.nextFromDates = function() {
   goToStep(2);
 };
 
-/* ─── GUIDE BUILDER ─── */
+/* ─── GUIDE BUILDER — organized by day ─── */
 window.buildGuide = function() {
   const db = window.FOOD_DB;
   if (!db) return;
 
-  const hotelId = window._plan.hotelId || window._selectedHotelId;
-  const hotel   = db.hotels.find(h => h.id === hotelId);
-  const savedIds = window._plan.savedPlaces || [];
+  const hotelId   = window._plan.hotelId || window._selectedHotelId;
+  const hotel     = db.hotels.find(h => h.id === hotelId);
+  const savedIds  = window._plan.savedPlaces || [];
   const allPlaces = getPlaces();
+  const totalDays = getDayCount();
 
   // Hotel badge
-  const badge = document.getElementById('guideHotelBadge');
-  const hName = document.getElementById('guideHotelName');
+  const badge  = document.getElementById('guideHotelBadge');
+  const hName  = document.getElementById('guideHotelName');
   const hMetro = document.getElementById('guideHotelMetro');
   if (hotel) {
     badge.style.display = 'flex';
-    hName.textContent  = hotel.name;
-    hMetro.textContent = hotel.metro;
+    hName.textContent   = hotel.name;
+    hMetro.textContent  = hotel.metro;
   } else { badge.style.display = 'none'; }
 
-  // Build tabs
-  const tabsEl   = document.getElementById('guideTabs');
+  const tabsEl    = document.getElementById('guideTabs');
   const contentEl = document.getElementById('guideContent');
-  tabsEl.innerHTML = '';
+  tabsEl.innerHTML   = '';
   contentEl.innerHTML = '';
 
-  // Tab 0: Morning
+  // ── Tab 0: Morning (hotel breakfast + coffee) ──────────────
   const morningBtn = document.createElement('button');
   morningBtn.className = 'guide-tab active';
   morningBtn.textContent = '☀️ Өглөө';
   morningBtn.onclick = () => switchGuideTab(0);
   tabsEl.appendChild(morningBtn);
 
-  // Morning section
   const morningSection = document.createElement('div');
   morningSection.className = 'guide-section active';
   morningSection.id = 'guide-sec-0';
@@ -2384,33 +2393,30 @@ window.buildGuide = function() {
     const bfPlaces  = hotel.places.filter(p => p.meal === 'breakfast');
     const cofPlaces = hotel.places.filter(p => p.meal === 'coffee');
     let html = '';
-    if (bfPlaces.length) {
-      html += `<div class="guide-day-title">🥟 Өглөөний хоол</div>`;
-      html += bfPlaces.map(p => renderFoodCard(p)).join('');
-    }
-    if (cofPlaces.length) {
-      html += `<div class="guide-day-title">☕ Кофе шоп</div>`;
-      html += cofPlaces.map(p => renderFoodCard(p)).join('');
-    }
+    if (bfPlaces.length)  { html += `<div class="guide-day-title">🥟 Өглөөний хоол</div>` + bfPlaces.map(renderFoodCard).join(''); }
+    if (cofPlaces.length) { html += `<div class="guide-day-title">☕ Кофе шоп</div>` + cofPlaces.map(renderFoodCard).join(''); }
     morningSection.innerHTML = html || `<div class="guide-empty">Энэ буудлын мэдээлэл боловсруулж байна.</div>`;
   } else if (hotel) {
-    // Hotel selected but has no places data yet
     morningSection.innerHTML = `<div class="guide-empty">⏳ <strong>${hotel.nameShort || hotel.name}</strong> буудлын мэдээлэл удахгүй нэмэгдэнэ.</div>`;
   } else {
     morningSection.innerHTML = `<div class="guide-empty">Буудлаа <strong>1-р алхам</strong>-д сонгоно уу.</div>`;
   }
   contentEl.appendChild(morningSection);
 
-  // Tabs per attraction (saved places)
+  // ── Tabs per day (not per place) ────────────────────────────
   const savedPlaces = savedIds.map(id => allPlaces.find(p => p.id === id)).filter(Boolean);
-  savedPlaces.forEach((place, i) => {
-    const attraction = db.getAttractionForPlace(place.id);
-    if (!attraction) return;
+  let dayTabCount = 0;
 
-    const tabIdx = i + 1;
+  for (let d = 1; d <= totalDays; d++) {
+    const dayPlaces = savedPlaces.filter(pl => (window._plan.dayAssignments[pl.id] || 1) === d);
+    if (dayPlaces.length === 0) continue;
+
+    dayTabCount++;
+    const tabIdx = dayTabCount;
+
     const btn = document.createElement('button');
-    btn.className = 'guide-tab';
-    btn.textContent = place.name;
+    btn.className  = 'guide-tab';
+    btn.textContent = `${d}-р өдөр`;
     btn.onclick = () => switchGuideTab(tabIdx);
     tabsEl.appendChild(btn);
 
@@ -2418,22 +2424,37 @@ window.buildGuide = function() {
     sec.className = 'guide-section';
     sec.id = `guide-sec-${tabIdx}`;
 
-    const lunch   = attraction.places.filter(p => p.meal === 'lunch');
-    const coffee  = attraction.places.filter(p => p.meal === 'coffee');
-    const dinner  = attraction.places.filter(p => p.meal === 'dinner');
+    // Aggregate food from all places on this day (deduplicated by name)
+    const seen = new Set();
+    const allLunch = [], allCoffee = [], allDinner = [];
+    dayPlaces.forEach(pl => {
+      const attraction = db.getAttractionForPlace(pl.id);
+      if (!attraction) return;
+      attraction.places.forEach(fp => {
+        if (seen.has(fp.name)) return;
+        seen.add(fp.name);
+        if (fp.meal === 'lunch')  allLunch.push(fp);
+        if (fp.meal === 'coffee') allCoffee.push(fp);
+        if (fp.meal === 'dinner') allDinner.push(fp);
+      });
+    });
 
-    let html = `<div style="font-size:.78rem;color:var(--sub);margin-bottom:12px;">📍 ${attraction.name}</div>`;
-    if (lunch.length)  { html += `<div class="guide-day-title">🍜 Өдрийн хоол</div>` + lunch.map(renderFoodCard).join(''); }
-    if (coffee.length) { html += `<div class="guide-day-title">☕ Кофе / Цай</div>` + coffee.map(renderFoodCard).join(''); }
-    if (dinner.length) { html += `<div class="guide-day-title">🌙 Оройн хоол</div>` + dinner.map(renderFoodCard).join(''); }
+    const placeIcons = dayPlaces.map(pl => `${pl.icon} ${pl.name}`).join(' · ');
+    let html = `<div style="font-size:.78rem;color:var(--sub);margin-bottom:14px;line-height:1.6;">📍 ${placeIcons}</div>`;
+    if (allLunch.length)  { html += `<div class="guide-day-title">🍜 Өдрийн хоол</div>`  + allLunch.map(renderFoodCard).join(''); }
+    if (allCoffee.length) { html += `<div class="guide-day-title">☕ Кофе / Цай</div>`   + allCoffee.map(renderFoodCard).join(''); }
+    if (allDinner.length) { html += `<div class="guide-day-title">🌙 Оройн хоол</div>`   + allDinner.map(renderFoodCard).join(''); }
+    if (!allLunch.length && !allCoffee.length && !allDinner.length) {
+      html += `<div class="guide-empty">Энэ өдрийн газруудын хоолны мэдээлэл удахгүй нэмэгдэнэ.</div>`;
+    }
     sec.innerHTML = html;
     contentEl.appendChild(sec);
-  });
+  }
 
-  if (savedPlaces.filter(p => db.getAttractionForPlace(p.id)).length === 0) {
+  if (dayTabCount === 0) {
     const tip = document.createElement('div');
     tip.className = 'guide-empty';
-    tip.innerHTML = 'Step 4-д газруудаа нэмсний дараа гарын авлага харагдана.';
+    tip.innerHTML = 'Step 4-д газруудаа нэмсний дараа өдөр бүрийн хоолны гарын авлага харагдана.';
     contentEl.appendChild(tip);
   }
 };
@@ -2614,10 +2635,49 @@ function getArrivalDate() {
   return window._plan.arrival ? new Date(window._plan.arrival) : new Date();
 }
 
+/* ─── PARSE PLACE DURATION ─── */
+// Correctly handles "30–60 мин" → 0.75 hrs, "1–2 цаг" → 1.5 hrs, "2 цаг" → 2 hrs
+function parsePlaceHours(str) {
+  if (!str) return 2;
+  const minRange = str.match(/(\d+)[–\-](\d+)\s*мин/);
+  if (minRange) return (parseInt(minRange[1]) + parseInt(minRange[2])) / 2 / 60;
+  const minSingle = str.match(/(\d+)\s*мин/);
+  if (minSingle) return parseInt(minSingle[1]) / 60;
+  const hrRange = str.match(/(\d+)[–\-](\d+)\s*цаг/);
+  if (hrRange) return (parseInt(hrRange[1]) + parseInt(hrRange[2])) / 2;
+  const hrSingle = str.match(/(\d+)\s*цаг/);
+  if (hrSingle) return parseInt(hrSingle[1]);
+  return parseFloat(str) || 2;
+}
+
+/* ─── PLACE AREAS — for travel time estimates ─── */
+window.PLACE_AREAS = {
+  pudong_core:       ['oriental_pearl','shanghai_tower','jin_mao','swfc','lujiazui',
+                      'flair_bar','mint_club','super_brand_mall','ifc_mall'],
+  pudong_outer:      ['shanghai_disneyland','century_park','expo_greenhouse','china_art_museum'],
+  bund_area:         ['bund','nanjing_road','peoples_square','huangpu_river',
+                      'shanghai_museum','urban_planning','rockbund_art','jewish_refugees',
+                      'lost_heaven','mr_mrs_bund','bar_rouge','long_bar','fairmont_jazz',
+                      'jia_jia','da_hu_chun','spicy_joint','vue_bar','people_park'],
+  old_city:          ['yu_garden','yuyuan_bazaar','yuyuan_bazaar_shop','yuyuan_food',
+                      'nanxiang','chenghuang_temple','heji_crab','south_bund','shelter_club'],
+  french_concession: ['former_french','tianzifang','xintiandi','fuxing_park',
+                      'sinan_mansions','wukang_road','anfu_road','din_tai_fung',
+                      'commune_social','sober_company','coffee_compound','speak_low',
+                      'fu_1088','iapm_mall','huaihai_road','noodle_bull','hai_di_lao'],
+  jing_an:           ['jingan_temple','nanjing_west','plaza66','jing_an_sculpture',
+                      'm50','1933_millfun','natural_history','yang_guofu','jade_buddha',
+                      'zhongshan_park'],
+  xujiahui:          ['grand_gateway','xujiahui_electronics','longhua_temple'],
+  west_bund_area:    ['west_bund','power_station_art','yuz_museum','long_museum_west'],
+  north_east:        ['duolun_road','east_bund'],
+  outer_district:    ['qibao','gongqing_forest','chongming','qingpu_mosque'],
+  daytrips:          ['suzhou','hangzhou','wuzhen','tongli','sheshan','nanjing_trip']
+};
+
 // Get which area a place belongs to (for travel time calc)
 function getArea(placeId) {
-  const areas = window.PLACE_AREAS || {};
-  for (const [area, ids] of Object.entries(areas)) {
+  for (const [area, ids] of Object.entries(window.PLACE_AREAS)) {
     if (ids.includes(placeId)) return area;
   }
   return 'unknown';
@@ -2627,13 +2687,25 @@ function getTravelTime(fromId, toId) {
   if (!fromId) return { metro: 0, walk: 0, taxi: 0 };
   const aFrom = getArea(fromId), aTo = getArea(toId);
   if (aFrom === 'daytrips' || aTo === 'daytrips') return { metro:0, walk:0, taxi:0, note:'Өдрийн аялал' };
-  if (aFrom === aTo) return { metro: 5, walk: 15, taxi: 8 };
-  // Pudong ↔ Bund area — ferry/metro
-  const pudong = ['pudong'];
-  const bund = ['bund_area'];
-  if ((pudong.includes(aFrom) && bund.includes(aTo)) || (bund.includes(aFrom) && pudong.includes(aTo)))
+  if (aFrom === aTo) return { metro: 8, walk: 20, taxi: 10 };
+  // Pudong core ↔ Bund — ferry or Metro Line 2
+  if ((aFrom === 'pudong_core' && aTo === 'bund_area') ||
+      (aFrom === 'bund_area'   && aTo === 'pudong_core'))
     return { metro: 15, walk: 40, taxi: 12, ferry: 10 };
-  return { metro: 22, walk: 60, taxi: 16 };
+  // Adjacent area pairs — moderate travel ~20 min metro
+  const adjacent = {
+    bund_area:         ['old_city','french_concession','north_east','pudong_core'],
+    old_city:          ['bund_area','french_concession'],
+    french_concession: ['bund_area','old_city','xujiahui','west_bund_area','jing_an'],
+    jing_an:           ['french_concession','bund_area','north_east'],
+    xujiahui:          ['french_concession','west_bund_area'],
+    west_bund_area:    ['xujiahui','french_concession'],
+    pudong_core:       ['bund_area','pudong_outer'],
+    pudong_outer:      ['pudong_core'],
+    north_east:        ['bund_area','jing_an'],
+  };
+  if ((adjacent[aFrom] || []).includes(aTo)) return { metro: 20, walk: 55, taxi: 15 };
+  return { metro: 32, walk: 90, taxi: 22 };
 }
 
 /* ─── STEP 5: ITINERARY ─── */
@@ -2690,12 +2762,19 @@ function buildItinerary() {
   }
 
   // ── RENDER TIMELINE ──
+  // Format decimal hour → "HH:MM" (defined once, outside loop)
+  function fmtHour(h) {
+    const hh = Math.min(Math.floor(h), 23);
+    const mm = Math.round((h - Math.floor(h)) * 60);
+    return `${String(hh).padStart(2,'0')}:${String(mm === 60 ? 0 : mm).padStart(2,'0')}`;
+  }
+
   let html = '';
   for (let d = 1; d <= totalDays; d++) {
     const dt = new Date(arrival); dt.setDate(arrival.getDate() + d - 1);
     const dayLabel = `${dt.getDate()} ${MN_MONTHS[dt.getMonth()]} (${MN_DAYS[dt.getDay()]})`;
-    const globalStart = p.globalStartTime || window._plan.globalStartTime || '09:00';
-    const globalEnd   = p.globalEndTime   || window._plan.globalEndTime   || '21:00';
+    const globalStart = p.globalStartTime || '09:00';
+    const globalEnd   = p.globalEndTime   || '21:00';
     const startHour = parseInt(globalStart.split(':')[0]) || 9;
     const endHour   = parseInt(globalEnd.split(':')[0])   || 21;
 
@@ -2709,13 +2788,6 @@ function buildItinerary() {
         <div style="font-size:.75rem;color:var(--sub);margin-left:auto;">${globalStart} → ${globalEnd}</div>
       </div>
       <div class="itin-timeline">`;
-
-    // Format decimal hour → "HH:MM"
-    function fmtHour(h) {
-      const hh = Math.min(Math.floor(h), 23);
-      const mm = Math.round((h - Math.floor(h)) * 60);
-      return `${String(hh).padStart(2,'0')}:${String(mm === 60 ? 0 : mm).padStart(2,'0')}`;
-    }
 
     let hour = startHour, prevId = null;
     dayPlaces.forEach((pl, pi) => {
@@ -2762,12 +2834,17 @@ function buildItinerary() {
           </div>
         </div>`;
 
-      const visitHrs = parseFloat(pl.time) || 2;
+      const visitHrs = parsePlaceHours(pl.time);  // BUG FIX: was parseFloat
       const tt = prevId ? getTravelTime(prevId, pl.id) : { metro: 0 };
       const travelHrs = (tt.metro || 0) / 60;
       hour += visitHrs + travelHrs + 0.25; // 15 min buffer
       prevId = pl.id;
     });
+
+    // ── TIME CONFLICT WARNING ──
+    if (hour > endHour + 0.5) {
+      html += `<div class="day-overload">⚠️ Энэ өдрийн хуваарь <strong>${fmtHour(hour)}</strong>-д дуусна — төлөвлөснөөс <strong>${((hour - endHour)).toFixed(1)} цаг</strong> илүү. Зарим газрыг өөр өдөрт шилжүүлнэ үү.</div>`;
+    }
 
     html += '</div></div>';
   }
@@ -2819,21 +2896,37 @@ window.removeSaved = function(id) {
   updateSummaryBar();
 };
 
-/* ─── DRAG & DROP REORDER ─── */
+/* ─── DRAG & DROP REORDER — SortableJS (touch + desktop) ─── */
 function initDragDrop(list) {
-  let dragged = null;
-  list.querySelectorAll('.saved-item').forEach(item => {
-    item.addEventListener('dragstart', e => { dragged = item; item.style.opacity='.4'; });
-    item.addEventListener('dragend',   () => { dragged = null; item.style.opacity='1'; });
-    item.addEventListener('dragover',  e => { e.preventDefault(); });
-    item.addEventListener('drop', () => {
-      if (!dragged || dragged === item) return;
-      const fromId = dragged.dataset.id, toId = item.dataset.id;
-      const arr = window._plan.savedPlaces;
-      const fi = arr.indexOf(fromId), ti = arr.indexOf(toId);
-      if (fi >= 0 && ti >= 0) { arr.splice(fi,1); arr.splice(ti,0,fromId); buildItinerary(); }
+  if (window.Sortable) {
+    new Sortable(list, {
+      animation: 150,
+      handle: '.saved-item-icon',
+      ghostClass: 'sortable-ghost',
+      onEnd: function() {
+        // Rebuild savedPlaces order directly from DOM after drag
+        const newOrder = [...list.querySelectorAll('.saved-item')].map(el => el.dataset.id);
+        window._plan.savedPlaces = newOrder.filter(id => window._plan.savedPlaces.includes(id));
+        buildItinerary();
+        window.autoSave && window.autoSave();
+      }
     });
-  });
+  } else {
+    // Fallback: HTML5 drag for environments without Sortable
+    let dragged = null;
+    list.querySelectorAll('.saved-item').forEach(item => {
+      item.addEventListener('dragstart', e => { dragged = item; item.style.opacity='.4'; });
+      item.addEventListener('dragend',   () => { dragged = null; item.style.opacity='1'; });
+      item.addEventListener('dragover',  e => { e.preventDefault(); });
+      item.addEventListener('drop', () => {
+        if (!dragged || dragged === item) return;
+        const fromId = dragged.dataset.id, toId = item.dataset.id;
+        const arr = window._plan.savedPlaces;
+        const fi = arr.indexOf(fromId), ti = arr.indexOf(toId);
+        if (fi >= 0 && ti >= 0) { arr.splice(fi,1); arr.splice(ti,0,fromId); buildItinerary(); }
+      });
+    });
+  }
 }
 
 /* ─── SHARE ─── */
@@ -2862,22 +2955,26 @@ window.downloadPDF = function() {
   if (_cp)     _pParts.push(`Хүүхэд (төлбөртэй) ${_cp}`);
   const peopleNames = _pParts.join(' · ') || 'Аялагчид';
 
+  const pdfStart = p.globalStartTime || '09:00';
+  const pdfEnd   = p.globalEndTime   || '21:00';
+  function pdfFmtHour(h) {
+    const hh = Math.min(Math.floor(h), 23);
+    const mm = Math.round((h - Math.floor(h)) * 60);
+    return `${String(hh).padStart(2,'0')}:${String(mm === 60 ? 0 : mm).padStart(2,'0')}`;
+  }
   let daysSections = '';
   for (let d = 1; d <= totalDays; d++) {
     const dt = new Date(arrival); dt.setDate(arrival.getDate() + d - 1);
     const dayLabel = `${dt.getDate()} ${MN_MONTHS[dt.getMonth()]} (${MN_DAYS[dt.getDay()]})`;
-    const key = p.arrival + '_d' + (d-1);
-    const pref = p.timePrefs[key] || {};
     const dayPlaces = saved.filter(pl => (p.dayAssignments[pl.id]||1) === d);
     if (!dayPlaces.length) continue;
 
-    let hour = parseInt((pref.start||'09:00').split(':')[0])||9;
+    let hour = parseInt(pdfStart.split(':')[0]) || 9;
     let prevId = null;
     let rows = '';
     dayPlaces.forEach(pl => {
       const tt = prevId ? getTravelTime(prevId, pl.id) : {metro:0, walk:0, taxi:0};
-      const _hh = Math.min(Math.floor(hour),23), _mm = Math.round((hour-Math.floor(hour))*60);
-      const tStr = `${String(_hh).padStart(2,'0')}:${String(_mm===60?0:_mm).padStart(2,'0')}`;
+      const tStr = pdfFmtHour(hour);
       const trvl = tt.ferry ? `⛴ ${tt.ferry}мин` : tt.metro ? `🚇 Metro ${tt.metro}мин · 🚕 Такси ${tt.taxi}мин` : '';
       rows += `
         <tr class="place-row">
@@ -2890,12 +2987,12 @@ window.downloadPDF = function() {
             ${trvl ? `<span class="travel">${trvl} зорчих</span>` : ''}
           </td>
         </tr>`;
-      hour += (parseFloat(pl.time)||2) + (tt.metro||0)/60 + 0.25;
+      hour += parsePlaceHours(pl.time) + (tt.metro||0)/60 + 0.25;  // BUG FIX: was parseFloat
       prevId = pl.id;
     });
     daysSections += `
       <div class="day-block">
-        <div class="day-header"><span class="day-num">${d}-р өдөр</span><span class="day-date">${dayLabel}</span><span class="day-time">${pref.start||'09:00'} → ${pref.end||'21:00'}</span></div>
+        <div class="day-header"><span class="day-num">${d}-р өдөр</span><span class="day-date">${dayLabel}</span><span class="day-time">${pdfStart} → ${pdfEnd}</span></div>
         <table class="itin-table"><tbody>${rows}</tbody></table>
       </div>`;
   }
