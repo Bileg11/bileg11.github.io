@@ -359,6 +359,28 @@
     .itin-name { font-size: .93rem; font-weight: 600; }
     .itin-sub { font-size: .78rem; color: var(--sub); margin-top: 2px; }
 
+    /* ── ARRIVAL GUIDE ── */
+    .arrival-guide-wrap { margin-top: 6px; }
+    .arrival-guide-btn {
+      background: none; border: 1px solid var(--border); border-radius: 8px;
+      padding: 4px 10px; font-size: .72rem; color: var(--sub); cursor: pointer;
+      display: inline-flex; align-items: center; gap: 4px;
+      transition: background .15s, color .15s;
+    }
+    .arrival-guide-btn:hover { background: rgba(255,255,255,.06); color: var(--text); }
+    .arrival-guide-btn.open { background: rgba(99,102,241,.12); color: #818cf8; border-color: #818cf8; }
+    .ag-chevron { font-size: .9rem; transition: transform .2s; display: inline-block; }
+    .arrival-guide-btn.open .ag-chevron { transform: rotate(90deg); }
+    .arrival-guide-steps { margin-top: 8px; display: flex; flex-direction: column; gap: 5px; }
+    .ag-step {
+      font-size: .75rem; color: var(--text); background: rgba(255,255,255,.04);
+      border-radius: 8px; padding: 6px 10px; border-left: 3px solid #818cf8;
+      line-height: 1.4;
+    }
+    .ag-step.ag-booking {
+      border-left-color: #f59e0b; background: rgba(245,158,11,.08); color: #fbbf24;
+    }
+
     /* ── COST TABLE ── */
     .cost-table { width: 100%; border-collapse: collapse; margin-top: 12px; }
     .cost-table td { padding: 8px 12px; border-bottom: 1px solid var(--border); font-size: .88rem; }
@@ -2272,6 +2294,16 @@ window.selectGlobalTime = function(type, el) {
 /* ─── HOTEL SELECTION ─── */
 window._selectedHotelId = null;
 
+window.toggleArrivalGuide = function(wrapperId) {
+  const wrap = document.getElementById(wrapperId);
+  if (!wrap) return;
+  const btn = wrap.querySelector('.arrival-guide-btn');
+  const steps = wrap.querySelector('.arrival-guide-steps');
+  const isOpen = steps.style.display !== 'none';
+  steps.style.display = isOpen ? 'none' : 'flex';
+  btn.classList.toggle('open', !isOpen);
+};
+
 window.selectHotel = function(el) {
   document.querySelectorAll('.hotel-chip').forEach(c => c.classList.remove('selected'));
   el.classList.add('selected');
@@ -2714,6 +2746,16 @@ function buildItinerary() {
             <div class="itin-name">${pl.icon} ${pl.name}</div>
             <div class="itin-sub">${pl.catLabel} · ${pl.time} · ${pl.costLabel}</div>
             ${pl.metro ? `<div style="font-size:.72rem;color:var(--sub);margin-top:2px;">🚇 ${pl.metro}</div>` : ''}
+            ${pl.arrivalGuide ? `
+              <div class="arrival-guide-wrap" id="ag_${pl.id}_${d}">
+                <button class="arrival-guide-btn" onclick="toggleArrivalGuide('ag_${pl.id}_${d}')">
+                  📍 Хэрхэн очих вэ? <span class="ag-chevron">›</span>
+                </button>
+                <div class="arrival-guide-steps" style="display:none;">
+                  ${pl.arrivalGuide.map(step => `<div class="ag-step">${step}</div>`).join('')}
+                  ${pl.booking ? `<div class="ag-step ag-booking">📋 ${pl.booking}</div>` : ''}
+                </div>
+              </div>` : ''}
           </div>
         </div>`;
 

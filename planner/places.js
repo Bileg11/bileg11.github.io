@@ -24,40 +24,69 @@ window.PLACES = [
     id:'bund', name:'The Bund', cat:'culture', catLabel:'Үзэх ёстой',
     img:'https://images.unsplash.com/photo-1538428494232-9c0d8a3ab403?auto=format&fit=crop&w=400&h=280&q=80',
     icon:'🌆', bg:'linear-gradient(135deg,#1a1a2e,#16213e)',
-    metro:'Line 2/10 · Nanjing East Road', cost:0, costLabel:'Үнэгүй',
+    metro:'Line 2/10 · East Nanjing Rd · Exit 3', cost:0, costLabel:'Үнэгүй',
     time:'1–3 цаг', rating:'4.8', reviews:'157,400',
     desc:'Шанхайн хамгийн алдартай газар. 1.6 км явган зам, колониал барилга, Пудунгийн панорама.',
     lfs:'LFS: 20:00-аас очвол гэрэлт үзэмж хамгийн сайн. Завиар аялал ¥35-аас.',
+    arrivalGuide:[
+      '🚇 East Nanjing Road буудал, Exit 3-аар гарна',
+      '🚶 Зүүн зүгт The Bund тэмдэгийг дагаж ~800м алхана (10 мин)',
+      '🌊 Хуанпу мөрний эрэгт хүрч, хойш (зүүн тийш) явган зам эхэлнэ',
+      '📸 Хамгийн сайн зураг: Бүндийн хойд хэсэгт нарны жаргалт / шөнийн гэрлийн үед',
+      '⚠️ Оройн 20:00–22:00 хамгийн дүүрэн — хурдан явж байгаарай'
+    ],
     tags:['culture','photo','night','budget']
   },
   {
     id:'oriental_pearl', name:'Oriental Pearl Tower', cat:'culture', catLabel:'Үзэх ёстой',
     img:'https://images.unsplash.com/photo-1506158669146-619067262a00?auto=format&fit=crop&w=400&h=280&q=80',
     icon:'🔴', bg:'linear-gradient(135deg,#7b0000,#c0392b)',
-    metro:'Line 2 · Lujiazui', cost:210, costLabel:'¥150–210',
+    metro:'Line 2 · Lujiazui · Exit 1', cost:210, costLabel:'¥150–210',
     time:'1–2 цаг', rating:'4.7', reviews:'176,800',
     desc:'468м өндөр Шанхайн тэмдэгт цамхаг. Тунгалаг ажиглалтын зам, Sky Walk, 360° панорама.',
     lfs:'LFS: Нарны жаргалтаас 30 мин өмнө орвол шилжилтийн гэрлийг харна.',
+    arrivalGuide:[
+      '🚇 Lujiazui буудал, Exit 1-ээр гарна',
+      '🔴 Гарснаасаа Oriental Pearl Tower шууд харагдана (~300м)',
+      '🚶 Луцзяцуйн дугуй талбай дагуж баруун тийш алхана (5 мин)',
+      '🎫 1-р давхарт тасалбар авах лааны орно — онлайн захиалга байвал 2-р давхарт шууд орно',
+      '💡 Sky Walk (тунгалаг ажиглалт) ¥30 нэмэлт — урьдчилан шийдэж явна уу'
+    ],
     tags:['culture','photo','night']
   },
   {
     id:'yu_garden', name:'Yu Garden', cat:'culture', catLabel:'Үзэх ёстой',
     img:'https://images.unsplash.com/photo-1645490431810-08d8e3c59e17?auto=format&fit=crop&w=400&h=280&q=80',
     icon:'🏯', bg:'linear-gradient(135deg,#2d5a27,#4a7c59)',
-    metro:'Line 10/14 · Yu Garden', cost:30, costLabel:'¥30',
+    metro:'Line 10/14 · Yuyuan · Exit 1', cost:40, costLabel:'¥40 (оргил) / ¥30 (чөлөөт)',
     time:'1–2 цаг', rating:'4.7', reviews:'53,600',
     desc:'1559 оны Мин гүрний уламжлалт цэцэрлэг. 2 га талбайд дэнж, цөөрөм, чулуун хашлага.',
-    lfs:'LFS: Өглөө 09:00 хүртэл хүн цөөн. Онлайн захиалгаар ¥15 хямдрал.',
+    lfs:'LFS: Өглөө 09:00 хүртэл хүн цөөн. WeChat-аар онлайн захиалга хийвэл дараалалгүй орно.',
+    arrivalGuide:[
+      '🚇 Yuyuan буудал (Line 10 эсвэл Line 14), Exit 1-ээр гарна',
+      '🚶 Fuyou Road дагуж зүүн тийш ~200м алхана (3 мин)',
+      '🌉 Zig-zag гүүр (九曲桥) харагдана — энэ л орох зам',
+      '🎫 Орох хаалга зүүн талд, тасалбар авах зогсоолд зог',
+      '⏰ Нээлтийн цаг: 08:30–17:00 (сүүлийн орох 16:30)',
+      '📱 WeChat дээр "豫园" гэж хайгаад урьдчилан тасалбар авбал хурдан'
+    ],
     tags:['culture','tradition','family']
   },
   {
     id:'shanghai_tower', name:'Shanghai Tower', cat:'culture', catLabel:'Үзэх ёстой',
     img:'https://images.unsplash.com/photo-1574504500022-de9a6309a501?auto=format&fit=crop&w=400&h=280&q=80',
     icon:'🗼', bg:'linear-gradient(135deg,#0a0a2e,#1a1a5e)',
-    metro:'Line 2 · Lujiazui', cost:180, costLabel:'¥120–180',
+    metro:'Line 2 · Lujiazui · Exit 6', cost:180, costLabel:'¥120–180',
     time:'1–2 цаг', rating:'4.8', reviews:'45,000',
     desc:'Дэлхийн 2-р өндөр барилга (632м). 128-р давхарт ажиглалтын тавцан. Лифт 55 секундэд.',
     lfs:'LFS: Өглөө 09:00–11:00 дараалал бага. Орой нарны жаргалтаас 1 цаг өмнө очвол.',
+    arrivalGuide:[
+      '🚇 Lujiazui буудал, Exit 6-аар гарна — Shanghai Tower-тай шууд underground холбоотой',
+      '🏙 Гарснаасаа Shanghai Tower-ийн B1 давхарт байна',
+      '🎫 2-р давхарт тасалбар авах лааны орно (онлайн захиалга байвал хурдан)',
+      '⏫ Дэлхийн хамгийн хурдан лифт — 55 секундэд 128-р давхарт хүргэнэ',
+      '📱 Урьдчилан: trip.com эсвэл official сайтаас тасалбар захиал'
+    ],
     tags:['culture','photo','night']
   },
   {
@@ -84,30 +113,48 @@ window.PLACES = [
     id:'nanjing_road', name:'Nanjing Road (East)', cat:'culture', catLabel:'Үзэх ёстой',
     img:'https://images.unsplash.com/photo-1506158278516-d720e72406fc?auto=format&fit=crop&w=400&h=280&q=80',
     icon:'🚶', bg:'linear-gradient(135deg,#8b0000,#dc143c)',
-    metro:'Line 2/10 · Nanjing East Road', cost:0, costLabel:'Үнэгүй',
+    metro:'Line 2/10 · East Nanjing Rd · Exit 1', cost:0, costLabel:'Үнэгүй',
     time:'1–2 цаг', rating:'4.5', reviews:'85,000',
     desc:'Дэлхийн хамгийн завгүй явган тэрэгний зам. 1.2 км урт хөлөг дэлгүүр, брэнд, хоолны газар.',
     lfs:'LFS: Шөнийн гэрэл их тод. People\'s Square-аас Бүнд хүртэл алхаарай.',
+    arrivalGuide:[
+      '🚇 East Nanjing Road буудал, Exit 1-ээр гарна',
+      '🛍 Явган тэрэгний зам шууд эхэлнэ — баруун тийш People\'s Square, зүүн тийш Бүнд',
+      '🚶 Бүнд хүртэл алхвал ~15 мин (1.2 км)',
+      '⚡ Орой 19:00–22:00 хамгийн гэрэлтэй, хамгийн завгүй цаг'
+    ],
     tags:['culture','shopping','night']
   },
   {
     id:'peoples_square', name:"People's Square", cat:'culture', catLabel:'Үзэх ёстой',
     img:'https://images.unsplash.com/photo-1548919973-5cef591cdbc9?auto=format&fit=crop&w=400&h=280&q=80',
     icon:'🏛', bg:'linear-gradient(135deg,#1565c0,#1e88e5)',
-    metro:"Line 1/2/8 · People's Square", cost:0, costLabel:'Үнэгүй',
+    metro:"Line 1/2/8 · People's Square · Exit 1", cost:0, costLabel:'Үнэгүй',
     time:'1 цаг', rating:'4.5', reviews:'40,000',
     desc:'Хотын гол цэг. Шанхайн музей, урлагийн музей, хот төлөвлөлтийн үзэсгэлэн нэг дор.',
     lfs:'LFS: Амралтын өдөр "гэрлэлтийн зах" — зочин хүүхдийн намтрыг харуулдаг.',
+    arrivalGuide:[
+      "🚇 People's Square буудал, Exit 1-ээр гарна",
+      '🏛 Гарснаасаа өмнө зүгт Shanghai Museum харагдана (талбайн өмнөд хэсэг)',
+      '🌳 Талбайгаар алхаж People\'s Park-руу орж болно (баруун хэсэг)',
+      '🏙 Urban Planning Museum: Exit 1-ээс зүүн тийш 3 мин'
+    ],
     tags:['culture','budget']
   },
   {
     id:'lujiazui', name:'Lujiazui Financial District', cat:'culture', catLabel:'Үзэх ёстой',
     img:'https://images.unsplash.com/photo-1612756336279-b9eb5b6b71d9?auto=format&fit=crop&w=400&h=280&q=80',
     icon:'🌃', bg:'linear-gradient(135deg,#0d1117,#1f2937)',
-    metro:'Line 2 · Lujiazui', cost:0, costLabel:'Үнэгүй',
+    metro:'Line 2 · Lujiazui · Exit 1', cost:0, costLabel:'Үнэгүй',
     time:'1–2 цаг', rating:'4.8', reviews:'60,000',
     desc:'Шанхай цамхаг, SWFC, Jin Mao гурав зэрэгцэн оршдог дэлхийн хамгийн гайхалтай цамхаг бүлэг.',
     lfs:'LFS: Бүндээс харалдаа. Шөнийн гэрэлтийн үед хамгийн сайн зураг авагдана.',
+    arrivalGuide:[
+      '🚇 Lujiazui буудал, Exit 1-ээр гарна',
+      '🌃 Гарснаасаа гурван цамхаг харагдана — Shanghai Tower (хамгийн өндөр, мушгиасан), SWFC (лааз нээгч), Jin Mao (алтан)',
+      '🚶 Луцзяцуйн дугуй зам дагуж тойрон алхвал бүх цамхгийн урд зогсож зураг авч болно',
+      '🌊 Бүнд харалдааны эрэгт хүрэхийн тулд Lujiazui Rd дагуж ~15 мин алхана'
+    ],
     tags:['culture','photo','night']
   },
   {
@@ -124,10 +171,16 @@ window.PLACES = [
     id:'huangpu_river', name:'Huangpu River Cruise', cat:'culture', catLabel:'Үзэх ёстой',
     img:'https://images.unsplash.com/photo-1508742066636-3b9fb738ee0e?auto=format&fit=crop&w=400&h=280&q=80',
     icon:'🚢', bg:'linear-gradient(135deg,#00305a,#005a99)',
-    metro:'Line 2/10 · Nanjing East Road', cost:100, costLabel:'¥100–220',
+    metro:'Line 2/10 · East Nanjing Rd · Exit 3', cost:100, costLabel:'¥100–220',
     time:'1–2 цаг', rating:'4.6', reviews:'18,000',
     desc:'Хуанпу мөрнөөс Бүнд болон Пудунгийн тэнгэр багалзуурыг далайн аялалаар үзнэ.',
     lfs:'LFS: 19:00-ийн аялал хамгийн гайхалтай. 1 цагийн аялал хамгийн алдартай.',
+    arrivalGuide:[
+      '🚇 East Nanjing Road буудал, Exit 3-аар гарна',
+      '🚶 Бүнд рүү алхаад Shiliupu Wharf (十六铺码头) хайна — Бүндийн өмнөд хэсэг',
+      '🚢 Тасалбар авах зогсоол буудлын дэргэд — 1 цаг / 2 цагийн аялал сонгоно',
+      '🌃 19:00-ийн аялалд заавал урьдчилан захиалах — онлайн эсвэл буудал дээр'
+    ],
     tags:['culture','photo','night']
   },
   {
@@ -148,40 +201,68 @@ window.PLACES = [
     id:'tianzifang', name:'Tianzifang', cat:'hidden', catLabel:'Нуугдмал газар',
     img:'https://images.unsplash.com/photo-1567762694593-134db1c4f131?auto=format&fit=crop&w=400&h=280&q=80',
     icon:'🎨', bg:'linear-gradient(135deg,#4a235a,#7d3c98)',
-    metro:'Line 9 · Dapuqiao', cost:0, costLabel:'Үнэгүй',
+    metro:'Line 9 · Dapuqiao · Exit 1', cost:0, costLabel:'Үнэгүй',
     time:'1–2 цаг', rating:'4.6', reviews:'25,000',
     desc:'1930-иад оны шикүмэн гудамж дотор урлаг, дизайны хороолол. Кофе шоп, гараар хийсэн бараа.',
     lfs:'LFS: Ажлын өдрийн өглөө хамгийн хүнгүй. Уур амьсгалаар Тяньцзыфан = жинхэнэ шанхай.',
+    arrivalGuide:[
+      '🚇 Dapuqiao буудал, Exit 1-ээр гарна',
+      '🚶 Гарснаасаа шууд урд зүгт Taikang Road харагдана (~100м)',
+      '🎨 Taikang Road 210 хаяг — Tianzifang-ийн гол орох хаалга',
+      '🌀 Нарийн гудамжаар орж гарахад 30–40 мин хангалттай',
+      '☕ Гадна талын кофе шопуудын үнэ илүү боломжийн байна'
+    ],
     tags:['hidden','photo','shopping','budget']
   },
   {
     id:'m50', name:'M50 Creative Park', cat:'hidden', catLabel:'Нуугдмал газар',
     img:'https://images.unsplash.com/photo-1531973819741-e27a5ae2cc7b?auto=format&fit=crop&w=400&h=280&q=80',
     icon:'🖼', bg:'linear-gradient(135deg,#1a3a4a,#2e6f8e)',
-    metro:'Line 13 · Jiangning Road', cost:0, costLabel:'Үнэгүй',
+    metro:'Line 13 · Jiangning Road · Exit 1', cost:0, costLabel:'Үнэгүй',
     time:'1–3 цаг', rating:'4.5', reviews:'15,000',
     desc:'Хуучин нэхмэлийн үйлдвэрт 100+ орчин үеийн урлагийн галерей. ShanghART болон бусад.',
     lfs:'LFS: Сана гараг–Бямба 10:00–17:00 нээлттэй. Сучжоу голын эрэгт алхаарай.',
+    arrivalGuide:[
+      '🚇 Jiangning Road буудал, Exit 1-ээр гарна',
+      '🚶 Сучжоу голын эрэгт хойш алхана (~400м, 5 мин)',
+      '🏭 50 Moganshan Road хаяг — том төмөр хаалга',
+      '🖼 Доторх галерейнүүд ихэвчлэн үнэгүй, зарим нь ¥10–30',
+      '⏰ Мягмар–Ням 10:00–18:00, Даваа гараг хаалттай'
+    ],
     tags:['hidden','photo','budget']
   },
   {
     id:'wukang_road', name:'Wukang Road', cat:'hidden', catLabel:'Нуугдмал газар',
     img:'https://images.unsplash.com/photo-1531969112524-ac37343c7941?auto=format&fit=crop&w=400&h=280&q=80',
     icon:'🌸', bg:'linear-gradient(135deg,#6a1b9a,#9c27b0)',
-    metro:'Line 11 · Jiaotong University', cost:0, costLabel:'Үнэгүй',
+    metro:'Line 11 · Jiaotong University · Exit 7', cost:0, costLabel:'Үнэгүй',
     time:'1–2 цаг', rating:'4.7', reviews:'8,000',
     desc:'1920-иад оны колониал барилга бүхий гудамж. Тренди кофе, нарийн боов, бутик дэлгүүр.',
     lfs:'LFS: Wukang Mansion урд хэсэг хамгийн Instagram-able. Өглөө 10:00 хүртэл хүнгүй.',
+    arrivalGuide:[
+      '🚇 Jiaotong University буудал, Exit 7-аар гарна',
+      '🚶 Wukang Road руу хойш ~5 мин алхана',
+      '🏛 Wukang Mansion (нум хэлбэрийн барилга) харагдана — энэ л хамгийн алдартай цэг',
+      '📸 Mansion урдаас зургаа авахад завгүй байна — эрт очих нь зохимжтой',
+      '☕ Тойрч алхаад кофе шопуудаар ор — Ferguson Lane ойролцоо'
+    ],
     tags:['hidden','photo','food']
   },
   {
     id:'fuxing_park', name:'Fuxing Park', cat:'hidden', catLabel:'Нуугдмал газар',
     img:'https://images.unsplash.com/photo-1645526629357-16bbd762c8d5?auto=format&fit=crop&w=400&h=280&q=80',
     icon:'🌿', bg:'linear-gradient(135deg,#1b5e20,#2e7d32)',
-    metro:'Line 10/13 · Xintiandi', cost:0, costLabel:'Үнэгүй',
+    metro:'Line 10/13 · Xintiandi · Exit 1', cost:0, costLabel:'Үнэгүй',
     time:'30–60 мин', rating:'4.6', reviews:'10,000',
     desc:'Францын хэв маягийн хуучин цэцэрлэг. Өглөөний тай чи, маажонг. Орон нутгийн амьдрал.',
     lfs:'LFS: 06:00–09:00 орон нутгийн тай чи харахад хамгийн сайн. Xintiandитай нийлүүл.',
+    arrivalGuide:[
+      '🚇 Xintiandi буудал, Exit 1-ээр гарна',
+      '🚶 Хойш Fuxing Road дагуж ~5 мин алхана',
+      '🌿 Цэцэрлэгийн хаалга Gaolan Road дагуу байна',
+      '🧘 Өглөө 06:00–09:00 тай чи, маажонг тоглоог нь харах боломжтой',
+      '⏰ Өдөр бүр 06:00–18:00 нээлттэй, үнэгүй'
+    ],
     tags:['hidden','relax','budget']
   },
   {
@@ -282,10 +363,18 @@ window.PLACES = [
     id:'shanghai_museum', name:'Shanghai Museum', cat:'museum', catLabel:'Музей & Урлаг',
     img:'https://images.unsplash.com/photo-1713006947005-70c6b2796b68?auto=format&fit=crop&w=400&h=280&q=80',
     icon:'🏛', bg:'linear-gradient(135deg,#3d2c8d,#6a5acd)',
-    metro:"Line 1/2/8 · People's Square", cost:0, costLabel:'Үнэгүй',
+    metro:"Line 1/2/8 · People's Square · Exit 1", cost:0, costLabel:'Үнэгүй',
     time:'2–3 цаг', rating:'4.8', reviews:'30,000',
     desc:'Хятадын урлагийн нэн чухал музей. Хүрэл эдлэл, каллиграф, шаазан, нефрит — 120,000+ үзмэр.',
     lfs:'LFS: Урьдчилан онлайн бүртгүүлэх шаардлагатай. Ням гарагт хамгийн дүүрэн.',
+    booking:'Онлайн урьдчилан бүртгүүлэх шаардлагатай (үнэгүй)',
+    arrivalGuide:[
+      "🚇 People's Square буудал, Exit 1-ээр гарна",
+      '🚶 Өмнө зүгт талбай дундуур ~3 мин алхана',
+      '🏛 Shanghai Museum талбайн урд захад байна — том дугуй барилга',
+      '📱 ЗААВАЛ: shan.hai-museum.com дээр паспортоор урьдчилан бүртгэнэ (үнэгүй)',
+      '⏰ Мягмар–Ням 09:00–17:00 (сүүлийн орох 16:00), Даваа гараг хаалттай'
+    ],
     tags:['museum','culture','budget','family']
   },
   {
@@ -302,10 +391,16 @@ window.PLACES = [
     id:'urban_planning', name:'Shanghai Urban Planning Exhibition Center', cat:'museum', catLabel:'Музей & Урлаг',
     img:'https://images.unsplash.com/photo-1567574446891-7aef076416ec?auto=format&fit=crop&w=400&h=280&q=80',
     icon:'🏙', bg:'linear-gradient(135deg,#006064,#00838f)',
-    metro:"Line 1/2/8 · People's Square", cost:30, costLabel:'¥30',
+    metro:"Line 1/2/8 · People's Square · Exit 1", cost:30, costLabel:'¥30',
     time:'1–2 цаг', rating:'4.5', reviews:'8,000',
     desc:'Шанхайн ирээдүйн хот төлөвлөлтийн 1:500 масштабын гайхалтай загвар. Хотыг дээрээс харна.',
     lfs:'LFS: Шанхай хотыг бүхэлд нь нэг дор харах сонирхолтой туршлага.',
+    arrivalGuide:[
+      "🚇 People's Square буудал, Exit 1-ээр гарна",
+      '🚶 Зүүн тийш талбай дагуж ~3 мин алхана',
+      '🏙 Том ногоон барилга — Urban Planning Exhibition Center',
+      '⏰ Мягмар–Ням 09:00–17:00 (Даваа гараг хаалттай)'
+    ],
     tags:['museum','culture','budget']
   },
   {
@@ -332,17 +427,23 @@ window.PLACES = [
     id:'long_museum_west', name:'Long Museum West Bund', cat:'museum', catLabel:'Музей & Урлаг',
     img:'https://images.unsplash.com/photo-1614636401882-aa1a36704629?auto=format&fit=crop&w=400&h=280&q=80',
     icon:'🖼', bg:'linear-gradient(135deg,#212121,#424242)',
-    metro:'Line 11 · Yunjin Road', cost:50, costLabel:'¥50',
+    metro:'Line 7/12 · Longhua Middle Rd · Exit 2', cost:50, costLabel:'¥50',
     time:'1–2 цаг', rating:'4.7', reviews:'7,000',
     desc:'Хуучин нүүрс хаях байрны орчинд байрлах хувийн орчин үеийн урлагийн цуглуулга.',
     lfs:'LFS: West Bund аялалтай нийлүүл. Хятадын орчин үеийн урлагийн хамгийн сайн сан.',
+    arrivalGuide:[
+      '🚇 Longhua Middle Road буудал (Line 7 эсвэл Line 12), Exit 2-аас гарна',
+      '🚶 Хуанпу мөрний эрэг рүү ~10 мин алхана',
+      '🖼 Long Museum West Bund: 3398 Longteng Ave — мөрний эрэгт байна',
+      '⏰ Мягмар–Ням 10:00–18:00 (Даваа гараг хаалттай)'
+    ],
     tags:['museum','hidden','relax']
   },
   {
     id:'yuz_museum', name:'Yuz Museum (Yu Zhu)', cat:'museum', catLabel:'Музей & Урлаг',
     img:'https://images.unsplash.com/photo-1590274171261-3e14f2003541?auto=format&fit=crop&w=400&h=280&q=80',
     icon:'🎪', bg:'linear-gradient(135deg,#f57c00,#ef6c00)',
-    metro:'Line 11 · Yunjin Road', cost:100, costLabel:'¥100',
+    metro:'Line 7/12 · Longhua Middle Rd · Exit 2', cost:100, costLabel:'¥100',
     time:'1–2 цаг', rating:'4.5', reviews:'4,000',
     desc:'Индонезийн бизнесмэн Budi Tek-ийн хувийн цуглуулга. Хуучин ангилалтаа MEGA арт бүтээлүүд.',
     lfs:'LFS: West Bund-ийн урлагийн кластерын хэсэг. Long Museum-тай нийлүүлэхэд тохиромжтой.',
@@ -376,20 +477,34 @@ window.PLACES = [
     id:'jingan_temple', name:"Jing'an Temple", cat:'temple', catLabel:'Сүм & Шашин',
     img:'https://images.unsplash.com/photo-1559305984-b6421217abff?auto=format&fit=crop&w=400&h=280&q=80',
     icon:'⛩', bg:'linear-gradient(135deg,#b7950b,#d4ac0d)',
-    metro:"Line 2/7 · Jing'an Temple", cost:50, costLabel:'¥50',
+    metro:"Line 2/7 · Jing'an Temple · Exit 1", cost:50, costLabel:'¥50',
     time:'1 цаг', rating:'4.6', reviews:'25,000',
     desc:'Хотын төвийн шинэ байшингуудын дунд орших 1700 жилийн настай буддын сүм. Алтан дээвэр.',
     lfs:'LFS: Орон нутгийн хүмүүс идэр настан нь мөрт морилдог. Шинэ жилийн наадмаар онцгой.',
+    arrivalGuide:[
+      "🚇 Jing'an Temple буудал, Exit 1-ээр гарна — сүм шууд харагдана",
+      '🎫 Орох хаалган дахь тасалбарын лааны орно (¥50)',
+      '🙏 Гол сүмд орохдоо малгайгаа авна, чимээгүй байна',
+      '📸 Зураг авахдаа мөргөж буй хүмүүсийг зөвшөөрөлгүй авахгүй байна',
+      '⏰ Өдөр бүр 07:30–17:00 нээлттэй'
+    ],
     tags:['temple','culture','photo']
   },
   {
     id:'longhua_temple', name:'Longhua Temple', cat:'temple', catLabel:'Сүм & Шашин',
     img:'https://images.unsplash.com/photo-1637225999435-b65b96e1c9b2?auto=format&fit=crop&w=400&h=280&q=80',
     icon:'🛕', bg:'linear-gradient(135deg,#8b4513,#cd853f)',
-    metro:'Line 11/12 · Longhua', cost:10, costLabel:'¥10',
+    metro:'Line 11/12 · Longhua · Exit 1', cost:10, costLabel:'¥10',
     time:'1–2 цаг', rating:'4.6', reviews:'15,000',
     desc:'Шанхайн хамгийн эртний буддын сүм. Мод цамхаг, цэцэрлэг. 242 онд байгуулагдсан.',
     lfs:'LFS: Шинэ жилийн наадмаар хонх дуугарах ёслол алдартай. Гоё сэрүүн байдаг.',
+    arrivalGuide:[
+      '🚇 Longhua буудал (Line 11 эсвэл Line 12), Exit 1-ээр гарна',
+      '🛕 Гарснаасаа Longhua сүмийн цамхаг харагдана (~200м)',
+      '🎫 Орох тасалбар ¥10 — хаалган дэргэд авна',
+      '🌸 Longhua Rd дагуж ирэхдээ персик цэцгийн мод олон — хаврын улиралд гайхалтай',
+      '⏰ Өдөр бүр 07:00–17:00 нээлттэй'
+    ],
     tags:['temple','culture','photo','family']
   },
   {
@@ -688,20 +803,34 @@ window.PLACES = [
     id:'west_bund', name:'West Bund (Xuhui Riverside)', cat:'relax', catLabel:'Амрах',
     img:'https://images.unsplash.com/photo-1474181487882-5abf3f0ba6c2?auto=format&fit=crop&w=400&h=280&q=80',
     icon:'🌅', bg:'linear-gradient(135deg,#0d3349,#1565c0)',
-    metro:'Line 11 · Yunjin Road', cost:0, costLabel:'Үнэгүй',
+    metro:'Line 7/12 · Longhua Middle Rd · Exit 2  /  Line 11 · Yunjin Rd', cost:0, costLabel:'Үнэгүй',
     time:'1–3 цаг', rating:'4.7', reviews:'20,000',
     desc:'Хуанпу мөрний баруун эргийн урлаг, соёлын бүс. West Bund Art Museum, кофе шоп.',
     lfs:'LFS: Орой нарны жаргалт гайхалтай. Музей Мяг хаалттай.',
+    arrivalGuide:[
+      '🚇 Хамгийн ойр: Line 7/12 Longhua Middle Road буудал, Exit 2-аас гарна',
+      '🚶 Мөрний эрэг рүү зүүн тийш ~10 мин алхана',
+      '🌅 West Bund Art Center, Yuz Museum, Long Museum бүгд мөрний эрэгт зэрэгцэн байна',
+      '☕ Кофе шопуудыг эрэгт дагаж алхахад олон байна',
+      '⏰ West Bund Art Museum: Мяг–Ням 10:00–18:00, Мяг гараг хаалттай'
+    ],
     tags:['relax','photo','museum']
   },
   {
     id:'xintiandi', name:'Xintiandi', cat:'relax', catLabel:'Амрах',
     img:'https://images.unsplash.com/photo-1618933198854-ee406476827c?auto=format&fit=crop&w=400&h=280&q=80',
     icon:'🏮', bg:'linear-gradient(135deg,#8b1a1a,#cc4444)',
-    metro:'Line 10/13 · Xintiandi', cost:0, costLabel:'Үнэгүй',
+    metro:'Line 10/13 · Xintiandi · Exit 6', cost:0, costLabel:'Үнэгүй',
     time:'2 цаг', rating:'4.6', reviews:'30,000',
     desc:'Шикүмэн барилгуудыг трендит бар, ресторан, кофе болгосон. Өдөр кофе, шөнө коктейль.',
     lfs:'LFS: Fuxing Park-тай нийлүүл. Брunch-д 10:00–12:00 хамгийн сайн.',
+    arrivalGuide:[
+      '🚇 Xintiandi буудал, Exit 6-аар гарна — Xintiandi Plaza шууд харагдана',
+      '🏮 Хойд хэсэг (North Block): ресторан, кофе, бутик',
+      '🏚 Өмнөд хэсэг (South Block): CCP Museum, уламжлалт шикүмэн гэр',
+      '🗺 Хоёр хэсгийн хооронд Xingye Road — алхаад 5 мин',
+      '☕ Brunch: 10:00–12:00 завгүй биш, хамгийн сайн цаг'
+    ],
     tags:['relax','night','food','photo','tradition']
   },
   {
@@ -738,10 +867,18 @@ window.PLACES = [
     id:'expo_greenhouse', name:'Expo Culture Park Greenhouse', cat:'relax', catLabel:'Амрах',
     img:'https://images.unsplash.com/photo-1718114268138-4adae6613099?auto=format&fit=crop&w=400&h=280&q=80',
     icon:'🪴', bg:'linear-gradient(135deg,#004d40,#00897b)',
-    metro:'Line 13 · Yaohua Road', cost:70, costLabel:'¥70–100',
+    metro:'Line 13 · Shibo Ave · Exit 4  /  Line 7 · Houtan · Exit 4', cost:70, costLabel:'¥70–100',
     time:'2 цаг', rating:'4.8', reviews:'1,900',
     desc:'Хуучин ган үйлдвэр дотор тропик ой, усан хүрхрээ, цөлийн ургамал.',
-    lfs:'LFS: Мяг хаалттай. Ажлын өдрийн өглөө хүн цөөн.',
+    lfs:'LFS: Мяг хаалттай. Ажлын өдрийн өглөө хүн цөөн. WeChat-аар заавал урьдчилан захиал.',
+    booking:'WeChat-аар заавал урьдчилан захиална',
+    arrivalGuide:[
+      '🚇 Line 13 Shibo Ave (世博大道) буудал Exit 4, эсвэл Line 7 Houtan (后滩) буудал Exit 4',
+      '🚶 Exit 4-аас Expo Culture Park тэмдгийг дагаж ~10 мин алхана',
+      '📱 ЗААВАЛ: WeChat-ын "世博文化公园温室" account-аас тухайн өдрийн тасалбар урьдчилан авна',
+      '🌿 Орох хаалган дээр QR код скан хийлгэнэ',
+      '⏰ Мягмар–Ням 09:00–17:00 (сүүлийн орох 16:00), Даваа гараг хаалттай'
+    ],
     tags:['relax','photo','family']
   },
   {
