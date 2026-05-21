@@ -3007,6 +3007,63 @@ window.loadSharedPlan = function() {
   showToast('Хуваалцсан төлөвлөгөө нээгдлээ!', 'success');
 };
 
+// ── UNSAVED PLAN WARNING ──────────────────────────────────
+// Track dirty state: set true whenever user makes changes, false after save
+window._planDirty = false;
+
+// Mark dirty on any meaningful interaction
+(function() {
+  const markDirty = () => { window._planDirty = true; };
+
+  // Date inputs
+  ['dateArrival','dateDeparture'].forEach(id => {
+    const el = document.getElementById(id);
+    if (el) el.addEventListener('change', markDirty);
+  });
+
+  // People counter buttons, hotel chips, interests — delegate on document
+  document.addEventListener('click', e => {
+    if (e.target.closest('.ppl-btn') ||
+        e.target.closest('.hotel-chip') ||
+        e.target.closest('.chip') ||
+        e.target.closest('.place-save') ||
+        e.target.closest('.day-assign-select')) {
+      markDirty();
+    }
+  });
+
+  // Plan title
+  const titleEl = document.getElementById('planTitle');
+  if (titleEl) titleEl.addEventListener('input', markDirty);
+})();
+
+// Clear dirty flag after successful save or when loading existing plan
+const _origSavePlan = window.savePlan;
+window.savePlan = async function() {
+  await _origSavePlan();
+  window._planDirty = false;
+};
+
+// autoSave also clears dirty (fires after Firebase write)
+const _origAutoSave = window.autoSave;
+window.autoSave = function() {
+  _origAutoSave();
+  // cleared inside autoSave after successful write — we clear optimistically here too
+  setTimeout(() => { window._planDirty = false; }, 3500);
+};
+
+// Warn before tab close only if there are meaningful unsaved changes
+window.addEventListener('beforeunload', e => {
+  const p = window._plan;
+  const hasContent = p.savedPlaces?.length > 0 || p.arrival || p.departure;
+  const isSaved = !!window._planId && !window._planId.startsWith('local_');
+  if (hasContent && window._planDirty && !isSaved) {
+    e.preventDefault();
+    e.returnValue = 'Хадгалаагүй өөрчлөлт байна. Хуудсыг хаах уу?';
+    return e.returnValue;
+  }
+});
+
 // Signal that planner logic is fully loaded
 window.dispatchEvent(new Event('plannerReady'));
 </script>
