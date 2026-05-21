@@ -2770,7 +2770,6 @@ function buildItinerary() {
   }
   if (!html) html = '<div class="empty-state"><div class="empty-icon">📋</div><p>Өдрүүдэд газар хуваарилаагүй байна</p></div>';
   document.getElementById('itinContent').innerHTML = html;
-  document.getElementById('itin-sub').textContent =
   const totalPeople = (p.adults||2) + (p.childFree||0) + (p.childPaid||0);
   const metroPeople = (p.adults||2) + (p.childPaid||0);
   document.getElementById('itin-sub').textContent =
