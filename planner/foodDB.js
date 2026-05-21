@@ -44,14 +44,37 @@ window.FOOD_DB = {
       name: 'Home Inn Selected (Expo Park)',
       nameShort: 'Home Inn (Expo Park)',
       metro: 'Houtan Station · Line 7',
-      places: [] /* ← дата ирэхэд нэмнэ */
+      places: [
+        { name:"Home Inn Buffet Breakfast (如家精选自助早餐)", walk:0, metro:"Буудалд байна", price:43, hours:"07:00–09:30", menu:"yes", desc:"Хятад+баруун буфет: банш, зутан будаа, гоомон, талх, өндөгний хуурга, кофе, шүүс. Захиалгад багтаагүй бол ¥38–48/хүн.", keyword:"如家精选酒店 早餐", meal:"breakfast" },
+        { name:"Lanzhou Beef Noodles (兰州拉面)", walk:3, metro:"Houtan Station, Exit 4", price:30, hours:"07:00–21:00", menu:"photo", desc:"Гар аргаар татсан гоомон, үхрийн махтай шөл — хурдан, хямд, цадмал.", keyword:"兰州牛肉拉面 世博大道", meal:"breakfast" },
+        { name:"Yang's Dumpling (小杨生煎 世博大道店)", walk:6, metro:"Houtan Station, Exit 4", price:28, hours:"07:00–20:30", menu:"photo", desc:"Шанхайн хамгийн алдартай шарсан шүүстэй банш — 4 ш + шөл ¥25-35.", keyword:"小杨生煎 (世博大道店)", meal:"breakfast" },
+        { name:"Luckin Coffee (瑞幸咖啡 世博园店)", walk:5, metro:"Shibo Ave Station, Exit 3", price:22, hours:"07:30–20:00", menu:"yes", desc:"App-аар урьдчилан захиалж алаад аваад явна — хямд, хурдан.", keyword:"瑞幸咖啡 (世博园店)", meal:"coffee" },
+        { name:"FamilyMart (全家 世博大道店)", walk:2, metro:"Houtan Station, Exit 4", price:18, hours:"24 цаг", menu:"yes", desc:"24 цагийн дэлгүүр — халуун кофе, оногири, сэндвич, ¥15–30-д хурдан өглөөний хоол.", keyword:"全家便利店 (世博大道店)", meal:"breakfast" },
+        { name:"Manner Coffee (manner咖啡 世博滨江店)", walk:8, metro:"Houtan Station, Exit 4", price:20, hours:"08:00–20:00", menu:"yes", desc:"Шанхайн specialty кофе сүлжээ — flat white, latte ¥15–25.", keyword:"Manner Coffee (世博滨江店)", meal:"coffee" },
+        { name:"Xibei Oat Noodles (西贝莜面村 世博店)", walk:10, metro:"Shibo Ave Station, Exit 2", price:110, hours:"10:30–21:30", menu:"yes", desc:"Хойд Хятадын хонины махтай хуурга, гар хийцийн гоомон — цэвэрхэн, амттай.", keyword:"西贝莜面村 (世博店)", meal:"lunch" },
+        { name:"Expo Food Court (世博商城美食广场)", walk:8, metro:"Shibo Ave Station, Exit 1", price:60, hours:"10:00–21:00", menu:"photo", desc:"Expo Culture Park дэргэдэх олон хоолны газрын цуглуулга — Хятад болон олон улсын сонголт.", keyword:"世博商城美食广场", meal:"lunch" },
+        { name:"Haidilao Hot Pot (海底捞 世博店)", walk:12, metro:"Shibo Ave Station, Exit 1", price:150, hours:"10:00–06:00", menu:"yes", desc:"Дэлхийд алдартай халуун тавгийн ресторан — монголчуудын дуртай, шөнийн 6 цаг хүртэл нээлттэй.", keyword:"海底捞 (世博店)", meal:"dinner" },
+        { name:"Wai Po Jia (外婆家 世博店)", walk:10, metro:"Shibo Ave Station, Exit 2", price:80, hours:"11:00–14:00, 17:00–21:00", menu:"photo", desc:"Жанжуны эмэгтэйн хоол — хямд, амттай, Шанхайн орон нутгийн амт.", keyword:"外婆家 (世博店)", meal:"dinner" }
+      ]
     },
     {
       id: 'yitel',
       name: 'Yitel Hotel (Pudian Road)',
       nameShort: 'Yitel (Pudian Road)',
       metro: 'Pudian Road Station · Line 4/6',
-      places: [] /* ← дата ирэхэд нэмнэ */
+      places: [
+        { name:"Yitel Buffet Breakfast (和颐酒店自助早餐)", walk:0, metro:"Буудалд байна", price:53, hours:"07:00–10:00", menu:"yes", desc:"Хятад+баруун буфет: таанбао, зутан будаа, гоомон, омлет, салат, жимс, соёмбо сүү, кофе. Захиалгад багтаагүй бол ¥48–58/хүн.", keyword:"和颐酒店 浦电路 早餐", meal:"breakfast" },
+        { name:"Yang's Dumpling (小杨生煎 浦电路店)", walk:5, metro:"Pudian Road Station, Exit 1", price:28, hours:"07:00–20:30", menu:"photo", desc:"Шанхайн хамгийн алдартай шарсан шүүстэй банш — 4 ш + үхрийн шөл ¥25–35.", keyword:"小杨生煎 (浦电路店)", meal:"breakfast" },
+        { name:"Lanzhou Beef Noodles (兰州拉面 浦电路店)", walk:3, metro:"Pudian Road Station, Exit 2", price:28, hours:"06:30–21:00", menu:"photo", desc:"Гар аргаар татсан гоомон — үхрийн махтай, хурдан, хямд, цадмал.", keyword:"兰州牛肉拉面 (浦电路店)", meal:"breakfast" },
+        { name:"Luckin Coffee (瑞幸咖啡 浦电路站店)", walk:3, metro:"Pudian Road Station, Exit 1", price:20, hours:"07:00–20:00", menu:"yes", desc:"App-аар урьдчилан захиална — flat white, latte ¥9.9–22, хамгийн хямд кофе.", keyword:"瑞幸咖啡 (浦电路站店)", meal:"coffee" },
+        { name:"Manner Coffee (manner咖啡 浦电路店)", walk:4, metro:"Pudian Road Station, Exit 1", price:20, hours:"07:30–20:00", menu:"yes", desc:"Шанхайн дуртай specialty кофе — өөрийн аяга авчирвал ¥5 хөнгөлөлт.", keyword:"Manner Coffee (浦电路店)", meal:"coffee" },
+        { name:"FamilyMart (全家 浦电路店)", walk:2, metro:"Pudian Road Station, Exit 1", price:18, hours:"24 цаг", menu:"yes", desc:"Буудлаас 2 минут — халуун кофе, оногири, бэлэн хоол ¥15–30.", keyword:"全家便利店 (浦电路店)", meal:"breakfast" },
+        { name:"Xibei Oat Noodles (西贝莜面村 96广场店)", walk:7, metro:"Pudian Road Station, Exit 2", price:110, hours:"10:30–21:30", menu:"yes", desc:"Хойд Хятадын хонины махтай хуурга, гар хийцийн гоомон — ¥90–130/хүн, цэвэрхэн.", keyword:"西贝莜面村 (96广场店)", meal:"lunch" },
+        { name:"96 Plaza Food Hall (96广场餐饮区)", walk:7, metro:"Pudian Road Station, Exit 2", price:70, hours:"10:00–21:30", menu:"photo", desc:"Буудлаас 7 минут — олон хоолны газрын цуглуулга, Хятад болон олон улсын сонголт.", keyword:"96广场美食广场 浦电路", meal:"lunch" },
+        { name:"Starbucks (星巴克 96广场店)", walk:7, metro:"Pudian Road Station, Exit 2", price:45, hours:"07:00–22:00", menu:"yes", desc:"96 Plaza дотор — өглөөний сэндвич, kopi latte, тайван суух боломжтой.", keyword:"星巴克 (96广场店)", meal:"coffee" },
+        { name:"Haidilao Hot Pot (海底捞 浦电路店)", walk:10, metro:"Pudian Road Station, Exit 2", price:150, hours:"10:00–06:00", menu:"yes", desc:"Дэлхийд алдартай халуун тавгийн ресторан — шөнийн 6 цаг хүртэл нээлттэй.", keyword:"海底捞 (浦电路店)", meal:"dinner" },
+        { name:"Spicy Joint Hunan (辣府 浦东店)", walk:12, metro:"Century Avenue Station, Exit 3", price:100, hours:"11:00–22:00", menu:"yes", desc:"Хунань мужийн халуун шарсан мах — монголчуудын дуртай, ¥80–120/хүн.", keyword:"辣府湘菜 (浦东店)", meal:"dinner" }
+      ]
     }
   ],
 
