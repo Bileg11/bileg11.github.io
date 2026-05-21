@@ -194,6 +194,30 @@
     }
     .btn-add-person:hover { border-color: var(--primary); color: var(--primary); }
 
+    /* ── PEOPLE COUNTER ── */
+    .people-counter-wrap { display:flex;flex-direction:column;gap:10px; }
+    .people-counter-row {
+      display:flex;align-items:center;justify-content:space-between;
+      background:var(--bg);border:1.5px solid var(--border);
+      border-radius:12px;padding:12px 14px;gap:10px;
+    }
+    .people-counter-info { flex:1; }
+    .people-counter-label { font-size:.88rem;font-weight:600;color:var(--text); }
+    .people-counter-note  { font-size:.72rem;color:var(--sub);margin-top:2px; }
+    .people-counter-ctrl  { display:flex;align-items:center;gap:10px; }
+    .people-counter-ctrl span { font-size:1.15rem;font-weight:700;min-width:24px;text-align:center; }
+    .ppl-btn {
+      width:32px;height:32px;border-radius:50%;border:1.5px solid var(--border);
+      background:var(--bg);cursor:pointer;font-size:1.1rem;font-weight:700;
+      display:flex;align-items:center;justify-content:center;
+      transition:all .15s;color:var(--text);
+    }
+    .ppl-btn:hover { border-color:var(--primary);color:var(--primary); }
+    .people-counter-total {
+      font-size:.78rem;color:var(--sub);padding:6px 2px;
+    }
+    .people-counter-total strong { color:var(--text); }
+
     /* ── DAY SCHEDULE ── */
     .day-cards { display: flex; flex-direction: column; gap: 12px; }
     .day-card {
@@ -839,11 +863,45 @@
       </div>
 
       <div style="margin-top:20px;">
-        <label style="margin-bottom:10px;display:block;">Хамт явагчид</label>
-        <div class="people-list" id="peopleList"></div>
-        <button class="btn-add-person" onclick="addPerson()" style="margin-top:10px;">
-          ＋ Хүн нэмэх
-        </button>
+        <label style="margin-bottom:12px;display:block;">Хэдүүлээ явах вэ?</label>
+        <div class="people-counter-wrap">
+          <div class="people-counter-row">
+            <div class="people-counter-info">
+              <div class="people-counter-label">👤 Насанд хүрсэн</div>
+            </div>
+            <div class="people-counter-ctrl">
+              <button class="ppl-btn" onclick="adjustPeople('adults',-1)">−</button>
+              <span id="countAdults">2</span>
+              <button class="ppl-btn" onclick="adjustPeople('adults',1)">＋</button>
+            </div>
+          </div>
+          <div class="people-counter-row">
+            <div class="people-counter-info">
+              <div class="people-counter-label">👶 Хүүхэд <span style="font-weight:400;font-size:.8rem;color:var(--sub)">(өндөр 1.3м-ээс бага)</span></div>
+              <div class="people-counter-note" style="color:#16a34a;">🚇 Метро & ихэнх газар үнэгүй</div>
+            </div>
+            <div class="people-counter-ctrl">
+              <button class="ppl-btn" onclick="adjustPeople('childFree',-1)">−</button>
+              <span id="countChildFree">0</span>
+              <button class="ppl-btn" onclick="adjustPeople('childFree',1)">＋</button>
+            </div>
+          </div>
+          <div class="people-counter-row">
+            <div class="people-counter-info">
+              <div class="people-counter-label">🧒 Хүүхэд <span style="font-weight:400;font-size:.8rem;color:var(--sub)">(өндөр 1.3м-ээс дээш)</span></div>
+              <div class="people-counter-note" style="color:var(--sub);">🚇 Метро төлнө, үзмэрийн хасалт бий</div>
+            </div>
+            <div class="people-counter-ctrl">
+              <button class="ppl-btn" onclick="adjustPeople('childPaid',-1)">−</button>
+              <span id="countChildPaid">0</span>
+              <button class="ppl-btn" onclick="adjustPeople('childPaid',1)">＋</button>
+            </div>
+          </div>
+          <div class="people-counter-total" id="peopleTotalRow">
+            Нийт <strong id="peopleTotalCount">2</strong> хүн
+            · Метро төлөх: <strong id="metroPayCount">2</strong> хүн
+          </div>
+        </div>
       </div>
 
       <div style="margin-top:20px;">
@@ -902,7 +960,7 @@
 
       <!-- FRIEND SEARCH -->
       <div class="friend-search-wrap" id="friendSearchSection">
-        <label class="friend-search-label">👥 Найз нэмэх <span style="color:var(--sub);font-weight:400;">(хэрэглэгчийн нэр эсвэл и-мэйл)</span></label>
+        <label class="friend-search-label">🔗 Хамтран төлөвлөх <span style="color:var(--sub);font-weight:400;">(заавал биш — account-тай найзаа нэмж хамт засах)</span></label>
         <div class="friend-search-box">
           <span class="friend-search-icon">🔍</span>
           <input type="text" id="friendSearchInput" placeholder="username эсвэл email хайх..." autocomplete="off" oninput="searchFriends(this.value)"/>
@@ -1235,6 +1293,9 @@ window.autoSave = function() {
         people:    window._plan.people,
         hotel:     window._plan.hotel,
         hotelId:   window._plan.hotelId || window._selectedHotelId || 'other',
+        adults:    window._plan.adults    || 2,
+        childFree: window._plan.childFree || 0,
+        childPaid: window._plan.childPaid || 0,
         interests: window._plan.interests,
         budget:    window._plan.budget,
         timePrefs: window._plan.timePrefs,
@@ -1261,6 +1322,10 @@ function startLiveSync(planId) {
     window._plan.hotel     = d.hotel     || '';
     window._plan.hotelId   = d.hotelId   || 'other';
     window._selectedHotelId = d.hotelId  || 'other';
+    window._plan.adults    = d.adults    ?? 2;
+    window._plan.childFree = d.childFree ?? 0;
+    window._plan.childPaid = d.childPaid ?? 0;
+    if (window._ppl) { window._ppl.adults=window._plan.adults; window._ppl.childFree=window._plan.childFree; window._ppl.childPaid=window._plan.childPaid; renderPeopleCounters && renderPeopleCounters(); }
     window._plan.interests = d.interests || [];
     window._plan.budget    = d.budget    || '';
     window._plan.timePrefs = d.timePrefs || {};
@@ -1482,6 +1547,9 @@ window.savePlan = async () => {
     people:       window._plan.people,
     hotel:        window._plan.hotel,
     hotelId:      window._plan.hotelId || window._selectedHotelId || 'other',
+    adults:       window._plan.adults    || 2,
+    childFree:    window._plan.childFree || 0,
+    childPaid:    window._plan.childPaid || 0,
     interests:    window._plan.interests,
     budget:       window._plan.budget,
     timePrefs:    window._plan.timePrefs,
@@ -2154,8 +2222,8 @@ function updateSummaryBar() {
   const p = window._plan;
   document.getElementById('psb-dates').innerHTML =
     p.arrival ? `<strong>${p.arrival}</strong> → <strong>${p.departure||'?'}</strong>` : '';
-  document.getElementById('psb-people').innerHTML =
-    p.people.length ? `<strong>${p.people.length}</strong> хүн` : '';
+  const totalPpl = (p.adults||2) + (p.childFree||0) + (p.childPaid||0);
+  document.getElementById('psb-people').innerHTML = totalPpl ? `<strong>${totalPpl}</strong> хүн` : '';
   document.getElementById('psb-saved').innerHTML =
     p.savedPlaces.length ? `<strong>${p.savedPlaces.length}</strong> газар хадгалсан` : '';
 }
@@ -2163,41 +2231,28 @@ function updateSummaryBar() {
 /* ─── STEP 1: AUTH ─── */
 
 /* ─── STEP 2: DATES & PEOPLE ─── */
-let people = [{ name: '' }];
+// Counter-based people model
+window._ppl = {
+  adults:    window._plan.adults    || 2,
+  childFree: window._plan.childFree || 0,
+  childPaid: window._plan.childPaid || 0
+};
 
-function renderPeople() {
-  const list = document.getElementById('peopleList');
-  list.innerHTML = '';
-  people.forEach((p, i) => {
-    const row = document.createElement('div');
-    row.className = 'person-row';
-    const colors = ['#e8392a','#3b82f6','#10b981','#f59e0b','#8b5cf6','#ec4899'];
-    const col = colors[i % colors.length];
-    row.innerHTML = `
-      <div class="person-avatar" style="background:linear-gradient(135deg,${col},${col}cc)">
-        ${p.name ? p.name[0].toUpperCase() : (i===0?'Та':'?')}
-      </div>
-      <input type="text" placeholder="${i===0?'Таны нэр (заавал биш)':'Найзын нэр'}"
-        value="${p.name}" oninput="people[${i}].name=this.value;updatePersonAvatar(this,${i})"/>
-      ${i>0 ? `<button class="btn-remove-person" onclick="removePerson(${i})">✕</button>` : ''}
-    `;
-    list.appendChild(row);
-  });
+function renderPeopleCounters() {
+  document.getElementById('countAdults').textContent    = window._ppl.adults;
+  document.getElementById('countChildFree').textContent = window._ppl.childFree;
+  document.getElementById('countChildPaid').textContent = window._ppl.childPaid;
+  const total = window._ppl.adults + window._ppl.childFree + window._ppl.childPaid;
+  const metroPay = window._ppl.adults + window._ppl.childPaid;
+  document.getElementById('peopleTotalCount').textContent = total;
+  document.getElementById('metroPayCount').textContent    = metroPay;
 }
-window.updatePersonAvatar = function(inp, i) {
-  const av = inp.parentElement.querySelector('.person-avatar');
-  av.textContent = inp.value ? inp.value[0].toUpperCase() : (i===0?'Та':'?');
+window.adjustPeople = function(type, delta) {
+  window._ppl[type] = Math.max(0, (window._ppl[type] || 0) + delta);
+  if (type === 'adults' && window._ppl.adults < 1) window._ppl.adults = 1;
+  renderPeopleCounters();
 };
-window.addPerson = function() {
-  if (people.length >= 8) { showToast('Хамгийн ихдээ 8 хүн', ''); return; }
-  people.push({ name: '' });
-  renderPeople();
-};
-window.removePerson = function(i) {
-  people.splice(i, 1);
-  renderPeople();
-};
-renderPeople();
+renderPeopleCounters();
 
 window.updateDayCards = function() {}; // no-op — replaced by global time
 
@@ -2240,7 +2295,10 @@ window.nextFromDates = function() {
   if (new Date(dep) < new Date(arr)) { showToast('Явах огноо ирэх огнооноос хожуу байх ёстой', 'error'); return; }
   window._plan.arrival = arr;
   window._plan.departure = dep;
-  window._plan.people = people;
+  window._plan.adults    = window._ppl.adults;
+  window._plan.childFree = window._ppl.childFree;
+  window._plan.childPaid = window._ppl.childPaid;
+  window._plan.people    = []; // legacy compat
   // Save hotel from chip or text input
   if (window._selectedHotelId && window._selectedHotelId !== 'other') {
     const h = (window.FOOD_DB?.hotels || []).find(h => h.id === window._selectedHotelId);
@@ -2355,10 +2413,28 @@ window.switchGuideTab = function(idx) {
 };
 
 function renderFoodCard(p) {
+  const isCoffee = p.meal === 'coffee';
   const mealIcon = { breakfast:'🥢', lunch:'🍜', dinner:'🌙', coffee:'☕' }[p.meal] || '🍽';
-  const menuLabel = p.menu === 'yes' ? '✓ Англи меню' : p.menu === 'photo' ? '📷 Зургийн меню' : '— Монгол меню байхгүй';
+  const amapUrl  = window.FOOD_DB.amapLink(p.keyword);
+
+  // Coffee: compact inline row — just name, price, Amap button
+  if (isCoffee) {
+    return `
+  <div class="food-card" style="padding:9px 14px;align-items:center;">
+    <div class="food-card-meal" style="font-size:1rem;">☕</div>
+    <div class="food-card-body" style="display:flex;align-items:center;justify-content:space-between;gap:8px;flex-wrap:wrap;">
+      <div>
+        <span class="food-card-name" style="font-size:.82rem;">${p.name}</span>
+        <span style="color:var(--sub);font-size:.75rem;margin-left:6px;">¥${p.price} (~₮${Math.round(p.price*535).toLocaleString()})</span>
+      </div>
+      <a class="btn-amap" href="${amapUrl}" target="_blank" rel="noopener" style="padding:4px 10px;font-size:.72rem;">🗺 Amap</a>
+    </div>
+  </div>`;
+  }
+
+  // Meals: full card
+  const menuLabel = p.menu === 'yes' ? '✓ Англи меню' : p.menu === 'photo' ? '📷 Зургийн меню' : '';
   const menuClass = p.menu === 'yes' ? 'yes' : p.menu === 'photo' ? 'photo' : '';
-  const amapUrl = window.FOOD_DB.amapLink(p.keyword);
   return `
   <div class="food-card">
     <div class="food-card-meal">${mealIcon}</div>
@@ -2375,7 +2451,7 @@ function renderFoodCard(p) {
       <div class="food-card-desc">${p.desc}</div>
       <div class="food-card-actions">
         <a class="btn-amap" href="${amapUrl}" target="_blank" rel="noopener">🗺 Amap</a>
-        <span class="menu-badge ${menuClass}">${menuLabel}</span>
+        ${menuClass ? `<span class="menu-badge ${menuClass}">${menuLabel}</span>` : ''}
       </div>
     </div>
   </div>`;
@@ -2583,10 +2659,10 @@ function buildItinerary() {
   for (let d = 1; d <= totalDays; d++) {
     const dt = new Date(arrival); dt.setDate(arrival.getDate() + d - 1);
     const dayLabel = `${dt.getDate()} ${MN_MONTHS[dt.getMonth()]} (${MN_DAYS[dt.getDay()]})`;
-    const key = p.arrival + '_d' + (d-1);
-    const pref = p.timePrefs[key] || {};
-    const startHour = parseInt((pref.start||'09:00').split(':')[0]) || 9;
-    const endHour   = parseInt((pref.end  ||'21:00').split(':')[0]) || 21;
+    const globalStart = p.globalStartTime || window._plan.globalStartTime || '09:00';
+    const globalEnd   = p.globalEndTime   || window._plan.globalEndTime   || '21:00';
+    const startHour = parseInt(globalStart.split(':')[0]) || 9;
+    const endHour   = parseInt(globalEnd.split(':')[0])   || 21;
 
     const dayPlaces = saved.filter(pl => (p.dayAssignments[pl.id]||1) === d);
     if (dayPlaces.length === 0) continue;
@@ -2595,14 +2671,21 @@ function buildItinerary() {
       <div class="itin-day-header">
         <div class="itin-day-badge">${d}-р өдөр</div>
         <div class="itin-day-date">${dayLabel}</div>
-        <div style="font-size:.75rem;color:var(--sub);margin-left:auto;">${pref.start||'09:00'} → ${pref.end||'21:00'}</div>
+        <div style="font-size:.75rem;color:var(--sub);margin-left:auto;">${globalStart} → ${globalEnd}</div>
       </div>
       <div class="itin-timeline">`;
+
+    // Format decimal hour → "HH:MM"
+    function fmtHour(h) {
+      const hh = Math.min(Math.floor(h), 23);
+      const mm = Math.round((h - Math.floor(h)) * 60);
+      return `${String(hh).padStart(2,'0')}:${String(mm === 60 ? 0 : mm).padStart(2,'0')}`;
+    }
 
     let hour = startHour, prevId = null;
     dayPlaces.forEach((pl, pi) => {
       const isLast = pi === dayPlaces.length - 1;
-      const timeStr = `${String(Math.min(hour,23)).padStart(2,'0')}:00`;
+      const timeStr = fmtHour(hour);
 
       // Travel time from previous place
       let travelHtml = '';
@@ -2646,9 +2729,12 @@ function buildItinerary() {
   if (!html) html = '<div class="empty-state"><div class="empty-icon">📋</div><p>Өдрүүдэд газар хуваарилаагүй байна</p></div>';
   document.getElementById('itinContent').innerHTML = html;
   document.getElementById('itin-sub').textContent =
-    `${totalDays} өдөр · ${saved.length} газар · ${p.people.length||1} хүн`;
+  const totalPeople = (p.adults||2) + (p.childFree||0) + (p.childPaid||0);
+  const metroPeople = (p.adults||2) + (p.childPaid||0);
+  document.getElementById('itin-sub').textContent =
+    `${totalDays} өдөр · ${saved.length} газар · ${totalPeople} хүн`;
 
-  buildCostTable(saved, p.people.length||1);
+  buildCostTable(saved, totalPeople, metroPeople);
 }
 
 // Assign a place to a specific day
@@ -2659,16 +2745,18 @@ window.assignDay = function(placeId, day) {
   showToast(`${day}-р өдөрт хуваарилагдлаа`, 'success');
 };
 
-function buildCostTable(places, numPeople) {
+function buildCostTable(places, numPeople, metroPeople) {
+  metroPeople = metroPeople || numPeople;
   const days = getDayCount();
   const entryCost = places.reduce((s, p) => s + (p.cost||0), 0);
-  const metroEst = 20 * numPeople * days;   // ¥15–25/хүн/өдөр, дундаж ¥20
-  const foodEst  = 100 * days * numPeople;  // ¥80–120/хүн/өдөр, дундаж ¥100
+  const metroEst = 20 * metroPeople * days;  // Метро: зөвхөн төлдөг хүмүүс
+  const foodEst  = 100 * days * numPeople;   // Хоол: бүх хүн
   const total = entryCost * numPeople + metroEst + foodEst;
+  const metroNote = metroPeople < numPeople ? ` (${numPeople-metroPeople} хүүхэд үнэгүй)` : '';
 
   const rows = [
     ['Үзэмжийн хураамж', `¥${entryCost} × ${numPeople} хүн`, `¥${entryCost*numPeople}`],
-    ['Метро & тэрэг', `¥20/хүн/өдөр × ${days}өд × ${numPeople}`, `¥${metroEst}`],
+    ['Метро & тэрэг', `¥20/өдөр × ${days}өд × ${metroPeople}${metroNote}`, `¥${metroEst}`],
     ['Хоол (ойролцоо)', `¥100/хүн/өдөр × ${days}өд × ${numPeople}`, `¥${foodEst}`],
     ['Нийт (CNY)', '', `<span class="cost-total">¥${total}</span>`],
     ['Нийт (₮)', '', `<span class="cost-total">~₮${Math.round(total*535).toLocaleString()}</span>`],
