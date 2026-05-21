@@ -211,7 +211,21 @@ body{
   gap:20px;
 }
 @media(max-width:960px){.cards-grid{grid-template-columns:repeat(2,1fr)}}
-@media(max-width:600px){.cards-grid{grid-template-columns:1fr;gap:16px}}
+@media(max-width:600px){
+  .tips-section{padding:72px 0 100px}
+  .tips-section-label{padding:0 24px}
+  .cards-grid{
+    display:flex;
+    overflow-x:auto;
+    overflow-y:visible;
+    scroll-snap-type:x mandatory;
+    -webkit-overflow-scrolling:touch;
+    gap:12px;
+    padding:4px 24px 20px;
+    scrollbar-width:none;
+  }
+  .cards-grid::-webkit-scrollbar{display:none}
+}
 
 /* ── TIP CARD ── */
 .tip-card{
@@ -276,7 +290,15 @@ body{
 .tip-card.wide{
   grid-column:1 / -1;
 }
-@media(max-width:600px){.tip-card.wide{grid-column:auto}}
+@media(max-width:600px){
+  .tip-card.wide{grid-column:auto}
+  .tip-card{
+    flex:0 0 82vw;
+    max-width:300px;
+    scroll-snap-align:start;
+    min-height:260px;
+  }
+}
 
 /* ── CTA SECTION ── */
 .cta-section{
