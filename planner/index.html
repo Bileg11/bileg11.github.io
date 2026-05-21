@@ -854,6 +854,33 @@
     </div>
   </div>
 
+  <!-- ══ ONBOARDING WELCOME OVERLAY ══ -->
+  <div id="onboardOverlay" style="display:none;position:fixed;inset:0;background:rgba(0,0,0,.6);z-index:999;display:flex;align-items:center;justify-content:center;padding:20px;">
+    <div style="background:#fff;border-radius:24px;max-width:400px;width:100%;padding:32px 28px;text-align:center;box-shadow:0 24px 60px rgba(0,0,0,.25);">
+      <div style="font-size:2.4rem;margin-bottom:12px;">🗺️</div>
+      <div style="font-size:1.25rem;font-weight:800;color:#1a1a2e;margin-bottom:6px;letter-spacing:-.03em;">Шанхай аяллаа төлөвлөе</div>
+      <div style="font-size:.88rem;color:#5a5a72;margin-bottom:28px;line-height:1.6;">Дөрвөн хялбар алхамаар аяллынхаа бүрэн хуваарийг гаргана</div>
+      <div style="display:flex;flex-direction:column;gap:12px;margin-bottom:28px;text-align:left;">
+        <div style="display:flex;align-items:center;gap:14px;padding:12px 14px;background:#f7f7f8;border-radius:14px;">
+          <div style="width:36px;height:36px;border-radius:50%;background:#e8392a;color:#fff;font-size:.85rem;font-weight:700;display:flex;align-items:center;justify-content:center;flex-shrink:0;">1</div>
+          <div><div style="font-size:.9rem;font-weight:700;color:#1a1a2e;">📅 Огноо & хүн тоогоо оруулна</div><div style="font-size:.78rem;color:#5a5a72;">Хэзээ, хэд хэдэн хүн аялах вэ</div></div>
+        </div>
+        <div style="display:flex;align-items:center;gap:14px;padding:12px 14px;background:#f7f7f8;border-radius:14px;">
+          <div style="width:36px;height:36px;border-radius:50%;background:#e8392a;color:#fff;font-size:.85rem;font-weight:700;display:flex;align-items:center;justify-content:center;flex-shrink:0;">2</div>
+          <div><div style="font-size:.9rem;font-weight:700;color:#1a1a2e;">📍 Очих газруудаа сонгоно</div><div style="font-size:.78rem;color:#5a5a72;">88 газраас дуртайгаа хадгална</div></div>
+        </div>
+        <div style="display:flex;align-items:center;gap:14px;padding:12px 14px;background:#f7f7f8;border-radius:14px;">
+          <div style="width:36px;height:36px;border-radius:50%;background:#e8392a;color:#fff;font-size:.85rem;font-weight:700;display:flex;align-items:center;justify-content:center;flex-shrink:0;">3</div>
+          <div><div style="font-size:.9rem;font-weight:700;color:#1a1a2e;">🗓 Өдөр бүрийн хуваарь гарна</div><div style="font-size:.78rem;color:#5a5a72;">Цаг, зардал, метро маршрут</div></div>
+        </div>
+      </div>
+      <button onclick="dismissOnboarding()" style="width:100%;padding:16px;background:#e8392a;color:#fff;border:none;border-radius:50px;font-size:1rem;font-weight:700;cursor:pointer;touch-action:manipulation;letter-spacing:-.01em;">
+        Эхлэх →
+      </button>
+      <div style="font-size:.75rem;color:#aaa;margin-top:12px;">Үнэгүй · Бүртгэлгүй ашиглах боломжтой</div>
+    </div>
+  </div>
+
   <!-- SHARED PLAN BANNER -->
   <div class="shared-banner" id="sharedBanner">
     <h3 id="sharedBannerTitle">🗺 Найзын төлөвлөгөөг харж байна</h3>
@@ -1178,6 +1205,15 @@
       <button class="btn-back" onclick="goToStep(4)">← Засах</button>
       <button class="btn-next" onclick="savePlan()">Хадгалах ✓</button>
       <button class="btn-next" style="background:#16a34a;border-color:#16a34a;" onclick="goToStep(6)">🗺 Гарын авлага →</button>
+    </div>
+
+    <!-- BOOKING CTA -->
+    <div style="margin-top:24px;padding:22px;background:linear-gradient(135deg,#1a1a2e,#e8392a);border-radius:20px;text-align:center;">
+      <div style="font-size:1.1rem;font-weight:800;color:#fff;margin-bottom:6px;letter-spacing:-.02em;">Хөтчтэй аялах уу? 🇨🇳</div>
+      <div style="font-size:.85rem;color:rgba(255,255,255,.8);margin-bottom:18px;line-height:1.5;">Шанхайд очихоор манай хөтч дагалдана —<br>метро, ресторан, хэл орчуулга бүгдийг зохицуулна</div>
+      <a href="/booking/" style="display:inline-block;background:#fff;color:#e8392a;border-radius:50px;padding:14px 36px;font-size:.95rem;font-weight:800;text-decoration:none;touch-action:manipulation;letter-spacing:-.01em;">
+        Захиалга өгөх →
+      </a>
     </div>
   </div>
 
@@ -3212,6 +3248,20 @@ window.addEventListener('beforeunload', e => {
     return e.returnValue;
   }
 });
+
+// ── ONBOARDING ──────────────────────────────────────────
+(function() {
+  const seen = localStorage.getItem('lfs_planner_seen');
+  if (!seen) {
+    const ov = document.getElementById('onboardOverlay');
+    if (ov) ov.style.display = 'flex';
+  }
+})();
+window.dismissOnboarding = function() {
+  const ov = document.getElementById('onboardOverlay');
+  if (ov) ov.style.display = 'none';
+  localStorage.setItem('lfs_planner_seen', '1');
+};
 
 // Signal that planner logic is fully loaded
 window.dispatchEvent(new Event('plannerReady'));

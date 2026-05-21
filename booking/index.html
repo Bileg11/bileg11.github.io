@@ -415,7 +415,7 @@ footer{
       </div>
 
       <!-- STEP COUNTER -->
-      <div class="step-counter" id="stepCounter">1 / 10</div>
+      <div class="step-counter" id="stepCounter">1 / 6</div>
 
       <!-- WIZARD BODY -->
       <div class="wizard-disabled" id="wizardBody">
@@ -508,6 +508,37 @@ footer{
             </div>
 
             <div class="field-err" id="err-start">Огноогоо сонгоно уу</div>
+
+            <hr style="margin:20px 0;border:none;border-top:1px solid #eee">
+            <div class="step-sub" style="margin:16px 0 10px">Хэдэн өдөр?</div>
+            <div class="card-grid days-grid" id="days-grid">
+              <div class="sel-card" data-val="1 өдөр" onclick="selectCard('days',this)">
+                <div class="sel-card-label">1 өдөр</div>
+              </div>
+              <div class="sel-card" data-val="2 өдөр" onclick="selectCard('days',this)">
+                <div class="sel-card-label">2 өдөр</div>
+              </div>
+              <div class="sel-card" data-val="3 өдөр" onclick="selectCard('days',this)">
+                <div class="sel-card-label">3 өдөр</div>
+              </div>
+              <div class="sel-card" data-val="4–5 өдөр" onclick="selectCard('days',this)">
+                <div class="sel-card-label">4–5 өдөр</div>
+              </div>
+              <div class="sel-card" data-val="7+ өдөр" onclick="selectCard('days',this)">
+                <div class="sel-card-label">7+ өдөр</div>
+              </div>
+            </div>
+            <div class="field-err" id="err-days">Өдрийн тоогоо сонгоно уу</div>
+
+            <hr style="margin:20px 0;border:none;border-top:1px solid #eee">
+            <div class="step-sub" style="margin:16px 0 10px">Хэдэн хүн?</div>
+            <div class="stepper">
+              <button class="stepper-btn" onclick="changePeople(-1)" aria-label="Хасах">−</button>
+              <div class="stepper-val" id="people-display">1</div>
+              <button class="stepper-btn" onclick="changePeople(1)" aria-label="Нэмэх">+</button>
+            </div>
+            <div class="stepper-hint">Хамгийн ихдээ 30 хүн</div>
+
             <div class="wiz-nav">
               <button class="btn-back" onclick="prevStep()">← Буцах</button>
               <button class="btn-next" onclick="nextStep()">Дараах →</button>
@@ -596,9 +627,12 @@ footer{
             </div>
 
             <input class="wiz-input" type="text" id="b-social" placeholder="facebook.com/username эсвэл instagram.com/username">
+
+            <div class="step-sub" style="margin:16px 0 8px">Нэмэлт хүсэлт <span style="font-size:13px;font-weight:400;color:var(--muted)">(заавал биш)</span></div>
+            <textarea class="wiz-textarea" id="b-note" placeholder="Тусгай хүсэлт байвал бичнэ үү..."></textarea>
+
             <div class="wiz-nav">
               <button class="btn-back" onclick="prevStep()">← Буцах</button>
-              <button class="btn-skip" onclick="skipStep()">Алгасах →</button>
               <button class="btn-next" onclick="nextStep()">Дараах →</button>
             </div>
           </div>
@@ -749,7 +783,8 @@ footer{
 
 <script>
 // ── WIZARD STATE ─────────────────────────────────────────────────
-const TOTAL_STEPS = 9;
+const TOTAL_STEPS = 6;
+const STEP_SEQUENCE = [1, 2, 3, 6, 8, 9]; // steps 4,5,7 merged into 3 and 6
 let currentStep = 1;
 let peopleCount = 1;
 let wizardData = {
@@ -777,9 +812,11 @@ let wizardLocked = false; // disabled when profile incomplete / not authed
 })();
 
 function updateProgress() {
-  const pct = Math.round((currentStep / TOTAL_STEPS) * 100);
+  const idx = STEP_SEQUENCE.indexOf(currentStep);
+  const displayNum = Math.max(1, idx + 1);
+  const pct = Math.round((displayNum / TOTAL_STEPS) * 100);
   document.getElementById('progressBar').style.width = pct + '%';
-  document.getElementById('stepCounter').textContent = currentStep + ' / ' + TOTAL_STEPS;
+  document.getElementById('stepCounter').textContent = displayNum + ' / ' + TOTAL_STEPS;
 }
 
 function showStep(n, direction) {
@@ -844,22 +881,16 @@ function validateCurrentStep() {
     if (!v) { showErr('b-start','err-start'); return false; }
     wizardData.start = v;
     clearErr('b-start','err-start');
-    return true;
-  }
-  if (s === 4) {
     if (!wizardData.days) { document.getElementById('err-days').classList.add('show'); return false; }
     document.getElementById('err-days').classList.remove('show');
-    return true;
-  }
-  if (s === 5) {
     wizardData.people = peopleCount;
     return true;
   }
   if (s === 6) {
     wizardData.social = document.getElementById('b-social').value.trim();
+    wizardData.note = document.getElementById('b-note')?.value.trim() || '';
     return true;
   }
-  if (s === 7) { wizardData.note = document.getElementById('b-note').value.trim(); return true; }
   if (s === 8) {
     if (!wizardData.source) { document.getElementById('err-source').classList.add('show'); return false; }
     wizardData.sourceFb = document.getElementById('b-source-fb')?.value.trim() || '';
@@ -884,23 +915,28 @@ function clearErr(inputId, errId) {
 
 function nextStep() {
   if (!validateCurrentStep()) return;
-  if (currentStep < TOTAL_STEPS) {
-    if (currentStep === 8) { populateSummary(); }
-    showStep(currentStep + 1, 'forward');
+  const idx = STEP_SEQUENCE.indexOf(currentStep);
+  if (idx >= 0 && idx < STEP_SEQUENCE.length - 1) {
+    const nextN = STEP_SEQUENCE[idx + 1];
+    if (nextN === 9) { populateSummary(); }
+    showStep(nextN, 'forward');
   }
 }
 
 function prevStep() {
-  if (currentStep > 1) {
-    showStep(currentStep - 1, 'back');
+  const idx = STEP_SEQUENCE.indexOf(currentStep);
+  if (idx > 0) {
+    showStep(STEP_SEQUENCE[idx - 1], 'back');
   }
 }
 
 function skipStep() {
-  if (currentStep === 7) { wizardData.note = ''; }
-  if (currentStep === 8) { populateSummary(); }
-  if (currentStep < TOTAL_STEPS) {
-    showStep(currentStep + 1, 'forward');
+  if (currentStep === 6) { wizardData.social = ''; wizardData.note = ''; }
+  const idx = STEP_SEQUENCE.indexOf(currentStep);
+  if (idx >= 0 && idx < STEP_SEQUENCE.length - 1) {
+    const nextN = STEP_SEQUENCE[idx + 1];
+    if (nextN === 9) { populateSummary(); }
+    showStep(nextN, 'forward');
   }
 }
 
