@@ -434,8 +434,8 @@ footer{
               </div>
               <div>
                 <label style="font-size:12px;font-weight:600;color:var(--muted2);letter-spacing:.03em;display:block;margin-bottom:6px">УТАС</label>
-                <input class="wiz-input" type="tel" id="b-phone" placeholder="88887777" maxlength="8" autocomplete="tel-national" inputmode="numeric" style="font-size:16px">
-                <div class="field-err" id="err-phone">8 оронтой дугаар оруулна уу</div>
+                <input class="wiz-input" type="tel" id="b-phone" placeholder="88887777 эсвэл +976 8888 7777" maxlength="15" autocomplete="tel" inputmode="tel" style="font-size:16px">
+                <div class="field-err" id="err-phone">Утасны дугаараа оруулна уу</div>
               </div>
               <div>
                 <label style="font-size:12px;font-weight:600;color:var(--muted2);letter-spacing:.03em;display:block;margin-bottom:6px">И-МЭЙЛ</label>
@@ -828,7 +828,7 @@ function validateCurrentStep() {
     const email = document.getElementById('b-email').value.trim();
     let ok = true;
     if (!name) { showErr('b-name','err-name'); ok = false; } else clearErr('b-name','err-name');
-    if (!/^\d{8}$/.test(phone)) { showErr('b-phone','err-phone'); ok = false; } else clearErr('b-phone','err-phone');
+    if (!/^\+?\d{7,14}$/.test(phone)) { showErr('b-phone','err-phone'); ok = false; } else clearErr('b-phone','err-phone');
     if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) { showErr('b-email','err-email'); ok = false; } else clearErr('b-email','err-email');
     if (!ok) return false;
     wizardData.name = name; wizardData.phone = phone; wizardData.email = email;
@@ -935,8 +935,9 @@ function selectCard(type, el) {
     wizardData.days = el.dataset.val;
     document.getElementById('err-days').classList.remove('show');
   }
-  // Auto-advance after a visual confirmation delay
-  setTimeout(() => nextStep(), 380);
+  // Show checkmark feedback but let user advance manually
+  const nextBtn = document.querySelector('#step-' + currentStep + ' .wiz-next-btn');
+  if (nextBtn) { nextBtn.style.background = '#16a34a'; setTimeout(() => { nextBtn.style.background = ''; }, 800); }
 }
 
 // People stepper
@@ -1014,7 +1015,7 @@ function unlockWizard() {
 function pulseAuthNotice() {}
 
 window.shareBooking = async function() {
-  const url  = 'https://bileg11.github.io/booking/';
+  const url  = window.location.origin + '/booking/';
   const text = 'LFS Shanghai — Шанхай аяллын найдвартай хөтөч 🇨🇳';
   if (navigator.share) {
     try { await navigator.share({ title:'LFS Shanghai', text, url }); return; } catch(_) {}

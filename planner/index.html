@@ -44,6 +44,12 @@
       color: var(--text);
       min-height: 100vh;
     }
+    /* Global mobile touch — no 300ms delay on any tappable element */
+    button, a, .chip, .hotel-chip, .place-card, .filter-btn, .place-save,
+    .arrival-guide-btn, .guide-tab, .step-dot {
+      touch-action: manipulation;
+      -webkit-tap-highlight-color: transparent;
+    }
 
     /* ── NAV ── */
     .nav {
@@ -207,12 +213,14 @@
     .people-counter-ctrl  { display:flex;align-items:center;gap:10px; }
     .people-counter-ctrl span { font-size:1.15rem;font-weight:700;min-width:24px;text-align:center; }
     .ppl-btn {
-      width:32px;height:32px;border-radius:50%;border:1.5px solid var(--border);
-      background:var(--bg);cursor:pointer;font-size:1.1rem;font-weight:700;
+      width:44px;height:44px;border-radius:50%;border:1.5px solid var(--border);
+      background:var(--bg);cursor:pointer;font-size:1.2rem;font-weight:700;
       display:flex;align-items:center;justify-content:center;
       transition:all .15s;color:var(--text);
+      touch-action:manipulation;-webkit-tap-highlight-color:transparent;
     }
     .ppl-btn:hover { border-color:var(--primary);color:var(--primary); }
+    .ppl-btn:active { background:var(--primary);color:#fff;border-color:var(--primary); }
     .people-counter-total {
       font-size:.78rem;color:var(--sub);padding:6px 2px;
     }
