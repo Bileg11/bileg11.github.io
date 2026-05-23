@@ -156,37 +156,27 @@ body{
   .nav-btn{display:none}
 }
 
-/* ── HERO (full-bleed cinematic) ── */
+/* ── HERO ── */
 .hero{
-  position:relative;
-  min-height:100svh;
-  display:flex;flex-direction:column;
-  align-items:center;justify-content:center;
+  padding:96px 24px 0;
   text-align:center;
+  background:var(--bg);
   overflow:hidden;
-  padding:0;
 }
 .hero-content-inner{
-  position:relative;z-index:2;
-  padding:140px 40px 180px;
-  max-width:860px;width:100%;
+  max-width:700px;
+  margin:0 auto 44px;
 }
-.hero-overlay{
-  position:absolute;inset:0;
-  background:linear-gradient(180deg,rgba(0,0,0,.2) 0%,rgba(0,0,0,.45) 55%,rgba(0,0,0,.82) 100%);
-  z-index:1;pointer-events:none;
-}
-/* ── HERO SLIDESHOW (full-bleed background) ── */
+.hero-overlay{display:none}
+/* ── HERO SLIDESHOW (contained card) ── */
 .hero-slides{
-  position:absolute;
-  inset:0;width:100%;height:100%;
-  border-radius:0;
+  position:relative;
+  width:100%;max-width:1100px;
+  height:460px;
+  border-radius:20px;
   overflow:hidden;
-  aspect-ratio:auto;
-  max-height:none;
-  margin:0;
-  box-shadow:none;
-  z-index:0;
+  margin:0 auto;
+  box-shadow:0 20px 72px rgba(0,0,0,.18);
 }
 .hero-slide{
   position:absolute;inset:0;
@@ -196,41 +186,40 @@ body{
 .hero-slide.active{opacity:1}
 .hero-dots{
   display:flex;gap:7px;justify-content:center;
-  position:absolute;bottom:72px;z-index:4;
-  margin:0;
+  position:absolute;bottom:16px;left:0;right:0;z-index:4;
 }
 .hero-dot{
   width:6px;height:6px;border-radius:50%;
-  background:rgba(255,255,255,.35);
+  background:rgba(255,255,255,.5);
   cursor:pointer;transition:all .3s;border:none;padding:0;
 }
-.hero-dot.active{background:#fff;width:20px;border-radius:3px;}
+.hero-dot.active{background:#fff;width:20px;border-radius:3px}
 .slide-arrow{
   position:absolute;top:50%;transform:translateY(-50%);
-  width:44px;height:44px;border-radius:50%;
-  background:rgba(255,255,255,.18);
+  width:40px;height:40px;border-radius:50%;
+  background:rgba(255,255,255,.2);
   backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px);
-  border:1px solid rgba(255,255,255,.25);cursor:pointer;
-  font-size:22px;line-height:1;color:#fff;
+  border:1px solid rgba(255,255,255,.3);cursor:pointer;
+  font-size:20px;line-height:1;color:#fff;
   display:flex;align-items:center;justify-content:center;
-  opacity:.55;transition:opacity .2s,transform .2s,background .2s;
+  opacity:0;transition:opacity .2s,transform .2s,background .2s;
   z-index:4;
 }
-.slide-prev{left:16px}
-.slide-next{right:16px}
-.hero:hover .slide-arrow{opacity:1}
-.slide-arrow:hover{background:rgba(255,255,255,.32);transform:translateY(-50%) scale(1.08);opacity:1}
+.slide-prev{left:12px}
+.slide-next{right:12px}
+.hero-slides:hover .slide-arrow{opacity:1}
+.slide-arrow:hover{background:rgba(255,255,255,.35);transform:translateY(-50%) scale(1.08);opacity:1}
 @media(max-width:600px){.slide-arrow{display:none}}
 .hero-eyebrow{
   font-size:12px;font-weight:600;letter-spacing:.08em;text-transform:uppercase;
   color:var(--blue);
-  margin-bottom:16px;
+  margin-bottom:14px;
   animation:heroFade .9s ease both;
 }
 .hero h1{
-  font-size:clamp(40px,7vw,80px);
+  font-size:clamp(36px,6vw,72px);
   font-weight:700;
-  line-height:1.05;
+  line-height:1.06;
   letter-spacing:-.04em;
   margin-bottom:16px;
   color:var(--dark2);
@@ -241,16 +230,17 @@ body{
   color:var(--blue);
 }
 .hero-sub{
-  font-size:clamp(16px,2vw,19px);
+  font-size:clamp(15px,1.8vw,18px);
   font-weight:400;
   color:var(--muted);
-  max-width:540px;
-  margin:0 auto 0;
+  max-width:520px;
+  margin:0 auto;
   line-height:1.65;
   animation:heroFade .9s ease .2s both;
 }
 .hero-btns{
   display:flex;gap:12px;flex-wrap:wrap;justify-content:center;
+  margin-top:28px;
   animation:heroFade .9s ease .3s both;
 }
 .btn-primary{
@@ -292,21 +282,21 @@ body{
 }
 .btn-outline:hover{background:rgba(255,255,255,.12);border-color:#fff}
 .hero-stats{
-  position:absolute;bottom:0;left:0;right:0;z-index:3;
-  display:flex;flex-wrap:wrap;
-  background:rgba(0,0,0,.45);
-  backdrop-filter:blur(20px);-webkit-backdrop-filter:blur(20px);
-  border-top:1px solid rgba(255,255,255,.1);
+  display:flex;flex-wrap:wrap;justify-content:center;
   gap:0;padding:0;
+  background:var(--bg2);
+  border-top:1px solid var(--border);
+  border-bottom:1px solid var(--border);
+  margin-top:0;
 }
 .hero-stat{
-  flex:1;min-width:140px;
-  padding:18px 20px;text-align:center;
-  border-right:1px solid rgba(255,255,255,.08);
+  flex:1;min-width:120px;
+  padding:20px 16px;text-align:center;
+  border-right:1px solid var(--border);
 }
 .hero-stat:last-child{border-right:none}
-.hero-stat-num{font-size:26px;font-weight:700;letter-spacing:-.03em;color:#fff;margin-bottom:2px}
-.hero-stat-label{font-size:10px;font-weight:600;letter-spacing:.08em;text-transform:uppercase;color:rgba(255,255,255,.5)}
+.hero-stat-num{font-size:24px;font-weight:700;letter-spacing:-.03em;color:var(--dark2);margin-bottom:2px}
+.hero-stat-label{font-size:10px;font-weight:600;letter-spacing:.08em;text-transform:uppercase;color:var(--muted2)}
 @keyframes heroFade{from{opacity:0;transform:translateY(24px)}to{opacity:1;transform:translateY(0)}}
 
 /* ── INTRO BAND ── */
@@ -393,13 +383,14 @@ body{
 
 /* ── MEDICAL DARK SECTION ── */
 .medical-section{
-  background:#000;color:#fff;
+  background:linear-gradient(160deg,#0d1b2e 0%,#0a1520 60%,#0d1b2e 100%);
+  color:#fff;
   padding:100px 24px;position:relative;overflow:hidden;
 }
 .medical-glow{
   position:absolute;top:-200px;left:50%;transform:translateX(-50%);
   width:800px;height:600px;
-  background:radial-gradient(ellipse,rgba(0,113,227,.18) 0%,transparent 70%);
+  background:radial-gradient(ellipse,rgba(0,113,227,.22) 0%,transparent 70%);
   pointer-events:none;
 }
 .medical-inner{max-width:1060px;margin:0 auto;}
@@ -771,8 +762,8 @@ section,#booking-section{scroll-margin-top:60px}
    RESPONSIVE — TABLET (max 860px)
 ══════════════════════════════════════ */
 @media(max-width:860px){
-  .hero{min-height:100svh}
-  .hero-content-inner{padding:120px 24px 170px}
+  .hero{padding:80px 16px 0}
+  .hero-slides{height:340px;border-radius:16px}
   .hero-stats{flex-wrap:wrap}
   .section{padding:72px 20px}
   .services-section,.tips-section,.itin-section,.why-section,.booking-section{padding:72px 20px}
@@ -789,18 +780,17 @@ section,#booking-section{scroll-margin-top:60px}
   /* Nav */
   .nav-user-btn{display:none}
 
-  /* Hero full-bleed */
-  .hero{min-height:100svh}
-  .hero-content-inner{padding:100px 20px 160px}
-  .hero h1{font-size:clamp(32px,9vw,52px);letter-spacing:-.03em}
+  /* Hero */
+  .hero{padding:72px 16px 0}
+  .hero-slides{height:260px;border-radius:14px}
+  .hero h1{font-size:clamp(28px,8vw,44px);letter-spacing:-.03em}
   .hero-sub{font-size:15px;line-height:1.6}
-  .hero-btns{flex-direction:column;align-items:center;gap:10px;width:100%;max-width:300px;margin:24px auto 0}
-  .btn-primary{justify-content:center;padding:16px 20px;font-size:16px;font-weight:600;border-radius:14px;width:100%}
-  .btn-ghost{justify-content:center;padding:15px 20px;font-size:15px;border-radius:14px;width:100%}
-  .hero-dots{bottom:58px}
+  .hero-btns{flex-direction:column;align-items:center;gap:10px;width:100%;max-width:280px;margin:20px auto 0}
+  .btn-primary{justify-content:center;padding:15px 20px;font-size:15px;border-radius:14px;width:100%}
+  .btn-ghost{justify-content:center;padding:14px 20px;font-size:14px;border-radius:14px;width:100%}
   .hero-stat{flex:1 1 50%;padding:14px 12px}
   .hero-stat:nth-child(even){border-right:none}
-  .hero-stat-num{font-size:22px}
+  .hero-stat-num{font-size:20px}
 
   /* Intro band */
   .intro-grid{grid-template-columns:1fr 1fr}
@@ -985,67 +975,62 @@ section,#booking-section{scroll-margin-top:60px}
   <a href="/booking/" class="nav-link" style="color:#0071e3;font-weight:600">Захиалах →</a>
 </div>
 
-<!-- HERO — full bleed cinematic -->
+<!-- HERO -->
 <section class="hero" id="home">
 
-  <!-- BACKGROUND SLIDES -->
+  <!-- MAIN CONTENT -->
+  <div class="hero-content-inner">
+    <div class="hero-eyebrow">Аялал · Монгол хөтөч · VIP Үйлчилгээ · Оношлогоо</div>
+    <h1><em>Шанхайд</em> хэрэгтэй бүхэн "<em>НЭГ ДОР</em>"</h1>
+    <p class="hero-sub">Монгол хэлтэй хувийн хөтөч. Дараалалгүй. Санаа зовохгүй.<br>Зөвхөн аялалаа бүрэн мэдрэ.</p>
+    <div class="hero-btns">
+      <button class="btn-primary" onclick="scrollToId('medical')">🩺 Эрүүл мэндийн хөтөлбөр</button>
+      <button class="btn-ghost" onclick="window.location.href='/booking/'">Хөтөч Захиалах</button>
+      <a href="https://m.me/100076380514835" target="_blank" rel="noopener noreferrer" class="btn-ghost">💬 Мессеж</a>
+    </div>
+  </div>
+
+  <!-- SLIDESHOW CARD -->
   <div class="hero-slides" id="heroSlides">
     <div class="hero-slide active" style="background-image:url('https://images.unsplash.com/photo-1752662742861-fb76c71576d7?w=1400&q=85&auto=format&fit=crop')"></div>
     <div class="hero-slide" data-bg="https://images.unsplash.com/photo-1748078096034-46086f5b87da?w=1400&q=85&auto=format&fit=crop"></div>
     <div class="hero-slide" data-bg="https://images.unsplash.com/photo-1647067151129-ac9991329a73?w=1400&q=85&auto=format&fit=crop"></div>
     <div class="hero-slide" data-bg="https://images.unsplash.com/photo-1747479309766-37bbf669cffe?w=1400&q=85&auto=format&fit=crop"></div>
     <div class="hero-slide" data-bg="https://images.unsplash.com/photo-1717400411765-0d6a4d0bc8db?w=1400&q=85&auto=format&fit=crop"></div>
-  </div>
-
-  <!-- GRADIENT OVERLAY -->
-  <div class="hero-overlay"></div>
-
-  <!-- SLIDE ARROWS -->
-  <button class="slide-arrow slide-prev" onclick="goSlide(curSlide-1);startAuto()" aria-label="Өмнөх">&#8249;</button>
-  <button class="slide-arrow slide-next" onclick="goSlide(curSlide+1);startAuto()" aria-label="Дараах">&#8250;</button>
-
-  <!-- MAIN CONTENT -->
-  <div class="hero-content-inner">
-    <div class="hero-eyebrow" style="color:rgba(255,255,255,.7)">Аялал · Монгол хөтөч · VIP Үйлчилгээ · Бүтэн биеийн оношлогоо</div>
-    <h1 style="color:#fff"><em>Шанхайд</em> хэрэгтэй бүхэн "<em>НЭГ ДОР</em>"</h1>
-    <p class="hero-sub" style="color:rgba(255,255,255,.75)">Монгол хэлтэй хувийн хөтөч. Дараалалгүй. Санаа зовохгүй.<br>Зөвхөн аялалаа бүрэн мэдрэ.</p>
-    <div class="hero-btns">
-      <button class="btn-primary" onclick="scrollToId('medical')">🩺 Эрүүл мэндийн хөтөлбөр</button>
-      <button class="btn-ghost" onclick="window.location.href='/booking/'" style="background:rgba(255,255,255,.15);border-color:rgba(255,255,255,.3);color:#fff;backdrop-filter:blur(10px)">Хөтөч Захиалах</button>
-      <a href="https://m.me/100076380514835" target="_blank" rel="noopener noreferrer" class="btn-outline">💬 Мессеж илгээх</a>
-    </div>
-  </div>
-
-  <!-- DOTS -->
-  <div class="hero-dots" id="heroDots">
-    <button class="hero-dot active" onclick="goSlide(0)"></button>
-    <button class="hero-dot" onclick="goSlide(1)"></button>
-    <button class="hero-dot" onclick="goSlide(2)"></button>
-    <button class="hero-dot" onclick="goSlide(3)"></button>
-    <button class="hero-dot" onclick="goSlide(4)"></button>
-  </div>
-
-  <!-- STATS BAR -->
-  <div class="hero-stats">
-    <div class="hero-stat">
-      <div class="hero-stat-num" data-count="150" data-suffix="+">150+</div>
-      <div class="hero-stat-label">Аялагч</div>
-    </div>
-    <div class="hero-stat">
-      <div class="hero-stat-num" data-count="3" data-suffix=" жил">3 жил</div>
-      <div class="hero-stat-label">Туршлага</div>
-    </div>
-    <div class="hero-stat">
-      <div class="hero-stat-num" data-count="98" data-suffix="%">98%</div>
-      <div class="hero-stat-label">Сэтгэл ханамж</div>
-    </div>
-    <div class="hero-stat">
-      <div class="hero-stat-num">24/7</div>
-      <div class="hero-stat-label">Дэмжлэг</div>
+    <!-- ARROWS inside the card -->
+    <button class="slide-arrow slide-prev" onclick="goSlide(curSlide-1);startAuto()" aria-label="Өмнөх">&#8249;</button>
+    <button class="slide-arrow slide-next" onclick="goSlide(curSlide+1);startAuto()" aria-label="Дараах">&#8250;</button>
+    <!-- DOTS inside the card -->
+    <div class="hero-dots" id="heroDots">
+      <button class="hero-dot active" onclick="goSlide(0)"></button>
+      <button class="hero-dot" onclick="goSlide(1)"></button>
+      <button class="hero-dot" onclick="goSlide(2)"></button>
+      <button class="hero-dot" onclick="goSlide(3)"></button>
+      <button class="hero-dot" onclick="goSlide(4)"></button>
     </div>
   </div>
 
 </section>
+
+<!-- STATS BAR -->
+<div class="hero-stats">
+  <div class="hero-stat">
+    <div class="hero-stat-num" data-count="150" data-suffix="+">150+</div>
+    <div class="hero-stat-label">Аялагч</div>
+  </div>
+  <div class="hero-stat">
+    <div class="hero-stat-num" data-count="3" data-suffix=" жил">3 жил</div>
+    <div class="hero-stat-label">Туршлага</div>
+  </div>
+  <div class="hero-stat">
+    <div class="hero-stat-num" data-count="98" data-suffix="%">98%</div>
+    <div class="hero-stat-label">Сэтгэл ханамж</div>
+  </div>
+  <div class="hero-stat">
+    <div class="hero-stat-num">24/7</div>
+    <div class="hero-stat-label">Дэмжлэг</div>
+  </div>
+</div>
 
 <!-- INTRO BAND -->
 <div class="intro-band">
@@ -1441,35 +1426,6 @@ section,#booking-section{scroll-margin-top:60px}
           <div><div style="font-size:13px;font-weight:600;color:var(--dark2)">Д. Батзориг</div><div style="font-size:12px;color:var(--muted)">Бизнесийн хэлмэрч</div></div>
         </div>
       </div>
-    </div>
-  </div>
-</section>
-
-<!-- TEAM -->
-<section style="background:#000;padding:100px 24px" id="team">
-  <div style="max-width:860px;margin:0 auto;text-align:center">
-    <div class="section-eyebrow reveal">Манай баг</div>
-    <div class="section-title reveal reveal-delay-1" style="color:#fff">Шанхайг танд хамгийн ойр<br>мэддэг хүмүүс</div>
-    <p class="section-sub reveal reveal-delay-2" style="color:rgba(255,255,255,.6);max-width:500px;margin:0 auto 56px">Шанхайд 5+ жил амьдарсан, монгол аялагчдад туслах нь манай гол зорилго.</p>
-    <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:20px" class="gallery-grid-wrap">
-      <div class="reveal reveal-delay-1" style="background:rgba(255,255,255,.05);border:1px solid rgba(255,255,255,.1);border-radius:24px;padding:36px 24px;transition:background .2s,border-color .2s" onmouseover="this.style.background='rgba(255,255,255,.09)';this.style.borderColor='rgba(0,113,227,.4)'" onmouseout="this.style.background='rgba(255,255,255,.05)';this.style.borderColor='rgba(255,255,255,.1)'">
-        <div style="width:80px;height:80px;border-radius:50%;background:linear-gradient(135deg,#0071e3,#34c759);margin:0 auto 20px;display:flex;align-items:center;justify-content:center;font-size:32px">🧑‍💼</div>
-        <div style="font-size:12px;font-weight:700;letter-spacing:.07em;text-transform:uppercase;color:#60b5ff;margin-bottom:10px">Хөтөч · Орчуулагч</div>
-        <div style="font-size:14px;color:rgba(255,255,255,.6);line-height:1.7">Шанхайд 6 жил амьдарсан.<br>Монгол, Хятад, Англи хэлтэй.</div>
-      </div>
-      <div class="reveal reveal-delay-2" style="background:rgba(255,255,255,.05);border:1px solid rgba(255,255,255,.1);border-radius:24px;padding:36px 24px;transition:background .2s,border-color .2s" onmouseover="this.style.background='rgba(255,255,255,.09)';this.style.borderColor='rgba(0,113,227,.4)'" onmouseout="this.style.background='rgba(255,255,255,.05)';this.style.borderColor='rgba(255,255,255,.1)'">
-        <div style="width:80px;height:80px;border-radius:50%;background:linear-gradient(135deg,#e8392a,#ff9f0a);margin:0 auto 20px;display:flex;align-items:center;justify-content:center;font-size:32px">👩‍⚕️</div>
-        <div style="font-size:12px;font-weight:700;letter-spacing:.07em;text-transform:uppercase;color:#60b5ff;margin-bottom:10px">Эрүүл мэндийн зохицуулагч</div>
-        <div style="font-size:14px;color:rgba(255,255,255,.6);line-height:1.7">Эмнэлгийн орчуулга,<br>VIP тасгийн захиалга.</div>
-      </div>
-      <div class="reveal reveal-delay-3" style="background:rgba(255,255,255,.05);border:1px solid rgba(255,255,255,.1);border-radius:24px;padding:36px 24px;transition:background .2s,border-color .2s" onmouseover="this.style.background='rgba(255,255,255,.09)';this.style.borderColor='rgba(0,113,227,.4)'" onmouseout="this.style.background='rgba(255,255,255,.05)';this.style.borderColor='rgba(255,255,255,.1)'">
-        <div style="width:80px;height:80px;border-radius:50%;background:linear-gradient(135deg,#5e5ce6,#bf5af2);margin:0 auto 20px;display:flex;align-items:center;justify-content:center;font-size:32px">💼</div>
-        <div style="font-size:12px;font-weight:700;letter-spacing:.07em;text-transform:uppercase;color:#60b5ff;margin-bottom:10px">Бизнесийн хэлмэрч</div>
-        <div style="font-size:14px;color:rgba(255,255,255,.6);line-height:1.7">Экспо, уулзалт, гэрээний<br>мэргэжлийн орчуулагч.</div>
-      </div>
-    </div>
-    <div class="reveal reveal-delay-2" style="margin-top:36px;padding:16px 24px;background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.07);border-radius:14px;font-size:13px;color:rgba(255,255,255,.35)">
-      📷 Багийн гишүүдийн зурагнуудыг удахгүй оруулна
     </div>
   </div>
 </section>
