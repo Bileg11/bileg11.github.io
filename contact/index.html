@@ -579,7 +579,7 @@ footer{
 </footer>
 
 <script>
-// ── EmailJS init ──
+if(history.scrollRestoration)history.scrollRestoration='manual';window.scrollTo(0,0);// ── EmailJS init ──
 (function(){
   emailjs.init({publicKey:'jzbMLEF7IhbkS48RI'});
 })();

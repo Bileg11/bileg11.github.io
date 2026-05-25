@@ -1730,7 +1730,7 @@ section,#booking-section{scroll-margin-top:60px}
 </footer>
 
 <script>
-// ── LOADER ──
+if(history.scrollRestoration)history.scrollRestoration='manual';window.scrollTo(0,0);// ── LOADER ──
 window.addEventListener('load', () => {
   setTimeout(() => {
     const l = document.getElementById('loader');

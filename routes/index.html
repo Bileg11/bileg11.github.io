@@ -1616,7 +1616,7 @@ footer a:hover{text-decoration:underline}
 </footer>
 
 <script>
-// ── Hamburger menu ──
+if(history.scrollRestoration)history.scrollRestoration='manual';window.scrollTo(0,0);// ── Hamburger menu ──
 const hamburger = document.getElementById('hamburger');
 const navLinks = document.getElementById('navLinks');
 hamburger.addEventListener('click', () => {

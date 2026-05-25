@@ -948,7 +948,7 @@ footer{
 </footer>
 
 <script>
-// ── MOBILE MENU ──
+if(history.scrollRestoration)history.scrollRestoration='manual';window.scrollTo(0,0);// ── MOBILE MENU ──
 function toggleMenu(){
   document.getElementById('navLinks').classList.toggle('open');
 }
