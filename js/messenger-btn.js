@@ -1,4 +1,5 @@
 (function () {
+  if (window.innerWidth > 860) return;
   const btn = document.createElement('a');
   btn.href = 'https://m.me/100076380514835';
   btn.target = '_blank';
