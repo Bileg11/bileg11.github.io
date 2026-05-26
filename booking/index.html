@@ -1265,56 +1265,28 @@ window.submitBooking = async function() {
       console.warn('Firestore write skipped:', fsErr.code || fsErr.message);
     }
 
-    // Telegram notification
+    // JARVIS Railway API — confirm/cancel товчтой Telegram мэдэгдэл + Firestore хадгалах
+    // Railway URL-ийг эндээс өөрчилнө үү (Railway dashboard → Settings → Domains)
+    const JARVIS_WEBHOOK = 'https://jarvis-production.up.railway.app/api/booking';
     try {
-      const tgToken = '8799776564:AAEiPSe4iSLLae2FFvY02eHaoSfXC-Bw3t0';
-      const tgChat  = '5541078218';
-
-      // Profile section
-      let profileLine = 'Бүртгэлгүй хэрэглэгч (account байхгүй)';
-      if (currentUser) {
-        try {
-          const pSnap = await getDoc(doc(db, 'users', currentUser.uid));
-          const p = pSnap.exists() ? pSnap.data() : {};
-          const fullName = [p.lastName, p.firstName].filter(Boolean).join(' ') || '—';
-          profileLine =
-`Бүртгэлтэй хэрэглэгч
-Нэр: ${fullName}
-Утас: ${p.phone || '—'}
-И-мэйл: ${currentUser.email || '—'}
-Төрсөн: ${p.birthday || '—'}
-Хүйс: ${p.gender || '—'}`;
-        } catch(_) {
-          profileLine = `Бүртгэлтэй: ${currentUser.email}`;
-        }
-      }
-
-      const tgMsg =
-`📋 Шинэ захиалга!
-
-━━━ ЗАХИАЛГА ━━━
-Үйлчилгээ: ${d.service}
-Эхлэх огноо: ${d.start}
-Хоног: ${d.days}
-Хүний тоо: ${d.people}
-Нэмэлт: ${d.note || '—'}
-Хаанаас мэдсэн: ${d.source || '—'}
-
-━━━ ХОЛБОО БАРИХ ━━━
-Нэр: ${d.name}
-Утас: ${d.phone}
-И-мэйл: ${d.email || '—'}
-Social: ${d.social || '—'}
-
-━━━ БҮРТГЭЛ ━━━
-${profileLine}`;
-
-      await fetch(`https://api.telegram.org/bot${tgToken}/sendMessage`, {
+      await fetch(JARVIS_WEBHOOK, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ chat_id: tgChat, text: tgMsg })
+        body: JSON.stringify({
+          name:    d.name,
+          phone:   d.phone,
+          email:   d.email   || '',
+          service: d.service || '',
+          start:   d.start   || '',
+          days:    d.days    || '',
+          people:  String(d.people || 1),
+          social:  d.social  || '',
+          note:    d.note    || '',
+          source:  d.source  || '',
+          userId:  d.userId  || '',
+        }),
       });
-    } catch(tgErr) { console.warn('Telegram:', tgErr); }
+    } catch(jarvisErr) { console.warn('JARVIS webhook:', jarvisErr); }
 
     // ── Notion Захиалгын хуваарь (Make.com webhook-оор) ──
     try {
