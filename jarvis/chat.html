@@ -573,15 +573,153 @@
       .hsk-sidebar { display: flex !important; transform: none !important; position: static !important; }
       .mode-tab[data-mode="hsk"] { display: none; }
     }
+
+    /* ── AI CORE ─────────────────────────────────────────────────── */
+    .ai-core {
+      position: relative;
+      width: 30px; height: 30px;
+      flex-shrink: 0;
+    }
+    .ring {
+      position: absolute; inset: 0;
+      border-radius: 50%;
+      border: 1.5px solid transparent;
+    }
+    .ring-1 {
+      border-top-color: var(--accent);
+      border-right-color: rgba(0,198,255,.3);
+      animation: spin 2s linear infinite;
+    }
+    .ring-2 {
+      inset: 4px;
+      border-bottom-color: var(--green);
+      border-left-color: rgba(0,255,136,.3);
+      animation: spinReverse 1.4s linear infinite;
+    }
+    .ring-3 {
+      inset: 8px;
+      border-top-color: rgba(0,198,255,.6);
+      animation: spin 3s linear infinite;
+    }
+    .core-dot {
+      position: absolute; inset: 0;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 11px;
+    }
+    @keyframes spin        { to { transform: rotate(360deg); } }
+    @keyframes spinReverse { to { transform: rotate(-360deg); } }
+
+    /* ── HUD CORNERS ─────────────────────────────────────────────── */
+    .hud-corner {
+      position: fixed;
+      z-index: 400;
+      font-size: 9px;
+      font-family: 'Courier New', monospace;
+      color: rgba(0,198,255,.5);
+      line-height: 1.7;
+      pointer-events: none;
+    }
+    .hud-tl { top: calc(env(safe-area-inset-top, 0px) + 68px); left: 8px; }
+    .hud-tr { top: calc(env(safe-area-inset-top, 0px) + 68px); right: 8px; text-align: right; }
+    .hud-bl { bottom: calc(var(--nav-h) + var(--safe-bot) + 8px); left: 8px; }
+    .hud-br { bottom: calc(var(--nav-h) + var(--safe-bot) + 8px); right: 8px; text-align: right; }
+    .hud-line { letter-spacing: .5px; }
+    .hud-val  { color: var(--accent); }
+    .hud-green { color: var(--green) !important; }
+    .hud-gold  { color: var(--gold) !important; }
+    @media (max-width: 480px) { .hud-corner { display: none; } }
+
+    /* ── DATA STREAM ─────────────────────────────────────────────── */
+    .data-stream {
+      position: fixed;
+      top: 0; bottom: 0; right: 0;
+      width: 18px;
+      overflow: hidden;
+      z-index: 50;
+      pointer-events: none;
+      opacity: .18;
+    }
+    .data-stream-inner {
+      display: flex; flex-direction: column;
+      font-family: monospace; font-size: 9px;
+      color: #00ff41;
+      line-height: 1.4;
+      animation: dataStream 18s linear infinite;
+      white-space: pre;
+    }
+    @keyframes dataStream { 0% { transform: translateY(-50%); } 100% { transform: translateY(0%); } }
+
+    /* ── TARGET LOCKED ───────────────────────────────────────────── */
+    .target-locked {
+      animation: targetLocked .4s ease-out;
+    }
+    @keyframes targetLocked {
+      0%   { opacity: 0; transform: scale(1.04) translateY(-6px); box-shadow: 0 0 40px rgba(0,255,136,.25); }
+      100% { opacity: 1; transform: scale(1) translateY(0); box-shadow: none; }
+    }
+    .target-label {
+      position: absolute; top: -22px; left: 50%;
+      transform: translateX(-50%);
+      font-size: 8px; font-family: monospace; letter-spacing: 2px;
+      color: var(--green); text-transform: uppercase;
+      opacity: 0; animation: fadeLabel .6s .1s forwards;
+    }
+    @keyframes fadeLabel { to { opacity: .7; } }
+
+    /* ── BUTTON GLOW ─────────────────────────────────────────────── */
+    .fc-btn { position: relative; overflow: visible; }
+    .fc-btn.flash-glow {
+      animation: btnGlow .4s ease-out;
+    }
+    @keyframes btnGlow {
+      0%   { box-shadow: 0 0 0 0 rgba(0,198,255,.7); }
+      100% { box-shadow: 0 0 0 16px transparent; }
+    }
+    .fc-btn.correct.flash-glow { animation: btnGlowGreen .4s ease-out; }
+    @keyframes btnGlowGreen {
+      0%   { box-shadow: 0 0 0 0 rgba(0,255,136,.7); }
+      100% { box-shadow: 0 0 0 16px transparent; }
+    }
   </style>
 </head>
 <body>
+
+  <!-- HUD CORNERS -->
+  <div class="hud-corner hud-tl" id="hud-tl">
+    <div class="hud-line">SYS <span class="hud-val hud-green">ONLINE</span></div>
+    <div class="hud-line">CPU <span class="hud-val" id="hud-cpu">--</span></div>
+    <div class="hud-line">SYNC <span class="hud-val hud-green" id="hud-sync">OK</span></div>
+  </div>
+  <div class="hud-corner hud-tr" id="hud-tr">
+    <div class="hud-line"><span id="hud-time">--:--:--</span></div>
+    <div class="hud-line">SHANGHAI</div>
+    <div class="hud-line hud-gold">MISSION ACTIVE</div>
+  </div>
+  <div class="hud-corner hud-bl" id="hud-bl">
+    <div class="hud-line">MEM <span class="hud-val" id="hud-mem">--</span></div>
+    <div class="hud-line">HSK <span class="hud-val hud-gold" id="hud-hsk">--</span></div>
+  </div>
+  <div class="hud-corner hud-br" id="hud-br">
+    <div class="hud-line">NET <span class="hud-val hud-green">SECURE</span></div>
+    <div class="hud-line">AI <span class="hud-val hud-green">READY</span></div>
+  </div>
+
+  <!-- DATA STREAM -->
+  <div class="data-stream" id="data-stream">
+    <div class="data-stream-inner" id="data-stream-inner"></div>
+  </div>
 
   <!-- HEADER -->
   <header class="hdr">
     <div class="hdr-left">
       <div class="j-badge">
-        <div class="j-av">🤖</div>
+        <!-- AI Core -->
+        <div class="ai-core">
+          <div class="ring ring-1"></div>
+          <div class="ring ring-2"></div>
+          <div class="ring ring-3"></div>
+          <div class="core-dot">🤖</div>
+        </div>
         <span class="j-name">JARVIS</span>
         <div class="j-dot"></div>
       </div>
@@ -720,11 +858,11 @@
 
   <!-- BOTTOM NAV -->
   <nav class="bottom-nav">
-    <a class="nav-item" href="/jarvis/index.html"><span class="ni">🏠</span><span>Нүүр</span></a>
-    <a class="nav-item" href="/jarvis/tracker.html"><span class="ni">📊</span><span>Tracker</span></a>
-    <a class="nav-item" href="/jarvis/dashboard.html"><span class="ni">📈</span><span>Статс</span></a>
-    <a class="nav-item active" href="/jarvis/chat.html"><span class="ni">🤖</span><span>Chat</span></a>
-    <a class="nav-item" href="/jarvis/profile.html"><span class="ni">👤</span><span>Профайл</span></a>
+    <a class="nav-item" href="index.html"><span class="ni">🏠</span><span>Нүүр</span></a>
+    <a class="nav-item" href="tracker.html"><span class="ni">📊</span><span>Tracker</span></a>
+    <a class="nav-item" href="dashboard.html"><span class="ni">📈</span><span>Статс</span></a>
+    <a class="nav-item active" href="chat.html"><span class="ni">🤖</span><span>Chat</span></a>
+    <a class="nav-item" href="profile.html"><span class="ni">👤</span><span>Профайл</span></a>
   </nav>
 
   <script src="app.js"></script>
@@ -1328,9 +1466,93 @@
   // Expose for firebase-config.js auth callback
   window.syncChatFromFirestore = function() {
     renderHistory();
-    // Trigger HSK init after auth
     document.dispatchEvent(new Event('jarvis:ready'));
   };
+
+  // ════════════════════════════════════════════════════════════════
+  //  STARK HUD TELEMETRY
+  // ════════════════════════════════════════════════════════════════
+  function updateHUDClock() {
+    const el = document.getElementById('hud-time');
+    if (!el) return;
+    const now = new Date();
+    el.textContent = now.toLocaleTimeString('en-US', {
+      hour12: false, hour:'2-digit', minute:'2-digit', second:'2-digit',
+      timeZone: 'Asia/Shanghai'
+    });
+  }
+
+  function updateHUDStats() {
+    // Memory usage if available
+    const memEl = document.getElementById('hud-mem');
+    if (memEl && performance.memory) {
+      const used = Math.round(performance.memory.usedJSHeapSize / 1048576);
+      memEl.textContent = used + 'MB';
+    } else if (memEl) {
+      memEl.textContent = 'OK';
+    }
+    // CPU proxy: random 3-8% to look alive
+    const cpuEl = document.getElementById('hud-cpu');
+    if (cpuEl) cpuEl.textContent = (3 + Math.floor(Math.random() * 6)) + '%';
+    // HSK active level
+    const hskEl = document.getElementById('hud-hsk');
+    if (hskEl && _progress._active) hskEl.textContent = 'LVL ' + _progress._active;
+  }
+
+  function buildDataStream() {
+    const chars = '01アイウエオ语文学习JARVIS01HSK中国上海010110';
+    let html = '';
+    for (let i = 0; i < 120; i++) {
+      html += chars[Math.floor(Math.random() * chars.length)] + '\n';
+    }
+    // Duplicate for seamless loop
+    const inner = document.getElementById('data-stream-inner');
+    if (inner) inner.textContent = html + html;
+  }
+
+  // Start HUD
+  buildDataStream();
+  updateHUDClock();
+  updateHUDStats();
+  setInterval(updateHUDClock, 1000);
+  setInterval(updateHUDStats, 4000);
+
+  // ── Target Locked + Button Glow ──────────────────────────────────
+  const _origShowCard = showCard;
+  showCard = function(idx) {
+    _origShowCard(idx);
+    // Add target-locked animation
+    const card = document.getElementById('fc-card');
+    if (card) {
+      card.classList.remove('target-locked');
+      card.offsetWidth; // reflow
+      card.classList.add('target-locked');
+      // Remove after animation
+      setTimeout(() => card.classList.remove('target-locked'), 500);
+    }
+    // Add target label
+    const fcPanel = document.getElementById('flashcard-panel');
+    if (fcPanel) {
+      const old = fcPanel.querySelector('.target-label');
+      if (old) old.remove();
+      const lbl = document.createElement('div');
+      lbl.className = 'target-label';
+      lbl.textContent = '[ TARGET LOCKED ]';
+      fcPanel.style.position = 'relative';
+      fcPanel.insertBefore(lbl, fcPanel.firstChild);
+      setTimeout(() => lbl.remove(), 1200);
+    }
+  };
+
+  // Button glow on click
+  document.querySelectorAll('.fc-btn').forEach(btn => {
+    btn.addEventListener('click', function() {
+      this.classList.remove('flash-glow');
+      this.offsetWidth;
+      this.classList.add('flash-glow');
+      setTimeout(() => this.classList.remove('flash-glow'), 450);
+    });
+  });
   </script>
 </body>
 </html>
