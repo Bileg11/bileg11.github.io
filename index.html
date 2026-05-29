@@ -653,27 +653,24 @@ footer{
 }
 .footer-fb:hover{box-shadow:var(--shadow2)}
 /* ── STUDENT 20K GUIDE CARD ── */
-.student-section{padding:80px 24px 0;max-width:1160px;margin:0 auto}
 .student-card{
-  background:var(--dark2);border-radius:28px;padding:44px 48px;
-  color:#fff;display:grid;grid-template-columns:1fr 1.15fr;gap:0 56px;align-items:start;
+  background:linear-gradient(135deg,#0055b3 0%,#0071e3 60%,#1a8fff 100%);
+  border-radius:28px;padding:48px 52px;color:#fff;
+  display:flex;flex-direction:column;align-items:flex-start;max-width:600px;
 }
-@media(max-width:860px){.student-card{grid-template-columns:1fr;gap:36px 0;padding:32px 24px}}
-.student-eyebrow{font-size:11px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:rgba(255,255,255,.4);margin-bottom:10px}
-.student-title{font-size:clamp(22px,3.2vw,32px);font-weight:700;letter-spacing:-.03em;color:#fff;line-height:1.15;margin-bottom:12px}
-.student-desc{font-size:14px;color:rgba(255,255,255,.55);line-height:1.65;margin-bottom:32px;max-width:340px}
-.student-price-row{display:flex;align-items:flex-end;gap:10px;margin-bottom:8px}
-.student-price{font-size:52px;font-weight:800;letter-spacing:-.04em;color:#fff;line-height:1}
-.student-price-unit{font-size:16px;font-weight:400;color:rgba(255,255,255,.45);margin-bottom:6px}
-.student-price-note{font-size:12px;color:rgba(255,255,255,.35);margin-bottom:28px}
-.student-cta{display:inline-flex;align-items:center;gap:8px;background:#fff;color:var(--dark2);padding:14px 28px;border-radius:28px;font-size:15px;font-weight:700;font-family:inherit;text-decoration:none;transition:opacity .2s,transform .15s;margin-bottom:14px}
+@media(max-width:860px){.student-card{padding:32px 24px}}
+.student-eyebrow{font-size:11px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:rgba(255,255,255,.6);margin-bottom:10px}
+.student-title{font-size:clamp(24px,3.5vw,36px);font-weight:700;letter-spacing:-.03em;color:#fff;line-height:1.15;margin-bottom:14px}
+.student-desc{font-size:15px;color:rgba(255,255,255,.75);line-height:1.65;margin-bottom:32px;max-width:380px}
+.student-price-row{display:flex;align-items:flex-end;gap:10px;margin-bottom:6px}
+.student-price{font-size:56px;font-weight:800;letter-spacing:-.04em;color:#fff;line-height:1}
+.student-price-unit{font-size:18px;font-weight:400;color:rgba(255,255,255,.6);margin-bottom:8px}
+.student-price-note{font-size:12px;color:rgba(255,255,255,.5);margin-bottom:28px}
+.student-cta{display:inline-flex;align-items:center;gap:8px;background:#fff;color:#0071e3;padding:14px 28px;border-radius:28px;font-size:15px;font-weight:700;font-family:inherit;text-decoration:none;transition:opacity .2s,transform .15s}
 .student-cta:hover{opacity:.92;transform:scale(1.02)}
-.student-cta-note{font-size:12px;color:rgba(255,255,255,.3);display:block}
-.student-includes-title{font-size:11px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:rgba(255,255,255,.35);margin-bottom:18px}
-.student-includes{list-style:none;display:flex;flex-direction:column;gap:0;margin:0;padding:0}
-.student-includes li{display:flex;align-items:flex-start;gap:12px;font-size:14px;color:rgba(255,255,255,.8);line-height:1.55;padding:13px 0;border-bottom:1px solid rgba(255,255,255,.07)}
-.student-includes li:last-child{border-bottom:none}
-.student-includes li strong{color:#fff;font-weight:600}
+.student-more{display:inline-flex;align-items:center;font-size:15px;font-weight:600;color:rgba(255,255,255,.8);text-decoration:none;padding:14px 4px;transition:color .2s}
+.student-more:hover{color:#fff}
+.student-cta-note{font-size:12px;color:rgba(255,255,255,.45);display:block}
 
 .footer-col-title{font-size:12px;font-weight:600;letter-spacing:.04em;text-transform:uppercase;color:var(--dark2);margin-bottom:16px}
 .footer-link{
@@ -1134,41 +1131,22 @@ section,#booking-section{scroll-margin-top:60px}
 <!-- STUDENT 20K GUIDE -->
 <section id="student-guide" style="padding:80px 24px 0;max-width:1160px;margin:0 auto">
   <div class="student-card reveal">
-
-    <!-- LEFT -->
-    <div>
-      <div class="student-eyebrow">Оюутнуудад · Залуустаа</div>
-      <div class="student-title">Хятадад анх удаа<br>суралцахаар төлөвлөж буй<br>оюутанд</div>
-      <div class="student-desc">Утсаар ярьж, зураг бичлэгээр ойлгомжтой тайлбарлана. Хятад явахаасаа өмнө хэрэгтэй бүхнээ бэлдэхэд тусална.</div>
-
-      <div class="student-price-row">
-        <div class="student-price">20,000</div>
-        <div class="student-price-unit">₮</div>
-      </div>
-      <div class="student-price-note">Нэг удаагийн зөвлөгөө</div>
-
+    <div class="student-eyebrow">Оюутнуудад · Залуустаа</div>
+    <div class="student-title">Хятадад анх удаа<br>суралцахаар төлөвлөж буй<br>оюутанд</div>
+    <div class="student-desc">Утсаар ярьж, зураг бичлэгээр ойлгомжтой тайлбарлана. Хятад явахаасаа өмнө хэрэгтэй бүхнээ бэлдэхэд тусална.</div>
+    <div class="student-price-row">
+      <div class="student-price">20,000</div>
+      <div class="student-price-unit">₮</div>
+    </div>
+    <div class="student-price-note">Нэг удаагийн зөвлөгөө</div>
+    <div style="display:flex;align-items:center;gap:12px;flex-wrap:wrap">
       <a href="https://www.facebook.com/profile.php?id=100076380514835" target="_blank" class="student-cta">
         <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"/></svg>
         Одоо захиалах →
       </a>
-      <span class="student-cta-note">Facebook Messenger-ээр холбогдоно</span>
+      <a href="/tips/#guide20k" class="student-more">Дэлгэрэнгүй →</a>
     </div>
-
-    <!-- RIGHT -->
-    <div>
-      <div class="student-includes-title">Багцад багтах зүйлс</div>
-      <ul class="student-includes">
-        <li><span>Хятад явахаасаа өмнө <strong>ямар аппууд бэлдэх</strong> — Alipay, WeChat, Amap, eSIM, VPN бүгдийг тохируулна</span></li>
-        <li><span><strong>Карт холбох заавар</strong> — Alipay, WeChat Pay гадаадын паспортоор яаж бүртгүүлэх</span></li>
-        <li><span>Хятадын <strong>мэдээлэл түргэн авах аппууд</strong></span></li>
-        <li><span><strong>Хурдны галт тэрэг болон нислэгийн тасалбарыг хямд үнээр авах арга</strong></span></li>
-        <li><span>Хятадад <strong>ирсний дараа юу хийх</strong> — Ус, SIM, банк, дотуур байрны дүрэм, хоол, виз мэдүүлэх</span></li>
-        <li><span><strong>Өдөр тутмын амьдрал</strong> — хоолны газар, метро, хямд дэлгүүр</span></li>
-        <li><span><strong>Виза хэрхэн мэдүүлэх</strong> — X1, X2 оюутны виз бүрдүүлэх баримт, алхам алхмаар</span></li>
-        <li><span><strong>Гадаад иргэн оршин суух эрх</strong> (Residence Permit) яаж авах — бичиг баримт, хугацаа, зардал</span></li>
-      </ul>
-    </div>
-
+    <span class="student-cta-note" style="margin-top:10px">Facebook Messenger-ээр холбогдоно</span>
   </div>
 </section>
 
