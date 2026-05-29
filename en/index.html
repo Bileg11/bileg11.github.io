@@ -49,7 +49,7 @@
   --dark2:#1d1d1f;
 }
 
-html{scroll-behavior:smooth;overflow-x:hidden}
+html{scroll-behavior:smooth;overflow-x:clip}
 body{
   font-family:'Inter',system-ui,-apple-system,BlinkMacSystemFont,'SF Pro Display','Segoe UI',sans-serif;
   background:var(--bg);
@@ -877,12 +877,13 @@ section,#booking-section{scroll-margin-top:60px}
 <!-- Mobile nav menu — outside nav to avoid backdrop-filter containing block issue -->
 <div class="nav-links" id="navLinks">
   <button class="nav-link active" onclick="scrollTo_(0);toggleMobileMenu()">Home</button>
-  <button class="nav-link" onclick="scrollToId('services');toggleMobileMenu()">Services</button>
   <button class="nav-link" onclick="scrollToId('medical');toggleMobileMenu()">Healthcare</button>
   <button class="nav-link" onclick="scrollToId('itineraries');toggleMobileMenu()">Itineraries</button>
+  <button class="nav-link" onclick="window.location.href='/tips/#guide20k';toggleMobileMenu()">Student 20K Tips</button>
   <button class="nav-link" onclick="scrollToId('tips');toggleMobileMenu()">Tips</button>
   <button class="nav-link" onclick="scrollToId('pricing');toggleMobileMenu()">Pricing</button>
-  <button class="nav-link" onclick="window.location.href='/booking/';toggleMobileMenu()">Book</button>
+  <button class="nav-link" onclick="window.location.href='/login/';toggleMobileMenu()">Login</button>
+  <button class="nav-link" onclick="window.location.href='/booking/';toggleMobileMenu()" style="color:#0071e3;font-weight:600">Book →</button>
 </div>
 
 <!-- HERO -->

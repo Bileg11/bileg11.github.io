@@ -43,7 +43,7 @@
   --dark2:#1d1d1f;
 }
 
-html{scroll-behavior:smooth;overflow-x:hidden}
+html{scroll-behavior:smooth;overflow-x:clip}
 body{
   font-family:'Inter',system-ui,-apple-system,BlinkMacSystemFont,'SF Pro Display','Segoe UI',sans-serif;
   background:var(--bg);
@@ -608,11 +608,15 @@ footer{
   <a href="/" class="nav-logo">LFS <span>Shanghai</span></a>
   <div class="nav-links" id="navLinks">
     <a href="/" class="nav-link">Нүүр</a>
-    <a href="/#services" class="nav-link">Үйлчилгээ</a>
+    <a href="/health/" class="nav-link">Эрүүл мэнд</a>
     <a href="/routes/" class="nav-link">Маршрут</a>
     <a href="/tips/" class="nav-link active">Зөвлөмж</a>
-    <a href="/login/" class="nav-link">Нэвтрэх 👤</a>
-    <a href="/booking/" class="nav-link">Захиалах</a>
+    <a href="/tips/#guide20k" class="nav-link">Оюутны 20К зөвлөмж</a>
+    <a href="/metro/" class="nav-link">Метро</a>
+    <a href="/planner/" class="nav-link" style="color:#e8392a;">✦ Аяллын Төлөвлөгч</a>
+    <a href="/contact/" class="nav-link">Холбогдох</a>
+    <a href="/login/" class="nav-link">Нэвтрэх</a>
+    <a href="/booking/" class="nav-link" style="color:#0071e3;font-weight:600">Захиалах →</a>
   </div>
   <div class="nav-actions">
     <a href="/booking/" class="nav-btn">Захиалах ↗</a>

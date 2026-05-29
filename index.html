@@ -58,7 +58,7 @@
   --dark2:#1d1d1f;
 }
 
-html{scroll-behavior:smooth;overflow-x:hidden}
+html{scroll-behavior:smooth;overflow-x:clip}
 body{
   font-family:'Inter',system-ui,-apple-system,BlinkMacSystemFont,'SF Pro Display','Segoe UI',sans-serif;
   background:var(--bg);
@@ -964,14 +964,15 @@ section,#booking-section{scroll-margin-top:60px}
 <!-- Mobile nav menu — outside nav to avoid backdrop-filter containing block issue -->
 <div class="nav-links" id="navLinks">
   <button class="nav-link active" onclick="scrollTo_(0);closeMobileMenu()">Нүүр</button>
-  <button class="nav-link" onclick="window.location.href='/health/';closeMobileMenu()">Эрүүл мэнд 🩺</button>
-  <button class="nav-link" onclick="window.location.href='/routes/';closeMobileMenu()">Маршрут 🗺️</button>
-  <button class="nav-link" onclick="window.location.href='/tips/';closeMobileMenu()">Зөвлөмж 💡</button>
-  <button class="nav-link" onclick="window.location.href='/metro/';closeMobileMenu()">Метро 🚇</button>
+  <button class="nav-link" onclick="window.location.href='/health/';closeMobileMenu()">Эрүүл мэнд</button>
+  <button class="nav-link" onclick="window.location.href='/routes/';closeMobileMenu()">Маршрут</button>
+  <button class="nav-link" onclick="window.location.href='/tips/';closeMobileMenu()">Зөвлөмж</button>
+  <button class="nav-link" onclick="window.location.href='/tips/#guide20k';closeMobileMenu()">Оюутны 20К зөвлөмж</button>
+  <button class="nav-link" onclick="window.location.href='/metro/';closeMobileMenu()">Метро</button>
   <button class="nav-link" onclick="window.location.href='/planner/';closeMobileMenu()" style="color:#e8392a;">✦ Аяллын Төлөвлөгч</button>
-  <button class="nav-link" onclick="scrollToId('pricing');closeMobileMenu()">Үнэ 💰</button>
-  <button class="nav-link" onclick="window.location.href='/contact/';closeMobileMenu()">Холбогдох 📩</button>
-  <button class="nav-link" id="mob-auth-btn" onclick="window.location.href='/login/';closeMobileMenu()">Нэвтрэх 👤</button>
+  <button class="nav-link" onclick="scrollToId('pricing');closeMobileMenu()">Үнэ</button>
+  <button class="nav-link" onclick="window.location.href='/contact/';closeMobileMenu()">Холбогдох</button>
+  <button class="nav-link" id="mob-auth-btn" onclick="window.location.href='/login/';closeMobileMenu()">Нэвтрэх</button>
   <a href="/booking/" class="nav-link" style="color:#0071e3;font-weight:600">Захиалах →</a>
 </div>
 
