@@ -6,6 +6,17 @@
 <title>404 — Хуудас олдсонгүй | LFS Shanghai</title>
 <link rel="icon" type="image/svg+xml" href="/favicon.svg">
 <meta name="robots" content="noindex, nofollow">
+<script>
+  // /health → /health/ гэх мэт trailing slash дутуу байвал redirect
+  var path = window.location.pathname;
+  var pages = ['/health','/routes','/tips','/metro','/contact','/booking','/planner','/login','/profile','/pricing','/blog','/terms','/privacy','/admin','/pdf'];
+  for (var i = 0; i < pages.length; i++) {
+    if (path === pages[i] || path.indexOf(pages[i] + '/') === 0) {
+      window.location.replace(path.replace(/\/?$/, '/') + window.location.search + window.location.hash);
+      break;
+    }
+  }
+</script>
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
 <style>
 *{margin:0;padding:0;box-sizing:border-box}
