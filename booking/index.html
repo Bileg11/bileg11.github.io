@@ -1183,6 +1183,7 @@ async function checkProfileComplete(user) {
   try {
     const snap = await getDoc(doc(db, 'users', user.uid));
     const p = snap.exists() ? snap.data() : {};
+    currentProfile = p;
     // Auto-fill wizard step 1 from profile
     if (p.firstName || p.lastName) {
       const nameEl = document.getElementById('b-name');
@@ -1204,6 +1205,7 @@ async function checkProfileComplete(user) {
 }
 
 let currentUser = null;
+let currentProfile = {};
 onAuthStateChanged(auth, user => {
   document.getElementById('bookingSkeleton').style.display = 'none';
   document.getElementById('bookingMain').style.display = 'block';
@@ -1269,7 +1271,18 @@ window.submitBooking = async function() {
       await fetch('https://bileg11githubio-production.up.railway.app/api/booking', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(d),
+        body: JSON.stringify({
+          ...d,
+          profile: {
+            firstName: currentProfile.firstName || '',
+            lastName:  currentProfile.lastName  || '',
+            phone:     currentProfile.phone     || '',
+            email:     currentProfile.email     || '',
+            gender:    currentProfile.gender    || '',
+            birthday:  currentProfile.birthday  || '',
+            isLoggedIn: !!currentUser,
+          }
+        }),
       });
     } catch(e) { console.warn('LFS webhook:', e); }
 

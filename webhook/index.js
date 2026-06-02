@@ -7,17 +7,31 @@ const CHAT_ID = process.env.TELEGRAM_CHAT_ID;
 
 app.post('/api/booking', async (req, res) => {
   const d = req.body;
+  const p = d.profile || {};
 
   const msg = `📋 <b>Шинэ захиалга — LFS Shanghai</b>
 
+——— ЗАХИАЛГА ———
+🛎 <b>Үйлчилгээ:</b> ${d.service || '—'}
+📅 <b>Эхлэх огноо:</b> ${d.start || '—'}
+🌙 <b>Хоног:</b> ${d.days || '—'}
+👥 <b>Хүний тоо:</b> ${d.people || '—'}
+📝 <b>Нэмэлт:</b> ${d.note || '—'}
+📣 <b>Хаанаас мэдсэн:</b> ${d.source || '—'}
+
+——— ХОЛБОО БАРИХ ———
 👤 <b>Нэр:</b> ${d.name || '—'}
 📞 <b>Утас:</b> ${d.phone || '—'}
-📧 <b>Имэйл:</b> ${d.email || '—'}
-🛎 <b>Үйлчилгээ:</b> ${d.service || '—'}
-📅 <b>Огноо:</b> ${d.start || '—'} (${d.days || '—'} өдөр)
-👥 <b>Хүний тоо:</b> ${d.people || '—'}
+📧 <b>И-мэйл:</b> ${d.email || '—'}
 🔗 <b>Social:</b> ${d.social || '—'}
-📝 <b>Нэмэлт:</b> ${d.note || '—'}`;
+
+——— БҮРТГЭЛ ———
+${p.isLoggedIn ? '✅ Бүртгэлтэй хэрэглэгч' : '❌ Бүртгэлгүй'}
+👤 <b>Нэр:</b> ${p.lastName || '—'} ${p.firstName || '—'}
+📞 <b>Утас:</b> ${p.phone || '—'}
+📧 <b>И-мэйл:</b> ${p.email || '—'}
+⚧ <b>Хүйс:</b> ${p.gender || '—'}
+🎂 <b>Төрсөн:</b> ${p.birthday || '—'}`;
 
   try {
     await fetch(`https://api.telegram.org/bot${TOKEN}/sendMessage`, {
