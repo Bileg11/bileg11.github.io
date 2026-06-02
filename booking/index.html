@@ -1264,6 +1264,15 @@ window.submitBooking = async function() {
       console.warn('Firestore write skipped:', fsErr.code || fsErr.message);
     }
 
+    // ── LFS Webhook → Telegram ──
+    try {
+      await fetch('https://bileg11githubio-production.up.railway.app/api/booking', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(d),
+      });
+    } catch(e) { console.warn('LFS webhook:', e); }
+
     // ── Notion Захиалгын хуваарь (Make.com webhook-оор) ──
     try {
       const MAKE_WEBHOOK = 'https://hook.us2.make.com/9g9h5g4md1i55pkk9k9o615q0gwvsiih';
