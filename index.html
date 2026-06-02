@@ -31,6 +31,7 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="preconnect" href="https://www.gstatic.com" crossorigin>
+<link rel="preload" as="image" href="/img/hero/hero-1.jpg">
 <!-- Font: preload critical weights, swap to avoid FOIT -->
 <link rel="preload" as="style" href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap">
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet" media="print" onload="this.media='all'">
@@ -1316,10 +1317,10 @@ section,#booking-section{scroll-margin-top:60px}
         </div>
         <div class="itin-meta"><div><span>Монгол</span> тайлбартай</div></div>
         <div style="display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-top:12px">
-          <div style="border-radius:10px;overflow:hidden;aspect-ratio:4/3;background:var(--bg2);"><img src="/img/food/xiaolongbao.jpg" style="width:100%;height:100%;object-fit:cover" alt="Xiaolongbao"></div>
-          <div style="border-radius:10px;overflow:hidden;aspect-ratio:4/3;background:var(--bg2);"><img src="/img/food/shanghai-food.jpg" style="width:100%;height:100%;object-fit:cover" alt="Shanghai food"></div>
-          <div style="border-radius:10px;overflow:hidden;aspect-ratio:4/3;background:var(--bg2);"><img src="/img/food/dimsum-2.jpg" style="width:100%;height:100%;object-fit:cover" alt="Dim sum"></div>
-          <div style="border-radius:10px;overflow:hidden;aspect-ratio:4/3;background:var(--bg2);"><img src="/img/food/chinese-food-2.jpg" style="width:100%;height:100%;object-fit:cover" alt="Chinese food"></div>
+          <div style="border-radius:10px;overflow:hidden;aspect-ratio:4/3;background:var(--bg2);"><img src="/img/food/xiaolongbao.jpg" style="width:100%;height:100%;object-fit:cover" alt="Xiaolongbao" loading="lazy"></div>
+          <div style="border-radius:10px;overflow:hidden;aspect-ratio:4/3;background:var(--bg2);"><img src="/img/food/shanghai-food.jpg" style="width:100%;height:100%;object-fit:cover" alt="Shanghai food" loading="lazy"></div>
+          <div style="border-radius:10px;overflow:hidden;aspect-ratio:4/3;background:var(--bg2);"><img src="/img/food/dimsum-2.jpg" style="width:100%;height:100%;object-fit:cover" alt="Dim sum" loading="lazy"></div>
+          <div style="border-radius:10px;overflow:hidden;aspect-ratio:4/3;background:var(--bg2);"><img src="/img/food/chinese-food-2.jpg" style="width:100%;height:100%;object-fit:cover" alt="Chinese food" loading="lazy"></div>
         </div>
       </div>
     </div>
@@ -2192,7 +2193,7 @@ function openAccountModal() {
 
 <script src="/js/toast.js"></script>
 <script src="/js/calendar.js"></script>
-<script type="module">
+<script type="module" defer>
   import { initializeApp } from "https://www.gstatic.com/firebasejs/11.7.1/firebase-app.js";
   import { getAnalytics, logEvent } from "https://www.gstatic.com/firebasejs/11.7.1/firebase-analytics.js";
   import { getAuth, createUserWithEmailAndPassword, signInWithEmailAndPassword, onAuthStateChanged, signOut, GoogleAuthProvider, FacebookAuthProvider, signInWithPopup, signInWithRedirect, getRedirectResult, sendPasswordResetEmail, deleteUser, reauthenticateWithCredential, EmailAuthProvider } from "https://www.gstatic.com/firebasejs/11.7.1/firebase-auth.js";
@@ -2347,15 +2348,16 @@ if ('serviceWorker' in navigator) {
 }
 </script>
 <script type="text/javascript">
-var Tawk_API=Tawk_API||{}, Tawk_LoadTime=new Date();
-(function(){
+// Tawk.to — 3 секундын дараа ачааллах (FCP blocked болохгүйн тулд)
+setTimeout(function(){
+  var Tawk_API=Tawk_API||{}, Tawk_LoadTime=new Date();
   var s1=document.createElement("script"),s0=document.getElementsByTagName("script")[0];
   s1.async=true;
   s1.src='https://embed.tawk.to/6a01d583db08b91c337bdcf5/1jobik2hq';
   s1.charset='UTF-8';
   s1.setAttribute('crossorigin','*');
   s0.parentNode.insertBefore(s1,s0);
-})();
+}, 3000);
 </script>
 <script src="/js/messenger-btn.js"></script>
 </body>
