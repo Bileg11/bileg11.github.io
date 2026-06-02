@@ -1,8 +1,14 @@
-const express = require('express');
+'use strict';
+const express  = require('express');
+const cron     = require('node-cron');
+const lfsBot   = require('./lfs-telegram');
+const metaHook = require('./meta-webhook');
+const alerts   = require('./alerts');
+
 const app = express();
 app.use(express.json());
 
-const TOKEN = process.env.TELEGRAM_TOKEN;
+const TOKEN   = process.env.TELEGRAM_TOKEN;
 const CHAT_ID = process.env.TELEGRAM_CHAT_ID;
 
 app.post('/api/booking', async (req, res) => {
@@ -46,6 +52,38 @@ ${p.isLoggedIn ? '✅ Бүртгэлтэй хэрэглэгч' : '❌ Бүртг
   }
 });
 
-app.get('/', (req, res) => res.send('LFS Webhook OK'));
+// ── LFS МАРКЕТИНГ BOT ─────────────────────────────────────────────
+app.post('/api/lfs-telegram', lfsBot);
 
-app.listen(process.env.PORT || 3000);
+// ── META (IG DM + FB Messenger) ───────────────────────────────────
+app.get('/api/meta-webhook', metaHook.verify);
+app.post('/api/meta-webhook', metaHook.handle);
+
+app.get('/', (req, res) => res.send('LFS Shanghai webhook running ✅'));
+
+app.listen(process.env.PORT || 3000, () => console.log('[LFS] Server running'));
+
+// ── MARKETING CONTENT — 13:00 Шанхай (05:00 UTC) ─────────────────
+cron.schedule('0 5 * * *', () => {
+  lfsBot.generateMarketingIdeas().catch(e => console.error('[Marketing]', e.message));
+});
+
+// ── MORNING BRIEF — 07:30 Шанхай (23:30 UTC өмнөх өдөр) ──────────
+cron.schedule('30 23 * * *', () => {
+  metaHook.sendMorningBrief().catch(e => console.error('[MorningBrief]', e.message));
+});
+
+// ── DAILY REPORT — 22:00 Шанхай (14:00 UTC) ──────────────────────
+cron.schedule('0 14 * * *', () => {
+  metaHook.sendDailyReport().catch(e => console.error('[DailyReport]', e.message));
+});
+
+// ── LFS ACTIVITY CHECK — 12:00 Шанхай (04:00 UTC) ────────────────
+cron.schedule('0 4 * * *', () => {
+  alerts.checkLFSActivity().catch(e => console.error('[LFSAlert]', e.message));
+});
+
+// ── POST FREQUENCY CHECK — 10:00 Шанхай (02:00 UTC) ──────────────
+cron.schedule('0 2 * * *', () => {
+  alerts.checkPostFrequency().catch(e => console.error('[PostFreq]', e.message));
+});
