@@ -1264,29 +1264,6 @@ window.submitBooking = async function() {
       console.warn('Firestore write skipped:', fsErr.code || fsErr.message);
     }
 
-    // JARVIS Railway API — confirm/cancel товчтой Telegram мэдэгдэл + Firestore хадгалах
-    // Railway URL-ийг эндээс өөрчилнө үү (Railway dashboard → Settings → Domains)
-    const JARVIS_WEBHOOK = 'https://jarvis-production.up.railway.app/api/booking';
-    try {
-      await fetch(JARVIS_WEBHOOK, {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({
-          name:    d.name,
-          phone:   d.phone,
-          email:   d.email   || '',
-          service: d.service || '',
-          start:   d.start   || '',
-          days:    d.days    || '',
-          people:  String(d.people || 1),
-          social:  d.social  || '',
-          note:    d.note    || '',
-          source:  d.source  || '',
-          userId:  d.userId  || '',
-        }),
-      });
-    } catch(jarvisErr) { console.warn('JARVIS webhook:', jarvisErr); }
-
     // ── Notion Захиалгын хуваарь (Make.com webhook-оор) ──
     try {
       const MAKE_WEBHOOK = 'https://hook.us2.make.com/9g9h5g4md1i55pkk9k9o615q0gwvsiih';
