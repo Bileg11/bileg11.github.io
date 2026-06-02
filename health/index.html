@@ -676,8 +676,9 @@ footer a:hover{color:#fff}
           <span class="badge-tag">Дээд зэрэглэл</span>
         </div>
       </div>
-      <div class="hospital-photo">
-        <div class="hospital-photo-inner">
+      <div class="hospital-photo" style="overflow:hidden;position:relative">
+        <img src="/img/health/hospital-reception.jpg" alt="光明中医院" style="width:100%;height:100%;object-fit:cover;position:absolute;inset:0;opacity:.7">
+        <div class="hospital-photo-inner" style="position:relative;z-index:1">
           <span class="hospital-icon">🏥</span>
           <div class="hospital-photo-title">光明中医院</div>
           <div class="hospital-photo-sub">Xinchang Branch · Shanghai</div>
@@ -809,7 +810,7 @@ footer a:hover{color:#fff}
         <p class="pkg-desc">Шанхайн шилдэг VIP эмнэлэгт хувийн сувилагч, орчуулагчтай иж бүрэн шинжилгээ хийлгэх 2 өдрийн аялал. Өглөөний цайны дараа шинжилгээнд орж, мөн өдрийн хариугаа авна.</p>
         <div class="pkg-photos pkg-photos-single">
           <div class="pkg-photo" style="background:linear-gradient(135deg,#1055a0,#3d8ef0)">
-            <img src="/img/health/hospital.jpg" alt="光明中医院" class="pkg-photo-img" onerror="this.closest('.pkg-photo').classList.add('no-img')">
+            <img src="/img/health/hospital-reception.jpg" alt="光明中医院" class="pkg-photo-img" onerror="this.closest('.pkg-photo').classList.add('no-img')">
             <div class="pkg-photo-placeholder">🏥</div>
             <div class="pkg-photo-label">光明中医院 · Xinchang Branch · Shanghai</div>
           </div>
@@ -1023,7 +1024,17 @@ const galleries = {
   altan: {
     title: '🥇 Алтан багц — Зургийн цомог',
     photos: [
-      { src:'/img/health/hospital.jpg',                                         label:'光明中医院 · VIP тасаг',              bg:'linear-gradient(135deg,#1055a0,#3d8ef0)', icon:'🏥' },
+      { src:'/img/health/hospital-reception.jpg',  label:'光明中医院 · Хүлээлгийн танхим',     bg:'linear-gradient(135deg,#1055a0,#3d8ef0)', icon:'🏥' },
+      { src:'/img/health/hospital-atrium.jpg',    label:'光明中医院 · Гол хол барилга',        bg:'linear-gradient(135deg,#0a3060,#1055a0)', icon:'🏛️' },
+      { src:'/img/health/hospital-lobby.jpg',     label:'光明中医院 · Лобби · орох хаалга',    bg:'linear-gradient(135deg,#0d2a5a,#1a4fa0)', icon:'🚪' },
+      { src:'/img/health/hospital-hallway.jpg',   label:'光明中医院 · Коридор · тасаг',        bg:'linear-gradient(135deg,#1a1a3a,#2a3a7a)', icon:'🛏️' },
+      { src:'/img/health/hospital-ward.jpg',      label:'光明中医院 · VIP хүлээлгийн өрөө',   bg:'linear-gradient(135deg,#0a2a3a,#1a5a8a)', icon:'💺' },
+      { src:'/img/health/hospital-room.jpg',      label:'光明中医院 · Эмчилгээний өрөө',      bg:'linear-gradient(135deg,#1a2a0a,#3a5a2a)', icon:'🩺' },
+      { src:'/img/health/hospital-corridor.jpg',  label:'光明中医院 · Дотоод коридор',        bg:'linear-gradient(135deg,#2a1a0a,#5a3a0a)', icon:'🏃' },
+      { src:'/img/health/hospital-exterior.jpg',  label:'光明中医院 · Гадна байдал',          bg:'linear-gradient(135deg,#0a2a1a,#1a5a3a)', icon:'🌿' },
+      { src:'/img/health/hospital-interior.jpg',  label:'光明中医院 · Дотоод орчин',          bg:'linear-gradient(135deg,#0a1a3a,#1a3a7a)', icon:'✨' },
+      { src:'/img/health/hospital-vip.jpg',       label:'光明中医院 · VIP давхар',             bg:'linear-gradient(135deg,#1a0a3a,#3a1a7a)', icon:'👑' },
+      { src:'/img/health/hospital-floor.jpg',     label:'光明中医院 · Давхрын зураг',         bg:'linear-gradient(135deg,#0a0a2a,#1a1a5a)', icon:'📐' },
       { src:'/img/health/Bund2.jpg',                                            label:'The Bund · шөнийн гэрэлтэй',          bg:'linear-gradient(135deg,#071e3d,#1a4fa8)', icon:'🌃' },
       { src:'/img/health/pexels-olivia-cai-2152171456-32062049.jpg',            label:'The Bund · завиар аялал',              bg:'linear-gradient(135deg,#1a2a4a,#2a5fc4)', icon:'⛵' },
       { src:'/img/health/Bund1.jpg',                                            label:'The Bund · өдрийн цагт',              bg:'linear-gradient(135deg,#2a3a5a,#4a7fd4)', icon:'🏛️' },
@@ -1049,7 +1060,11 @@ const galleries = {
   mungun: {
     title: '🥈 Мөнгөн багц — Зургийн цомог',
     photos: [
-      { src:'/img/health/hospital.jpg', label:'光明中医院 · VIP тасаг', bg:'linear-gradient(135deg,#1055a0,#3d8ef0)', icon:'🏥' },
+      { src:'/img/health/hospital-reception.jpg', label:'光明中医院 · Хүлээлгийн танхим', bg:'linear-gradient(135deg,#1055a0,#3d8ef0)', icon:'🏥' },
+      { src:'/img/health/hospital-atrium.jpg',   label:'光明中医院 · Гол хол барилга',    bg:'linear-gradient(135deg,#0a3060,#1055a0)', icon:'🏛️' },
+      { src:'/img/health/hospital-lobby.jpg',    label:'光明中医院 · Лобби',              bg:'linear-gradient(135deg,#0d2a5a,#1a4fa0)', icon:'🚪' },
+      { src:'/img/health/hospital-room.jpg',     label:'光明中医院 · Эмчилгээний өрөө',  bg:'linear-gradient(135deg,#1a2a0a,#3a5a2a)', icon:'🩺' },
+      { src:'/img/health/hospital-vip.jpg',      label:'光明中医院 · VIP давхар',         bg:'linear-gradient(135deg,#1a0a3a,#3a1a7a)', icon:'👑' },
     ]
   }
 };
