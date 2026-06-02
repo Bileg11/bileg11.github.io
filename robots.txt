@@ -4,4 +4,4 @@ Disallow: /admin/
 Disallow: /login/
 Disallow: /profile/
 
-Sitemap: https://bileg11.github.io/sitemap.xml
+Sitemap: https://lfsshanghai.com/sitemap.xml

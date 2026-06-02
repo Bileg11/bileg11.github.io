@@ -5,7 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>Аяллын Төлөвлөгч — LFS Shanghai</title>
   <meta name="description" content="Шанхай аяллаа нарийн төлөвлө. Огноо, хүмүүс, сонирхол, цагийн хэв маяг бүгдийг нэг дор."/>
-  <link rel="canonical" href="https://bileg11.github.io/planner/"/>
+  <link rel="canonical" href="https://lfsshanghai.com/planner/"/>
   <link rel="icon" href="/favicon.svg" type="image/svg+xml"/>
   <link rel="apple-touch-icon" href="/apple-touch-icon.png"/>
 
@@ -13,7 +13,7 @@
   <meta property="og:title" content="LFS Shanghai — Аяллын Төлөвлөгч"/>
   <meta property="og:description" content="Шанхайн аяллаа нарийн төлөвлө — газрууд, хуваарь, зардал, найзтайгаа хуваалц."/>
   <meta property="og:type" content="website"/>
-  <meta property="og:url" content="https://bileg11.github.io/planner/"/>
+  <meta property="og:url" content="https://lfsshanghai.com/planner/"/>
   <meta property="og:locale" content="mn_MN"/>
   <meta property="og:site_name" content="LFS Shanghai"/>
 
@@ -1593,13 +1593,13 @@ function openSavedPlan(id, data) {
   startLiveSync(id);
   showFloatingShare(true);
   const linkEl = document.getElementById('shareLink');
-  if (linkEl) linkEl.value = `https://bileg11.github.io/planner/?id=${id}`;
+  if (linkEl) linkEl.value = `https://lfsshanghai.com/planner/?id=${id}`;
   setSyncBadge('saved');
   window.showToast && window.showToast(`"${data.title||'Төлөвлөгөө'}" нээгдлээ ✓`, 'success');
 }
 
 window.copyShareLink = function(id) {
-  const link = `https://bileg11.github.io/planner/?id=${id}`;
+  const link = `https://lfsshanghai.com/planner/?id=${id}`;
   navigator.clipboard.writeText(link).then(() => {
     window.showToast && window.showToast('Линк хуулагдлаа! 📋', 'success');
   }).catch(() => {
@@ -1658,11 +1658,11 @@ window.savePlan = async () => {
     setSyncBadge('saving');
     if (window._planId && !window._planId.startsWith('local_')) {
       await setDoc(doc(db,'planners',window._planId), planData, { merge:true });
-      if (linkEl) linkEl.value = `https://bileg11.github.io/planner/?id=${window._planId}`;
+      if (linkEl) linkEl.value = `https://lfsshanghai.com/planner/?id=${window._planId}`;
       showToast('Шинэчлэгдлээ ✓', 'success');
     } else {
       const ref = await addDoc(collection(db,'planners'), planData);
-      if (linkEl) linkEl.value = `https://bileg11.github.io/planner/?id=${ref.id}`;
+      if (linkEl) linkEl.value = `https://lfsshanghai.com/planner/?id=${ref.id}`;
       window._planId = ref.id;
       window._currentRole = 'owner';
       startLiveSync(ref.id);
@@ -1678,7 +1678,7 @@ window.savePlan = async () => {
   } catch(e) {
     const localId = 'local_' + Date.now();
     localStorage.setItem('plan_' + localId, JSON.stringify(planData));
-    if (linkEl) linkEl.value = `https://bileg11.github.io/planner/?id=${localId}`;
+    if (linkEl) linkEl.value = `https://lfsshanghai.com/planner/?id=${localId}`;
     window._planId = localId;
     setSyncBadge('hide');
     showToast('Хадгалагдлаа (offline)', 'success');
