@@ -1,0 +1,680 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>My Profile — LFS Shanghai</title>
+<link rel="icon" type="image/svg+xml" href="/favicon.svg">
+<link rel="icon" type="image/png" sizes="32x32" href="/favicon.png">
+<link rel="apple-touch-icon" href="/apple-touch-icon.png">
+<meta name="robots" content="noindex, nofollow">
+<link rel="alternate" hreflang="mn" href="https://lfsshanghai.com/profile/">
+<link rel="alternate" hreflang="en" href="https://lfsshanghai.com/en/profile/">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+:root{
+  --bg:#f5f5f7;--bg2:#fff;--bg3:#f0f0f2;
+  --dark2:#1d1d1f;--muted:#6e6e73;--muted2:#86868b;
+  --border:#d2d2d7;--blue:#0071e3;--blue-hover:#0077ed;
+  --red:#ff3b30;--green:#34c759;--radius:16px;
+}
+body{font-family:'Inter',sans-serif;background:var(--bg);color:var(--dark2);min-height:100vh;-webkit-font-smoothing:antialiased}
+.nav{position:sticky;top:0;z-index:100;background:rgba(245,245,247,.85);backdrop-filter:blur(20px);border-bottom:1px solid var(--border);padding:0 24px;height:52px;display:flex;align-items:center;justify-content:space-between}
+.nav-logo{font-size:16px;font-weight:700;letter-spacing:-.02em;color:var(--dark2);text-decoration:none}
+.nav-logo span{color:var(--blue)}
+.nav-back{display:flex;align-items:center;gap:6px;font-size:13px;color:var(--blue);cursor:pointer;background:none;border:none;font-family:inherit;padding:6px 0}
+.nav-back:hover{opacity:.7}
+.page{max-width:700px;margin:0 auto;padding:32px 20px}
+.page-title{font-size:26px;font-weight:700;letter-spacing:-.03em;margin-bottom:28px}
+.profile-card{background:var(--bg2);border-radius:var(--radius);border:1px solid var(--border);padding:28px;margin-bottom:20px}
+.profile-header{display:flex;align-items:center;gap:20px;margin-bottom:24px;padding-bottom:24px;border-bottom:1px solid var(--border)}
+.profile-photo-wrap{position:relative;flex-shrink:0}
+.profile-photo{width:80px;height:80px;border-radius:50%;object-fit:cover;border:2px solid var(--border);display:block}
+.profile-initials{width:80px;height:80px;border-radius:50%;background:var(--blue);color:#fff;font-size:28px;font-weight:700;display:flex;align-items:center;justify-content:center}
+.photo-edit-btn{position:absolute;bottom:0;right:0;width:26px;height:26px;border-radius:50%;background:var(--dark2);color:#fff;border:2px solid var(--bg2);font-size:12px;display:flex;align-items:center;justify-content:center;cursor:pointer}
+.profile-name{font-size:20px;font-weight:700;letter-spacing:-.02em}
+.profile-email{font-size:13px;color:var(--muted);margin-top:2px}
+.profile-meta{font-size:12px;color:var(--muted2);margin-top:6px}
+.section-title{font-size:13px;font-weight:600;color:var(--muted);letter-spacing:.04em;text-transform:uppercase;margin-bottom:16px}
+.field-row{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-bottom:14px}
+@media(max-width:500px){.field-row{grid-template-columns:1fr}}
+.field{margin-bottom:14px}
+.field > label{display:block;font-size:12px;font-weight:600;color:var(--muted2);margin-bottom:6px;letter-spacing:.03em;text-transform:uppercase}
+.field input:not([type="radio"]),.field select{width:100%;padding:10px 14px;border:1px solid var(--border);border-radius:10px;font-size:14px;font-family:inherit;color:var(--dark2);background:var(--bg);outline:none;transition:.15s}
+.field input:not([type="radio"]):focus,.field select:focus{border-color:var(--blue);box-shadow:0 0 0 3px rgba(0,113,227,.08)}
+.gender-row{display:flex;gap:20px;padding-top:4px}
+.gender-row label{display:inline-flex;align-items:center;gap:8px;font-size:14px;font-weight:400;text-transform:none;letter-spacing:0;cursor:pointer;color:var(--dark2);margin-bottom:0;line-height:1}
+.gender-row input[type="radio"]{-webkit-appearance:radio;appearance:radio;width:16px;height:16px;min-width:16px;min-height:16px;margin:0;padding:0;cursor:pointer;flex-shrink:0;border:none;background:none}
+.gender-row label span{display:inline-block;line-height:1}
+.username-wrap{position:relative}
+.username-wrap input{padding-right:36px}
+.username-check{position:absolute;right:12px;top:50%;transform:translateY(-50%);font-size:14px;font-weight:600;pointer-events:none}
+.username-check.ok{color:var(--green)}
+.username-check.err{color:var(--red)}
+.username-link{font-size:11px;color:var(--muted2);margin-top:5px}
+.username-link span{color:var(--blue)}
+.save-btn{padding:11px 28px;background:var(--blue);color:#fff;border:none;border-radius:12px;font-size:14px;font-weight:600;cursor:pointer;font-family:inherit;transition:.2s}
+.save-btn:hover{background:var(--blue-hover)}
+.save-msg{font-size:12px;padding:10px 14px;border-radius:8px;margin-top:12px;display:none;line-height:1.5}
+.save-msg.success{background:#f0fff4;color:#27ae60;border:1px solid #b2f0c8;display:block}
+.save-msg.error{background:#fff0f0;color:#c0392b;border:1px solid #fcc;display:block}
+.field input.invalid:not([type="radio"]),.field select.invalid{border-color:#e53935!important;background:#fff5f5;box-shadow:0 0 0 3px rgba(229,57,53,.1)!important}
+.field-hint{font-size:11px;color:#e53935;margin-top:4px;display:none}
+.field-hint.show{display:block}
+.photo-upload-btn{display:flex;align-items:center;justify-content:center;gap:8px;width:100%;padding:11px;background:var(--bg3);border:1px dashed var(--border);border-radius:12px;font-size:14px;font-weight:500;cursor:pointer;font-family:inherit;color:var(--dark2);transition:.15s}
+.photo-upload-btn:hover{border-color:var(--blue);color:var(--blue);background:#f0f6ff}
+.photo-upload-btn.invalid{border-color:#e53935!important;background:#fff5f5!important;color:#e53935!important;box-shadow:0 0 0 3px rgba(229,57,53,.1)}
+#photo-file-input{display:none}
+.photo-hint{font-size:11px;color:#e53935;margin-top:6px;display:none;text-align:center}
+.photo-hint.show{display:block}
+.bookings-card{background:var(--bg2);border-radius:var(--radius);border:1px solid var(--border);padding:28px}
+.booking-item{padding:16px;border-radius:12px;border:1px solid var(--border);margin-bottom:12px;cursor:pointer;transition:.15s}
+.booking-item:last-child{margin-bottom:0}
+.booking-item:hover{border-color:var(--blue);background:rgba(0,113,227,.02)}
+.booking-item-top{display:flex;align-items:center;justify-content:space-between;margin-bottom:6px}
+.booking-service{font-size:14px;font-weight:600}
+.booking-date{font-size:12px;color:var(--muted)}
+.booking-meta{font-size:12px;color:var(--muted2)}
+.badge{display:inline-flex;padding:3px 9px;border-radius:20px;font-size:11px;font-weight:600}
+.badge-new{background:rgba(0,113,227,.12);color:var(--blue)}
+.badge-contacted{background:rgba(255,159,10,.15);color:#c07800}
+.badge-done{background:rgba(52,199,89,.15);color:#27ae60}
+.empty-bookings{text-align:center;padding:40px 20px;color:var(--muted);font-size:14px}
+.logout-btn{width:100%;margin-top:20px;padding:11px;background:none;border:1px solid var(--border);border-radius:12px;font-size:14px;color:var(--red);cursor:pointer;font-family:inherit;transition:.2s}
+.logout-btn:hover{background:#fff0f0;border-color:var(--red)}
+.delete-account-btn{width:100%;margin-top:10px;padding:11px;background:none;border:none;border-radius:12px;font-size:13px;color:var(--muted);cursor:pointer;font-family:inherit;transition:.2s}
+.delete-account-btn:hover{color:var(--red);background:#fff5f5}
+.logout-confirm{display:none;margin-top:10px;background:var(--bg2);border:1px solid var(--border);border-radius:14px;padding:16px 18px;text-align:center}
+.logout-confirm.open{display:block}
+.logout-confirm-text{font-size:14px;color:var(--dark2);margin-bottom:14px;line-height:1.5}
+.logout-confirm-btns{display:flex;gap:10px}
+.logout-yes{flex:1;padding:10px;background:#e53935;color:#fff;border:none;border-radius:10px;font-size:14px;font-weight:600;cursor:pointer;font-family:inherit;transition:.2s}
+.logout-yes:hover{background:#c62828}
+.logout-no{flex:1;padding:10px;background:none;border:1px solid var(--border);border-radius:10px;font-size:14px;color:var(--muted);cursor:pointer;font-family:inherit;transition:.2s}
+.logout-no:hover{background:#fff;color:var(--dark2)}
+.del-overlay{display:none;position:fixed;inset:0;background:rgba(0,0,0,.5);z-index:3000;align-items:flex-end;justify-content:center;backdrop-filter:blur(4px);-webkit-backdrop-filter:blur(4px)}
+.del-overlay.open{display:flex}
+@media(min-width:500px){.del-overlay{align-items:center}}
+.del-sheet{background:#fff;border-radius:24px 24px 0 0;padding:32px 28px 40px;width:100%;max-width:420px;text-align:center}
+@media(min-width:500px){.del-sheet{border-radius:24px;padding:36px 32px}}
+.del-icon{font-size:40px;margin-bottom:16px}
+.del-title{font-size:18px;font-weight:700;color:var(--dark2);letter-spacing:-.02em;margin-bottom:8px}
+.del-sub{font-size:14px;color:var(--muted);line-height:1.6;margin-bottom:24px}
+.del-confirm-input{width:100%;padding:11px 14px;border:1px solid var(--border);border-radius:10px;font-size:14px;font-family:inherit;color:var(--dark2);background:var(--bg2);outline:none;transition:.15s;text-align:center;margin-bottom:16px;letter-spacing:.05em}
+.del-confirm-input:focus{border-color:var(--red);box-shadow:0 0 0 3px rgba(229,57,53,.1);background:#fff}
+.del-btn-delete{width:100%;padding:13px;background:#e53935;color:#fff;border:none;border-radius:12px;font-size:14px;font-weight:600;cursor:pointer;font-family:inherit;margin-bottom:10px;transition:.2s;opacity:.4;pointer-events:none}
+.del-btn-delete.ready{opacity:1;pointer-events:all}
+.del-btn-delete.ready:hover{background:#c62828}
+.del-btn-cancel{width:100%;padding:11px;background:none;border:1px solid var(--border);border-radius:12px;font-size:14px;color:var(--muted);cursor:pointer;font-family:inherit;transition:.2s}
+.del-btn-cancel:hover{background:var(--bg2)}
+.plan-item-row{display:flex;align-items:center;gap:12px;padding:12px 14px;border-radius:12px;border:1px solid var(--border);margin-bottom:10px;transition:.15s;cursor:pointer}
+.plan-item-row:last-child{margin-bottom:0}
+.plan-item-row:hover{border-color:var(--blue);background:rgba(0,113,227,.02)}
+.plan-item-row-icon{font-size:1.3rem;flex-shrink:0}
+.plan-item-row-info{flex:1;min-width:0}
+.plan-item-row-title{font-size:14px;font-weight:600;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.plan-item-row-meta{font-size:12px;color:var(--muted2);margin-top:2px}
+.plan-item-row-actions{display:flex;gap:6px;flex-shrink:0}
+.plan-row-btn{background:none;border:1px solid var(--border);color:var(--muted);padding:5px 10px;border-radius:8px;font-size:11px;font-weight:600;cursor:pointer;font-family:inherit;transition:.15s}
+.plan-row-btn:hover{border-color:var(--blue);color:var(--blue)}
+.not-logged{text-align:center;padding:80px 20px}
+.not-logged h2{font-size:22px;font-weight:700;margin-bottom:8px}
+.not-logged p{font-size:14px;color:var(--muted);margin-bottom:24px}
+.login-link{display:inline-block;padding:12px 28px;background:var(--blue);color:#fff;border-radius:12px;text-decoration:none;font-size:14px;font-weight:600}
+@keyframes sk-shimmer{0%{background-position:-600px 0}100%{background-position:600px 0}}
+.sk{background:linear-gradient(90deg,#e8e8ed 25%,#f2f2f5 50%,#e8e8ed 75%);background-size:1200px 100%;animation:sk-shimmer 1.4s infinite linear;border-radius:8px}
+#skeletonPage{max-width:700px;margin:0 auto;padding:32px 20px}
+.sk-card{background:#fff;border-radius:16px;border:1px solid var(--border);padding:28px;margin-bottom:20px}
+.sk-header{display:flex;align-items:center;gap:20px;margin-bottom:24px;padding-bottom:24px;border-bottom:1px solid var(--border)}
+.sk-avatar{width:80px;height:80px;border-radius:50%;flex-shrink:0}
+.sk-name{height:18px;width:160px;margin-bottom:8px}
+.sk-email{height:13px;width:110px;margin-bottom:6px;border-radius:6px}
+.sk-meta{height:11px;width:80px;border-radius:6px}
+.sk-label{height:10px;width:60px;border-radius:5px;margin-bottom:8px}
+.sk-input{height:40px;border-radius:10px;margin-bottom:14px}
+.sk-input-half{height:40px;border-radius:10px}
+.sk-row{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-bottom:14px}
+@media(max-width:500px){.sk-row{grid-template-columns:1fr}}
+.sk-btn{height:42px;width:120px;border-radius:12px;margin-top:4px}
+.sk-section-title{height:11px;width:90px;border-radius:5px;margin-bottom:18px}
+.sk-booking{height:72px;border-radius:12px;margin-bottom:12px}
+.sk-title{height:26px;width:180px;border-radius:8px;margin-bottom:28px}
+</style>
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-81DTJ80VLR"></script>
+<script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag("js",new Date());gtag("config","G-81DTJ80VLR");</script>
+</head>
+<body>
+
+<nav class="nav">
+  <a href="/en/" class="nav-logo">LFS <span>Shanghai</span></a>
+  <button class="nav-back" onclick="history.back()">← Back</button>
+</nav>
+
+<!-- SKELETON -->
+<div id="skeletonPage" style="position:relative">
+  <div class="sk-title sk"></div>
+  <div class="sk-card">
+    <div class="sk-header">
+      <div class="sk-avatar sk"></div>
+      <div>
+        <div class="sk-name sk"></div>
+        <div class="sk-email sk"></div>
+        <div class="sk-meta sk"></div>
+      </div>
+    </div>
+    <div class="sk-label sk"></div>
+    <div class="sk-input sk"></div>
+    <div class="sk-row">
+      <div><div class="sk-label sk"></div><div class="sk-input-half sk"></div></div>
+      <div><div class="sk-label sk"></div><div class="sk-input-half sk"></div></div>
+    </div>
+    <div class="sk-label sk"></div>
+    <div class="sk-input sk"></div>
+    <div class="sk-row">
+      <div><div class="sk-label sk"></div><div class="sk-input-half sk"></div></div>
+      <div><div class="sk-label sk"></div><div class="sk-input-half sk"></div></div>
+    </div>
+    <div class="sk-btn sk"></div>
+  </div>
+  <div class="sk-card">
+    <div class="sk-section-title sk"></div>
+    <div class="sk-booking sk"></div>
+    <div class="sk-booking sk"></div>
+  </div>
+  <div id="skFallback" style="display:none;text-align:center;padding:16px 0">
+    <a href="/en/login/?redirect=/en/profile/" style="color:#0071e3;font-size:14px;font-weight:500">Sign In →</a>
+  </div>
+</div>
+
+<div class="page" id="notLoggedIn" style="display:none">
+  <div class="not-logged">
+    <h2>Not signed in</h2>
+    <p>Please sign in to view your profile</p>
+    <a href="/en/" class="login-link">Back to Home</a>
+  </div>
+</div>
+
+<div class="page" id="profilePage" style="display:none">
+  <div class="page-title">My Profile</div>
+
+  <div class="profile-card">
+    <div class="profile-header">
+      <div class="profile-photo-wrap">
+        <img class="profile-photo" id="pp-photo" src="" style="display:none" onerror="this.style.display='none';document.getElementById('pp-initials').style.display='flex'">
+        <div class="profile-initials" id="pp-initials">👤</div>
+        <div class="photo-edit-btn" onclick="document.getElementById('photoSection').classList.toggle('open-photo')" title="Change photo">✎</div>
+      </div>
+      <div>
+        <div class="profile-name" id="pp-name">—</div>
+        <div class="profile-email" id="pp-email">—</div>
+        <div class="profile-meta" id="pp-meta"></div>
+      </div>
+    </div>
+
+    <div id="photoSection" style="display:none;margin-bottom:20px;padding-bottom:20px;border-bottom:1px solid var(--border)">
+      <div class="section-title">Profile Photo</div>
+      <input type="file" id="photo-file-input" accept="image/*">
+      <button class="photo-upload-btn" id="photo-upload-btn" onclick="document.getElementById('photo-file-input').click()">
+        📷 Choose / Take Photo
+      </button>
+      <div class="photo-hint" id="hint-photo">Please add a profile photo</div>
+    </div>
+
+    <div class="section-title">Personal Information</div>
+    <div class="field">
+      <label>Username</label>
+      <div class="username-wrap">
+        <input type="text" id="edit-username" placeholder="username" oninput="checkUsername(this.value)" autocomplete="off" spellcheck="false">
+        <span class="username-check" id="username-check"></span>
+      </div>
+      <div class="username-link">lfsshanghai.com/profile/<span id="username-preview">username</span></div>
+    </div>
+    <div class="field-row">
+      <div class="field">
+        <label>Last Name</label>
+        <input type="text" id="edit-lastname" placeholder="Last name">
+        <div class="field-hint" id="hint-lastname">Please enter your last name</div>
+      </div>
+      <div class="field">
+        <label>First Name</label>
+        <input type="text" id="edit-firstname" placeholder="First name">
+        <div class="field-hint" id="hint-firstname">Please enter your first name</div>
+      </div>
+    </div>
+    <div class="field">
+      <label>Gender</label>
+      <div class="gender-row" id="gender-row">
+        <label><input type="radio" name="edit-gender" value="Male"><span>Male</span></label>
+        <label><input type="radio" name="edit-gender" value="Female"><span>Female</span></label>
+      </div>
+      <div class="field-hint" id="hint-gender">Please select your gender</div>
+    </div>
+    <div class="field-row">
+      <div class="field">
+        <label>Phone Number</label>
+        <input type="tel" id="edit-phone" placeholder="+976 9999 9999">
+        <div class="field-hint" id="hint-phone">Please enter your phone number</div>
+      </div>
+      <div class="field">
+        <label>Date of Birth</label>
+        <input type="date" id="edit-birthday">
+        <div class="field-hint" id="hint-birthday">Please enter your date of birth</div>
+      </div>
+    </div>
+    <button class="save-btn" onclick="saveProfile()">Save</button>
+    <div class="save-msg" id="save-msg"></div>
+  </div>
+
+  <!-- TRIP PLANS -->
+  <div class="bookings-card" style="margin-bottom:20px">
+    <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:16px">
+      <div class="section-title" style="margin-bottom:0">My Trip Plans</div>
+      <a href="/en/planner/" style="font-size:12px;font-weight:600;color:var(--blue);text-decoration:none">＋ New</a>
+    </div>
+    <div id="myPlans"><div class="empty-bookings">Loading...</div></div>
+  </div>
+
+  <!-- BOOKINGS -->
+  <div class="bookings-card">
+    <div class="section-title">My Bookings</div>
+    <div id="myBookings"><div class="empty-bookings">Loading...</div></div>
+  </div>
+
+  <button class="logout-btn" onclick="openLogoutConfirm()">Sign Out</button>
+  <div class="logout-confirm" id="logoutConfirm">
+    <div class="logout-confirm-text">Are you sure you want to sign out?</div>
+    <div class="logout-confirm-btns">
+      <button class="logout-yes" onclick="doLogout()">Yes, sign out</button>
+      <button class="logout-no" onclick="closeLogoutConfirm()">Cancel</button>
+    </div>
+  </div>
+  <button class="delete-account-btn" onclick="openDeleteModal()">Delete Account</button>
+</div>
+
+<!-- DELETE MODAL -->
+<div class="del-overlay" id="delOverlay" onclick="if(event.target===this)closeDeleteModal()">
+  <div class="del-sheet">
+    <div class="del-icon">⚠️</div>
+    <div class="del-title">Delete your account?</div>
+    <div class="del-sub">This action cannot be undone. All your bookings and data will be permanently deleted.<br><br>Type <b>DELETE</b> below to confirm.</div>
+    <input class="del-confirm-input" id="delConfirmInput" type="text" placeholder="DELETE" autocomplete="off" oninput="checkDelConfirm(this.value)">
+    <button class="del-btn-delete" id="delBtnConfirm" onclick="doDeleteAccount()">Permanently delete account</button>
+    <button class="del-btn-cancel" onclick="closeDeleteModal()">Cancel</button>
+  </div>
+</div>
+
+<script src="/js/toast.js"></script>
+<script src="/js/calendar.js"></script>
+<script type="module">
+import { initializeApp } from "https://www.gstatic.com/firebasejs/11.7.1/firebase-app.js";
+import { getAuth, onAuthStateChanged, signOut, deleteUser } from "https://www.gstatic.com/firebasejs/11.7.1/firebase-auth.js";
+import { getFirestore, doc, getDoc, setDoc, deleteDoc, collection, query, where, getDocs, orderBy } from "https://www.gstatic.com/firebasejs/11.7.1/firebase-firestore.js";
+
+const app = initializeApp({
+  apiKey: "AIzaSyDixZdKwlrixRFokERCMQ5Ld1BMkhUttCQ",
+  authDomain: "lfs-shanghai.firebaseapp.com",
+  projectId: "lfs-shanghai",
+  storageBucket: "lfs-shanghai.firebasestorage.app",
+  messagingSenderId: "337508244675",
+  appId: "1:337508244675:web:f47b7e14417a0f1d129676"
+});
+const auth = getAuth(app);
+const db   = getFirestore(app);
+
+let currentUser = null;
+let currentProfile = {};
+
+try { initDatepicker('edit-birthday', { placeholder: 'Select date' }); } catch(e) {}
+
+setTimeout(() => {
+  if (document.getElementById('skeletonPage').style.display !== 'none') {
+    document.getElementById('skFallback').style.display = 'block';
+  }
+}, 2000);
+
+const authTimeout = setTimeout(() => {
+  if (document.getElementById('skeletonPage').style.display !== 'none') {
+    window.location.href = '/en/login/?redirect=/en/profile/';
+  }
+}, 5000);
+
+onAuthStateChanged(auth, async user => {
+  clearTimeout(authTimeout);
+  document.getElementById('skeletonPage').style.display = 'none';
+  if (!user) {
+    document.getElementById('notLoggedIn').style.display = 'block';
+    return;
+  }
+  currentUser = user;
+  document.getElementById('profilePage').style.display = 'block';
+  const snap = await getDoc(doc(db, 'users', user.uid));
+  currentProfile = snap.exists() ? snap.data() : {};
+  fillForm(currentProfile, user);
+  loadBookings(user.email, user.uid);
+  loadPlans(user.uid);
+});
+
+function fillForm(p, user) {
+  const name = [p.lastName, p.firstName].filter(Boolean).join(' ') || user.displayName || '—';
+  document.getElementById('pp-name').textContent = name;
+  document.getElementById('pp-email').textContent = user.email || '—';
+  if (p.gender || p.birthday) {
+    document.getElementById('pp-meta').textContent = [p.gender, p.birthday].filter(Boolean).join(' · ');
+  }
+  const photo = p.photoURL || user.photoURL || '';
+  if (photo) {
+    document.getElementById('pp-photo').src = photo;
+    document.getElementById('pp-photo').style.display = 'block';
+    document.getElementById('pp-initials').style.display = 'none';
+  }
+  document.getElementById('edit-username').value  = p.username  || '';
+  document.getElementById('edit-lastname').value  = p.lastName  || '';
+  document.getElementById('edit-firstname').value = p.firstName || '';
+  document.getElementById('edit-phone').value     = p.phone     || '';
+  if (p.birthday) {
+    const bdEl = document.getElementById('edit-birthday');
+    bdEl.value = p.birthday;
+    bdEl.dispatchEvent(new Event('change'));
+  }
+  if (p.username) {
+    document.getElementById('username-preview').textContent = p.username;
+    document.getElementById('username-check').textContent = '✓';
+    document.getElementById('username-check').className = 'username-check ok';
+  }
+  if (p.gender) {
+    const radio = document.querySelector(`input[name="edit-gender"][value="${p.gender}"]`);
+    if (radio) radio.checked = true;
+  }
+}
+
+let unameTimer;
+window.checkUsername = function(val) {
+  clearTimeout(unameTimer);
+  val = val.toLowerCase().replace(/[^a-z0-9_.]/g, '');
+  document.getElementById('edit-username').value = val;
+  const check = document.getElementById('username-check');
+  const preview = document.getElementById('username-preview');
+  preview.textContent = val || 'username';
+  if (!val) { check.textContent = ''; return; }
+  if (val.length < 3) { check.textContent = '✗'; check.className = 'username-check err'; return; }
+  check.textContent = '···'; check.className = 'username-check';
+  unameTimer = setTimeout(async () => {
+    if (val === currentProfile.username) { check.textContent = '✓'; check.className = 'username-check ok'; return; }
+    const snap = await getDoc(doc(db, 'usernames', val));
+    if (snap.exists()) { check.textContent = '✗'; check.className = 'username-check err'; }
+    else { check.textContent = '✓'; check.className = 'username-check ok'; }
+  }, 500);
+};
+
+document.getElementById('photo-file-input').addEventListener('change', function(e) {
+  const file = e.target.files[0];
+  if (!file) return;
+  const reader = new FileReader();
+  reader.onload = function(ev) {
+    const image = new Image();
+    image.onload = function() {
+      const size = 300;
+      const canvas = document.createElement('canvas');
+      canvas.width = size; canvas.height = size;
+      const ctx = canvas.getContext('2d');
+      const min = Math.min(image.width, image.height);
+      const sx = (image.width - min) / 2;
+      const sy = (image.height - min) / 2;
+      ctx.drawImage(image, sx, sy, min, min, 0, 0, size, size);
+      const base64 = canvas.toDataURL('image/jpeg', 0.75);
+      const ppImg = document.getElementById('pp-photo');
+      ppImg.src = base64;
+      ppImg.style.display = 'block';
+      document.getElementById('pp-initials').style.display = 'none';
+      document.getElementById('photoSection').style.display = 'none';
+      currentProfile.photoURL = base64;
+      document.getElementById('photo-upload-btn')?.classList.remove('invalid');
+      document.getElementById('hint-photo')?.classList.remove('show');
+    };
+    image.src = ev.target.result;
+  };
+  reader.readAsDataURL(file);
+});
+
+function profileSetInvalid(inputId, hintId) {
+  const el = document.getElementById(inputId);
+  if (el) {
+    el.classList.add('invalid');
+    el.addEventListener('input',  () => { el.classList.remove('invalid'); document.getElementById(hintId)?.classList.remove('show'); }, { once: true });
+    el.addEventListener('change', () => { el.classList.remove('invalid'); document.getElementById(hintId)?.classList.remove('show'); }, { once: true });
+  }
+  document.getElementById(hintId)?.classList.add('show');
+}
+
+window.saveProfile = async function() {
+  const msg = document.getElementById('save-msg');
+  msg.className = 'save-msg';
+  const username  = document.getElementById('edit-username').value.trim().toLowerCase();
+  const firstName = document.getElementById('edit-firstname').value.trim();
+  const lastName  = document.getElementById('edit-lastname').value.trim();
+  const phone     = document.getElementById('edit-phone').value.trim();
+  const birthday  = document.getElementById('edit-birthday').value;
+  const genderEl  = document.querySelector('input[name="edit-gender"]:checked');
+  const gender    = genderEl ? genderEl.value : (currentProfile.gender || '');
+  const photoURL  = currentProfile.photoURL || currentUser.photoURL || '';
+
+  let hasError = false;
+  if (!photoURL) {
+    const btn = document.getElementById('photo-upload-btn');
+    const hint = document.getElementById('hint-photo');
+    btn?.classList.add('invalid');
+    hint?.classList.add('show');
+    document.getElementById('photoSection').style.display = 'block';
+    hasError = true;
+  }
+  if (!lastName)  { profileSetInvalid('edit-lastname',  'hint-lastname');  hasError = true; }
+  if (!firstName) { profileSetInvalid('edit-firstname', 'hint-firstname'); hasError = true; }
+  if (!gender) {
+    document.getElementById('hint-gender')?.classList.add('show');
+    document.getElementById('gender-row')?.style.setProperty('outline', '2px solid #e53935');
+    document.querySelectorAll('input[name="edit-gender"]').forEach(r => {
+      r.addEventListener('change', () => {
+        document.getElementById('hint-gender')?.classList.remove('show');
+        document.getElementById('gender-row')?.style.removeProperty('outline');
+      }, { once: true });
+    });
+    hasError = true;
+  }
+  if (!phone)    { profileSetInvalid('edit-phone',    'hint-phone');    hasError = true; }
+  if (!birthday) { profileSetInvalid('edit-birthday', 'hint-birthday'); hasError = true; }
+
+  if (hasError) {
+    msg.textContent = '⚠️ Please fill in all required fields';
+    msg.className = 'save-msg error';
+    msg.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+    return;
+  }
+  msg.className = 'save-msg';
+
+  try {
+    if (username && username !== currentProfile.username) {
+      if (username.length < 3) {
+        msg.textContent = 'Username must be at least 3 characters.';
+        msg.className = 'save-msg error'; return;
+      }
+      const snap = await getDoc(doc(db, 'usernames', username));
+      if (snap.exists() && snap.data().uid !== currentUser.uid) {
+        msg.textContent = 'This username is already taken.';
+        msg.className = 'save-msg error'; return;
+      }
+      if (currentProfile.username) {
+        await deleteDoc(doc(db, 'usernames', currentProfile.username));
+      }
+      await setDoc(doc(db, 'usernames', username), { uid: currentUser.uid });
+    }
+
+    const profile = { username, firstName, lastName, phone, birthday, gender, photoURL, email: currentUser.email || '', updatedAt: Date.now() };
+    if (!currentProfile.createdAt) profile.createdAt = Date.now();
+    await setDoc(doc(db, 'users', currentUser.uid), { ...currentProfile, ...profile });
+    currentProfile = { ...currentProfile, ...profile };
+
+    document.getElementById('pp-name').textContent = [lastName, firstName].filter(Boolean).join(' ') || '—';
+    document.getElementById('pp-meta').textContent = [gender, birthday].filter(Boolean).join(' · ');
+
+    if (username) window.history.replaceState({}, '', `/profile/${username}`);
+
+    toast('Saved successfully', 'success');
+  } catch(e) {
+    toast('Failed to save', 'error', { subtitle: e.message });
+  }
+};
+
+async function loadBookings(email, uid) {
+  const container = document.getElementById('myBookings');
+  try {
+    const q = query(collection(db, 'bookings'), where('userId', '==', uid), orderBy('createdAt', 'desc'));
+    const snap = await getDocs(q);
+    if (snap.empty) {
+      container.innerHTML = '<div class="empty-bookings">No bookings yet<br><a href="/en/booking/" style="color:var(--blue);font-weight:600;margin-top:8px;display:inline-block">Book Now →</a></div>';
+      return;
+    }
+    const statusLabel = { new:'New', contacted:'Contacted', done:'Done' };
+    const statusClass = { new:'badge-new', contacted:'badge-contacted', done:'badge-done' };
+    container.innerHTML = snap.docs.map(d => {
+      const b = d.data();
+      const st = b.status || (b.done ? 'done' : 'new');
+      const date = b.createdAt?.toDate?.()?.toLocaleDateString('en-US') || '—';
+      return `<div class="booking-item">
+        <div class="booking-item-top">
+          <span class="booking-service">${b.service || 'Service'}</span>
+          <span class="badge ${statusClass[st]||'badge-new'}">${statusLabel[st]||'New'}</span>
+        </div>
+        <div class="booking-date">Date: ${b.start || '—'} · ${b.days || '—'}</div>
+        <div class="booking-meta">Booked: ${date}</div>
+      </div>`;
+    }).join('');
+  } catch(e) {
+    try {
+      const q2 = query(collection(db, 'bookings'), where('userId', '==', uid));
+      const snap2 = await getDocs(q2);
+      if (snap2.empty) {
+        container.innerHTML = '<div class="empty-bookings">No bookings yet<br><a href="/en/booking/" style="color:var(--blue);font-weight:600;margin-top:8px;display:inline-block">Book Now →</a></div>';
+        return;
+      }
+      const statusLabel = { new:'New', contacted:'Contacted', done:'Done' };
+      const statusClass = { new:'badge-new', contacted:'badge-contacted', done:'badge-done' };
+      container.innerHTML = snap2.docs.map(d => {
+        const b = d.data();
+        const st = b.status || (b.done ? 'done' : 'new');
+        const date = b.createdAt?.toDate?.()?.toLocaleDateString('en-US') || '—';
+        return `<div class="booking-item">
+          <div class="booking-item-top">
+            <span class="booking-service">${b.service || 'Service'}</span>
+            <span class="badge ${statusClass[st]||'badge-new'}">${statusLabel[st]||'New'}</span>
+          </div>
+          <div class="booking-date">Date: ${b.start || '—'} · ${b.days || '—'}</div>
+          <div class="booking-meta">Booked: ${date}</div>
+        </div>`;
+      }).join('');
+    } catch(e2) {
+      container.innerHTML = '<div class="empty-bookings">No bookings yet<br><a href="/en/booking/" style="color:var(--blue);font-weight:600;margin-top:8px;display:inline-block">Book Now →</a></div>';
+    }
+  }
+}
+
+async function loadPlans(uid) {
+  const container = document.getElementById('myPlans');
+  if (!container) return;
+  try {
+    const q = query(collection(db,'planners'), where('uid','==',uid), orderBy('createdAt','desc'));
+    const snap = await getDocs(q);
+    if (snap.empty) {
+      container.innerHTML = '<div class="empty-bookings">No plans yet<br><a href="/en/planner/" style="color:var(--blue);font-weight:600;margin-top:8px;display:inline-block">Create a Plan →</a></div>';
+      return;
+    }
+    container.innerHTML = '';
+    snap.docs.slice(0,6).forEach(docSnap => {
+      const d = docSnap.data(), id = docSnap.id;
+      const title   = d.title || 'Untitled Plan';
+      const arrival = d.dates?.arrival || '';
+      const dep     = d.dates?.departure || '';
+      const places  = (d.savedPlaces || []).length;
+      const people  = (d.people || []).length;
+      const meta    = [arrival?(arrival+(dep?' → '+dep:'')):'', people?people+' people':'', places?places+' places':''].filter(Boolean).join(' · ');
+      const link    = `https://lfsshanghai.com/en/planner/?id=${id}`;
+      const row = document.createElement('div');
+      row.className = 'plan-item-row';
+      row.innerHTML = `
+        <div class="plan-item-row-icon">🗺</div>
+        <div class="plan-item-row-info">
+          <div class="plan-item-row-title">${title}</div>
+          <div class="plan-item-row-meta">${meta}</div>
+        </div>
+        <div class="plan-item-row-actions">
+          <button class="plan-row-btn" onclick="event.stopPropagation();navigator.clipboard.writeText('${link}').then(()=>toast('Link copied','success'))">📋</button>
+          <a href="${link}" class="plan-row-btn" style="text-decoration:none;display:inline-flex;align-items:center;" onclick="event.stopPropagation()">Open</a>
+        </div>
+      `;
+      row.addEventListener('click', () => window.location.href = link);
+      container.appendChild(row);
+    });
+  } catch(e) {
+    container.innerHTML = '<div class="empty-bookings">Failed to load plans</div>';
+  }
+}
+
+window.openLogoutConfirm  = () => document.getElementById('logoutConfirm').classList.add('open');
+window.closeLogoutConfirm = () => document.getElementById('logoutConfirm').classList.remove('open');
+window.doLogout = async () => { await signOut(auth); window.location.href = '/en/'; };
+
+window.openDeleteModal = function() {
+  document.getElementById('delConfirmInput').value = '';
+  document.getElementById('delBtnConfirm').classList.remove('ready');
+  document.getElementById('delOverlay').classList.add('open');
+};
+window.closeDeleteModal = () => document.getElementById('delOverlay').classList.remove('open');
+window.checkDelConfirm  = val => document.getElementById('delBtnConfirm').classList.toggle('ready', val.trim().toUpperCase() === 'DELETE');
+
+window.doDeleteAccount = async function() {
+  if (!currentUser) return;
+  const btn = document.getElementById('delBtnConfirm');
+  btn.textContent = 'Deleting...';
+  btn.classList.remove('ready');
+  try {
+    await setDoc(doc(db, 'deleted_accounts', currentUser.uid), {
+      ...currentProfile,
+      uid: currentUser.uid,
+      authEmail: currentUser.email || '',
+      authProvider: currentUser.providerData?.[0]?.providerId || '',
+      deletedAt: Date.now()
+    }).catch(() => {});
+    if (currentProfile.username) await deleteDoc(doc(db, 'usernames', currentProfile.username)).catch(() => {});
+    await deleteDoc(doc(db, 'users', currentUser.uid)).catch(() => {});
+    await deleteUser(currentUser);
+    window.location.replace('/en/');
+  } catch(e) {
+    closeDeleteModal();
+    if (e.code === 'auth/requires-recent-login') {
+      toast('Please sign in again before deleting', 'warning', { duration: 5000 });
+      setTimeout(() => { window.location.href = '/en/login?redirect=/en/profile/'; }, 2000);
+    } else {
+      toast('Failed to delete account', 'error', { subtitle: e.code || e.message });
+    }
+  }
+};
+
+document.querySelector('.photo-edit-btn').addEventListener('click', function() {
+  const sec = document.getElementById('photoSection');
+  sec.style.display = sec.style.display === 'none' ? 'block' : 'none';
+});
+</script>
+<script type="text/javascript">
+var Tawk_API=Tawk_API||{}, Tawk_LoadTime=new Date();
+(function(){
+  var s1=document.createElement("script"),s0=document.getElementsByTagName("script")[0];
+  s1.async=true;
+  s1.src='https://embed.tawk.to/6a01d583db08b91c337bdcf5/1jobik2hq';
+  s1.charset='UTF-8';
+  s1.setAttribute('crossorigin','*');
+  s0.parentNode.insertBefore(s1,s0);
+})();
+</script>
+<script src="/js/messenger-btn.js"></script>
+</body>
+</html>
