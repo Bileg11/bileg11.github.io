@@ -1,33 +1,56 @@
 'use strict';
-// ── FIREBASE SINGLETON ────────────────────────────────────────────
-// Хоёр database тусдаа:
-//   dbPersonal  — jarvis-bileg   (Билэгийн хувийн өгөгдөл)
-//   dbLFS       — lfs-shanghai   (LFS бизнесийн өгөгдөл)
-//
-// FIREBASE_LFS env var тавиагүй байвал dbLFS = dbPersonal (fallback)
-// → LFS Firebase service account нэмэхэд л автоматаар тусгаарлагдана
+// ── FIREBASE SINGLETON — LAZY INIT ────────────────────────────────
+// Сервер эхлэхэд Firebase-г шууд ачаалахгүй — эхний хэрэглээнд л init хийнэ.
+// Env var байхгүй бол сервер унахгүй, зөвхөн Firestore дуудлага алдаа өгнө.
 
 const admin = require('firebase-admin');
 
-function getOrInit(name, envKey) {
-  const found = admin.apps.find(a => a.name === name);
-  if (found) return found;
-  const json = process.env[envKey] || process.env.FIREBASE_SERVICE_ACCOUNT;
-  return admin.initializeApp(
-    { credential: admin.credential.cert(JSON.parse(json)) },
-    name
-  );
+let _personalApp = null;
+let _lfsApp = null;
+
+function getPersonalApp() {
+  if (!_personalApp) {
+    const found = admin.apps.find(a => a.name === 'personal');
+    if (found) { _personalApp = found; }
+    else {
+      const json = process.env.FIREBASE_SERVICE_ACCOUNT;
+      if (!json) throw new Error('[Firebase] FIREBASE_SERVICE_ACCOUNT env var тохируулаагүй');
+      _personalApp = admin.initializeApp(
+        { credential: admin.credential.cert(JSON.parse(json)) },
+        'personal'
+      );
+    }
+  }
+  return _personalApp;
 }
 
-// ── Хувийн JARVIS (jarvis-bileg) ──────────────────────────────────
-// routines, logs, tasks, revenue, bileg/profile
-const personalApp = getOrInit('personal', 'FIREBASE_SERVICE_ACCOUNT');
-const dbPersonal  = personalApp.firestore();
+function getLFSApp() {
+  if (!_lfsApp) {
+    const found = admin.apps.find(a => a.name === 'lfs');
+    if (found) { _lfsApp = found; }
+    else {
+      const json = process.env.FIREBASE_LFS || process.env.FIREBASE_SERVICE_ACCOUNT;
+      if (!json) throw new Error('[Firebase] FIREBASE_LFS эсвэл FIREBASE_SERVICE_ACCOUNT env var тохируулаагүй');
+      _lfsApp = admin.initializeApp(
+        { credential: admin.credential.cert(JSON.parse(json)) },
+        'lfs'
+      );
+    }
+  }
+  return _lfsApp;
+}
 
-// ── LFS бизнес (lfs-shanghai) ─────────────────────────────────────
-// analytics, profiles, chatHistory, marketing, bookings
-// FIREBASE_LFS тавиагүй бол jarvis-bileg-ийг ашиглана (fallback)
-const lfsApp = getOrInit('lfs', 'FIREBASE_LFS');
-const dbLFS  = lfsApp.firestore();
+// Proxy objects — property access хийх үедээ л init хийнэ
+const dbPersonal = new Proxy({}, {
+  get(_, prop) {
+    return getPersonalApp().firestore()[prop].bind(getPersonalApp().firestore());
+  },
+});
+
+const dbLFS = new Proxy({}, {
+  get(_, prop) {
+    return getLFSApp().firestore()[prop].bind(getLFSApp().firestore());
+  },
+});
 
 module.exports = { admin, dbPersonal, dbLFS };
