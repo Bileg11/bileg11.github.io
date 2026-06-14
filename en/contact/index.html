@@ -1,0 +1,282 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Contact Us — LFS Shanghai</title>
+<link rel="icon" type="image/svg+xml" href="/favicon.svg">
+<link rel="icon" type="image/png" sizes="32x32" href="/favicon.png">
+<link rel="apple-touch-icon" href="/apple-touch-icon.png">
+<meta name="description" content="Contact LFS Shanghai — your trusted Mongolian guide in Shanghai. Reach us via Facebook, Instagram, Email, or our contact form.">
+<meta property="og:type" content="website">
+<meta property="og:title" content="Contact Us — LFS Shanghai">
+<meta property="og:description" content="Get in touch with LFS Shanghai. We respond within 1 hour.">
+<meta property="og:url" content="https://lfsshanghai.com/en/contact/">
+<meta property="og:locale" content="en_US">
+<link rel="canonical" href="https://lfsshanghai.com/en/contact/">
+<link rel="alternate" hreflang="en" href="https://lfsshanghai.com/en/contact/">
+<link rel="alternate" hreflang="mn" href="https://lfsshanghai.com/contact/">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-81DTJ80VLR"></script>
+<script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag("js",new Date());gtag("config","G-81DTJ80VLR");</script>
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+:root{
+  --bg:#fff;--bg2:#f5f5f7;--bg3:#fbfbfd;--card:#fff;
+  --text:#1d1d1f;--muted:#6e6e73;--muted2:#86868b;
+  --blue:#0071e3;--blue-hover:#0077ed;--blue-light:#e8f1fb;
+  --border:rgba(0,0,0,.08);--border2:rgba(0,0,0,.05);
+  --shadow:0 2px 20px rgba(0,0,0,.08);--shadow2:0 8px 40px rgba(0,0,0,.12);
+  --radius:18px;--dark:#000;--dark2:#1d1d1f;
+}
+html{scroll-behavior:smooth;overflow-x:clip}
+body{font-family:'Inter',system-ui,-apple-system,sans-serif;background:var(--bg);color:var(--text);overflow-x:hidden;line-height:1.47059;-webkit-font-smoothing:antialiased;}
+::-webkit-scrollbar{width:6px}::-webkit-scrollbar-track{background:var(--bg2)}::-webkit-scrollbar-thumb{background:#c7c7cc;border-radius:3px}
+
+/* NAV */
+.nav{position:fixed;top:0;left:0;right:0;z-index:500;height:52px;display:flex;align-items:center;justify-content:space-between;padding:0 22px;background:rgba(255,255,255,.85);backdrop-filter:saturate(180%) blur(20px);-webkit-backdrop-filter:saturate(180%) blur(20px);border-bottom:1px solid rgba(0,0,0,.06);transition:background .3s;}
+.nav-logo{font-size:17px;font-weight:700;color:var(--dark2);letter-spacing:-.02em;text-decoration:none;user-select:none;}
+.nav-logo span{color:var(--blue)}
+.nav-links{display:flex;align-items:center;gap:0;position:fixed;top:0;left:50%;transform:translateX(-50%);height:52px;background:none;padding:0;z-index:490;}
+.nav-link{padding:6px 14px;font-size:12px;font-weight:400;color:var(--muted);text-decoration:none;cursor:pointer;border:none;background:none;font-family:inherit;transition:color .2s;white-space:nowrap;}
+.nav-link:hover{color:var(--dark2)}.nav-link.active{color:var(--dark2);font-weight:500}
+.nav-actions{display:flex;align-items:center;gap:8px}
+.nav-btn{padding:7px 16px;background:var(--blue);color:#fff;border:none;border-radius:20px;font-size:12px;font-weight:500;cursor:pointer;font-family:inherit;transition:background .2s,transform .15s;text-decoration:none;white-space:nowrap;}
+.nav-btn:hover{background:var(--blue-hover);transform:scale(1.03)}
+.hamburger{display:none;flex-direction:column;gap:4px;cursor:pointer;padding:6px;border:none;background:none}
+.hamburger span{display:block;width:18px;height:1.5px;background:var(--dark2);transition:.3s;border-radius:1px}
+@media(max-width:860px){
+  .nav-links{display:flex;position:fixed;top:52px;left:0;right:0;bottom:0;height:auto;transform:translateY(-28px) scale(0.98);z-index:499;background:rgba(8,8,12,.92);backdrop-filter:saturate(160%) blur(28px);-webkit-backdrop-filter:saturate(160%) blur(28px);flex-direction:column;align-items:flex-start;padding:36px 28px 40px;gap:2px;border-top:1px solid rgba(255,255,255,.07);overflow-y:auto;opacity:0;pointer-events:none;transition:opacity .6s cubic-bezier(.4,0,.2,1),transform .6s cubic-bezier(.4,0,.2,1);}
+  .nav-links.open{opacity:1;transform:translateY(0) scale(1);pointer-events:auto}
+  .nav-link{font-size:22px;font-weight:300;padding:14px 0;color:#fff;border-bottom:1px solid rgba(255,255,255,.07);width:100%;letter-spacing:-.01em;min-height:48px;display:flex;align-items:center}
+  .nav-link:hover,.nav-link.active{color:#fff}
+  .hamburger{display:flex}.nav-btn{display:none}
+}
+
+/* HERO */
+.hero{padding:120px 40px 64px;text-align:center;max-width:680px;margin:0 auto;}
+.hero-eyebrow{font-size:12px;font-weight:600;letter-spacing:.1em;text-transform:uppercase;color:var(--blue);margin-bottom:18px;}
+.hero h1{font-size:clamp(36px,6vw,64px);font-weight:700;line-height:1.05;letter-spacing:-.04em;color:var(--dark2);margin-bottom:20px;}
+.hero h1 em{font-style:normal;color:var(--blue)}
+.hero-sub{font-size:clamp(15px,1.8vw,18px);font-weight:400;color:var(--muted);max-width:500px;margin:0 auto;line-height:1.7;}
+@keyframes fadeUp{from{opacity:0;transform:translateY(22px)}to{opacity:1;transform:translateY(0)}}
+@media(max-width:600px){.hero{padding:96px 20px 48px}}
+
+/* MAIN */
+.main{max-width:900px;margin:0 auto;padding:16px 24px 80px;}
+
+/* CONTACT CARDS */
+.cards-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(200px,1fr));gap:16px;margin-bottom:56px;}
+.contact-card{background:var(--card);border:1px solid var(--border);border-radius:var(--radius);padding:28px 20px;text-align:center;box-shadow:var(--shadow);transition:transform .25s,box-shadow .25s;text-decoration:none;color:inherit;display:flex;flex-direction:column;align-items:center;gap:14px;}
+.contact-card:hover{transform:translateY(-4px);box-shadow:var(--shadow2);}
+.contact-icon{width:52px;height:52px;border-radius:14px;display:flex;align-items:center;justify-content:center;font-size:24px;}
+.contact-card h3{font-size:15px;font-weight:600;color:var(--dark2);}
+.contact-card p{font-size:13px;color:var(--muted);line-height:1.55;}
+.contact-card .link-label{font-size:12px;font-weight:600;color:var(--blue);margin-top:4px;}
+.icon-fb{background:#e7f0fd;} .icon-ig{background:#fce8f3;} .icon-email{background:#e8f5e9;} .icon-msg{background:#e8f1fd;}
+
+/* FORM SECTION */
+.form-section{background:var(--bg2);border-radius:24px;padding:48px 40px;margin-bottom:40px;}
+.form-section h2{font-size:clamp(22px,3vw,32px);font-weight:700;letter-spacing:-.03em;color:var(--dark2);margin-bottom:8px;}
+.form-section p.sub{font-size:15px;color:var(--muted);margin-bottom:32px;}
+.form-row{display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-bottom:16px;}
+.form-group{display:flex;flex-direction:column;gap:6px;margin-bottom:16px;}
+.form-group label{font-size:13px;font-weight:500;color:var(--dark2);}
+.form-group input,.form-group textarea,.form-group select{padding:12px 16px;border:1px solid var(--border);border-radius:12px;font-size:14px;font-family:inherit;color:var(--text);background:#fff;outline:none;transition:border-color .2s;}
+.form-group input:focus,.form-group textarea:focus,.form-group select:focus{border-color:var(--blue);}
+.form-group textarea{resize:vertical;min-height:120px;}
+.btn-submit{width:100%;padding:14px;background:var(--blue);color:#fff;border:none;border-radius:14px;font-size:15px;font-weight:600;cursor:pointer;font-family:inherit;transition:background .2s,transform .15s;}
+.btn-submit:hover{background:var(--blue-hover);transform:scale(1.01)}
+.btn-submit:disabled{opacity:.6;cursor:not-allowed;transform:none}
+.form-success{display:none;text-align:center;padding:28px;background:#e8f5e9;border-radius:14px;color:#2e7d32;font-weight:600;}
+@media(max-width:600px){.form-section{padding:32px 20px}.form-row{grid-template-columns:1fr}}
+
+/* TRUST BAR */
+.trust-bar{display:flex;gap:24px;justify-content:center;flex-wrap:wrap;margin:32px 0;padding:24px;background:var(--bg2);border-radius:16px;}
+.trust-item{display:flex;align-items:center;gap:8px;font-size:13px;color:var(--muted);font-weight:500;}
+.trust-icon{font-size:18px;}
+
+/* FOOTER */
+footer{background:var(--bg2);border-top:1px solid var(--border);padding:40px 24px;text-align:center;font-size:12px;color:var(--muted);line-height:1.8;}
+footer a{color:var(--blue);text-decoration:none}
+footer a:hover{text-decoration:underline}
+.footer-nav{display:flex;gap:20px;justify-content:center;flex-wrap:wrap;margin-bottom:16px;}
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav class="nav">
+  <a href="/en/" class="nav-logo">LFS <span>Shanghai</span></a>
+  <div class="nav-links" id="navLinks">
+    <a class="nav-link" href="/en/">Home</a>
+    <a class="nav-link" href="/en/health/">Healthcare</a>
+    <a class="nav-link" href="/en/routes/">Routes</a>
+    <a class="nav-link" href="/en/tips/">Tips</a>
+    <a class="nav-link" href="/en/metro/">Metro Guide</a>
+    <a class="nav-link" href="/en/planner/" style="color:#e8392a;">✦ Trip Planner</a>
+    <a class="nav-link active" href="/en/contact/">Contact</a>
+    <a class="nav-link" href="/login/">Login</a>
+    <a class="nav-link" href="/en/booking/" style="color:#0071e3;font-weight:600">Book Now →</a>
+  </div>
+  <div class="nav-actions">
+    <a href="/en/booking/" class="nav-btn">Book Now</a>
+    <button class="hamburger" id="hamburger" aria-label="Open menu">
+      <span></span><span></span><span></span>
+    </button>
+  </div>
+</nav>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="hero-eyebrow">Get in Touch</div>
+  <h1>Contact <em>LFS Shanghai</em></h1>
+  <p class="hero-sub">We respond within 1 hour. Reach us through any channel below — Facebook, Instagram, Email, or fill out the form.</p>
+</section>
+
+<!-- MAIN -->
+<main class="main">
+
+  <!-- TRUST BAR -->
+  <div class="trust-bar">
+    <div class="trust-item"><span class="trust-icon">⚡</span> Average 1-hour response</div>
+    <div class="trust-item"><span class="trust-icon">🇲🇳</span> Mongolian-speaking guide</div>
+    <div class="trust-item"><span class="trust-icon">✓</span> 200+ trips organized</div>
+    <div class="trust-item"><span class="trust-icon">🔒</span> Safe &amp; trusted</div>
+  </div>
+
+  <!-- CONTACT CARDS -->
+  <div class="cards-grid">
+    <a href="https://www.facebook.com/profile.php?id=100076380514835" target="_blank" rel="noopener" class="contact-card">
+      <div class="contact-icon icon-fb">📘</div>
+      <h3>Facebook</h3>
+      <p>Message us on Facebook for quick questions and updates.</p>
+      <span class="link-label">Open Facebook →</span>
+    </a>
+    <a href="https://instagram.com/lfs.shanghai" target="_blank" rel="noopener" class="contact-card">
+      <div class="contact-icon icon-ig">📸</div>
+      <h3>Instagram</h3>
+      <p>Follow us and DM for trip inspiration and booking info.</p>
+      <span class="link-label">Open Instagram →</span>
+    </a>
+    <a href="mailto:lfs.shanghai1@gmail.com" class="contact-card">
+      <div class="contact-icon icon-email">✉️</div>
+      <h3>Email</h3>
+      <p>lfs.shanghai1@gmail.com — for detailed inquiries and quotes.</p>
+      <span class="link-label">Send Email →</span>
+    </a>
+    <a href="https://m.me/100076380514835" target="_blank" rel="noopener" class="contact-card">
+      <div class="contact-icon icon-msg">💬</div>
+      <h3>Messenger</h3>
+      <p>Chat directly via Facebook Messenger — fastest response.</p>
+      <span class="link-label">Open Messenger →</span>
+    </a>
+  </div>
+
+  <!-- CONTACT FORM -->
+  <div class="form-section">
+    <h2>Send Us a Message</h2>
+    <p class="sub">Fill out the form and we'll reply within 1 hour.</p>
+
+    <div id="contactSuccess" class="form-success">
+      ✅ Message sent! We'll get back to you within 1 hour.
+    </div>
+
+    <form id="contactForm">
+      <div class="form-row">
+        <div class="form-group">
+          <label for="cf_name">Your Name</label>
+          <input type="text" id="cf_name" name="from_name" placeholder="Full name" required>
+        </div>
+        <div class="form-group">
+          <label for="cf_email">Email</label>
+          <input type="email" id="cf_email" name="from_email" placeholder="your@email.com" required>
+        </div>
+      </div>
+      <div class="form-group">
+        <label for="cf_subject">Subject</label>
+        <select id="cf_subject" name="subject">
+          <option value="Healthcare inquiry">Healthcare inquiry</option>
+          <option value="City tour inquiry">City tour inquiry</option>
+          <option value="Shopping assistance">Shopping assistance</option>
+          <option value="Airport pickup">Airport pickup</option>
+          <option value="Student advice">Student advice (20K guide)</option>
+          <option value="General question">General question</option>
+        </select>
+      </div>
+      <div class="form-group">
+        <label for="cf_message">Message</label>
+        <textarea id="cf_message" name="message" placeholder="Tell us about your trip plans, dates, questions..." required></textarea>
+      </div>
+      <button type="submit" class="btn-submit" id="cfSubmitBtn">Send Message</button>
+    </form>
+  </div>
+
+</main>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-nav">
+    <a href="/en/">Home</a>
+    <a href="/en/health/">Healthcare</a>
+    <a href="/en/routes/">Routes</a>
+    <a href="/en/tips/">Tips</a>
+    <a href="/en/metro/">Metro</a>
+    <a href="/en/booking/">Book Now</a>
+    <a href="/contact/">🇲🇳 Монгол</a>
+  </div>
+  <div>© 2026 LFS Shanghai — Trusted Guide for Mongolian Travelers</div>
+  <div style="margin-top:4px"><a href="/en/">lfsshanghai.com/en</a></div>
+</footer>
+
+<script src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js"></script>
+<script>
+(function(){emailjs.init({publicKey:'jzbMLEF7IhbkS48RI'})})();
+
+// Hamburger
+const hamburger=document.getElementById('hamburger');
+const navLinks=document.getElementById('navLinks');
+hamburger.addEventListener('click',()=>{
+  navLinks.classList.toggle('open');
+  const s=hamburger.querySelectorAll('span');
+  if(navLinks.classList.contains('open')){s[0].style.transform='translateY(5.5px) rotate(45deg)';s[1].style.opacity='0';s[2].style.transform='translateY(-5.5px) rotate(-45deg)';}
+  else{s[0].style.transform='';s[1].style.opacity='';s[2].style.transform='';}
+});
+navLinks.querySelectorAll('.nav-link').forEach(l=>l.addEventListener('click',()=>{navLinks.classList.remove('open');hamburger.querySelectorAll('span').forEach(s=>{s.style.transform='';s.style.opacity='';})}));
+
+// Contact form
+document.getElementById('contactForm').addEventListener('submit',async function(e){
+  e.preventDefault();
+  const btn=document.getElementById('cfSubmitBtn');
+  btn.disabled=true;btn.textContent='Sending...';
+  const params={
+    from_name:document.getElementById('cf_name').value,
+    from_email:document.getElementById('cf_email').value,
+    subject:document.getElementById('cf_subject').value,
+    message:document.getElementById('cf_message').value,
+    to_email:'lfs.shanghai1@gmail.com'
+  };
+  try{
+    await emailjs.send('service_lr0xy9q','template_tb03qyj',params);
+    document.getElementById('contactForm').style.display='none';
+    document.getElementById('contactSuccess').style.display='block';
+  }catch(err){
+    btn.disabled=false;btn.textContent='Send Message';
+    alert('Failed to send. Please contact us directly via Facebook or Email.');
+  }
+});
+
+// Nav scroll
+window.addEventListener('scroll',()=>{
+  const nav=document.querySelector('.nav');
+  nav.style.background=window.scrollY>10?'rgba(255,255,255,.96)':'rgba(255,255,255,.85)';
+},{passive:true});
+</script>
+
+<script type="text/javascript">
+var Tawk_API=Tawk_API||{},Tawk_LoadTime=new Date();
+(function(){var s1=document.createElement("script"),s0=document.getElementsByTagName("script")[0];s1.async=true;s1.src='https://embed.tawk.to/6a01d583db08b91c337bdcf5/1jobik2hq';s1.charset='UTF-8';s1.setAttribute('crossorigin','*');s0.parentNode.insertBefore(s1,s0);})();
+</script>
+<script src="/js/messenger-btn.js"></script>
+</body>
+</html>

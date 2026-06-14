@@ -1,0 +1,689 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Book a Service — LFS Shanghai</title>
+<link rel="icon" type="image/svg+xml" href="/favicon.svg">
+<link rel="icon" type="image/png" sizes="32x32" href="/favicon.png">
+<link rel="apple-touch-icon" href="/apple-touch-icon.png">
+<meta name="description" content="Book LFS Shanghai services — VIP healthcare, city guide, shopping assistance, airport pickup, and more.">
+<meta property="og:type" content="website">
+<meta property="og:title" content="Book a Service — LFS Shanghai">
+<meta property="og:url" content="https://lfsshanghai.com/en/booking/">
+<meta property="og:locale" content="en_US">
+<link rel="canonical" href="https://lfsshanghai.com/en/booking/">
+<link rel="alternate" hreflang="en" href="https://lfsshanghai.com/en/booking/">
+<link rel="alternate" hreflang="mn" href="https://lfsshanghai.com/booking/">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-81DTJ80VLR"></script>
+<script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag("js",new Date());gtag("config","G-81DTJ80VLR");</script>
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+:root{
+  --bg:#fff;--bg2:#f5f5f7;--bg3:#fbfbfd;--card:#fff;
+  --text:#1d1d1f;--muted:#6e6e73;--muted2:#86868b;
+  --blue:#0071e3;--blue-hover:#0077ed;--blue-light:#e8f1fb;
+  --green:#34c759;
+  --border:rgba(0,0,0,.08);--border2:rgba(0,0,0,.05);
+  --shadow:0 2px 20px rgba(0,0,0,.08);--shadow2:0 8px 40px rgba(0,0,0,.12);
+  --radius:18px;--dark:#000;--dark2:#1d1d1f;
+}
+html{scroll-behavior:smooth;overflow-x:clip}
+body{font-family:'Inter',system-ui,-apple-system,sans-serif;background:var(--bg2);color:var(--text);overflow-x:hidden;line-height:1.47059;-webkit-font-smoothing:antialiased;}
+::-webkit-scrollbar{width:6px}::-webkit-scrollbar-track{background:var(--bg2)}::-webkit-scrollbar-thumb{background:#c7c7cc;border-radius:3px}
+
+/* NAV */
+.nav{position:fixed;top:0;left:0;right:0;z-index:500;height:52px;display:flex;align-items:center;justify-content:space-between;padding:0 22px;background:rgba(255,255,255,.92);backdrop-filter:saturate(180%) blur(20px);-webkit-backdrop-filter:saturate(180%) blur(20px);border-bottom:1px solid rgba(0,0,0,.06);}
+.nav-logo{font-size:17px;font-weight:700;color:var(--dark2);letter-spacing:-.02em;text-decoration:none;}
+.nav-logo span{color:var(--blue)}
+.nav-links{display:flex;align-items:center;gap:0;position:fixed;top:0;left:50%;transform:translateX(-50%);height:52px;background:none;padding:0;z-index:490;}
+.nav-link{padding:6px 14px;font-size:12px;font-weight:400;color:var(--muted);text-decoration:none;border:none;background:none;font-family:inherit;transition:color .2s;white-space:nowrap;}
+.nav-link:hover{color:var(--dark2)}
+.nav-actions{display:flex;align-items:center;gap:8px}
+.hamburger{display:none;flex-direction:column;gap:4px;cursor:pointer;padding:6px;border:none;background:none}
+.hamburger span{display:block;width:18px;height:1.5px;background:var(--dark2);transition:.3s;border-radius:1px}
+@media(max-width:860px){
+  .nav-links{display:flex;position:fixed;top:52px;left:0;right:0;bottom:0;height:auto;transform:translateY(-28px) scale(0.98);z-index:499;background:rgba(8,8,12,.92);backdrop-filter:saturate(160%) blur(28px);flex-direction:column;align-items:flex-start;padding:36px 28px 40px;gap:2px;border-top:1px solid rgba(255,255,255,.07);overflow-y:auto;opacity:0;pointer-events:none;transition:opacity .6s cubic-bezier(.4,0,.2,1),transform .6s cubic-bezier(.4,0,.2,1);}
+  .nav-links.open{opacity:1;transform:translateY(0) scale(1);pointer-events:auto}
+  .nav-link{font-size:22px;font-weight:300;padding:14px 0;color:#fff;border-bottom:1px solid rgba(255,255,255,.07);width:100%;min-height:48px;display:flex;align-items:center}
+  .hamburger{display:flex}
+}
+
+/* PAGE LAYOUT */
+.page{padding-top:68px;min-height:100vh;padding-bottom:60px;}
+.container{max-width:680px;margin:0 auto;padding:0 20px;}
+
+/* HERO */
+.booking-hero{text-align:center;padding:32px 0 24px;}
+.booking-hero h1{font-size:clamp(26px,5vw,40px);font-weight:700;letter-spacing:-.03em;color:var(--dark2);margin-bottom:8px;}
+.booking-hero h1 em{font-style:normal;color:var(--blue)}
+.booking-hero p{font-size:15px;color:var(--muted);}
+
+/* TRUST BAR */
+.trust-bar{display:flex;gap:16px;justify-content:center;flex-wrap:wrap;padding:16px 20px;background:#fff;border-radius:14px;margin-bottom:24px;border:1px solid var(--border);box-shadow:var(--shadow);}
+.trust-item{display:flex;align-items:center;gap:6px;font-size:12px;color:var(--muted);font-weight:500;}
+
+/* PRICING PANEL */
+.pricing-toggle{display:flex;align-items:center;gap:8px;justify-content:center;margin-bottom:16px;cursor:pointer;font-size:13px;color:var(--blue);font-weight:500;user-select:none;}
+.pricing-toggle svg{transition:transform .2s;}
+.pricing-toggle.open svg{transform:rotate(180deg);}
+.pricing-panel{display:none;background:#fff;border:1px solid var(--border);border-radius:var(--radius);padding:20px 24px;margin-bottom:20px;box-shadow:var(--shadow);}
+.pricing-panel.open{display:block;}
+.pricing-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px;}
+.pricing-item{display:flex;justify-content:space-between;align-items:center;font-size:13px;padding:8px 12px;background:var(--bg2);border-radius:10px;}
+.pricing-item .pi-name{color:var(--muted);}
+.pricing-item .pi-val{font-weight:600;color:var(--dark2);}
+
+/* PROGRESS */
+.progress-wrap{margin-bottom:24px;}
+.progress-bar{height:3px;background:var(--border);border-radius:2px;overflow:hidden;}
+.progress-fill{height:100%;background:var(--blue);border-radius:2px;transition:width .4s ease;}
+.progress-label{display:flex;justify-content:space-between;font-size:11px;color:var(--muted);margin-top:6px;}
+
+/* WIZARD CARD */
+.wizard-card{background:#fff;border-radius:24px;padding:36px 32px;box-shadow:var(--shadow2);border:1px solid var(--border);margin-bottom:20px;}
+@media(max-width:500px){.wizard-card{padding:24px 18px;border-radius:18px;}}
+
+.step{display:none;animation:fadeUp .4s ease both;}
+.step.active{display:block;}
+@keyframes fadeUp{from{opacity:0;transform:translateY(16px)}to{opacity:1;transform:translateY(0)}}
+
+.step-eyebrow{font-size:11px;font-weight:600;letter-spacing:.1em;text-transform:uppercase;color:var(--blue);margin-bottom:12px;}
+.step-title{font-size:clamp(20px,4vw,28px);font-weight:700;letter-spacing:-.03em;color:var(--dark2);margin-bottom:6px;line-height:1.2;}
+.step-sub{font-size:14px;color:var(--muted);margin-bottom:28px;line-height:1.6;}
+
+/* FORM */
+.form-group{margin-bottom:18px;}
+.form-group label{display:block;font-size:13px;font-weight:500;color:var(--dark2);margin-bottom:6px;}
+.form-group input,.form-group textarea,.form-group select{width:100%;padding:12px 16px;border:1.5px solid var(--border);border-radius:12px;font-size:14px;font-family:inherit;color:var(--text);background:#fff;outline:none;transition:border-color .2s;}
+.form-group input:focus,.form-group textarea:focus,.form-group select:focus{border-color:var(--blue);}
+.form-group textarea{resize:vertical;min-height:100px;}
+.form-row{display:grid;grid-template-columns:1fr 1fr;gap:14px;}
+@media(max-width:500px){.form-row{grid-template-columns:1fr;}}
+
+/* SERVICE CARDS */
+.service-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:8px;}
+@media(max-width:440px){.service-grid{grid-template-columns:1fr;}}
+.service-card{border:1.5px solid var(--border);border-radius:14px;padding:16px;cursor:pointer;transition:all .2s;text-align:left;background:#fff;font-family:inherit;}
+.service-card:hover{border-color:var(--blue);background:var(--blue-light);}
+.service-card.selected{border-color:var(--blue);background:var(--blue-light);box-shadow:0 0 0 2px rgba(0,113,227,.15);}
+.sc-icon{font-size:22px;margin-bottom:8px;}
+.sc-name{font-size:13px;font-weight:600;color:var(--dark2);margin-bottom:3px;}
+.sc-desc{font-size:11px;color:var(--muted);line-height:1.4;}
+
+/* CALENDAR */
+.cal-header{display:flex;align-items:center;justify-content:space-between;margin-bottom:16px;}
+.cal-month{font-size:15px;font-weight:600;color:var(--dark2);}
+.cal-nav{border:none;background:var(--bg2);border-radius:8px;width:32px;height:32px;cursor:pointer;font-size:16px;display:flex;align-items:center;justify-content:center;transition:background .2s;}
+.cal-nav:hover{background:#e8e8ed;}
+.cal-grid{display:grid;grid-template-columns:repeat(7,1fr);gap:2px;}
+.cal-day-name{text-align:center;font-size:11px;font-weight:600;color:var(--muted);padding:6px 0;}
+.cal-day{text-align:center;padding:8px 4px;border-radius:8px;font-size:13px;cursor:pointer;transition:all .15s;border:1.5px solid transparent;}
+.cal-day:hover:not(.empty):not(.past){background:var(--blue-light);color:var(--blue);}
+.cal-day.selected{background:var(--blue);color:#fff;font-weight:600;}
+.cal-day.today{border-color:var(--blue);color:var(--blue);font-weight:600;}
+.cal-day.past{color:#d1d1d6;cursor:default;}
+.cal-day.empty{cursor:default;}
+
+/* COUNT SELECTOR */
+.count-selector{display:flex;align-items:center;gap:16px;margin-top:8px;}
+.count-btn{width:36px;height:36px;border-radius:50%;border:1.5px solid var(--border);background:#fff;font-size:18px;cursor:pointer;display:flex;align-items:center;justify-content:center;transition:all .2s;font-family:inherit;}
+.count-btn:hover{border-color:var(--blue);color:var(--blue);}
+.count-val{font-size:18px;font-weight:600;color:var(--dark2);min-width:24px;text-align:center;}
+.count-label{font-size:13px;color:var(--muted);}
+
+/* DURATION CHIPS */
+.dur-chips{display:flex;gap:8px;flex-wrap:wrap;margin-top:8px;}
+.dur-chip{padding:8px 16px;border:1.5px solid var(--border);border-radius:50px;font-size:13px;font-weight:500;color:var(--muted);cursor:pointer;transition:all .2s;background:#fff;}
+.dur-chip:hover{border-color:var(--blue);color:var(--blue);}
+.dur-chip.selected{border-color:var(--blue);background:var(--blue);color:#fff;}
+
+/* HEAR-ABOUT CHIPS */
+.hear-chips{display:flex;flex-wrap:wrap;gap:8px;margin-top:8px;}
+.hear-chip{padding:8px 16px;border:1.5px solid var(--border);border-radius:50px;font-size:13px;font-weight:500;color:var(--muted);cursor:pointer;transition:all .2s;background:#fff;}
+.hear-chip:hover{border-color:var(--blue);color:var(--blue);}
+.hear-chip.selected{border-color:var(--blue);background:var(--blue-light);color:var(--blue);}
+
+/* SUMMARY */
+.summary-rows{display:flex;flex-direction:column;gap:0;border:1px solid var(--border);border-radius:14px;overflow:hidden;margin-bottom:20px;}
+.summary-row{display:flex;justify-content:space-between;align-items:center;padding:13px 16px;font-size:14px;border-bottom:1px solid var(--border2);}
+.summary-row:last-child{border-bottom:none;}
+.sr-label{color:var(--muted);}
+.sr-val{font-weight:600;color:var(--dark2);text-align:right;}
+
+/* BUTTONS */
+.btn-next{width:100%;padding:15px;background:var(--blue);color:#fff;border:none;border-radius:14px;font-size:15px;font-weight:600;cursor:pointer;font-family:inherit;transition:background .2s,transform .15s;margin-top:8px;}
+.btn-next:hover{background:var(--blue-hover);transform:scale(1.01)}
+.btn-next:disabled{opacity:.5;cursor:not-allowed;transform:none}
+.btn-back{background:none;border:none;font-size:13px;color:var(--muted);cursor:pointer;font-family:inherit;padding:8px 0;margin-top:4px;display:flex;align-items:center;gap:4px;}
+.btn-back:hover{color:var(--dark2);}
+.btn-submit{width:100%;padding:15px;background:var(--green);color:#fff;border:none;border-radius:14px;font-size:15px;font-weight:600;cursor:pointer;font-family:inherit;transition:background .2s,transform .15s;margin-top:8px;}
+.btn-submit:hover{background:#2db84e;transform:scale(1.01)}
+.btn-submit:disabled{opacity:.5;cursor:not-allowed;transform:none}
+
+/* SUCCESS */
+.success-screen{display:none;text-align:center;padding:40px 20px;}
+.success-screen.show{display:block;}
+.success-icon{font-size:64px;margin-bottom:20px;}
+.success-screen h2{font-size:26px;font-weight:700;color:var(--dark2);margin-bottom:10px;}
+.success-screen p{font-size:15px;color:var(--muted);margin-bottom:24px;}
+.success-details{background:var(--bg2);border-radius:14px;padding:20px;margin-bottom:24px;text-align:left;}
+.sd-row{display:flex;justify-content:space-between;font-size:13px;padding:6px 0;border-bottom:1px solid var(--border2);}
+.sd-row:last-child{border-bottom:none;}
+.sd-label{color:var(--muted);}
+.sd-val{font-weight:600;color:var(--dark2);}
+
+/* FOOTER */
+footer{background:var(--bg2);border-top:1px solid var(--border);padding:32px 24px;text-align:center;font-size:12px;color:var(--muted);line-height:1.8;margin-top:40px;}
+footer a{color:var(--blue);text-decoration:none}footer a:hover{text-decoration:underline}
+.footer-nav{display:flex;gap:16px;justify-content:center;flex-wrap:wrap;margin-bottom:12px;}
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav class="nav">
+  <a href="/en/" class="nav-logo">LFS <span>Shanghai</span></a>
+  <div class="nav-links" id="navLinks">
+    <a class="nav-link" href="/en/">Home</a>
+    <a class="nav-link" href="/en/health/">Healthcare</a>
+    <a class="nav-link" href="/en/routes/">Routes</a>
+    <a class="nav-link" href="/en/tips/">Tips</a>
+    <a class="nav-link" href="/en/metro/">Metro</a>
+    <a class="nav-link" href="/en/planner/" style="color:#e8392a;">✦ Planner</a>
+    <a class="nav-link" href="/en/contact/">Contact</a>
+  </div>
+  <div class="nav-actions">
+    <button class="hamburger" id="hamburger" aria-label="Open menu">
+      <span></span><span></span><span></span>
+    </button>
+  </div>
+</nav>
+
+<div class="page">
+<div class="container">
+
+  <!-- HERO -->
+  <div class="booking-hero">
+    <h1>Book a <em>Service</em></h1>
+    <p>Fill out the form below — we'll confirm within 1 hour.</p>
+  </div>
+
+  <!-- TRUST BAR -->
+  <div class="trust-bar">
+    <div class="trust-item">⚡ 1-hour response</div>
+    <div class="trust-item">✓ 200+ trips organized</div>
+    <div class="trust-item">🇲🇳 Mongolian guide</div>
+    <div class="trust-item">🔒 Safe &amp; trusted</div>
+  </div>
+
+  <!-- PRICING TOGGLE -->
+  <div class="pricing-toggle" id="pricingToggle" onclick="togglePricing()">
+    <span>💰 View pricing</span>
+    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="6 9 12 15 18 9"/></svg>
+  </div>
+  <div class="pricing-panel" id="pricingPanel">
+    <div class="pricing-grid">
+      <div class="pricing-item"><span class="pi-name">Gold Healthcare Package</span><span class="pi-val">₮2,050,000</span></div>
+      <div class="pricing-item"><span class="pi-name">Silver Healthcare Package</span><span class="pi-val">₮950,000</span></div>
+      <div class="pricing-item"><span class="pi-name">City Guide</span><span class="pi-val">500¥/day</span></div>
+      <div class="pricing-item"><span class="pi-name">Business Interpreter</span><span class="pi-val">500¥/day</span></div>
+      <div class="pricing-item"><span class="pi-name">Hotel Booking</span><span class="pi-val">50¥</span></div>
+      <div class="pricing-item"><span class="pi-name">Airport Pickup</span><span class="pi-val">200¥</span></div>
+      <div class="pricing-item"><span class="pi-name">Student Advisory</span><span class="pi-val">₮20,000</span></div>
+      <div class="pricing-item"><span class="pi-name">Shopping Assistance</span><span class="pi-val">Contact us</span></div>
+    </div>
+  </div>
+
+  <!-- PROGRESS -->
+  <div class="progress-wrap">
+    <div class="progress-bar"><div class="progress-fill" id="progressFill" style="width:16%"></div></div>
+    <div class="progress-label"><span id="progressStep">Step 1 of 6</span><span id="progressPct">16%</span></div>
+  </div>
+
+  <!-- WIZARD -->
+  <div class="wizard-card">
+
+    <!-- STEP 1: CONTACT INFO -->
+    <div class="step active" id="step1">
+      <div class="step-eyebrow">Step 1 of 6</div>
+      <div class="step-title">Your Contact Info</div>
+      <div class="step-sub">We'll use this to confirm your booking.</div>
+      <div class="form-group">
+        <label for="f_name">Full Name *</label>
+        <input type="text" id="f_name" placeholder="Your full name" required>
+      </div>
+      <div class="form-row">
+        <div class="form-group">
+          <label for="f_phone">Phone Number *</label>
+          <input type="tel" id="f_phone" placeholder="+976 ...">
+        </div>
+        <div class="form-group">
+          <label for="f_email">Email *</label>
+          <input type="email" id="f_email" placeholder="your@email.com">
+        </div>
+      </div>
+      <button class="btn-next" onclick="goStep(2)">Continue →</button>
+    </div>
+
+    <!-- STEP 2: SERVICE -->
+    <div class="step" id="step2">
+      <div class="step-eyebrow">Step 2 of 6</div>
+      <div class="step-title">Select a Service</div>
+      <div class="step-sub">Choose the service you'd like to book.</div>
+      <div class="service-grid">
+        <button class="service-card" data-val="healthcare" onclick="selectService(this)">
+          <div class="sc-icon">🏥</div>
+          <div class="sc-name">VIP Healthcare</div>
+          <div class="sc-desc">Medical checkup at Guangming TCM Hospital</div>
+        </button>
+        <button class="service-card" data-val="city-guide" onclick="selectService(this)">
+          <div class="sc-icon">🗺️</div>
+          <div class="sc-name">City Tour Guide</div>
+          <div class="sc-desc">Mongolian-speaking guide for sightseeing</div>
+        </button>
+        <button class="service-card" data-val="shopping" onclick="selectService(this)">
+          <div class="sc-icon">🛍️</div>
+          <div class="sc-name">Shopping Assistant</div>
+          <div class="sc-desc">Negotiation & guide at markets and malls</div>
+        </button>
+        <button class="service-card" data-val="food-tour" onclick="selectService(this)">
+          <div class="sc-icon">🍜</div>
+          <div class="sc-name">Food Tour</div>
+          <div class="sc-desc">Curated restaurant &amp; street food experience</div>
+        </button>
+        <button class="service-card" data-val="airport-pickup" onclick="selectService(this)">
+          <div class="sc-icon">✈️</div>
+          <div class="sc-name">Airport Pickup</div>
+          <div class="sc-desc">VIP car from PVG or SHA airport (200¥)</div>
+        </button>
+        <button class="service-card" data-val="interpreter" onclick="selectService(this)">
+          <div class="sc-icon">💼</div>
+          <div class="sc-name">Business Interpreter</div>
+          <div class="sc-desc">Chinese–Mongolian interpreter for meetings</div>
+        </button>
+        <button class="service-card" data-val="student-advice" onclick="selectService(this)">
+          <div class="sc-icon">🎓</div>
+          <div class="sc-name">Student Advisory</div>
+          <div class="sc-desc">One-time consultation for studying in Shanghai (₮20,000)</div>
+        </button>
+        <button class="service-card" data-val="custom" onclick="selectService(this)">
+          <div class="sc-icon">✨</div>
+          <div class="sc-name">Custom Request</div>
+          <div class="sc-desc">Tell us what you need in the notes</div>
+        </button>
+      </div>
+      <button class="btn-next" id="btnStep2" onclick="goStep(3)" disabled>Continue →</button>
+      <button class="btn-back" onclick="goStep(1)">← Back</button>
+    </div>
+
+    <!-- STEP 3: DATE & DETAILS -->
+    <div class="step" id="step3">
+      <div class="step-eyebrow">Step 3 of 6</div>
+      <div class="step-title">Travel Dates</div>
+      <div class="step-sub">Select your arrival date and how long you'll need the service.</div>
+
+      <div style="margin-bottom:24px">
+        <div style="font-size:13px;font-weight:500;color:var(--dark2);margin-bottom:12px;">Select Start Date</div>
+        <div class="cal-header">
+          <button class="cal-nav" onclick="calPrev()">‹</button>
+          <span class="cal-month" id="calMonthLabel"></span>
+          <button class="cal-nav" onclick="calNext()">›</button>
+        </div>
+        <div class="cal-grid" id="calDayNames"></div>
+        <div class="cal-grid" id="calDays" style="margin-top:4px;"></div>
+        <div style="font-size:13px;color:var(--muted);margin-top:10px;">Selected: <strong id="selectedDateLabel">—</strong></div>
+      </div>
+
+      <div class="form-group">
+        <label>Duration</label>
+        <div class="dur-chips">
+          <div class="dur-chip" data-val="1" onclick="selectDuration(this)">1 day</div>
+          <div class="dur-chip" data-val="2" onclick="selectDuration(this)">2 days</div>
+          <div class="dur-chip" data-val="3" onclick="selectDuration(this)">3 days</div>
+          <div class="dur-chip" data-val="5" onclick="selectDuration(this)">5 days</div>
+          <div class="dur-chip" data-val="7" onclick="selectDuration(this)">1 week</div>
+          <div class="dur-chip" data-val="custom" onclick="selectDuration(this)">Custom</div>
+        </div>
+        <input type="number" id="durationCustom" placeholder="Enter number of days" style="display:none;margin-top:10px;width:100%;padding:10px 14px;border:1.5px solid var(--border);border-radius:10px;font-size:14px;font-family:inherit;">
+      </div>
+
+      <div class="form-group">
+        <label>Number of People</label>
+        <div class="count-selector">
+          <button class="count-btn" onclick="changeCount(-1)">−</button>
+          <span class="count-val" id="countVal">1</span>
+          <button class="count-btn" onclick="changeCount(1)">+</button>
+          <span class="count-label">person(s)</span>
+        </div>
+      </div>
+
+      <button class="btn-next" onclick="goStep(6)">Continue →</button>
+      <button class="btn-back" onclick="goStep(2)">← Back</button>
+    </div>
+
+    <!-- STEP 6: EXTRA INFO -->
+    <div class="step" id="step6">
+      <div class="step-eyebrow">Step 4 of 6</div>
+      <div class="step-title">Additional Info</div>
+      <div class="step-sub">Optional details that help us prepare better for you.</div>
+      <div class="form-group">
+        <label for="f_social">Your Facebook / Instagram (optional)</label>
+        <input type="text" id="f_social" placeholder="facebook.com/yourname or @instagram">
+      </div>
+      <div class="form-group">
+        <label for="f_notes">Special Requests or Notes</label>
+        <textarea id="f_notes" placeholder="Any specific requirements, health conditions, dietary restrictions, allergies, or custom requests..."></textarea>
+      </div>
+      <button class="btn-next" onclick="goStep(8)">Continue →</button>
+      <button class="btn-back" onclick="goStep(3)">← Back</button>
+    </div>
+
+    <!-- STEP 8: HOW DID YOU HEAR -->
+    <div class="step" id="step8">
+      <div class="step-eyebrow">Step 5 of 6</div>
+      <div class="step-title">How Did You Find Us?</div>
+      <div class="step-sub">This helps us understand where to reach more Mongolian travelers.</div>
+      <div class="hear-chips">
+        <div class="hear-chip" onclick="selectHear(this)" data-val="Facebook">Facebook</div>
+        <div class="hear-chip" onclick="selectHear(this)" data-val="Instagram">Instagram</div>
+        <div class="hear-chip" onclick="selectHear(this)" data-val="Friend / Word of mouth">Friend / Word of mouth</div>
+        <div class="hear-chip" onclick="selectHear(this)" data-val="Google search">Google search</div>
+        <div class="hear-chip" onclick="selectHear(this)" data-val="TikTok">TikTok</div>
+        <div class="hear-chip" onclick="selectHear(this)" data-val="Returning customer">Returning customer</div>
+        <div class="hear-chip" onclick="selectHear(this)" data-val="Other">Other</div>
+      </div>
+      <button class="btn-next" onclick="goStep(9)" style="margin-top:20px">Continue →</button>
+      <button class="btn-back" onclick="goStep(6)">← Back</button>
+    </div>
+
+    <!-- STEP 9: SUMMARY -->
+    <div class="step" id="step9">
+      <div class="step-eyebrow">Step 6 of 6</div>
+      <div class="step-title">Review &amp; Submit</div>
+      <div class="step-sub">Please check your details before submitting.</div>
+      <div class="summary-rows" id="summaryRows"></div>
+      <button class="btn-submit" id="btnSubmit" onclick="submitBooking()">✓ Submit Booking</button>
+      <button class="btn-back" onclick="goStep(8)">← Back</button>
+    </div>
+
+  </div><!-- /wizard-card -->
+
+  <!-- SUCCESS -->
+  <div class="wizard-card success-screen" id="successScreen">
+    <div class="success-icon">🎉</div>
+    <h2>Booking Received!</h2>
+    <p>We'll confirm via phone or email within <strong>1 hour</strong>.</p>
+    <div class="success-details" id="successDetails"></div>
+    <a href="/en/" style="display:inline-block;padding:12px 28px;background:var(--blue);color:#fff;border-radius:50px;text-decoration:none;font-size:14px;font-weight:600;">Back to Home</a>
+  </div>
+
+</div><!-- /container -->
+</div><!-- /page -->
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-nav">
+    <a href="/en/">Home</a>
+    <a href="/en/health/">Healthcare</a>
+    <a href="/en/routes/">Routes</a>
+    <a href="/en/tips/">Tips</a>
+    <a href="/en/metro/">Metro</a>
+    <a href="/booking/">🇲🇳 Монгол</a>
+  </div>
+  <div>© 2026 LFS Shanghai — Trusted Guide for Mongolian Travelers</div>
+</footer>
+
+<!-- FIREBASE -->
+<script type="module">
+import { initializeApp } from 'https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js';
+import { getFirestore, collection, addDoc } from 'https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore.js';
+const firebaseConfig = {
+  apiKey:"AIzaSyDExRTbwpFcRsT-mfWvGFZuDWN8vqxnPxE",
+  authDomain:"lfs-shanghai.firebaseapp.com",
+  projectId:"lfs-shanghai",
+  storageBucket:"lfs-shanghai.appspot.com",
+  messagingSenderId:"123456789",
+  appId:"1:123456789:web:abcdef123456"
+};
+const app = initializeApp(firebaseConfig);
+const db = getFirestore(app);
+window._saveToFirestore = async (data) => {
+  try { await addDoc(collection(db,'bookings'), data); } catch(e) { console.warn('Firestore:', e); }
+};
+</script>
+<script src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js"></script>
+<script>
+(function(){emailjs.init({publicKey:'jzbMLEF7IhbkS48RI'})})();
+
+// ── State ──
+const STEPS = [1,2,3,6,8,9];
+let currentStepIdx = 0;
+const data = {
+  name:'', phone:'', email:'',
+  service:'', serviceLabel:'',
+  date:'', duration:'', people:1,
+  social:'', notes:'', hearAbout:''
+};
+let calYear, calMonth;
+
+// ── Hamburger ──
+const hamburger=document.getElementById('hamburger');
+const navLinks=document.getElementById('navLinks');
+hamburger.addEventListener('click',()=>{
+  navLinks.classList.toggle('open');
+  const s=hamburger.querySelectorAll('span');
+  if(navLinks.classList.contains('open')){s[0].style.transform='translateY(5.5px) rotate(45deg)';s[1].style.opacity='0';s[2].style.transform='translateY(-5.5px) rotate(-45deg)';}
+  else{s[0].style.transform='';s[1].style.opacity='';s[2].style.transform='';}
+});
+
+// ── Pricing ──
+function togglePricing(){
+  const panel=document.getElementById('pricingPanel');
+  const toggle=document.getElementById('pricingToggle');
+  panel.classList.toggle('open');
+  toggle.classList.toggle('open');
+}
+window.togglePricing=togglePricing;
+
+// ── Step nav ──
+function setProgress(idx){
+  const pct=Math.round((idx+1)/STEPS.length*100);
+  document.getElementById('progressFill').style.width=pct+'%';
+  document.getElementById('progressStep').textContent='Step '+(idx+1)+' of '+STEPS.length;
+  document.getElementById('progressPct').textContent=pct+'%';
+}
+function goStep(n){
+  // Validate step 1
+  if(n>1){
+    const nm=document.getElementById('f_name').value.trim();
+    const ph=document.getElementById('f_phone').value.trim();
+    const em=document.getElementById('f_email').value.trim();
+    if(!nm||(!ph&&!em)){alert('Please enter your name and phone or email.');return;}
+    data.name=nm; data.phone=ph; data.email=em;
+  }
+  document.querySelectorAll('.step').forEach(s=>s.classList.remove('active'));
+  document.getElementById('step'+n).classList.add('active');
+  currentStepIdx=STEPS.indexOf(n);
+  setProgress(currentStepIdx);
+  if(n===9)buildSummary();
+  window.scrollTo({top:0,behavior:'smooth'});
+}
+window.goStep=goStep;
+
+// ── Service selection ──
+function selectService(el){
+  document.querySelectorAll('.service-card').forEach(c=>c.classList.remove('selected'));
+  el.classList.add('selected');
+  data.service=el.dataset.val;
+  data.serviceLabel=el.querySelector('.sc-name').textContent;
+  document.getElementById('btnStep2').disabled=false;
+}
+window.selectService=selectService;
+
+// ── Calendar ──
+const MONTHS=['January','February','March','April','May','June','July','August','September','October','November','December'];
+const DAYS=['Su','Mo','Tu','We','Th','Fr','Sa'];
+function initCal(){
+  const now=new Date();
+  calYear=now.getFullYear(); calMonth=now.getMonth();
+  const dn=document.getElementById('calDayNames');
+  dn.innerHTML=DAYS.map(d=>`<div class="cal-day-name">${d}</div>`).join('');
+  renderCal();
+}
+function renderCal(){
+  document.getElementById('calMonthLabel').textContent=MONTHS[calMonth]+' '+calYear;
+  const first=new Date(calYear,calMonth,1).getDay();
+  const days=new Date(calYear,calMonth+1,0).getDate();
+  const today=new Date(); today.setHours(0,0,0,0);
+  let html='';
+  for(let i=0;i<first;i++) html+='<div class="cal-day empty"></div>';
+  for(let d=1;d<=days;d++){
+    const dt=new Date(calYear,calMonth,d);
+    const isPast=dt<today;
+    const isToday=dt.getTime()===today.getTime();
+    const isSel=data.date===fmtDate(calYear,calMonth,d);
+    html+=`<div class="cal-day${isPast?' past':''}${isToday?' today':''}${isSel?' selected':''}" ${!isPast?`onclick="pickDay(${d})"`:''}>${d}</div>`;
+  }
+  document.getElementById('calDays').innerHTML=html;
+}
+function fmtDate(y,m,d){return y+'-'+(m+1<10?'0':'')+(m+1)+'-'+(d<10?'0':'')+d;}
+function pickDay(d){data.date=fmtDate(calYear,calMonth,d);document.getElementById('selectedDateLabel').textContent=MONTHS[calMonth]+' '+d+', '+calYear;renderCal();}
+function calPrev(){calMonth--;if(calMonth<0){calMonth=11;calYear--;}renderCal();}
+function calNext(){calMonth++;if(calMonth>11){calMonth=0;calYear++;}renderCal();}
+window.calPrev=calPrev;window.calNext=calNext;window.pickDay=pickDay;
+initCal();
+
+// ── Duration ──
+function selectDuration(el){
+  document.querySelectorAll('.dur-chip').forEach(c=>c.classList.remove('selected'));
+  el.classList.add('selected');
+  const v=el.dataset.val;
+  const custom=document.getElementById('durationCustom');
+  if(v==='custom'){custom.style.display='block';data.duration='';}
+  else{custom.style.display='none';data.duration=v+' day'+(v==='1'?'':'s');}
+}
+window.selectDuration=selectDuration;
+document.getElementById('durationCustom').addEventListener('input',function(){data.duration=this.value+' days';});
+
+// ── People count ──
+function changeCount(d){const v=Math.max(1,data.people+d);data.people=v;document.getElementById('countVal').textContent=v;}
+window.changeCount=changeCount;
+
+// ── Hear about ──
+function selectHear(el){
+  document.querySelectorAll('.hear-chip').forEach(c=>c.classList.remove('selected'));
+  el.classList.add('selected');
+  data.hearAbout=el.dataset.val;
+}
+window.selectHear=selectHear;
+
+// ── Summary ──
+function buildSummary(){
+  data.social=document.getElementById('f_social').value.trim();
+  data.notes=document.getElementById('f_notes').value.trim();
+  const rows=[
+    {l:'Name',v:data.name},
+    {l:'Contact',v:data.phone||data.email},
+    {l:'Service',v:data.serviceLabel},
+    {l:'Start Date',v:data.date||'—'},
+    {l:'Duration',v:data.duration||'—'},
+    {l:'People',v:data.people+' person'+(data.people>1?'s':'')},
+    {l:'Notes',v:data.notes||'—'},
+    {l:'Heard via',v:data.hearAbout||'—'},
+  ];
+  document.getElementById('summaryRows').innerHTML=rows.map(r=>`<div class="summary-row"><span class="sr-label">${r.l}</span><span class="sr-val">${r.v}</span></div>`).join('');
+}
+
+// ── Submit ──
+async function submitBooking(){
+  const btn=document.getElementById('btnSubmit');
+  btn.disabled=true; btn.textContent='Submitting...';
+  const bookingData={
+    ...data,
+    lang:'en',
+    submittedAt:new Date().toISOString(),
+    source:'web-en'
+  };
+
+  // 1. Firebase
+  if(window._saveToFirestore) await window._saveToFirestore(bookingData);
+
+  // 2. Railway webhook (Telegram notification)
+  fetch('https://bileg11githubio-production.up.railway.app/api/booking',{
+    method:'POST',headers:{'Content-Type':'application/json'},
+    body:JSON.stringify(bookingData)
+  }).catch(()=>{});
+
+  // 3. Make.com webhook (Notion calendar)
+  fetch('https://hook.us2.make.com/9g9h5g4md1i55pkk9k9o615q0gwvsiih',{
+    method:'POST',headers:{'Content-Type':'application/json'},
+    body:JSON.stringify(bookingData)
+  }).catch(()=>{});
+
+  // 4. EmailJS — customer confirmation
+  if(data.email){
+    emailjs.send('service_lr0xy9q','template_o0e4529',{
+      to_name:data.name,
+      to_email:data.email,
+      service:data.serviceLabel,
+      date:data.date,
+      duration:data.duration,
+      people:data.people,
+      notes:data.notes||'—'
+    }).catch(()=>{});
+  }
+
+  // 5. Show success
+  document.querySelector('.wizard-card').style.display='none';
+  document.querySelector('.progress-wrap').style.display='none';
+  document.querySelector('.pricing-toggle').style.display='none';
+  document.querySelector('.trust-bar').style.display='none';
+  const ss=document.getElementById('successScreen');
+  ss.classList.add('show');
+  document.getElementById('successDetails').innerHTML=[
+    {l:'Name',v:data.name},
+    {l:'Service',v:data.serviceLabel},
+    {l:'Date',v:data.date||'—'},
+    {l:'Duration',v:data.duration||'—'},
+    {l:'People',v:data.people},
+  ].map(r=>`<div class="sd-row"><span class="sd-label">${r.l}</span><span class="sd-val">${r.v}</span></div>`).join('');
+  window.scrollTo({top:0,behavior:'smooth'});
+}
+window.submitBooking=submitBooking;
+
+// ── URL package prefill ──
+(function(){
+  const params=new URLSearchParams(location.search);
+  const pkg=params.get('package');
+  if(pkg==='gold'||pkg==='altan'){
+    data.service='healthcare'; data.serviceLabel='VIP Healthcare — Gold Package';
+  } else if(pkg==='silver'||pkg==='mungun'){
+    data.service='healthcare'; data.serviceLabel='VIP Healthcare — Silver Package';
+  }
+  if(data.service){
+    setTimeout(()=>{
+      document.querySelectorAll('.service-card').forEach(c=>{
+        if(c.dataset.val==='healthcare')c.classList.add('selected');
+      });
+      document.getElementById('btnStep2').disabled=false;
+    },100);
+  }
+  const svc=params.get('service');
+  if(svc){
+    setTimeout(()=>{
+      document.querySelectorAll('.service-card').forEach(c=>{
+        if(c.dataset.val===svc){c.classList.add('selected');data.service=svc;data.serviceLabel=c.querySelector('.sc-name').textContent;document.getElementById('btnStep2').disabled=false;}
+      });
+    },100);
+  }
+})();
+</script>
+<script type="text/javascript">
+var Tawk_API=Tawk_API||{},Tawk_LoadTime=new Date();
+(function(){var s1=document.createElement("script"),s0=document.getElementsByTagName("script")[0];s1.async=true;s1.src='https://embed.tawk.to/6a01d583db08b91c337bdcf5/1jobik2hq';s1.charset='UTF-8';s1.setAttribute('crossorigin','*');s0.parentNode.insertBefore(s1,s0);})();
+</script>
+<script src="/js/messenger-btn.js"></script>
+</body>
+</html>

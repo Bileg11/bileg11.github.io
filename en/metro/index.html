@@ -1,0 +1,439 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Shanghai Metro Guide — LFS Shanghai</title>
+<link rel="icon" type="image/svg+xml" href="/favicon.svg">
+<link rel="icon" type="image/png" sizes="32x32" href="/favicon.png">
+<link rel="apple-touch-icon" href="/apple-touch-icon.png">
+<meta name="description" content="Complete Shanghai Metro guide for Mongolian travelers. Airport connections, metro card, pricing, key lines, and night transport.">
+<meta property="og:type" content="website">
+<meta property="og:title" content="Shanghai Metro Guide — LFS Shanghai">
+<meta property="og:url" content="https://lfsshanghai.com/en/metro/">
+<meta property="og:locale" content="en_US">
+<link rel="canonical" href="https://lfsshanghai.com/en/metro/">
+<link rel="alternate" hreflang="en" href="https://lfsshanghai.com/en/metro/">
+<link rel="alternate" hreflang="mn" href="https://lfsshanghai.com/metro/">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-81DTJ80VLR"></script>
+<script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag("js",new Date());gtag("config","G-81DTJ80VLR");</script>
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+:root{
+  --bg:#fff;--bg2:#f5f5f7;--bg3:#fbfbfd;--card:#fff;
+  --text:#1d1d1f;--muted:#6e6e73;--muted2:#86868b;
+  --blue:#0071e3;--blue-hover:#0077ed;--blue-light:#e8f1fb;
+  --border:rgba(0,0,0,.08);--border2:rgba(0,0,0,.05);
+  --shadow:0 2px 20px rgba(0,0,0,.08);--shadow2:0 8px 40px rgba(0,0,0,.12);
+  --radius:18px;--dark:#000;--dark2:#1d1d1f;
+}
+html{scroll-behavior:smooth;overflow-x:clip}
+body{font-family:'Inter',system-ui,-apple-system,sans-serif;background:var(--bg);color:var(--text);overflow-x:hidden;line-height:1.47059;-webkit-font-smoothing:antialiased;}
+::-webkit-scrollbar{width:6px}::-webkit-scrollbar-track{background:var(--bg2)}::-webkit-scrollbar-thumb{background:#c7c7cc;border-radius:3px}
+
+/* NAV */
+.nav{position:fixed;top:0;left:0;right:0;z-index:500;height:52px;display:flex;align-items:center;justify-content:space-between;padding:0 22px;background:rgba(255,255,255,.85);backdrop-filter:saturate(180%) blur(20px);-webkit-backdrop-filter:saturate(180%) blur(20px);border-bottom:1px solid rgba(0,0,0,.06);transition:background .3s;}
+.nav-logo{font-size:17px;font-weight:700;color:var(--dark2);letter-spacing:-.02em;text-decoration:none;user-select:none;}
+.nav-logo span{color:var(--blue)}
+.nav-links{display:flex;align-items:center;gap:0;position:fixed;top:0;left:50%;transform:translateX(-50%);height:52px;background:none;padding:0;z-index:490;}
+.nav-link{padding:6px 14px;font-size:12px;font-weight:400;color:var(--muted);text-decoration:none;cursor:pointer;border:none;background:none;font-family:inherit;transition:color .2s;white-space:nowrap;}
+.nav-link:hover{color:var(--dark2)}.nav-link.active{color:var(--dark2);font-weight:500}
+.nav-actions{display:flex;align-items:center;gap:8px}
+.nav-btn{padding:7px 16px;background:var(--blue);color:#fff;border:none;border-radius:20px;font-size:12px;font-weight:500;cursor:pointer;font-family:inherit;transition:background .2s,transform .15s;text-decoration:none;white-space:nowrap;}
+.nav-btn:hover{background:var(--blue-hover);transform:scale(1.03)}
+.hamburger{display:none;flex-direction:column;gap:4px;cursor:pointer;padding:6px;border:none;background:none}
+.hamburger span{display:block;width:18px;height:1.5px;background:var(--dark2);transition:.3s;border-radius:1px}
+@media(max-width:860px){
+  .nav-links{display:flex;position:fixed;top:52px;left:0;right:0;bottom:0;height:auto;transform:translateY(-28px) scale(0.98);z-index:499;background:rgba(8,8,12,.92);backdrop-filter:saturate(160%) blur(28px);-webkit-backdrop-filter:saturate(160%) blur(28px);flex-direction:column;align-items:flex-start;padding:36px 28px 40px;gap:2px;border-top:1px solid rgba(255,255,255,.07);overflow-y:auto;opacity:0;pointer-events:none;transition:opacity .6s cubic-bezier(.4,0,.2,1),transform .6s cubic-bezier(.4,0,.2,1);}
+  .nav-links.open{opacity:1;transform:translateY(0) scale(1);pointer-events:auto}
+  .nav-link{font-size:22px;font-weight:300;padding:14px 0;color:#fff;border-bottom:1px solid rgba(255,255,255,.07);width:100%;letter-spacing:-.01em;min-height:48px;display:flex;align-items:center}
+  .nav-link:hover,.nav-link.active{color:#fff}
+  .hamburger{display:flex}.nav-btn{display:none}
+}
+
+/* HERO */
+.hero{padding:120px 40px 64px;text-align:center;max-width:760px;margin:0 auto;}
+.hero-eyebrow{font-size:12px;font-weight:600;letter-spacing:.1em;text-transform:uppercase;color:var(--blue);margin-bottom:18px;}
+.hero h1{font-size:clamp(36px,6vw,64px);font-weight:700;line-height:1.05;letter-spacing:-.04em;color:var(--dark2);margin-bottom:20px;}
+.hero h1 em{font-style:normal;color:var(--blue)}
+.hero-sub{font-size:clamp(15px,1.8vw,18px);font-weight:400;color:var(--muted);max-width:540px;margin:0 auto;line-height:1.7;}
+@media(max-width:600px){.hero{padding:96px 20px 48px}}
+
+/* TOC */
+.toc{position:sticky;top:52px;z-index:400;background:rgba(255,255,255,.92);backdrop-filter:saturate(180%) blur(16px);-webkit-backdrop-filter:saturate(180%) blur(16px);border-bottom:1px solid var(--border);padding:14px 0;}
+.toc-inner{display:flex;gap:8px;justify-content:center;flex-wrap:wrap;max-width:900px;margin:0 auto;padding:0 20px;}
+.toc-link{padding:7px 16px;background:var(--bg2);border:1px solid var(--border);border-radius:50px;font-size:12px;font-weight:500;color:var(--muted);text-decoration:none;white-space:nowrap;transition:all .2s;}
+.toc-link:hover{background:#e8e8ed;color:var(--dark2)}
+
+/* MAIN */
+.main{max-width:900px;margin:0 auto;padding:56px 24px 80px;}
+
+/* SECTIONS */
+.section{margin-bottom:60px;scroll-margin-top:110px;}
+.section-title{font-size:clamp(22px,3.5vw,32px);font-weight:700;letter-spacing:-.03em;color:var(--dark2);margin-bottom:8px;}
+.section-sub{font-size:15px;color:var(--muted);margin-bottom:24px;line-height:1.6;}
+
+/* INFO CARDS */
+.info-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(260px,1fr));gap:16px;margin-bottom:20px;}
+.info-card{background:var(--card);border:1px solid var(--border);border-radius:var(--radius);padding:24px;box-shadow:var(--shadow);}
+.info-card-icon{font-size:28px;margin-bottom:12px;}
+.info-card h3{font-size:15px;font-weight:600;color:var(--dark2);margin-bottom:6px;}
+.info-card p{font-size:13px;color:var(--muted);line-height:1.6;}
+.info-card .highlight{font-size:20px;font-weight:700;color:var(--blue);display:block;margin-bottom:4px;}
+
+/* TABLE */
+.table-wrap{overflow-x:auto;border-radius:var(--radius);border:1px solid var(--border);margin-bottom:20px;}
+table{width:100%;border-collapse:collapse;}
+th{background:var(--bg2);padding:12px 16px;text-align:left;font-size:12px;font-weight:600;color:var(--muted);text-transform:uppercase;letter-spacing:.05em;}
+td{padding:12px 16px;font-size:14px;color:var(--text);border-top:1px solid var(--border2);}
+tr:hover td{background:var(--bg3);}
+.line-dot{display:inline-block;width:10px;height:10px;border-radius:50%;margin-right:6px;}
+
+/* LINE DOTS */
+.l1{background:#e60012}.l2{background:#97c024}.l4{background:#45c2c1}.l10{background:#c68fc1}.l16{background:#d4404a}
+
+/* TIP BOX */
+.tip-box{background:var(--blue-light);border-left:3px solid var(--blue);border-radius:0 12px 12px 0;padding:16px 20px;margin:20px 0;font-size:14px;color:var(--text);line-height:1.6;}
+
+/* PAYMENT STEPS */
+.steps{display:flex;flex-direction:column;gap:16px;}
+.step{display:flex;gap:16px;align-items:flex-start;}
+.step-num{min-width:32px;height:32px;background:var(--blue);color:#fff;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:13px;font-weight:700;flex-shrink:0;}
+.step-body h4{font-size:14px;font-weight:600;color:var(--dark2);margin-bottom:4px;}
+.step-body p{font-size:13px;color:var(--muted);line-height:1.6;}
+
+/* NIGHT TRANSPORT */
+.night-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(200px,1fr));gap:16px;}
+.night-card{background:var(--card);border:1px solid var(--border);border-radius:var(--radius);padding:20px;box-shadow:var(--shadow);text-align:center;}
+.night-card .night-icon{font-size:32px;margin-bottom:10px;}
+.night-card h4{font-size:14px;font-weight:600;color:var(--dark2);margin-bottom:6px;}
+.night-card p{font-size:12px;color:var(--muted);line-height:1.5;}
+
+/* CTA */
+.cta{background:linear-gradient(135deg,var(--blue) 0%,#005bb5 100%);border-radius:24px;padding:48px 40px;text-align:center;color:#fff;margin-top:40px;}
+.cta h2{font-size:clamp(22px,3.5vw,36px);font-weight:700;letter-spacing:-.03em;margin-bottom:12px;}
+.cta p{font-size:16px;opacity:.85;margin-bottom:28px;}
+.cta-btns{display:flex;gap:12px;justify-content:center;flex-wrap:wrap;}
+.btn-cta-white{padding:13px 28px;background:#fff;color:var(--blue);border:none;border-radius:50px;font-size:14px;font-weight:600;cursor:pointer;text-decoration:none;transition:transform .2s;}
+.btn-cta-outline{padding:13px 28px;background:transparent;color:#fff;border:2px solid rgba(255,255,255,.5);border-radius:50px;font-size:14px;font-weight:600;cursor:pointer;text-decoration:none;transition:border-color .2s;}
+.btn-cta-white:hover{transform:scale(1.03)}.btn-cta-outline:hover{border-color:#fff}
+@media(max-width:600px){.cta{padding:32px 20px}}
+
+/* FOOTER */
+footer{background:var(--bg2);border-top:1px solid var(--border);padding:40px 24px;text-align:center;font-size:12px;color:var(--muted);line-height:1.8;}
+footer a{color:var(--blue);text-decoration:none}footer a:hover{text-decoration:underline}
+.footer-nav{display:flex;gap:20px;justify-content:center;flex-wrap:wrap;margin-bottom:16px;}
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav class="nav">
+  <a href="/en/" class="nav-logo">LFS <span>Shanghai</span></a>
+  <div class="nav-links" id="navLinks">
+    <a class="nav-link" href="/en/">Home</a>
+    <a class="nav-link" href="/en/health/">Healthcare</a>
+    <a class="nav-link" href="/en/routes/">Routes</a>
+    <a class="nav-link" href="/en/tips/">Tips</a>
+    <a class="nav-link active" href="/en/metro/">Metro Guide</a>
+    <a class="nav-link" href="/en/planner/" style="color:#e8392a;">✦ Trip Planner</a>
+    <a class="nav-link" href="/en/contact/">Contact</a>
+    <a class="nav-link" href="/login/">Login</a>
+    <a class="nav-link" href="/en/booking/" style="color:#0071e3;font-weight:600">Book Now →</a>
+  </div>
+  <div class="nav-actions">
+    <a href="/en/booking/" class="nav-btn">Book Now</a>
+    <button class="hamburger" id="hamburger" aria-label="Open menu">
+      <span></span><span></span><span></span>
+    </button>
+  </div>
+</nav>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="hero-eyebrow">Transit Guide</div>
+  <h1>Shanghai <em>Metro</em> Guide</h1>
+  <p class="hero-sub">Everything you need to navigate Shanghai's massive metro system — airport connections, metro card, pricing, key lines, and night transport.</p>
+</section>
+
+<!-- TOC -->
+<div class="toc">
+  <div class="toc-inner">
+    <a href="#airport" class="toc-link">✈️ Airport</a>
+    <a href="#card" class="toc-link">🎫 Metro Card</a>
+    <a href="#pricing" class="toc-link">💰 Pricing</a>
+    <a href="#lines" class="toc-link">🚇 Key Lines</a>
+    <a href="#destinations" class="toc-link">📍 Destinations</a>
+    <a href="#payment" class="toc-link">📱 Mobile Payment</a>
+    <a href="#rail" class="toc-link">🚄 High-Speed Rail</a>
+    <a href="#transfers" class="toc-link">🔄 Transfers</a>
+    <a href="#night" class="toc-link">🌙 Night Transport</a>
+  </div>
+</div>
+
+<!-- MAIN -->
+<main class="main">
+
+  <!-- AIRPORT -->
+  <section class="section" id="airport">
+    <div class="section-title">✈️ Airport Connections</div>
+    <p class="section-sub">Shanghai has two airports. Here's how to get to the city from each one.</p>
+    <div class="info-grid">
+      <div class="info-card">
+        <div class="info-card-icon">🛬</div>
+        <span class="highlight">Pudong (PVG)</span>
+        <h3>International Airport</h3>
+        <p><strong>Metro Line 2:</strong> ~60 min to city center, 7–9¥<br>
+        <strong>Maglev Train:</strong> 8 minutes to Longyang Rd, 50¥<br>
+        <strong>Taxi:</strong> ~200¥ to Puxi (45–90 min depending on traffic)</p>
+      </div>
+      <div class="info-card">
+        <div class="info-card-icon">🛫</div>
+        <span class="highlight">Hongqiao (SHA)</span>
+        <h3>Domestic + Some International</h3>
+        <p><strong>Metro Line 2 or 10:</strong> Direct to city, ~30–40 min, 4–6¥<br>
+        <strong>Taxi:</strong> ~100¥ to Puxi<br>
+        <strong>Also:</strong> Hongqiao Railway Station is next door — convenient for high-speed rail</p>
+      </div>
+    </div>
+    <div class="tip-box">
+      💡 <strong>Tip:</strong> If you have a lot of luggage, take a taxi from the airport. Our team can arrange VIP airport pickup — no stress, Mongolian-speaking driver. <a href="/en/booking/?service=airport" style="color:var(--blue);font-weight:600">Book airport pickup →</a>
+    </div>
+  </section>
+
+  <!-- METRO CARD -->
+  <section class="section" id="card">
+    <div class="section-title">🎫 Metro Card</div>
+    <p class="section-sub">The easiest way to ride — buy a Shanghai Public Transportation Card (交通卡).</p>
+    <div class="info-grid">
+      <div class="info-card">
+        <div class="info-card-icon">💳</div>
+        <h3>Where to Get It</h3>
+        <p>Buy at any metro station service desk or convenience store (Family Mart, 7-Eleven) inside the station.</p>
+      </div>
+      <div class="info-card">
+        <div class="info-card-icon">💰</div>
+        <h3>Cost</h3>
+        <p><strong>20¥ deposit</strong> (refundable when you return the card)<br>Minimum top-up: 20¥<br>Works on metro, bus, and some ferries.</p>
+      </div>
+      <div class="info-card">
+        <div class="info-card-icon">📱</div>
+        <h3>Alternatively</h3>
+        <p>Use <strong>WeChat Pay or Alipay</strong> QR code directly at the metro turnstile — no card needed if you have a working digital wallet.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- PRICING -->
+  <section class="section" id="pricing">
+    <div class="section-title">💰 Metro Pricing</div>
+    <p class="section-sub">Fares are distance-based and very affordable.</p>
+    <div class="table-wrap">
+      <table>
+        <thead>
+          <tr><th>Distance</th><th>Fare (¥)</th><th>Approx. (₮)</th></tr>
+        </thead>
+        <tbody>
+          <tr><td>0 – 6 km</td><td>3¥</td><td>~₮1,600</td></tr>
+          <tr><td>6 – 16 km</td><td>4¥</td><td>~₮2,100</td></tr>
+          <tr><td>16 – 26 km</td><td>5¥</td><td>~₮2,700</td></tr>
+          <tr><td>26 – 36 km</td><td>6¥</td><td>~₮3,200</td></tr>
+          <tr><td>36 – 46 km</td><td>7¥</td><td>~₮3,700</td></tr>
+          <tr><td>46+ km</td><td>+1¥ per 10km</td><td>—</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <div class="tip-box">
+      💡 Most tourist destinations in Shanghai are within 0–16km, so most rides cost 3–5¥.
+    </div>
+  </section>
+
+  <!-- KEY LINES -->
+  <section class="section" id="lines">
+    <div class="section-title">🚇 Key Metro Lines</div>
+    <p class="section-sub">Shanghai has 20 metro lines. Here are the ones you'll use most as a visitor.</p>
+    <div class="table-wrap">
+      <table>
+        <thead>
+          <tr><th>Line</th><th>Color</th><th>Key Stops</th></tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><span class="line-dot l1"></span><strong>Line 1</strong></td>
+            <td style="color:#e60012">Red</td>
+            <td>People's Square, Xujiahui, Shanghai Railway Station</td>
+          </tr>
+          <tr>
+            <td><span class="line-dot l2"></span><strong>Line 2</strong></td>
+            <td style="color:#97c024">Green</td>
+            <td>Pudong Airport ↔ Hongqiao Airport, The Bund (East Nanjing Rd), People's Square, Lujiazui</td>
+          </tr>
+          <tr>
+            <td><span class="line-dot l4"></span><strong>Line 4</strong></td>
+            <td style="color:#45c2c1">Teal</td>
+            <td>Circle line around central Shanghai — Shanghai Railway Station, Yuyuan area</td>
+          </tr>
+          <tr>
+            <td><span class="line-dot l10"></span><strong>Line 10</strong></td>
+            <td style="color:#c68fc1">Purple</td>
+            <td>Hongqiao Airport, Xintiandi, Old Town, Yu Garden</td>
+          </tr>
+          <tr>
+            <td><span class="line-dot l16"></span><strong>Line 16</strong></td>
+            <td style="color:#d4404a">Red-Orange</td>
+            <td>Dishui Lake — useful for day trips to Zhujiajiao water town area</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </section>
+
+  <!-- DESTINATIONS -->
+  <section class="section" id="destinations">
+    <div class="section-title">📍 Tourist Destinations by Metro</div>
+    <p class="section-sub">Where to go and which line to take.</p>
+    <div class="table-wrap">
+      <table>
+        <thead>
+          <tr><th>Destination</th><th>Line</th><th>Station</th></tr>
+        </thead>
+        <tbody>
+          <tr><td>The Bund (外滩)</td><td>Line 2</td><td>East Nanjing Rd</td></tr>
+          <tr><td>Yuyuan Garden (豫园)</td><td>Line 10 / 14</td><td>Yu Garden</td></tr>
+          <tr><td>Shanghai Tower / Lujiazui</td><td>Line 2</td><td>Lujiazui</td></tr>
+          <tr><td>Xintiandi</td><td>Line 10 / 13</td><td>Xintiandi</td></tr>
+          <tr><td>Shanghai Museum</td><td>Line 1 / 2</td><td>People's Square</td></tr>
+          <tr><td>M50 Creative Park</td><td>Line 13</td><td>Jiangning Rd</td></tr>
+          <tr><td>Nanjing Road Shopping</td><td>Line 1 / 2</td><td>People's Square</td></tr>
+          <tr><td>IFC Mall (Lujiazui)</td><td>Line 2</td><td>Lujiazui</td></tr>
+          <tr><td>Plaza 66</td><td>Line 2</td><td>West Nanjing Rd</td></tr>
+          <tr><td>Tianzifang / Taikang Rd</td><td>Line 9</td><td>Dapuqiao</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </section>
+
+  <!-- MOBILE PAYMENT -->
+  <section class="section" id="payment">
+    <div class="section-title">📱 Paying with WeChat / Alipay</div>
+    <p class="section-sub">You can pay metro fares directly with your phone — no card needed.</p>
+    <div class="steps">
+      <div class="step">
+        <div class="step-num">1</div>
+        <div class="step-body"><h4>Open WeChat or Alipay</h4><p>Make sure you have a working Chinese bank card or international card linked to your account.</p></div>
+      </div>
+      <div class="step">
+        <div class="step-num">2</div>
+        <div class="step-body"><h4>Find "Metro QR Code" / "地铁码"</h4><p>In WeChat: Wallet → Transport Card. In Alipay: Metro / 地铁.</p></div>
+      </div>
+      <div class="step">
+        <div class="step-num">3</div>
+        <div class="step-body"><h4>Scan at Turnstile</h4><p>Hold your QR code up to the scanner at the gate. Works on entry and exit.</p></div>
+      </div>
+      <div class="step">
+        <div class="step-num">4</div>
+        <div class="step-body"><h4>Fare Deducted Automatically</h4><p>Exact fare is charged based on distance when you exit.</p></div>
+      </div>
+    </div>
+    <div class="tip-box" style="margin-top:20px">
+      💡 <strong>International travelers:</strong> Alipay now accepts international Visa/Mastercard — set it up before your trip! WeChat Pay may require a Chinese bank card for some features.
+    </div>
+  </section>
+
+  <!-- HIGH-SPEED RAIL -->
+  <section class="section" id="rail">
+    <div class="section-title">🚄 High-Speed Rail</div>
+    <p class="section-sub">For day trips to nearby cities like Suzhou, Hangzhou, or Nanjing.</p>
+    <div class="info-grid">
+      <div class="info-card">
+        <div class="info-card-icon">🏛️</div>
+        <h3>Hongqiao Railway Station</h3>
+        <p>Shanghai's main high-speed rail hub. Next to Hongqiao Airport (Terminal 2).<br>Metro Lines 2 and 10 go directly there.</p>
+      </div>
+      <div class="info-card">
+        <div class="info-card-icon">🎫</div>
+        <h3>Buying Tickets</h3>
+        <p>Book on <strong>Trip.com</strong>, <strong>12306.cn</strong>, or at the station. Need your passport. We can help book tickets for you.</p>
+      </div>
+      <div class="info-card">
+        <div class="info-card-icon">⏱️</div>
+        <h3>Travel Times</h3>
+        <p><strong>Suzhou:</strong> 25 min<br><strong>Hangzhou:</strong> 45 min<br><strong>Nanjing:</strong> 1h 10min<br><strong>Beijing:</strong> 4h 30min</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- TRANSFER STATIONS -->
+  <section class="section" id="transfers">
+    <div class="section-title">🔄 Key Transfer Stations</div>
+    <p class="section-sub">These are the major interchange hubs — remember their locations.</p>
+    <div class="info-grid">
+      <div class="info-card"><div class="info-card-icon">⭐</div><h3>People's Square</h3><p>Lines 1, 2, 8 — the busiest hub in central Shanghai. Near the Bund, Nanjing Road.</p></div>
+      <div class="info-card"><div class="info-card-icon">⭐</div><h3>Xujiahui</h3><p>Lines 1, 9, 11 — major shopping district south of the city center.</p></div>
+      <div class="info-card"><div class="info-card-icon">⭐</div><h3>Century Avenue</h3><p>Lines 2, 4, 6, 9 — key Pudong hub near IFC and Oriental Pearl Tower.</p></div>
+      <div class="info-card"><div class="info-card-icon">⭐</div><h3>Hongqiao</h3><p>Lines 2, 10, 17 — links airport, railway station, and western Shanghai.</p></div>
+    </div>
+  </section>
+
+  <!-- NIGHT TRANSPORT -->
+  <section class="section" id="night">
+    <div class="section-title">🌙 Night Transport</div>
+    <p class="section-sub">Metro runs until ~23:00. For late nights, here are your options.</p>
+    <div class="night-grid">
+      <div class="night-card"><div class="night-icon">🚖</div><h4>DiDi (滴滴)</h4><p>China's Uber. English app available. Download before arriving — most convenient late-night option.</p></div>
+      <div class="night-card"><div class="night-icon">🚕</div><h4>Street Taxi</h4><p>Flag a yellow taxi on the street. Starting fare ~14¥. Show your destination in Chinese characters.</p></div>
+      <div class="night-card"><div class="night-icon">🚌</div><h4>Night Bus</h4><p>Night routes (夜宵线) run on some lines after metro closes. Cheap but infrequent.</p></div>
+      <div class="night-card"><div class="night-icon">🚲</div><h4>Hellobike</h4><p>Dockless bike-share. Great for short trips under 3km. Scan QR with Alipay.</p></div>
+    </div>
+    <div class="tip-box" style="margin-top:20px">
+      💡 <strong>LFS Tip:</strong> Save DiDi on your phone before arriving in Shanghai. It's the safest and easiest night transport — English interface and GPS tracking.
+    </div>
+  </section>
+
+  <!-- CTA -->
+  <div class="cta">
+    <h2>Need Help Navigating Shanghai?</h2>
+    <p>Our Mongolian-speaking guide will handle everything — transport, translation, and more.</p>
+    <div class="cta-btns">
+      <a href="/en/booking/" class="btn-cta-white">Book a Guide</a>
+      <a href="/en/contact/" class="btn-cta-outline">Ask a Question</a>
+    </div>
+  </div>
+
+</main>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-nav">
+    <a href="/en/">Home</a>
+    <a href="/en/health/">Healthcare</a>
+    <a href="/en/routes/">Routes</a>
+    <a href="/en/tips/">Tips</a>
+    <a href="/en/booking/">Book Now</a>
+    <a href="/metro/">🇲🇳 Монгол</a>
+  </div>
+  <div>© 2026 LFS Shanghai — Trusted Guide for Mongolian Travelers</div>
+  <div style="margin-top:4px"><a href="/en/">lfsshanghai.com/en</a></div>
+</footer>
+
+<script>
+if(history.scrollRestoration)history.scrollRestoration='manual';window.scrollTo(0,0);
+const hamburger=document.getElementById('hamburger');
+const navLinks=document.getElementById('navLinks');
+hamburger.addEventListener('click',()=>{
+  navLinks.classList.toggle('open');
+  const s=hamburger.querySelectorAll('span');
+  if(navLinks.classList.contains('open')){s[0].style.transform='translateY(5.5px) rotate(45deg)';s[1].style.opacity='0';s[2].style.transform='translateY(-5.5px) rotate(-45deg)';}
+  else{s[0].style.transform='';s[1].style.opacity='';s[2].style.transform='';}
+});
+navLinks.querySelectorAll('.nav-link').forEach(l=>l.addEventListener('click',()=>{navLinks.classList.remove('open');hamburger.querySelectorAll('span').forEach(s=>{s.style.transform='';s.style.opacity='';})}));
+window.addEventListener('scroll',()=>{const nav=document.querySelector('.nav');nav.style.background=window.scrollY>10?'rgba(255,255,255,.96)':'rgba(255,255,255,.85)';},{passive:true});
+</script>
+<script type="text/javascript">
+var Tawk_API=Tawk_API||{},Tawk_LoadTime=new Date();
+(function(){var s1=document.createElement("script"),s0=document.getElementsByTagName("script")[0];s1.async=true;s1.src='https://embed.tawk.to/6a01d583db08b91c337bdcf5/1jobik2hq';s1.charset='UTF-8';s1.setAttribute('crossorigin','*');s0.parentNode.insertBefore(s1,s0);})();
+</script>
+<script src="/js/messenger-btn.js"></script>
+</body>
+</html>

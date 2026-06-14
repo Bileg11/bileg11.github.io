@@ -1,0 +1,893 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Shanghai Trip Planner — LFS Shanghai</title>
+  <meta name="description" content="Plan your Shanghai trip step by step. Dates, interests, places, daily itinerary, cost estimate — all in one place. Share with friends."/>
+  <link rel="canonical" href="https://lfsshanghai.com/en/planner/"/>
+  <link rel="icon" href="/favicon.svg" type="image/svg+xml"/>
+  <link rel="apple-touch-icon" href="/apple-touch-icon.png"/>
+  <meta property="og:title" content="Shanghai Trip Planner — LFS Shanghai"/>
+  <meta property="og:description" content="Plan your Shanghai trip — places, schedule, cost, share with friends."/>
+  <meta property="og:type" content="website"/>
+  <meta property="og:url" content="https://lfsshanghai.com/en/planner/"/>
+  <meta property="og:locale" content="en_US"/>
+  <link rel="alternate" hreflang="en" href="https://lfsshanghai.com/en/planner/"/>
+  <link rel="alternate" hreflang="mn" href="https://lfsshanghai.com/planner/"/>
+  <link rel="preconnect" href="https://fonts.googleapis.com"/>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet"/>
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-81DTJ80VLR"></script>
+  <script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag("js",new Date());gtag("config","G-81DTJ80VLR");</script>
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    :root {
+      --primary: #e8392a; --primary-d: #c42d1f;
+      --blue: #0071e3;
+      --bg: #f7f7f8; --card: #ffffff;
+      --text: #1a1a2e; --sub: #5a5a72;
+      --border: #e4e4ec; --radius: 16px;
+      --shadow: 0 4px 20px rgba(0,0,0,.08);
+      --shadow-hover: 0 8px 32px rgba(0,0,0,.14);
+    }
+    html { scroll-behavior: smooth; overflow-x: hidden; }
+    body { font-family: 'Inter', sans-serif; background: var(--bg); color: var(--text); min-height: 100vh; }
+    button, a, .chip, .place-card { touch-action: manipulation; -webkit-tap-highlight-color: transparent; }
+
+    /* NAV */
+    .nav { background: #fff; border-bottom: 1px solid var(--border); position: sticky; top: 0; z-index: 100; }
+    .nav-inner { max-width: 1100px; margin: 0 auto; display: flex; align-items: center; justify-content: space-between; padding: 0 20px; height: 60px; }
+    .nav-logo { font-size: 1.1rem; font-weight: 800; color: var(--primary); text-decoration: none; letter-spacing: -.5px; }
+    .nav-links { display: flex; gap: 24px; list-style: none; }
+    .nav-links a { color: var(--sub); text-decoration: none; font-size: .9rem; font-weight: 500; transition: color .2s; }
+    .nav-links a:hover { color: var(--primary); }
+    .nav-btn { background: var(--primary); color: #fff; border: none; padding: 8px 20px; border-radius: 50px; font-size: .88rem; font-weight: 600; cursor: pointer; text-decoration: none; transition: background .2s; }
+    .nav-btn:hover { background: var(--primary-d); }
+    @media(max-width:640px){.nav-links{display:none;}}
+
+    /* WRAPPER */
+    .planner-wrap { max-width: 820px; margin: 32px auto 80px; padding: 0 20px; }
+
+    /* HERO */
+    .hero-plan { text-align: center; margin-bottom: 32px; }
+    .hero-plan h1 { font-size: 1.9rem; font-weight: 800; color: var(--text); line-height: 1.2; margin-bottom: 8px; }
+    .hero-plan h1 span { color: var(--primary); }
+    .hero-plan p { color: var(--sub); font-size: 1rem; }
+
+    /* PROGRESS BAR */
+    .progress-bar { display: flex; gap: 0; margin-bottom: 28px; background: #fff; border-radius: 14px; padding: 6px 10px; box-shadow: var(--shadow); overflow-x: auto; }
+    .step-dot { display: flex; flex-direction: column; align-items: center; gap: 4px; flex: 1; min-width: 60px; padding: 6px 4px; cursor: pointer; border-radius: 10px; transition: background .2s; }
+    .step-dot:hover { background: var(--bg); }
+    .step-dot.active .dot-circle { background: var(--primary); color: #fff; }
+    .step-dot.done .dot-circle { background: #16a34a; color: #fff; }
+    .dot-circle { width: 30px; height: 30px; border-radius: 50%; background: #e4e4ec; color: var(--sub); font-size: .8rem; font-weight: 700; display: flex; align-items: center; justify-content: center; transition: background .3s; }
+    .dot-label { font-size: .68rem; color: var(--sub); font-weight: 500; text-align: center; white-space: nowrap; }
+    .step-dot.active .dot-label { color: var(--primary); font-weight: 600; }
+
+    /* CARD */
+    .card { background: var(--card); border-radius: var(--radius); box-shadow: var(--shadow); padding: 28px 24px; margin-bottom: 16px; border: 1px solid rgba(0,0,0,.04); }
+    .card-title { font-size: 1.25rem; font-weight: 800; color: var(--text); margin-bottom: 4px; letter-spacing: -.03em; }
+    .card-sub { font-size: .88rem; color: var(--sub); margin-bottom: 20px; line-height: 1.6; }
+
+    /* STEPS */
+    .step { display: none; animation: fadeUp .4s ease both; }
+    .step.active { display: block; }
+    @keyframes fadeUp { from{opacity:0;transform:translateY(14px)} to{opacity:1;transform:translateY(0)} }
+
+    /* FORM */
+    .form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; margin-bottom: 6px; }
+    @media(max-width:500px){.form-row{grid-template-columns:1fr;}}
+    .form-group { margin-bottom: 16px; }
+    .form-group label { font-size: .82rem; font-weight: 600; color: var(--sub); display: block; margin-bottom: 6px; text-transform: uppercase; letter-spacing: .04em; }
+    .form-group input, .form-group select { width: 100%; padding: 11px 14px; border: 1.5px solid var(--border); border-radius: 10px; font-size: .95rem; font-family: inherit; color: var(--text); background: #fff; outline: none; transition: border-color .2s; }
+    .form-group input:focus, .form-group select:focus { border-color: var(--primary); }
+
+    /* PEOPLE COUNTER */
+    .people-counter-wrap { border: 1.5px solid var(--border); border-radius: 12px; overflow: hidden; }
+    .people-counter-row { display: flex; align-items: center; justify-content: space-between; padding: 12px 16px; border-bottom: 1px solid var(--border); }
+    .people-counter-row:last-of-type { border-bottom: none; }
+    .people-counter-label { font-size: .88rem; font-weight: 600; color: var(--text); }
+    .people-counter-note { font-size: .75rem; color: var(--sub); margin-top: 2px; }
+    .people-counter-ctrl { display: flex; align-items: center; gap: 14px; }
+    .ppl-btn { width: 32px; height: 32px; border-radius: 50%; border: 1.5px solid var(--border); background: #fff; font-size: 1.1rem; cursor: pointer; display: flex; align-items: center; justify-content: center; transition: all .2s; font-family: inherit; }
+    .ppl-btn:hover { border-color: var(--primary); color: var(--primary); }
+    .people-counter-ctrl span { font-size: 1rem; font-weight: 700; min-width: 20px; text-align: center; }
+    .people-counter-total { padding: 10px 16px; background: #f7f7f8; font-size: .82rem; color: var(--sub); border-top: 1px solid var(--border); }
+
+    /* HOTEL CHIPS */
+    .hotel-chips { display: flex; flex-direction: column; gap: 8px; }
+    .hotel-chip { display: flex; align-items: center; gap: 12px; padding: 12px 14px; border: 1.5px solid var(--border); border-radius: 12px; cursor: pointer; transition: all .2s; background: #fff; }
+    .hotel-chip.selected { border-color: var(--primary); background: #fff5f4; }
+    .hotel-chip-icon { font-size: 1.3rem; }
+    .hotel-chip-info { flex: 1; }
+    .hotel-chip-name { font-size: .88rem; font-weight: 600; color: var(--text); }
+    .hotel-chip-metro { font-size: .76rem; color: var(--sub); margin-top: 2px; }
+    .hotel-chip-check { color: var(--primary); font-weight: 700; opacity: 0; transition: opacity .2s; }
+    .hotel-chip.selected .hotel-chip-check { opacity: 1; }
+
+    /* CHIPS */
+    .chips { display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 8px; }
+    .chip { padding: 8px 16px; border: 1.5px solid var(--border); border-radius: 50px; font-size: .85rem; font-weight: 500; color: var(--sub); cursor: pointer; transition: all .2s; background: #fff; user-select: none; }
+    .chip:hover { border-color: var(--primary); color: var(--primary); }
+    .chip.selected { background: var(--primary); border-color: var(--primary); color: #fff; }
+
+    /* PLACES */
+    .places-filter { display: flex; gap: 6px; flex-wrap: wrap; margin-bottom: 16px; }
+    .filter-btn { padding: 6px 14px; border: 1.5px solid var(--border); border-radius: 50px; font-size: .8rem; font-weight: 500; color: var(--sub); cursor: pointer; background: #fff; font-family: inherit; transition: all .2s; }
+    .filter-btn:hover { border-color: var(--primary); color: var(--primary); }
+    .filter-btn.active { background: var(--primary); border-color: var(--primary); color: #fff; }
+    .places-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(240px, 1fr)); gap: 12px; }
+    .place-card { border: 1.5px solid var(--border); border-radius: 14px; padding: 16px; cursor: pointer; transition: all .2s; background: #fff; position: relative; }
+    .place-card:hover { box-shadow: var(--shadow-hover); border-color: #c4c4d0; }
+    .place-card.saved { border-color: var(--primary); background: #fff5f4; }
+    .pc-header { display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 8px; }
+    .pc-icon { font-size: 1.6rem; }
+    .place-save { background: none; border: none; font-size: 1.2rem; cursor: pointer; padding: 2px; }
+    .pc-name { font-size: .9rem; font-weight: 700; color: var(--text); margin-bottom: 4px; }
+    .pc-sub { font-size: .76rem; color: var(--sub); line-height: 1.5; margin-bottom: 8px; }
+    .pc-tags { display: flex; flex-wrap: wrap; gap: 4px; }
+    .pc-tag { font-size: .68rem; padding: 2px 8px; border-radius: 20px; background: #f0f0f5; color: var(--sub); font-weight: 500; }
+    .pc-cost { font-size: .76rem; color: var(--sub); margin-top: 6px; }
+    .pc-cost strong { color: var(--text); }
+
+    /* BUTTONS */
+    .btn-row { display: flex; gap: 10px; margin-top: 8px; }
+    .btn-next { flex: 1; padding: 14px; background: var(--primary); color: #fff; border: none; border-radius: 50px; font-size: .95rem; font-weight: 700; cursor: pointer; font-family: inherit; transition: background .2s, transform .15s; }
+    .btn-next:hover { background: var(--primary-d); transform: scale(1.01); }
+    .btn-back { padding: 14px 22px; background: #fff; color: var(--sub); border: 1.5px solid var(--border); border-radius: 50px; font-size: .9rem; font-weight: 600; cursor: pointer; font-family: inherit; transition: all .2s; }
+    .btn-back:hover { border-color: var(--text); color: var(--text); }
+
+    /* SAVED LIST */
+    .saved-list { display: flex; flex-direction: column; gap: 8px; min-height: 40px; }
+    .saved-item { display: flex; align-items: center; gap: 10px; padding: 10px 12px; background: #f7f7f8; border-radius: 10px; font-size: .88rem; font-weight: 500; color: var(--text); cursor: grab; border: 1.5px solid transparent; }
+    .saved-item:hover { border-color: var(--border); }
+    .drag-hint { font-size: .78rem; color: var(--sub); text-align: center; margin-top: 8px; }
+
+    /* ITINERARY */
+    .itin-day { margin-bottom: 20px; }
+    .itin-day-title { font-size: .95rem; font-weight: 800; color: var(--text); margin-bottom: 10px; padding-bottom: 8px; border-bottom: 2px solid var(--border); display: flex; justify-content: space-between; align-items: center; }
+    .itin-place { display: flex; gap: 12px; align-items: flex-start; padding: 10px 0; border-bottom: 1px solid var(--border); }
+    .itin-place:last-child { border-bottom: none; }
+    .itin-num { width: 28px; height: 28px; border-radius: 50%; background: var(--primary); color: #fff; font-size: .78rem; font-weight: 700; display: flex; align-items: center; justify-content: center; flex-shrink: 0; margin-top: 1px; }
+    .itin-info {}
+    .itin-name { font-size: .88rem; font-weight: 700; color: var(--text); }
+    .itin-meta { font-size: .76rem; color: var(--sub); margin-top: 2px; }
+
+    /* COST TABLE */
+    .cost-table { width: 100%; border-collapse: collapse; font-size: .85rem; }
+    .cost-table th { text-align: left; padding: 8px 12px; background: #f7f7f8; font-size: .78rem; color: var(--sub); text-transform: uppercase; letter-spacing: .04em; }
+    .cost-table td { padding: 10px 12px; border-top: 1px solid var(--border); color: var(--text); }
+    .cost-table .total-row td { font-weight: 700; background: #f7f7f8; }
+
+    /* SHARE BOX */
+    .share-box { display: flex; flex-direction: column; gap: 10px; }
+    .share-link-input { padding: 11px 14px; border: 1.5px solid var(--border); border-radius: 10px; font-size: .85rem; font-family: monospace; color: var(--sub); background: #f7f7f8; width: 100%; }
+    .btn-copy { padding: 11px 20px; background: var(--text); color: #fff; border: none; border-radius: 50px; font-size: .85rem; font-weight: 600; cursor: pointer; font-family: inherit; align-self: flex-start; transition: opacity .2s; }
+    .btn-copy:hover { opacity: .85; }
+    .btn-save-plan { padding: 13px 28px; background: var(--primary); color: #fff; border: none; border-radius: 50px; font-size: .95rem; font-weight: 700; cursor: pointer; font-family: inherit; transition: background .2s; margin-bottom: 8px; }
+    .btn-save-plan:hover { background: var(--primary-d); }
+
+    /* TOAST */
+    .toast-container { position: fixed; bottom: 24px; left: 50%; transform: translateX(-50%); z-index: 9999; display: flex; flex-direction: column; gap: 8px; pointer-events: none; }
+    .toast { padding: 12px 20px; border-radius: 50px; font-size: .88rem; font-weight: 600; color: #fff; box-shadow: 0 4px 20px rgba(0,0,0,.2); animation: toastIn .3s ease; white-space: nowrap; }
+    .toast.success { background: #16a34a; }
+    .toast.error { background: #dc2626; }
+    @keyframes toastIn { from{opacity:0;transform:translateY(8px)} to{opacity:1;transform:translateY(0)} }
+
+    /* SHARED BANNER */
+    .shared-banner { background: #fff5f4; border: 1.5px solid #fca5a5; border-radius: 14px; padding: 20px; margin-bottom: 20px; display: none; }
+    .shared-banner.visible { display: block; }
+    .shared-banner h3 { font-size: 1rem; font-weight: 700; margin-bottom: 6px; }
+    .shared-banner p { font-size: .85rem; color: var(--sub); margin-bottom: 14px; }
+    .shared-banner-btns { display: flex; gap: 8px; }
+    .btn-use-plan { padding: 9px 18px; background: var(--primary); color: #fff; border: none; border-radius: 50px; font-size: .85rem; font-weight: 600; cursor: pointer; }
+    .btn-view-only { padding: 9px 18px; background: #fff; color: var(--sub); border: 1.5px solid var(--border); border-radius: 50px; font-size: .85rem; font-weight: 600; cursor: pointer; }
+
+    /* SYNC BADGE */
+    .sync-badge { display: flex; align-items: center; gap: 6px; font-size: .78rem; color: var(--sub); padding: 4px 10px; background: #f7f7f8; border-radius: 20px; }
+    .sync-dot { width: 7px; height: 7px; border-radius: 50%; background: #16a34a; }
+
+    /* FOOTER */
+    footer { background: #f7f7f8; border-top: 1px solid var(--border); padding: 32px 24px; text-align: center; font-size: .78rem; color: var(--sub); margin-top: 40px; }
+    footer a { color: var(--primary); text-decoration: none; }
+    .footer-nav { display: flex; gap: 20px; justify-content: center; flex-wrap: wrap; margin-bottom: 12px; }
+  </style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav class="nav">
+  <div class="nav-inner">
+    <a class="nav-logo" href="/en/">LFS Shanghai</a>
+    <ul class="nav-links">
+      <li><a href="/en/">Home</a></li>
+      <li><a href="/en/routes/">Routes</a></li>
+      <li><a href="/en/tips/">Tips</a></li>
+      <li><a href="/en/planner/" style="color:var(--primary)">Planner</a></li>
+    </ul>
+    <div style="display:flex;align-items:center;gap:10px;">
+      <div id="syncBadge" class="sync-badge" style="display:none"><div class="sync-dot"></div><span id="syncText">Saved</span></div>
+      <button id="btnShareFloat2" class="nav-btn" style="display:none;" onclick="openShareModal()">🔗 Share</button>
+      <div id="navAuth"><a href="/login/?redirect=/en/planner/" class="nav-btn" style="background:#1a1a2e;">Login</a></div>
+    </div>
+  </div>
+</nav>
+
+<!-- TOAST -->
+<div class="toast-container" id="toastContainer"></div>
+
+<!-- MAIN -->
+<main class="planner-wrap">
+
+  <div class="hero-plan">
+    <h1>Shanghai <span>Trip Planner</span></h1>
+    <p>Dates, people, interests, places — all in one. Share with friends.</p>
+  </div>
+
+  <!-- SHARED BANNER -->
+  <div class="shared-banner" id="sharedBanner">
+    <h3 id="sharedBannerTitle">🗺 Viewing a friend's plan</h3>
+    <p id="sharedBannerDesc">You can copy this plan and edit it as your own.</p>
+    <div class="shared-banner-btns">
+      <button class="btn-use-plan" onclick="copyAndEditPlan()">Copy &amp; Edit ✏️</button>
+      <button class="btn-view-only" onclick="dismissSharedBanner()">View only</button>
+    </div>
+  </div>
+
+  <!-- PROGRESS -->
+  <div class="progress-bar" id="progressBar">
+    <div class="step-dot active" data-step="1" onclick="goToStep(1)"><div class="dot-circle">1</div><span class="dot-label">Dates</span></div>
+    <div class="step-dot" data-step="2" onclick="goToStep(2)"><div class="dot-circle">2</div><span class="dot-label">Interests</span></div>
+    <div class="step-dot" data-step="3" onclick="goToStep(3)"><div class="dot-circle">3</div><span class="dot-label">Schedule</span></div>
+    <div class="step-dot" data-step="4" onclick="goToStep(4)"><div class="dot-circle">4</div><span class="dot-label">Places</span></div>
+    <div class="step-dot" data-step="5" onclick="goToStep(5)"><div class="dot-circle">5</div><span class="dot-label">Itinerary</span></div>
+    <div class="step-dot" data-step="6" onclick="goToStep(6)"><div class="dot-circle">6</div><span class="dot-label">Share</span></div>
+  </div>
+
+  <!-- ══ STEP 1: DATES & PEOPLE ══ -->
+  <div class="step active" id="step-1">
+    <div class="card">
+      <div class="card-title">Dates &amp; Group</div>
+      <div class="card-sub">When are you going and how many people?</div>
+      <div class="form-row">
+        <div class="form-group">
+          <label>Arrival Date</label>
+          <input type="date" id="dateArrival" onchange="updateDayCards()"/>
+        </div>
+        <div class="form-group">
+          <label>Departure Date</label>
+          <input type="date" id="dateDeparture" onchange="updateDayCards()"/>
+        </div>
+      </div>
+
+      <div style="margin-top:16px">
+        <label style="font-size:.82rem;font-weight:600;color:var(--sub);text-transform:uppercase;letter-spacing:.04em;display:block;margin-bottom:10px;">Group Size</label>
+        <div class="people-counter-wrap">
+          <div class="people-counter-row">
+            <div><div class="people-counter-label">👤 Adults</div></div>
+            <div class="people-counter-ctrl">
+              <button class="ppl-btn" onclick="adjustPeople('adults',-1)">−</button>
+              <span id="countAdults">2</span>
+              <button class="ppl-btn" onclick="adjustPeople('adults',1)">＋</button>
+            </div>
+          </div>
+          <div class="people-counter-row">
+            <div>
+              <div class="people-counter-label">👶 Children <span style="font-weight:400;font-size:.78rem;color:var(--sub)">(under 1.3m tall)</span></div>
+              <div class="people-counter-note" style="color:#16a34a;">🚇 Free metro &amp; most attractions</div>
+            </div>
+            <div class="people-counter-ctrl">
+              <button class="ppl-btn" onclick="adjustPeople('childFree',-1)">−</button>
+              <span id="countChildFree">0</span>
+              <button class="ppl-btn" onclick="adjustPeople('childFree',1)">＋</button>
+            </div>
+          </div>
+          <div class="people-counter-row">
+            <div>
+              <div class="people-counter-label">🧒 Children <span style="font-weight:400;font-size:.78rem;color:var(--sub)">(over 1.3m tall)</span></div>
+              <div class="people-counter-note">🚇 Pays metro, discount at attractions</div>
+            </div>
+            <div class="people-counter-ctrl">
+              <button class="ppl-btn" onclick="adjustPeople('childPaid',-1)">−</button>
+              <span id="countChildPaid">0</span>
+              <button class="ppl-btn" onclick="adjustPeople('childPaid',1)">＋</button>
+            </div>
+          </div>
+          <div class="people-counter-total" id="peopleTotalRow">
+            Total <strong id="peopleTotalCount">2</strong> people · Metro: <strong id="metroPayCount">2</strong> paying
+          </div>
+        </div>
+      </div>
+
+      <div style="margin-top:20px">
+        <label style="font-size:.82rem;font-weight:600;color:var(--sub);text-transform:uppercase;letter-spacing:.04em;display:block;margin-bottom:10px;">Staying at</label>
+        <div class="hotel-chips" id="hotelChips">
+          <div class="hotel-chip" data-hotel-id="renaissance" onclick="selectHotel(this)">
+            <div class="hotel-chip-icon">🏨</div>
+            <div class="hotel-chip-info"><div class="hotel-chip-name">Renaissance Lujiazui</div><div class="hotel-chip-metro">🚇 Lujiazui · Line 2</div></div>
+            <div class="hotel-chip-check">✓</div>
+          </div>
+          <div class="hotel-chip" data-hotel-id="yunrui" onclick="selectHotel(this)">
+            <div class="hotel-chip-icon">🏨</div>
+            <div class="hotel-chip-info"><div class="hotel-chip-name">Yunrui Hotel (Zhongshan Park)</div><div class="hotel-chip-metro">🚇 Zhongshan Park · Line 2/3/4</div></div>
+            <div class="hotel-chip-check">✓</div>
+          </div>
+          <div class="hotel-chip" data-hotel-id="home-inn" onclick="selectHotel(this)">
+            <div class="hotel-chip-icon">🏨</div>
+            <div class="hotel-chip-info"><div class="hotel-chip-name">Home Inn (Expo Park)</div><div class="hotel-chip-metro">🚇 Houtan · Line 7</div></div>
+            <div class="hotel-chip-check">✓</div>
+          </div>
+          <div class="hotel-chip" data-hotel-id="other" onclick="selectHotel(this)">
+            <div class="hotel-chip-icon">📍</div>
+            <div class="hotel-chip-info"><div class="hotel-chip-name">Other hotel</div><div class="hotel-chip-metro">Enter name below</div></div>
+            <div class="hotel-chip-check">✓</div>
+          </div>
+        </div>
+        <div id="hotelOtherWrap" style="display:none;margin-top:8px;">
+          <input type="text" id="hotel" placeholder="e.g. Radisson Hotel Hongkou" style="width:100%;padding:10px 14px;border:1.5px solid var(--border);border-radius:10px;font-size:.9rem;font-family:inherit;"/>
+        </div>
+      </div>
+
+      <div style="margin-top:20px">
+        <label style="font-size:.82rem;font-weight:600;color:var(--sub);text-transform:uppercase;letter-spacing:.04em;display:block;margin-bottom:6px;">Plan Name <span style="font-weight:400;text-transform:none;letter-spacing:0;">(optional)</span></label>
+        <input type="text" id="planTitle" placeholder="e.g. Family Shanghai 2026 🏙" style="width:100%;padding:11px 14px;border:1.5px solid var(--border);border-radius:10px;font-size:.9rem;font-family:inherit;"/>
+      </div>
+    </div>
+    <div class="btn-row">
+      <button class="btn-next" onclick="nextFromDates()">Continue →</button>
+    </div>
+  </div>
+
+  <!-- ══ STEP 2: INTERESTS ══ -->
+  <div class="step" id="step-2">
+    <div class="card">
+      <div class="card-title">Your Interests</div>
+      <div class="card-sub">What do you enjoy most? Select all that apply.</div>
+      <div class="chips" id="interestChips">
+        <div class="chip" data-val="culture" onclick="toggleChip(this)">🏛 Culture &amp; History</div>
+        <div class="chip" data-val="food" onclick="toggleChip(this)">🍜 Food &amp; Restaurants</div>
+        <div class="chip" data-val="shopping" onclick="toggleChip(this)">🛍 Shopping</div>
+        <div class="chip" data-val="tech" onclick="toggleChip(this)">🏙 Technology</div>
+        <div class="chip" data-val="tradition" onclick="toggleChip(this)">🏮 Traditional China</div>
+        <div class="chip" data-val="relax" onclick="toggleChip(this)">🌿 Parks &amp; Relaxation</div>
+        <div class="chip" data-val="night" onclick="toggleChip(this)">🌙 Nightlife</div>
+        <div class="chip" data-val="photo" onclick="toggleChip(this)">📸 Photo Spots</div>
+        <div class="chip" data-val="family" onclick="toggleChip(this)">👨‍👩‍👧 Family-Friendly</div>
+        <div class="chip" data-val="budget" onclick="toggleChip(this)">💰 Budget-Friendly</div>
+      </div>
+      <div style="margin-top:24px">
+        <label style="font-size:.82rem;font-weight:600;color:var(--sub);text-transform:uppercase;letter-spacing:.04em;display:block;margin-bottom:8px;">Budget (total, approx)</label>
+        <div class="chips" id="budgetChips">
+          <div class="chip" data-val="low" onclick="toggleSingleChip(this,'budgetChips')">Under ₮500,000</div>
+          <div class="chip" data-val="mid" onclick="toggleSingleChip(this,'budgetChips')">₮500K–₮1.2M</div>
+          <div class="chip" data-val="high" onclick="toggleSingleChip(this,'budgetChips')">₮1.2M–₮2.5M</div>
+          <div class="chip" data-val="luxury" onclick="toggleSingleChip(this,'budgetChips')">₮2.5M+</div>
+        </div>
+      </div>
+    </div>
+    <div class="btn-row">
+      <button class="btn-back" onclick="goToStep(1)">← Back</button>
+      <button class="btn-next" onclick="nextFromInterests()">Continue →</button>
+    </div>
+  </div>
+
+  <!-- ══ STEP 3: SCHEDULE ══ -->
+  <div class="step" id="step-3">
+    <div class="card">
+      <div class="card-title">Daily Schedule</div>
+      <div class="card-sub">Same timing applied to all days.</div>
+      <div style="margin-bottom:20px">
+        <div style="font-size:.88rem;font-weight:600;margin-bottom:10px;">🌅 What time do you start your day?</div>
+        <div class="chips" id="startTimeChips">
+          <div class="chip" data-val="08:00" onclick="selectGlobalTime('start',this)">08:00 Early</div>
+          <div class="chip selected" data-val="09:00" onclick="selectGlobalTime('start',this)">09:00 Morning</div>
+          <div class="chip" data-val="10:00" onclick="selectGlobalTime('start',this)">10:00</div>
+          <div class="chip" data-val="11:00" onclick="selectGlobalTime('start',this)">11:00 Late start</div>
+        </div>
+      </div>
+      <div>
+        <div style="font-size:.88rem;font-weight:600;margin-bottom:10px;">🌙 What time do you wrap up?</div>
+        <div class="chips" id="endTimeChips">
+          <div class="chip" data-val="18:00" onclick="selectGlobalTime('end',this)">18:00 Early</div>
+          <div class="chip" data-val="20:00" onclick="selectGlobalTime('end',this)">20:00</div>
+          <div class="chip selected" data-val="21:00" onclick="selectGlobalTime('end',this)">21:00 Standard</div>
+          <div class="chip" data-val="23:00" onclick="selectGlobalTime('end',this)">23:00+ Late night</div>
+        </div>
+      </div>
+    </div>
+    <div class="btn-row">
+      <button class="btn-back" onclick="goToStep(2)">← Back</button>
+      <button class="btn-next" onclick="nextFromTime()">Continue →</button>
+    </div>
+  </div>
+
+  <!-- ══ STEP 4: PLACES ══ -->
+  <div class="step" id="step-4">
+    <div class="card">
+      <div class="card-title">Select Places</div>
+      <div class="card-sub">Browse Shanghai's top spots and save the ones you want to visit.</div>
+      <div class="places-filter" id="placesFilter">
+        <button class="filter-btn active" onclick="filterPlaces('all',this)">🗺 All</button>
+        <button class="filter-btn" onclick="filterPlaces('culture',this)">🏛 Must-See</button>
+        <button class="filter-btn" onclick="filterPlaces('hidden',this)">💎 Hidden Gems</button>
+        <button class="filter-btn" onclick="filterPlaces('museum',this)">🖼 Museums</button>
+        <button class="filter-btn" onclick="filterPlaces('temple',this)">⛩ Temples</button>
+        <button class="filter-btn" onclick="filterPlaces('shopping',this)">🛍 Shopping</button>
+        <button class="filter-btn" onclick="filterPlaces('food',this)">🍜 Food</button>
+        <button class="filter-btn" onclick="filterPlaces('relax',this)">🌿 Parks</button>
+        <button class="filter-btn" onclick="filterPlaces('night',this)">🌙 Nightlife</button>
+        <button class="filter-btn" onclick="filterPlaces('daytrip',this)">🚌 Day Trips</button>
+      </div>
+      <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:14px;">
+        <span style="font-size:.85rem;color:var(--sub);">Total <strong id="totalPlacesCount">0</strong> places</span>
+        <span style="font-size:.85rem;color:var(--primary);font-weight:600;"><span id="savedCount">0</span> saved</span>
+      </div>
+      <div class="places-grid" id="placesGrid"></div>
+    </div>
+    <div class="btn-row">
+      <button class="btn-back" onclick="goToStep(3)">← Back</button>
+      <button class="btn-next" onclick="nextFromPlaces()">Generate Itinerary →</button>
+    </div>
+  </div>
+
+  <!-- ══ STEP 5: ITINERARY ══ -->
+  <div class="step" id="step-5">
+    <div class="card">
+      <div class="card-title">Your Itinerary</div>
+      <div class="card-sub" id="itin-sub">Your saved places, organized by day.</div>
+      <div id="itinContent"></div>
+    </div>
+    <div class="card">
+      <div class="card-title">Saved Places</div>
+      <div class="card-sub">Drag to reorder.</div>
+      <div class="saved-list" id="savedList"></div>
+      <div class="drag-hint">☝ Drag to reorder</div>
+    </div>
+    <div class="card">
+      <div class="card-title">Estimated Cost</div>
+      <div class="card-sub">Approximate cost per person</div>
+      <table class="cost-table" id="costTable">
+        <thead><tr><th>Item</th><th>Est. Cost</th></tr></thead>
+        <tbody id="costBody"></tbody>
+      </table>
+    </div>
+    <div class="btn-row">
+      <button class="btn-back" onclick="goToStep(4)">← Back</button>
+      <button class="btn-next" onclick="goToStep(6)">Save &amp; Share →</button>
+    </div>
+  </div>
+
+  <!-- ══ STEP 6: SHARE ══ -->
+  <div class="step" id="step-6">
+    <div class="card">
+      <div class="card-title">Save &amp; Share 🔗</div>
+      <div class="card-sub">Save your plan to get a shareable link. Send it to friends — they can copy and edit it as their own.</div>
+      <button class="btn-save-plan" onclick="savePlan()">💾 Save Plan</button>
+      <div class="share-box">
+        <input class="share-link-input" id="shareLink" readonly placeholder="← Click 'Save Plan' first"/>
+        <button class="btn-copy" onclick="copyLink()">Copy Link</button>
+        <div id="shareHint" style="display:none;font-size:.8rem;color:#16a34a;margin-top:8px;padding:8px 12px;background:#f0fff4;border-radius:8px;">
+          ✓ Link ready! Send it to your travel buddy.
+        </div>
+      </div>
+    </div>
+    <div class="card" style="text-align:center;padding:32px 24px;">
+      <div style="font-size:2rem;margin-bottom:12px;">🗺️</div>
+      <div style="font-size:1rem;font-weight:700;margin-bottom:8px;">Need a Mongolian Guide?</div>
+      <div style="font-size:.88rem;color:var(--sub);margin-bottom:20px;">LFS Shanghai can handle transport, translations, and all arrangements for you.</div>
+      <a href="/en/booking/" style="display:inline-block;padding:12px 28px;background:var(--primary);color:#fff;border-radius:50px;text-decoration:none;font-size:.9rem;font-weight:700;">Book a Guide →</a>
+    </div>
+    <div class="btn-row">
+      <button class="btn-back" onclick="goToStep(5)">← Back</button>
+    </div>
+  </div>
+
+</main>
+
+<footer>
+  <div class="footer-nav">
+    <a href="/en/">Home</a>
+    <a href="/en/health/">Healthcare</a>
+    <a href="/en/routes/">Routes</a>
+    <a href="/en/tips/">Tips</a>
+    <a href="/en/booking/">Book Now</a>
+    <a href="/planner/">🇲🇳 Монгол</a>
+  </div>
+  <div>© 2026 LFS Shanghai — Trusted Guide for Mongolian Travelers</div>
+</footer>
+
+<!-- FIREBASE -->
+<script type="module">
+import { initializeApp } from 'https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js';
+import { getFirestore, doc, getDoc, setDoc, addDoc, collection } from 'https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore.js';
+import { getAuth, onAuthStateChanged } from 'https://www.gstatic.com/firebasejs/10.12.0/firebase-auth.js';
+const app = initializeApp({
+  apiKey:"AIzaSyDExRTbwpFcRsT-mfWvGFZuDWN8vqxnPxE",
+  authDomain:"lfs-shanghai.firebaseapp.com",
+  projectId:"lfs-shanghai",
+  storageBucket:"lfs-shanghai.appspot.com",
+  messagingSenderId:"123456789",
+  appId:"1:123456789:web:abcdef123456"
+});
+const db = getFirestore(app);
+const auth = getAuth(app);
+onAuthStateChanged(auth, user => {
+  window._currentUser = user || null;
+  if(user){document.getElementById('navAuth').innerHTML=`<span style="font-size:.82rem;color:var(--sub)">${user.email||user.displayName||'Logged in'}</span>`;}
+});
+window._db = db;
+window._fbDoc = doc;
+window._fbGetDoc = getDoc;
+window._fbSetDoc = setDoc;
+window._fbAddDoc = addDoc;
+window._fbCollection = collection;
+window.savePlan = async function(){
+  const title = document.getElementById('planTitle')?.value.trim() || 'Shanghai Trip';
+  const uid = window._currentUser?.uid || 'guest';
+  const planData = {
+    title, lang:'en',
+    dates:{ arrival: window._plan.arrival, departure: window._plan.departure },
+    adults: window._plan.adults||2,
+    childFree: window._plan.childFree||0,
+    childPaid: window._plan.childPaid||0,
+    hotel: window._plan.hotel||'',
+    interests: window._plan.interests||[],
+    budget: window._plan.budget||'',
+    timePrefs: window._plan.timePrefs||{},
+    savedPlaces: window._plan.savedPlaces||[],
+    createdAt: new Date().toISOString(), uid
+  };
+  const linkEl = document.getElementById('shareLink');
+  try {
+    if(window._planId){
+      await window._fbSetDoc(window._fbDoc(db,'planners',window._planId), planData, {merge:true});
+      if(linkEl) linkEl.value = `https://lfsshanghai.com/en/planner/?id=${window._planId}`;
+      showToast('Updated ✓','success');
+    } else {
+      const ref = await window._fbAddDoc(window._fbCollection(db,'planners'), planData);
+      window._planId = ref.id;
+      if(linkEl) linkEl.value = `https://lfsshanghai.com/en/planner/?id=${ref.id}`;
+      document.getElementById('btnShareFloat2').style.display='';
+      showToast('Saved! 🎉','success');
+    }
+    document.getElementById('shareHint').style.display='block';
+    linkEl?.select();
+  } catch(e){
+    const localId='local_'+Date.now();
+    localStorage.setItem('plan_'+localId, JSON.stringify(planData));
+    if(linkEl) linkEl.value=`https://lfsshanghai.com/en/planner/?id=${localId}`;
+    window._planId=localId;
+    showToast('Saved offline','success');
+  }
+};
+// Load shared plan
+window.addEventListener('DOMContentLoaded',()=>{
+  const params=new URLSearchParams(location.search);
+  const id=params.get('id');
+  if(!id) return;
+  if(id.startsWith('local_')){
+    const raw=localStorage.getItem('plan_'+id);
+    if(raw) applySharedPlan(JSON.parse(raw),id);
+    return;
+  }
+  (async()=>{
+    try{
+      const snap=await window._fbGetDoc(window._fbDoc(db,'planners',id));
+      if(!snap.exists()){showToast('Plan not found','error');return;}
+      window._planId=id;
+      applySharedPlan(snap.data(),id);
+    }catch(e){console.warn(e);}
+  })();
+});
+function applySharedPlan(data,id){
+  if(data.savedPlaces) window._plan.savedPlaces=[...data.savedPlaces];
+  if(data.interests) window._plan.interests=[...data.interests];
+  if(data.dates){window._plan.arrival=data.dates.arrival;window._plan.departure=data.dates.departure;}
+  if(data.adults) window._plan.adults=data.adults;
+  if(data.hotel) window._plan.hotel=data.hotel;
+  const banner=document.getElementById('sharedBanner');
+  const title=data.title||'Shanghai Trip';
+  const places=(data.savedPlaces||[]).length;
+  document.getElementById('sharedBannerTitle').textContent=`🗺 "${title}"`;
+  document.getElementById('sharedBannerDesc').textContent=`${places} places saved · Shared plan`;
+  banner.classList.add('visible');
+  if(data.dates?.arrival) document.getElementById('dateArrival').value=data.dates.arrival;
+  if(data.dates?.departure) document.getElementById('dateDeparture').value=data.dates.departure;
+  window._sharedPlanData=data;
+}
+window.copyAndEditPlan=function(){
+  document.getElementById('sharedBanner')?.classList.remove('visible');
+  window._planId=null;
+  showToast('Copied! Save it as your own.','success');
+};
+window.dismissSharedBanner=function(){document.getElementById('sharedBanner')?.classList.remove('visible');};
+</script>
+
+<script>
+// ── State ──
+window._plan = {
+  arrival:'', departure:'', adults:2, childFree:0, childPaid:0,
+  hotel:'', interests:[], budget:'', timePrefs:{start:'09:00',end:'21:00'},
+  savedPlaces:[], dayAssignments:{}
+};
+window._planId = null;
+window._currentUser = null;
+
+// ── Toast ──
+function showToast(msg, type='success'){
+  const c=document.getElementById('toastContainer');
+  const t=document.createElement('div');
+  t.className='toast '+type; t.textContent=msg;
+  c.appendChild(t);
+  setTimeout(()=>t.remove(),3000);
+}
+window.showToast=showToast;
+
+// ── Step nav ──
+function goToStep(n){
+  document.querySelectorAll('.step').forEach(s=>s.classList.remove('active'));
+  document.getElementById('step-'+n).classList.add('active');
+  document.querySelectorAll('.step-dot').forEach((d,i)=>{
+    d.classList.remove('active','done');
+    const sn=parseInt(d.dataset.step);
+    if(sn===n) d.classList.add('active');
+    else if(sn<n) d.classList.add('done');
+  });
+  window.scrollTo({top:0,behavior:'smooth'});
+  if(n===4) renderPlaces();
+  if(n===5) renderItinerary();
+}
+window.goToStep=goToStep;
+
+function nextFromDates(){
+  const a=document.getElementById('dateArrival').value;
+  const d=document.getElementById('dateDeparture').value;
+  window._plan.arrival=a; window._plan.departure=d;
+  window._plan.hotel=document.getElementById('hotel')?.value.trim()||window._plan.hotel;
+  goToStep(2);
+}
+window.nextFromDates=nextFromDates;
+
+function nextFromInterests(){
+  window._plan.interests=[...document.querySelectorAll('#interestChips .chip.selected')].map(c=>c.dataset.val);
+  const b=document.querySelector('#budgetChips .chip.selected');
+  window._plan.budget=b?b.dataset.val:'';
+  goToStep(3);
+}
+window.nextFromInterests=nextFromInterests;
+
+function nextFromTime(){ goToStep(4); }
+window.nextFromTime=nextFromTime;
+
+function nextFromPlaces(){ goToStep(5); }
+window.nextFromPlaces=nextFromPlaces;
+
+// ── Chip toggles ──
+window.toggleChip=function(el){el.classList.toggle('selected');};
+window.toggleSingleChip=function(el,gid){
+  document.querySelectorAll('#'+gid+' .chip').forEach(c=>c.classList.remove('selected'));
+  el.classList.add('selected');
+};
+window.selectGlobalTime=function(type,el){
+  const gid=type==='start'?'startTimeChips':'endTimeChips';
+  document.querySelectorAll('#'+gid+' .chip').forEach(c=>c.classList.remove('selected'));
+  el.classList.add('selected');
+  window._plan.timePrefs[type]=el.dataset.val;
+};
+
+// ── People ──
+window.adjustPeople=function(type,d){
+  window._plan[type]=Math.max(0,window._plan[type]+d);
+  if(type==='adults') window._plan.adults=Math.max(1,window._plan.adults);
+  document.getElementById('count'+type.charAt(0).toUpperCase()+type.slice(1)).textContent=window._plan[type];
+  const total=window._plan.adults+window._plan.childFree+window._plan.childPaid;
+  const paying=window._plan.adults+window._plan.childPaid;
+  document.getElementById('peopleTotalCount').textContent=total;
+  document.getElementById('metroPayCount').textContent=paying;
+};
+
+// ── Hotel ──
+window.selectHotel=function(el){
+  document.querySelectorAll('.hotel-chip').forEach(c=>c.classList.remove('selected'));
+  el.classList.add('selected');
+  const id=el.dataset.hotelId;
+  window._plan.hotel=el.querySelector('.hotel-chip-name').textContent;
+  window._plan.hotelId=id;
+  document.getElementById('hotelOtherWrap').style.display=id==='other'?'block':'none';
+};
+
+// ── Places database (EN) ──
+const PLACES = [
+  {id:'bund',name:'The Bund (外滩)',icon:'🌉',cat:'culture',tags:['photo','culture'],cost:0,desc:'Shanghai\'s most iconic waterfront promenade with colonial architecture and Pudong skyline views.',metro:'East Nanjing Rd · Line 2/10'},
+  {id:'yuyuan',name:'Yuyuan Garden (豫园)',icon:'🌸',cat:'culture',tags:['culture','tradition','family'],cost:40,desc:'Exquisite Ming-dynasty garden in the heart of the Old City. Nearby bazaar is great for street food.',metro:'Yu Garden · Line 10/14'},
+  {id:'tower',name:'Shanghai Tower (上海中心)',icon:'🏙️',cat:'culture',tags:['photo','tech'],cost:180,desc:'World\'s 2nd tallest building at 632m. 118F observation deck with breathtaking views.',metro:'Lujiazui · Line 2'},
+  {id:'starbucks',name:'Starbucks Reserve Roastery',icon:'☕',cat:'food',tags:['food','photo'],cost:80,desc:'World\'s largest Starbucks — 6 floors of coffee experience. Highly Instagrammable.',metro:'West Nanjing Rd · Line 2'},
+  {id:'xintiandi',name:'Xintiandi (新天地)',icon:'🏘️',cat:'hidden',tags:['culture','night','photo'],cost:0,desc:'Stylish historic lane district with cafés, boutiques, and restaurants. Great for evening strolls.',metro:'Xintiandi · Line 10/13'},
+  {id:'m50',name:'M50 Creative Park',icon:'🎨',cat:'museum',tags:['culture','photo'],cost:0,desc:'100+ contemporary art galleries in a converted 1930s factory. Free entry to most spaces.',metro:'Jiangning Rd · Line 13'},
+  {id:'oriental',name:'Oriental Pearl Tower (东方明珠)',icon:'🗼',cat:'culture',tags:['photo','family'],cost:150,desc:'Shanghai\'s iconic TV tower with Shanghai History Museum inside and stunning river views.',metro:'Lujiazui · Line 2'},
+  {id:'nanjingrd',name:'Nanjing Road Pedestrian Street',icon:'🛍️',cat:'shopping',tags:['shopping'],cost:0,desc:'1.2km pedestrian shopping street — one of the world\'s busiest commercial streets.',metro:'People\'s Square · Line 1/2'},
+  {id:'ifc',name:'IFC Mall (国金中心)',icon:'💎',cat:'shopping',tags:['shopping'],cost:0,desc:'Pudong\'s premier luxury mall — Chanel, Hermès, Louis Vuitton, Cartier and more.',metro:'Lujiazui · Line 2'},
+  {id:'plaza66',name:'Plaza 66 (恒隆广场)',icon:'🏬',cat:'shopping',tags:['shopping'],cost:0,desc:'Nanjing West Road luxury hub — Gucci, Prada, Dior, Bulgari, Rolex.',metro:'West Nanjing Rd · Line 2'},
+  {id:'jingan',name:'Jing\'an Temple (静安寺)',icon:'⛩',cat:'temple',tags:['culture','tradition','photo'],cost:50,desc:'Active Buddhist temple in the heart of the city — golden roofs glowing against modern skyscrapers.',metro:'Jing\'an Temple · Line 2/7'},
+  {id:'longhua',name:'Longhua Temple (龙华寺)',icon:'⛩',cat:'temple',tags:['culture','tradition'],cost:10,desc:'Shanghai\'s oldest and largest Buddhist temple, dating back 1,700 years.',metro:'Longhua · Line 11/12'},
+  {id:'shanghaimuseum',name:'Shanghai Museum (上海博物馆)',icon:'🏛️',cat:'museum',tags:['culture','museum'],cost:0,desc:'World-class collection of ancient Chinese bronzes, ceramics, jade and calligraphy. Free entry.',metro:'People\'s Square · Line 1/2/8'},
+  {id:'powerstation',name:'Power Station of Art',icon:'🖼️',cat:'museum',tags:['culture','photo'],cost:20,desc:'China\'s first state-run contemporary art museum, converted from a 1930s power plant.',metro:'Miaojiang Rd · Line 4/8'},
+  {id:'taikang',name:'Taikang Road (田子坊)',icon:'🎭',cat:'hidden',tags:['culture','photo','shopping'],cost:0,desc:'Bohemian alley maze with independent boutiques, art studios, and hole-in-the-wall cafés.',metro:'Dapuqiao · Line 9'},
+  {id:'zhujiajiao',name:'Zhujiajiao Water Town (朱家角)',icon:'🚣',cat:'daytrip',tags:['culture','tradition','photo','family'],cost:50,desc:'"Venice of the East" — ancient canal town 1 hour from the city. Boat rides, stone bridges, street food.',metro:'Bus from Pu\'an Rd'},
+  {id:'suzhou',name:'Suzhou Day Trip',icon:'🏯',cat:'daytrip',tags:['culture','tradition'],cost:80,desc:'Beautiful canal city 25 minutes by high-speed rail. UNESCO garden city.',metro:'Hongqiao Railway Station'},
+  {id:'ditalfung',name:'Din Tai Fung (鼎泰豐)',icon:'🥟',cat:'food',tags:['food'],cost:150,desc:'Michelin-starred Taiwanese chain famous for xiaolongbao soup dumplings. Pre-booking recommended.',metro:'West Nanjing Rd · Line 2'},
+  {id:'haidilao',name:'Hai Di Lao Hotpot (海底捞)',icon:'🍲',cat:'food',tags:['food','night'],cost:200,desc:'China\'s most famous hotpot chain — 24-hour service, exceptional staff entertainment.',metro:'Multiple locations'},
+  {id:'qipuroad',name:'Qipu Road Clothing Market (七浦路)',icon:'🧥',cat:'shopping',tags:['shopping','budget'],cost:0,desc:'10-floor clothing market with wholesale prices. Mongolian guide essential for best deals.',metro:'Tiantong Rd · Line 10'},
+  {id:'yuyuanbazaar',name:'Yuyuan Bazaar (豫园商城)',icon:'🏮',cat:'shopping',tags:['shopping','tradition'],cost:0,desc:'Traditional crafts, silk, jade, tea, and souvenirs. Great for gifts to take home.',metro:'Yu Garden · Line 10/14'},
+  {id:'fabricmarket',name:'South Bund Fabric Market',icon:'✂️',cat:'shopping',tags:['shopping'],cost:0,desc:'Custom-made suits and dresses in 24–48 hours. Bring a photo of the style you want.',metro:'Nanpu Bridge · Line 4'},
+  {id:'century',name:'Century Park (世纪公园)',icon:'🌳',cat:'relax',tags:['relax','family'],cost:10,desc:'Shanghai\'s largest park — perfect for picnics, boat rides, and cycling. Family-friendly.',metro:'Century Park · Line 2'},
+  {id:'zhongshan',name:'Zhongshan Park',icon:'🌿',cat:'relax',tags:['relax'],cost:0,desc:'Central green space popular with locals for morning exercises and afternoon strolls.',metro:'Zhongshan Park · Line 2/3/4'},
+  {id:'bund-night',name:'The Bund at Night',icon:'🌃',cat:'night',tags:['photo','night'],cost:0,desc:'The most spectacular view in Shanghai — Pudong\'s LED skyline reflecting on the Huangpu River.',metro:'East Nanjing Rd · Line 2'},
+  {id:'bar-street',name:'Yongkang Road Bar Street',icon:'🍺',cat:'night',tags:['night'],cost:100,desc:'Lively expat bar street with outdoor seating. Relaxed and affordable nightlife.',metro:'Jiashan Rd · Line 9'},
+  {id:'jade',name:'Jade Buddha Temple (玉佛寺)',icon:'🪬',cat:'temple',tags:['tradition','culture'],cost:50,desc:'Famous for its stunning white jade Buddha statue carved from a single piece of Burmese jade.',metro:'Changshou Rd · Line 7'},
+  {id:'tianzifang',name:'Tianzifang (田子坊)',icon:'🏛️',cat:'hidden',tags:['photo','shopping','food'],cost:0,desc:'Labyrinthine 1930s lane houses converted into cafes, galleries, and boutiques.',metro:'Dapuqiao · Line 9'},
+  {id:'haibao',name:'Haibao Museum',icon:'🦋',cat:'museum',tags:['museum','family'],cost:60,desc:'Shanghai Natural History Museum — dinosaurs, ocean life, and human evolution exhibits.',metro:'Dalian Rd · Line 4'},
+  {id:'photography',name:'Shanghai Photo Museum',icon:'📷',cat:'museum',tags:['museum','photo'],cost:50,desc:'Extensive collection of historic Shanghai photography and world-class rotating exhibitions.',metro:'Lujiazui · Line 2'},
+];
+
+let currentFilter='all';
+window.filterPlaces=function(cat,btn){
+  currentFilter=cat;
+  document.querySelectorAll('.filter-btn').forEach(b=>b.classList.remove('active'));
+  btn.classList.add('active');
+  renderPlaces();
+};
+
+function renderPlaces(){
+  const grid=document.getElementById('placesGrid');
+  let filtered=PLACES;
+  if(currentFilter!=='all') filtered=PLACES.filter(p=>p.cat===currentFilter);
+  const interests=window._plan.interests||[];
+  filtered=[...filtered].sort((a,b)=>{
+    const score=p=>{
+      const interestMatch=interests.length===0||p.tags.some(t=>interests.includes(t))?1:0;
+      return interestMatch;
+    };
+    return score(b)-score(a);
+  });
+  document.getElementById('totalPlacesCount').textContent=filtered.length;
+  document.getElementById('savedCount').textContent=window._plan.savedPlaces.length;
+  grid.innerHTML=filtered.map(p=>{
+    const saved=window._plan.savedPlaces.includes(p.id);
+    return `<div class="place-card${saved?' saved':''}" id="pc_${p.id}">
+      <div class="pc-header">
+        <span class="pc-icon">${p.icon}</span>
+        <button class="place-save" onclick="toggleSave('${p.id}')">${saved?'❤️':'🤍'}</button>
+      </div>
+      <div class="pc-name">${p.name}</div>
+      <div class="pc-sub">${p.desc}</div>
+      <div class="pc-cost">🚇 ${p.metro}${p.cost?` · ~¥${p.cost}/person`:' · Free'}</div>
+      <div class="pc-tags">${p.tags.map(t=>`<span class="pc-tag">${t}</span>`).join('')}</div>
+    </div>`;
+  }).join('');
+}
+
+window.toggleSave=function(id){
+  const idx=window._plan.savedPlaces.indexOf(id);
+  if(idx>-1) window._plan.savedPlaces.splice(idx,1);
+  else window._plan.savedPlaces.push(id);
+  document.getElementById('savedCount').textContent=window._plan.savedPlaces.length;
+  const card=document.getElementById('pc_'+id);
+  if(card){
+    const saved=window._plan.savedPlaces.includes(id);
+    card.classList.toggle('saved',saved);
+    card.querySelector('.place-save').textContent=saved?'❤️':'🤍';
+  }
+};
+
+// ── Itinerary generation ──
+function renderItinerary(){
+  const a=window._plan.arrival;
+  const d=window._plan.departure;
+  const saved=window._plan.savedPlaces;
+  const container=document.getElementById('itinContent');
+
+  if(!a||!d){container.innerHTML='<p style="color:var(--sub);font-size:.88rem;">Please set your travel dates in Step 1 first.</p>';renderSavedList();renderCost();return;}
+  const days=Math.max(1,Math.round((new Date(d)-new Date(a))/(1000*60*60*24)));
+  const perDay=Math.ceil(saved.length/days)||0;
+  const sub=document.getElementById('itin-sub');
+  sub.textContent=`${saved.length} places across ${days} day${days>1?'s':''} — ${perDay} per day`;
+
+  if(saved.length===0){container.innerHTML='<p style="color:var(--sub);font-size:.88rem;">No places saved yet. Go back to Step 4 and add some!</p>';renderSavedList();renderCost();return;}
+
+  const placeMap={};PLACES.forEach(p=>placeMap[p.id]=p);
+  const start=window._plan.timePrefs?.start||'09:00';
+  let html='';
+  for(let day=0;day<days;day++){
+    const dayPlaces=saved.slice(day*perDay,(day+1)*perDay).map(id=>placeMap[id]).filter(Boolean);
+    const date=new Date(a);date.setDate(date.getDate()+day);
+    const label=date.toLocaleDateString('en-US',{weekday:'short',month:'short',day:'numeric'});
+    html+=`<div class="itin-day"><div class="itin-day-title"><span>Day ${day+1} — ${label}</span><span style="font-size:.76rem;color:var(--sub)">${start}+</span></div>`;
+    if(dayPlaces.length===0){html+='<div style="font-size:.82rem;color:var(--sub);padding:8px 0;">No places assigned to this day.</div>';}
+    dayPlaces.forEach((p,i)=>{
+      html+=`<div class="itin-place"><div class="itin-num">${i+1}</div><div class="itin-info"><div class="itin-name">${p.icon} ${p.name}</div><div class="itin-meta">🚇 ${p.metro}${p.cost?' · ~¥'+p.cost:' · Free'}</div></div></div>`;
+    });
+    html+='</div>';
+  }
+  if(saved.length>days*perDay){
+    const extra=saved.slice(days*perDay).map(id=>placeMap[id]).filter(Boolean);
+    html+=`<div class="itin-day"><div class="itin-day-title">Unscheduled</div>`;
+    extra.forEach((p,i)=>{html+=`<div class="itin-place"><div class="itin-num">+</div><div class="itin-info"><div class="itin-name">${p.icon} ${p.name}</div><div class="itin-meta">🚇 ${p.metro}</div></div></div>`;});
+    html+='</div>';
+  }
+  container.innerHTML=html;
+  renderSavedList();
+  renderCost();
+}
+
+function renderSavedList(){
+  const sl=document.getElementById('savedList');
+  const placeMap={};PLACES.forEach(p=>placeMap[p.id]=p);
+  if(window._plan.savedPlaces.length===0){sl.innerHTML='<div style="font-size:.85rem;color:var(--sub);text-align:center;padding:12px;">No places saved yet.</div>';return;}
+  sl.innerHTML=window._plan.savedPlaces.map((id,i)=>{
+    const p=placeMap[id];if(!p)return'';
+    return`<div class="saved-item" draggable="true" data-id="${id}">${p.icon} ${p.name}</div>`;
+  }).join('');
+  enableDrag();
+}
+
+function renderCost(){
+  const placeMap={};PLACES.forEach(p=>placeMap[p.id]=p);
+  const adults=window._plan.adults||2;
+  const paying=adults+(window._plan.childPaid||0);
+  const entries=window._plan.savedPlaces.map(id=>placeMap[id]).filter(Boolean);
+  let total=0;
+  const rows=entries.filter(p=>p.cost>0).map(p=>{total+=p.cost;return`<tr><td>${p.icon} ${p.name}</td><td>¥${p.cost}</td></tr>`;});
+  const metro=Math.round((window._plan.savedPlaces.length*4)*paying);
+  total+=metro/paying;
+  const body=document.getElementById('costBody');
+  body.innerHTML=rows.join('')
+    +`<tr><td>🚇 Metro (estimated)</td><td>¥${Math.round(metro/paying)}</td></tr>`
+    +`<tr class="total-row"><td>Total per person</td><td>¥${Math.round(total)} (~₮${Math.round(total*535).toLocaleString()})</td></tr>`;
+}
+
+// ── Drag & drop ──
+function enableDrag(){
+  const items=document.querySelectorAll('.saved-item');
+  let dragged=null;
+  items.forEach(item=>{
+    item.addEventListener('dragstart',()=>dragged=item);
+    item.addEventListener('dragover',e=>{e.preventDefault();});
+    item.addEventListener('drop',e=>{
+      e.preventDefault();
+      if(!dragged||dragged===item)return;
+      const all=[...document.querySelectorAll('.saved-item')];
+      const from=all.indexOf(dragged);
+      const to=all.indexOf(item);
+      const sp=[...window._plan.savedPlaces];
+      const [moved]=sp.splice(from,1);
+      sp.splice(to,0,moved);
+      window._plan.savedPlaces=sp;
+      renderSavedList();
+    });
+  });
+}
+
+function updateDayCards(){
+  window._plan.arrival=document.getElementById('dateArrival').value;
+  window._plan.departure=document.getElementById('dateDeparture').value;
+}
+window.updateDayCards=updateDayCards;
+
+function copyLink(){
+  const v=document.getElementById('shareLink').value;
+  if(!v||v.startsWith('←')){showToast('Save the plan first','error');return;}
+  navigator.clipboard?.writeText(v).then(()=>showToast('Link copied! 📋','success')).catch(()=>{
+    document.getElementById('shareLink').select();document.execCommand('copy');showToast('Link copied! 📋','success');
+  });
+}
+window.copyLink=copyLink;
+window.openShareModal=function(){copyLink();};
+</script>
+<script type="text/javascript">
+var Tawk_API=Tawk_API||{},Tawk_LoadTime=new Date();
+(function(){var s1=document.createElement("script"),s0=document.getElementsByTagName("script")[0];s1.async=true;s1.src='https://embed.tawk.to/6a01d583db08b91c337bdcf5/1jobik2hq';s1.charset='UTF-8';s1.setAttribute('crossorigin','*');s0.parentNode.insertBefore(s1,s0);})();
+</script>
+<script src="/js/messenger-btn.js"></script>
+</body>
+</html>
