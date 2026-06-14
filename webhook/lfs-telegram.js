@@ -7,7 +7,7 @@
 //   4. Format support — single / carousel / reel
 
 const fetch  = require('node-fetch');
-const { admin, dbPersonal, dbLFS } = require('../firebase');
+const { admin, dbLFS } = require('./firebase');
 
 const TG_TOKEN   = process.env.TELEGRAM_BOT_TOKEN_LFS;
 const TG_CHAT    = process.env.TELEGRAM_ID;
@@ -721,7 +721,7 @@ async function handleText(msg) {
     const amount  = parseInt(incomeMatch[1]);
     const note    = (incomeMatch[2] || '').trim() || 'Тодорхойгүй';
     const d       = todaySH();
-    const ref     = dbPersonal.doc(`users/${UID}/revenue/${d}`);
+    const ref     = dbLFS.doc(`users/${UID}/revenue/${d}`);
     const snap    = await ref.get();
     const cur     = snap.exists ? snap.data() : { total: 0, entries: [] };
     const entries = [...(cur.entries || []), { amount, note, time: new Date().toISOString() }];
@@ -737,10 +737,10 @@ async function handleText(msg) {
   // ── /revenue ─────────────────────────────────────────────────────
   if (text === '/revenue') {
     const d          = todaySH();
-    const todaySnap  = await dbPersonal.doc(`users/${UID}/revenue/${d}`).get();
+    const todaySnap  = await dbLFS.doc(`users/${UID}/revenue/${d}`).get();
     const todayData  = todaySnap.exists ? todaySnap.data() : { total: 0, entries: [] };
     const monthPfx   = d.slice(0, 7);
-    const allRevSnap = await dbPersonal.collection(`users/${UID}/revenue`).get().catch(() => ({ docs: [] }));
+    const allRevSnap = await dbLFS.collection(`users/${UID}/revenue`).get().catch(() => ({ docs: [] }));
     const monthTotal = allRevSnap.docs
       .filter(doc => doc.id.startsWith(monthPfx))
       .reduce((sum, doc) => sum + (doc.data().total || 0), 0);

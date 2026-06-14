@@ -7,7 +7,7 @@
 //   3. Өдрийн аналитик бүртгэх
 
 const fetch  = require('node-fetch');
-const { admin, dbLFS } = require('../firebase');
+const { admin, dbLFS } = require('./firebase');
 const TG_TOKEN = process.env.TELEGRAM_BOT_TOKEN_LFS;
 const TG_CHAT  = process.env.TELEGRAM_ID;
 const UID      = process.env.USER_UID;

@@ -5,10 +5,9 @@
 // POST /api/meta-webhook  — Incoming messages
 
 const fetch  = require('node-fetch');
-const { admin, dbPersonal, dbLFS } = require('../firebase');
+const { admin, dbLFS } = require('./firebase');
 
 // LFS чатбот өгөгдөл → dbLFS
-// Morning brief-д хувийн өгөгдөл → dbPersonal
 
 const META_TOKEN   = process.env.ACCESS_TOKEN_META;
 const IG_ID        = process.env.INSTAGRAM_BUSINESS_ID;
@@ -120,19 +119,9 @@ async function sendMorningBrief() {
   try {
     const yesterday = new Date(Date.now() - 86400000).toISOString().slice(0, 10);
 
-    const [analyticsSnap, bilegSnap, tasksSnap] = await Promise.all([
-      dbLFS.doc(`users/${UID}/analytics/${yesterday}`).get(),
-      dbPersonal.doc(`users/${UID}/bileg/profile`).get(),
-      dbPersonal.collection(`users/${UID}/tasks`).where('done', '==', false).get().catch(() => ({ docs: [] })),
-    ]);
+    const analyticsSnap = await dbLFS.doc(`users/${UID}/analytics/${yesterday}`).get();
 
     const d             = analyticsSnap.exists ? analyticsSnap.data() : {};
-    const bileg         = bilegSnap.exists ? bilegSnap.data() : {};
-    const tasks         = tasksSnap.docs
-      .map(doc => doc.data())
-      .sort((a, b) => (a.createdAt || '').localeCompare(b.createdAt || ''))
-      .slice(0, 5)
-      .map(d => d.text);
     const userCount     = (d.users    || []).length;
     const guideCount    = d.guide     || 0;
     const medicalCount  = d.medical   || 0;
@@ -141,9 +130,6 @@ async function sendMorningBrief() {
 
     const promptParts = [
       `LFS Shanghai өчигдрийн тоо: ${userCount} хэрэглэгч, ${guideCount} гайд, ${medicalCount} эмнэлэг, ${agentCount} ажилтан дуудсан.`,
-      bileg.goal  ? `Билэгийн зорилго: "${bileg.goal}".`  : '',
-      bileg.focus ? `Өнөөдрийн focus: "${bileg.focus}".` : '',
-      tasks.length ? `Хийх tasks: ${tasks.slice(0,3).join(', ')}.` : '',
       'Билэгт зориулж өнөөдрийн 1-2 өгүүлбэр практик урам зоригтой зөвлөгөө өг. Монголоор, дотно, анхаарлын тэмдэггүй.',
     ].filter(Boolean).join(' ');
 
@@ -173,22 +159,15 @@ async function sendMorningBrief() {
     const dayName = days[now.getDay()];
     const dateStr = now.toLocaleDateString('sv', { timeZone: 'Asia/Shanghai' });
 
-    const taskSection = tasks.length
-      ? '\n📋 *Хийх (' + tasks.length + '):*\n' + tasks.slice(0,5).map((t,i) => (i+1) + '. ' + t).join('\n') + '\n'
-      : '';
-    const goalSection = bileg.goal ? '\n🎯 _' + bileg.goal + '_\n' : '';
-
     const brief = [
       '🌅 *Өглөөний мэнд, Билэг.*',
       '_' + dayName + ', ' + dateStr + ' | Шанхай 07:30_',
       '`────────────────────`',
       '📊 *Өчигдрийн LFS:*',
       '• Хандсан: *' + userCount + '* · Гайд: *' + guideCount + '* · Эмнэлэг: *' + medicalCount + '* · Ажилтан: *' + agentCount + '*' + (escalateCount > 0 ? '\n• ⚠️ Бухимдсан: *' + escalateCount + '*' : ''),
-      goalSection,
-      taskSection,
       '💡 ' + advice,
       '',
-      '⚡ _J.A.R.V.I.S ажиллаж байна._',
+      '⚡ _LFS webhook ажиллаж байна._',
     ].join('\n');
 
     await tgNotify(brief);
@@ -203,7 +182,7 @@ async function sendDailyReport() {
     const today = todayKey();
     const [analyticsSnap, revenueSnap] = await Promise.all([
       dbLFS.doc(`users/${UID}/analytics/${today}`).get(),
-      dbPersonal.doc(`users/${UID}/revenue/${today}`).get(),
+      dbLFS.doc(`users/${UID}/revenue/${today}`).get(),
     ]);
     const d = analyticsSnap.exists ? analyticsSnap.data() : {};
 
@@ -234,16 +213,6 @@ _${today}_
 Маргаашийн ажилд чинь амжилт хүсье. 🚀`;
 
     await tgNotify(report);
-
-    // Sprint 1: LFS статистикийг dbPersonal-д sync хийх → вэб dashboard уншина
-    dbPersonal.doc(`users/${UID}/analytics/${today}`).set({
-      lfs_users_today:  userCount,
-      lfs_leads_today:  bookingLeads,
-      lfs_guide_today:  guideCount,
-      lfs_medical_today: medicalCount,
-      lfs_revenue_today: revenue,
-      syncedAt:         new Date().toISOString(),
-    }, { merge: true }).catch(() => {});
 
   } catch (e) {
     console.error('[Report] Daily report error:', e.message);
@@ -597,12 +566,8 @@ async function processMessage(senderId, text, mid, platform, accessToken) {
       triggeredAt: new Date().toISOString(),
       resolved:    false,
     };
-    // dbLFS — сервер талын хадгалалт
     dbLFS.doc(`users/${UID}/alerts/current`).set(alertPayload)
       .catch(e => console.error('[Alert] LFS write error:', e.message));
-    // dbPersonal — вэб dashboard (jarvis-bileg SDK) уншдаг
-    dbPersonal.doc(`users/${UID}/alerts/current`).set(alertPayload)
-      .catch(e => console.error('[Alert] Personal write error:', e.message));
   }
 
   const ok = await sendWithButtons(senderId, cleanReply, platform, accessToken);
