@@ -1,0 +1,655 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Contact — LFS Shanghai | Mongolian Guide in Shanghai</title>
+<link rel="icon" type="image/svg+xml" href="/favicon.svg">
+<link rel="icon" type="image/png" sizes="32x32" href="/favicon.png">
+<link rel="apple-touch-icon" href="/apple-touch-icon.png">
+<meta name="description" content="Contact LFS Shanghai. Reach us via Facebook Messenger, Instagram, or Email.">
+<meta name="robots" content="index, follow">
+<meta property="og:type" content="website">
+<meta property="og:title" content="Contact — LFS Shanghai">
+<meta property="og:description" content="Contact LFS Shanghai. Mongolian-speaking guide in Shanghai.">
+<meta property="og:url" content="https://lfsshanghai.com/en/contact/">
+<meta property="og:locale" content="en_US">
+<meta property="og:image" content="https://lfsshanghai.com/img/health/Bund2.jpg">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="800">
+<link rel="canonical" href="https://lfsshanghai.com/en/contact/">
+<link rel="alternate" hreflang="mn" href="https://lfsshanghai.com/contact/">
+<link rel="alternate" hreflang="en" href="https://lfsshanghai.com/en/contact/">
+<link rel="alternate" hreflang="x-default" href="https://lfsshanghai.com/contact/">
+<link href="https://fonts.googleapis.com/css2?family=Inter:ital,wght@0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,400&display=swap" rel="stylesheet">
+<script type="text/javascript" src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js"></script>
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-81DTJ80VLR"></script>
+<script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag("js",new Date());gtag("config","G-81DTJ80VLR");</script>
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+
+:root{
+  --bg:#fff;
+  --bg2:#f5f5f7;
+  --bg3:#fbfbfd;
+  --card:#fff;
+  --text:#1d1d1f;
+  --muted:#6e6e73;
+  --muted2:#86868b;
+  --blue:#0071e3;
+  --blue-hover:#0077ed;
+  --blue-light:#e8f1fb;
+  --border:rgba(0,0,0,.08);
+  --border2:rgba(0,0,0,.05);
+  --shadow:0 2px 20px rgba(0,0,0,.08);
+  --shadow2:0 8px 40px rgba(0,0,0,.12);
+  --radius:18px;
+  --radius2:24px;
+  --dark:#000;
+  --dark2:#1d1d1f;
+}
+
+html{scroll-behavior:smooth;overflow-x:clip}
+body{
+  font-family:'Inter',system-ui,-apple-system,BlinkMacSystemFont,'SF Pro Display','Segoe UI',sans-serif;
+  background:var(--bg);
+  color:var(--text);
+  overflow-x:hidden;
+  line-height:1.47059;
+  -webkit-font-smoothing:antialiased;
+}
+
+::-webkit-scrollbar{width:6px}
+::-webkit-scrollbar-track{background:var(--bg2)}
+::-webkit-scrollbar-thumb{background:#c7c7cc;border-radius:3px}
+
+/* ── NAV ── */
+.nav{
+  position:fixed;top:0;left:0;right:0;z-index:500;
+  height:52px;
+  display:flex;align-items:center;justify-content:space-between;
+  padding:0 22px;
+  background:rgba(255,255,255,.85);
+  backdrop-filter:saturate(180%) blur(20px);
+  -webkit-backdrop-filter:saturate(180%) blur(20px);
+  border-bottom:1px solid rgba(0,0,0,.06);
+  transition:background .3s;
+}
+.nav-logo{
+  font-size:17px;font-weight:700;
+  color:var(--dark2);
+  letter-spacing:-.02em;
+  text-decoration:none;
+  user-select:none;
+}
+.nav-logo span{color:var(--blue)}
+.nav-center-links{
+  position:absolute;left:50%;transform:translateX(-50%);
+  display:flex;align-items:center;gap:2px;height:52px;z-index:1;
+}
+.nav-center-link{
+  padding:5px 12px;font-size:12px;font-weight:500;
+  color:var(--muted);text-decoration:none;
+  border-radius:8px;transition:color .2s,background .2s;white-space:nowrap;
+}
+.nav-center-link:hover{color:var(--dark2);background:var(--bg2)}
+.nav-center-link.active{color:var(--dark2);font-weight:600}
+.nav-actions{display:flex;align-items:center;gap:8px}
+.nav-btn{
+  padding:7px 16px;
+  background:var(--blue);
+  color:#fff;
+  border:none;border-radius:20px;
+  font-size:12px;font-weight:500;
+  cursor:pointer;font-family:inherit;
+  transition:background .2s,transform .15s;
+  text-decoration:none;display:inline-flex;align-items:center;
+}
+.nav-btn:hover{background:var(--blue-hover)}
+.hamburger{
+  display:none;flex-direction:column;gap:4px;
+  cursor:pointer;padding:6px;min-width:44px;min-height:44px;
+  align-items:center;justify-content:center;
+  border:none;background:none;
+}
+.hamburger span{display:block;width:18px;height:1px;background:var(--dark2);transition:.3s;border-radius:1px}
+
+/* Mobile nav */
+.nav-mobile{
+  display:none;position:fixed;top:52px;left:0;right:0;bottom:0;
+  background:rgba(8,8,12,.92);
+  backdrop-filter:saturate(160%) blur(28px);
+  -webkit-backdrop-filter:saturate(160%) blur(28px);
+  flex-direction:column;align-items:flex-start;
+  padding:52px 28px 40px;gap:2px;z-index:499;
+  border-top:1px solid rgba(255,255,255,.07);overflow-y:auto;
+  opacity:0;pointer-events:none;
+  transform:translateY(-28px) scale(0.98);
+  transition:opacity .6s cubic-bezier(.4,0,.2,1),transform .6s cubic-bezier(.4,0,.2,1);
+}
+.nav-mobile.open{opacity:1;transform:translateY(0) scale(1);pointer-events:auto}
+.nav-mobile-link{
+  font-size:22px;font-weight:300;letter-spacing:-.01em;
+  padding:18px 0;color:rgba(255,255,255,.8);
+  border-bottom:1px solid rgba(255,255,255,.07);width:100%;
+  background:none;border-left:none;border-right:none;border-top:none;
+  cursor:pointer;font-family:inherit;text-align:left;
+  transition:color .2s,padding-left .25s,opacity .15s;
+  min-height:48px;display:flex;align-items:center;text-decoration:none;
+}
+.nav-mobile-link:hover,.nav-mobile-link.active{color:#fff;padding-left:10px;font-weight:400}
+
+@media(max-width:860px){
+  .nav-center-links{display:none}
+  .nav-mobile{display:flex}
+  .hamburger{display:flex}
+  .nav-btn{display:none}
+}
+
+/* ── PAGE HERO ── */
+.page-hero{
+  padding:120px 24px 80px;
+  text-align:center;
+  max-width:800px;
+  margin:0 auto;
+}
+.hero-eyebrow{
+  font-size:12px;font-weight:600;letter-spacing:.1em;text-transform:uppercase;
+  color:var(--blue);margin-bottom:16px;
+}
+.page-hero h1{
+  font-size:clamp(40px,6vw,76px);
+  font-weight:700;
+  line-height:1.05;
+  letter-spacing:-.04em;
+  color:var(--dark2);
+  margin-bottom:20px;
+}
+.page-hero h1 em{font-style:normal;color:var(--blue)}
+.page-hero p{
+  font-size:clamp(15px,1.8vw,18px);
+  color:var(--muted);
+  max-width:480px;
+  margin:0 auto;
+  line-height:1.65;
+}
+
+/* ── CONTACT CARDS ── */
+.contact-section{
+  padding:40px 24px 80px;
+  max-width:900px;
+  margin:0 auto;
+}
+.contact-grid{
+  display:grid;
+  grid-template-columns:repeat(auto-fill,minmax(240px,1fr));
+  gap:16px;
+  margin-bottom:64px;
+}
+.contact-card{
+  background:var(--card);
+  border:1px solid var(--border);
+  border-radius:var(--radius2);
+  padding:28px 24px;
+  display:flex;align-items:center;gap:16px;
+  text-decoration:none;color:var(--dark2);
+  box-shadow:var(--shadow);
+  transition:transform .2s,box-shadow .2s,border-color .2s;
+  cursor:pointer;
+}
+.contact-card:hover{
+  transform:translateY(-3px);
+  box-shadow:var(--shadow2);
+  border-color:rgba(0,113,227,.15);
+}
+.contact-card-icon{
+  width:48px;height:48px;border-radius:14px;
+  display:flex;align-items:center;justify-content:center;
+  flex-shrink:0;font-size:22px;
+}
+.contact-card-body{}
+.contact-card-name{font-size:15px;font-weight:600;margin-bottom:3px}
+.contact-card-value{font-size:13px;color:var(--muted)}
+
+/* Non-link card */
+.contact-card-static{
+  background:var(--card);
+  border:1px solid var(--border);
+  border-radius:var(--radius2);
+  padding:28px 24px;
+  display:flex;align-items:center;gap:16px;
+  box-shadow:var(--shadow);
+}
+
+/* ── CTA BAND ── */
+.cta-band{
+  background:var(--bg2);
+  border-radius:var(--radius2);
+  padding:40px 32px;
+  text-align:center;
+  margin-bottom:64px;
+}
+.cta-band h2{
+  font-size:clamp(22px,3vw,30px);font-weight:700;
+  letter-spacing:-.02em;color:var(--dark2);margin-bottom:10px;
+}
+.cta-band p{font-size:15px;color:var(--muted);margin-bottom:24px}
+.btn-primary{
+  display:inline-flex;align-items:center;gap:8px;
+  padding:14px 28px;
+  background:var(--blue);color:#fff;
+  border:none;border-radius:980px;
+  font-size:15px;font-weight:500;
+  cursor:pointer;font-family:inherit;
+  text-decoration:none;
+  transition:background .2s,transform .15s;
+}
+.btn-primary:hover{background:var(--blue-hover);transform:translateY(-1px)}
+
+/* ── CONTACT FORM ── */
+.form-section{
+  margin-bottom:80px;
+}
+.form-section h2{
+  font-size:clamp(24px,3vw,32px);font-weight:700;
+  letter-spacing:-.03em;color:var(--dark2);
+  margin-bottom:8px;
+}
+.form-section p{font-size:15px;color:var(--muted);margin-bottom:32px}
+.contact-form{
+  background:var(--bg3);
+  border:1px solid var(--border);
+  border-radius:var(--radius2);
+  padding:36px 32px;
+  box-shadow:var(--shadow);
+}
+.form-row{display:grid;grid-template-columns:1fr 1fr;gap:16px}
+@media(max-width:600px){.form-row{grid-template-columns:1fr}}
+.form-group{display:flex;flex-direction:column;gap:6px;margin-bottom:16px}
+.form-label{font-size:13px;font-weight:500;color:var(--dark2)}
+.form-input,.form-textarea{
+  padding:12px 14px;
+  background:var(--card);
+  border:1px solid var(--border);
+  border-radius:12px;
+  font-size:15px;font-family:inherit;color:var(--dark2);
+  transition:border-color .2s,box-shadow .2s;
+  outline:none;
+  resize:none;
+}
+.form-input:focus,.form-textarea:focus{
+  border-color:var(--blue);
+  box-shadow:0 0 0 3px rgba(0,113,227,.12);
+}
+.form-textarea{height:120px;line-height:1.5}
+.form-submit{
+  display:inline-flex;align-items:center;justify-content:center;gap:8px;
+  padding:14px 32px;
+  background:var(--blue);color:#fff;
+  border:none;border-radius:980px;
+  font-size:15px;font-weight:500;
+  cursor:pointer;font-family:inherit;
+  transition:background .2s,transform .15s;
+  width:100%;margin-top:8px;
+}
+.form-submit:hover{background:var(--blue-hover)}
+.form-submit:disabled{background:#c7c7cc;cursor:not-allowed;transform:none}
+.form-msg{
+  margin-top:12px;font-size:14px;text-align:center;
+  padding:10px;border-radius:10px;display:none;
+}
+.form-msg.success{background:#e8f5e9;color:#2e7d32;display:block}
+.form-msg.error{background:#ffebee;color:#c62828;display:block}
+
+/* ── SECTION DIVIDER ── */
+.section-divider{height:1px;background:var(--border);max-width:900px;margin:0 auto}
+
+/* ── FOOTER ── */
+footer{
+  background:var(--bg2);
+  border-top:1px solid var(--border);
+  padding:56px 24px 32px;
+  margin-top:0;
+}
+.footer-inner{max-width:900px;margin:0 auto}
+.footer-top{
+  display:grid;grid-template-columns:1.4fr 1fr 1fr;gap:40px;margin-bottom:40px;
+}
+@media(max-width:700px){.footer-top{grid-template-columns:1fr;gap:32px}}
+.footer-logo{font-size:18px;font-weight:700;letter-spacing:-.02em;color:var(--dark2);margin-bottom:8px}
+.footer-logo span{color:var(--blue)}
+.footer-tagline{font-size:13px;color:var(--muted);line-height:1.6;max-width:280px;margin-bottom:20px}
+.footer-fb{
+  display:inline-flex;align-items:center;gap:8px;
+  padding:9px 16px;
+  background:var(--card);
+  border:1px solid var(--border);
+  border-radius:20px;
+  font-size:13px;font-weight:500;
+  color:var(--dark2);text-decoration:none;
+  box-shadow:var(--shadow);
+  transition:box-shadow .2s,transform .15s;
+}
+.footer-fb:hover{box-shadow:var(--shadow2);transform:translateY(-1px)}
+.footer-col-title{font-size:12px;font-weight:600;letter-spacing:.04em;text-transform:uppercase;color:var(--dark2);margin-bottom:16px}
+.footer-link{
+  display:block;font-size:13px;color:var(--muted);
+  text-decoration:none;padding:4px 0;
+  background:none;border:none;cursor:pointer;font-family:inherit;text-align:left;
+  transition:color .2s;
+}
+.footer-link:hover{color:var(--blue)}
+.footer-bottom{
+  display:flex;align-items:center;justify-content:space-between;
+  flex-wrap:wrap;gap:12px;
+  padding-top:24px;
+  border-top:1px solid var(--border);
+  font-size:12px;color:var(--muted);
+}
+
+@keyframes fadeUp{from{opacity:0;transform:translateY(22px)}to{opacity:1;transform:translateY(0)}}
+.fade-in{animation:fadeUp .7s ease both}
+.fade-in-2{animation:fadeUp .7s ease .1s both}
+.fade-in-3{animation:fadeUp .7s ease .2s both}
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav class="nav">
+  <a href="/en/" class="nav-logo">LFS <span>Shanghai</span></a>
+  <div class="nav-center-links">
+    <a href="/routes/" class="nav-center-link">Routes</a>
+    <a href="/en/health/" class="nav-center-link">Health</a>
+    <a href="/en/tips/" class="nav-center-link">Tips</a>
+    <a href="/en/metro/" class="nav-center-link">Metro</a>
+    <a href="/en/contact/" class="nav-center-link active">Contact</a>
+    <a href="/planner/" class="nav-center-link" style="color:#e8392a;font-weight:700;">✦ Planner</a>
+  </div>
+  <div class="nav-actions">
+    <a href="/contact/" style="padding:7px 14px;background:var(--bg2);color:var(--muted);border-radius:20px;font-size:12px;font-weight:600;text-decoration:none">МН</a>
+    <span style="padding:7px 10px;background:var(--blue);color:#fff;border-radius:20px;font-size:12px;font-weight:600">EN</span>
+    <a href="/en/booking/" class="nav-btn">Book ↗</a>
+    <button class="hamburger" id="hamburger" aria-label="Open menu" onclick="toggleMobileMenu()">
+      <span></span><span></span><span></span>
+    </button>
+  </div>
+</nav>
+
+<!-- Mobile nav -->
+<div class="nav-mobile" id="navMobile">
+  <a href="/en/" class="nav-mobile-link">Home</a>
+  <a href="/en/health/" class="nav-mobile-link">Health</a>
+  <a href="/routes/" class="nav-mobile-link">Routes</a>
+  <a href="/en/tips/" class="nav-mobile-link">Tips</a>
+  <a href="/en/tips/#guide20k" class="nav-mobile-link">Student 20K Advice</a>
+  <a href="/en/metro/" class="nav-mobile-link">Metro</a>
+  <a href="/planner/" class="nav-mobile-link" style="color:#e8392a;">✦ Trip Planner</a>
+  <a href="/en/contact/" class="nav-mobile-link active">Contact</a>
+  <a href="/login/" class="nav-mobile-link">Login</a>
+  <a href="/en/booking/" class="nav-mobile-link" style="color:#0071e3;font-weight:600">Book Now →</a>
+</div>
+
+<!-- HERO -->
+<section class="page-hero">
+  <div class="hero-eyebrow fade-in">Get in Touch</div>
+  <h1 class="fade-in-2">Contact <em>Us</em></h1>
+  <p class="fade-in-3">Have a question, booking, or want more information? Reach us through any of the channels below. We respond quickly on working days.</p>
+</section>
+
+<div class="section-divider"></div>
+
+<!-- CONTACT CARDS -->
+<section class="contact-section">
+  <div class="contact-grid">
+
+    <!-- Facebook -->
+    <a href="https://www.facebook.com/profile.php?id=100076380514835" target="_blank" rel="noopener" class="contact-card">
+      <div class="contact-card-icon" style="background:#e7f0fd">
+        <svg width="26" height="26" viewBox="0 0 24 24" fill="#1877f2"><path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"/></svg>
+      </div>
+      <div class="contact-card-body">
+        <div class="contact-card-name">Facebook</div>
+        <div class="contact-card-value">LFS Shanghai</div>
+      </div>
+    </a>
+
+    <!-- Instagram -->
+    <a href="https://www.instagram.com/lfs.shanghai" target="_blank" rel="noopener" class="contact-card">
+      <div class="contact-card-icon" style="background:#fdf0f8">
+        <svg width="26" height="26" viewBox="0 0 24 24" fill="url(#ig-card-grad)">
+          <defs>
+            <linearGradient id="ig-card-grad" x1="0%" y1="100%" x2="100%" y2="0%">
+              <stop offset="0%" style="stop-color:#f09433"/>
+              <stop offset="25%" style="stop-color:#e6683c"/>
+              <stop offset="50%" style="stop-color:#dc2743"/>
+              <stop offset="75%" style="stop-color:#cc2366"/>
+              <stop offset="100%" style="stop-color:#bc1888"/>
+            </linearGradient>
+          </defs>
+          <path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zM12 0C8.741 0 8.333.014 7.053.072 2.695.272.273 2.69.073 7.052.014 8.333 0 8.741 0 12c0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98C8.333 23.986 8.741 24 12 24c3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98C15.668.014 15.259 0 12 0zm0 5.838a6.162 6.162 0 100 12.324 6.162 6.162 0 000-12.324zM12 16a4 4 0 110-8 4 4 0 010 8zm6.406-11.845a1.44 1.44 0 100 2.881 1.44 1.44 0 000-2.881z"/>
+        </svg>
+      </div>
+      <div class="contact-card-body">
+        <div class="contact-card-name">Instagram</div>
+        <div class="contact-card-value">@lfs.shanghai</div>
+      </div>
+    </a>
+
+    <!-- Email -->
+    <a href="mailto:lfs.shanghai1@gmail.com" class="contact-card">
+      <div class="contact-card-icon" style="background:#fff3e0">
+        <svg width="26" height="26" viewBox="0 0 24 24" fill="#f57c00"><path d="M20 4H4c-1.1 0-2 .9-2 2v12c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 4l-8 5-8-5V6l8 5 8-5v2z"/></svg>
+      </div>
+      <div class="contact-card-body">
+        <div class="contact-card-name">Email</div>
+        <div class="contact-card-value">lfs.shanghai1@gmail.com</div>
+      </div>
+    </a>
+
+    <!-- Facebook Messenger -->
+    <a href="https://m.me/100076380514835" target="_blank" rel="noopener" class="contact-card">
+      <div class="contact-card-icon" style="background:#ede7f6">
+        <svg width="26" height="26" viewBox="0 0 24 24" fill="#7b1fa2"><path d="M12 0C5.374 0 0 4.975 0 11.111c0 3.497 1.745 6.616 4.472 8.652V24l4.086-2.242c1.09.301 2.246.464 3.442.464 6.626 0 12-4.974 12-11.111C24 4.975 18.626 0 12 0zm1.193 14.963l-3.056-3.259-5.963 3.259L10.49 8.67l3.13 3.259 5.89-3.259-6.317 6.293z"/></svg>
+      </div>
+      <div class="contact-card-body">
+        <div class="contact-card-name">Messenger</div>
+        <div class="contact-card-value">Send a message</div>
+      </div>
+    </a>
+
+  </div>
+
+  <!-- CTA BAND -->
+  <div class="cta-band">
+    <h2>Ready to visit Shanghai?</h2>
+    <p>Book now and start your trip with a Mongolian-speaking guide.</p>
+    <a href="/en/booking/" class="btn-primary">Book Now ↗</a>
+  </div>
+
+  <div class="section-divider" style="margin-bottom:64px"></div>
+
+  <!-- CONTACT FORM -->
+  <div class="form-section">
+    <h2>Send a Message</h2>
+    <p>Write your question and send it — we'll reply within 24 hours on working days.</p>
+    <div class="contact-form">
+      <form id="contactForm" onsubmit="submitForm(event)">
+        <input type="hidden" name="to_email" value="amarsaikhanbileg@gmail.com">
+        <div class="form-row">
+          <div class="form-group">
+            <label class="form-label" for="contact-name">Your Name *</label>
+            <input class="form-input" type="text" id="contact-name" name="from_name" placeholder="Enter your name" required>
+          </div>
+          <div class="form-group">
+            <label class="form-label" for="contact-phone">Phone *</label>
+            <input class="form-input" type="text" id="contact-phone" name="phone" placeholder="+976 XXXX XXXX" required>
+          </div>
+        </div>
+        <div class="form-row">
+          <div class="form-group">
+            <label class="form-label" for="contact-email">Email *</label>
+            <input class="form-input" type="email" id="contact-email" name="email" placeholder="your@email.com" required>
+          </div>
+          <div class="form-group">
+            <label class="form-label" for="contact-fb">Facebook Link <span style="font-weight:400;color:var(--muted)">(optional)</span></label>
+            <input class="form-input" type="text" id="contact-fb" name="facebook" placeholder="facebook.com/your.name">
+            <div style="margin-top:8px">
+              <button type="button" onclick="toggleFbTutorial()" style="background:none;border:none;cursor:pointer;font-size:12px;color:var(--blue);font-family:inherit;padding:0;display:flex;align-items:center;gap:4px">
+                💡 How do I find my link? <span id="fbTutArrow">▼</span>
+              </button>
+              <div id="fbTutorial" style="display:none;margin-top:10px;background:#f0f6ff;border-radius:10px;padding:14px 16px;font-size:12px;color:var(--muted);line-height:1.8">
+                <strong style="color:var(--dark2);display:block;margin-bottom:6px">📱 On mobile:</strong>
+                <ol style="padding-left:16px;margin-bottom:10px">
+                  <li>Open the Facebook app</li>
+                  <li>Tap your profile picture to go to your profile</li>
+                  <li>Tap "···" in the top right corner</li>
+                  <li>Select "Copy Profile Link"</li>
+                  <li>Paste the copied link here</li>
+                </ol>
+                <strong style="color:var(--dark2);display:block;margin-bottom:6px">💻 On desktop:</strong>
+                <ol style="padding-left:16px">
+                  <li>Log in to facebook.com</li>
+                  <li>Click your name on the left to go to your profile</li>
+                  <li>Copy the URL from your browser's address bar</li>
+                </ol>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="form-group">
+          <label class="form-label" for="contact-message">Message *</label>
+          <textarea class="form-textarea" id="contact-message" name="message" placeholder="Write your question, request, or booking details..." required></textarea>
+        </div>
+        <button class="form-submit" type="submit" id="formSubmitBtn">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M2.01 21L23 12 2.01 3 2 10l15 2-15 2z"/></svg>
+          Send
+        </button>
+        <div class="form-msg" id="formMsg"></div>
+      </form>
+    </div>
+  </div>
+
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-inner">
+    <div class="footer-top">
+      <div>
+        <div class="footer-logo">LFS <span>Shanghai</span></div>
+        <div class="footer-tagline">A Mongolian-speaking guide specializing in Shanghai. We organize your trip personally.</div>
+        <a href="https://www.facebook.com/profile.php?id=100076380514835" target="_blank" class="footer-fb">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="#1877f2"><path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"/></svg>
+          Follow on Facebook
+        </a>
+        <a href="https://www.instagram.com/lfs.shanghai" target="_blank" class="footer-fb" style="margin-top:8px">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="url(#ig-footer-grad)">
+            <defs><linearGradient id="ig-footer-grad" x1="0%" y1="100%" x2="100%" y2="0%"><stop offset="0%" style="stop-color:#f09433"/><stop offset="100%" style="stop-color:#bc1888"/></linearGradient></defs>
+            <path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zM12 0C8.741 0 8.333.014 7.053.072 2.695.272.273 2.69.073 7.052.014 8.333 0 8.741 0 12c0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98C8.333 23.986 8.741 24 12 24c3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98C15.668.014 15.259 0 12 0zm0 5.838a6.162 6.162 0 100 12.324 6.162 6.162 0 000-12.324zM12 16a4 4 0 110-8 4 4 0 010 8zm6.406-11.845a1.44 1.44 0 100 2.881 1.44 1.44 0 000-2.881z"/>
+          </svg>
+          Follow on Instagram
+        </a>
+      </div>
+      <div>
+        <div class="footer-col-title">Pages</div>
+        <a href="/en/" class="footer-link">Home</a>
+        <a href="/routes/" class="footer-link">Routes</a>
+        <a href="/en/health/" class="footer-link">Health</a>
+        <a href="/en/tips/" class="footer-link">Tips</a>
+        <a href="/en/metro/" class="footer-link">Metro Guide</a>
+        <a href="/en/contact/" class="footer-link">Contact</a>
+        <a href="/en/booking/" class="footer-link">Book Now</a>
+      </div>
+      <div>
+        <div class="footer-col-title">Contact</div>
+        <div style="font-size:13px;color:var(--muted);line-height:2.2">
+          <a href="https://www.facebook.com/profile.php?id=100076380514835" target="_blank" style="display:flex;align-items:center;gap:8px;color:var(--muted);text-decoration:none;margin-bottom:8px">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="#1877f2"><path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"/></svg>
+            Facebook
+          </a>
+          <a href="https://www.instagram.com/lfs.shanghai" target="_blank" style="display:flex;align-items:center;gap:8px;color:var(--muted);text-decoration:none;margin-bottom:8px">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="url(#ig-footer-col)"><defs><linearGradient id="ig-footer-col" x1="0%" y1="100%" x2="100%" y2="0%"><stop offset="0%" style="stop-color:#f09433"/><stop offset="100%" style="stop-color:#bc1888"/></linearGradient></defs><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zM12 0C8.741 0 8.333.014 7.053.072 2.695.272.273 2.69.073 7.052.014 8.333 0 8.741 0 12c0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98C8.333 23.986 8.741 24 12 24c3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98C15.668.014 15.259 0 12 0zm0 5.838a6.162 6.162 0 100 12.324 6.162 6.162 0 000-12.324zM12 16a4 4 0 110-8 4 4 0 010 8zm6.406-11.845a1.44 1.44 0 100 2.881 1.44 1.44 0 000-2.881z"/></svg>
+            Instagram
+          </a>
+          <a href="mailto:lfs.shanghai1@gmail.com" style="display:flex;align-items:center;gap:8px;color:var(--muted);text-decoration:none">✉️ lfs.shanghai1@gmail.com</a>
+        </div>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <div>© 2026 LFS Shanghai. All rights reserved.</div>
+      <div style="display:flex;align-items:center;gap:16px;flex-wrap:wrap;justify-content:center">
+        <a href="/en/privacy/" class="footer-link" style="font-size:12px">Privacy Policy</a>
+        <a href="/en/terms/" class="footer-link" style="font-size:12px">Terms of Service</a>
+        <span>Shanghai, China 🇨🇳</span>
+      </div>
+    </div>
+  </div>
+</footer>
+
+<script>
+if(history.scrollRestoration)history.scrollRestoration='manual';window.scrollTo(0,0);// ── EmailJS init ──
+(function(){
+  emailjs.init({publicKey:'jzbMLEF7IhbkS48RI'});
+})();
+
+// ── Mobile nav ──
+function toggleMobileMenu(){
+  document.getElementById('navMobile').classList.toggle('open');
+}
+function closeMobileMenu(){
+  document.getElementById('navMobile').classList.remove('open');
+}
+document.addEventListener('click', e => {
+  const nav = document.getElementById('navMobile');
+  const btn = document.getElementById('hamburger');
+  if(nav.classList.contains('open') && !nav.contains(e.target) && !btn.contains(e.target)){
+    nav.classList.remove('open');
+  }
+});
+
+// ── FB tutorial toggle ──
+function toggleFbTutorial(){
+  const t = document.getElementById('fbTutorial');
+  const a = document.getElementById('fbTutArrow');
+  const open = t.style.display === 'block';
+  t.style.display = open ? 'none' : 'block';
+  a.textContent = open ? '▼' : '▲';
+}
+
+// ── Contact form ──
+function submitForm(e){
+  e.preventDefault();
+  const btn = document.getElementById('formSubmitBtn');
+  const msg = document.getElementById('formMsg');
+  btn.disabled = true;
+  btn.textContent = 'Sending...';
+  msg.className = 'form-msg';
+  msg.style.display = 'none';
+
+  const form = document.getElementById('contactForm');
+  emailjs.sendForm('service_lr0xy9q', 'template_tb03qyj', form)
+    .then(() => {
+      btn.textContent = 'Sent ✓';
+      msg.className = 'form-msg success';
+      msg.style.display = 'block';
+      msg.textContent = 'Your message was sent successfully. We will reply soon!';
+      form.reset();
+      setTimeout(() => {
+        btn.disabled = false;
+        btn.innerHTML = '<svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M2.01 21L23 12 2.01 3 2 10l15 2-15 2z"/></svg> Send';
+      }, 3000);
+    })
+    .catch((err) => {
+      btn.disabled = false;
+      btn.innerHTML = '<svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M2.01 21L23 12 2.01 3 2 10l15 2-15 2z"/></svg> Send';
+      msg.className = 'form-msg error';
+      msg.style.display = 'block';
+      const errText = err && (err.text || err.message || JSON.stringify(err));
+      msg.textContent = 'Error: ' + (errText || 'Unknown error');
+      console.error('EmailJS error:', err);
+    });
+}
+</script>
+</body>
+</html>

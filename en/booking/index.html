@@ -1,0 +1,1366 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Book Now — LFS Shanghai</title>
+<link rel="manifest" href="/manifest.json">
+<link rel="icon" type="image/svg+xml" href="/favicon.svg">
+<link rel="icon" type="image/png" sizes="32x32" href="/favicon.png">
+<link rel="apple-touch-icon" href="/apple-touch-icon.png">
+<meta name="google-site-verification" content="35m0yyQrPQg0QEHh1WAqDF2aDlv8aAQIMmzYVPuKF6w">
+<meta name="description" content="Book your Shanghai trip. We'll contact you within 24 hours.">
+<meta name="robots" content="index, follow">
+<meta property="og:type" content="website">
+<meta property="og:title" content="Book Now — LFS Shanghai">
+<meta property="og:description" content="Book your Shanghai trip. We'll contact you within 24 hours.">
+<meta property="og:url" content="https://lfsshanghai.com/en/booking/">
+<meta property="og:locale" content="en_US">
+<meta property="og:image" content="https://lfsshanghai.com/img/health/Bund2.jpg">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="800">
+<link rel="canonical" href="https://lfsshanghai.com/en/booking/">
+<link rel="alternate" hreflang="mn" href="https://lfsshanghai.com/booking/">
+<link rel="alternate" hreflang="en" href="https://lfsshanghai.com/en/booking/">
+<link rel="alternate" hreflang="x-default" href="https://lfsshanghai.com/booking/">
+<link href="https://fonts.googleapis.com/css2?family=Inter:ital,wght@0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,300;1,400&display=swap" rel="stylesheet">
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+:root{
+  --bg:#fff;--bg2:#f5f5f7;--bg3:#fbfbfd;--card:#fff;
+  --text:#1d1d1f;--muted:#6e6e73;--muted2:#86868b;
+  --blue:#0071e3;--blue-hover:#0077ed;
+  --border:rgba(0,0,0,.08);--border2:rgba(0,0,0,.05);
+  --shadow:0 2px 20px rgba(0,0,0,.08);--shadow2:0 8px 40px rgba(0,0,0,.12);
+  --radius:18px;--radius2:24px;--dark:#000;--dark2:#1d1d1f;
+}
+html{scroll-behavior:smooth}
+body{
+  font-family:'Inter',system-ui,-apple-system,BlinkMacSystemFont,'SF Pro Display','Segoe UI',sans-serif;
+  background:var(--bg);color:var(--text);overflow-x:hidden;
+  line-height:1.47059;-webkit-font-smoothing:antialiased;
+}
+::-webkit-scrollbar{width:6px}
+::-webkit-scrollbar-track{background:var(--bg2)}
+::-webkit-scrollbar-thumb{background:#c7c7cc;border-radius:3px}
+
+/* NAV */
+.nav{
+  position:fixed;top:0;left:0;right:0;z-index:500;height:52px;
+  display:flex;align-items:center;justify-content:space-between;
+  padding:0 22px;
+  background:rgba(255,255,255,.85);
+  backdrop-filter:saturate(180%) blur(20px);
+  -webkit-backdrop-filter:saturate(180%) blur(20px);
+  border-bottom:1px solid rgba(0,0,0,.06);
+}
+.nav-logo{
+  font-size:17px;font-weight:700;color:var(--dark2);
+  letter-spacing:-.02em;cursor:pointer;user-select:none;
+  text-decoration:none;
+}
+.nav-logo span{color:var(--blue)}
+.nav-back{
+  padding:7px 16px;background:var(--bg2);color:var(--dark2);
+  border:none;border-radius:20px;font-size:12px;font-weight:500;
+  cursor:pointer;font-family:inherit;transition:background .2s;
+  text-decoration:none;display:inline-flex;align-items:center;gap:6px;
+}
+.nav-back:hover{background:var(--border)}
+.lang-switch{display:flex;gap:2px;background:var(--bg2);border:1px solid var(--border);border-radius:20px;padding:3px}
+.lang-btn{padding:4px 10px;border-radius:16px;font-size:11px;font-weight:600;color:var(--muted);text-decoration:none;transition:.15s}
+.lang-btn:hover{color:var(--dark2)}
+.lang-active{background:var(--card);color:var(--dark2);box-shadow:0 1px 3px rgba(0,0,0,.08)}
+
+/* PROGRESS BAR */
+.progress-bar-wrap{
+  position:fixed;top:52px;left:0;right:0;z-index:499;height:3px;
+  background:var(--bg2);
+}
+.progress-bar-fill{
+  height:100%;background:var(--blue);
+  transition:width .4s cubic-bezier(.4,0,.2,1);
+  border-radius:0 2px 2px 0;
+}
+
+/* PAGE LAYOUT */
+.page-outer{
+  min-height:100vh;padding:80px 24px 60px;
+  display:flex;align-items:flex-start;justify-content:center;
+}
+.wizard-wrap{width:100%;max-width:600px;padding:40px 0 80px}
+
+/* NOTICES */
+.auth-notice{display:none;background:#fff8e6;border:2px solid #f5c842;border-radius:14px;padding:16px 20px;margin-bottom:24px;align-items:flex-start;justify-content:space-between;gap:12px;flex-wrap:wrap}
+.auth-notice.show{display:flex}
+.auth-notice-text{font-size:14px;color:#7a5c00;font-weight:500;line-height:1.5}
+.auth-notice-text small{display:block;font-size:12px;color:#a07800;font-weight:400;margin-top:3px}
+.auth-notice-actions{display:flex;flex-direction:column;gap:8px;flex-shrink:0}
+.auth-notice-btn{padding:9px 20px;background:var(--blue);color:#fff;border:none;border-radius:10px;font-size:13px;font-weight:600;cursor:pointer;font-family:inherit;white-space:nowrap;text-decoration:none;display:block;text-align:center}
+.auth-notice-btn:hover{opacity:.88}
+.profile-notice{display:none;background:#fff3e0;border:2px solid #ff9800;border-radius:14px;padding:16px 20px;margin-bottom:24px;align-items:flex-start;justify-content:space-between;gap:12px;flex-wrap:wrap}
+.profile-notice.show{display:flex}
+.profile-notice-text{font-size:14px;color:#7a4000;font-weight:500;line-height:1.5}
+.profile-notice-text small{display:block;font-size:12px;color:#9a5000;font-weight:400;margin-top:3px}
+.profile-notice-btn{padding:9px 20px;background:#ff9800;color:#fff;border:none;border-radius:10px;font-size:13px;font-weight:600;cursor:pointer;font-family:inherit;white-space:nowrap;text-decoration:none;display:block;text-align:center}
+@keyframes noticePulse{0%{box-shadow:0 0 0 0 rgba(245,166,0,.5)}60%{box-shadow:0 0 0 10px rgba(245,166,0,0)}100%{box-shadow:0 0 0 0 rgba(245,166,0,0)}}
+.auth-notice.pulse{animation:noticePulse .6s ease 3}
+
+/* STEP COUNTER */
+.step-counter{
+  font-size:13px;font-weight:600;color:var(--muted2);
+  text-align:right;margin-bottom:32px;letter-spacing:.01em;
+}
+
+/* WIZARD VIEWPORT */
+.wizard-viewport{overflow:visible;position:relative}
+
+/* STEP */
+.wizard-step{
+  display:none;
+  animation-duration:.35s;
+  animation-timing-function:cubic-bezier(.4,0,.2,1);
+  animation-fill-mode:both;
+}
+.wizard-step.active{display:block}
+.wizard-step.slide-in-right{animation-name:slideInRight}
+.wizard-step.slide-in-left{animation-name:slideInLeft}
+@keyframes slideInRight{from{transform:translateX(60px);opacity:0}to{transform:translateX(0);opacity:1}}
+@keyframes slideInLeft{from{transform:translateX(-60px);opacity:0}to{transform:translateX(0);opacity:1}}
+
+/* QUESTION */
+.step-question{
+  font-size:clamp(24px,5vw,32px);font-weight:700;
+  line-height:1.2;letter-spacing:-.03em;
+  color:var(--dark2);margin-bottom:8px;
+}
+.step-sub{font-size:14px;color:var(--muted);margin-bottom:28px;line-height:1.5}
+
+/* INPUTS */
+.wiz-input,.wiz-textarea{
+  width:100%;background:var(--bg2);border:2px solid var(--border);
+  border-radius:14px;padding:16px 20px;
+  color:var(--dark2);font-size:18px;font-family:inherit;
+  outline:none;transition:.2s;-webkit-appearance:none;
+  letter-spacing:.01em;
+}
+.wiz-input:focus,.wiz-textarea:focus{
+  border-color:var(--blue);background:#fff;
+  box-shadow:0 0 0 4px rgba(0,113,227,.1);
+}
+.wiz-input.invalid{border-color:#e53935!important;background:#fff5f5;box-shadow:0 0 0 4px rgba(229,57,53,.08)!important}
+.wiz-textarea{resize:vertical;min-height:120px;line-height:1.6;font-size:16px}
+.field-err{font-size:13px;color:#e53935;margin-top:8px;display:none;font-weight:500}
+.field-err.show{display:block}
+
+/* CARD GRID */
+.card-grid{
+  display:grid;
+  grid-template-columns:repeat(auto-fill,minmax(160px,1fr));
+  gap:12px;margin-bottom:4px;
+}
+.card-grid.days-grid{
+  grid-template-columns:repeat(auto-fill,minmax(120px,1fr));
+}
+.sel-card{
+  border:2px solid var(--border);border-radius:16px;
+  padding:20px 16px;cursor:pointer;
+  background:var(--bg2);transition:.2s;
+  text-align:center;user-select:none;
+  -webkit-tap-highlight-color:transparent;
+}
+.sel-card:hover{border-color:var(--blue);background:#f0f6ff}
+.sel-card.selected{
+  border-color:var(--blue);background:#e8f0fe;
+  box-shadow:0 0 0 3px rgba(0,113,227,.15);
+}
+.sel-card-icon{font-size:28px;margin-bottom:8px}
+.sel-card-label{font-size:13px;font-weight:600;color:var(--dark2);line-height:1.3}
+.days-grid .sel-card{padding:16px 12px}
+.days-grid .sel-card-label{font-size:14px;font-weight:700}
+
+/* STEPPER */
+.stepper{display:flex;align-items:center;gap:0;margin-bottom:4px}
+.stepper-btn{
+  width:52px;height:52px;border-radius:50%;border:2px solid var(--border);
+  background:var(--bg2);font-size:22px;font-weight:600;
+  cursor:pointer;display:flex;align-items:center;justify-content:center;
+  transition:.15s;color:var(--dark2);font-family:inherit;flex-shrink:0;
+  user-select:none;-webkit-tap-highlight-color:transparent;
+}
+.stepper-btn:hover{border-color:var(--blue);background:#f0f6ff;color:var(--blue)}
+.stepper-btn:active{transform:scale(.93)}
+.stepper-val{
+  font-size:36px;font-weight:700;min-width:80px;text-align:center;
+  color:var(--dark2);letter-spacing:-.03em;
+}
+.stepper-hint{font-size:13px;color:var(--muted);margin-top:10px}
+
+/* NAV BUTTONS */
+.wiz-nav{display:flex;align-items:center;gap:12px;margin-top:28px;flex-wrap:wrap}
+.btn-next{
+  flex:1;min-width:120px;padding:15px 28px;
+  background:var(--blue);color:#fff;border:none;
+  border-radius:14px;font-size:16px;font-weight:600;
+  cursor:pointer;font-family:inherit;transition:.18s;
+  display:flex;align-items:center;justify-content:center;gap:8px;
+}
+.btn-next:hover{background:var(--blue-hover)}
+.btn-next:disabled{opacity:.5;cursor:not-allowed}
+.btn-back{
+  padding:15px 20px;background:var(--bg2);color:var(--muted);
+  border:none;border-radius:14px;font-size:15px;font-weight:500;
+  cursor:pointer;font-family:inherit;transition:.18s;white-space:nowrap;
+}
+.btn-back:hover{background:var(--border);color:var(--dark2)}
+.btn-skip{
+  padding:15px 20px;background:transparent;color:var(--muted);
+  border:2px solid var(--border);border-radius:14px;font-size:15px;font-weight:500;
+  cursor:pointer;font-family:inherit;transition:.18s;white-space:nowrap;
+}
+.btn-skip:hover{border-color:var(--muted);color:var(--dark2)}
+
+/* SUMMARY CARD */
+.summary-card{
+  background:var(--bg2);border-radius:var(--radius2);padding:28px;
+  margin-bottom:4px;
+}
+.summary-row{
+  display:flex;gap:14px;align-items:flex-start;
+  padding:12px 0;border-bottom:1px solid var(--border);
+}
+.summary-row:last-child{border-bottom:none}
+.summary-label{font-size:12px;font-weight:600;color:var(--muted2);letter-spacing:.04em;text-transform:uppercase;min-width:100px;padding-top:2px}
+.summary-val{font-size:14px;font-weight:500;color:var(--dark2);line-height:1.4;flex:1}
+
+/* SUBMIT BTN */
+.btn-submit{
+  width:100%;padding:17px;background:var(--blue);color:#fff;
+  border:none;border-radius:14px;font-size:16px;font-weight:700;
+  cursor:pointer;font-family:inherit;transition:.2s;margin-top:20px;
+  letter-spacing:-.01em;
+}
+.btn-submit:hover{background:var(--blue-hover)}
+.btn-submit:disabled{opacity:.5;cursor:not-allowed}
+
+/* SUCCESS */
+.success-screen{display:none;text-align:center;padding:48px 20px 20px}
+.success-icon{font-size:52px;margin-bottom:18px}
+.success-screen h3{font-size:24px;font-weight:700;color:var(--dark2);margin-bottom:14px;letter-spacing:-.03em}
+.success-screen p{font-size:15px;color:var(--muted);line-height:1.7;max-width:440px;margin:0 auto}
+.share-btn{display:inline-flex;align-items:center;gap:8px;margin-top:24px;padding:13px 26px;background:var(--blue);color:#fff;border:none;border-radius:12px;font-size:14px;font-weight:600;cursor:pointer;font-family:inherit;transition:.2s}
+.share-btn:hover{background:var(--blue-hover)}
+.share-copied{font-size:12px;color:var(--blue);margin-top:10px;display:none}
+.share-copied.show{display:block}
+
+/* SKELETON */
+@keyframes sk-shimmer{0%{background-position:-600px 0}100%{background-position:600px 0}}
+.sk{background:linear-gradient(90deg,#e8e8ed 25%,#f2f2f5 50%,#e8e8ed 75%);background-size:1200px 100%;animation:sk-shimmer 1.4s infinite linear;border-radius:8px}
+#bookingSkeleton{padding:20px 0}
+.sk-form-title{height:36px;width:260px;margin-bottom:32px;border-radius:10px}
+.sk-form-input{height:56px;border-radius:12px;margin-bottom:14px}
+.sk-form-btn{height:52px;border-radius:14px;margin-top:20px}
+
+/* WIZARD DISABLED */
+.wizard-disabled{position:relative}
+.wizard-disabled-overlay{
+  display:none;position:absolute;inset:0;z-index:10;
+  cursor:not-allowed;border-radius:18px;
+  background:rgba(255,255,255,.01);
+}
+
+/* INLINE CALENDAR */
+.ical-wrap{background:var(--bg2);border-radius:16px;padding:16px;margin-bottom:12px}
+.ical-head{display:flex;align-items:center;justify-content:space-between;margin-bottom:14px}
+.ical-nav{width:34px;height:34px;border:none;background:#fff;border-radius:50%;font-size:22px;cursor:pointer;display:flex;align-items:center;justify-content:center;color:var(--dark2);box-shadow:0 1px 4px rgba(0,0,0,.1);transition:.15s}
+.ical-nav:hover{background:var(--blue);color:#fff}
+.ical-title{font-size:15px;font-weight:700;color:var(--dark2);letter-spacing:-.02em}
+.ical-daynames{display:grid;grid-template-columns:repeat(7,1fr);margin-bottom:4px}
+.ical-dn-cell{text-align:center;font-size:11px;font-weight:600;color:var(--muted2);padding:4px 0}
+.ical-grid{display:grid;grid-template-columns:repeat(7,1fr);gap:2px}
+.ical-day{aspect-ratio:1;display:flex;align-items:center;justify-content:center;font-size:13px;border-radius:50%;cursor:pointer;border:none;background:none;font-family:inherit;color:var(--dark2);transition:.12s;width:100%}
+.ical-day:hover:not(.ical-disabled):not(.ical-selected){background:rgba(0,113,227,.1);color:var(--blue)}
+.ical-day.ical-other{color:#c7c7cc}
+.ical-day.ical-today{font-weight:700;color:var(--blue)}
+.ical-day.ical-selected{background:var(--blue)!important;color:#fff!important;font-weight:700}
+.ical-day.ical-disabled{color:#d1d1d6;cursor:default;pointer-events:none}
+.ical-selected{text-align:center;font-size:14px;font-weight:600;color:var(--blue);padding:8px 0 4px;min-height:28px}
+
+/* SOCIAL TUTORIAL */
+.social-tutorial-toggle{
+  display:flex;align-items:center;justify-content:space-between;
+  background:rgba(0,113,227,.06);border:1.5px solid rgba(0,113,227,.2);
+  border-radius:12px;padding:12px 16px;margin-bottom:12px;
+  font-size:13px;font-weight:600;color:var(--blue);cursor:pointer;
+  user-select:none;transition:.15s;-webkit-tap-highlight-color:transparent;
+}
+.social-tutorial-toggle:hover{background:rgba(0,113,227,.1)}
+.social-tutorial{
+  background:var(--bg2);border:1.5px solid var(--border);
+  border-radius:12px;padding:16px;margin-bottom:14px;
+}
+.tut-section{margin-bottom:16px}
+.tut-section:last-child{margin-bottom:0}
+.tut-platform{font-weight:700;color:var(--dark2);margin-bottom:10px;font-size:14px}
+.tut-block{margin-bottom:10px}
+.tut-method{font-weight:600;color:var(--muted);margin-bottom:5px;font-size:12px;text-transform:uppercase;letter-spacing:.03em}
+.tut-steps{padding-left:20px;color:var(--dark2);line-height:1.9;font-size:13px}
+.tut-steps li{margin-bottom:1px}
+
+/* FOOTER */
+footer{
+  background:var(--bg2);border-top:1px solid var(--border);
+  padding:40px 24px;text-align:center;
+}
+.footer-logo{font-size:16px;font-weight:700;letter-spacing:-.02em;color:var(--dark2);margin-bottom:6px}
+.footer-logo span{color:var(--blue)}
+.footer-copy{font-size:12px;color:var(--muted)}
+
+@media(max-width:500px){
+  .card-grid{grid-template-columns:1fr 1fr}
+  .days-grid{grid-template-columns:1fr 1fr}
+  .wiz-nav{gap:8px}
+  .btn-next{font-size:15px;padding:14px 20px}
+  .btn-back,.btn-skip{padding:14px 16px;font-size:14px}
+}
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav class="nav">
+  <a href="/en/" class="nav-logo">LFS <span>Shanghai</span></a>
+  <div style="display:flex;align-items:center;gap:10px">
+    <div class="lang-switch"><a href="/booking/" class="lang-btn">МН</a><a href="/en/booking/" class="lang-btn lang-active">EN</a></div>
+    <a href="/en/" class="nav-back">← Back</a>
+  </div>
+</nav>
+
+<!-- TRUST BAR -->
+<div style="background:#f5f5f7;border-bottom:1px solid rgba(0,0,0,.06);padding:10px 20px;display:flex;align-items:center;justify-content:center;gap:20px;flex-wrap:wrap;font-size:12px;color:#6e6e73;font-weight:500">
+  <span>⚡ Average response within 1 hour</span>
+  <span style="color:#d1d1d6">·</span>
+  <span>✓ 200+ trips organized</span>
+  <span style="color:#d1d1d6">·</span>
+  <span>🇲🇳 Mongolian-speaking guide</span>
+  <span style="color:#d1d1d6">·</span>
+  <span>🔒 Safe &amp; trusted</span>
+</div>
+
+<!-- PRICING PANEL -->
+<div style="background:#fff;border-bottom:1px solid rgba(0,0,0,.08)">
+  <div style="max-width:720px;margin:0 auto;padding:0 20px">
+    <!-- Toggle -->
+    <button onclick="togglePricing()" id="pricingToggleBtn"
+      style="width:100%;display:flex;align-items:center;justify-content:space-between;padding:14px 0;border:none;background:none;cursor:pointer;font-family:inherit">
+      <span style="font-size:13px;font-weight:600;color:#1d1d1f">💰 View Price List</span>
+      <span id="pricingArrow" style="font-size:12px;color:#6e6e73">▼</span>
+    </button>
+    <!-- Expandable -->
+    <div id="pricingPanel" style="display:none;padding-bottom:20px">
+      <!-- Gold package -->
+      <div style="background:linear-gradient(135deg,#1d1d1f,#3a3a3c);border-radius:14px;padding:20px;margin-bottom:12px;color:#fff">
+        <div style="font-size:11px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;opacity:.5;margin-bottom:6px">🥇 Gold Package — All in One</div>
+        <div style="font-size:32px;font-weight:800;letter-spacing:-.03em;line-height:1">2,050,000<span style="font-size:16px;font-weight:400;opacity:.5">₮</span></div>
+        <div style="font-size:12px;opacity:.4;margin-top:4px">5 days · 4 nights · 1 person</div>
+      </div>
+      <!-- Individual services -->
+      <div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(160px,1fr));gap:10px;margin-bottom:12px">
+        <div style="background:#f5f5f7;border-radius:12px;padding:16px">
+          <div style="font-size:11px;color:#6e6e73;font-weight:600;margin-bottom:4px">🧑‍💼 GUIDE</div>
+          <div style="font-size:22px;font-weight:700;color:#1d1d1f">500<span style="font-size:12px;font-weight:400;color:#6e6e73"> CNY/day</span></div>
+        </div>
+        <div style="background:#f5f5f7;border-radius:12px;padding:16px">
+          <div style="font-size:11px;color:#6e6e73;font-weight:600;margin-bottom:4px">💬 INTERPRETER</div>
+          <div style="font-size:22px;font-weight:700;color:#1d1d1f">500<span style="font-size:12px;font-weight:400;color:#6e6e73"> CNY/day</span></div>
+        </div>
+        <div style="background:#f5f5f7;border-radius:12px;padding:16px">
+          <div style="font-size:11px;color:#6e6e73;font-weight:600;margin-bottom:4px">🏨 HOTEL BOOKING</div>
+          <div style="font-size:22px;font-weight:700;color:#1d1d1f">50<span style="font-size:12px;font-weight:400;color:#6e6e73"> CNY/time</span></div>
+        </div>
+        <div style="background:#f5f5f7;border-radius:12px;padding:16px">
+          <div style="font-size:11px;color:#6e6e73;font-weight:600;margin-bottom:4px">✈️ AIRPORT PICKUP</div>
+          <div style="font-size:22px;font-weight:700;color:#1d1d1f">200<span style="font-size:12px;font-weight:400;color:#6e6e73"> CNY/time</span></div>
+        </div>
+        <div style="background:#f5f5f7;border-radius:12px;padding:16px">
+          <div style="font-size:11px;color:#6e6e73;font-weight:600;margin-bottom:4px">📚 STUDENT ADVICE</div>
+          <div style="font-size:22px;font-weight:700;color:#1d1d1f">20,000<span style="font-size:12px;font-weight:400;color:#6e6e73"> MNT/time</span></div>
+        </div>
+      </div>
+      <a href="/en/pricing/" style="font-size:13px;color:#0071e3;font-weight:600;text-decoration:none">View detailed pricing page →</a>
+    </div>
+  </div>
+</div>
+
+<!-- PROGRESS BAR -->
+<div class="progress-bar-wrap">
+  <div class="progress-bar-fill" id="progressBar" style="width:10%"></div>
+</div>
+
+<!-- MAIN -->
+<div class="page-outer">
+  <div class="wizard-wrap">
+
+    <!-- SKELETON -->
+    <div id="bookingSkeleton">
+      <div class="sk sk-form-title"></div>
+      <div class="sk sk-form-input"></div>
+      <div class="sk sk-form-input"></div>
+      <div class="sk sk-form-btn"></div>
+    </div>
+
+    <!-- WIZARD MAIN -->
+    <div id="bookingMain" style="display:none">
+
+
+      <!-- PROFILE NOTICE -->
+      <div class="profile-notice" id="profileNotice">
+        <div class="profile-notice-text">
+          ⚠️ Please complete your profile
+          <small>Please fill in your name, phone, photo and other details before booking</small>
+        </div>
+        <div>
+          <a href="/profile/" class="profile-notice-btn">Complete Profile →</a>
+        </div>
+      </div>
+
+      <!-- STEP COUNTER -->
+      <div class="step-counter" id="stepCounter">1 / 6</div>
+
+      <!-- WIZARD BODY -->
+      <div class="wizard-disabled" id="wizardBody">
+        <div class="wizard-disabled-overlay" id="wizardOverlay"></div>
+        <div class="wizard-viewport" id="wizardViewport">
+
+          <!-- STEP 1: Contact info (Name + Phone + Email) -->
+          <div class="wizard-step active" id="step-1">
+            <div class="step-question">Contact Information</div>
+            <div class="step-sub">Please fill in all fields</div>
+            <div style="display:flex;flex-direction:column;gap:14px">
+              <div>
+                <label style="font-size:12px;font-weight:600;color:var(--muted2);letter-spacing:.03em;display:block;margin-bottom:6px">NAME</label>
+                <input class="wiz-input" type="text" id="b-name" placeholder="Example: John Smith" autocomplete="given-name" style="font-size:16px">
+                <div class="field-err" id="err-name">Please enter your name</div>
+              </div>
+              <div>
+                <label style="font-size:12px;font-weight:600;color:var(--muted2);letter-spacing:.03em;display:block;margin-bottom:6px">PHONE</label>
+                <input class="wiz-input" type="tel" id="b-phone" placeholder="88887777 эсвэл +976 8888 7777" maxlength="15" autocomplete="tel" inputmode="tel" style="font-size:16px">
+                <div class="field-err" id="err-phone">Please enter your phone number</div>
+              </div>
+              <div>
+                <label style="font-size:12px;font-weight:600;color:var(--muted2);letter-spacing:.03em;display:block;margin-bottom:6px">EMAIL</label>
+                <input class="wiz-input" type="email" id="b-email" placeholder="example@gmail.com" autocomplete="email" inputmode="email" style="font-size:16px">
+                <div class="field-err" id="err-email">Please enter a valid email address</div>
+              </div>
+            </div>
+            <div class="wiz-nav">
+              <button class="btn-next" id="next-1" onclick="nextStep()">Next →</button>
+            </div>
+          </div>
+
+          <!-- STEP 2: Service -->
+          <div class="wizard-step" id="step-2">
+            <div class="step-question">Service Type</div>
+            <div class="step-sub">Select one — you'll advance to the next step</div>
+            <div id="pkg-prefill-banner" style="display:none;margin-bottom:14px;padding:12px 16px;background:#f0f6ff;border:1.5px solid var(--blue);border-radius:12px;font-size:13px;font-weight:600;color:var(--blue)">✅ Selected package: <span id="pkg-prefill-label"></span></div>
+            <div class="card-grid" id="service-grid">
+              <div class="sel-card" data-val="🏥 Health Checkup" onclick="selectCard('service',this)">
+                <div class="sel-card-icon">🏥</div>
+                <div class="sel-card-label">Health Checkup</div>
+              </div>
+              <div class="sel-card" data-val="🗺️ City Tour Guide" onclick="selectCard('service',this)">
+                <div class="sel-card-icon">🗺️</div>
+                <div class="sel-card-label">City Tour Guide</div>
+              </div>
+              <div class="sel-card" data-val="🛍️ Shopping Guide" onclick="selectCard('service',this)">
+                <div class="sel-card-icon">🛍️</div>
+                <div class="sel-card-label">Shopping Guide</div>
+              </div>
+              <div class="sel-card" data-val="🍜 Restaurant &amp; Food" onclick="selectCard('service',this)">
+                <div class="sel-card-icon">🍜</div>
+                <div class="sel-card-label">Restaurant &amp; Food</div>
+              </div>
+              <div class="sel-card" data-val="✈️ Airport Pickup" onclick="selectCard('service',this)">
+                <div class="sel-card-icon">✈️</div>
+                <div class="sel-card-label">Airport Pickup</div>
+              </div>
+              <div class="sel-card" data-val="💼 Business Interpreter" onclick="selectCard('service',this)">
+                <div class="sel-card-icon">💼</div>
+                <div class="sel-card-label">Business Interpreter</div>
+              </div>
+              <div class="sel-card" data-val="📚 Student Advice (20K)" onclick="selectCard('service',this)">
+                <div class="sel-card-icon">📚</div>
+                <div class="sel-card-label">Student Advice</div>
+              </div>
+            </div>
+            <div class="field-err" id="err-service">Please select a service type</div>
+            <div class="wiz-nav">
+              <button class="btn-back" onclick="prevStep()">← Back</button>
+              <button class="btn-next" onclick="nextStep()">Next →</button>
+            </div>
+          </div>
+
+          <!-- STEP 3: Start date -->
+          <div class="wizard-step" id="step-3">
+            <div class="step-question">Start Date</div>
+            <input type="hidden" id="b-start">
+
+            <!-- Inline calendar -->
+            <div class="ical-wrap">
+              <div class="ical-head">
+                <button type="button" class="ical-nav" id="ical-prev">&#8249;</button>
+                <span class="ical-title" id="ical-title"></span>
+                <button type="button" class="ical-nav" id="ical-next">&#8250;</button>
+              </div>
+              <div class="ical-daynames" id="ical-dn"></div>
+              <div class="ical-grid" id="ical-grid"></div>
+              <div class="ical-selected" id="ical-selected">Select a date</div>
+            </div>
+
+            <div class="field-err" id="err-start">Please select a date</div>
+
+            <hr style="margin:20px 0;border:none;border-top:1px solid #eee">
+            <div class="step-sub" style="margin:16px 0 10px">How many days?</div>
+            <div class="card-grid days-grid" id="days-grid">
+              <div class="sel-card" data-val="1 day" onclick="selectCard('days',this)">
+                <div class="sel-card-label">1 day</div>
+              </div>
+              <div class="sel-card" data-val="2 days" onclick="selectCard('days',this)">
+                <div class="sel-card-label">2 days</div>
+              </div>
+              <div class="sel-card" data-val="3 days" onclick="selectCard('days',this)">
+                <div class="sel-card-label">3 days</div>
+              </div>
+              <div class="sel-card" data-val="4–5 days" onclick="selectCard('days',this)">
+                <div class="sel-card-label">4–5 days</div>
+              </div>
+              <div class="sel-card" data-val="7+ days" onclick="selectCard('days',this)">
+                <div class="sel-card-label">7+ days</div>
+              </div>
+            </div>
+            <div class="field-err" id="err-days">Please select number of days</div>
+
+            <hr style="margin:20px 0;border:none;border-top:1px solid #eee">
+            <div class="step-sub" style="margin:16px 0 10px">How many people?</div>
+            <div class="stepper">
+              <button class="stepper-btn" onclick="changePeople(-1)" aria-label="Decrease">−</button>
+              <div class="stepper-val" id="people-display">1</div>
+              <button class="stepper-btn" onclick="changePeople(1)" aria-label="Increase">+</button>
+            </div>
+            <div class="stepper-hint">Maximum 30 people</div>
+
+            <div class="wiz-nav">
+              <button class="btn-back" onclick="prevStep()">← Back</button>
+              <button class="btn-next" onclick="nextStep()">Next →</button>
+            </div>
+          </div>
+
+          <!-- STEP 4: Days -->
+          <div class="wizard-step" id="step-4">
+            <div class="step-question">How many days?</div>
+            <div class="step-sub">Select the duration of your trip</div>
+            <div class="card-grid days-grid" id="days-grid">
+              <div class="sel-card" data-val="1 day" onclick="selectCard('days',this)">
+                <div class="sel-card-label">1 day</div>
+              </div>
+              <div class="sel-card" data-val="2 days" onclick="selectCard('days',this)">
+                <div class="sel-card-label">2 days</div>
+              </div>
+              <div class="sel-card" data-val="3 days" onclick="selectCard('days',this)">
+                <div class="sel-card-label">3 days</div>
+              </div>
+              <div class="sel-card" data-val="4–5 days" onclick="selectCard('days',this)">
+                <div class="sel-card-label">4–5 days</div>
+              </div>
+              <div class="sel-card" data-val="7+ days" onclick="selectCard('days',this)">
+                <div class="sel-card-label">7+ days</div>
+              </div>
+            </div>
+            <div class="field-err" id="err-days">Please select number of days</div>
+            <div class="wiz-nav">
+              <button class="btn-back" onclick="prevStep()">← Back</button>
+              <button class="btn-next" onclick="nextStep()">Next →</button>
+            </div>
+          </div>
+
+          <!-- STEP 5: People stepper -->
+          <div class="wizard-step" id="step-5">
+            <div class="step-question">How many people?</div>
+            <div class="step-sub">How many people will be traveling in total?</div>
+            <div class="stepper">
+              <button class="stepper-btn" onclick="changePeople(-1)" aria-label="Decrease">−</button>
+              <div class="stepper-val" id="people-display">1</div>
+              <button class="stepper-btn" onclick="changePeople(1)" aria-label="Increase">+</button>
+            </div>
+            <div class="stepper-hint">Maximum 30 people</div>
+            <div class="wiz-nav">
+              <button class="btn-back" onclick="prevStep()">← Back</button>
+              <button class="btn-next" onclick="nextStep()">Next →</button>
+            </div>
+          </div>
+
+          <!-- STEP 6: Social (OPTIONAL) -->
+          <div class="wizard-step" id="step-6">
+            <div class="step-question">Social Link <span style="font-size:14px;font-weight:400;color:var(--muted)">(optional)</span></div>
+            <div class="step-sub">Adding your Facebook or Instagram link makes it easier to reach you via Messenger</div>
+
+            <!-- Tutorial toggle -->
+            <div class="social-tutorial-toggle" onclick="toggleSocialTutorial()">
+              <span>📖 How to find your Facebook / Instagram link?</span>
+              <span id="tutArrow">▼</span>
+            </div>
+            <div class="social-tutorial" id="socialTutorial" style="display:none">
+              <div class="tut-section">
+                <div class="tut-platform">📘 Find your Facebook link</div>
+                <div class="tut-block">
+                  <div class="tut-method">On mobile:</div>
+                  <div class="tut-step">1. Open the Facebook app → Go to your profile</div>
+                  <div class="tut-step">2. Tap <strong>···</strong> → Select <strong>"Copy Profile Link"</strong></div>
+                  <div class="tut-step">3. Paste the copied link in the field below</div>
+                </div>
+                <div class="tut-block">
+                  <div class="tut-method">On desktop:</div>
+                  <div class="tut-step">1. Go to facebook.com → Click your name to open your profile</div>
+                  <div class="tut-step">2. Copy the URL from your browser's address bar</div>
+                  <div class="tut-step">Example: <code style="background:var(--bg);padding:2px 6px;border-radius:5px;font-size:12px">facebook.com/username</code></div>
+                </div>
+              </div>
+              <div class="tut-section">
+                <div class="tut-platform">📸 Find your Instagram link</div>
+                <div class="tut-block">
+                  <div class="tut-method">On mobile:</div>
+                  <div class="tut-step">1. Open the Instagram app → Go to your profile tab (bottom right)</div>
+                  <div class="tut-step">2. Note your username (<strong>@username</strong>)</div>
+                  <div class="tut-step">Example: <code style="background:var(--bg);padding:2px 6px;border-radius:5px;font-size:12px">instagram.com/username</code></div>
+                </div>
+              </div>
+            </div>
+
+            <input class="wiz-input" type="text" id="b-social" placeholder="facebook.com/username эсвэл instagram.com/username">
+
+            <div class="step-sub" style="margin:16px 0 8px">Additional Request <span style="font-size:13px;font-weight:400;color:var(--muted)">(optional)</span></div>
+            <textarea class="wiz-textarea" id="b-note" placeholder="Write any special requests here..."></textarea>
+
+            <div class="wiz-nav">
+              <button class="btn-back" onclick="prevStep()">← Back</button>
+              <button class="btn-next" onclick="nextStep()">Next →</button>
+            </div>
+          </div>
+
+          <!-- STEP 7: Note (optional) -->
+          <div class="wizard-step" id="step-7">
+            <div class="step-question">Additional Request</div>
+            <div class="step-sub">Optional — write any special requests or questions here</div>
+            <textarea class="wiz-textarea" id="b-note" placeholder="Write any special requests or questions here..."></textarea>
+            <div class="wiz-nav">
+              <button class="btn-back" onclick="prevStep()">← Back</button>
+              <button class="btn-skip" onclick="skipStep()">Skip →</button>
+              <button class="btn-next" onclick="nextStep()">Next →</button>
+            </div>
+          </div>
+
+          <!-- STEP 8: Source -->
+          <div class="wizard-step" id="step-8">
+            <div class="step-question">How did you hear about us?</div>
+            <div class="step-sub">Answer as best as you can remember</div>
+            <div class="card-grid">
+              <div class="sel-card" data-val="Instagram" onclick="selectSource(this)">
+                <div class="sel-card-icon">📸</div>
+                <div class="sel-card-label">Instagram</div>
+              </div>
+              <div class="sel-card" data-val="Facebook" onclick="selectSource(this)">
+                <div class="sel-card-icon">📘</div>
+                <div class="sel-card-label">Facebook</div>
+              </div>
+              <div class="sel-card" data-val="From a friend" onclick="selectSource(this)">
+                <div class="sel-card-icon">🤝</div>
+                <div class="sel-card-label">From a friend</div>
+              </div>
+              <div class="sel-card" data-val="Website" onclick="selectSource(this)">
+                <div class="sel-card-icon">🌐</div>
+                <div class="sel-card-label">Website</div>
+              </div>
+              <div class="sel-card" data-val="Other" onclick="selectSource(this)">
+                <div class="sel-card-icon">💬</div>
+                <div class="sel-card-label">Other</div>
+              </div>
+            </div>
+            <div id="fb-page-wrap" style="display:none;margin-top:16px">
+              <input class="wiz-input" type="text" id="b-source-fb" placeholder="Which Facebook page/post? (if you remember)">
+            </div>
+            <div class="field-err" id="err-source">Please select an answer</div>
+            <div class="wiz-nav">
+              <button class="btn-back" onclick="prevStep()">← Back</button>
+              <button class="btn-next" onclick="nextStep()">Next →</button>
+            </div>
+          </div>
+
+          <!-- STEP 9: Summary -->
+          <div class="wizard-step" id="step-9">
+            <div class="step-question">Review Your Booking</div>
+            <div class="step-sub">If all information is correct, please submit</div>
+            <div class="summary-card" id="summaryCard">
+              <div class="summary-row"><div class="summary-label">Name</div><div class="summary-val" id="sum-name">—</div></div>
+              <div class="summary-row"><div class="summary-label">Phone</div><div class="summary-val" id="sum-phone">—</div></div>
+              <div class="summary-row"><div class="summary-label">Email</div><div class="summary-val" id="sum-email">—</div></div>
+              <div class="summary-row"><div class="summary-label">Service</div><div class="summary-val" id="sum-service">—</div></div>
+              <div class="summary-row" id="sum-row-package" style="display:none"><div class="summary-label">Package</div><div class="summary-val" id="sum-package">—</div></div>
+              <div class="summary-row"><div class="summary-label">Date</div><div class="summary-val" id="sum-start">—</div></div>
+              <div class="summary-row"><div class="summary-label">Duration</div><div class="summary-val" id="sum-days">—</div></div>
+              <div class="summary-row"><div class="summary-label">People</div><div class="summary-val" id="sum-people">—</div></div>
+              <div class="summary-row" id="sum-row-social"><div class="summary-label">Social</div><div class="summary-val" id="sum-social">—</div></div>
+              <div class="summary-row" id="sum-row-note" style="display:none"><div class="summary-label">Note</div><div class="summary-val" id="sum-note">—</div></div>
+              <div class="summary-row"><div class="summary-label">How you heard</div><div class="summary-val" id="sum-source">—</div></div>
+            </div>
+            <div class="wiz-nav">
+              <button class="btn-back" onclick="prevStep()">← Back</button>
+              <button class="btn-submit" id="submitBtn" onclick="submitBooking()">Submit Booking →</button>
+            </div>
+          </div>
+
+        </div><!-- /wizard-viewport -->
+      </div><!-- /wizard-body -->
+
+      <!-- SUCCESS SCREEN -->
+      <div class="success-screen" id="successScreen">
+        <div class="success-icon">🎉</div>
+        <h3>Successfully Submitted!</h3>
+        <p>Your booking has been received.<br>
+        A confirmation email has been sent to your address.</p>
+
+        <div style="background:#f5f5f7;border-radius:16px;padding:24px 20px;margin:24px auto;max-width:420px;text-align:left">
+          <div style="font-size:13px;font-weight:700;color:#1d1d1f;letter-spacing:-.01em;margin-bottom:16px">What happens next?</div>
+          <div style="display:flex;flex-direction:column;gap:14px">
+            <div style="display:flex;gap:14px;align-items:flex-start">
+              <div style="width:28px;height:28px;border-radius:50%;background:#0071e3;color:#fff;font-size:12px;font-weight:700;display:flex;align-items:center;justify-content:center;flex-shrink:0">1</div>
+              <div>
+                <div style="font-size:13px;font-weight:600;color:#1d1d1f;margin-bottom:2px">⚡ We'll contact you within 1 hour</div>
+                <div style="font-size:12px;color:#6e6e73;line-height:1.5">We'll reply via Facebook Messenger or email.</div>
+              </div>
+            </div>
+            <div style="display:flex;gap:14px;align-items:flex-start">
+              <div style="width:28px;height:28px;border-radius:50%;background:#0071e3;color:#fff;font-size:12px;font-weight:700;display:flex;align-items:center;justify-content:center;flex-shrink:0">2</div>
+              <div>
+                <div style="font-size:13px;font-weight:600;color:#1d1d1f;margin-bottom:2px">We'll discuss details</div>
+                <div style="font-size:12px;color:#6e6e73;line-height:1.5">We'll confirm dates, schedule, pricing, and payment terms.</div>
+              </div>
+            </div>
+            <div style="display:flex;gap:14px;align-items:flex-start">
+              <div style="width:28px;height:28px;border-radius:50%;background:#0071e3;color:#fff;font-size:12px;font-weight:700;display:flex;align-items:center;justify-content:center;flex-shrink:0">3</div>
+              <div>
+                <div style="font-size:13px;font-weight:600;color:#1d1d1f;margin-bottom:2px">Your trip begins</div>
+                <div style="font-size:12px;color:#6e6e73;line-height:1.5">We'll meet you in Shanghai and handle all arrangements.</div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Direct contact buttons -->
+        <div style="display:flex;flex-direction:column;gap:10px;max-width:340px;margin:0 auto 20px">
+          <a href="https://www.facebook.com/profile.php?id=100076380514835" target="_blank"
+             style="display:flex;align-items:center;justify-content:center;gap:10px;padding:14px 20px;background:#1877f2;color:#fff;border-radius:14px;text-decoration:none;font-size:14px;font-weight:600">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="#fff"><path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"/></svg>
+            Contact via Facebook
+          </a>
+          <a href="mailto:lfs.shanghai1@gmail.com"
+             style="display:flex;align-items:center;justify-content:center;gap:10px;padding:14px 20px;background:#f5f5f7;color:#1d1d1f;border-radius:14px;text-decoration:none;font-size:14px;font-weight:600">
+            ✉️ Contact via Email
+          </a>
+        </div>
+
+        <button class="share-btn" onclick="shareBooking()">🔗 Share with a friend</button>
+        <div class="share-copied" id="shareCopied">Link copied!</div>
+      </div>
+
+    </div><!-- /bookingMain -->
+  </div><!-- /wizard-wrap -->
+</div><!-- /page-outer -->
+
+<footer>
+  <div class="footer-logo">LFS <span>Shanghai</span></div>
+  <div class="footer-copy">© 2026 LFS Shanghai. All rights reserved.</div>
+  <div style="margin-top:8px;font-size:11px;color:#86868b">
+    <a href="/en/privacy/" style="color:#86868b;text-decoration:none">Privacy Policy</a>
+    <span style="margin:0 8px">·</span>
+    <a href="/en/terms/" style="color:#86868b;text-decoration:none">Terms of Service</a>
+  </div>
+</footer>
+
+<script src="/js/toast.js"></script>
+<script src="/js/calendar.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js"></script>
+<script>emailjs.init("jzbMLEF7IhbkS48RI");</script>
+
+<script>
+// ── WIZARD STATE ─────────────────────────────────────────────────
+const TOTAL_STEPS = 6;
+const STEP_SEQUENCE = [1, 2, 3, 6, 8, 9]; // steps 4,5,7 merged into 3 and 6
+let currentStep = 1;
+let peopleCount = 1;
+let wizardData = {
+  name: '', phone: '', email: '', service: '',
+  start: '', days: '', people: 1, social: '', note: '',
+  source: '', sourceFb: '', package: ''
+};
+let wizardLocked = false; // disabled when profile incomplete / not authed
+
+// ── PACKAGE PRE-FILL (from /health/?package=...) ─────────────────
+(function preSelectPackage() {
+  const PKG_MAP = {
+    mungun:   { service: '🏥 Health Checkup', label: '🥈 Silver Package — ₮950,000' },
+    altan:    { service: '🏥 Health Checkup', label: '🥇 Gold Package — ₮2,050,000' },
+    '1800cny':  { service: '🏥 Health Checkup', label: '🔬 1,800¥ Package' },
+    '20000cny': { service: '🏥 Health Checkup', label: '💎 20,000¥ Premium' }
+  };
+  const p = new URLSearchParams(location.search).get('package');
+  if (!p || !PKG_MAP[p]) return;
+  const { service, label } = PKG_MAP[p];
+  wizardData.service  = service;
+  wizardData.package  = label;
+  // Show pre-selected banner at top of step 4
+  window.__prePackage = label;
+})();
+
+function updateProgress() {
+  const idx = STEP_SEQUENCE.indexOf(currentStep);
+  const displayNum = Math.max(1, idx + 1);
+  const pct = Math.round((displayNum / TOTAL_STEPS) * 100);
+  document.getElementById('progressBar').style.width = pct + '%';
+  document.getElementById('stepCounter').textContent = displayNum + ' / ' + TOTAL_STEPS;
+}
+
+function showStep(n, direction) {
+  // direction: 'forward' | 'back'
+  const prev = document.getElementById('step-' + currentStep);
+  const next = document.getElementById('step-' + n);
+  if (prev) {
+    prev.classList.remove('active','slide-in-right','slide-in-left');
+    prev.style.display = 'none';
+  }
+  next.style.display = 'block';
+  next.classList.remove('slide-in-right','slide-in-left');
+  // Force reflow
+  void next.offsetWidth;
+  next.classList.add('active', direction === 'back' ? 'slide-in-left' : 'slide-in-right');
+  currentStep = n;
+  updateProgress();
+  // Apply package pre-selection when step 4 (service) becomes visible
+  if (n === 2 && window.__prePackage) {
+    const banner = document.getElementById('pkg-prefill-banner');
+    document.getElementById('pkg-prefill-label').textContent = window.__prePackage;
+    banner.style.display = 'block';
+    // Highlight the health card
+    document.querySelectorAll('#service-grid .sel-card').forEach(c => {
+      if (c.dataset.val === wizardData.service) {
+        c.classList.add('selected');
+      }
+    });
+  }
+  // Focus first input in step
+  setTimeout(() => {
+    const inp = next.querySelector('input,textarea');
+    if (inp && inp.type !== 'hidden') {
+      try { inp.focus(); } catch(_) {}
+    }
+  }, 380);
+  // Scroll to top of wizard
+  document.getElementById('wizardViewport').scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+}
+
+function validateCurrentStep() {
+  const s = currentStep;
+  if (s === 1) {
+    const name = document.getElementById('b-name').value.trim();
+    const phone = document.getElementById('b-phone').value.trim().replace(/\s/g,'');
+    const email = document.getElementById('b-email').value.trim();
+    let ok = true;
+    if (!name) { showErr('b-name','err-name'); ok = false; } else clearErr('b-name','err-name');
+    if (!/^\+?\d{7,14}$/.test(phone)) { showErr('b-phone','err-phone'); ok = false; } else clearErr('b-phone','err-phone');
+    if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) { showErr('b-email','err-email'); ok = false; } else clearErr('b-email','err-email');
+    if (!ok) return false;
+    wizardData.name = name; wizardData.phone = phone; wizardData.email = email;
+    return true;
+  }
+  if (s === 2) {
+    if (!wizardData.service) { document.getElementById('err-service').classList.add('show'); return false; }
+    document.getElementById('err-service').classList.remove('show');
+    return true;
+  }
+  if (s === 3) {
+    const v = document.getElementById('b-start').value.trim();
+    if (!v) { showErr('b-start','err-start'); return false; }
+    wizardData.start = v;
+    clearErr('b-start','err-start');
+    if (!wizardData.days) { document.getElementById('err-days').classList.add('show'); return false; }
+    document.getElementById('err-days').classList.remove('show');
+    wizardData.people = peopleCount;
+    return true;
+  }
+  if (s === 6) {
+    wizardData.social = document.getElementById('b-social').value.trim();
+    wizardData.note = document.getElementById('b-note')?.value.trim() || '';
+    return true;
+  }
+  if (s === 8) {
+    if (!wizardData.source) { document.getElementById('err-source').classList.add('show'); return false; }
+    wizardData.sourceFb = document.getElementById('b-source-fb')?.value.trim() || '';
+    document.getElementById('err-source').classList.remove('show');
+    return true;
+  }
+  return true;
+}
+
+function showErr(inputId, errId) {
+  const el = document.getElementById(inputId);
+  if (el) el.classList.add('invalid');
+  const er = document.getElementById(errId);
+  if (er) er.classList.add('show');
+}
+function clearErr(inputId, errId) {
+  const el = document.getElementById(inputId);
+  if (el) el.classList.remove('invalid');
+  const er = document.getElementById(errId);
+  if (er) er.classList.remove('show');
+}
+
+function nextStep() {
+  if (!validateCurrentStep()) return;
+  const idx = STEP_SEQUENCE.indexOf(currentStep);
+  if (idx >= 0 && idx < STEP_SEQUENCE.length - 1) {
+    const nextN = STEP_SEQUENCE[idx + 1];
+    if (nextN === 9) { populateSummary(); }
+    showStep(nextN, 'forward');
+  }
+}
+
+function prevStep() {
+  const idx = STEP_SEQUENCE.indexOf(currentStep);
+  if (idx > 0) {
+    showStep(STEP_SEQUENCE[idx - 1], 'back');
+  }
+}
+
+function skipStep() {
+  if (currentStep === 6) { wizardData.social = ''; wizardData.note = ''; }
+  const idx = STEP_SEQUENCE.indexOf(currentStep);
+  if (idx >= 0 && idx < STEP_SEQUENCE.length - 1) {
+    const nextN = STEP_SEQUENCE[idx + 1];
+    if (nextN === 9) { populateSummary(); }
+    showStep(nextN, 'forward');
+  }
+}
+
+function selectSource(el) {
+  const grid = el.closest('.card-grid');
+  grid.querySelectorAll('.sel-card').forEach(c => c.classList.remove('selected'));
+  el.classList.add('selected');
+  wizardData.source = el.dataset.val;
+  document.getElementById('err-source').classList.remove('show');
+  const fbWrap = document.getElementById('fb-page-wrap');
+  if (fbWrap) fbWrap.style.display = (wizardData.source === 'Facebook') ? 'block' : 'none';
+}
+
+function toggleSocialTutorial() {
+  const tut = document.getElementById('socialTutorial');
+  const arrow = document.getElementById('tutArrow');
+  const open = tut.style.display !== 'none';
+  tut.style.display = open ? 'none' : 'block';
+  arrow.textContent = open ? '▼' : '▲';
+}
+
+// Card selection (service / days)
+function selectCard(type, el) {
+  const grid = el.closest('.card-grid');
+  grid.querySelectorAll('.sel-card').forEach(c => c.classList.remove('selected'));
+  el.classList.add('selected');
+  if (type === 'service') {
+    wizardData.service = el.dataset.val;
+    document.getElementById('err-service').classList.remove('show');
+  }
+  if (type === 'days') {
+    wizardData.days = el.dataset.val;
+    document.getElementById('err-days').classList.remove('show');
+  }
+  // Show checkmark feedback but let user advance manually
+  const nextBtn = document.querySelector('#step-' + currentStep + ' .wiz-next-btn');
+  if (nextBtn) { nextBtn.style.background = '#16a34a'; setTimeout(() => { nextBtn.style.background = ''; }, 800); }
+}
+
+// People stepper
+function changePeople(delta) {
+  const newVal = peopleCount + delta;
+  if (newVal < 1 || newVal > 30) return;
+  peopleCount = newVal;
+  document.getElementById('people-display').textContent = peopleCount;
+}
+
+// Summary
+function populateSummary() {
+  wizardData.social = document.getElementById('b-social').value.trim();
+  wizardData.note   = document.getElementById('b-note').value.trim();
+  wizardData.people = peopleCount;
+  document.getElementById('sum-name').textContent    = wizardData.name    || '—';
+  document.getElementById('sum-phone').textContent   = wizardData.phone   || '—';
+  document.getElementById('sum-email').textContent   = wizardData.email   || '—';
+  document.getElementById('sum-service').textContent = wizardData.service || '—';
+  const pkgRow = document.getElementById('sum-row-package');
+  if (wizardData.package) {
+    pkgRow.style.display = 'flex';
+    document.getElementById('sum-package').textContent = wizardData.package;
+  } else { pkgRow.style.display = 'none'; }
+  document.getElementById('sum-start').textContent   = wizardData.start   || '—';
+  document.getElementById('sum-days').textContent    = wizardData.days    || '—';
+  document.getElementById('sum-people').textContent  = wizardData.people + (wizardData.people === 1 ? ' person' : ' people');
+  const rowSocial = document.getElementById('sum-row-social');
+  const rowNote   = document.getElementById('sum-row-note');
+  rowSocial.style.display = 'flex';
+  document.getElementById('sum-social').textContent = wizardData.social || '—';
+  if (wizardData.note) {
+    rowNote.style.display = 'flex';
+    document.getElementById('sum-note').textContent = wizardData.note;
+  } else { rowNote.style.display = 'none'; }
+  const srcEl = document.getElementById('sum-source');
+  if (srcEl) {
+    let srcText = wizardData.source || '—';
+    if (wizardData.source === 'Facebook' && wizardData.sourceFb) srcText += ' · ' + wizardData.sourceFb;
+    srcEl.textContent = srcText;
+  }
+}
+
+// Enter key on text/email/tel inputs
+['b-name','b-phone','b-email'].forEach(id => {
+  const el = document.getElementById(id);
+  if (!el) return;
+  el.addEventListener('keydown', e => {
+    if (e.key === 'Enter') { e.preventDefault(); nextStep(); }
+  });
+});
+// Social — optional field, Enter still advances
+document.getElementById('b-social').addEventListener('keydown', e => {
+  if (e.key === 'Enter') { e.preventDefault(); nextStep(); }
+});
+
+// Clear invalid on input
+['b-name','b-phone','b-email','b-start','b-social'].forEach(id => {
+  const el = document.getElementById(id);
+  if (!el) return;
+  el.addEventListener('input', () => el.classList.remove('invalid'));
+});
+
+// Lock/unlock wizard
+function lockWizard() {
+  wizardLocked = true;
+  const ov = document.getElementById('wizardOverlay');
+  ov.style.display = 'block';
+  ov.onclick = pulseAuthNotice;
+}
+function unlockWizard() {
+  wizardLocked = false;
+  document.getElementById('wizardOverlay').style.display = 'none';
+}
+function pulseAuthNotice() {}
+
+window.shareBooking = async function() {
+  const url  = window.location.origin + '/en/booking/';
+  const text = 'LFS Shanghai — Your trusted guide in Shanghai 🇨🇳';
+  if (navigator.share) {
+    try { await navigator.share({ title:'LFS Shanghai', text, url }); return; } catch(_) {}
+  }
+  try {
+    await navigator.clipboard.writeText(url);
+    const el = document.getElementById('shareCopied');
+    el.classList.add('show');
+    setTimeout(() => el.classList.remove('show'), 2500);
+  } catch(_) {}
+};
+
+// Initialize progress
+updateProgress();
+
+function togglePricing() {
+  const panel = document.getElementById('pricingPanel');
+  const arrow = document.getElementById('pricingArrow');
+  const btn   = document.getElementById('pricingToggleBtn');
+  const open  = panel.style.display !== 'none';
+  panel.style.display = open ? 'none' : 'block';
+  arrow.textContent   = open ? '▼' : '▲';
+  btn.querySelector('span:first-child').textContent = open ? '💰 View Price List' : '💰 Close Price List';
+}
+</script>
+
+<script type="module">
+import { initializeApp } from "https://www.gstatic.com/firebasejs/11.7.1/firebase-app.js";
+import { getFirestore, collection, addDoc, serverTimestamp, doc, getDoc } from "https://www.gstatic.com/firebasejs/11.7.1/firebase-firestore.js";
+import { getAnalytics, logEvent } from "https://www.gstatic.com/firebasejs/11.7.1/firebase-analytics.js";
+import { getAuth, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/11.7.1/firebase-auth.js";
+
+const firebaseConfig = {
+  apiKey: "AIzaSyDixZdKwlrixRFokERCMQ5Ld1BMkhUttCQ",
+  authDomain: "lfs-shanghai.firebaseapp.com",
+  projectId: "lfs-shanghai",
+  storageBucket: "lfs-shanghai.firebasestorage.app",
+  messagingSenderId: "337508244675",
+  appId: "1:337508244675:web:f47b7e14417a0f1d129676",
+  measurementId: "G-81DTJ80VLR"
+};
+
+const app  = initializeApp(firebaseConfig);
+const db   = getFirestore(app);
+const analytics = getAnalytics(app);
+const auth = getAuth(app);
+logEvent(analytics, 'page_view', { page_title: 'Booking Page' });
+
+// ── Inline calendar for step 5 ──────────────────────────────────
+(function() {
+  const EN_MONTHS = ['January','February','March','April','May','June','July','August','September','October','November','December'];
+  const EN_DAYS   = ['Mo','Tu','We','Th','Fr','Sa','Su'];
+  const pad = n => String(n).padStart(2,'0');
+  const toYMD = d => `${d.getFullYear()}-${pad(d.getMonth()+1)}-${pad(d.getDate())}`;
+
+  const today = new Date(); today.setHours(0,0,0,0);
+  let viewYear = today.getFullYear();
+  let viewMonth = today.getMonth();
+  let selected = null;
+
+  const realInput  = document.getElementById('b-start');
+  const titleEl    = document.getElementById('ical-title');
+  const gridEl     = document.getElementById('ical-grid');
+  const dnEl       = document.getElementById('ical-dn');
+  const selectedEl = document.getElementById('ical-selected');
+
+  // Day name headers
+  EN_DAYS.forEach(d => {
+    const el = document.createElement('div');
+    el.className = 'ical-dn-cell';
+    el.textContent = d;
+    dnEl.appendChild(el);
+  });
+
+  function render() {
+    titleEl.textContent = `${viewYear} · ${EN_MONTHS[viewMonth]}`;
+    gridEl.innerHTML = '';
+
+    const first = new Date(viewYear, viewMonth, 1);
+    const last  = new Date(viewYear, viewMonth+1, 0);
+    let dow = first.getDay() - 1; if (dow < 0) dow = 6;
+
+    // Prev month fillers
+    for (let i = 0; i < dow; i++) {
+      const d = new Date(viewYear, viewMonth, -dow + i + 1);
+      addCell(d, true);
+    }
+    // Current month
+    for (let i = 1; i <= last.getDate(); i++) addCell(new Date(viewYear, viewMonth, i), false);
+    // Next month fillers
+    const total = dow + last.getDate();
+    const rem = (7 - (total % 7)) % 7;
+    for (let i = 1; i <= rem; i++) addCell(new Date(viewYear, viewMonth+1, i), true);
+  }
+
+  function addCell(date, other) {
+    const btn = document.createElement('button');
+    btn.type = 'button';
+    btn.className = 'ical-day';
+    btn.textContent = date.getDate();
+    if (other)                           btn.classList.add('ical-other');
+    if (toYMD(date) === toYMD(today))    btn.classList.add('ical-today');
+    if (date < today)                    btn.classList.add('ical-disabled');
+    if (selected && toYMD(date) === toYMD(selected)) btn.classList.add('ical-selected');
+    btn.onclick = () => {
+      selected = date;
+      realInput.value = toYMD(date);
+      const label = `${date.getFullYear()}/${pad(date.getMonth()+1)}/${pad(date.getDate())}`;
+      selectedEl.textContent = '✓ ' + label + ' selected';
+      document.getElementById('err-start').style.display = 'none';
+      render();
+    };
+    gridEl.appendChild(btn);
+  }
+
+  document.getElementById('ical-prev').onclick = () => {
+    viewMonth--; if (viewMonth < 0) { viewMonth = 11; viewYear--; } render();
+  };
+  document.getElementById('ical-next').onclick = () => {
+    viewMonth++; if (viewMonth > 11) { viewMonth = 0; viewYear++; } render();
+  };
+
+  render();
+})();
+
+async function checkProfileComplete(user) {
+  const profileNotice = document.getElementById('profileNotice');
+  try {
+    const snap = await getDoc(doc(db, 'users', user.uid));
+    const p = snap.exists() ? snap.data() : {};
+    currentProfile = p;
+    // Auto-fill wizard step 1 from profile
+    if (p.firstName || p.lastName) {
+      const nameEl = document.getElementById('b-name');
+      if (nameEl && !nameEl.value) nameEl.value = [p.lastName, p.firstName].filter(Boolean).join(' ');
+    }
+    if (p.phone) {
+      const phoneEl = document.getElementById('b-phone');
+      if (phoneEl && !phoneEl.value) phoneEl.value = p.phone;
+    }
+    if (user.email) {
+      const emailEl = document.getElementById('b-email');
+      if (emailEl && !emailEl.value) emailEl.value = user.email;
+    }
+    profileNotice.classList.remove('show');
+  } catch(e) {
+    // On error allow booking
+    unlockWizard();
+  }
+}
+
+let currentUser = null;
+let currentProfile = {};
+onAuthStateChanged(auth, user => {
+  document.getElementById('bookingSkeleton').style.display = 'none';
+  document.getElementById('bookingMain').style.display = 'block';
+
+  currentUser = user;
+  unlockWizard();
+  if (user) {
+    checkProfileComplete(user);
+  }
+});
+
+async function sendConfirmEmail(toEmail, toName, d) {
+  try {
+    await window.emailjs.send("service_lr0xy9q", "template_o0e4529", {
+      to_email: toEmail,
+      to_name:  toName,
+      service:  d.service,
+      start:    d.start,
+      days:     d.days,
+      people:   d.people || '—',
+      phone:    d.phone,
+      group:    d.group  || '—',
+      note:     d.note   || '—'
+    });
+  } catch(e) { console.error("EmailJS error:", e); }
+}
+
+
+window.submitBooking = async function() {
+  // Read latest values (user may have edited summary fields)
+  const d = {
+    name:    document.getElementById('b-name').value.trim()    || wizardData.name,
+    phone:   document.getElementById('b-phone').value.trim().replace(/\s/g,'') || wizardData.phone,
+    email:   document.getElementById('b-email').value.trim()   || wizardData.email,
+    service: wizardData.service,
+    start:   document.getElementById('b-start').value.trim()   || wizardData.start,
+    days:    wizardData.days,
+    people:  String(peopleCount),
+    social:  document.getElementById('b-social').value.trim()  || '',
+    group:   String(peopleCount),
+    note:    document.getElementById('b-note').value.trim()    || '',
+    source:  wizardData.source   || '',
+    sourceFb: wizardData.sourceFb || '',
+    userId:  currentUser ? currentUser.uid : '',
+    createdAt: serverTimestamp()
+  };
+
+  const btn = document.getElementById('submitBtn');
+  btn.disabled = true;
+  btn.textContent = 'Submitting...';
+
+  try {
+    // Save to Firestore (best-effort — continues even if rules deny)
+    try {
+      await addDoc(collection(db, "bookings"), d);
+      logEvent(analytics, 'booking_submitted', { service: d.service, people: d.people });
+    } catch(fsErr) {
+      console.warn('Firestore write skipped:', fsErr.code || fsErr.message);
+    }
+
+    // ── LFS Webhook → Telegram ──
+    try {
+      await fetch('https://bileg11githubio-production.up.railway.app/api/booking', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          ...d,
+          profile: {
+            firstName: currentProfile.firstName || '',
+            lastName:  currentProfile.lastName  || '',
+            phone:     currentProfile.phone     || '',
+            email:     currentProfile.email     || '',
+            gender:    currentProfile.gender    || '',
+            birthday:  currentProfile.birthday  || '',
+            isLoggedIn: !!currentUser,
+          }
+        }),
+      });
+    } catch(e) { console.warn('LFS webhook:', e); }
+
+    // ── Notion booking sync (Make.com webhook) ──
+    try {
+      const MAKE_WEBHOOK = 'https://hook.us2.make.com/9g9h5g4md1i55pkk9k9o615q0gwvsiih';
+      await fetch(MAKE_WEBHOOK, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          name:    d.name,
+          phone:   d.phone,
+          email:   d.email,
+          service: d.service,
+          start:   d.start,
+          days:    parseInt(d.days)   || 1,
+          people:  parseInt(d.people) || 1,
+          note:    d.note || ''
+        })
+      });
+    } catch(notionErr) { console.warn('Notion sync:', notionErr); }
+
+    await sendConfirmEmail(d.email, d.name, d);
+
+    // Send admin notification email
+    try {
+      await window.emailjs.send("service_lr0xy9q", "template_o0e4529", {
+        to_email: "lfs.shanghai1@gmail.com",
+        to_name:  "LFS Admin",
+        service:  d.service,
+        start:    d.start,
+        days:     d.days,
+        people:   d.people || '—',
+        phone:    d.phone,
+        group:    d.group  || '—',
+        note:     `[ADMIN] New booking!\nName: ${d.name}\nPhone: ${d.phone}\nEmail: ${d.email}\nSocial: ${d.social||'—'}\n\nNote: ${d.note||'—'}`
+      });
+    } catch(_) { /* silent — Telegram covers this */ }
+
+    // Show success
+    document.getElementById('wizardBody').style.display = 'none';
+    document.getElementById('stepCounter').style.display = 'none';
+    document.getElementById('successScreen').style.display = 'block';
+    document.getElementById('progressBar').style.width = '100%';
+  } catch(err) {
+    console.error(err);
+    btn.disabled = false;
+    btn.textContent = 'Submit Booking →';
+    toast('An error occurred', 'error', { subtitle: err.code || err.message || String(err) });
+  }
+};
+</script>
+
+<script>
+if ('serviceWorker' in navigator) {
+  navigator.serviceWorker.register('/sw.js').catch(() => {});
+}
+</script>
+<script type="text/javascript">
+var Tawk_API=Tawk_API||{}, Tawk_LoadTime=new Date();
+(function(){
+  var s1=document.createElement("script"),s0=document.getElementsByTagName("script")[0];
+  s1.async=true;
+  s1.src='https://embed.tawk.to/6a01d583db08b91c337bdcf5/1jobik2hq';
+  s1.charset='UTF-8';
+  s1.setAttribute('crossorigin','*');
+  s0.parentNode.insertBefore(s1,s0);
+})();
+</script>
+<script src="/js/messenger-btn.js"></script>
+</body>
+</html>
