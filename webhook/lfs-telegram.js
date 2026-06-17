@@ -926,11 +926,10 @@ async function generateMarketingIdeas() {
 // ── WEBHOOK HANDLER ───────────────────────────────────────────────
 module.exports = async (req, res) => {
   if (req.method !== 'POST') return res.status(200).send('LFS Bot OK');
-  res.status(200).json({ ok: true });
 
   try {
     const upd = req.body;
-    if (!upd || !UID) return;
+    if (!upd || !UID) return res.status(200).json({ ok: true });
 
     if (upd.callback_query) {
       await handleCallback(upd.callback_query);
@@ -942,6 +941,8 @@ module.exports = async (req, res) => {
   } catch (e) {
     console.error('[LFS Bot] Error:', e.message);
   }
+
+  res.status(200).json({ ok: true });
 };
 
 module.exports.tgCall                 = tgCall;
