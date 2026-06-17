@@ -140,6 +140,36 @@ const FORMAT_GUIDE = {
 };
 const FORMAT_EMOJI = { single: '📸', carousel: '🎠', reel: '🎬' };
 
+// ── LIVE DATA: Шанхайн бодит 7 хоногийн цаг агаар (Open-Meteo, key-гүй) ──
+async function getShanghaiWeather() {
+  try {
+    const url = 'https://api.open-meteo.com/v1/forecast?latitude=31.23&longitude=121.47'
+      + '&daily=weather_code,temperature_2m_max,temperature_2m_min,precipitation_probability_max'
+      + '&timezone=Asia/Shanghai&forecast_days=7';
+    const r = await fetch(url);
+    const d = await r.json();
+    if (!d.daily || !d.daily.time) return null;
+
+    const codeText = c => {
+      if (c === 0) return 'цэлмэг';
+      if (c <= 3) return 'багавтар үүлэрхэг';
+      if (c <= 48) return 'манантай';
+      if (c <= 55) return 'шиврээ бороо';
+      if (c <= 65) return 'бороотой';
+      if (c <= 77) return 'цас/мөндөр';
+      if (c <= 82) return 'аадар бороо';
+      if (c >= 95) return 'аянга цахилгаантай';
+      return 'үүлэрхэг';
+    };
+    const wd = ['Ня', 'Да', 'Мя', 'Лх', 'Пү', 'Ба', 'Бя'];
+    return d.daily.time.map((t, i) =>
+      `${t} (${wd[new Date(t).getDay()]}): ${codeText(d.daily.weather_code[i])}, `
+      + `${Math.round(d.daily.temperature_2m_min[i])}–${Math.round(d.daily.temperature_2m_max[i])}°C, `
+      + `бороо орох магадлал ${d.daily.precipitation_probability_max[i]}%`
+    ).join('\n');
+  } catch (e) { console.error('[Weather]', e.message); return null; }
+}
+
 // ── HELPERS ───────────────────────────────────────────────────────
 async function tgCall(method, body) {
   const r = await fetch(`https://api.telegram.org/bot${TG_TOKEN}/${method}`, {
@@ -1034,9 +1064,19 @@ async function generateMarketingIdeas(slot = 'default') {
 
   const pillars = pickPillars(slot, recentPillars);
 
+  // Бодит цаг агаар: зөвхөн цаг агаарын pillar сонгогдсон үед татна (API хэмнэнэ)
+  let liveContext = '';
+  if (pillars.some(p => p.includes('ЦАГ АГААР'))) {
+    const w = await getShanghaiWeather();
+    if (w) liveContext +=
+      `\nБОДИТ 7 ХОНОГИЙН ЦАГ АГААР (Open-Meteo-оос татсан, ЭНЭ БОДИТ ӨГӨГДЛИЙГ АШИГЛА — `
+      + `статик "Meiyu" гэж бүү бич, доорх жинхэнэ температур/борооны магадлалыг иш татаж зөвлөгөө өг):\n${w}\n`;
+  }
+
   const task =
     `Өнөөдөр: ${today}\n` +
     (usedTopics ? `Сүүлд хийсэн постуудын сэдэв (ДАВТАХГҮЙ): ${usedTopics}\n\n` : '\n') +
+    liveContext +
     `Facebook/Instagram-д шууд хуулж тавихад бэлэн 3 пост бич.\n` +
     `Пост бүрийг ЗӨВХӨН дараах өөр өөр сэдвээр (нэг сэдэв = нэг пост) бич:\n` +
     `  • Пост 1 сэдэв: ${pillars[0]}\n` +
