@@ -870,15 +870,23 @@ async function handleText(msg) {
       `/income [дүн] [тэмдэглэл] — орлого бүртгэх\n` +
       `/revenue — орлогын тайлан\n\n` +
       `*📸 IG/FB Post*\n` +
-      `/weekplan — 7 хоногийн 14 пост үүсгэх 🆕\n` +
+      `/marketing — 3 пост санаа үүсгэх → approve → auto-post\n` +
+      `/weekplan — 7 хоногийн 14 пост үүсгэх\n` +
       `/week — одоогийн пост хуваарь\n` +
-      `/history — approve хийсэн постын түүх 🆕\n` +
+      `/history — approve хийсэн постын түүх\n` +
       `_Зураг явуулахад → AI caption + нийтлэх_\n\n` +
       `*🤖 AI features*\n` +
       `• LFS brand voice caption\n` +
       `• Single / Carousel / Reel формат\n` +
       `• Post memory — давтахгүй`
     );
+    return;
+  }
+
+  // ── /marketing ───────────────────────────────────────────────────
+  if (text === '/marketing') {
+    await tgSend('⏳ 3 пост санаа бэлдэж байна...');
+    await generateMarketingIdeas();
     return;
   }
 }
