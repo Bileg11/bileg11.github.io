@@ -113,7 +113,7 @@ async function postToIG(imageUrl, caption, hashtags) {
   const cData = await cRes.json();
   if (!cData.id) return { ok: false, err: cData.error?.message || 'Container алдаа' };
 
-  await new Promise(r => setTimeout(r, 3000));
+  await new Promise(r => setTimeout(r, 2000));
 
   const pRes  = await fetch(`https://graph.facebook.com/v25.0/${IG_ID}/media_publish`, {
     method: 'POST',
@@ -472,70 +472,48 @@ async function handleCallback(cb) {
     return;
   }
 
-  // ── Marketing content queue approve → auto-publish ────────────────
+  // ── Marketing content queue approve → fire-and-forget publish ───────
   if (cmd.startsWith('mkq_')) {
     const ideaId = cmd.slice(4);
-    let ideaData = {};
     try {
       const qRef        = dbLFS.doc(`users/${UID}/marketing/weeklyQueue`);
       const qSnap       = await qRef.get();
       const qData       = qSnap.exists ? qSnap.data() : {};
       const pendingKey  = `pending_${ideaId}`;
       const approvedKey = `approved_${ideaId}`;
-      ideaData          = qData[pendingKey] || {};
+      const ideaData    = qData[pendingKey] || {};
 
+      // Firestore-д approved болгож, publish queue-д нэм
       await qRef.set({
         [approvedKey]: { ...ideaData, status: 'approved', approvedAt: new Date().toISOString() },
         [pendingKey]:  admin.firestore.FieldValue.delete(),
+      }, { merge: true });
+
+      await dbLFS.doc(`users/${UID}/marketing/publishQueue`).set({
+        [`job_${ideaId}`]: { ...ideaData, status: 'queued', queuedAt: new Date().toISOString() },
       }, { merge: true });
     } catch (e) {
       console.error('[Marketing] Approve save error:', e.message);
     }
 
-    // Button-г "Approved" болго
+    // Telegram-д шууд хариул (timeout болохоос өмнө)
     await tgCall('editMessageReplyMarkup', {
       chat_id: TG_CHAT, message_id: msgId,
       reply_markup: { inline_keyboard: [[{ text: '✅ Approved', callback_data: 'noop' }]] },
     });
-
     await tgAnswer(cbId, '⏳ Нийтэлж байна...');
-    await tgSend('⏳ Зураг хайж, IG + FB-д нийтэлж байна...');
+    await tgSend('⏳ Нийтэлж байна...');
 
-    // Зураг хайх + IG + FB-д нийтлэх
-    try {
-      const searchQuery = ideaData.imageSearch || ideaData.title || ideaData.topic || 'shanghai china';
-      const imageUrl    = await fetchNewImage(searchQuery);
+    // Publish-г тусдаа endpoint-д fire-and-forget дуудна (await хийхгүй)
+    const base = process.env.VERCEL_URL
+      ? `https://${process.env.VERCEL_URL}`
+      : 'https://bileg11-github-io.vercel.app';
+    fetch(`${base}/api/publish-post`, {
+      method:  'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body:    JSON.stringify({ ideaId }),
+    }).catch(e => console.error('[Publish trigger]', e.message));
 
-      // Caption бүтээх: hook + caption + cta
-      const parts = [ideaData.hook, ideaData.caption, ideaData.cta].filter(Boolean);
-      const fullCaption = parts.length ? parts.join('\n\n') : (ideaData.title || 'LFS Shanghai');
-      const hashtags    = ideaData.hashtags || '';
-
-      const [igResult, fbResult] = await Promise.all([
-        postToIG(imageUrl, fullCaption, hashtags),
-        postToFB(imageUrl, fullCaption, hashtags),
-      ]);
-
-      if (igResult.ok) {
-        await saveToPostHistory(ideaData);
-      }
-
-      const igLine = igResult.ok
-        ? `📱 IG: ✅ нийтлэгдлээ (ID: \`${igResult.postId}\`)`
-        : `📱 IG: ❌ ${igResult.err}`;
-      const fbLine = fbResult.ok
-        ? `📘 FB: ✅ нийтлэгдлээ`
-        : `📘 FB: ❌ ${fbResult.err}`;
-
-      await tgSend(
-        `${igResult.ok || fbResult.ok ? '✅' : '❌'} *Нийтлэлт дууслаа*\n\n` +
-        `📸 Сэдэв: ${ideaData.title || '—'}\n` +
-        `${igLine}\n${fbLine}`,
-      );
-    } catch (e) {
-      console.error('[Marketing] Auto-publish error:', e.message);
-      await tgSend(`❌ Нийтлэх үед алдаа гарлаа: ${e.message}`);
-    }
     return;
   }
 
@@ -1027,6 +1005,48 @@ module.exports = async (req, res) => {
   res.status(200).json({ ok: true });
 };
 
+// ── BACKGROUND PUBLISH (called from /api/publish-post) ───────────────
+async function publishMarketingPost(ideaId) {
+  const jobKey  = `job_${ideaId}`;
+  const queueRef = dbLFS.doc(`users/${UID}/marketing/publishQueue`);
+
+  let ideaData = {};
+  try {
+    const snap = await queueRef.get();
+    ideaData = snap.exists ? (snap.data()[jobKey] || {}) : {};
+  } catch (e) { console.error('[Publish] Firestore read error:', e.message); }
+
+  const searchQuery = ideaData.imageSearch || ideaData.title || ideaData.topic || 'shanghai china';
+  const imageUrl    = await fetchNewImage(searchQuery);
+
+  const parts       = [ideaData.hook, ideaData.caption, ideaData.cta].filter(Boolean);
+  const fullCaption = parts.length ? parts.join('\n\n') : (ideaData.title || 'LFS Shanghai');
+  const hashtags    = ideaData.hashtags || '';
+
+  const [igResult, fbResult] = await Promise.all([
+    postToIG(imageUrl, fullCaption, hashtags),
+    postToFB(imageUrl, fullCaption, hashtags),
+  ]);
+
+  if (igResult.ok) await saveToPostHistory(ideaData);
+
+  // Queue-с устга
+  queueRef.set({ [jobKey]: admin.firestore.FieldValue.delete() }, { merge: true }).catch(() => {});
+
+  const igLine = igResult.ok
+    ? `📱 IG: ✅ нийтлэгдлээ (ID: \`${igResult.postId}\`)`
+    : `📱 IG: ❌ ${igResult.err}`;
+  const fbLine = fbResult.ok
+    ? `📘 FB: ✅ нийтлэгдлээ`
+    : `📘 FB: ❌ ${fbResult.err}`;
+
+  await tgSend(
+    `${igResult.ok || fbResult.ok ? '✅' : '❌'} *Нийтлэлт дууслаа*\n\n` +
+    `📸 Сэдэв: ${ideaData.title || '—'}\n${igLine}\n${fbLine}`,
+  );
+}
+
 module.exports.tgCall                 = tgCall;
 module.exports.tgSend                 = (text) => tgCall('sendMessage', { chat_id: TG_CHAT, text, parse_mode: 'Markdown' });
 module.exports.generateMarketingIdeas = generateMarketingIdeas;
+module.exports.publishMarketingPost   = publishMarketingPost;

@@ -94,6 +94,15 @@ app.get('/api/cron/postfreq', cronAuth, async (req, res) => {
   res.json({ ok: true });
 });
 
+// ── BACKGROUND PUBLISH ENDPOINT (fire-and-forget from lfs-telegram) ──
+app.post('/api/publish-post', async (req, res) => {
+  const { ideaId } = req.body || {};
+  if (!ideaId) return res.status(400).json({ error: 'ideaId missing' });
+  // Heavy work (IG+FB post with sleeps) — respond AFTER done
+  await lfsBot.publishMarketingPost(ideaId).catch(e => console.error('[Publish]', e.message));
+  res.json({ ok: true });
+});
+
 app.get('/', (req, res) => res.send('LFS Shanghai webhook running ✅'));
 
 // Vercel → module.exports, локал → app.listen
