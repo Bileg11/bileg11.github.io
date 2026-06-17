@@ -70,8 +70,10 @@ function cronAuth(req, res, next) {
 }
 
 app.get('/api/cron/marketing', cronAuth, async (req, res) => {
-  await lfsBot.generateMarketingIdeas().catch(e => console.error('[Marketing]', e.message));
-  res.json({ ok: true });
+  // slot=morning → мэдээллийн value контент | slot=evening → итгэлцэл/түүх | default → 80/20
+  const slot = ['morning', 'evening'].includes(req.query.slot) ? req.query.slot : 'default';
+  await lfsBot.generateMarketingIdeas(slot).catch(e => console.error('[Marketing]', e.message));
+  res.json({ ok: true, slot });
 });
 
 app.get('/api/cron/morning', cronAuth, async (req, res) => {

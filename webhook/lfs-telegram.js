@@ -89,12 +89,25 @@ const CONTENT_PILLARS = {
   ],
 };
 
-// 80/20 тэнцвэр: 2 value + 1 (trust 60% / service 40%). Цэвэр "зар" ховор гарна.
-function pickPillars() {
-  const v = [...CONTENT_PILLARS.value].sort(() => Math.random() - 0.5).slice(0, 2);
-  const pool = Math.random() < 0.6 ? CONTENT_PILLARS.trust : CONTENT_PILLARS.service;
-  const third = pool[Math.floor(Math.random() * pool.length)];
-  return [...v, third].sort(() => Math.random() - 0.5);
+// Slot-д тааруулж pillar сонгоно (Монгол сошиал идэвхжлийн оргил цагт уялдсан):
+//   morning → цэвэр мэдээллийн value контент (гид, Alipay, цаг агаар, хоол)
+//   evening → итгэлцэл/сэтгэл хөдлөл давамгай (бодит түүх, влог) + 1 зөөлөн зар
+//   default → /marketing командын 80/20 тэнцвэр (2 value + 1 trust/service)
+function pickPillars(slot = 'default') {
+  const shuffle = arr => [...arr].sort(() => Math.random() - 0.5);
+  let picks;
+  if (slot === 'morning') {
+    picks = shuffle(CONTENT_PILLARS.value).slice(0, 3);
+  } else if (slot === 'evening') {
+    const t = shuffle(CONTENT_PILLARS.trust).slice(0, 2);
+    const s = CONTENT_PILLARS.service[Math.floor(Math.random() * CONTENT_PILLARS.service.length)];
+    picks = [...t, s];
+  } else {
+    const v = shuffle(CONTENT_PILLARS.value).slice(0, 2);
+    const pool = Math.random() < 0.6 ? CONTENT_PILLARS.trust : CONTENT_PILLARS.service;
+    picks = [...v, pool[Math.floor(Math.random() * pool.length)]];
+  }
+  return shuffle(picks);
 }
 
 // ── FORMAT GUIDE ──────────────────────────────────────────────────
@@ -965,7 +978,7 @@ async function handleText(msg) {
 
 // ── SPRINT 4: AI MARKETING CONTENT INTELLIGENCE ───────────────────
 // server.js-ийн cron-оор дуудагдана (13:00 Шанхай / 05:00 UTC)
-async function generateMarketingIdeas() {
+async function generateMarketingIdeas(slot = 'default') {
   if (!GEMINI_KEY) { console.warn('[Marketing] GEMINI_API_KEY тохиргоогүй'); return; }
 
   const today   = todaySH();
@@ -974,7 +987,7 @@ async function generateMarketingIdeas() {
     ? history.map(p => p.title).filter(Boolean).join(', ')
     : '';
 
-  const pillars = pickPillars();
+  const pillars = pickPillars(slot);
 
   const task =
     `Өнөөдөр: ${today}\n` +
