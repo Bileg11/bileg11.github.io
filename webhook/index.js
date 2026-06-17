@@ -89,6 +89,7 @@ app.get('/api/debug/livedata', async (req, res) => {
     geminiKeySet: lfsBot.hasGeminiKey(),
     weather: weather || '(null — татаж чадсангүй)',
     events:  events  || '(null — Gemini grounding ажиллаагүй эсвэл event алга)',
+    geminiRaw: await lfsBot.debugGeminiRaw().catch(e => `ERR: ${e.message}`),
   });
 });
 

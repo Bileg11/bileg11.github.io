@@ -202,6 +202,31 @@ async function getShanghaiEvents() {
   } catch (e) { console.error('[Events]', e.message); return null; }
 }
 
+// Gemini grounding-ийн raw хариуг оношлоход (түр debug)
+async function debugGeminiRaw() {
+  if (!GEMINI_KEY) return { error: 'GEMINI_KEY алга' };
+  try {
+    const r = await fetch(
+      `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent?key=${GEMINI_KEY}`,
+      {
+        method:  'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body:    JSON.stringify({
+          contents: [{ parts: [{ text: 'Шанхайд энэ долоо хоногт болох томоохон арга хэмжээ юу вэ?' }] }],
+          tools:    [{ google_search: {} }],
+        }),
+      }
+    );
+    const d = await r.json();
+    return {
+      httpStatus:    r.status,
+      apiError:      d.error ? `${d.error.code} ${d.error.status}: ${d.error.message}` : null,
+      hasCandidates: !!d.candidates,
+      rawHead:       JSON.stringify(d).slice(0, 500),
+    };
+  } catch (e) { return { exception: e.message }; }
+}
+
 // ── HELPERS ───────────────────────────────────────────────────────
 async function tgCall(method, body) {
   const r = await fetch(`https://api.telegram.org/bot${TG_TOKEN}/${method}`, {
@@ -1318,3 +1343,4 @@ module.exports.publishMarketingPost   = publishMarketingPost;
 module.exports.getShanghaiWeather     = getShanghaiWeather;
 module.exports.getShanghaiEvents      = getShanghaiEvents;
 module.exports.hasGeminiKey           = () => !!GEMINI_KEY;
+module.exports.debugGeminiRaw         = debugGeminiRaw;
