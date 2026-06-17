@@ -81,18 +81,6 @@ app.get('/api/cron/remind', cronAuth, async (req, res) => {
   res.json({ ok: true });
 });
 
-// Live-data оношилгоо: weather + events жинхэнэ хариуг харуулна (түр debug)
-app.get('/api/debug/livedata', async (req, res) => {
-  const weather = await lfsBot.getShanghaiWeather().catch(e => `ERR: ${e.message}`);
-  const events  = await lfsBot.getShanghaiEvents().catch(e => `ERR: ${e.message}`);
-  res.json({
-    geminiKeySet: lfsBot.hasGeminiKey(),
-    weather: weather || '(null — татаж чадсангүй)',
-    events:  events  || '(null — Gemini grounding ажиллаагүй эсвэл event алга)',
-    geminiRaw: await lfsBot.debugGeminiRaw().catch(e => `ERR: ${e.message}`),
-  });
-});
-
 app.get('/api/cron/morning', cronAuth, async (req, res) => {
   await metaHook.sendMorningBrief().catch(e => console.error('[MorningBrief]', e.message));
   res.json({ ok: true });
