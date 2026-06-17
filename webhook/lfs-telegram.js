@@ -475,6 +475,7 @@ async function handleCallback(cb) {
       // FB-д нийтлэх
       let fbMsg = '';
       try {
+        if (!FB_ID) { fbMsg = '⚠️ FB: FACEBOOK_PAGE_ID тохиргоогүй'; throw new Error('no FB_ID'); }
         const ptRes  = await fetch(`https://graph.facebook.com/v25.0/${FB_ID}?fields=access_token&access_token=${META_TOKEN}`);
         const ptData = await ptRes.json();
         const pageTok = ptData.access_token || META_TOKEN;
