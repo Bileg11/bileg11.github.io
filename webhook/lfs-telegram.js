@@ -1315,3 +1315,6 @@ module.exports.tgSend                 = (text) => tgCall('sendMessage', { chat_i
 module.exports.generateMarketingIdeas = generateMarketingIdeas;
 module.exports.checkApproveReminders  = checkApproveReminders;
 module.exports.publishMarketingPost   = publishMarketingPost;
+module.exports.getShanghaiWeather     = getShanghaiWeather;
+module.exports.getShanghaiEvents      = getShanghaiEvents;
+module.exports.hasGeminiKey           = () => !!GEMINI_KEY;
