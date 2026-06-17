@@ -150,22 +150,20 @@ async function getShanghaiWeather() {
     const d = await r.json();
     if (!d.daily || !d.daily.time) return null;
 
-    const codeText = c => {
-      if (c === 0) return 'цэлмэг';
-      if (c <= 3) return 'багавтар үүлэрхэг';
-      if (c <= 48) return 'манантай';
-      if (c <= 55) return 'шиврээ бороо';
-      if (c <= 65) return 'бороотой';
-      if (c <= 77) return 'цас/мөндөр';
-      if (c <= 82) return 'аадар бороо';
-      if (c >= 95) return 'аянга цахилгаантай';
+    // weather_code-ийг борооны магадлалтай хослуулж зөөлрүүлнэ.
+    // Forecast "аянга" гэж драматик гаргадаг ч магадлал багатай бол хэт бүү онцол.
+    const skyText = (c, prob) => {
+      if (prob < 35) return c <= 1 ? 'нартай цэлмэг' : 'багавтар үүлэрхэг, ихэвчлэн хуурай';
+      if (c >= 95)  return prob >= 70 ? 'богино зуурын аадар бороо боломжтой' : 'хааяа бороо орж магадгүй';
+      if (c >= 61)  return prob >= 65 ? 'бороотой' : 'хааяа бороотой';
+      if (c >= 51)  return 'шиврээ бороотой';
+      if (c >= 45)  return 'манантай';
       return 'үүлэрхэг';
     };
     const wd = ['Ня', 'Да', 'Мя', 'Лх', 'Пү', 'Ба', 'Бя'];
     return d.daily.time.map((t, i) =>
-      `${t} (${wd[new Date(t).getDay()]}): ${codeText(d.daily.weather_code[i])}, `
-      + `${Math.round(d.daily.temperature_2m_min[i])}–${Math.round(d.daily.temperature_2m_max[i])}°C, `
-      + `бороо орох магадлал ${d.daily.precipitation_probability_max[i]}%`
+      `${t} (${wd[new Date(t).getDay()]}): ${skyText(d.daily.weather_code[i], d.daily.precipitation_probability_max[i])}, `
+      + `${Math.round(d.daily.temperature_2m_min[i])}–${Math.round(d.daily.temperature_2m_max[i])}°C`
     ).join('\n');
   } catch (e) { console.error('[Weather]', e.message); return null; }
 }
@@ -1126,8 +1124,9 @@ async function generateMarketingIdeas(slot = 'default') {
   if (pillars.some(p => p.includes('ЦАГ АГААР'))) {
     const w = await getShanghaiWeather();
     if (w) liveContext +=
-      `\nБОДИТ 7 ХОНОГИЙН ЦАГ АГААР (Open-Meteo-оос татсан, ЭНЭ БОДИТ ӨГӨГДЛИЙГ АШИГЛА — `
-      + `статик "Meiyu" гэж бүү бич, доорх жинхэнэ температур/борооны магадлалыг иш татаж зөвлөгөө өг):\n${w}\n`;
+      `\nБОДИТ 7 ХОНОГИЙН ЦАГ АГААР (Open-Meteo). Доорх өгөгдлийг ашигла, гэхдээ:\n`
+      + `— Нэг өдрийн нарийн forecast хэт драматик/найдваргүй тул "өнөөдөр аянга цахилгаантай" гэх ОНЦЛОХГҮЙ.\n`
+      + `— Оронд нь 7 хоногийн ЕРӨНХИЙ чиг хандлага (бүгчим чийглэг, хааяа бороотой), температурын муж, шүхэр/хувцасны практик зөвлөгөөнд анхаар.\n${w}\n`;
   }
   if (pillars.some(p => p.includes('EVENT'))) {
     const ev = await getShanghaiEvents();
