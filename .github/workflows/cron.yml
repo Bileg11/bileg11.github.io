@@ -1,0 +1,56 @@
+name: LFS Cron Jobs
+
+on:
+  schedule:
+    - cron: '30 23 * * *'  # Morning brief   — 07:30 Shanghai
+    - cron: '0  2  * * *'  # Post frequency  — 10:00 Shanghai
+    - cron: '0  4  * * *'  # LFS activity    — 12:00 Shanghai
+    - cron: '0  5  * * *'  # Marketing ideas — 13:00 Shanghai
+    - cron: '0  14 * * *'  # Daily report    — 22:00 Shanghai
+  workflow_dispatch:        # Гараар ажиллуулах боломж
+
+jobs:
+  morning-brief:
+    if: github.event_name == 'workflow_dispatch' || github.event.schedule == '30 23 * * *'
+    runs-on: ubuntu-latest
+    steps:
+      - name: Morning Brief
+        run: |
+          curl -s -X GET "https://bileg11-github-io.vercel.app/api/cron/morning" \
+            -H "X-Cron-Secret: ${{ secrets.CRON_SECRET }}"
+
+  post-frequency:
+    if: github.event_name == 'workflow_dispatch' || github.event.schedule == '0 2 * * *'
+    runs-on: ubuntu-latest
+    steps:
+      - name: Post Frequency Check
+        run: |
+          curl -s -X GET "https://bileg11-github-io.vercel.app/api/cron/postfreq" \
+            -H "X-Cron-Secret: ${{ secrets.CRON_SECRET }}"
+
+  lfs-activity:
+    if: github.event_name == 'workflow_dispatch' || github.event.schedule == '0 4 * * *'
+    runs-on: ubuntu-latest
+    steps:
+      - name: LFS Activity Check
+        run: |
+          curl -s -X GET "https://bileg11-github-io.vercel.app/api/cron/activity" \
+            -H "X-Cron-Secret: ${{ secrets.CRON_SECRET }}"
+
+  marketing-ideas:
+    if: github.event_name == 'workflow_dispatch' || github.event.schedule == '0 5 * * *'
+    runs-on: ubuntu-latest
+    steps:
+      - name: Marketing Ideas
+        run: |
+          curl -s -X GET "https://bileg11-github-io.vercel.app/api/cron/marketing" \
+            -H "X-Cron-Secret: ${{ secrets.CRON_SECRET }}"
+
+  daily-report:
+    if: github.event_name == 'workflow_dispatch' || github.event.schedule == '0 14 * * *'
+    runs-on: ubuntu-latest
+    steps:
+      - name: Daily Report
+        run: |
+          curl -s -X GET "https://bileg11-github-io.vercel.app/api/cron/report" \
+            -H "X-Cron-Secret: ${{ secrets.CRON_SECRET }}"
