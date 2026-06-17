@@ -1,6 +1,5 @@
 'use strict';
 const express  = require('express');
-const cron     = require('node-cron');
 const lfsBot   = require('./lfs-telegram');
 const metaHook = require('./meta-webhook');
 const alerts   = require('./alerts');
@@ -11,6 +10,7 @@ app.use(express.json());
 const TOKEN   = process.env.TELEGRAM_TOKEN;
 const CHAT_ID = process.env.TELEGRAM_CHAT_ID;
 
+// ── BOOKING ───────────────────────────────────────────────────────────
 app.post('/api/booking', async (req, res) => {
   const d = req.body;
   const p = d.profile || {};
@@ -52,38 +52,53 @@ ${p.isLoggedIn ? '✅ Бүртгэлтэй хэрэглэгч' : '❌ Бүртг
   }
 });
 
-// ── LFS МАРКЕТИНГ BOT ─────────────────────────────────────────────
+// ── LFS МАРКЕТИНГ BOT ─────────────────────────────────────────────────
 app.post('/api/lfs-telegram', lfsBot);
 
-// ── META (IG DM + FB Messenger) ───────────────────────────────────
+// ── META (IG DM + FB Messenger) ───────────────────────────────────────
 app.get('/api/meta-webhook', metaHook.verify);
 app.post('/api/meta-webhook', metaHook.handle);
 
+// ── CRON TRIGGER ENDPOINTS (cron-job.org дуудна) ─────────────────────
+// Нууц токен шалгана — CRON_SECRET env var тохируулаагүй бол нээлттэй
+function cronAuth(req, res, next) {
+  const secret = process.env.CRON_SECRET;
+  if (secret && req.headers['x-cron-secret'] !== secret) {
+    return res.status(401).json({ error: 'Unauthorized' });
+  }
+  next();
+}
+
+app.get('/api/cron/marketing', cronAuth, async (req, res) => {
+  await lfsBot.generateMarketingIdeas().catch(e => console.error('[Marketing]', e.message));
+  res.json({ ok: true });
+});
+
+app.get('/api/cron/morning', cronAuth, async (req, res) => {
+  await metaHook.sendMorningBrief().catch(e => console.error('[MorningBrief]', e.message));
+  res.json({ ok: true });
+});
+
+app.get('/api/cron/report', cronAuth, async (req, res) => {
+  await metaHook.sendDailyReport().catch(e => console.error('[DailyReport]', e.message));
+  res.json({ ok: true });
+});
+
+app.get('/api/cron/activity', cronAuth, async (req, res) => {
+  await alerts.checkLFSActivity().catch(e => console.error('[LFSAlert]', e.message));
+  res.json({ ok: true });
+});
+
+app.get('/api/cron/postfreq', cronAuth, async (req, res) => {
+  await alerts.checkPostFrequency().catch(e => console.error('[PostFreq]', e.message));
+  res.json({ ok: true });
+});
+
 app.get('/', (req, res) => res.send('LFS Shanghai webhook running ✅'));
 
-app.listen(process.env.PORT || 3000, () => console.log('[LFS] Server running'));
-
-// ── MARKETING CONTENT — 13:00 Шанхай (05:00 UTC) ─────────────────
-cron.schedule('0 5 * * *', () => {
-  lfsBot.generateMarketingIdeas().catch(e => console.error('[Marketing]', e.message));
-});
-
-// ── MORNING BRIEF — 07:30 Шанхай (23:30 UTC өмнөх өдөр) ──────────
-cron.schedule('30 23 * * *', () => {
-  metaHook.sendMorningBrief().catch(e => console.error('[MorningBrief]', e.message));
-});
-
-// ── DAILY REPORT — 22:00 Шанхай (14:00 UTC) ──────────────────────
-cron.schedule('0 14 * * *', () => {
-  metaHook.sendDailyReport().catch(e => console.error('[DailyReport]', e.message));
-});
-
-// ── LFS ACTIVITY CHECK — 12:00 Шанхай (04:00 UTC) ────────────────
-cron.schedule('0 4 * * *', () => {
-  alerts.checkLFSActivity().catch(e => console.error('[LFSAlert]', e.message));
-});
-
-// ── POST FREQUENCY CHECK — 10:00 Шанхай (02:00 UTC) ──────────────
-cron.schedule('0 2 * * *', () => {
-  alerts.checkPostFrequency().catch(e => console.error('[PostFreq]', e.message));
-});
+// Vercel → module.exports, локал → app.listen
+if (process.env.VERCEL) {
+  module.exports = app;
+} else {
+  app.listen(process.env.PORT || 3000, () => console.log('[LFS] Server running'));
+}
