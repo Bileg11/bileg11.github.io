@@ -496,24 +496,47 @@ async function handleCallback(cb) {
       console.error('[Marketing] Approve save error:', e.message);
     }
 
-    // Telegram-д шууд хариул (timeout болохоос өмнө)
     await tgCall('editMessageReplyMarkup', {
       chat_id: TG_CHAT, message_id: msgId,
       reply_markup: { inline_keyboard: [[{ text: '✅ Approved', callback_data: 'noop' }]] },
     });
     await tgAnswer(cbId, '⏳ Нийтэлж байна...');
-    await tgSend('⏳ Нийтэлж байна...');
+    await tgSend('⏳ Зураг хайж, нийтэлж байна...');
 
-    // Publish-г тусдаа endpoint-д fire-and-forget дуудна (await хийхгүй)
-    const base = process.env.VERCEL_URL
-      ? `https://${process.env.VERCEL_URL}`
-      : 'https://bileg11-github-io.vercel.app';
-    fetch(`${base}/api/publish-post`, {
-      method:  'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body:    JSON.stringify({ ideaId }),
-    }).catch(e => console.error('[Publish trigger]', e.message));
+    // Inline publish — IG + FB зэрэг (~5-6 секунд, Vercel 10s дотор багтана)
+    try {
+      const qRef2   = dbLFS.doc(`users/${UID}/marketing/weeklyQueue`);
+      const qSnap2  = await qRef2.get();
+      const idea    = (qSnap2.exists ? qSnap2.data() : {})[`approved_${ideaId}`] || {};
 
+      const searchQuery = idea.imageSearch || idea.title || idea.topic || 'shanghai china';
+      const imageUrl    = await fetchNewImage(searchQuery);
+      const parts       = [idea.hook, idea.caption, idea.cta].filter(Boolean);
+      const fullCaption = parts.length ? parts.join('\n\n') : (idea.title || 'LFS Shanghai');
+      const hashtags    = idea.hashtags || '';
+
+      const [igResult, fbResult] = await Promise.all([
+        postToIG(imageUrl, fullCaption, hashtags),
+        postToFB(imageUrl, fullCaption, hashtags),
+      ]);
+
+      if (igResult.ok) await saveToPostHistory(idea);
+
+      const igLine = igResult.ok
+        ? `📱 IG: ✅ нийтлэгдлээ`
+        : `📱 IG: ❌ ${igResult.err}`;
+      const fbLine = fbResult.ok
+        ? `📘 FB: ✅ нийтлэгдлээ`
+        : `📘 FB: ❌ ${fbResult.err}`;
+
+      await tgSend(
+        `${igResult.ok || fbResult.ok ? '✅' : '❌'} *Нийтлэлт дууслаа*\n\n` +
+        `📸 ${idea.title || '—'}\n${igLine}\n${fbLine}`,
+      );
+    } catch (e) {
+      console.error('[Marketing] Publish error:', e.message);
+      await tgSend(`❌ Алдаа: ${e.message}`);
+    }
     return;
   }
 
