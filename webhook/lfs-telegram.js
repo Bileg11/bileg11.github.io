@@ -458,9 +458,9 @@ async function handleCallback(cb) {
     });
 
     await tgAnswer(cbId, '⏳ Нийтэлж байна...');
-    await tgSend('⏳ Зураг хайж, Instagram-д нийтэлж байна...');
+    await tgSend('⏳ Зураг хайж, IG + FB-д нийтэлж байна...');
 
-    // Зураг хайх + IG-д нийтлэх
+    // Зураг хайх + IG + FB-д нийтлэх
     try {
       const searchQuery = ideaData.imageSearch || ideaData.title || ideaData.topic || 'shanghai china';
       const imageUrl    = await fetchNewImage(searchQuery);
@@ -468,18 +468,35 @@ async function handleCallback(cb) {
       // Caption бүтээх: hook + caption + cta
       const parts = [ideaData.hook, ideaData.caption, ideaData.cta].filter(Boolean);
       const fullCaption = parts.length ? parts.join('\n\n') : (ideaData.title || 'LFS Shanghai');
+      const hashtags    = ideaData.hashtags || '';
 
-      const igResult = await postToIG(imageUrl, fullCaption, ideaData.hashtags || '');
+      const igResult = await postToIG(imageUrl, fullCaption, hashtags);
+
+      // FB-д нийтлэх
+      let fbMsg = '';
+      try {
+        const ptRes  = await fetch(`https://graph.facebook.com/v25.0/${FB_ID}?fields=access_token&access_token=${META_TOKEN}`);
+        const ptData = await ptRes.json();
+        const pageTok = ptData.access_token || META_TOKEN;
+        const fbRes  = await fetch(`https://graph.facebook.com/v25.0/${FB_ID}/photos`, {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ url: imageUrl, message: `${fullCaption}\n\n${hashtags}`.trim(), access_token: pageTok }),
+        });
+        const fbData = await fbRes.json();
+        fbMsg = !fbData.error ? '✅ FB нийтлэгдлээ!' : `❌ FB: ${fbData.error?.message}`;
+      } catch (e) { fbMsg = `❌ FB алдаа: ${e.message}`; }
 
       if (igResult.ok) {
         await saveToPostHistory(ideaData);
         await tgSend(
-          `✅ *Instagram-д нийтлэгдлээ!*\n\n` +
+          `✅ *Нийтлэгдлээ!*\n\n` +
           `📸 Сэдэв: ${ideaData.title || '—'}\n` +
-          `🔗 Post ID: \`${igResult.postId}\``,
+          `📱 IG Post ID: \`${igResult.postId}\`\n` +
+          `📘 ${fbMsg}`,
         );
       } else {
-        await tgSend(`❌ IG алдаа: ${igResult.err}`);
+        await tgSend(`❌ IG алдаа: ${igResult.err}\n📘 ${fbMsg}`);
       }
     } catch (e) {
       console.error('[Marketing] Auto-publish error:', e.message);
