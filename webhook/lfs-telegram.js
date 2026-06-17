@@ -861,21 +861,24 @@ async function generateMarketingIdeas() {
     `]`;
 
   try {
-    const r = await fetch(
-      `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent?key=${GEMINI_KEY}`,
-      {
-        method:  'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({
-          contents: [{ role: 'user', parts: [{ text: prompt }] }],
-          generationConfig: { maxOutputTokens: 2000, temperature: 0.9 },
-        }),
-      }
-    );
-    const data     = await r.json();
-    if (data.error) { console.error('[Marketing] Gemini error:', data.error.message); return; }
+    // GitHub Models (GPT-4o-mini) — үнэгүй, SYSTEM_USE_TOKEN ашиглана
+    const r = await fetch('https://models.inference.ai.azure.com/chat/completions', {
+      method:  'POST',
+      headers: {
+        'Content-Type':  'application/json',
+        'Authorization': `Bearer ${GH_TOKEN}`,
+      },
+      body: JSON.stringify({
+        model:    'gpt-4o-mini',
+        messages: [{ role: 'user', content: prompt }],
+        max_tokens:  2000,
+        temperature: 0.9,
+      }),
+    });
+    const data = await r.json();
+    if (data.error) { console.error('[Marketing] GitHub Models error:', data.error.message); return; }
 
-    const rawText  = data.candidates?.[0]?.content?.parts?.[0]?.text?.trim();
+    const rawText  = data.choices?.[0]?.message?.content?.trim();
     const arrMatch = rawText?.match(/\[[\s\S]*\]/);
     if (!arrMatch) { console.error('[Marketing] JSON array гарсангүй'); return; }
 
