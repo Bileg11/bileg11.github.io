@@ -1052,9 +1052,11 @@ async function generateMarketingIdeas(slot = 'default') {
 
     const ideas = JSON.parse(arrMatch[0]);
 
+    const batchIds = [];
     for (let i = 0; i < Math.min(ideas.length, 3); i++) {
       const idea   = ideas[i];
       const ideaId = `mk_${Date.now()}_${i}`;
+      batchIds.push(ideaId);
       const fEmoji = FORMAT_EMOJI[idea.format] || '📸';
 
       await dbLFS.doc(`users/${UID}/marketing/weeklyQueue`).set({
@@ -1086,9 +1088,39 @@ async function generateMarketingIdeas(slot = 'default') {
 
       await new Promise(res => setTimeout(res, 800));
     }
+
+    // Approve хүлээж байгааг сануулах proactive reminder (30 мин → 15 мин)
+    scheduleApproveReminders(batchIds);
   } catch (e) {
     console.error('[Marketing] generateMarketingIdeas error:', e.message);
   }
+}
+
+// Batch илгээснээс хойш нэгийг ч approve/skip хийгээгүй бол сануулна.
+// 30 минутын дараа 1 удаа, дараа нь 15 минутын дараа дахин. Аль нэгэнд нь
+// хүрсэн бол идэвхтэй гэж үзээд сануулахаа болино. (always-on host дээр ажиллана)
+function scheduleApproveReminders(ideaIds) {
+  if (!ideaIds || !ideaIds.length) return;
+
+  const stillAllPending = async () => {
+    try {
+      const snap = await dbLFS.doc(`users/${UID}/marketing/weeklyQueue`).get();
+      const data = snap.exists ? snap.data() : {};
+      return ideaIds.every(id => data[`pending_${id}`]);
+    } catch { return false; }
+  };
+
+  // 1-р сануулга: 30 мин дараа
+  setTimeout(async () => {
+    if (!(await stillAllPending())) return;
+    await tgSend(`⏰ *Сануулга* — ${ideaIds.length} постын санаа approve хүлээсээр байна. Аль нэгийг нь Зөвшөөрөх/Орхих дараарай.`);
+
+    // 2-р сануулга: дараагийн 15 мин дараа
+    setTimeout(async () => {
+      if (!(await stillAllPending())) return;
+      await tgSend(`🔔 *Дахин сануулга* — постын санаанууд хариу хүлээж байна. Оргил цаг өнгөрөхөөс өмнө шийдээрэй 👆`);
+    }, 15 * 60 * 1000);
+  }, 30 * 60 * 1000);
 }
 
 // ── WEBHOOK HANDLER ───────────────────────────────────────────────
