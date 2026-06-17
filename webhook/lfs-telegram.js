@@ -9,8 +9,8 @@
 const fetch  = require('node-fetch');
 const { admin, dbLFS } = require('./firebase');
 
-const TG_TOKEN   = process.env.TELEGRAM_BOT_TOKEN_LFS;
-const TG_CHAT    = process.env.TELEGRAM_ID;
+const TG_TOKEN   = process.env.TELEGRAM_BOT_TOKEN_LFS || process.env.TELEGRAM_TOKEN;
+const TG_CHAT    = process.env.TELEGRAM_ID            || process.env.TELEGRAM_CHAT_ID;
 const META_TOKEN = process.env.ACCESS_TOKEN_META;
 const IG_ID      = process.env.INSTAGRAM_BUSINESS_ID;
 const FB_ID      = process.env.FACEBOOK_PAGE_ID;

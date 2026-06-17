@@ -4,8 +4,8 @@
 
 const fetch  = require('node-fetch');
 const { dbLFS } = require('./firebase');
-const TG_TOKEN = process.env.TELEGRAM_BOT_TOKEN_LFS;
-const TG_CHAT  = process.env.TELEGRAM_ID;
+const TG_TOKEN = process.env.TELEGRAM_BOT_TOKEN_LFS || process.env.TELEGRAM_TOKEN;
+const TG_CHAT  = process.env.TELEGRAM_ID            || process.env.TELEGRAM_CHAT_ID;
 const UID      = process.env.USER_UID;
 
 async function tg(text) {
