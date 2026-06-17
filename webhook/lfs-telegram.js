@@ -1018,10 +1018,11 @@ async function generateMarketingIdeas() {
         },
       }, { merge: true });
 
+      const hashtagLine = idea.hashtags && !idea.caption.includes('#LFSShanghai')
+        ? `\n\n${idea.hashtags}` : '';
       const msg =
         `💡 *Постын санаа ${i + 1}/3* — ${fEmoji} \`${idea.format}\`\n\n` +
-        `${idea.caption}\n\n` +
-        `${idea.hashtags}`;
+        `${idea.caption}${hashtagLine}`;
 
       await tgCall('sendMessage', {
         chat_id:      TG_CHAT,
