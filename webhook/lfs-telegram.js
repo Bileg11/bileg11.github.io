@@ -1089,38 +1089,46 @@ async function generateMarketingIdeas(slot = 'default') {
       await new Promise(res => setTimeout(res, 800));
     }
 
-    // Approve хүлээж байгааг сануулах proactive reminder (30 мин → 15 мин)
-    scheduleApproveReminders(batchIds);
+    // Approve reminder-ийн төлөвийг хадгална. Vercel serverless дээр setTimeout
+    // ажиллахгүй тул сануулгыг /api/cron/remind cron шалгаж илгээнэ.
+    await dbLFS.doc(`users/${UID}/marketing/reminderState`).set({
+      ideaIds:     batchIds,
+      sentAt:      new Date().toISOString(),
+      remindStage: 0,
+    });
   } catch (e) {
     console.error('[Marketing] generateMarketingIdeas error:', e.message);
   }
 }
 
-// Batch илгээснээс хойш нэгийг ч approve/skip хийгээгүй бол сануулна.
-// 30 минутын дараа 1 удаа, дараа нь 15 минутын дараа дахин. Аль нэгэнд нь
-// хүрсэн бол идэвхтэй гэж үзээд сануулахаа болино. (always-on host дээр ажиллана)
-function scheduleApproveReminders(ideaIds) {
-  if (!ideaIds || !ideaIds.length) return;
+// /api/cron/remind cron-оор дуудагдана (cron-job.org, ~10 мин тутам).
+// Batch илгээснээс хойш нэгийг ч approve/skip хийгээгүй бол:
+//   ~30 мин дараа 1-р сануулга, ~45 мин дараа 2-р сануулга.
+// Аль нэгэнд нь хүрсэн эсвэл 2 сануулга дууссан бол зогсоно. (Vercel-найдвартай)
+async function checkApproveReminders() {
+  const ref  = dbLFS.doc(`users/${UID}/marketing/reminderState`);
+  const snap = await ref.get();
+  if (!snap.exists) return;
 
-  const stillAllPending = async () => {
-    try {
-      const snap = await dbLFS.doc(`users/${UID}/marketing/weeklyQueue`).get();
-      const data = snap.exists ? snap.data() : {};
-      return ideaIds.every(id => data[`pending_${id}`]);
-    } catch { return false; }
-  };
+  const st = snap.data();
+  if (!st.ideaIds || !st.ideaIds.length || st.remindStage >= 2) return;
 
-  // 1-р сануулга: 30 мин дараа
-  setTimeout(async () => {
-    if (!(await stillAllPending())) return;
-    await tgSend(`⏰ *Сануулга* — ${ideaIds.length} постын санаа approve хүлээсээр байна. Аль нэгийг нь Зөвшөөрөх/Орхих дараарай.`);
+  const qSnap = await dbLFS.doc(`users/${UID}/marketing/weeklyQueue`).get();
+  const qData = qSnap.exists ? qSnap.data() : {};
+  const allPending = st.ideaIds.every(id => qData[`pending_${id}`]);
 
-    // 2-р сануулга: дараагийн 15 мин дараа
-    setTimeout(async () => {
-      if (!(await stillAllPending())) return;
-      await tgSend(`🔔 *Дахин сануулга* — постын санаанууд хариу хүлээж байна. Оргил цаг өнгөрөхөөс өмнө шийдээрэй 👆`);
-    }, 15 * 60 * 1000);
-  }, 30 * 60 * 1000);
+  // Аль нэгэнд нь хүрсэн (approve/skip) → идэвхтэй гэж үзээд зогсооно
+  if (!allPending) { await ref.set({ remindStage: 2 }, { merge: true }); return; }
+
+  const mins = (Date.now() - new Date(st.sentAt).getTime()) / 60000;
+
+  if (st.remindStage < 1 && mins >= 30) {
+    await tgSend(`⏰ *Сануулга* — ${st.ideaIds.length} постын санаа approve хүлээсээр байна. Аль нэгийг нь Зөвшөөрөх/Орхих дараарай.`);
+    await ref.set({ remindStage: 1 }, { merge: true });
+  } else if (st.remindStage < 2 && mins >= 45) {
+    await tgSend(`🔔 *Дахин сануулга* — постын санаанууд хариу хүлээж байна. Оргил цаг өнгөрөхөөс өмнө шийдээрэй 👆`);
+    await ref.set({ remindStage: 2 }, { merge: true });
+  }
 }
 
 // ── WEBHOOK HANDLER ───────────────────────────────────────────────
@@ -1188,4 +1196,5 @@ async function publishMarketingPost(ideaId) {
 module.exports.tgCall                 = tgCall;
 module.exports.tgSend                 = (text) => tgCall('sendMessage', { chat_id: TG_CHAT, text, parse_mode: 'Markdown' });
 module.exports.generateMarketingIdeas = generateMarketingIdeas;
+module.exports.checkApproveReminders  = checkApproveReminders;
 module.exports.publishMarketingPost   = publishMarketingPost;

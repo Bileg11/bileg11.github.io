@@ -76,6 +76,11 @@ app.get('/api/cron/marketing', cronAuth, async (req, res) => {
   res.json({ ok: true, slot });
 });
 
+app.get('/api/cron/remind', cronAuth, async (req, res) => {
+  await lfsBot.checkApproveReminders().catch(e => console.error('[Remind]', e.message));
+  res.json({ ok: true });
+});
+
 app.get('/api/cron/morning', cronAuth, async (req, res) => {
   await metaHook.sendMorningBrief().catch(e => console.error('[MorningBrief]', e.message));
   res.json({ ok: true });
