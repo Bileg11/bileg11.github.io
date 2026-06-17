@@ -11,9 +11,10 @@ const { admin, dbLFS } = require('./firebase');
 
 const TG_TOKEN   = process.env.TELEGRAM_BOT_TOKEN_LFS || process.env.TELEGRAM_TOKEN;
 const TG_CHAT    = process.env.TELEGRAM_ID            || process.env.TELEGRAM_CHAT_ID;
-const META_TOKEN = process.env.ACCESS_TOKEN_META;
-const IG_ID      = process.env.INSTAGRAM_BUSINESS_ID;
-const FB_ID      = process.env.FACEBOOK_PAGE_ID;
+const META_TOKEN    = process.env.ACCESS_TOKEN_META;
+const IG_ID         = process.env.INSTAGRAM_BUSINESS_ID;
+const FB_ID         = process.env.FACEBOOK_PAGE_ID;
+const FB_PAGE_TOKEN = process.env.FACEBOOK_PAGE_TOKEN; // permanent page token (never-expiring)
 const UID        = process.env.USER_UID;
 const GH_TOKEN   = process.env.SYSTEM_USE_TOKEN;
 const PEXELS_KEY = process.env.PEXELS_API_KEY;
@@ -133,6 +134,46 @@ async function postToIG(imageUrl, caption, hashtags) {
   dbLFS.doc(`users/${UID}/marketing/lastPost`)
     .set({ postedAt: new Date().toISOString() }).catch(() => {});
   return { ok: true, postId: pData.id };
+}
+
+// ── FACEBOOK PAGE PUBLISH ─────────────────────────────────────────
+// FB_PAGE_TOKEN = permanent page token (never-expiring)
+// Хэрэв байхгүй бол META_TOKEN-оос page token татна (pages_show_list шаардлагатай)
+async function postToFB(imageUrl, caption, hashtags) {
+  if (!FB_ID) return { ok: false, err: 'FACEBOOK_PAGE_ID тохиргоогүй' };
+
+  let pageToken = FB_PAGE_TOKEN;
+  if (!pageToken) {
+    try {
+      const ptRes  = await fetch(`https://graph.facebook.com/v25.0/${FB_ID}?fields=access_token&access_token=${META_TOKEN}`);
+      const ptData = await ptRes.json();
+      pageToken    = ptData.access_token;
+      if (!pageToken) {
+        console.error('[FB] Page token авч чадсангүй:', JSON.stringify(ptData));
+        return { ok: false, err: 'Page token авч чадсангүй — FACEBOOK_PAGE_TOKEN нэм эсвэл pages_show_list permission шалга' };
+      }
+      console.log('[FB] Page token fetched dynamically');
+    } catch (e) {
+      return { ok: false, err: `Page token fetch алдаа: ${e.message}` };
+    }
+  }
+
+  const fullMsg = [caption, hashtags].filter(Boolean).join('\n\n');
+  try {
+    const fbRes  = await fetch(`https://graph.facebook.com/v25.0/${FB_ID}/photos`, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ url: imageUrl, message: fullMsg, access_token: pageToken }),
+    });
+    const fbData = await fbRes.json();
+    if (fbData.error) {
+      console.error('[FB] Post error:', JSON.stringify(fbData.error));
+      return { ok: false, err: fbData.error.message };
+    }
+    return { ok: true, postId: fbData.id || fbData.post_id };
+  } catch (e) {
+    return { ok: false, err: e.message };
+  }
 }
 
 async function fetchNewImage(query = 'shanghai') {
@@ -470,35 +511,27 @@ async function handleCallback(cb) {
       const fullCaption = parts.length ? parts.join('\n\n') : (ideaData.title || 'LFS Shanghai');
       const hashtags    = ideaData.hashtags || '';
 
-      const igResult = await postToIG(imageUrl, fullCaption, hashtags);
-
-      // FB-д нийтлэх
-      let fbMsg = '';
-      try {
-        if (!FB_ID) { fbMsg = '⚠️ FB: FACEBOOK_PAGE_ID тохиргоогүй'; throw new Error('no FB_ID'); }
-        const ptRes  = await fetch(`https://graph.facebook.com/v25.0/${FB_ID}?fields=access_token&access_token=${META_TOKEN}`);
-        const ptData = await ptRes.json();
-        const pageTok = ptData.access_token || META_TOKEN;
-        const fbRes  = await fetch(`https://graph.facebook.com/v25.0/${FB_ID}/photos`, {
-          method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({ url: imageUrl, message: `${fullCaption}\n\n${hashtags}`.trim(), access_token: pageTok }),
-        });
-        const fbData = await fbRes.json();
-        fbMsg = !fbData.error ? '✅ FB нийтлэгдлээ!' : `❌ FB: ${fbData.error?.message}`;
-      } catch (e) { fbMsg = `❌ FB алдаа: ${e.message}`; }
+      const [igResult, fbResult] = await Promise.all([
+        postToIG(imageUrl, fullCaption, hashtags),
+        postToFB(imageUrl, fullCaption, hashtags),
+      ]);
 
       if (igResult.ok) {
         await saveToPostHistory(ideaData);
-        await tgSend(
-          `✅ *Нийтлэгдлээ!*\n\n` +
-          `📸 Сэдэв: ${ideaData.title || '—'}\n` +
-          `📱 IG Post ID: \`${igResult.postId}\`\n` +
-          `📘 ${fbMsg}`,
-        );
-      } else {
-        await tgSend(`❌ IG алдаа: ${igResult.err}\n📘 ${fbMsg}`);
       }
+
+      const igLine = igResult.ok
+        ? `📱 IG: ✅ нийтлэгдлээ (ID: \`${igResult.postId}\`)`
+        : `📱 IG: ❌ ${igResult.err}`;
+      const fbLine = fbResult.ok
+        ? `📘 FB: ✅ нийтлэгдлээ`
+        : `📘 FB: ❌ ${fbResult.err}`;
+
+      await tgSend(
+        `${igResult.ok || fbResult.ok ? '✅' : '❌'} *Нийтлэлт дууслаа*\n\n` +
+        `📸 Сэдэв: ${ideaData.title || '—'}\n` +
+        `${igLine}\n${fbLine}`,
+      );
     } catch (e) {
       console.error('[Marketing] Auto-publish error:', e.message);
       await tgSend(`❌ Нийтлэх үед алдаа гарлаа: ${e.message}`);
