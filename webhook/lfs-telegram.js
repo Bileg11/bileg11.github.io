@@ -431,32 +431,60 @@ async function handleCallback(cb) {
     return;
   }
 
-  // ── Marketing content queue approve/reject ─────────────────────
+  // ── Marketing content queue approve → auto-publish ────────────────
   if (cmd.startsWith('mkq_')) {
     const ideaId = cmd.slice(4);
+    let ideaData = {};
     try {
       const qRef        = dbLFS.doc(`users/${UID}/marketing/weeklyQueue`);
       const qSnap       = await qRef.get();
       const qData       = qSnap.exists ? qSnap.data() : {};
       const pendingKey  = `pending_${ideaId}`;
       const approvedKey = `approved_${ideaId}`;
-      const ideaData    = qData[pendingKey] || {};
+      ideaData          = qData[pendingKey] || {};
 
       await qRef.set({
         [approvedKey]: { ...ideaData, status: 'approved', approvedAt: new Date().toISOString() },
         [pendingKey]:  admin.firestore.FieldValue.delete(),
       }, { merge: true });
-
-      // Post memory-д хадгалах
-      await saveToPostHistory(ideaData);
     } catch (e) {
-      console.error('[Marketing] Approve error:', e.message);
+      console.error('[Marketing] Approve save error:', e.message);
     }
+
+    // Button-г "Approved" болго
     await tgCall('editMessageReplyMarkup', {
       chat_id: TG_CHAT, message_id: msgId,
       reply_markup: { inline_keyboard: [[{ text: '✅ Approved', callback_data: 'noop' }]] },
     });
-    await tgSend('✅ Постын санаа queue-д нэмэгдлээ.');
+
+    await tgAnswer(cbId, '⏳ Нийтэлж байна...');
+    await tgSend('⏳ Зураг хайж, Instagram-д нийтэлж байна...');
+
+    // Зураг хайх + IG-д нийтлэх
+    try {
+      const searchQuery = ideaData.imageSearch || ideaData.title || ideaData.topic || 'shanghai china';
+      const imageUrl    = await fetchNewImage(searchQuery);
+
+      // Caption бүтээх: hook + caption + cta
+      const parts = [ideaData.hook, ideaData.caption, ideaData.cta].filter(Boolean);
+      const fullCaption = parts.length ? parts.join('\n\n') : (ideaData.title || 'LFS Shanghai');
+
+      const igResult = await postToIG(imageUrl, fullCaption, ideaData.hashtags || '');
+
+      if (igResult.ok) {
+        await saveToPostHistory(ideaData);
+        await tgSend(
+          `✅ *Instagram-д нийтлэгдлээ!*\n\n` +
+          `📸 Сэдэв: ${ideaData.title || '—'}\n` +
+          `🔗 Post ID: \`${igResult.postId}\``,
+        );
+      } else {
+        await tgSend(`❌ IG алдаа: ${igResult.err}`);
+      }
+    } catch (e) {
+      console.error('[Marketing] Auto-publish error:', e.message);
+      await tgSend(`❌ Нийтлэх үед алдаа гарлаа: ${e.message}`);
+    }
     return;
   }
 
