@@ -106,19 +106,23 @@ const CONTENT_PILLARS = {
 //   morning → цэвэр мэдээллийн value контент (гид, Alipay, цаг агаар, хоол)
 //   evening → итгэлцэл/сэтгэл хөдлөл давамгай (бодит түүх, влог) + 1 зөөлөн зар
 //   default → /marketing командын 80/20 тэнцвэр (2 value + 1 trust/service)
-function pickPillars(slot = 'default') {
+// recent = сүүлд гарсан pillar-ууд; тэдгээрийг алгасч ижил сэдэв ойрхон давтахаас сэргийлнэ.
+function pickPillars(slot = 'default', recent = []) {
   const shuffle = arr => [...arr].sort(() => Math.random() - 0.5);
+  // recent-д байгааг хасч сонгоно; хангалттай үлдэхгүй бол бүх пулаас сонгоно
+  const fresh = (arr, need) => {
+    const avail = arr.filter(p => !recent.includes(p));
+    return shuffle(avail.length >= need ? avail : arr);
+  };
   let picks;
   if (slot === 'morning') {
-    picks = shuffle(CONTENT_PILLARS.value).slice(0, 3);
+    picks = fresh(CONTENT_PILLARS.value, 3).slice(0, 3);
   } else if (slot === 'evening') {
-    const t = shuffle(CONTENT_PILLARS.trust).slice(0, 2);
-    const s = CONTENT_PILLARS.service[Math.floor(Math.random() * CONTENT_PILLARS.service.length)];
-    picks = [...t, s];
+    picks = [...fresh(CONTENT_PILLARS.trust, 2).slice(0, 2), fresh(CONTENT_PILLARS.service, 1)[0]];
   } else {
-    const v = shuffle(CONTENT_PILLARS.value).slice(0, 2);
+    const v    = fresh(CONTENT_PILLARS.value, 2).slice(0, 2);
     const pool = Math.random() < 0.6 ? CONTENT_PILLARS.trust : CONTENT_PILLARS.service;
-    picks = [...v, pool[Math.floor(Math.random() * pool.length)]];
+    picks = [...v, fresh(pool, 1)[0]];
   }
   return shuffle(picks);
 }
@@ -1008,12 +1012,22 @@ async function generateMarketingIdeas(slot = 'default') {
   }
 
   const today   = todaySH();
-  const history = await getPostHistory();
-  const usedTopics = history.length
-    ? history.map(p => p.title).filter(Boolean).join(', ')
-    : '';
 
-  const pillars = pickPillars(slot);
+  // Давталтаас сэргийлэх: pillar ротаци + сүүлд гарсан санааны гарчгууд
+  const rotRef  = dbLFS.doc(`users/${UID}/marketing/rotation`);
+  const rotSnap = await rotRef.get();
+  const rot     = rotSnap.exists ? rotSnap.data() : {};
+  const recentPillars = rot.recentPillars || [];
+  const recentTitles  = rot.recentTitles  || [];
+
+  // Давтахгүй сэдвүүд = approve хийсэн (history) + сүүлд generate хийсэн санаанууд
+  const history    = await getPostHistory();
+  const usedTopics = [
+    ...history.map(p => p.title).filter(Boolean),
+    ...recentTitles,
+  ].filter((t, i, a) => a.indexOf(t) === i).join(', ');
+
+  const pillars = pickPillars(slot, recentPillars);
 
   const task =
     `Өнөөдөр: ${today}\n` +
@@ -1108,6 +1122,13 @@ async function generateMarketingIdeas(slot = 'default') {
       ideaIds:     batchIds,
       sentAt:      new Date().toISOString(),
       remindStage: 0,
+    });
+
+    // Ротаци шинэчлэх: энэ удаагийн pillar + гарчгийг хадгалж дараагийнхад алгасна
+    const newTitles = ideas.slice(0, 3).map(x => x.title).filter(Boolean);
+    await rotRef.set({
+      recentPillars: [...pillars, ...recentPillars].slice(0, 6),
+      recentTitles:  [...newTitles, ...recentTitles].slice(0, 20),
     });
   } catch (e) {
     console.error('[Marketing] generateMarketingIdeas error:', e.message);
