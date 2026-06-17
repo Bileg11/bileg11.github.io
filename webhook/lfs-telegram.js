@@ -170,6 +170,38 @@ async function getShanghaiWeather() {
   } catch (e) { console.error('[Weather]', e.message); return null; }
 }
 
+// ── LIVE DATA: Энэ 7 хоногт Шанхайд болох event (Gemini + Google Search) ──
+// Timeout 6с + алдаа гарвал null → статик event pillar руу аюулгүй унана.
+async function getShanghaiEvents() {
+  if (!GEMINI_KEY) return null;
+  try {
+    const ctrl  = new AbortController();
+    const timer = setTimeout(() => ctrl.abort(), 6000);
+    const prompt =
+      `Өнөөдрөөс (${todaySH()}) эхлэн ойрын 7 хоногт Шанхай хотод болох томоохон үзэсгэлэн, `
+      + `концерт, наадам, спорт, соёлын арга хэмжээ юу байна вэ? Зөвхөн БОДИТ, баталгаатай 3-5 `
+      + `арга хэмжээг товч жагсаа — огноо, газрын нэртэй (англи + ханз). Баталгаатай мэдээлэл `
+      + `олдохгүй бол "тодорхой томоохон арга хэмжээ алга" гэж бич, бүү зохио.`;
+    const r = await fetch(
+      `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent?key=${GEMINI_KEY}`,
+      {
+        method:  'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body:    JSON.stringify({
+          contents: [{ parts: [{ text: prompt }] }],
+          tools:    [{ google_search: {} }],
+        }),
+        signal: ctrl.signal,
+      }
+    );
+    clearTimeout(timer);
+    const d = await r.json();
+    if (d.error) { console.error('[Events]', d.error.message); return null; }
+    const txt = d.candidates?.[0]?.content?.parts?.map(p => p.text).filter(Boolean).join(' ').trim();
+    return txt || null;
+  } catch (e) { console.error('[Events]', e.message); return null; }
+}
+
 // ── HELPERS ───────────────────────────────────────────────────────
 async function tgCall(method, body) {
   const r = await fetch(`https://api.telegram.org/bot${TG_TOKEN}/${method}`, {
@@ -1064,13 +1096,19 @@ async function generateMarketingIdeas(slot = 'default') {
 
   const pillars = pickPillars(slot, recentPillars);
 
-  // Бодит цаг агаар: зөвхөн цаг агаарын pillar сонгогдсон үед татна (API хэмнэнэ)
+  // Бодит өгөгдөл: зөвхөн холбогдох pillar сонгогдсон үед татна (API хэмнэнэ)
   let liveContext = '';
   if (pillars.some(p => p.includes('ЦАГ АГААР'))) {
     const w = await getShanghaiWeather();
     if (w) liveContext +=
       `\nБОДИТ 7 ХОНОГИЙН ЦАГ АГААР (Open-Meteo-оос татсан, ЭНЭ БОДИТ ӨГӨГДЛИЙГ АШИГЛА — `
       + `статик "Meiyu" гэж бүү бич, доорх жинхэнэ температур/борооны магадлалыг иш татаж зөвлөгөө өг):\n${w}\n`;
+  }
+  if (pillars.some(p => p.includes('EVENT'))) {
+    const ev = await getShanghaiEvents();
+    if (ev) liveContext +=
+      `\nЭНЭ 7 ХОНОГТ ШАНХАЙД БОЛОХ БОДИТ АРГА ХЭМЖЭЭ (Google хайлтаас, ЗӨВХӨН ЭНДХ-Г АШИГЛА, `
+      + `өөр арга хэмжээ бүү зохио):\n${ev}\n`;
   }
 
   const task =
