@@ -917,7 +917,7 @@ async function handleText(msg) {
   }
 
   // ── /marketing ───────────────────────────────────────────────────
-  if (text === '/marketing') {
+  if (text === '/marketing' || text === '/idea') {
     await tgSend('⏳ 3 пост санаа бэлдэж байна...');
     await generateMarketingIdeas();
     return;
