@@ -981,6 +981,19 @@ async function handleText(msg) {
 async function generateMarketingIdeas(slot = 'default') {
   if (!GEMINI_KEY) { console.warn('[Marketing] GEMINI_API_KEY тохиргоогүй'); return; }
 
+  // Өдөр бүр ЯГ 1 пост, ээлжээр: тэгш өдөр → morning (12:30, value),
+  // сондгой өдөр → evening (19:00, trust). Хоёр cron өдөр бүр дуудагдсан ч
+  // тохирохгүй ээлж нь алгасна. /marketing команд (default) үргэлж ажиллана.
+  if (slot === 'morning' || slot === 'evening') {
+    const epochDay  = Math.floor(new Date(todaySH()).getTime() / 86400000);
+    const isEvenDay = epochDay % 2 === 0;
+    const shouldRun = slot === 'morning' ? isEvenDay : !isEvenDay;
+    if (!shouldRun) {
+      console.log(`[Marketing] ${slot} slot — өнөөдөр ээлж биш, алгаслаа`);
+      return;
+    }
+  }
+
   const today   = todaySH();
   const history = await getPostHistory();
   const usedTopics = history.length
