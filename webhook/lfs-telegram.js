@@ -4,7 +4,7 @@
 //   1. LFS Brand Voice — бүх caption-д тусгасан
 //   2. Post Memory    — сүүлийн 14 постыг санаж давтахгүй
 //   3. /weekplan      — 7 хоногийн 14 пост, тус бүрийг approve
-//   4. Format support — single / carousel / reel
+//   4. Format support — single / carousel (зураг дээр суурилсан)
 
 const fetch  = require('node-fetch');
 const { admin, dbLFS } = require('./firebase');
@@ -349,6 +349,79 @@ async function fetchNewImage(query = 'shanghai') {
   return 'https://images.unsplash.com/photo-1481627834876-b7833e8f5570';
 }
 
+// Carousel-д зориулж n ялгаатай зураг татна (Pexels → Unsplash fallback)
+async function fetchCarouselImages(query = 'shanghai', n = 4) {
+  const urls = [];
+  try {
+    if (PEXELS_KEY) {
+      const r = await fetch(
+        `https://api.pexels.com/v1/search?query=${encodeURIComponent(query)}&per_page=${n + 4}`,
+        { headers: { Authorization: PEXELS_KEY } }
+      );
+      const d = await r.json();
+      (d.photos || []).slice(0, n).forEach(p => urls.push(p.src.large2x));
+    }
+    if (urls.length < 2 && UNSPLASH_KEY) {
+      const r = await fetch(
+        `https://api.unsplash.com/search/photos?query=${encodeURIComponent(query)}&per_page=${n + 4}`,
+        { headers: { Authorization: `Client-ID ${UNSPLASH_KEY}` } }
+      );
+      const d = await r.json();
+      (d.results || []).slice(0, n).forEach(p => urls.push(p.urls.regular));
+    }
+  } catch {}
+  // Дор хаяж нэг зураг баталгаажуулна
+  if (!urls.length) urls.push(await fetchNewImage(query));
+  return urls;
+}
+
+// IG carousel — олон зургийг нэг swipe пост болгож нийтэлнэ
+async function postToIGCarousel(imageUrls, caption, hashtags) {
+  if (imageUrls.length < 2) return postToIG(imageUrls[0], caption, hashtags);
+  try {
+    // 1) Зураг бүрд carousel-item container үүсгэнэ
+    const childIds = [];
+    for (const url of imageUrls.slice(0, 7)) {
+      const cRes = await fetch(`https://graph.facebook.com/v25.0/${IG_ID}/media`, {
+        method: 'POST', headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ image_url: url, is_carousel_item: true, access_token: META_TOKEN }),
+      });
+      const cData = await cRes.json();
+      if (cData.id) childIds.push(cData.id);
+    }
+    if (childIds.length < 2) return { ok: false, err: 'Carousel item container алдаа' };
+
+    await new Promise(r => setTimeout(r, 2000));
+
+    // 2) Эцэг carousel container
+    const parentRes = await fetch(`https://graph.facebook.com/v25.0/${IG_ID}/media`, {
+      method: 'POST', headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ media_type: 'CAROUSEL', children: childIds, caption, access_token: META_TOKEN }),
+    });
+    const parentData = await parentRes.json();
+    if (!parentData.id) return { ok: false, err: parentData.error?.message || 'Carousel container алдаа' };
+
+    await new Promise(r => setTimeout(r, 2000));
+
+    // 3) Publish
+    const pRes = await fetch(`https://graph.facebook.com/v25.0/${IG_ID}/media_publish`, {
+      method: 'POST', headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ creation_id: parentData.id, access_token: META_TOKEN }),
+    });
+    const pData = await pRes.json();
+    if (pData.error) return { ok: false, err: pData.error.message };
+
+    if (hashtags && pData.id) {
+      await new Promise(r => setTimeout(r, 1500));
+      await fetch(`https://graph.facebook.com/v25.0/${pData.id}/comments`, {
+        method: 'POST', headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ message: hashtags, access_token: META_TOKEN }),
+      });
+    }
+    return { ok: true, postId: pData.id };
+  } catch (e) { return { ok: false, err: e.message }; }
+}
+
 // ── CAPTION GENERATOR v2.0 ────────────────────────────────────────
 // GitHub Models (gpt-4o-mini) — Gemini quota-аас хамааралгүй
 async function generateCaption(hint = '', format = 'single') {
@@ -653,17 +726,28 @@ async function handleCallback(cb) {
       const qSnap2  = await qRef2.get();
       const idea    = (qSnap2.exists ? qSnap2.data() : {})[`approved_${ideaId}`] || {};
 
-      // Preview дээр харсан/сонгосон зургийг ашиглана; байхгүй бол шинээр татна
-      const imageUrl    = idea.imageUrl
-        || await fetchNewImage(idea.imageSearch || idea.title || idea.topic || 'shanghai china');
       const parts       = [idea.hook, idea.caption, idea.cta].filter(Boolean);
       const fullCaption = parts.length ? parts.join('\n\n') : (idea.title || 'LFS Shanghai');
       const hashtags    = idea.hashtags || '';
+      const imgQuery    = idea.imageSearch || idea.title || idea.topic || 'shanghai china';
 
-      const [igResult, fbResult] = await Promise.all([
-        postToIG(imageUrl, fullCaption, hashtags),
-        postToFB(imageUrl, fullCaption, hashtags),
-      ]);
+      let igResult, fbResult;
+      if (idea.format === 'carousel') {
+        // Carousel — олон зураг. Preview зургийг эхний слайд болгоно.
+        const imgs = await fetchCarouselImages(imgQuery, 4);
+        if (idea.imageUrl && !imgs.includes(idea.imageUrl)) imgs.unshift(idea.imageUrl);
+        [igResult, fbResult] = await Promise.all([
+          postToIGCarousel(imgs.slice(0, 7), fullCaption, hashtags),
+          postToFB(imgs[0], fullCaption, hashtags),  // FB-д эхний зураг
+        ]);
+      } else {
+        // Single — нэг зураг (preview-д харсан)
+        const imageUrl = idea.imageUrl || await fetchNewImage(imgQuery);
+        [igResult, fbResult] = await Promise.all([
+          postToIG(imageUrl, fullCaption, hashtags),
+          postToFB(imageUrl, fullCaption, hashtags),
+        ]);
+      }
 
       if (igResult.ok) await saveToPostHistory(idea);
 
@@ -1158,12 +1242,13 @@ async function generateMarketingIdeas(slot = 'default') {
     `  • Пост 2 сэдэв: ${pillars[1]}\n` +
     `  • Пост 3 сэдэв: ${pillars[2]}\n` +
     `Value/Trust сэдэвт пост = цэвэр хэрэгтэй контент эсвэл бодит түүх, LFS-ийг зөвхөн доор зөөлөн дурд. Service сэдэвт пост = үйлчилгээгээ гол болго.\n` +
-    `Форматыг заавал ялгаатай болго: 1x single, 1x carousel, 1x reel.\n\n` +
+    `Формат: ЗӨВХӨН single эсвэл carousel (зураг дээр суурилсан, reel/видео БИШ). 3 постоос дор хаяж нэгийг carousel болго.\n` +
+    `carousel пост = олон слайдаар тайлбарласан (жагсаалт биш, урсгал), single = нэг хүчтэй санаа.\n\n` +
     `Хариу: JSON array ЗӨВХӨН:\n` +
     `[\n` +
     `  {\n` +
     `    "title": "Постын нэр (Монголоор)",\n` +
-    `    "format": "single|carousel|reel",\n` +
+    `    "format": "single|carousel",\n` +
     `    "caption": "Догол мөр бүр \\n\\n-ээр тусгаарлагдсан бэлэн пост текст",\n` +
     `    "hashtags": "#LFSShanghai + ladder аргаар сонгосон 2-4 хаштаг (1 нарийн + 1 дунд + 1 өргөн), сэдэвт тохирсон",\n` +
     `    "imageSearch": "Pexels keyword (English, 2-3 үг)"\n` +
