@@ -1276,10 +1276,11 @@ async function handleText(msg) {
       `/weekplan — 7 хоногийн 14 пост үүсгэх\n` +
       `/week — одоогийн пост хуваарь\n` +
       `/history — approve хийсэн постын түүх\n` +
+      `_Чөлөөт текст бичих → захиалгат пост (ж: "хоолны carousel хийээч")_\n` +
       `_Зураг явуулахад → AI caption + нийтлэх_\n\n` +
       `*🤖 AI features*\n` +
       `• LFS brand voice caption\n` +
-      `• Single / Carousel / Reel формат\n` +
+      `• Single / Carousel формат\n` +
       `• Post memory — давтахгүй`
     );
     return;
@@ -1291,18 +1292,26 @@ async function handleText(msg) {
     await generateMarketingIdeas();
     return;
   }
+
+  // ── Phase 4: chat-аар захиалгат пост (команд биш чөлөөт текст) ──
+  if (raw && !raw.startsWith('/') && raw.trim().length > 4) {
+    await tgSend('⏳ Захиалгат пост бэлдэж байна...');
+    await generateMarketingIdeas('default', raw.trim());
+    return;
+  }
 }
 
 // ── SPRINT 4: AI MARKETING CONTENT INTELLIGENCE ───────────────────
 // index.js-ийн /api/cron/marketing endpoint-оор дуудагдана (cron-job.org:
 // 11:30 GMT+8 → slot=morning, 18:00 → slot=evening; /marketing команд = default)
-async function generateMarketingIdeas(slot = 'default') {
+// customPrompt өгвөл chat-аар захиалгат пост (Phase 4) — pillar/parity-гүй
+async function generateMarketingIdeas(slot = 'default', customPrompt = null) {
   if (!GEMINI_KEY) { console.warn('[Marketing] GEMINI_API_KEY тохиргоогүй'); return; }
 
   // Өдөр бүр ЯГ 1 пост, ээлжээр: тэгш өдөр → morning (12:30, value),
   // сондгой өдөр → evening (19:00, trust). Хоёр cron өдөр бүр дуудагдсан ч
   // тохирохгүй ээлж нь алгасна. /marketing команд (default) үргэлж ажиллана.
-  if (slot === 'morning' || slot === 'evening') {
+  if (!customPrompt && (slot === 'morning' || slot === 'evening')) {
     const epochDay  = Math.floor(new Date(todaySH()).getTime() / 86400000);
     const isEvenDay = epochDay % 2 === 0;
     const shouldRun = slot === 'morning' ? isEvenDay : !isEvenDay;
@@ -1328,7 +1337,7 @@ async function generateMarketingIdeas(slot = 'default') {
     ...recentTitles,
   ].filter((t, i, a) => a.indexOf(t) === i).join(', ');
 
-  const pillars = pickPillars(slot, recentPillars);
+  const pillars = customPrompt ? [] : pickPillars(slot, recentPillars);
 
   // Бодит өгөгдөл: зөвхөн холбогдох pillar сонгогдсон үед татна (API хэмнэнэ)
   let liveContext = '';
@@ -1346,19 +1355,25 @@ async function generateMarketingIdeas(slot = 'default') {
       + `өөр арга хэмжээ бүү зохио):\n${ev}\n`;
   }
 
+  const taskBody = customPrompt
+    ? `Хэрэглэгчийн захиалгаар Instagram пост бич: "${customPrompt}"\n` +
+      `Энэ захиалгад ЯГ тохирсон 2 өөр хувилбар гарга (хэрэглэгч аль нэгийг сонгоно).\n` +
+      `Формат: захиалгад заасан бол түүнийг (carousel/single) баримтал, заагаагүй бол өөрөө сонго. reel/видео БИШ.\n`
+    : `Facebook/Instagram-д шууд хуулж тавихад бэлэн 3 пост бич.\n` +
+      `Пост бүрийг ЗӨВХӨН дараах өөр өөр сэдвээр (нэг сэдэв = нэг пост) бич:\n` +
+      `  • Пост 1 сэдэв: ${pillars[0]}\n` +
+      `  • Пост 2 сэдэв: ${pillars[1]}\n` +
+      `  • Пост 3 сэдэв: ${pillars[2]}\n` +
+      `Value/Trust сэдэвт пост = цэвэр хэрэгтэй контент эсвэл бодит түүх, LFS-ийг зөвхөн доор зөөлөн дурд. Service сэдэвт пост = үйлчилгээгээ гол болго.\n` +
+      `Формат: ЗӨВХӨН single эсвэл carousel (зураг дээр суурилсан, reel/видео БИШ). 3 постоос дор хаяж нэгийг carousel болго.\n` +
+      `carousel пост = олон слайдаар тайлбарласан (жагсаалт биш, урсгал), single = нэг хүчтэй санаа.\n`;
+
   const task =
     `Өнөөдөр: ${today}\n` +
     (usedTopics ? `Сүүлд хийсэн постуудын сэдэв (ДАВТАХГҮЙ): ${usedTopics}\n\n` : '\n') +
     liveContext +
-    `Facebook/Instagram-д шууд хуулж тавихад бэлэн 3 пост бич.\n` +
-    `Пост бүрийг ЗӨВХӨН дараах өөр өөр сэдвээр (нэг сэдэв = нэг пост) бич:\n` +
-    `  • Пост 1 сэдэв: ${pillars[0]}\n` +
-    `  • Пост 2 сэдэв: ${pillars[1]}\n` +
-    `  • Пост 3 сэдэв: ${pillars[2]}\n` +
-    `Value/Trust сэдэвт пост = цэвэр хэрэгтэй контент эсвэл бодит түүх, LFS-ийг зөвхөн доор зөөлөн дурд. Service сэдэвт пост = үйлчилгээгээ гол болго.\n` +
-    `Формат: ЗӨВХӨН single эсвэл carousel (зураг дээр суурилсан, reel/видео БИШ). 3 постоос дор хаяж нэгийг carousel болго.\n` +
-    `carousel пост = олон слайдаар тайлбарласан (жагсаалт биш, урсгал), single = нэг хүчтэй санаа.\n\n` +
-    `Хариу: JSON array ЗӨВХӨН:\n` +
+    taskBody +
+    `\nХариу: JSON array ЗӨВХӨН:\n` +
     `[\n` +
     `  {\n` +
     `    "title": "Постын нэр (Монголоор)",\n` +
@@ -1429,7 +1444,7 @@ async function generateMarketingIdeas(slot = 'default') {
       const hashtagLine = idea.hashtags && !idea.caption.includes('#LFSShanghai')
         ? `\n\n${idea.hashtags}` : '';
       const caption =
-        `💡 *Постын санаа ${i + 1}/3* — ${fEmoji} \`${idea.format}\`\n\n` +
+        `💡 *Постын санаа ${i + 1}/${Math.min(ideas.length, 3)}* — ${fEmoji} \`${idea.format}\`\n\n` +
         `${idea.caption}${hashtagLine}`;
 
       const kb = mkPreviewKb(ideaId);
