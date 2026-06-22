@@ -140,6 +140,15 @@ const FORMAT_GUIDE = {
 };
 const FORMAT_EMOJI = { single: '📸', carousel: '🎠', reel: '🎬' };
 
+// Marketing санаа preview-ийн товчнууд (зөвшөөрөх/зураг солих/текст засах/зураг upload/орхих)
+const mkPreviewKb = (ideaId) => ({ inline_keyboard: [
+  [{ text: '✅ Зөвшөөрөх', callback_data: `mkq_${ideaId}` },
+   { text: '🔄 Өөр зураг',  callback_data: `mkimg_${ideaId}` }],
+  [{ text: '✏️ Текст засах', callback_data: `mkedit_${ideaId}` },
+   { text: '📷 Зураг солих', callback_data: `mkphoto_${ideaId}` }],
+  [{ text: '❌ Орхих', callback_data: `mkx_${ideaId}` }],
+] });
+
 // ── LIVE DATA: Шанхайн бодит 7 хоногийн цаг агаар (Open-Meteo, key-гүй) ──
 async function getShanghaiWeather() {
   try {
@@ -219,6 +228,7 @@ const todaySH = () => new Date().toLocaleDateString('sv', { timeZone: 'Asia/Shan
 // Firestore refs
 const pendingRef = () => dbLFS.doc(`users/${UID}/marketing/pendingPost`);
 const manualRef  = () => dbLFS.doc(`users/${UID}/marketing/manualState`);
+const editRef    = () => dbLFS.doc(`users/${UID}/marketing/editState`);
 
 // ── POST MEMORY ───────────────────────────────────────────────────
 // Сүүлийн 14 approve хийсэн постыг санана — давтахаас зайлсхийнэ
@@ -370,6 +380,27 @@ async function fetchNewImage(query = 'shanghai') {
     }
   } catch {}
   return 'https://images.unsplash.com/photo-1481627834876-b7833e8f5570';
+}
+
+// Marketing caption-ийг хэрэглэгчийн зааврын дагуу AI-аар засна (Phase 2)
+async function editCaption(currentCaption, instruction) {
+  if (!GH_TOKEN) return null;
+  const prompt =
+    `Доорх Instagram постын монгол текстийг хэрэглэгчийн зааврын дагуу засаж, ЗӨВХӨН шинэ текстийг буцаа (тайлбар, гарчиг нэмэхгүй).\n\n`
+    + `ОДООГИЙН ТЕКСТ:\n${currentCaption}\n\n`
+    + `ЗААВАР: ${instruction}\n\n`
+    + `ДҮРЭМ: LFS Shanghai брэндийн өнгө аяс хадгал. "👉 lfsshanghai.com руу орж үнэгүй зөвлөгөө авна уу" CTA-г доор үлдээ. `
+    + `Догол мөр хооронд хоосон мөр. Газар/хоолны нэр англи+ханз (галиглахгүй). Дугаарласан жагсаалт хэрэглэхгүй. Хаштаг байвал хамгийн доор үлдээ.`;
+  try {
+    const r = await fetch('https://models.inference.ai.azure.com/chat/completions', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json', 'Authorization': `Bearer ${GH_TOKEN}` },
+      body: JSON.stringify({ model: 'gpt-4o-mini', messages: [{ role: 'user', content: prompt }], max_tokens: 900, temperature: 0.7 }),
+    });
+    const d = await r.json();
+    if (d.error) { console.error('[EditCaption]', d.error.message); return null; }
+    return d.choices?.[0]?.message?.content?.trim() || null;
+  } catch (e) { console.error('[EditCaption]', e.message); return null; }
 }
 
 // Carousel-д зориулж n ялгаатай зураг татна (Pexels → Unsplash fallback)
@@ -801,11 +832,7 @@ async function handleCallback(cb) {
     const hashtagLine = idea.hashtags && !idea.caption.includes('#LFSShanghai') ? `\n\n${idea.hashtags}` : '';
     const caption     = `💡 *Постын санаа* — ${fEmoji} \`${idea.format}\`\n\n${idea.caption}${hashtagLine}`;
     const cap         = caption.length > 1000 ? caption.slice(0, 1000) : caption;
-    const kb = { inline_keyboard: [
-      [{ text: '✅ Зөвшөөрөх', callback_data: `mkq_${ideaId}` },
-       { text: '🔄 Өөр зураг', callback_data: `mkimg_${ideaId}` }],
-      [{ text: '❌ Орхих', callback_data: `mkx_${ideaId}` }],
-    ] };
+    const kb = mkPreviewKb(ideaId);
 
     const res = await tgCall('editMessageMedia', {
       chat_id: TG_CHAT, message_id: msgId,
@@ -822,11 +849,30 @@ async function handleCallback(cb) {
     return;
   }
 
+  // ✏️ Текст засах — Билэгийн зааврыг хүлээнэ (handleText боловсруулна)
+  if (cmd.startsWith('mkedit_')) {
+    const ideaId = cmd.slice(7);
+    await editRef().set({ ideaId, mode: 'text', msgId });
+    await tgAnswer(cbId, '✏️ Текст засах');
+    await tgSend('✏️ Ямар өөрчлөлт хүсэж байна? Бичээд явуулаарай.\n\nЖишээ: "богино бол", "хоолны тухай нэм", "илүү найрсаг өнгөтэй болго"');
+    return;
+  }
+
+  // 📷 Зураг солих — Билэгийн өөрийн зургийг хүлээнэ (handlePhoto боловсруулна)
+  if (cmd.startsWith('mkphoto_')) {
+    const ideaId = cmd.slice(8);
+    await editRef().set({ ideaId, mode: 'photo', msgId });
+    await tgAnswer(cbId, '📷 Зураг солих');
+    await tgSend('📷 Тавихыг хүссэн зургаа Telegram-аар явуулаарай.');
+    return;
+  }
+
   if (cmd.startsWith('mkx_')) {
     await tgCall('editMessageReplyMarkup', {
       chat_id: TG_CHAT, message_id: msgId,
       reply_markup: { inline_keyboard: [[{ text: '❌ Skipped', callback_data: 'noop' }]] },
     });
+    await editRef().delete().catch(() => {});
     return;
   }
 
@@ -960,6 +1006,30 @@ async function handlePhoto(msg) {
   const photoUrl    = `https://api.telegram.org/file/bot${TG_TOKEN}/${fData.result?.file_path}`;
   const userCaption = msg.caption || '';
 
+  // ── Phase 2: Marketing санааны зургийг өөрийн зургаар солих ──
+  const eSnapP = await editRef().get();
+  if (eSnapP.exists && eSnapP.data().mode === 'photo') {
+    const es   = eSnapP.data();
+    const qRef = dbLFS.doc(`users/${UID}/marketing/weeklyQueue`);
+    const idea = ((await qRef.get()).data() || {})[`pending_${es.ideaId}`];
+    if (!idea) { await editRef().delete(); await tgSend('⚠️ Санаа олдсонгүй.'); return; }
+
+    await qRef.set({ [`pending_${es.ideaId}`]: { ...idea, imageUrl: photoUrl, ownPhoto: true } }, { merge: true });
+
+    const fEmoji      = FORMAT_EMOJI[idea.format] || '📸';
+    const hashtagLine = idea.hashtags && !idea.caption.includes('#LFSShanghai') ? `\n\n${idea.hashtags}` : '';
+    const caption     = `💡 *Постын санаа* — ${fEmoji} \`${idea.format}\`\n\n${idea.caption}${hashtagLine}`;
+    const cap         = caption.length > 1000 ? caption.slice(0, 1000) : caption;
+    await tgCall('editMessageMedia', {
+      chat_id: TG_CHAT, message_id: es.msgId,
+      media: { type: 'photo', media: fileId, caption: cap, parse_mode: 'Markdown' },
+      reply_markup: mkPreviewKb(es.ideaId),
+    });
+    await editRef().delete();
+    await tgSend('✅ Зураг солигдлоо. Зөвшөөрөх дарвал энэ зураг тавигдана.');
+    return;
+  }
+
   if (userCaption) {
     await tgSend('🤖 Caption бэлдэж байна...');
     const gen      = await generateCaption(userCaption, 'single');
@@ -996,6 +1066,33 @@ async function handlePhoto(msg) {
 async function handleText(msg) {
   const raw  = msg.text || '';
   const text = raw.toLowerCase().trim();
+
+  // ── Phase 2: Marketing санааны текстийг AI-аар засах ──
+  const eSnapT = await editRef().get();
+  if (eSnapT.exists && eSnapT.data().mode === 'text' && !raw.startsWith('/')) {
+    const es   = eSnapT.data();
+    const qRef = dbLFS.doc(`users/${UID}/marketing/weeklyQueue`);
+    const idea = ((await qRef.get()).data() || {})[`pending_${es.ideaId}`];
+    if (!idea) { await editRef().delete(); await tgSend('⚠️ Санаа олдсонгүй.'); return; }
+
+    await tgSend('✏️ Засаж байна...');
+    const newCap = await editCaption(idea.caption, raw);
+    if (!newCap) { await tgSend('⚠️ Засаж чадсангүй, дахин оролдоорой.'); return; }
+
+    await qRef.set({ [`pending_${es.ideaId}`]: { ...idea, caption: newCap } }, { merge: true });
+
+    const fEmoji      = FORMAT_EMOJI[idea.format] || '📸';
+    const hashtagLine = idea.hashtags && !newCap.includes('#LFSShanghai') ? `\n\n${idea.hashtags}` : '';
+    const caption     = `💡 *Постын санаа* — ${fEmoji} \`${idea.format}\`\n\n${newCap}${hashtagLine}`;
+    const cap         = caption.length > 1000 ? caption.slice(0, 1000) : caption;
+    const kb          = mkPreviewKb(es.ideaId);
+    const r = await tgCall('editMessageCaption', {
+      chat_id: TG_CHAT, message_id: es.msgId, caption: cap, parse_mode: 'Markdown', reply_markup: kb,
+    });
+    if (!r.ok) await tgCall('editMessageCaption', { chat_id: TG_CHAT, message_id: es.msgId, caption: cap.replace(/[*`_]/g, ''), reply_markup: kb });
+    await editRef().delete();
+    return;
+  }
 
   // Pending post: edit_text state
   const pSnap = await pendingRef().get();
@@ -1335,11 +1432,7 @@ async function generateMarketingIdeas(slot = 'default') {
         `💡 *Постын санаа ${i + 1}/3* — ${fEmoji} \`${idea.format}\`\n\n` +
         `${idea.caption}${hashtagLine}`;
 
-      const kb = { inline_keyboard: [
-        [{ text: '✅ Зөвшөөрөх', callback_data: `mkq_${ideaId}` },
-         { text: '🔄 Өөр зураг', callback_data: `mkimg_${ideaId}` }],
-        [{ text: '❌ Орхих', callback_data: `mkx_${ideaId}` }],
-      ] };
+      const kb = mkPreviewKb(ideaId);
       // Telegram зургийн caption 1024 тэмдэгт хязгаартай
       const clipCap = s => s.length > 1000 ? s.slice(0, 1000) : s;
 
