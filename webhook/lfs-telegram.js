@@ -1059,7 +1059,8 @@ async function handleText(msg) {
 }
 
 // ── SPRINT 4: AI MARKETING CONTENT INTELLIGENCE ───────────────────
-// server.js-ийн cron-оор дуудагдана (13:00 Шанхай / 05:00 UTC)
+// index.js-ийн /api/cron/marketing endpoint-оор дуудагдана (cron-job.org:
+// 11:30 GMT+8 → slot=morning, 18:00 → slot=evening; /marketing команд = default)
 async function generateMarketingIdeas(slot = 'default') {
   if (!GEMINI_KEY) { console.warn('[Marketing] GEMINI_API_KEY тохиргоогүй'); return; }
 
@@ -1153,11 +1154,19 @@ async function generateMarketingIdeas(slot = 'default') {
       }),
     });
     const data = await r.json();
-    if (data.error) { console.error('[Marketing] GitHub Models error:', data.error.message); return; }
+    if (data.error) {
+      console.error('[Marketing] GitHub Models error:', data.error.message);
+      await tgSend('⚠️ Маркетинг: AI үйлчилгээ хариу алдаатай байна. Хэсэг хүлээгээд дахин /marketing оролдоорой.');
+      return;
+    }
 
     const rawText  = data.choices?.[0]?.message?.content?.trim();
     const arrMatch = rawText?.match(/\[[\s\S]*\]/);
-    if (!arrMatch) { console.error('[Marketing] JSON array гарсангүй'); return; }
+    if (!arrMatch) {
+      console.error('[Marketing] JSON array гарсангүй');
+      await tgSend('⚠️ Маркетинг: AI зөв хэлбэрээр буцаасангүй. Дахин /marketing оролдоорой.');
+      return;
+    }
 
     const ideas = JSON.parse(arrMatch[0]);
 
@@ -1183,17 +1192,21 @@ async function generateMarketingIdeas(slot = 'default') {
         `💡 *Постын санаа ${i + 1}/3* — ${fEmoji} \`${idea.format}\`\n\n` +
         `${idea.caption}${hashtagLine}`;
 
-      await tgCall('sendMessage', {
-        chat_id:      TG_CHAT,
-        text:         msg.length > 3800 ? msg.slice(0, 3800) : msg,
-        parse_mode:   'Markdown',
-        reply_markup: {
-          inline_keyboard: [[
-            { text: '✅ Зөвшөөрөх', callback_data: `mkq_${ideaId}` },
-            { text: '❌ Орхих',      callback_data: `mkx_${ideaId}` },
-          ]],
-        },
+      const kb = { inline_keyboard: [[
+        { text: '✅ Зөвшөөрөх', callback_data: `mkq_${ideaId}` },
+        { text: '❌ Орхих',      callback_data: `mkx_${ideaId}` },
+      ]] };
+      const clip = s => s.length > 3800 ? s.slice(0, 3800) : s;
+
+      const sendRes = await tgCall('sendMessage', {
+        chat_id: TG_CHAT, text: clip(msg), parse_mode: 'Markdown', reply_markup: kb,
       });
+      // Markdown parse алдаа (caption-д тусгай тэмдэгт) бол энгийн текстээр дахин илгээнэ
+      if (!sendRes.ok) {
+        await tgCall('sendMessage', {
+          chat_id: TG_CHAT, text: clip(msg.replace(/[*`_]/g, '')), reply_markup: kb,
+        });
+      }
 
       await new Promise(res => setTimeout(res, 800));
     }
@@ -1214,6 +1227,7 @@ async function generateMarketingIdeas(slot = 'default') {
     });
   } catch (e) {
     console.error('[Marketing] generateMarketingIdeas error:', e.message);
+    await tgSend('⚠️ Маркетинг: пост үүсгэхэд алдаа гарлаа. Дахин /marketing оролдоорой.').catch(() => {});
   }
 }
 
