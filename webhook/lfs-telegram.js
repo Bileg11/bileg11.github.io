@@ -248,11 +248,32 @@ async function saveToPostHistory(post) {
 }
 
 // ── META PUBLISH ──────────────────────────────────────────────────
+// Эхний comment-д тавих бренд танилцуулга (хаштаг биш — хаштаг caption-д доор орно)
+const SITE_COMMENT =
+  'LFS Shanghai — Шанхай дахь аялал болон эрүүл мэндийн оношилгоог нэг дороос зохион байгуулна. '
+  + 'Буудал, хувийн хөтөч, Монгол орчуулга, онгоцны буудлын угтаа — бүгд нэг багцад.\n\n'
+  + '👉 Үнэгүй зөвлөгөө: lfsshanghai.com';
+
+// caption-ийн доор хаштагийг хэдэн мөр зайтай залгана
+const withHashtags = (caption, hashtags) =>
+  hashtags ? `${caption}\n\n\n${hashtags}` : caption;
+
+// Нийтлэгдсэн постын эхний comment-д бренд танилцуулга үлдээнэ
+async function igFirstComment(postId) {
+  if (!postId) return;
+  await new Promise(r => setTimeout(r, 1500));
+  await fetch(`https://graph.facebook.com/v25.0/${postId}/comments`, {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({ message: SITE_COMMENT, access_token: META_TOKEN }),
+  }).catch(() => {});
+}
+
 async function postToIG(imageUrl, caption, hashtags) {
   const cRes  = await fetch(`https://graph.facebook.com/v25.0/${IG_ID}/media`, {
     method: 'POST',
     headers: { 'Content-Type': 'application/json' },
-    body: JSON.stringify({ image_url: imageUrl, caption, access_token: META_TOKEN }),
+    body: JSON.stringify({ image_url: imageUrl, caption: withHashtags(caption, hashtags), access_token: META_TOKEN }),
   });
   const cData = await cRes.json();
   if (!cData.id) return { ok: false, err: cData.error?.message || 'Container алдаа' };
@@ -267,14 +288,7 @@ async function postToIG(imageUrl, caption, hashtags) {
   const pData = await pRes.json();
   if (pData.error) return { ok: false, err: pData.error.message };
 
-  if (hashtags && pData.id) {
-    await new Promise(r => setTimeout(r, 1500));
-    await fetch(`https://graph.facebook.com/v25.0/${pData.id}/comments`, {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ message: hashtags, access_token: META_TOKEN }),
-    });
-  }
+  await igFirstComment(pData.id);  // эхний comment-д бренд танилцуулга
   dbLFS.doc(`users/${UID}/marketing/lastPost`)
     .set({ postedAt: new Date().toISOString() }).catch(() => {});
   return { ok: true, postId: pData.id };
@@ -302,7 +316,7 @@ async function postToFB(imageUrl, caption, hashtags) {
     }
   }
 
-  const fullMsg = [caption, hashtags].filter(Boolean).join('\n\n');
+  const fullMsg = withHashtags(caption, hashtags);
   try {
     const fbRes  = await fetch(`https://graph.facebook.com/v25.0/${FB_ID}/photos`, {
       method: 'POST',
@@ -313,6 +327,15 @@ async function postToFB(imageUrl, caption, hashtags) {
     if (fbData.error) {
       console.error('[FB] Post error:', JSON.stringify(fbData.error));
       return { ok: false, err: fbData.error.message };
+    }
+    // FB-д эхний comment-д бренд танилцуулга
+    const fbPostId = fbData.post_id || fbData.id;
+    if (fbPostId) {
+      await new Promise(r => setTimeout(r, 1200));
+      await fetch(`https://graph.facebook.com/v25.0/${fbPostId}/comments`, {
+        method: 'POST', headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ message: SITE_COMMENT, access_token: pageToken }),
+      }).catch(() => {});
     }
     return { ok: true, postId: fbData.id || fbData.post_id };
   } catch (e) {
@@ -393,10 +416,10 @@ async function postToIGCarousel(imageUrls, caption, hashtags) {
 
     await new Promise(r => setTimeout(r, 2000));
 
-    // 2) Эцэг carousel container
+    // 2) Эцэг carousel container (caption-д хаштаг доор орно)
     const parentRes = await fetch(`https://graph.facebook.com/v25.0/${IG_ID}/media`, {
       method: 'POST', headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ media_type: 'CAROUSEL', children: childIds, caption, access_token: META_TOKEN }),
+      body: JSON.stringify({ media_type: 'CAROUSEL', children: childIds, caption: withHashtags(caption, hashtags), access_token: META_TOKEN }),
     });
     const parentData = await parentRes.json();
     if (!parentData.id) return { ok: false, err: parentData.error?.message || 'Carousel container алдаа' };
@@ -411,13 +434,7 @@ async function postToIGCarousel(imageUrls, caption, hashtags) {
     const pData = await pRes.json();
     if (pData.error) return { ok: false, err: pData.error.message };
 
-    if (hashtags && pData.id) {
-      await new Promise(r => setTimeout(r, 1500));
-      await fetch(`https://graph.facebook.com/v25.0/${pData.id}/comments`, {
-        method: 'POST', headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ message: hashtags, access_token: META_TOKEN }),
-      });
-    }
+    await igFirstComment(pData.id);  // эхний comment-д бренд танилцуулга
     return { ok: true, postId: pData.id };
   } catch (e) { return { ok: false, err: e.message }; }
 }
