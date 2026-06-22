@@ -329,8 +329,8 @@ async function fetchNewImage(query = 'shanghai') {
       );
       const d = await r.json();
       if (d.photos?.length) {
-        // Санамсаргүй сонгох — давхардахгүй байхын тулд
-        const idx = Math.floor(Math.random() * d.photos.length);
+        // Pexels хамаатай зургийг эхэнд эрэмбэлдэг — эхний 4-өөс сонгоно (бүгдээс биш)
+        const idx = Math.floor(Math.random() * Math.min(d.photos.length, 4));
         return d.photos[idx].src.large2x;
       }
     }
