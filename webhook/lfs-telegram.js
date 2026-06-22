@@ -653,8 +653,9 @@ async function handleCallback(cb) {
       const qSnap2  = await qRef2.get();
       const idea    = (qSnap2.exists ? qSnap2.data() : {})[`approved_${ideaId}`] || {};
 
-      const searchQuery = idea.imageSearch || idea.title || idea.topic || 'shanghai china';
-      const imageUrl    = await fetchNewImage(searchQuery);
+      // Preview дээр харсан/сонгосон зургийг ашиглана; байхгүй бол шинээр татна
+      const imageUrl    = idea.imageUrl
+        || await fetchNewImage(idea.imageSearch || idea.title || idea.topic || 'shanghai china');
       const parts       = [idea.hook, idea.caption, idea.cta].filter(Boolean);
       const fullCaption = parts.length ? parts.join('\n\n') : (idea.title || 'LFS Shanghai');
       const hashtags    = idea.hashtags || '';
@@ -680,6 +681,42 @@ async function handleCallback(cb) {
     } catch (e) {
       console.error('[Marketing] Publish error:', e.message);
       await tgSend(`❌ Алдаа: ${e.message}`);
+    }
+    return;
+  }
+
+  // 🔄 Өөр зураг — preview дээрх зургийг солино
+  if (cmd.startsWith('mkimg_')) {
+    const ideaId = cmd.slice(6);
+    const qRef   = dbLFS.doc(`users/${UID}/marketing/weeklyQueue`);
+    const idea   = ((await qRef.get()).data() || {})[`pending_${ideaId}`];
+    if (!idea) { await tgAnswer(cbId, 'Санаа олдсонгүй'); return; }
+
+    await tgAnswer(cbId, '🔄 Өөр зураг хайж байна...');
+    const newImg = await fetchNewImage(idea.imageSearch || idea.title || 'shanghai china');
+    await qRef.set({ [`pending_${ideaId}`]: { ...idea, imageUrl: newImg } }, { merge: true });
+
+    const fEmoji      = FORMAT_EMOJI[idea.format] || '📸';
+    const hashtagLine = idea.hashtags && !idea.caption.includes('#LFSShanghai') ? `\n\n${idea.hashtags}` : '';
+    const caption     = `💡 *Постын санаа* — ${fEmoji} \`${idea.format}\`\n\n${idea.caption}${hashtagLine}`;
+    const cap         = caption.length > 1000 ? caption.slice(0, 1000) : caption;
+    const kb = { inline_keyboard: [
+      [{ text: '✅ Зөвшөөрөх', callback_data: `mkq_${ideaId}` },
+       { text: '🔄 Өөр зураг', callback_data: `mkimg_${ideaId}` }],
+      [{ text: '❌ Орхих', callback_data: `mkx_${ideaId}` }],
+    ] };
+
+    const res = await tgCall('editMessageMedia', {
+      chat_id: TG_CHAT, message_id: msgId,
+      media: { type: 'photo', media: newImg, caption: cap, parse_mode: 'Markdown' },
+      reply_markup: kb,
+    });
+    if (!res.ok) {
+      await tgCall('editMessageMedia', {
+        chat_id: TG_CHAT, message_id: msgId,
+        media: { type: 'photo', media: newImg, caption: cap.replace(/[*`_]/g, '') },
+        reply_markup: kb,
+      });
     }
     return;
   }
@@ -1177,10 +1214,14 @@ async function generateMarketingIdeas(slot = 'default') {
       batchIds.push(ideaId);
       const fEmoji = FORMAT_EMOJI[idea.format] || '📸';
 
+      // Зургийн preview-г татаж санаатай хамт харуулна (approve хийхээс өмнө)
+      const imageUrl = await fetchNewImage(idea.imageSearch || idea.title || 'shanghai china');
+
       await dbLFS.doc(`users/${UID}/marketing/weeklyQueue`).set({
         [`pending_${ideaId}`]: {
           ...idea,
           ideaId,
+          imageUrl,
           status:    'pending',
           createdAt: new Date().toISOString(),
         },
@@ -1188,27 +1229,29 @@ async function generateMarketingIdeas(slot = 'default') {
 
       const hashtagLine = idea.hashtags && !idea.caption.includes('#LFSShanghai')
         ? `\n\n${idea.hashtags}` : '';
-      const msg =
+      const caption =
         `💡 *Постын санаа ${i + 1}/3* — ${fEmoji} \`${idea.format}\`\n\n` +
         `${idea.caption}${hashtagLine}`;
 
-      const kb = { inline_keyboard: [[
-        { text: '✅ Зөвшөөрөх', callback_data: `mkq_${ideaId}` },
-        { text: '❌ Орхих',      callback_data: `mkx_${ideaId}` },
-      ]] };
-      const clip = s => s.length > 3800 ? s.slice(0, 3800) : s;
+      const kb = { inline_keyboard: [
+        [{ text: '✅ Зөвшөөрөх', callback_data: `mkq_${ideaId}` },
+         { text: '🔄 Өөр зураг', callback_data: `mkimg_${ideaId}` }],
+        [{ text: '❌ Орхих', callback_data: `mkx_${ideaId}` }],
+      ] };
+      // Telegram зургийн caption 1024 тэмдэгт хязгаартай
+      const clipCap = s => s.length > 1000 ? s.slice(0, 1000) : s;
 
-      const sendRes = await tgCall('sendMessage', {
-        chat_id: TG_CHAT, text: clip(msg), parse_mode: 'Markdown', reply_markup: kb,
+      const sendRes = await tgCall('sendPhoto', {
+        chat_id: TG_CHAT, photo: imageUrl, caption: clipCap(caption), parse_mode: 'Markdown', reply_markup: kb,
       });
       // Markdown parse алдаа (caption-д тусгай тэмдэгт) бол энгийн текстээр дахин илгээнэ
       if (!sendRes.ok) {
-        await tgCall('sendMessage', {
-          chat_id: TG_CHAT, text: clip(msg.replace(/[*`_]/g, '')), reply_markup: kb,
+        await tgCall('sendPhoto', {
+          chat_id: TG_CHAT, photo: imageUrl, caption: clipCap(caption.replace(/[*`_]/g, '')), reply_markup: kb,
         });
       }
 
-      await new Promise(res => setTimeout(res, 800));
+      await new Promise(res => setTimeout(res, 400));
     }
 
     // Approve reminder-ийн төлөвийг хадгална. Vercel serverless дээр setTimeout
