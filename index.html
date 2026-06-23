@@ -126,6 +126,8 @@ body{
 .lang-btn:hover{color:var(--dark2)}
 .lang-active{background:var(--card);color:var(--dark2);box-shadow:0 1px 3px rgba(0,0,0,.08)}
 .mob-lang-switch{display:none}
+.nav-lang-mobile{display:none}
+@media(max-width:860px){.nav-lang-mobile{display:flex;align-items:center;justify-content:center;margin-left:auto;margin-right:12px;padding:5px 12px;border-radius:16px;font-size:12px;font-weight:700;color:var(--dark2);background:var(--bg2);border:1px solid var(--border);text-decoration:none;min-height:32px;white-space:nowrap}}
 .hamburger{display:none;flex-direction:column;gap:4px;cursor:pointer;padding:6px;min-width:44px;min-height:44px;align-items:center;justify-content:center;border:none;background:none}
 .hamburger span{display:block;width:18px;height:1px;background:var(--dark2);transition:.3s;border-radius:1px}
 @media(max-width:900px){
@@ -985,6 +987,7 @@ section,#booking-section{scroll-margin-top:60px}
     <a class="nav-user-btn" id="nav-auth-btn" href="/login/">Нэвтрэх 👤</a>
     <button class="nav-btn" onclick="window.location.href='/booking/'">Одоо Захиалах ↗</button>
   </div>
+  <a class="nav-lang-mobile" href="/en/" aria-label="Switch to English">🌐 EN</a>
   <div class="hamburger" onclick="toggleMobileMenu()">
     <span></span><span></span><span></span>
   </div>
