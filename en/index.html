@@ -111,6 +111,7 @@ body{
 .lang-btn{padding:4px 10px;border-radius:16px;font-size:11px;font-weight:600;color:var(--muted);text-decoration:none;transition:.15s}
 .lang-btn:hover{color:var(--dark2)}
 .lang-active{background:var(--card);color:var(--dark2);box-shadow:0 1px 3px rgba(0,0,0,.08)}
+.mob-lang-switch{display:none}
 .hamburger{display:none;flex-direction:column;gap:4px;cursor:pointer;padding:6px}
 .hamburger span{display:block;width:18px;height:1px;background:var(--dark2);transition:.3s;border-radius:1px}
 @media(max-width:860px){
@@ -120,6 +121,9 @@ body{
   .nav-link:hover,.nav-link.active{color:#fff}
   .hamburger{display:flex}
   .nav-btn{display:none}
+  .mob-lang-switch{display:flex;gap:8px;margin-top:20px}
+  .mob-lang-btn{padding:8px 20px;border-radius:20px;font-size:15px;font-weight:600;color:rgba(255,255,255,.7);text-decoration:none;border:1px solid rgba(255,255,255,.18);transition:.15s;min-height:44px;display:flex;align-items:center}
+  .mob-lang-btn.mob-lang-active{background:#fff;color:#111;border-color:#fff}
 }
 
 /* ── HERO ── */
@@ -887,6 +891,10 @@ section,#booking-section{scroll-margin-top:60px}
   <button class="nav-link" onclick="window.location.href='/en/contact/';toggleMobileMenu()">Contact</button>
   <button class="nav-link" onclick="window.location.href='/login/';toggleMobileMenu()">Login</button>
   <button class="nav-link" onclick="window.location.href='/en/booking/';toggleMobileMenu()" style="color:#0071e3;font-weight:600">Book Now →</button>
+  <div class="mob-lang-switch">
+    <a href="/" class="mob-lang-btn">МН</a>
+    <a href="/en/" class="mob-lang-btn mob-lang-active">EN</a>
+  </div>
 </div>
 
 <!-- HERO -->
