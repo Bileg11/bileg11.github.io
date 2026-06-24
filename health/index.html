@@ -677,12 +677,7 @@ footer a:hover{color:#fff}
         </div>
       </div>
       <div class="hospital-photo" style="overflow:hidden;position:relative">
-        <img src="/img/health/fa21132d-ec3f-431a-aa52-bb060e7004cd.jpeg" alt="光明中医院" style="width:100%;height:100%;object-fit:cover;position:absolute;inset:0;opacity:.85">
-        <div class="hospital-photo-inner" style="position:relative;z-index:1">
-          <span class="hospital-icon">🏥</span>
-          <div class="hospital-photo-title">光明中医院</div>
-          <div class="hospital-photo-sub">Xinchang Branch · Shanghai</div>
-        </div>
+        <img src="/img/health/fa21132d-ec3f-431a-aa52-bb060e7004cd.jpeg" alt="光明中医院" style="width:100%;height:100%;object-fit:cover;position:absolute;inset:0">
       </div>
     </div>
   </div>
@@ -717,6 +712,7 @@ footer a:hover{color:#fff}
           <li class="pkg-feature"><span class="pkg-check"><svg viewBox="0 0 10 10" fill="none"><polyline points="1.5,5 4,7.5 8.5,2.5" stroke="#0071e3" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg></span>Хувийн сувилагч + Монгол орчуулагч</li>
           <li class="pkg-feature"><span class="pkg-check"><svg viewBox="0 0 10 10" fill="none"><polyline points="1.5,5 4,7.5 8.5,2.5" stroke="#0071e3" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg></span>Шинжилгээний хариу Монгол + Англи хэлээр</li>
           <li class="pkg-feature"><span class="pkg-check"><svg viewBox="0 0 10 10" fill="none"><polyline points="1.5,5 4,7.5 8.5,2.5" stroke="#0071e3" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg></span>Нисэх буудлаас угтах + буудалд хүргэх</li>
+          <li class="pkg-feature"><span class="pkg-check"><svg viewBox="0 0 10 10" fill="none"><polyline points="1.5,5 4,7.5 8.5,2.5" stroke="#0071e3" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg></span>Эмнэлгийн VIP тасагт өглөөний цайтай хонох</li>
           <li class="pkg-feature"><span class="pkg-check"><svg viewBox="0 0 10 10" fill="none"><polyline points="1.5,5 4,7.5 8.5,2.5" stroke="#0071e3" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg></span>Хотын төвийн 4 одтой зочид буудалд 4 шөнө байрших</li>
           <li class="pkg-feature"><span class="pkg-check"><svg viewBox="0 0 10 10" fill="none"><polyline points="1.5,5 4,7.5 8.5,2.5" stroke="#0071e3" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg></span>Nanjing Road · The Bund · голоор завиар · Shanghai Tower</li>
           <li class="pkg-feature"><span class="pkg-check"><svg viewBox="0 0 10 10" fill="none"><polyline points="1.5,5 4,7.5 8.5,2.5" stroke="#0071e3" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg></span>Shanghai Zoo · Luxury буфет · Yu Garden</li>
@@ -810,6 +806,8 @@ footer a:hover{color:#fff}
           <li class="pkg-feature"><span class="pkg-check"><svg viewBox="0 0 10 10" fill="none"><polyline points="1.5,5 4,7.5 8.5,2.5" stroke="#0071e3" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg></span>Нүдний үзлэг</li>
           <li class="pkg-feature"><span class="pkg-check"><svg viewBox="0 0 10 10" fill="none"><polyline points="1.5,5 4,7.5 8.5,2.5" stroke="#0071e3" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg></span>Хувийн сувилагч + Монгол орчуулагч</li>
           <li class="pkg-feature"><span class="pkg-check"><svg viewBox="0 0 10 10" fill="none"><polyline points="1.5,5 4,7.5 8.5,2.5" stroke="#0071e3" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg></span>Шинжилгээний хариу Монгол + Англи хэлээр</li>
+          <li class="pkg-feature"><span class="pkg-check"><svg viewBox="0 0 10 10" fill="none"><polyline points="1.5,5 4,7.5 8.5,2.5" stroke="#0071e3" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg></span>Нисэх буудлаас угтах + буудалд хүргэх</li>
+          <li class="pkg-feature"><span class="pkg-check"><svg viewBox="0 0 10 10" fill="none"><polyline points="1.5,5 4,7.5 8.5,2.5" stroke="#0071e3" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg></span>Эмнэлгийн VIP тасагт өглөөний цайтай хонох</li>
           <li class="pkg-feature"><span class="pkg-check"><svg viewBox="0 0 10 10" fill="none"><polyline points="1.5,5 4,7.5 8.5,2.5" stroke="#0071e3" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg></span>1 өдрийн хот аялал — The Bund, Nanjing Road</li>
         </ul>
         <div style="margin:14px 0 0;padding:12px 14px;background:#f0f7ff;border-radius:10px;border:1px solid #c8dff8">
@@ -1069,17 +1067,17 @@ const galleries = {
   mungun: {
     title: '🥈 Мөнгөн багц — Зургийн цомог',
     photos: [
-      { src:'/img/health/hospital-reception.jpg', label:'', bg:'linear-gradient(135deg,#1055a0,#3d8ef0)', icon:'🏥' },
-      { src:'/img/health/hospital-atrium.jpg',    label:'', bg:'linear-gradient(135deg,#0a3060,#1055a0)', icon:'🏛️' },
-      { src:'/img/health/hospital-lobby.jpg',     label:'', bg:'linear-gradient(135deg,#0d2a5a,#1a4fa0)', icon:'🚪' },
-      { src:'/img/health/hospital-hallway.jpg',   label:'', bg:'linear-gradient(135deg,#1a1a3a,#2a3a7a)', icon:'🛏️' },
-      { src:'/img/health/hospital-ward.jpg',      label:'', bg:'linear-gradient(135deg,#0a2a3a,#1a5a8a)', icon:'💺' },
-      { src:'/img/health/hospital-room.jpg',      label:'', bg:'linear-gradient(135deg,#1a2a0a,#3a5a2a)', icon:'🩺' },
-      { src:'/img/health/hospital-corridor.jpg',  label:'', bg:'linear-gradient(135deg,#2a1a0a,#5a3a0a)', icon:'🏃' },
-      { src:'/img/health/hospital-exterior.jpg',  label:'', bg:'linear-gradient(135deg,#0a2a1a,#1a5a3a)', icon:'🌿' },
-      { src:'/img/health/hospital-interior.jpg',  label:'', bg:'linear-gradient(135deg,#0a1a3a,#1a3a7a)', icon:'✨' },
-      { src:'/img/health/hospital-vip.jpg',       label:'', bg:'linear-gradient(135deg,#1a0a3a,#3a1a7a)', icon:'👑' },
-      { src:'/img/health/hospital-floor.jpg',     label:'', bg:'linear-gradient(135deg,#0a0a2a,#1a1a5a)', icon:'📐' },
+      { src:'/img/health/hospital-corridor.jpg',  label:'', bg:'linear-gradient(135deg,#0a2a3a,#1a5a8a)' },
+      { src:'/img/health/hospital-floor.jpg',     label:'', bg:'linear-gradient(135deg,#0a2a3a,#1a5a8a)' },
+      { src:'/img/health/hospital-lobby.jpg',     label:'', bg:'linear-gradient(135deg,#0a2a3a,#1a5a8a)' },
+      { src:'/img/health/hospital-interior.jpg',  label:'', bg:'linear-gradient(135deg,#0a2a3a,#1a5a8a)' },
+      { src:'/img/health/hospital-vip.jpg',       label:'', bg:'linear-gradient(135deg,#0a2a3a,#1a5a8a)' },
+      { src:'/img/health/hospital-atrium.jpg',    label:'', bg:'linear-gradient(135deg,#0a2a3a,#1a5a8a)' },
+      { src:'/img/health/hospital-exterior.jpg',  label:'', bg:'linear-gradient(135deg,#0a2a3a,#1a5a8a)' },
+      { src:'/img/health/hospital-suite.jpg',     label:'', bg:'linear-gradient(135deg,#0a2a3a,#1a5a8a)' },
+      { src:'/img/health/hospital-clinic.jpg',    label:'', bg:'linear-gradient(135deg,#0a2a3a,#1a5a8a)' },
+      { src:'/img/health/hospital-ward.jpg',      label:'', bg:'linear-gradient(135deg,#0a2a3a,#1a5a8a)' },
+      { src:'/img/health/hospital-hallway.jpg',   label:'', bg:'linear-gradient(135deg,#0a2a3a,#1a5a8a)' },
     ]
   }
 };
@@ -1088,11 +1086,10 @@ function openGallery(pkg) {
   const g = galleries[pkg];
   document.getElementById('galleryTitleText').textContent = g.title;
   document.getElementById('galleryGrid').innerHTML = g.photos.map(p => `
-    <div class="gallery-item no-img" style="background:${p.bg}" onclick="openLightbox('${p.src}','${p.label.replace(/'/g,"&#39;")}')">
+    <div class="gallery-item" style="background:${p.bg}" onclick="openLightbox('${p.src}','${p.label.replace(/'/g,"&#39;")}')">
       <img src="${p.src}" class="gallery-item-img" alt="${p.label}"
-           onerror="this.closest('.gallery-item').classList.add('no-img')"
-           onload="this.closest('.gallery-item').classList.remove('no-img')">
-      <div class="gallery-item-placeholder">${p.icon}</div>
+           loading="eager" decoding="async"
+           onerror="this.style.display='none'">
       ${p.label ? `<div class="gallery-item-label">${p.label}</div>` : ''}
     </div>`).join('');
   document.getElementById('galleryOverlay').classList.add('open');
