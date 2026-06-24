@@ -528,10 +528,10 @@ setPersistence(auth, inMemoryPersistence)
   .then(() => signOut(auth))
   .catch(() => {})
   .finally(() => {
-    const ADMIN_UIDS = ['wRgkUaY10tXHGT4yet1V1BFQspF3'];
+    const ADMIN_EMAILS = ['amarsaikhanbileg@gmail.com'];
 
     onAuthStateChanged(auth, user => {
-      if (user && ADMIN_UIDS.includes(user.uid)) {
+      if (user && ADMIN_EMAILS.includes((user.email || '').toLowerCase())) {
         document.getElementById('loginWrap').style.display = 'none';
         document.getElementById('dashboard').style.display = 'block';
         document.getElementById('adminEmail').textContent = user.email;
