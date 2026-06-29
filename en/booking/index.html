@@ -611,8 +611,8 @@ async function submitBooking(){
   // 1. Firebase
   if(window._saveToFirestore) await window._saveToFirestore(bookingData);
 
-  // 2. Railway webhook (Telegram notification)
-  fetch('https://bileg11githubio-production.up.railway.app/api/booking',{
+  // 2. Vercel webhook (Telegram notification)
+  fetch('https://bileg11-github-io.vercel.app/api/booking',{
     method:'POST',headers:{'Content-Type':'application/json'},
     body:JSON.stringify(bookingData)
   }).catch(()=>{});
