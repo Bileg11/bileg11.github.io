@@ -179,6 +179,7 @@ footer{background:var(--bg2);border-top:1px solid var(--border);padding:32px 24p
 footer a{color:var(--blue);text-decoration:none}footer a:hover{text-decoration:underline}
 .footer-nav{display:flex;gap:16px;justify-content:center;flex-wrap:wrap;margin-bottom:12px;}
 </style>
+<script src="/js/pixel.js" defer></script>
 </head>
 <body>
 
@@ -651,6 +652,9 @@ async function submitBooking(){
     {l:'People',v:data.people},
   ].map(r=>`<div class="sd-row"><span class="sd-label">${r.l}</span><span class="sd-val">${r.v}</span></div>`).join('');
   window.scrollTo({top:0,behavior:'smooth'});
+
+  // Meta Pixel — Lead
+  window.lfsPixel?.trackLead(data.serviceLabel);
 }
 window.submitBooking=submitBooking;
 

@@ -1,4 +1,4 @@
-const CACHE = 'lfs-v7';
+const CACHE = 'lfs-v8';
 const STATIC_ASSETS = [
   '/js/toast.js',
   '/js/calendar.js',

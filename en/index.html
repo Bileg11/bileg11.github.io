@@ -802,6 +802,7 @@ section,#booking-section{scroll-margin-top:60px}
   .itin-tab{font-size:11px;padding:6px 10px}
 }
 </style>
+<script src="/js/pixel.js" defer></script>
 </head>
 <body>
 
@@ -1867,6 +1868,8 @@ function submitBooking(e) {
   document.getElementById('bookingSuccess').style.display = 'block';
   // Auto open FB in background
   window.open('https://www.facebook.com/profile.php?id=100076380514835', '_blank');
+  // Meta Pixel — Contact (энэ форм backend-д хадгалдаггүй, FB рүү шилжүүлдэг)
+  window.lfsPixel?.trackContact();
 }
 
 // ── CLOSE FLOAT MENU ──
