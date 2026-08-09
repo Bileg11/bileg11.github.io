@@ -83,8 +83,9 @@ body{font-family:'Inter',system-ui,-apple-system,sans-serif;background:var(--bg)
 @media(max-width:640px){.hospital-card{grid-template-columns:1fr;}.hospital-badge{text-align:left;}}
 
 /* PACKAGE CARDS */
-.packages-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(400px,1fr));gap:24px;margin-bottom:48px;}
-@media(max-width:860px){.packages-grid{grid-template-columns:1fr;}}
+.packages-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:20px;margin-bottom:48px;width:calc(100vw - 48px);max-width:1240px;position:relative;left:50%;transform:translateX(-50%);}
+@media(max-width:1080px){.packages-grid{grid-template-columns:repeat(2,1fr);width:100%;left:auto;transform:none;}}
+@media(max-width:760px){.packages-grid{grid-template-columns:1fr;}}
 
 .pkg-card{border-radius:24px;overflow:hidden;box-shadow:var(--shadow2);border:1px solid var(--border);display:flex;flex-direction:column;}
 .pkg-card.gold{border-color:rgba(212,168,67,.3);}
@@ -250,59 +251,86 @@ footer a{color:var(--blue);text-decoration:none}footer a:hover{text-decoration:u
   <!-- PACKAGES -->
   <section style="margin-bottom:48px">
     <h2 style="font-size:clamp(22px,3.5vw,32px);font-weight:700;letter-spacing:-.03em;color:var(--dark2);margin-bottom:8px;">Healthcare Packages</h2>
-    <p style="font-size:15px;color:var(--muted);margin-bottom:28px;">Choose the package that fits your needs. Both include Mongolian interpreter and VIP service.</p>
+    <p style="font-size:15px;color:var(--muted);margin-bottom:28px;">Choose the package that fits your needs. All packages include a Mongolian interpreter and VIP service.</p>
 
     <div class="packages-grid">
 
-      <!-- GOLD -->
+      <!-- HEALTH + TRAVEL -->
       <div class="pkg-card gold">
         <div class="pkg-header gold">
-          <div class="pkg-badge gold">⭐ Gold Package</div>
-          <div class="pkg-title">Gold Package</div>
-          <div class="pkg-subtitle">5 days · Full medical checkup + 3-day city tour</div>
-          <div class="pkg-price">₮2,050,000 <span>per person</span></div>
-          <div style="font-size:13px;color:rgba(255,255,255,.6);margin-top:4px">≈ $585 USD</div>
+          <div class="pkg-badge gold">⭐ Most popular</div>
+          <div class="pkg-title">Health + Travel Package</div>
+          <div class="pkg-subtitle">5 days / 4 nights · 23 medical tests + full city tour</div>
+          <div class="pkg-price">₮4,600,000 <span>per person</span></div>
+          <div style="font-size:13px;color:rgba(255,255,255,.6);margin-top:4px">≈ $1,310 USD</div>
         </div>
         <div class="pkg-body">
           <div class="pkg-features">
-            <div class="pkg-feat"><span class="pkg-feat-icon">✈️</span><div><div class="stop-name">Airport pickup</div><div class="stop-desc">VIP car from Pudong or Hongqiao Airport</div></div></div>
-            <div class="pkg-feat"><span class="pkg-feat-icon">🏥</span><div><div class="stop-name">Full 2-day medical checkup</div><div class="stop-desc">Complete diagnostics — blood, imaging, cardiology, internal medicine</div></div></div>
-            <div class="pkg-feat"><span class="pkg-feat-icon">🗣</span><div><div class="stop-name">Mongolian interpreter</div><div class="stop-desc">Present at all appointments, results explained in Mongolian</div></div></div>
-            <div class="pkg-feat"><span class="pkg-feat-icon">💊</span><div><div class="stop-name">Medicine prescription</div><div class="stop-desc">Medicines available to take back to Mongolia</div></div></div>
-            <div class="pkg-feat"><span class="pkg-feat-icon">🏙️</span><div><div class="stop-name">3-day city tour</div><div class="stop-desc">The Bund, Yuyuan, Shanghai Tower, shopping — Mongolian guide included</div></div></div>
-            <div class="pkg-feat"><span class="pkg-feat-icon">🏨</span><div><div class="stop-name">Hotel arrangement</div><div class="stop-desc">Hotel booking assistance (hotel cost separate)</div></div></div>
-            <div class="pkg-feat"><span class="pkg-feat-icon">✈️</span><div><div class="stop-name">Airport drop-off</div><div class="stop-desc">Return transfer to airport on departure day</div></div></div>
+            <div class="pkg-feat"><span class="pkg-feat-icon">✈️</span><div><div class="stop-name">Return flight tickets</div><div class="stop-desc">Ulaanbaatar ⇄ Shanghai — included in the price</div></div></div>
+            <div class="pkg-feat"><span class="pkg-feat-icon">🏨</span><div><div class="stop-name">5-star hotel · 4 nights</div><div class="stop-desc">Fully included — no separate accommodation cost</div></div></div>
+            <div class="pkg-feat"><span class="pkg-feat-icon">🏥</span><div><div class="stop-name">VIP medical checkup — 23 tests</div><div class="stop-desc">MRI, CT, echocardiogram, X-ray, full lab panel and 9 specialist consultations</div></div></div>
+            <div class="pkg-feat"><span class="pkg-feat-icon">🗣</span><div><div class="stop-name">Personal nurse + Mongolian interpreter</div><div class="stop-desc">Present at all appointments, results in Mongolian and English</div></div></div>
+            <div class="pkg-feat"><span class="pkg-feat-icon">🚗</span><div><div class="stop-name">All transport &amp; airport transfers</div><div class="stop-desc">Pudong or Hongqiao pickup, drop-off and all city transport</div></div></div>
+            <div class="pkg-feat"><span class="pkg-feat-icon">🏙️</span><div><div class="stop-name">Full city tour</div><div class="stop-desc">The Bund, Nanjing Road, Shanghai Tower, Zoo, Yu Garden, Xintiandi, LV, Starbucks Roastery</div></div></div>
+            <div class="pkg-feat"><span class="pkg-feat-icon">🍽️</span><div><div class="stop-name">Daily meals &amp; all entrance tickets</div><div class="stop-desc">Including the luxury buffet — nothing extra to pay on site</div></div></div>
           </div>
         </div>
         <div class="pkg-footer">
-          <button class="pkg-see-photos" onclick="openGallery('gold')">📷 View Photos (30)</button>
+          <button class="pkg-see-photos" onclick="openGallery('full')">📷 View Photos (30)</button>
           <div class="note">Book at least 2 weeks in advance</div>
-          <a href="/en/booking/?package=gold" class="btn-pkg">Book Gold →</a>
+          <a href="/en/booking/?package=full" class="btn-pkg">Book Health + Travel →</a>
         </div>
       </div>
 
-      <!-- SILVER -->
+      <!-- BASIC CHECKUP -->
       <div class="pkg-card silver">
         <div class="pkg-header silver">
-          <div class="pkg-badge silver">🥈 Silver Package</div>
-          <div class="pkg-title">Silver Package</div>
+          <div class="pkg-badge silver">🩺 Basic Checkup</div>
+          <div class="pkg-title">Basic Checkup Package</div>
           <div class="pkg-subtitle">2 days · Medical checkup + 1-day city tour</div>
-          <div class="pkg-price">₮950,000 <span>per person</span></div>
-          <div style="font-size:13px;color:rgba(255,255,255,.6);margin-top:4px">≈ $270 USD</div>
+          <div class="pkg-price">₮1,899,000 <span>per person</span></div>
+          <div style="font-size:13px;color:rgba(255,255,255,.6);margin-top:4px">≈ $540 USD</div>
         </div>
         <div class="pkg-body">
           <div class="pkg-features">
             <div class="pkg-feat"><span class="pkg-feat-icon">✈️</span><div><div class="stop-name">Airport pickup</div><div class="stop-desc">VIP car from Pudong or Hongqiao Airport</div></div></div>
-            <div class="pkg-feat"><span class="pkg-feat-icon">🏥</span><div><div class="stop-name">1-day medical checkup</div><div class="stop-desc">Core diagnostics — blood work, imaging, general checkup</div></div></div>
-            <div class="pkg-feat"><span class="pkg-feat-icon">🗣</span><div><div class="stop-name">Mongolian interpreter</div><div class="stop-desc">Present at all appointments</div></div></div>
+            <div class="pkg-feat"><span class="pkg-feat-icon">🏥</span><div><div class="stop-name">Core medical checkup</div><div class="stop-desc">Blood work, biochemistry, ECG, chest X-ray, ultrasound, eye exam</div></div></div>
+            <div class="pkg-feat"><span class="pkg-feat-icon">🗣</span><div><div class="stop-name">Personal nurse + Mongolian interpreter</div><div class="stop-desc">Present at all appointments, results in Mongolian and English</div></div></div>
+            <div class="pkg-feat"><span class="pkg-feat-icon">🛏️</span><div><div class="stop-name">Overnight in hospital VIP suite</div><div class="stop-desc">Breakfast included</div></div></div>
             <div class="pkg-feat"><span class="pkg-feat-icon">🏙️</span><div><div class="stop-name">1-day city tour</div><div class="stop-desc">The Bund, Nanjing Road, and one more destination of your choice</div></div></div>
-            <div class="pkg-feat"><span class="pkg-feat-icon">✈️</span><div><div class="stop-name">Airport drop-off</div><div class="stop-desc">Return transfer on departure day</div></div></div>
+            <div class="pkg-feat"><span class="pkg-feat-icon">✈️</span><div><div class="stop-name">Airport drop-off</div><div class="stop-desc">Return transfer on departure day. Flights not included.</div></div></div>
           </div>
         </div>
         <div class="pkg-footer">
-          <button class="pkg-see-photos" onclick="openGallery('silver')">📷 View Photos (5)</button>
+          <button class="pkg-see-photos" onclick="openGallery('basic')">📷 View Photos (4)</button>
           <div class="note">Book at least 2 weeks in advance</div>
-          <a href="/en/booking/?package=silver" class="btn-pkg">Book Silver →</a>
+          <a href="/en/booking/?package=basic" class="btn-pkg">Book Basic Checkup →</a>
+        </div>
+      </div>
+
+      <!-- TRAVEL ONLY -->
+      <div class="pkg-card">
+        <div class="pkg-header silver">
+          <div class="pkg-badge silver">🗺️ New</div>
+          <div class="pkg-title">Travel Only Package</div>
+          <div class="pkg-subtitle">5 days / 4 nights · City tour, no medical checkup</div>
+          <div class="pkg-price">₮3,200,000 <span>per person</span></div>
+          <div style="font-size:13px;color:rgba(255,255,255,.6);margin-top:4px">≈ $910 USD</div>
+        </div>
+        <div class="pkg-body">
+          <div class="pkg-features">
+            <div class="pkg-feat"><span class="pkg-feat-icon">🏨</span><div><div class="stop-name">4-star city-centre hotel · 4 nights</div><div class="stop-desc">Included in the price</div></div></div>
+            <div class="pkg-feat"><span class="pkg-feat-icon">🏙️</span><div><div class="stop-name">Full 5-day city tour</div><div class="stop-desc">The Bund, Nanjing Road, river cruise, Shanghai Tower, Zoo, Yu Garden</div></div></div>
+            <div class="pkg-feat"><span class="pkg-feat-icon">🛍️</span><div><div class="stop-name">Shopping day</div><div class="stop-desc">Xintiandi, Louis Vuitton, the world's only Starbucks Reserve Roastery</div></div></div>
+            <div class="pkg-feat"><span class="pkg-feat-icon">🗣</span><div><div class="stop-name">Private Mongolian-speaking guide</div><div class="stop-desc">With you for the whole trip</div></div></div>
+            <div class="pkg-feat"><span class="pkg-feat-icon">🚗</span><div><div class="stop-name">All city transport + airport transfers</div><div class="stop-desc">Pudong or Hongqiao pickup and drop-off</div></div></div>
+            <div class="pkg-feat"><span class="pkg-feat-icon">ℹ️</span><div><div class="stop-name">No medical checkup</div><div class="stop-desc">Flights not included. Choose Health + Travel if you want the checkup.</div></div></div>
+          </div>
+        </div>
+        <div class="pkg-footer">
+          <button class="pkg-see-photos" onclick="openGallery('travel')">📷 View Photos (20)</button>
+          <div class="note">Book at least 2 weeks in advance</div>
+          <a href="/en/booking/?package=travel" class="btn-pkg">Book Travel Only →</a>
         </div>
       </div>
 
@@ -315,8 +343,8 @@ footer a{color:var(--blue);text-decoration:none}footer a:hover{text-decoration:u
 
   <!-- ITINERARY: GOLD -->
   <section class="itin-section">
-    <h2>Gold Package — 5-Day Itinerary</h2>
-    <p class="sub">A detailed day-by-day plan included with the Gold Package.</p>
+    <h2>Health + Travel — 5-Day Itinerary</h2>
+    <p class="sub">A detailed day-by-day plan included with the Health + Travel Package.</p>
     <div class="itin-grid">
       <div class="itin-day">
         <div class="itin-day-label"><div class="day-circle">1</div><div class="day-name">Arrival Day</div></div>
@@ -410,7 +438,7 @@ footer a{color:var(--blue);text-decoration:none}footer a:hover{text-decoration:u
     <h2>Ready to Book Your Healthcare Trip?</h2>
     <p>Book at least 2 weeks in advance. We handle everything — hospital, interpreter, transport, and tour.</p>
     <div class="cta-btns">
-      <a href="/en/booking/?package=gold" class="btn-cta-white">Book Gold Package</a>
+      <a href="/en/booking/?package=full" class="btn-cta-white">Book Health + Travel Package</a>
       <a href="/en/contact/" class="btn-cta-outline">Ask a Question</a>
     </div>
   </div>
@@ -445,15 +473,14 @@ navLinks.querySelectorAll('.nav-link').forEach(l=>l.addEventListener('click',()=
 window.addEventListener('scroll',()=>{const nav=document.querySelector('.nav');nav.style.background=window.scrollY>10?'rgba(255,255,255,.96)':'rgba(255,255,255,.85)';},{passive:true});
 
 const galleries = {
-  gold: {
-    title: '🥇 Gold Package — Photo Gallery',
+  full: {
+    title: '🥇 Health + Travel Package — Photo Gallery',
     photos: [
       { src:'/img/health/hospital-reception.jpg',  label:'Guangming Hospital · Waiting Area',        bg:'linear-gradient(135deg,#1055a0,#3d8ef0)', icon:'🏥' },
       { src:'/img/health/hospital-atrium.jpg',     label:'Guangming Hospital · Main Building',       bg:'linear-gradient(135deg,#0a3060,#1055a0)', icon:'🏛️' },
       { src:'/img/health/hospital-lobby.jpg',      label:'Guangming Hospital · Lobby & Entrance',    bg:'linear-gradient(135deg,#0d2a5a,#1a4fa0)', icon:'🚪' },
       { src:'/img/health/hospital-hallway.jpg',    label:'Guangming Hospital · Corridor & Wards',    bg:'linear-gradient(135deg,#1a1a3a,#2a3a7a)', icon:'🛏️' },
       { src:'/img/health/hospital-ward.jpg',       label:'Guangming Hospital · VIP Waiting Room',    bg:'linear-gradient(135deg,#0a2a3a,#1a5a8a)', icon:'💺' },
-      { src:'/img/health/hospital-room.jpg',       label:'Guangming Hospital · Treatment Room',      bg:'linear-gradient(135deg,#1a2a0a,#3a5a2a)', icon:'🩺' },
       { src:'/img/health/hospital-corridor.jpg',   label:'Guangming Hospital · Interior Corridor',   bg:'linear-gradient(135deg,#2a1a0a,#5a3a0a)', icon:'🏃' },
       { src:'/img/health/hospital-exterior.jpg',   label:'Guangming Hospital · Exterior',            bg:'linear-gradient(135deg,#0a2a1a,#1a5a3a)', icon:'🌿' },
       { src:'/img/health/hospital-interior.jpg',   label:'Guangming Hospital · Interior',            bg:'linear-gradient(135deg,#0a1a3a,#1a3a7a)', icon:'✨' },
@@ -481,14 +508,38 @@ const galleries = {
       { src:'/img/health/pexels-cagri-besli-387362595-16751136.jpg',             label:'Shanghai Zoo · Zebra',                 bg:'linear-gradient(135deg,#1a2a0a,#3a5a1a)', icon:'🦓' },
     ]
   },
-  silver: {
-    title: '🥈 Silver Package — Photo Gallery',
+  basic: {
+    title: '🩺 Basic Checkup Package — Photo Gallery',
     photos: [
       { src:'/img/health/hospital-reception.jpg', label:'Guangming Hospital · Waiting Area',   bg:'linear-gradient(135deg,#1055a0,#3d8ef0)', icon:'🏥' },
       { src:'/img/health/hospital-atrium.jpg',    label:'Guangming Hospital · Main Building',  bg:'linear-gradient(135deg,#0a3060,#1055a0)', icon:'🏛️' },
       { src:'/img/health/hospital-lobby.jpg',     label:'Guangming Hospital · Lobby',          bg:'linear-gradient(135deg,#0d2a5a,#1a4fa0)', icon:'🚪' },
-      { src:'/img/health/hospital-room.jpg',      label:'Guangming Hospital · Treatment Room', bg:'linear-gradient(135deg,#1a2a0a,#3a5a2a)', icon:'🩺' },
       { src:'/img/health/hospital-vip.jpg',       label:'Guangming Hospital · VIP Floor',      bg:'linear-gradient(135deg,#1a0a3a,#3a1a7a)', icon:'👑' },
+    ]
+    },
+  travel: {
+    title: '🗺️ Travel Only Package — Photo Gallery',
+    photos: [
+      { src:'/img/health/Bund2.jpg',               label:'The Bund · Night Lights',                  bg:'linear-gradient(135deg,#071e3d,#1a4fa8)', icon:'🌃' },
+      { src:'/img/health/pexels-olivia-cai-2152171456-32062049.jpg',             label:'The Bund · River Cruise',              bg:'linear-gradient(135deg,#1a2a4a,#2a5fc4)', icon:'⛵' },
+      { src:'/img/health/Bund1.jpg',               label:'The Bund · Daytime',                       bg:'linear-gradient(135deg,#2a3a5a,#4a7fd4)', icon:'🏛️' },
+      { src:'/img/health/pexels-daciana-cristina-visan-2149801141-35049458.jpg', label:'Shanghai Skyline · Night',             bg:'linear-gradient(135deg,#0a0a1a,#1a1a4a)', icon:'🌆' },
+      { src:'/img/health/pexels-keeper-32467111.jpg',                            label:'Shanghai from Above',                  bg:'linear-gradient(135deg,#0a0a2a,#1a2a5a)', icon:'🛩️' },
+      { src:'/img/health/Tower1.jpg',              label:'Shanghai Tower · 632m',                    bg:'linear-gradient(135deg,#0a1a3a,#1e3fa0)', icon:'🏙️' },
+      { src:'/img/health/pexels-mohamed-does-349386075-37430246.jpg',            label:'Shanghai Tower · Up Close',            bg:'linear-gradient(135deg,#0a2a4a,#1a6fc4)', icon:'☁️' },
+      { src:'/img/health/pexels-blackcurrant-great-2016663774-33407837.jpg',     label:'Oriental Pearl Tower · Night',         bg:'linear-gradient(135deg,#0a0a2a,#2a1a5a)', icon:'💜' },
+      { src:'/img/health/pexels-daniel-reynaga-337914704-35521663.jpg',          label:'Yu Garden · Shanghai Tower View',      bg:'linear-gradient(135deg,#1a2a0a,#2a5a1a)', icon:'🏯' },
+      { src:'/img/health/pexels-christiana-dj-2160372921-36675533.jpg',          label:'Yu Garden · Old City Gate',            bg:'linear-gradient(135deg,#2a1a0a,#6a3a0a)', icon:'🏮' },
+      { src:'/img/health/pexels-tonynojmansk-186688133-18332508.jpg',            label:'Yu Garden · Traditional Architecture', bg:'linear-gradient(135deg,#3a1a0a,#8a4a1a)', icon:'⛩️' },
+      { src:'/img/health/pexels-zydeaosika-2261055-4139229.jpg',                 label:'Nanjing Road · Night Lights',          bg:'linear-gradient(135deg,#1a0a2a,#4a0a6a)', icon:'🌟' },
+      { src:'/img/health/pexels-anderson-wei-2151965849-34647784.jpg',           label:'Xintiandi · The Hub',                  bg:'linear-gradient(135deg,#1a2a1a,#2a5a2a)', icon:'🛍️' },
+      { src:'/img/health/pexels-brunafisantos-35132188.jpg',                     label:'Xintiandi · Glass Towers',             bg:'linear-gradient(135deg,#0a2a3a,#1a5a7a)', icon:'🏢' },
+      { src:'/img/health/pexels-bingqian-li-230971044-36064465.jpg',             label:'French Concession · Old Quarter',      bg:'linear-gradient(135deg,#2a1a0a,#5a3a1a)', icon:'🏚️' },
+      { src:'/img/health/pexels-nazmiazmir-33826186.jpg',                        label:'Starbucks Reserve Roastery · Outside', bg:'linear-gradient(135deg,#0a1a0a,#1a3a1a)', icon:'☕' },
+      { src:'/img/health/tangi-bertin-4WoSeG-5tzI-unsplash.jpg',                 label:'Starbucks Reserve Roastery · Inside',  bg:'linear-gradient(135deg,#1a0a00,#3a1a00)', icon:'✨' },
+      { src:'/img/health/pexels-tkirkgoz-15278918.jpg',                          label:'Shanghai Zoo · White Tiger',           bg:'linear-gradient(135deg,#1a1a0a,#3a3a0a)', icon:'🐯' },
+      { src:'/img/health/pexels-tkirkgoz-11857237.jpg',                          label:'Shanghai Zoo · Deer',                  bg:'linear-gradient(135deg,#0d3a1a,#1a6a2a)', icon:'🦌' },
+      { src:'/img/health/pexels-cagri-besli-387362595-16751136.jpg',             label:'Shanghai Zoo · Zebra',                 bg:'linear-gradient(135deg,#1a2a0a,#3a5a1a)', icon:'🦓' },
     ]
   }
 };

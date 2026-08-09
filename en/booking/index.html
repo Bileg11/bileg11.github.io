@@ -226,8 +226,9 @@ footer a{color:var(--blue);text-decoration:none}footer a:hover{text-decoration:u
   </div>
   <div class="pricing-panel" id="pricingPanel">
     <div class="pricing-grid">
-      <div class="pricing-item"><span class="pi-name">Gold Healthcare Package</span><span class="pi-val">₮2,050,000</span></div>
-      <div class="pricing-item"><span class="pi-name">Silver Healthcare Package</span><span class="pi-val">₮950,000</span></div>
+      <div class="pricing-item"><span class="pi-name">Health + Travel Package</span><span class="pi-val">₮4,600,000</span></div>
+      <div class="pricing-item"><span class="pi-name">Basic Checkup Package</span><span class="pi-val">₮1,899,000</span></div>
+      <div class="pricing-item"><span class="pi-name">Travel Only Package</span><span class="pi-val">₮3,200,000</span></div>
       <div class="pricing-item"><span class="pi-name">City Guide</span><span class="pi-val">500¥/day</span></div>
       <div class="pricing-item"><span class="pi-name">Business Interpreter</span><span class="pi-val">500¥/day</span></div>
       <div class="pricing-item"><span class="pi-name">Hotel Booking</span><span class="pi-val">50¥</span></div>
@@ -662,15 +663,23 @@ window.submitBooking=submitBooking;
 (function(){
   const params=new URLSearchParams(location.search);
   const pkg=params.get('package');
-  if(pkg==='gold'||pkg==='altan'){
-    data.service='healthcare'; data.serviceLabel='VIP Healthcare — Gold Package';
-  } else if(pkg==='silver'||pkg==='mungun'){
-    data.service='healthcare'; data.serviceLabel='VIP Healthcare — Silver Package';
+  // Package → service mapping. Legacy slugs (gold/altan/silver/mungun) still work
+  // so older links from Facebook posts and PDFs do not break.
+  const PKG_MAP = {
+    full:   { service:'healthcare',  label:'VIP Healthcare — Health + Travel Package (₮4,600,000)' },
+    basic:  { service:'healthcare',  label:'VIP Healthcare — Basic Checkup Package (₮1,899,000)' },
+    travel: { service:'city-guide',  label:'Travel Only Package (₮3,200,000)' },
+  };
+  const PKG_ALIAS = { gold:'full', altan:'full', silver:'basic', mungun:'basic' };
+  const hit = PKG_MAP[PKG_ALIAS[pkg] || pkg];
+  if(hit){
+    data.service = hit.service;
+    data.serviceLabel = hit.label;
   }
   if(data.service){
     setTimeout(()=>{
       document.querySelectorAll('.service-card').forEach(c=>{
-        if(c.dataset.val==='healthcare')c.classList.add('selected');
+        if(c.dataset.val===data.service)c.classList.add('selected');
       });
       document.getElementById('btnStep2').disabled=false;
     },100);

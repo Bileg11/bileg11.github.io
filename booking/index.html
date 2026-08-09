@@ -163,6 +163,8 @@ body{
   -webkit-tap-highlight-color:transparent;
 }
 .sel-card:hover{border-color:var(--blue);background:#f0f6ff}
+.sel-card-price{font-size:14px;font-weight:800;color:#0071e3;letter-spacing:-.02em;margin-top:5px}
+.sel-card-meta{font-size:11px;color:#6e6e73;line-height:1.4;margin-top:3px}
 .sel-card.selected{
   border-color:var(--blue);background:#e8f0fe;
   box-shadow:0 0 0 3px rgba(0,113,227,.15);
@@ -349,11 +351,21 @@ footer{
     </button>
     <!-- Expandable -->
     <div id="pricingPanel" style="display:none;padding-bottom:20px">
-      <!-- Gold package -->
-      <div style="background:linear-gradient(135deg,#1d1d1f,#3a3a3c);border-radius:14px;padding:20px;margin-bottom:12px;color:#fff">
-        <div style="font-size:11px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;opacity:.5;margin-bottom:6px">🥇 Алтан багц — Бүгдийг нэг дороос</div>
-        <div style="font-size:32px;font-weight:800;letter-spacing:-.03em;line-height:1">2,050,000<span style="font-size:16px;font-weight:400;opacity:.5">₮</span></div>
-        <div style="font-size:12px;opacity:.4;margin-top:4px">5 хоног · 4 шөнө · 1 хүн</div>
+      <!-- Packages -->
+      <div style="background:linear-gradient(135deg,#1d1d1f,#3a3a3c);border-radius:14px;padding:20px;margin-bottom:10px;color:#fff">
+        <div style="font-size:11px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;opacity:.5;margin-bottom:6px">🥇 Шинжилгээ + Аялал багц</div>
+        <div style="font-size:32px;font-weight:800;letter-spacing:-.03em;line-height:1">4,600,000<span style="font-size:16px;font-weight:400;opacity:.5">₮</span></div>
+        <div style="font-size:12px;opacity:.4;margin-top:4px">5 өдөр · 4 шөнө · 1 хүн · нислэг, буудал, хоол багтсан</div>
+      </div>
+      <div style="background:#f5f5f7;border-radius:14px;padding:20px;margin-bottom:10px">
+        <div style="font-size:11px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:#6e6e73;margin-bottom:6px">🩺 Энгийн шинжилгээний багц</div>
+        <div style="font-size:32px;font-weight:800;letter-spacing:-.03em;line-height:1;color:#1d1d1f">1,899,000<span style="font-size:16px;font-weight:400;color:#6e6e73">₮</span></div>
+        <div style="font-size:12px;color:#6e6e73;margin-top:4px">2 өдөр · 1 хүн · нислэг тусдаа</div>
+      </div>
+      <div style="background:#f5f5f7;border-radius:14px;padding:20px;margin-bottom:12px">
+        <div style="font-size:11px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:#6e6e73;margin-bottom:6px">🗺️ Зөвхөн аяллын багц</div>
+        <div style="font-size:32px;font-weight:800;letter-spacing:-.03em;line-height:1;color:#1d1d1f">3,200,000<span style="font-size:16px;font-weight:400;color:#6e6e73">₮</span></div>
+        <div style="font-size:12px;color:#6e6e73;margin-top:4px">5 хоног · 4 шөнө · 1 хүн · шинжилгээгүй</div>
       </div>
       <!-- Individual services -->
       <div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(160px,1fr));gap:10px;margin-bottom:12px">
@@ -484,6 +496,33 @@ footer{
                 <div class="sel-card-label">Оюутны зөвлөмж</div>
               </div>
             </div>
+            <!-- БАГЦ СОНГОХ -->
+            <div id="package-block" style="margin-top:26px;padding-top:22px;border-top:1px solid #e5e5e7">
+              <div class="step-question" style="font-size:16px;margin-bottom:4px">Багц сонгох</div>
+              <div class="step-sub" style="margin-bottom:14px">Заавал биш — багц сонговол үйлчилгээ автоматаар тохирно</div>
+              <div class="card-grid" id="package-grid">
+                <div class="sel-card" data-pkg="full" onclick="applyPackage('full', true)">
+                  <div class="sel-card-icon">🥇</div>
+                  <div class="sel-card-label">Шинжилгээ + Аялал</div>
+                  <div class="sel-card-price">₮4,600,000</div>
+                  <div class="sel-card-meta">5 өдөр / 4 шөнө · бүх зардал багтсан</div>
+                </div>
+                <div class="sel-card" data-pkg="basic" onclick="applyPackage('basic', true)">
+                  <div class="sel-card-icon">🩺</div>
+                  <div class="sel-card-label">Энгийн шинжилгээ</div>
+                  <div class="sel-card-price">₮1,899,000</div>
+                  <div class="sel-card-meta">2 өдөр · нислэг тусдаа</div>
+                </div>
+                <div class="sel-card" data-pkg="travel" onclick="applyPackage('travel', true)">
+                  <div class="sel-card-icon">🗺️</div>
+                  <div class="sel-card-label">Зөвхөн аялал</div>
+                  <div class="sel-card-price">₮3,200,000</div>
+                  <div class="sel-card-meta">5 хоног 4 шөнө · шинжилгээгүй</div>
+                </div>
+              </div>
+              <button type="button" onclick="clearPackage()" style="margin-top:10px;background:none;border:none;padding:4px 0;font-size:12.5px;color:#6e6e73;cursor:pointer;font-family:inherit;text-decoration:underline">Багц сонголтоо болих</button>
+            </div>
+
             <div class="field-err" id="err-service">Үйлчилгээний төрлөө сонгоно уу</div>
             <div class="wiz-nav">
               <button class="btn-back" onclick="prevStep()">← Буцах</button>
@@ -795,21 +834,63 @@ let wizardData = {
 };
 let wizardLocked = false; // disabled when profile incomplete / not authed
 
+// ── БАГЦУУД — нэг эх сурвалж (энд л засна) ─────────────────────
+const PKG_MAP = {
+  full:   { service: '🏥 Эрүүл мэндийн шинжилгээ', icon: '🥇', name: 'Шинжилгээ + Аялал багц',    price: '₮4,600,000', meta: '5 өдөр / 4 шөнө · нислэг, буудал, хоол багтсан' },
+  basic:  { service: '🏥 Эрүүл мэндийн шинжилгээ', icon: '🩺', name: 'Энгийн шинжилгээний багц', price: '₮1,899,000', meta: '2 өдөр · нислэг тусдаа' },
+  travel: { service: '🗺️ Аяллын хөтөч',            icon: '🗺️', name: 'Зөвхөн аяллын багц',       price: '₮3,200,000', meta: '5 хоног 4 шөнө · шинжилгээгүй' },
+};
+// Хуучин линкүүд (Facebook пост, PDF г.м.) эвдэрдэггүй байх
+const PKG_ALIAS = { altan: 'full', gold: 'full', mungun: 'basic', silver: 'basic' };
+
+function pkgLabel(key) {
+  const p = PKG_MAP[key];
+  return p ? p.icon + ' ' + p.name + ' — ' + p.price : '';
+}
+
+// Багц сонгох (URL-аас, эсвэл хэрэглэгч карт дарахад)
+function applyPackage(key, fromClick) {
+  const p = PKG_MAP[key];
+  if (!p) return;
+  wizardData.service = p.service;
+  wizardData.package = pkgLabel(key);
+  window.__prePackage = wizardData.package;
+  window.__prePackageKey = key;
+  syncPackageUI();
+  if (fromClick) {
+    const err = document.getElementById('err-service');
+    if (err) err.classList.remove('show');
+  }
+}
+
+// Багц сонголтоо болих
+function clearPackage() {
+  wizardData.package = '';
+  window.__prePackage = null;
+  window.__prePackageKey = null;
+  syncPackageUI();
+}
+
+// Сонгосон багц + үйлчилгээг дэлгэц дээр тэмдэглэх
+function syncPackageUI() {
+  document.querySelectorAll('#package-grid .sel-card').forEach(c =>
+    c.classList.toggle('selected', c.dataset.pkg === window.__prePackageKey));
+  document.querySelectorAll('#service-grid .sel-card').forEach(c =>
+    c.classList.toggle('selected', c.dataset.val === wizardData.service));
+  const banner = document.getElementById('pkg-prefill-banner');
+  const label  = document.getElementById('pkg-prefill-label');
+  if (banner && label) {
+    if (window.__prePackage) { label.textContent = window.__prePackage; banner.style.display = 'block'; }
+    else { banner.style.display = 'none'; }
+  }
+}
+
 // ── PACKAGE PRE-FILL (from /health/?package=...) ─────────────────
 (function preSelectPackage() {
-  const PKG_MAP = {
-    mungun:   { service: '🏥 Эрүүл мэндийн шинжилгээ', label: '🥈 Мөнгөн багц — ₮950,000' },
-    altan:    { service: '🏥 Эрүүл мэндийн шинжилгээ', label: '🥇 Алтан багц — ₮2,050,000' },
-    '1800cny':  { service: '🏥 Эрүүл мэндийн шинжилгээ', label: '🔬 1,800¥ багц' },
-    '20000cny': { service: '🏥 Эрүүл мэндийн шинжилгээ', label: '💎 20,000¥ Premium' }
-  };
   const p = new URLSearchParams(location.search).get('package');
-  if (!p || !PKG_MAP[p]) return;
-  const { service, label } = PKG_MAP[p];
-  wizardData.service  = service;
-  wizardData.package  = label;
-  // Show pre-selected banner at top of step 4
-  window.__prePackage = label;
+  const key = PKG_ALIAS[p] || p;
+  if (!key || !PKG_MAP[key]) return;
+  applyPackage(key, false);
 })();
 
 function updateProgress() {
@@ -836,17 +917,7 @@ function showStep(n, direction) {
   currentStep = n;
   updateProgress();
   // Apply package pre-selection when step 4 (service) becomes visible
-  if (n === 2 && window.__prePackage) {
-    const banner = document.getElementById('pkg-prefill-banner');
-    document.getElementById('pkg-prefill-label').textContent = window.__prePackage;
-    banner.style.display = 'block';
-    // Highlight the health card
-    document.querySelectorAll('#service-grid .sel-card').forEach(c => {
-      if (c.dataset.val === wizardData.service) {
-        c.classList.add('selected');
-      }
-    });
-  }
+  if (n === 2) syncPackageUI();
   // Focus first input in step
   setTimeout(() => {
     const inp = next.querySelector('input,textarea');
@@ -967,6 +1038,9 @@ function selectCard(type, el) {
   if (type === 'service') {
     wizardData.service = el.dataset.val;
     document.getElementById('err-service').classList.remove('show');
+    // Сонгосон багцын үйлчилгээтэй таарахгүй бол багцыг цэвэрлэнэ
+    const cur = PKG_MAP[window.__prePackageKey];
+    if (cur && cur.service !== el.dataset.val) clearPackage();
   }
   if (type === 'days') {
     wizardData.days = el.dataset.val;

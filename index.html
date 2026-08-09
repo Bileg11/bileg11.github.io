@@ -403,7 +403,7 @@ body{
   background:radial-gradient(ellipse,rgba(0,113,227,.22) 0%,transparent 70%);
   pointer-events:none;
 }
-.medical-inner{max-width:1060px;margin:0 auto;}
+.medical-inner{max-width:1240px;margin:0 auto;}
 .medical-header{text-align:center;margin-bottom:52px;}
 .medical-tag{
   display:inline-flex;align-items:center;gap:6px;
@@ -417,8 +417,9 @@ body{
   font-weight:700;letter-spacing:-.04em;line-height:1.07;
 }
 .medical-cards{
-  display:grid;grid-template-columns:1fr 1fr;gap:20px;
+  display:grid;grid-template-columns:repeat(3,1fr);gap:20px;
 }
+@media(max-width:980px){.medical-cards{grid-template-columns:repeat(2,1fr)}}
 @media(max-width:640px){.medical-cards{grid-template-columns:1fr;gap:16px}}
 .medical-card{
   background:rgba(255,255,255,.05);
@@ -1103,20 +1104,24 @@ section,#booking-section{scroll-margin-top:60px}
       <h2 class="medical-title">Шанхайд аялангаа<br>VIP оношилгоонд ороорой</h2>
     </div>
 
-    <!-- 2 Package cards -->
+    <!-- 3 Package cards -->
     <div class="medical-cards">
 
-      <!-- Алтан -->
+      <!-- Шинжилгээтэй аяллын багц -->
       <div class="medical-card gold reveal reveal-delay-1">
-        <div class="medical-card-badge badge-gold">👑 Алтан VIP багц</div>
-        <div class="medical-card-name">Алтан багц</div>
-        <div class="medical-card-price">₮2,050,000 <span>/ хүн</span></div>
-        <div class="medical-test" style="font-size:11px;color:rgba(255,255,255,.45);font-weight:600;letter-spacing:.06em;text-transform:uppercase;border-bottom:none;padding-bottom:2px">🩺 Шинжилгээ</div>
-        <div class="medical-test"><div class="medical-test-dot"></div>Цус, шээсний иж бүрэн шинжилгээ</div>
-        <div class="medical-test"><div class="medical-test-dot"></div>Элэг, бөөр, бамбайн үзлэг</div>
-        <div class="medical-test"><div class="medical-test-dot"></div>ЭКГ — зүрхний бичлэг</div>
-        <div class="medical-test"><div class="medical-test-dot"></div>Биеийн индекс (BMI) · Өглөөний цай</div>
-        <div class="medical-test" style="font-size:11px;color:rgba(255,255,255,.45);font-weight:600;letter-spacing:.06em;text-transform:uppercase;border-bottom:none;padding-bottom:2px;padding-top:10px">🗺️ Аяллын хөтөлбөр — 5 өдөр</div>
+        <div class="medical-card-badge badge-gold">👑 Хамгийн алдартай</div>
+        <div class="medical-card-name">Шинжилгээ + Аялал багц</div>
+        <div class="medical-card-price">₮4,600,000 <span>/ хүн</span></div>
+        <div class="medical-test" style="font-size:11px;color:rgba(255,255,255,.45);font-weight:600;letter-spacing:.06em;text-transform:uppercase;border-bottom:none;padding-bottom:2px">📦 Үнэд багтсан</div>
+        <div class="medical-test"><div class="medical-test-dot"></div>Нислэгийн тасалбар · очиж буцах</div>
+        <div class="medical-test"><div class="medical-test-dot"></div>5 одтой зочид буудал · 4 шөнө</div>
+        <div class="medical-test"><div class="medical-test-dot"></div>Унаа · хөтөч · орчуулагч · хоол</div>
+        <div class="medical-test"><div class="medical-test-dot"></div>Үзвэрийн бүх тасалбар</div>
+        <div class="medical-test" style="font-size:11px;color:rgba(255,255,255,.45);font-weight:600;letter-spacing:.06em;text-transform:uppercase;border-bottom:none;padding-bottom:2px;padding-top:10px">🩺 VIP эмнэлэг — 23 төрлийн шинжилгээ</div>
+        <div class="medical-test"><div class="medical-test-dot"></div>MRI · CT · Зүрхний эхо · Рентген</div>
+        <div class="medical-test"><div class="medical-test-dot"></div>Цус, шээсний иж бүрэн · биохими · ЭКГ</div>
+        <div class="medical-test"><div class="medical-test-dot"></div>Нарийн мэргэжлийн 9 үзлэг</div>
+        <div class="medical-test" style="font-size:11px;color:rgba(255,255,255,.45);font-weight:600;letter-spacing:.06em;text-transform:uppercase;border-bottom:none;padding-bottom:2px;padding-top:10px">🗺️ Аяллын хөтөлбөр — 5 өдөр / 4 шөнө</div>
         <div class="medical-test"><div class="medical-test-dot"></div>The Bund · Nanjing Road · Shanghai Tower</div>
         <div class="medical-test"><div class="medical-test-dot"></div>Shanghai Zoo · Luxury буфет · Yu Garden</div>
         <div class="medical-test"><div class="medical-test-dot"></div>Xintiandi · Louis Vuitton · Starbucks үйлдвэр</div>
@@ -1124,11 +1129,11 @@ section,#booking-section{scroll-margin-top:60px}
         <a href="/health/" class="medical-card-btn">Дэлгэрэнгүй үзэх →</a>
       </div>
 
-      <!-- Мөнгөн -->
+      <!-- Энгийн шинжилгээний багц -->
       <div class="medical-card reveal reveal-delay-2">
-        <div class="medical-card-badge badge-silver">🥈 Мөнгөн багц</div>
-        <div class="medical-card-name">Мөнгөн багц</div>
-        <div class="medical-card-price">₮950,000 <span>/ хүн</span></div>
+        <div class="medical-card-badge badge-silver">🩺 Энгийн багц</div>
+        <div class="medical-card-name">Энгийн шинжилгээний багц</div>
+        <div class="medical-card-price">₮1,899,000 <span>/ хүн</span></div>
         <div class="medical-test" style="font-size:11px;color:rgba(255,255,255,.45);font-weight:600;letter-spacing:.06em;text-transform:uppercase;border-bottom:none;padding-bottom:2px">🩺 Шинжилгээ</div>
         <div class="medical-test"><div class="medical-test-dot"></div>Цус, шээсний иж бүрэн шинжилгээ</div>
         <div class="medical-test"><div class="medical-test-dot"></div>Элэг, бөөр, бамбайн үзлэг</div>
@@ -1137,6 +1142,22 @@ section,#booking-section{scroll-margin-top:60px}
         <div class="medical-test" style="font-size:11px;color:rgba(255,255,255,.45);font-weight:600;letter-spacing:.06em;text-transform:uppercase;border-bottom:none;padding-bottom:2px;padding-top:10px">🗺️ Аяллын хөтөлбөр — 2 өдөр</div>
         <div class="medical-test"><div class="medical-test-dot"></div>The Bund · Nanjing Road · хотын тойрон</div>
         <div class="medical-test" style="color:rgba(255,255,255,.4);font-size:12px;border-bottom:none;padding-top:8px">👥 2+ хүн ирвэл үнийг тохиролцоно</div>
+        <a href="/health/" class="medical-card-btn">Дэлгэрэнгүй үзэх →</a>
+      </div>
+
+      <!-- Зөвхөн аяллын багц -->
+      <div class="medical-card reveal reveal-delay-3">
+        <div class="medical-card-badge badge-silver">🗺️ Шинэ</div>
+        <div class="medical-card-name">Зөвхөн аяллын багц</div>
+        <div class="medical-card-price">₮3,200,000 <span>/ хүн</span></div>
+        <div class="medical-test" style="font-size:11px;color:rgba(255,255,255,.45);font-weight:600;letter-spacing:.06em;text-transform:uppercase;border-bottom:none;padding-bottom:2px">🗺️ Аяллын хөтөлбөр — 5 хоног 4 шөнө</div>
+        <div class="medical-test"><div class="medical-test-dot"></div>The Bund · Nanjing Road · Shanghai Tower</div>
+        <div class="medical-test"><div class="medical-test-dot"></div>Shanghai Zoo · Luxury буфет · Yu Garden</div>
+        <div class="medical-test"><div class="medical-test-dot"></div>Xintiandi · Louis Vuitton · Starbucks үйлдвэр</div>
+        <div class="medical-test" style="font-size:11px;color:rgba(255,255,255,.45);font-weight:600;letter-spacing:.06em;text-transform:uppercase;border-bottom:none;padding-bottom:2px;padding-top:10px">✨ Багтсан</div>
+        <div class="medical-test"><div class="medical-test-dot"></div>4 одтой буудал · 4 шөнө</div>
+        <div class="medical-test"><div class="medical-test-dot"></div>Монгол хэлт хувийн хөтөч · тээвэр</div>
+        <div class="medical-test" style="color:rgba(255,255,255,.4);font-size:12px;border-bottom:none;padding-top:8px">ℹ️ Эрүүл мэндийн шинжилгээ ороогүй</div>
         <a href="/health/" class="medical-card-btn">Дэлгэрэнгүй үзэх →</a>
       </div>
 
@@ -1495,8 +1516,8 @@ section,#booking-section{scroll-margin-top:60px}
 <section style="background:var(--bg2);padding:100px 0" id="pricing">
   <div class="section-max">
     <div class="section-eyebrow reveal">Үнэ · Багц</div>
-    <div class="section-title reveal reveal-delay-1">Golden Package</div>
-    <div class="section-sub reveal reveal-delay-2">5 хоног 4 шөнө — Эрүүл мэнд, аялал, шоппинг бүгдийг нэг дороос</div>
+    <div class="section-title reveal reveal-delay-1">Шинжилгээ + Аялал багц</div>
+    <div class="section-sub reveal reveal-delay-2">5 өдөр / 4 шөнө — Нислэг, 5 одтой буудал, 23 төрлийн шинжилгээ, аялал бүгд нэг үнэд</div>
 
     <div style="margin-top:56px;display:grid;grid-template-columns:1fr 340px;gap:32px;align-items:start" class="reveal reveal-delay-2">
 
@@ -1537,7 +1558,7 @@ section,#booking-section{scroll-margin-top:60px}
             <div style="width:40px;height:40px;border-radius:50%;background:#0071e3;color:#fff;display:flex;align-items:center;justify-content:center;font-size:14px;font-weight:700;flex-shrink:0">3</div>
             <div>
               <div style="font-size:12px;color:var(--muted2);text-transform:uppercase;letter-spacing:.06em;margin-bottom:2px">Өдөр 3</div>
-              <div style="font-size:16px;font-weight:600;color:var(--dark2)">Амьтны хүрээлэн · Luxury буфет · Yu Garden</div>
+              <div style="font-size:16px;font-weight:600;color:var(--dark2)">Амьтны хүрээлэн · Yu Garden</div>
             </div>
           </div>
           <div style="padding-left:56px;font-size:14px;color:var(--muted);line-height:1.7">
@@ -1579,15 +1600,21 @@ section,#booking-section{scroll-margin-top:60px}
       <div style="position:sticky;top:80px">
         <div style="background:#000;border-radius:var(--radius2);padding:36px 32px;color:#fff">
           <div style="font-size:11px;text-transform:uppercase;letter-spacing:.1em;color:rgba(255,255,255,.45);margin-bottom:12px">Нийт үнэ</div>
-          <div style="font-size:48px;font-weight:700;letter-spacing:-.02em;line-height:1;margin-bottom:4px">2,050,000<span style="font-size:22px;font-weight:400;opacity:.6">₮</span></div>
-          <div style="font-size:13px;color:rgba(255,255,255,.4);margin-bottom:32px">5 хоног · 4 шөнө · 1 хүн</div>
+          <div style="font-size:48px;font-weight:700;letter-spacing:-.02em;line-height:1;margin-bottom:4px">4,600,000<span style="font-size:22px;font-weight:400;opacity:.6">₮</span></div>
+          <div style="font-size:13px;color:rgba(255,255,255,.4);margin-bottom:32px">5 өдөр · 4 шөнө · 1 хүн</div>
 
           <div style="display:flex;flex-direction:column;gap:12px;margin-bottom:32px">
+            <div style="display:flex;align-items:center;gap:10px;font-size:13px;color:rgba(255,255,255,.75)">
+              <span style="color:#30d158;font-size:15px">✓</span> Нислэгийн тасалбар (очиж, буцах)
+            </div>
+            <div style="display:flex;align-items:center;gap:10px;font-size:13px;color:rgba(255,255,255,.75)">
+              <span style="color:#30d158;font-size:15px">✓</span> 5 одтой зочид буудал · 4 шөнө
+            </div>
             <div style="display:flex;align-items:center;gap:10px;font-size:13px;color:rgba(255,255,255,.75)">
               <span style="color:#30d158;font-size:15px">✓</span> Нисэх онгоцны буудлаас угтах
             </div>
             <div style="display:flex;align-items:center;gap:10px;font-size:13px;color:rgba(255,255,255,.75)">
-              <span style="color:#30d158;font-size:15px">✓</span> VIP эмнэлгийн шинжилгээ
+              <span style="color:#30d158;font-size:15px">✓</span> VIP эмнэлэг — 23 төрлийн шинжилгээ
             </div>
             <div style="display:flex;align-items:center;gap:10px;font-size:13px;color:rgba(255,255,255,.75)">
               <span style="color:#30d158;font-size:15px">✓</span> Орчуулагч + хувийн сувилагч
@@ -1596,10 +1623,10 @@ section,#booking-section{scroll-margin-top:60px}
               <span style="color:#30d158;font-size:15px">✓</span> Хотын тойрон аялал (бүх өдөр)
             </div>
             <div style="display:flex;align-items:center;gap:10px;font-size:13px;color:rgba(255,255,255,.75)">
-              <span style="color:#30d158;font-size:15px">✓</span> Luxury буфет хоол
+              <span style="color:#30d158;font-size:15px">✓</span> Өдөр тутмын хоол · Luxury буфет
             </div>
             <div style="display:flex;align-items:center;gap:10px;font-size:13px;color:rgba(255,255,255,.75)">
-              <span style="color:#30d158;font-size:15px">✓</span> Шоппинг хөтөч
+              <span style="color:#30d158;font-size:15px">✓</span> Шоппинг хөтөч · үзвэрийн тасалбар
             </div>
             <div style="display:flex;align-items:center;gap:10px;font-size:13px;color:rgba(255,255,255,.75)">
               <span style="color:#30d158;font-size:15px">✓</span> Нисэх онгоцны буудалд хүргэх
@@ -1608,7 +1635,7 @@ section,#booking-section{scroll-margin-top:60px}
 
           <button onclick="window.location.href='/booking/'" style="width:100%;padding:16px;background:#0071e3;color:#fff;border:none;border-radius:12px;font-size:15px;font-weight:600;cursor:pointer;font-family:'Inter',sans-serif;letter-spacing:-.01em;transition:.2s" onmouseover="this.style.background='#0077ed'" onmouseout="this.style.background='#0071e3'">Одоо Захиалах →</button>
 
-          <div style="margin-top:16px;font-size:11px;color:rgba(255,255,255,.25);text-align:center">Буудлын зардал тусдаа · Нислэгийн зардал тусдаа</div>
+          <div style="margin-top:16px;font-size:11px;color:rgba(255,255,255,.25);text-align:center">Нислэг, буудал, хоол бүгд үнэд багтсан</div>
         </div>
       </div>
 
@@ -1618,7 +1645,7 @@ section,#booking-section{scroll-margin-top:60px}
     <div style="margin-top:48px;padding-top:48px;border-top:1px solid var(--border)" class="reveal">
       <div style="font-size:12px;font-weight:600;letter-spacing:.08em;text-transform:uppercase;color:var(--blue);margin-bottom:12px">Тусдаа үйлчилгээний үнэ</div>
       <div style="font-size:clamp(24px,4vw,36px);font-weight:700;letter-spacing:-.03em;color:var(--dark2);margin-bottom:8px">Хөтөч · Орчуулагч · Буудал · Угтах</div>
-      <div style="font-size:15px;color:var(--muted);margin-bottom:36px">Golden Package-д багтахгүй тохиолдолд тусдаа захиалах боломжтой.</div>
+      <div style="font-size:15px;color:var(--muted);margin-bottom:36px">Багцад хамрагдахгүй тохиолдолд тусдаа захиалах боломжтой.</div>
 
       <div style="display:grid;grid-template-columns:1fr 1fr;gap:16px;max-width:840px">
 
@@ -2014,7 +2041,7 @@ section,#booking-section{scroll-margin-top:60px}
         <div class="footer-col-title">Хуудсууд</div>
         <button class="footer-link" onclick="window.scrollTo({top:0,behavior:'smooth'})">Нүүр</button>
         <button class="footer-link" onclick="scrollToId('medical')">Эрүүл мэнд</button>
-        <a class="footer-link" href="/health/">Эрүүл мэндийн багц</a>
+        <a class="footer-link" href="/health/">Эрүүл мэнд · Багцууд</a>
         <a class="footer-link" href="/routes/">Маршрутууд</a>
         <a class="footer-link" href="/tips/">Зөвлөмж</a>
         <a class="footer-link" href="/metro/">Метро гарын авлага</a>
