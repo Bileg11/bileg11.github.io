@@ -627,6 +627,37 @@ footer a:hover{color:#fff}
   .tests-card{padding:22px 20px}
 }
 
+/* ── Компакт карт: гол онцлог + дэлгэх accordion ── */
+.pkg-key{list-style:none;margin:0 0 4px;padding:0;display:flex;flex-direction:column;gap:11px}
+.pkg-key li{display:flex;gap:11px;align-items:flex-start;font-size:14px;line-height:1.5;color:#3a3a3a}
+.pkg-key li span{flex-shrink:0;font-size:15px;line-height:1.4}
+.pkg-key li strong{color:#1d1d1f;font-weight:600}
+.pkg-key-link{color:var(--blue);font-weight:600;text-decoration:none;border-bottom:1px solid rgba(0,113,227,.3)}
+.pkg-key-link:hover{border-bottom-color:var(--blue)}
+
+.pkg-more{margin-top:14px;border-top:1px solid var(--border)}
+.pkg-more>summary{
+  list-style:none;cursor:pointer;
+  display:flex;align-items:center;justify-content:center;gap:8px;
+  padding:14px 0 2px;
+  font-size:13.5px;font-weight:600;color:var(--blue);
+  -webkit-tap-highlight-color:transparent;
+  user-select:none;-webkit-user-select:none;
+}
+.pkg-more>summary::-webkit-details-marker{display:none}
+.pkg-more>summary::marker{content:''}
+.pkg-more>summary::after{
+  content:'';width:7px;height:7px;
+  border-right:2px solid currentColor;border-bottom:2px solid currentColor;
+  transform:translateY(-2px) rotate(45deg);
+  transition:transform .2s ease;
+}
+.pkg-more[open]>summary::after{transform:translateY(1px) rotate(-135deg)}
+.pkg-more>summary:hover{opacity:.72}
+.pkg-more>summary:focus-visible{outline:2px solid var(--blue);outline-offset:3px;border-radius:6px}
+.pkg-more-body{padding-top:8px}
+.pkg-more-body>.pkg-group-label:first-child{margin-top:6px}
+
 .pkg-desc{font-size:14px;color:var(--muted);line-height:1.7;margin-bottom:16px}
 .pkg-photos{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-bottom:20px}
 .pkg-photos-single{grid-template-columns:1fr}
@@ -784,6 +815,18 @@ footer a:hover{color:#fff}
         <div class="pkg-all-in">✅ Бүх зардал үнэд багтсан — нэмэлт төлбөргүй</div>
         <div class="pkg-divider"></div>
 
+        <ul class="pkg-key">
+          <li><span>✈️</span><div><strong>Нислэгийн тасалбар</strong> — очиж, буцах</div></li>
+          <li><span>🏨</span><div><strong>5 одтой зочид буудал</strong> · 4 шөнө</div></li>
+          <li><span>🏥</span><div><strong>VIP эмнэлэг</strong> — <a href="#tests" class="pkg-key-link">23 төрлийн шинжилгээ →</a></div></li>
+          <li><span>🧑‍💼</span><div>Хөтөч, орчуулагч, хоол, унаа, тасалбар — бүгд үнэд</div></li>
+        </ul>
+
+        <div class="pkg-note">👥 2-оос дээш хүн ирвэл үнийг тохиролцоно</div>
+        <a href="/booking/?package=full" class="pkg-btn">Захиалах →</a>
+        <details class="pkg-more">
+          <summary>Дэлгэрэнгүй мэдээлэл</summary>
+          <div class="pkg-more-body">
         <div class="pkg-group-label">📦 Үнэд багтсан зүйлс</div>
         <ul class="pkg-features">
           <li class="pkg-feature"><span class="pkg-check"><svg viewBox="0 0 10 10" fill="none"><polyline points="1.5,5 4,7.5 8.5,2.5" stroke="#0071e3" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg></span><strong>Нислэгийн тасалбар</strong> — очиж, буцах</li>
@@ -878,8 +921,8 @@ footer a:hover{color:#fff}
             </div>
           </div>
         </div>
-        <div class="pkg-note">👥 2-оос дээш хүн ирвэл үнийг тохиролцоно</div>
-        <a href="/booking/?package=full" class="pkg-btn">Захиалах →</a>
+          </div>
+        </details>
       </div>
 
       <!-- CARD 2: Энгийн шинжилгээний багц -->
@@ -890,6 +933,19 @@ footer a:hover{color:#fff}
           <div class="pkg-tagline">Шинжилгээ + 1 өдрийн хот аялал · 2 өдөр</div>
         </div>
         <div class="pkg-divider"></div>
+
+        <ul class="pkg-key">
+          <li><span>🏥</span><div>Цус, биохими, ЭКГ, рентген, хэт авиан шинжилгээ</div></li>
+          <li><span>👩‍⚕️</span><div>Хувийн сувилагч + Монгол орчуулагч</div></li>
+          <li><span>🛏️</span><div>Эмнэлгийн VIP тасагт өглөөний цайтай хонох</div></li>
+          <li><span>🗺️</span><div>1 өдрийн хот аялал — The Bund, Nanjing Road</div></li>
+        </ul>
+
+        <div class="pkg-note">👥 2-оос дээш хүн ирвэл үнийг тохиролцоно</div>
+        <a href="/booking/?package=basic" class="pkg-btn outline">Захиалах →</a>
+        <details class="pkg-more">
+          <summary>Дэлгэрэнгүй мэдээлэл</summary>
+          <div class="pkg-more-body">
         <ul class="pkg-features">
           <li class="pkg-feature"><span class="pkg-check"><svg viewBox="0 0 10 10" fill="none"><polyline points="1.5,5 4,7.5 8.5,2.5" stroke="#0071e3" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg></span>Цусны ерөнхий шинжилгээ</li>
           <li class="pkg-feature"><span class="pkg-check"><svg viewBox="0 0 10 10" fill="none"><polyline points="1.5,5 4,7.5 8.5,2.5" stroke="#0071e3" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg></span>Цусны биохими — элэг, бөөр, чихэр</li>
@@ -934,8 +990,8 @@ footer a:hover{color:#fff}
             </div>
           </div>
         </div>
-        <div class="pkg-note">👥 2-оос дээш хүн ирвэл үнийг тохиролцоно</div>
-        <a href="/booking/?package=basic" class="pkg-btn outline">Захиалах →</a>
+          </div>
+        </details>
       </div>
 
       <!-- CARD 3: Зөвхөн аяллын багц -->
@@ -947,6 +1003,19 @@ footer a:hover{color:#fff}
           <div class="pkg-tagline">Шинжилгээгүй, зөвхөн аялал · 5 хоног 4 шөнө</div>
         </div>
         <div class="pkg-divider"></div>
+
+        <ul class="pkg-key">
+          <li><span>🏨</span><div><strong>4 одтой буудал</strong> · 4 шөнө</div></li>
+          <li><span>🗺️</span><div>The Bund · Shanghai Tower · Yu Garden · Zoo</div></li>
+          <li><span>🧑‍💼</span><div>Монгол хэлт хувийн хөтөч · хотын бүх тээвэр</div></li>
+          <li><span>ℹ️</span><div>Эрүүл мэндийн шинжилгээ <strong>ороогүй</strong></div></li>
+        </ul>
+
+        <div class="pkg-note">👥 2-оос дээш хүн ирвэл үнийг тохиролцоно</div>
+        <a href="/booking/?package=travel" class="pkg-btn outline">Захиалах →</a>
+        <details class="pkg-more">
+          <summary>Дэлгэрэнгүй мэдээлэл</summary>
+          <div class="pkg-more-body">
         <ul class="pkg-features">
           <li class="pkg-feature"><span class="pkg-check"><svg viewBox="0 0 10 10" fill="none"><polyline points="1.5,5 4,7.5 8.5,2.5" stroke="#0071e3" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg></span>Хотын төвийн 4 одтой зочид буудалд 4 шөнө байрших</li>
           <li class="pkg-feature"><span class="pkg-check"><svg viewBox="0 0 10 10" fill="none"><polyline points="1.5,5 4,7.5 8.5,2.5" stroke="#0071e3" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg></span>Nanjing Road · The Bund · голоор завиар · Shanghai Tower</li>
@@ -1025,8 +1094,8 @@ footer a:hover{color:#fff}
             </div>
           </div>
         </div>
-        <div class="pkg-note">👥 2-оос дээш хүн ирвэл үнийг тохиролцоно</div>
-        <a href="/booking/?package=travel" class="pkg-btn outline">Захиалах →</a>
+          </div>
+        </details>
       </div>
 
     </div>
@@ -1324,7 +1393,13 @@ footer a:hover{color:#fff}
 </div>
 
 <script>
-if(history.scrollRestoration)history.scrollRestoration='manual';window.scrollTo(0,0);// Gallery data
+if(history.scrollRestoration)history.scrollRestoration='manual';window.scrollTo(0,0);
+// Дэлгэц өргөн үед (3 багана) багцын дэлгэрэнгүйг анхнаасаа нээлттэй харуулна.
+// Утсан дээр хураасан хэвээр — JS ажиллахгүй бол ч хураасан төлөв нь зөв ажиллана.
+if (window.matchMedia('(min-width:1041px)').matches) {
+  document.querySelectorAll('.pkg-more').forEach(d => d.open = true);
+}
+// Gallery data
 const galleries = {
   full: {
     title: '🥇 Шинжилгээтэй аяллын багц — Зургийн цомог',
