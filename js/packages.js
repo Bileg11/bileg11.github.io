@@ -309,7 +309,7 @@
       name: { mn: 'Энгийн шинжилгээний багц', en: 'Basic Checkup Package' },
       badge: { mn: 'Энгийн багц', en: 'Basic checkup' },
       badgeClass: 'blue-badge',
-      price: { mnt: 1899000, cny: null, usd: 540 },
+      price: { mnt: 1899000, cny: null, usd: 539 },
       days: 2, nights: 1,
       duration: { mn: '2 өдөр', en: '2 days' },
       tagline: {
