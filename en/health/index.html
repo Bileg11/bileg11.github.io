@@ -125,10 +125,12 @@ body{font-family:'Inter',system-ui,-apple-system,sans-serif;background:var(--bg)
 .pkg-more>summary:hover{opacity:.72}
 .pkg-more>summary:focus-visible{outline:2px solid var(--blue);outline-offset:3px;border-radius:6px}
 .pkg-more-body{padding-top:10px;margin-bottom:16px!important}
-.pkg-footer{padding:20px 32px;background:var(--bg2);display:flex;align-items:center;justify-content:space-between;gap:12px;}
+.pkg-footer{padding:20px 32px;background:var(--bg2);display:flex;align-items:center;justify-content:space-between;gap:10px;flex-wrap:wrap;}
 .pkg-footer .note{font-size:12px;color:var(--muted);}
 .btn-pkg{padding:11px 24px;background:var(--blue);color:#fff;border:none;border-radius:50px;font-size:13px;font-weight:600;text-decoration:none;transition:background .2s,transform .15s;white-space:nowrap;}
 .btn-pkg:hover{background:var(--blue-hover);transform:scale(1.03)}
+.btn-pkg-ghost{padding:11px 20px;background:transparent;color:var(--blue);border:1.5px solid var(--blue);border-radius:50px;font-size:13px;font-weight:600;text-decoration:none;white-space:nowrap;transition:background .2s}
+.btn-pkg-ghost:hover{background:var(--blue-light)}
 
 /* ITINERARY */
 .itin-section{margin-bottom:48px;}
@@ -301,6 +303,7 @@ footer a{color:var(--blue);text-decoration:none}footer a:hover{text-decoration:u
         <div class="pkg-footer">
           <button class="pkg-see-photos" onclick="openGallery('full')">📷 View Photos (30)</button>
           <div class="note">Book at least 2 weeks in advance</div>
+          <a href="/en/packages/health-travel/" class="btn-pkg-ghost">Details</a>
           <a href="/en/booking/?package=full" class="btn-pkg">Book Health + Travel →</a>
         </div>
       </div>
@@ -332,6 +335,7 @@ footer a{color:var(--blue);text-decoration:none}footer a:hover{text-decoration:u
         <div class="pkg-footer">
           <button class="pkg-see-photos" onclick="openGallery('basic')">📷 View Photos (4)</button>
           <div class="note">Book at least 2 weeks in advance</div>
+          <a href="/en/packages/basic-checkup/" class="btn-pkg-ghost">Details</a>
           <a href="/en/booking/?package=basic" class="btn-pkg">Book Basic Checkup →</a>
         </div>
       </div>
@@ -363,6 +367,7 @@ footer a{color:var(--blue);text-decoration:none}footer a:hover{text-decoration:u
         <div class="pkg-footer">
           <button class="pkg-see-photos" onclick="openGallery('travel')">📷 View Photos (20)</button>
           <div class="note">Book at least 2 weeks in advance</div>
+          <a href="/en/packages/travel-only/" class="btn-pkg-ghost">Details</a>
           <a href="/en/booking/?package=travel" class="btn-pkg">Book Travel Only →</a>
         </div>
       </div>
