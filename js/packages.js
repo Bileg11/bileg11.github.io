@@ -18,6 +18,11 @@
 })(typeof self !== 'undefined' ? self : this, function () {
   'use strict';
 
+  /* Үнэ хэдий хүртэл хүчинтэй (Google Offer.priceValidUntil).
+     ⚠️ ЭНЭ ОГНОО ӨНГӨРВӨЛ Google хайлтын үр дүнд үнэ харуулахаа болино.
+     Жилд нэг удаа шинэчил — build script нь 60 хоног үлдэхэд сануулна. */
+  var PRICE_VALID_UNTIL = '2027-06-30';
+
   // ── 23 төрлийн шинжилгээ (Шинжилгээ + Аялал багцад багтсан) ──
   var TEST_GROUPS = [
     {
@@ -234,6 +239,7 @@
   var PACKAGES = [
     {
       id: 'full',
+      sku: 'LFS-FULL',
       slug: 'health-travel',
       order: 1,
       active: true,
@@ -294,6 +300,7 @@
     },
     {
       id: 'basic',
+      sku: 'LFS-BASIC',
       slug: 'basic-checkup',
       order: 2,
       active: true,
@@ -345,6 +352,7 @@
     },
     {
       id: 'travel',
+      sku: 'LFS-TRAVEL',
       slug: 'travel-only',
       order: 3,
       active: true,
@@ -421,6 +429,7 @@
 
   return {
     PACKAGES: PACKAGES,
+    PRICE_VALID_UNTIL: PRICE_VALID_UNTIL,
     TEST_GROUPS: TEST_GROUPS,
     ADDON_TESTS: ADDON_TESTS,
     PHOTOS: PHOTOS,

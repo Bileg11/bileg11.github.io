@@ -363,12 +363,15 @@ function jsonLd(p, L, t, url, altUrl) {
     description: p.meta.desc[L],
     image: SITE + p.meta.image,
     brand: { '@type': 'Brand', name: 'LFS Shanghai' },
+    sku: p.sku,
     offers: {
       '@type': 'Offer',
       url: url,
       priceCurrency: 'MNT',
       price: p.price.mnt,
+      priceValidUntil: DATA.PRICE_VALID_UNTIL,
       availability: 'https://schema.org/InStock',
+      itemCondition: 'https://schema.org/NewCondition',
       seller: { '@type': 'Organization', name: 'LFS Shanghai', url: SITE }
     }
   };
@@ -479,6 +482,23 @@ function write(rel, html) {
 }
 
 console.log('LFS багцын хуудас үүсгэж байна…\n');
+
+// ── priceValidUntil хугацаа дуусах гэж байна уу? ──
+(function checkPriceDate() {
+  const until = new Date(DATA.PRICE_VALID_UNTIL + 'T00:00:00Z');
+  const days = Math.round((until - new Date()) / 86400000);
+  if (isNaN(days)) {
+    console.error(`  ✗ PRICE_VALID_UNTIL буруу форматтай: "${DATA.PRICE_VALID_UNTIL}" (YYYY-MM-DD байх ёстой)`);
+    process.exit(1);
+  }
+  if (days < 0) {
+    console.error(`  ✗ PRICE_VALID_UNTIL ӨНГӨРСӨН (${DATA.PRICE_VALID_UNTIL}, ${-days} хоногийн өмнө).`);
+    console.error('    Google хайлтын үр дүнд үнэ харуулахаа болино. js/packages.js дээр шинэчил.\n');
+  } else if (days < 60) {
+    console.warn(`  ⚠ PRICE_VALID_UNTIL-д ${days} хоног үлдлээ (${DATA.PRICE_VALID_UNTIL}).`);
+    console.warn('    js/packages.js дээр шинэчлэхээ мартуузай.\n');
+  }
+})();
 const active = DATA.PACKAGES.filter(p => p.active).sort((a, b) => a.order - b.order);
 if (!active.length) { console.error('АЛДАА: идэвхтэй багц алга'); process.exit(1); }
 
