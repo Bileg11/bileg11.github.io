@@ -1,0 +1,182 @@
+<!DOCTYPE html>
+<html lang="mn">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Үнэлгээ өгөх — LFS Shanghai</title>
+<link rel="icon" type="image/svg+xml" href="/favicon.svg">
+<link rel="icon" type="image/png" sizes="32x32" href="/favicon.png">
+<link rel="apple-touch-icon" href="/apple-touch-icon.png">
+<meta name="description" content="LFS Shanghai-гаар аялсан туршлагаа хуваалцаж, үнэлгээ өгөөрэй.">
+<meta name="robots" content="noindex, follow">
+<link rel="canonical" href="https://lfsshanghai.com/review/">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+:root{--blue:#0071e3;--blue-hover:#0077ed;--blue-light:#e8f0fc;--text:#1d1d1f;--muted:#6e6e73;--muted2:#86868b;--bg:#fff;--bg2:#f5f5f7;--border:rgba(0,0,0,.08);--shadow:0 2px 20px rgba(0,0,0,.08)}
+body{font-family:'Inter',-apple-system,BlinkMacSystemFont,sans-serif;color:var(--text);background:var(--bg2);line-height:1.6;-webkit-font-smoothing:antialiased}
+.nav{height:54px;display:flex;align-items:center;justify-content:space-between;padding:0 22px;background:#fff;border-bottom:1px solid var(--border)}
+.nav-logo{font-size:17px;font-weight:800;letter-spacing:-.02em;text-decoration:none;color:var(--text)}
+.nav-logo span{color:var(--blue)}
+.wrap{max-width:560px;margin:0 auto;padding:32px 20px 80px}
+.card{background:#fff;border-radius:20px;padding:32px 28px;box-shadow:var(--shadow)}
+h1{font-size:clamp(24px,5vw,32px);font-weight:800;letter-spacing:-.03em;line-height:1.15;margin-bottom:10px}
+.sub{font-size:15px;color:var(--muted);margin-bottom:28px}
+label{display:block;font-size:13px;font-weight:600;margin-bottom:8px;margin-top:22px}
+label:first-of-type{margin-top:0}
+.hint{font-size:12px;color:var(--muted2);font-weight:400;margin-top:3px}
+input[type=text],textarea,select{
+  width:100%;padding:13px 15px;border:1.5px solid var(--border);border-radius:12px;
+  font-size:15px;font-family:inherit;color:var(--text);background:#fff;transition:border-color .2s,box-shadow .2s;
+}
+input:focus,textarea:focus,select:focus{outline:none;border-color:var(--blue);box-shadow:0 0 0 3px rgba(0,113,227,.12)}
+textarea{min-height:130px;resize:vertical;line-height:1.6}
+.stars{display:flex;gap:6px}
+.star{
+  width:52px;height:52px;border:1.5px solid var(--border);border-radius:14px;background:#fff;
+  font-size:24px;cursor:pointer;display:flex;align-items:center;justify-content:center;
+  transition:.15s;color:#d2d2d7;-webkit-tap-highlight-color:transparent;
+}
+.star.on{background:#fff8e7;border-color:#f0c040;color:#f59e0b}
+.star:hover{transform:translateY(-2px)}
+.consent{display:flex;gap:11px;align-items:flex-start;margin-top:24px;background:var(--bg2);border-radius:13px;padding:15px 16px}
+.consent input{width:19px;height:19px;flex-shrink:0;margin-top:2px;accent-color:var(--blue);cursor:pointer}
+.consent label{font-size:13px;font-weight:400;color:#3a3a3a;margin:0;line-height:1.55;cursor:pointer}
+.btn{
+  width:100%;margin-top:26px;padding:16px;background:var(--blue);color:#fff;border:none;border-radius:14px;
+  font-size:16px;font-weight:600;font-family:inherit;cursor:pointer;transition:background .2s;
+}
+.btn:hover:not(:disabled){background:var(--blue-hover)}
+.btn:disabled{opacity:.5;cursor:not-allowed}
+.err{font-size:13px;color:#d70015;margin-top:8px;display:none}
+.err.show{display:block}
+.done{text-align:center;padding:20px 0}
+.done-ic{font-size:52px;margin-bottom:14px}
+.done h2{font-size:24px;font-weight:800;letter-spacing:-.02em;margin-bottom:10px}
+.done p{font-size:15px;color:var(--muted);margin-bottom:26px}
+.done a{display:inline-block;padding:13px 28px;background:var(--blue);color:#fff;border-radius:26px;font-size:15px;font-weight:600;text-decoration:none}
+.note{font-size:12px;color:var(--muted2);margin-top:20px;line-height:1.6;text-align:center}
+</style>
+</head>
+<body>
+
+<nav class="nav">
+  <a href="/" class="nav-logo">LFS <span>Shanghai</span></a>
+</nav>
+
+<div class="wrap">
+  <div class="card" id="formCard">
+    <h1>Аяллаа үнэлээрэй</h1>
+    <p class="sub">Таны шударга сэтгэгдэл бусад аялагчдад тусална. 1 минут л болно.</p>
+
+    <label>Үнэлгээ <span class="hint">1-ээс 5 од</span></label>
+    <div class="stars" id="stars">
+      <button type="button" class="star" data-v="1">★</button>
+      <button type="button" class="star" data-v="2">★</button>
+      <button type="button" class="star" data-v="3">★</button>
+      <button type="button" class="star" data-v="4">★</button>
+      <button type="button" class="star" data-v="5">★</button>
+    </div>
+
+    <label for="pkg">Ямар багц авсан бэ?</label>
+    <select id="pkg">
+      <option value="">— Сонгоно уу —</option>
+      <option value="full">🥇 Шинжилгээ + Аялал багц</option>
+      <option value="basic">🩺 Энгийн шинжилгээний багц</option>
+      <option value="travel">🗺️ Зөвхөн аяллын багц</option>
+      <option value="other">Бусад үйлчилгээ</option>
+    </select>
+
+    <label for="name">Нэр <span class="hint">Сайт дээр ингэж харагдана. Товчилж бичиж болно (жишээ: Б. Мөнхбаяр)</span></label>
+    <input type="text" id="name" maxlength="40" placeholder="Б. Мөнхбаяр" autocomplete="name">
+
+    <label for="text">Сэтгэгдэл <span class="hint">Юу таалагдсан, юу дутуу байсан — шударгаар бичээрэй</span></label>
+    <textarea id="text" maxlength="600" placeholder="Аяллын явц, үйлчилгээ, хөтөч, эмнэлэг — таны бодит туршлага…"></textarea>
+
+    <div class="consent">
+      <input type="checkbox" id="consent">
+      <label for="consent">Миний нэр болон сэтгэгдлийг <strong>lfsshanghai.com сайт дээр нийтлэхийг зөвшөөрч байна.</strong> Хүсвэл дараа нь устгуулж болно.</label>
+    </div>
+
+    <div class="err" id="err"></div>
+    <button class="btn" id="submitBtn">Үнэлгээ илгээх</button>
+    <p class="note">Зөвхөн бодит үйлчлүүлэгчийн үнэлгээг нийтэлдэг. Илгээсэн үнэлгээг шалгасны дараа сайтад нэмнэ.</p>
+  </div>
+
+  <div class="card done" id="doneCard" style="display:none">
+    <div class="done-ic">🙏</div>
+    <h2>Баярлалаа!</h2>
+    <p>Таны үнэлгээ хүлээн авлаа. Шалгасны дараа сайтад нэмэгдэнэ.</p>
+    <a href="/">Нүүр хуудас руу →</a>
+  </div>
+</div>
+
+<script type="module">
+import { initializeApp } from "https://www.gstatic.com/firebasejs/11.7.1/firebase-app.js";
+import { getFirestore, collection, addDoc, serverTimestamp } from "https://www.gstatic.com/firebasejs/11.7.1/firebase-firestore.js";
+
+const app = initializeApp({
+  apiKey: "AIzaSyDixZdKwlrixRFokERCMQ5Ld1BMkhUttCQ",
+  authDomain: "lfs-shanghai.firebaseapp.com",
+  projectId: "lfs-shanghai",
+  storageBucket: "lfs-shanghai.firebasestorage.app",
+  messagingSenderId: "337508244675",
+  appId: "1:337508244675:web:f47b7e14417a0f1d129676"
+});
+const db = getFirestore(app);
+
+let rating = 0;
+const starsEl = document.getElementById('stars');
+starsEl.addEventListener('click', e => {
+  const b = e.target.closest('.star');
+  if (!b) return;
+  rating = +b.dataset.v;
+  [...starsEl.children].forEach(s => s.classList.toggle('on', +s.dataset.v <= rating));
+  hideErr();
+});
+
+const err = document.getElementById('err');
+const showErr = m => { err.textContent = m; err.classList.add('show'); };
+const hideErr = () => err.classList.remove('show');
+
+// URL-аас багц урьдчилан сонгох:  /review/?pkg=full
+const pre = new URLSearchParams(location.search).get('pkg');
+if (pre) { const o = document.querySelector(`#pkg option[value="${CSS.escape(pre)}"]`); if (o) o.selected = true; }
+
+document.getElementById('submitBtn').addEventListener('click', async () => {
+  const name = document.getElementById('name').value.trim();
+  const text = document.getElementById('text').value.trim();
+  const pkg  = document.getElementById('pkg').value;
+  const consent = document.getElementById('consent').checked;
+
+  if (!rating)            return showErr('Хэдэн од өгөхөө сонгоно уу.');
+  if (!pkg)               return showErr('Ямар багц авсанаа сонгоно уу.');
+  if (name.length < 2)    return showErr('Нэрээ бичнэ үү.');
+  if (text.length < 15)   return showErr('Сэтгэгдлээ жаахан дэлгэрэнгүй бичнэ үү (15+ тэмдэгт).');
+  if (!consent)           return showErr('Нийтлэхийг зөвшөөрөх нүдийг чагтална уу.');
+
+  const btn = document.getElementById('submitBtn');
+  btn.disabled = true; btn.textContent = 'Илгээж байна…';
+  hideErr();
+
+  try {
+    await addDoc(collection(db, 'reviews'), {
+      rating, pkg, name, text,
+      consent: true,
+      status: 'pending',          // admin зөвшөөртөл нийтлэгдэхгүй
+      source: 'form',
+      createdAt: serverTimestamp(),
+      ua: navigator.userAgent.slice(0, 120)
+    });
+    document.getElementById('formCard').style.display = 'none';
+    document.getElementById('doneCard').style.display = 'block';
+    window.scrollTo(0, 0);
+  } catch (e) {
+    console.error(e);
+    btn.disabled = false; btn.textContent = 'Үнэлгээ илгээх';
+    showErr('Илгээхэд алдаа гарлаа. Дахин оролдоно уу, эсвэл Messenger-ээр бидэнд бичээрэй.');
+  }
+});
+</script>
+</body>
+</html>

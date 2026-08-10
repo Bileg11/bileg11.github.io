@@ -18,6 +18,7 @@ const path = require('path');
 
 const ROOT = path.resolve(__dirname, '..');
 const DATA = require(path.join(ROOT, 'js', 'packages.js'));
+const RV   = require(path.join(ROOT, 'js', 'reviews.js'));
 const SITE = 'https://lfsshanghai.com';
 
 const T = {
@@ -31,6 +32,7 @@ const T = {
     addonsTitle: 'Нэмэлтээр сонгох боломжтой нарийн шинжилгээнүүд',
     addonsSub: 'Багцад ороогүй. Хэрэгтэй бол урьдчилан захиалж болно — үнийг эмнэлгийн мэргэжилтэнтэй тохиролцоно.',
     photos: 'Зургууд', book: 'Одоо захиалах →', allPkgs: 'Бүх багц харах',
+    reviewsLabel: 'Үйлчлүүлэгчид', reviewsTitle: 'Үнэлгээ', ofFive: '5-аас', reviewWord: 'үнэлгээ',
     perPerson: '/ хүн', groupNote: '👥 2-оос дээш хүн ирвэл үнийг тохиролцоно',
     ctaTitle: 'Захиалахад бэлэн үү?', ctaSub: 'Мэдээллээ илгээхэд 24 цагийн дотор холбоо барина.',
     notIncluded: 'Энэ багцад ОРООГҮЙ', crumbHome: 'Нүүр', crumbPkgs: 'Багцууд',
@@ -48,6 +50,7 @@ const T = {
     addonsTitle: 'Optional add-on tests',
     addonsSub: 'Not included in the package. Available on request — price agreed in advance with the hospital.',
     photos: 'Photos', book: 'Book now →', allPkgs: 'See all packages',
+    reviewsLabel: 'Customers', reviewsTitle: 'Reviews', ofFive: 'out of 5', reviewWord: 'reviews',
     perPerson: 'per person', groupNote: '👥 Group price available for 2+ people',
     ctaTitle: 'Ready to book?', ctaSub: 'Send us your details and we reply within 24 hours.',
     notIncluded: 'NOT included in this package', crumbHome: 'Home', crumbPkgs: 'Packages',
@@ -163,6 +166,17 @@ a{color:inherit}
 .addon{display:flex;gap:10px;align-items:flex-start;background:var(--bg2);border-radius:11px;padding:12px 14px;font-size:13px;line-height:1.5}
 .addon em{display:block;font-style:normal;font-size:11px;color:var(--muted2);margin-top:2px}
 
+.rv-head{display:flex;align-items:baseline;gap:12px;flex-wrap:wrap;margin-bottom:24px}
+.rv-score{font-size:38px;font-weight:800;letter-spacing:-.03em;line-height:1}
+.rv-stars{color:#f59e0b;font-size:18px;letter-spacing:2px}
+.rv-count{font-size:13.5px;color:var(--muted)}
+.rv-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:16px}
+.rv{background:var(--bg2);border-radius:16px;padding:22px 20px;display:flex;flex-direction:column;gap:12px}
+.rv-top{display:flex;align-items:center;justify-content:space-between;gap:10px}
+.rv-s{color:#f59e0b;font-size:14px;letter-spacing:1px}
+.rv-d{font-size:11.5px;color:var(--muted2)}
+.rv-t{font-size:14px;line-height:1.65;color:#3a3a3a;flex:1}
+.rv-n{font-size:13px;font-weight:600}
 .band{background:#000;color:#fff;border-radius:24px;padding:48px 40px;margin:56px 0;text-align:center}
 .band h2{font-size:clamp(24px,4vw,34px);font-weight:800;letter-spacing:-.03em;margin-bottom:10px}
 .band p{font-size:15px;color:rgba(255,255,255,.6);margin-bottom:8px}
@@ -334,6 +348,32 @@ ${addons}
 </div></section>`;
 }
 
+function stars(n) { return '★'.repeat(Math.round(n)) + '☆'.repeat(5 - Math.round(n)); }
+
+// Үнэлгээний хэсэг — БОДИТ үнэлгээ байхгүй бол огт гарахгүй.
+function reviewsHtml(p, L, t) {
+  const list = RV.forPackage(p.id);
+  const agg  = RV.aggregate(p.id);
+  if (!agg || !list.length) return '';
+  const cards = list.slice(0, 9).map(r => `    <div class="rv">
+      <div class="rv-top"><div class="rv-s">${stars(r.rating)}</div><div class="rv-d">${esc(r.date)}</div></div>
+      <div class="rv-t">${esc((r.text[L] || r.text.mn))}</div>
+      <div class="rv-n">${esc(r.name)}</div>
+    </div>`).join('\n');
+  return `<section class="sec"><div class="wrap">
+  <div class="sec-label">${t.reviewsLabel}</div>
+  <h2 class="sec-title">${t.reviewsTitle}</h2>
+  <div class="rv-head">
+    <div class="rv-score">${agg.value}</div>
+    <div class="rv-stars">${stars(agg.value)}</div>
+    <div class="rv-count">${agg.value} ${t.ofFive} · ${agg.count} ${t.reviewWord}</div>
+  </div>
+  <div class="rv-grid">
+${cards}
+  </div>
+</div></section>`;
+}
+
 function bandHtml(p, L, t) {
   return `<div class="wrap"><section class="band">
   <h2>${t.ctaTitle}</h2>
@@ -375,6 +415,25 @@ function jsonLd(p, L, t, url, altUrl) {
       seller: { '@type': 'Organization', name: 'LFS Shanghai', url: SITE }
     }
   };
+  const agg = RV.aggregate(p.id);
+  const rvList = RV.forPackage(p.id);
+  if (agg && rvList.length) {
+    product.aggregateRating = {
+      '@type': 'AggregateRating',
+      ratingValue: agg.value,
+      reviewCount: agg.count,
+      bestRating: 5,
+      worstRating: 1
+    };
+    product.review = rvList.slice(0, 9).map(r => ({
+      '@type': 'Review',
+      author: { '@type': 'Person', name: r.name },
+      datePublished: r.date,
+      reviewBody: r.text[L] || r.text.mn,
+      reviewRating: { '@type': 'Rating', ratingValue: r.rating, bestRating: 5, worstRating: 1 }
+    }));
+  }
+
   const crumbs = {
     '@context': 'https://schema.org',
     '@type': 'BreadcrumbList',
@@ -426,6 +485,7 @@ ${highlightsHtml(p, L, t)}
 ${itineraryHtml(p, L, t)}
 ${testsHtml(p, L, t)}
 ${photosHtml(p, L, t)}
+${reviewsHtml(p, L, t)}
 ${bandHtml(p, L, t)}
 ${footerHtml(t)}
 
