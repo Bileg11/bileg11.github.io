@@ -210,7 +210,7 @@ function heroHtml(p, L, t) {
   <h1 class="hero-title">${esc(p.name[L])}</h1>
   <p class="hero-sub">${esc(p.tagline[L])}</p>
   <div class="hero-price"><b>${money(p.price.mnt)}</b><i>${t.perPerson}</i></div>
-  <div class="hero-usd">≈ $${p.price.usd.toLocaleString('en-US')} USD · ${esc(p.duration[L])}</div>
+  <div class="hero-usd">${L === 'en' ? '≈ $' + p.price.usd.toLocaleString('en-US') + ' USD · ' : ''}${esc(p.duration[L])}</div>
 ${allin}${notinc}  <div class="cta-row">
     <a href="${t.booking}/?package=${p.id}" class="btn btn-primary">${t.book}</a>
     <a href="${t.hub}" class="btn btn-ghost">${t.allPkgs}</a>

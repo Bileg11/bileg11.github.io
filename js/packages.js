@@ -122,6 +122,8 @@
       { src: '/img/health/pexels-bingqian-li-230971044-36064465.jpg', bg: 'linear-gradient(135deg,#2a1a0a,#5a3a1a)', icon: '🏚️', mn: 'French Concession · хуучин дүүрэг', en: 'French Concession · Old Quarter' },
       { src: '/img/health/pexels-nazmiazmir-33826186.jpg', bg: 'linear-gradient(135deg,#0a1a0a,#1a3a1a)', icon: '☕', mn: 'Starbucks Roastery · гадна', en: 'Starbucks Reserve Roastery · Outside' },
       { src: '/img/health/tangi-bertin-4WoSeG-5tzI-unsplash.jpg', bg: 'linear-gradient(135deg,#1a0a00,#3a1a00)', icon: '✨', mn: 'Starbucks Roastery · дотор', en: 'Starbucks Reserve Roastery · Inside' },
+    ],
+    zoo: [
       { src: '/img/health/pexels-tkirkgoz-15278918.jpg', bg: 'linear-gradient(135deg,#1a1a0a,#3a3a0a)', icon: '🐯', mn: 'Shanghai Zoo · цагаан бар', en: 'Shanghai Zoo · White Tiger' },
       { src: '/img/health/pexels-tkirkgoz-11857237.jpg', bg: 'linear-gradient(135deg,#0d3a1a,#1a6a2a)', icon: '🦌', mn: 'Shanghai Zoo · буга', en: 'Shanghai Zoo · Deer' },
       { src: '/img/health/pexels-cagri-besli-387362595-16751136.jpg', bg: 'linear-gradient(135deg,#1a2a0a,#3a5a1a)', icon: '🦓', mn: 'Shanghai Zoo · тахь', en: 'Shanghai Zoo · Zebra' }
@@ -172,22 +174,14 @@
     }
   ];
 
-  // ── 2 өдрийн хуваарь (Энгийн шинжилгээ) ──
+  // ── 1 өдрийн ажиллагаа (Энгийн шинжилгээ) ──
   var ITIN_BASIC = [
     {
       day: 1,
-      title: { mn: 'УБ–Шанхай · Нисэх онгоцны буудлаас угтах', en: 'Arrival · Airport pickup' },
+      title: { mn: 'VIP шинжилгээ — нэг өдөрт', en: 'VIP checkup — in a single day' },
       desc: {
-        mn: 'Таныг нисэх буудлаас тосож авна. Эмнэлгийн VIP өрөөнд байрлаж маргаашийн шинжилгээнд бэлтгэнэ.',
-        en: 'We meet you at the airport. You stay in the hospital VIP suite and prepare for the next day’s checkup.'
-      }
-    },
-    {
-      day: 2,
-      title: { mn: 'VIP Шинжилгээ + 1 өдрийн аялал', en: 'VIP checkup + 1-day city tour' },
-      desc: {
-        mn: 'Өглөөний цай уугаад хувийн сувилагч, орчуулагчтайгаа шинжилгээнд ороод хариуг авна. Дараа нь хотын төвөөр аялна.',
-        en: 'After breakfast, your checkup with a personal nurse and interpreter, results the same day. Then a city-centre tour.'
+        mn: 'Өглөө эмнэлэгт ирж, хувийн сувилагч, Монгол орчуулагчтайгаа шинжилгээнд орно. Дараалалгүй, 2–3 цагт бүх шинжилгээ дуусч, хариугаа мөн өдөртөө Монгол + Англи хэлээр авна.',
+        en: 'Arrive at the hospital in the morning and go through your checkup with a personal nurse and Mongolian interpreter. No queues — everything is done in 2–3 hours and results come the same day in Mongolian and English.'
       }
     }
   ];
@@ -212,10 +206,10 @@
     },
     {
       day: 3,
-      title: { mn: 'Амьтны хүрээлэн · Luxury буфет · Yu Garden', en: 'Shanghai Zoo · Luxury buffet · Yu Garden' },
+      title: { mn: 'Shanghai Disneyland · Luxury буфет · Yu Garden', en: 'Shanghai Disneyland · Luxury buffet · Yu Garden' },
       desc: {
-        mn: '370 гаруй нэр төрлийн 10,000 гаруй амьтантай Shanghai Zoo-г үзнэ. Luxury дээд зэрэглэлийн буфет хоол идэж, Yu Garden-оор зочилно.',
-        en: 'Shanghai Zoo with over 10,000 animals, a luxury buffet lunch, and a visit to Yu Garden.'
+        mn: 'Shanghai Disneyland-д зочилно — тасалбар үнэд багтсан. Luxury дээд зэрэглэлийн буфет хоол идэж, Yu Garden-оор мөн зочилно.',
+        en: 'A day at Shanghai Disneyland — entrance ticket included in the price. Luxury buffet lunch and a visit to Yu Garden.'
       }
     },
     {
@@ -282,7 +276,7 @@
         en: 'A full 5-day trip: 23 comprehensive medical tests at Shanghai’s leading VIP hospital, plus the city’s highlights. Flights, 5-star hotel, meals, transport and entrance tickets are all included in the price.'
       },
       itinerary: ITIN_FULL,
-      photoSets: ['hospital', 'city'],
+      photoSets: ['hospital', 'city', 'zoo'],
       cardPhotos: [
         { src: '/img/health/Tower1.jpg', pos: 'center 15%', bg: 'linear-gradient(135deg,#0a1a3a,#1e3fa0)', icon: '🏙️', mn: 'Shanghai Tower · 632м', en: 'Shanghai Tower · 632m' },
         { src: '/img/health/Bund2.jpg', pos: '', bg: 'linear-gradient(135deg,#071e3d,#1a4fa8)', icon: '🌃', mn: 'The Bund · шөнийн гэрэлтэй', en: 'The Bund · Night Lights' },
@@ -310,11 +304,11 @@
       badge: { mn: 'Энгийн багц', en: 'Basic checkup' },
       badgeClass: 'blue-badge',
       price: { mnt: 1899000, cny: null, usd: 539 },
-      days: 2, nights: 1,
-      duration: { mn: '2 өдөр', en: '2 days' },
+      days: 1, nights: 0,
+      duration: { mn: '1 өдөр', en: '1 day' },
       tagline: {
-        mn: 'Шинжилгээ + 1 өдрийн хот аялал · 2 өдөр',
-        en: '2 days · Medical checkup + 1-day city tour'
+        mn: 'Зөвхөн суурь шинжилгээ · 1 өдөр · нислэг ороогүй',
+        en: 'Basic checkup only · 1 day · flights not included'
       },
       allIn: null,
       hotel: { included: false, stars: null, nights: 0 },
@@ -323,18 +317,18 @@
       key: [
         { icon: '🏥', mn: 'Цус, биохими, ЭКГ, рентген, хэт авиан шинжилгээ', en: 'Blood, biochemistry, ECG, X-ray, ultrasound' },
         { icon: '👩‍⚕️', mn: 'Хувийн сувилагч + Монгол орчуулагч', en: 'Personal nurse + Mongolian interpreter' },
-        { icon: '🛏️', mn: 'Эмнэлгийн VIP тасагт өглөөний цайтай хонох', en: 'Overnight in hospital VIP suite, breakfast included' },
-        { icon: '🗺️', mn: '1 өдрийн хот аялал — The Bund, Nanjing Road', en: '1-day city tour — The Bund, Nanjing Road' }
+        { icon: '⚡', mn: 'Дараалалгүй — 2–3 цагт бүгд дуусна', en: 'No queues — everything done in 2–3 hours' },
+        { icon: '📄', mn: 'Хариу мөн өдөртөө, Монгол + Англи хэлээр', en: 'Results the same day, in Mongolian and English' }
       ],
       includes: {
-        mn: ['Цусны ерөнхий шинжилгээ', 'Цусны биохими — элэг, бөөр, чихэр', 'Зүрхний ЭКГ шинжилгээ', 'Уушгины рентген зураг', 'Хэт авиан шинжилгээ — элэг, бөөр, дотоод эрхтэн', 'Цусны даралт, биеийн жин, өндөр', 'Нүдний үзлэг', 'Хувийн сувилагч + Монгол орчуулагч', 'Шинжилгээний хариу Монгол + Англи хэлээр', 'Нисэх буудлаас угтах + буудалд хүргэх', 'Эмнэлгийн VIP тасагт өглөөний цайтай хонох', '1 өдрийн хот аялал — The Bund, Nanjing Road'],
-        en: ['Complete blood analysis', 'Blood biochemistry — liver, kidney, glucose', 'ECG — electrocardiogram', 'Chest X-ray', 'Ultrasound — liver, kidney, internal organs', 'Blood pressure, weight, height', 'Eye examination', 'Personal nurse + Mongolian interpreter', 'Results in Mongolian and English', 'Airport pickup and drop-off', 'Overnight in hospital VIP suite with breakfast', '1-day city tour — The Bund, Nanjing Road']
+        mn: ['Цусны ерөнхий шинжилгээ', 'Цусны биохими — элэг, бөөр, чихэр', 'Зүрхний ЭКГ шинжилгээ', 'Уушгины рентген зураг', 'Хэт авиан шинжилгээ — элэг, бөөр, дотоод эрхтэн', 'Цусны даралт, биеийн жин, өндөр', 'Нүдний үзлэг', 'Хувийн сувилагч + Монгол орчуулагч', 'Шинжилгээний хариу Монгол + Англи хэлээр', 'Нисэх буудлаас угтах + буудалд хүргэх', 'Дараалалгүй — 2–3 цагт бүх шинжилгээ дуусна'],
+        en: ['Complete blood analysis', 'Blood biochemistry — liver, kidney, glucose', 'ECG — electrocardiogram', 'Chest X-ray', 'Ultrasound — liver, kidney, internal organs', 'Blood pressure, weight, height', 'Eye examination', 'Personal nurse + Mongolian interpreter', 'Results in Mongolian and English', 'Airport pickup and drop-off', 'No queues — the full checkup takes 2–3 hours']
       },
       highlights: null,
-      notIncluded: { mn: 'Нислэгийн зардал тусдаа орно.', en: 'Flights are not included.' },
+      notIncluded: { mn: 'Нислэг ороогүй. Хот аялал ороогүй — зөвхөн шинжилгээний багц.', en: 'Flights not included. No sightseeing — this is a checkup-only package.' },
       desc: {
-        mn: 'Шанхайн шилдэг VIP эмнэлэгт хувийн сувилагч, орчуулагчтай иж бүрэн шинжилгээ хийлгэх 2 өдрийн аялал. Өглөөний цайны дараа шинжилгээнд орж, мөн өдрийн хариугаа авна.',
-        en: 'A 2-day trip for a full checkup at Shanghai’s leading VIP hospital with a personal nurse and interpreter. Your checkup is after breakfast and results come the same day.'
+        mn: 'Шанхайн шилдэг VIP эмнэлэгт хувийн сувилагч, Монгол орчуулагчтай суурь шинжилгээгээ нэг өдөрт хийлгэнэ. Дараалалгүй, хариу мөн өдөртөө. Нислэг, аялал ороогүй — зөвхөн шинжилгээ.',
+        en: 'A basic checkup at Shanghai’s leading VIP hospital in a single day, with a personal nurse and Mongolian interpreter. No queues, results the same day. Flights and sightseeing are not included — checkup only.'
       },
       itinerary: ITIN_BASIC,
       photoSets: ['hospital'],
@@ -344,8 +338,8 @@
       meta: {
         title: { mn: 'Энгийн шинжилгээний багц — ₮1,899,000 · LFS Shanghai', en: 'Basic Checkup Package — ₮1,899,000 · LFS Shanghai' },
         desc: {
-          mn: 'Шанхайн VIP эмнэлэгт 2 өдрийн иж бүрэн шинжилгээ + 1 өдрийн хот аялал. Монгол орчуулагч, хувийн сувилагчтай. ₮1,899,000 / хүн.',
-          en: 'A 2-day full checkup at a Shanghai VIP hospital plus a 1-day city tour, with a Mongolian interpreter and personal nurse. ₮1,899,000 per person.'
+          mn: 'Шанхайн VIP эмнэлэгт суурь шинжилгээ нэг өдөрт. Дараалалгүй, Монгол орчуулагч, хувийн сувилагчтай, хариу мөн өдөртөө. ₮1,899,000 / хүн.',
+          en: 'A basic checkup at a Shanghai VIP hospital in a single day, with a Mongolian interpreter and personal nurse. Results the same day. ₮1,899,000 per person.'
         },
         image: '/img/health/hospital-reception.jpg'
       }
@@ -363,33 +357,36 @@
       badgeClass: 'green-badge',
       price: { mnt: 3200000, cny: null, usd: 910 },
       days: 5, nights: 4,
-      duration: { mn: '5 хоног 4 шөнө', en: '5 days / 4 nights' },
+      duration: { mn: '5 өдөр / 4 шөнө', en: '5 days / 4 nights' },
       tagline: {
-        mn: 'Шинжилгээгүй, зөвхөн аялал · 5 хоног 4 шөнө',
-        en: '5 days / 4 nights · City tour, no medical checkup'
+        mn: '5 өдөр / 4 шөнө · Нислэг, буудал, хоол бүгд багтсан · Disneyland',
+        en: '5 days / 4 nights · Flights, hotel and meals included · Disneyland'
       },
-      allIn: null,
-      hotel: { included: true, stars: 4, nights: 4 },
-      flightIncluded: false,
+      allIn: {
+        mn: 'Бүх зардал үнэд багтсан — нэмэлт төлбөргүй',
+        en: 'Everything included — nothing extra to pay'
+      },
+      hotel: { included: true, stars: 5, nights: 4 },
+      flightIncluded: true,
       hasTests: false,
       key: [
-        { icon: '🏨', mn: '<strong>4 одтой буудал</strong> · 4 шөнө', en: '<strong>4-star city-centre hotel</strong> · 4 nights' },
-        { icon: '🗺️', mn: 'The Bund · Shanghai Tower · Yu Garden · Zoo', en: 'The Bund · Shanghai Tower · Yu Garden · Zoo' },
-        { icon: '🧑‍💼', mn: 'Монгол хэлт хувийн хөтөч · хотын бүх тээвэр', en: 'Private Mongolian-speaking guide · all transport' },
+        { icon: '✈️', mn: '<strong>Нислэгийн тасалбар</strong> — очиж, буцах', en: '<strong>Return flight tickets</strong> — included' },
+        { icon: '🏨', mn: '<strong>5 одтой зочид буудал</strong> · 4 шөнө', en: '<strong>5-star hotel</strong> · 4 nights' },
+        { icon: '🏰', mn: '<strong>Shanghai Disneyland</strong> — тасалбар үнэд', en: '<strong>Shanghai Disneyland</strong> — ticket included' },
         { icon: 'ℹ️', mn: 'Эрүүл мэндийн шинжилгээ <strong>ороогүй</strong>', en: 'Medical checkup <strong>not included</strong>' }
       ],
       includes: {
-        mn: ['Хотын төвийн 4 одтой зочид буудалд 4 шөнө байрших', 'Nanjing Road · The Bund · голоор завиар · Shanghai Tower', 'Shanghai Zoo · Luxury буфет · Yu Garden', 'Xintiandi · Louis Vuitton · Starbucks үйлдвэр', 'Монгол хэлт хувийн хөтөч бүтэн хугацаанд', 'Хотын доторх бүх тээвэр', 'Luxury буфет хоол', 'Шоппинг хөтөч · ресторан зориулах', 'Нисэх буудлаас угтах + буудалд хүргэх', '24/7 Монгол хэлээр дэмжлэг'],
-        en: ['4-star city-centre hotel · 4 nights', 'Nanjing Road · The Bund · river cruise · Shanghai Tower', 'Shanghai Zoo · luxury buffet · Yu Garden', 'Xintiandi · Louis Vuitton · Starbucks Roastery', 'Private Mongolian-speaking guide for the whole trip', 'All city transport', 'Luxury buffet meal', 'Shopping guide · restaurant recommendations', 'Airport pickup and drop-off', '24/7 support in Mongolian']
+        mn: ['Нислэгийн тасалбар — очиж, буцах', '5 одтой зочид буудал · 4 шөнө', 'Унаа, тээвэр — хотын дотор бүрэн', 'Хөтөч + Монгол орчуулагч', 'Хоол — өдөр тутмын', 'Үзвэрийн бүх тасалбар (Disneyland орно)', 'Nanjing Road · The Bund · голоор завиар · Shanghai Tower', 'Shanghai Disneyland · Luxury буфет · Yu Garden', 'Xintiandi · Louis Vuitton · Starbucks үйлдвэр', '24/7 Монгол хэлээр дэмжлэг'],
+        en: ['Return flight tickets', '5-star hotel · 4 nights', 'All city transport', 'Guide + Mongolian interpreter', 'Daily meals', 'All entrance tickets (Disneyland included)', 'Nanjing Road · The Bund · river cruise · Shanghai Tower', 'Shanghai Disneyland · luxury buffet · Yu Garden', 'Xintiandi · Louis Vuitton · Starbucks Roastery', '24/7 support in Mongolian']
       },
       highlights: null,
       notIncluded: {
-        mn: 'Эрүүл мэндийн шинжилгээ ороогүй. Нислэгийн зардал тусдаа орно.',
-        en: 'No medical checkup. Flights are not included.'
+        mn: 'Эрүүл мэндийн шинжилгээ ороогүй. Шинжилгээ хийлгэхийг хүсвэл Шинжилгээ + Аялал багцыг сонгоно уу.',
+        en: 'No medical checkup. Choose the Health + Travel Package if you want the checkup.'
       },
       desc: {
-        mn: 'Эрүүл мэндийн шинжилгээгүй, цэвэр аяллын хувилбар. Шанхайн онцлох бүх газраар Монгол хэлт хувийн хөтөчтэй 5 өдөр аялна. Буудал, тээвэр, хоол, шоппинг бүгд зохион байгуулагдсан.',
-        en: 'A pure travel option with no medical checkup. Five days across Shanghai’s highlights with a private Mongolian-speaking guide. Hotel, transport, meals and shopping all arranged.'
+        mn: 'Шинжилгээ + Аялал багцтай яг ижил аялал — нислэг, 5 одтой буудал, хоол, унаа, үзвэрийн тасалбар бүгд үнэд багтсан. Ялгаа нь: эрүүл мэндийн шинжилгээ ороогүй, харин амьтны хүрээлэнгийн оронд Shanghai Disneyland орсон.',
+        en: 'The same trip as the Health + Travel Package — flights, 5-star hotel, meals, transport and entrance tickets all included. The differences: no medical checkup, and Shanghai Disneyland replaces the zoo day.'
       },
       itinerary: ITIN_TRAVEL,
       photoSets: ['city'],
@@ -402,8 +399,8 @@
       meta: {
         title: { mn: 'Зөвхөн аяллын багц — ₮3,200,000 · LFS Shanghai', en: 'Travel Only Package — ₮3,200,000 · LFS Shanghai' },
         desc: {
-          mn: 'Шанхайд 5 хоног 4 шөнө — 4 одтой буудал, Монгол хэлт хувийн хөтөч, бүх тээвэр. Эрүүл мэндийн шинжилгээгүй. ₮3,200,000 / хүн.',
-          en: '5 days and 4 nights in Shanghai — 4-star hotel, private Mongolian-speaking guide, all transport. No medical checkup. ₮3,200,000 per person.'
+          mn: 'Шанхайд 5 өдөр 4 шөнө — нислэг, 5 одтой буудал, хоол, Disneyland тасалбар бүгд багтсан. Эрүүл мэндийн шинжилгээгүй. ₮3,200,000 / хүн.',
+          en: '5 days and 4 nights in Shanghai — flights, 5-star hotel, meals and a Disneyland ticket all included. No medical checkup. ₮3,200,000 per person.'
         },
         image: '/img/health/Bund2.jpg'
       }
