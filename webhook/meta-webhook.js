@@ -19,6 +19,14 @@ const UID          = process.env.USER_UID;
 const TG_TOKEN     = process.env.TELEGRAM_BOT_TOKEN_JARVIS;
 const TG_CHAT      = process.env.TELEGRAM_ID;
 
+// ── FB MESSENGER БОТЫГ УНТРААХ ТУМБЛЕР ─────────────────────────────
+// Meta Business Agent (business.facebook.com) Facebook Page-ийн чатыг
+// хариулж эхэлсэн тул энэ ботын FB тал унтраалттай. Хоёр бот зэрэг
+// хариулбал нэг мессежид давхар хариулт очно.
+// Instagram DM энэ ботоор хэвээр ажиллана.
+// Буцааж асаах: Vercel дээр FB_BOT_ENABLED=true орчны хувьсагч нэмнэ.
+const FB_BOT_ENABLED = process.env.FB_BOT_ENABLED === 'true';
+
 // ── HELPERS ───────────────────────────────────────────────────────
 const sleep = ms => new Promise(r => setTimeout(r, ms));
 
@@ -614,6 +622,13 @@ module.exports = {
       if (body.object !== 'instagram' && body.object !== 'page') return;
 
       const isIG        = body.object === 'instagram';
+
+      // FB Messenger-ийг Meta Business Agent хариулж байгаа тул алгасна
+      if (!isIG && !FB_BOT_ENABLED) {
+        console.log('[Meta] FB Messenger алгасав — Meta Business Agent хариулна');
+        return;
+      }
+
       const accessToken = isIG ? META_TOKEN : await getPageToken();
       const platform    = isIG ? 'ig' : 'fb';
 
