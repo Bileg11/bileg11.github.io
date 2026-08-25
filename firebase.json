@@ -1,4 +1,7 @@
 {
+  "firestore": {
+    "rules": "firestore.rules"
+  },
   "functions": {
     "source": "functions"
   },
@@ -13,18 +16,44 @@
       "node_modules"
     ],
     "rewrites": [
-      { "source": "/login", "destination": "/login/index.html" },
-      { "source": "/booking", "destination": "/booking/index.html" },
-      { "source": "/admin", "destination": "/admin/index.html" },
-      { "source": "/profile/**", "destination": "/profile/index.html" },
-      { "source": "/profile", "destination": "/profile/index.html" },
-      { "source": "/mn", "destination": "/mn/index.html" },
-      { "source": "/en", "destination": "/en/index.html" }
+      {
+        "source": "/login",
+        "destination": "/login/index.html"
+      },
+      {
+        "source": "/booking",
+        "destination": "/booking/index.html"
+      },
+      {
+        "source": "/admin",
+        "destination": "/admin/index.html"
+      },
+      {
+        "source": "/profile/**",
+        "destination": "/profile/index.html"
+      },
+      {
+        "source": "/profile",
+        "destination": "/profile/index.html"
+      },
+      {
+        "source": "/mn",
+        "destination": "/mn/index.html"
+      },
+      {
+        "source": "/en",
+        "destination": "/en/index.html"
+      }
     ],
     "headers": [
       {
         "source": "**/*.@(jpg|jpeg|png|webp|gif|svg)",
-        "headers": [{ "key": "Cache-Control", "value": "public, max-age=604800" }]
+        "headers": [
+          {
+            "key": "Cache-Control",
+            "value": "public, max-age=604800"
+          }
+        ]
       }
     ]
   }

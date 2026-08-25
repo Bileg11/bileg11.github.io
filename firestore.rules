@@ -1,0 +1,76 @@
+rules_version = '2';
+service cloud.firestore {
+  match /databases/{database}/documents {
+
+    // Зөвхөн Билэг. Энэ и-мэйл нь admin/index.html доторх
+    // ADMIN_EMAILS-тэй таарч байх ёстой.
+    function isAdmin() {
+      return request.auth != null
+          && request.auth.token.email == 'amarsaikhanbileg@gmail.com';
+    }
+
+    // ── Хэрэглэгчийн профайл — зөвхөн эзэн нь ──
+    match /users/{userId} {
+      allow read, write: if request.auth != null && request.auth.uid == userId;
+    }
+
+    // ── Захиалга ──
+    // Хэн ч илгээнэ (нэвтрээгүй зочин ч захиалга өгдөг).
+    // Уншиж, засаж, устгахыг ЗӨВХӨН админ.
+    match /bookings/{docId} {
+      allow create: if true;
+      allow read, update, delete: if isAdmin();
+    }
+
+    // ── Санхүү — зөвхөн админ ──
+    match /finances/{docId} {
+      allow read, write: if isAdmin();
+    }
+
+    // ── Хэрэглэгчийн нэр (давхардал шалгахад нээлттэй унших) ──
+    match /usernames/{username} {
+      allow read: if true;
+      // Зөвхөн шинээр эзэмших боломжтой — бусдын нэрийг булааж чадахгүй
+      allow create: if request.auth != null
+                    && request.resource.data.uid == request.auth.uid;
+      allow update, delete: if request.auth != null
+                    && resource.data.uid == request.auth.uid;
+    }
+
+    // ── Аяллын төлөвлөгч ──
+    // Линкээр хуваалцдаг тул унших нээлттэй.
+    // Засах, устгахыг зөвхөн үүсгэсэн хэрэглэгч.
+    match /planners/{planId} {
+      allow read: if true;
+      allow create: if request.auth != null
+                    && request.resource.data.uid == request.auth.uid;
+      allow update, delete: if request.auth != null
+                    && resource.data.uid == request.auth.uid;
+    }
+
+    // ── Үйлчлүүлэгчийн үнэлгээ ──
+    // Хэн ч илгээнэ, гэхдээ хатуу шалгуултай, заавал status='pending'.
+    // Уншиж, зөвшөөрч, устгахыг зөвхөн админ.
+    match /reviews/{id} {
+      allow create: if
+           request.resource.data.keys().hasOnly(
+             ['rating','pkg','name','text','consent','status','source','createdAt','ua'])
+        && request.resource.data.rating is int
+        && request.resource.data.rating >= 1
+        && request.resource.data.rating <= 5
+        && request.resource.data.pkg in ['full','basic','travel','other']
+        && request.resource.data.name is string
+        && request.resource.data.name.size() >= 2
+        && request.resource.data.name.size() <= 40
+        && request.resource.data.text is string
+        && request.resource.data.text.size() >= 15
+        && request.resource.data.text.size() <= 600
+        && request.resource.data.consent == true
+        && request.resource.data.status == 'pending'
+        && request.resource.data.source == 'form';
+
+      allow read, update, delete: if isAdmin();
+    }
+
+  }
+}
