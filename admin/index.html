@@ -315,11 +315,11 @@ body{font-family:'Inter',sans-serif;background:var(--bg);color:var(--text);min-h
     <!-- ANALYTICS TAB -->
     <!-- REVIEWS TAB -->
     <div class="tab-content" id="tab-reviews">
-      <div style="background:#fff8e7;border:1px solid #f0c040;border-radius:12px;padding:16px 18px;margin-bottom:20px;font-size:13.5px;line-height:1.65">
-        <strong>⚠️ Зөвхөн бодит үнэлгээ нийтэл.</strong> Зохиосон үнэлгээ нэмбэл Google-ийн rich result
+      <div style="background:rgba(255,159,10,.12);border:1px solid rgba(255,159,10,.4);border-radius:12px;padding:16px 18px;margin-bottom:20px;font-size:13.5px;line-height:1.65;color:#ffd68a">
+        <strong style="color:#ff9f0a">⚠️ Зөвхөн бодит үнэлгээ нийтэл.</strong> Зохиосон үнэлгээ нэмбэл Google-ийн rich result
         бүхэлдээ хасагдаж, багцын үнэ ч хайлтад харагдахаа болино. Түүнээс ч чухал нь — үйлчлүүлэгчээ хуурч байгаа хэрэг.
       </div>
-      <div style="background:var(--bg2,#f5f5f7);border-radius:12px;padding:16px 18px;margin-bottom:20px;font-size:13px;line-height:1.7;color:#3a3a3a">
+      <div style="background:var(--bg2);border:1px solid var(--border);border-radius:12px;padding:16px 18px;margin-bottom:20px;font-size:13px;line-height:1.7;color:var(--text)">
         <strong>Хэрхэн нийтлэх вэ:</strong><br>
         1. Доорх үнэлгээг уншиж, бодит эсэхийг шалга<br>
         2. <strong>📋 Хуулах</strong> дар → JS объект clipboard-д хуулагдана<br>
@@ -628,7 +628,7 @@ window.switchTab = function(tab, btn) {
 
   window.loadReviews = async function (filter) {
     const box = document.getElementById('reviewsList');
-    box.innerHTML = '<div style="padding:30px;text-align:center;color:#86868b">Ачаалж байна…</div>';
+    box.innerHTML = '<div style="padding:30px;text-align:center;color:var(--muted)">Ачаалж байна…</div>';
     try {
       const snap = await getDocs(query(collection(db, 'reviews'), orderBy('createdAt', 'desc')));
       let rows = [];
@@ -636,7 +636,7 @@ window.switchTab = function(tab, btn) {
       if (filter !== 'all') rows = rows.filter(r => (r.status || 'pending') === filter);
 
       if (!rows.length) {
-        box.innerHTML = '<div style="padding:40px;text-align:center;color:#86868b;font-size:14px">' +
+        box.innerHTML = '<div style="padding:40px;text-align:center;color:var(--muted);font-size:14px">' +
           (filter === 'pending' ? 'Хүлээгдэж буй үнэлгээ алга.' : 'Үнэлгээ алга.') +
           '<br><span style="font-size:12.5px">Захиалагчдад <strong>lfsshanghai.com/review/</strong> линкийг явуулаарай.</span></div>';
         return;
@@ -646,13 +646,13 @@ window.switchTab = function(tab, btn) {
         const st = r.status || 'pending';
         const stColor = st === 'approved' ? '#34c759' : st === 'rejected' ? '#d70015' : '#f59e0b';
         const date = r.createdAt?.toDate ? r.createdAt.toDate().toISOString().slice(0, 10) : '—';
-        return `<div style="background:#fff;border:1px solid rgba(0,0,0,.08);border-radius:14px;padding:20px;margin-bottom:12px">
+        return `<div style="background:var(--bg2);border:1px solid var(--border);border-radius:14px;padding:20px;margin-bottom:12px">
           <div style="display:flex;justify-content:space-between;align-items:center;gap:10px;flex-wrap:wrap;margin-bottom:10px">
             <div style="color:#f59e0b;font-size:16px;letter-spacing:2px">${'★'.repeat(r.rating || 0)}${'☆'.repeat(5 - (r.rating || 0))}</div>
             <span style="font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.05em;color:${stColor}">${st}</span>
           </div>
-          <div style="font-size:14.5px;line-height:1.65;color:#1d1d1f;margin-bottom:12px">"${(r.text || '').replace(/</g, '&lt;')}"</div>
-          <div style="font-size:12.5px;color:#6e6e73;margin-bottom:14px">
+          <div style="font-size:14.5px;line-height:1.65;color:var(--text);margin-bottom:12px">"${(r.text || '').replace(/</g, '&lt;')}"</div>
+          <div style="font-size:12.5px;color:var(--muted);margin-bottom:14px">
             <strong>${(r.name || '').replace(/</g, '&lt;')}</strong> · ${PKG_NAME[r.pkg] || r.pkg || '—'} · ${date} · ${r.source || 'form'}
           </div>
           <div style="display:flex;gap:8px;flex-wrap:wrap">
