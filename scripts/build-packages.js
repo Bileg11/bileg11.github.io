@@ -518,27 +518,42 @@ function redirectPage(t) {
 }
 
 // ── Sitemap ───────────────────────────────────────────────────
-function updateSitemap(urls) {
+// entries: [{ url, changed }]
+// lastmod-ыг ЗӨВХӨН хуудас үнэхээр өөрчлөгдсөн үед шинэчилнэ. Агуулга
+// өөрчлөгдөөгүй атал огноог ахиулбал Google lastmod-д итгэхээ больдог.
+function updateSitemap(entries) {
   const file = path.join(ROOT, 'sitemap.xml');
   if (!fs.existsSync(file)) { console.log('  ⚠ sitemap.xml олдсонгүй — алгасав'); return; }
   let xml = fs.readFileSync(file, 'utf8');
-  // өмнө нэмсэн багцын мөрүүдийг цэвэрлээд дахин бичнэ
+
+  // Өмнөх lastmod-уудыг URL-аар нь цуглуулна
+  const prev = {};
+  const re = /<loc>([^<]+)<\/loc><lastmod>([^<]+)<\/lastmod>/g;
+  let m;
+  while ((m = re.exec(xml))) prev[m[1]] = m[2];
+
   xml = xml.replace(/\s*<!-- packages:start -->[\s\S]*?<!-- packages:end -->/g, '');
   const today = new Date().toISOString().slice(0, 10);
-  const block = '\n  <!-- packages:start -->\n' + urls.map(u =>
-    `  <url><loc>${u}</loc><lastmod>${today}</lastmod><changefreq>monthly</changefreq><priority>0.9</priority></url>`
-  ).join('\n') + '\n  <!-- packages:end -->';
+  let bumped = 0;
+  const block = '\n  <!-- packages:start -->\n' + entries.map(e => {
+    const date = (!e.changed && prev[e.url]) ? prev[e.url] : today;
+    if (date === today && prev[e.url] !== today) bumped++;
+    return `  <url><loc>${e.url}</loc><lastmod>${date}</lastmod><changefreq>monthly</changefreq><priority>0.9</priority></url>`;
+  }).join('\n') + '\n  <!-- packages:end -->';
   xml = xml.replace('</urlset>', block + '\n</urlset>');
   fs.writeFileSync(file, xml);
-  console.log(`  sitemap.xml → ${urls.length} URL нэмэв`);
+  console.log(`  sitemap.xml → ${entries.length} URL` + (bumped ? `, ${bumped}-ийн lastmod шинэчлэв` : ', lastmod хэвээр'));
 }
 
 // ── Ажиллуулах ────────────────────────────────────────────────
+// Өөрчлөгдсөн эсэхийг буцаана — sitemap-ийн lastmod үүнээс шалтгаална
 function write(rel, html) {
   const abs = path.join(ROOT, rel);
   fs.mkdirSync(path.dirname(abs), { recursive: true });
-  fs.writeFileSync(abs, html);
-  console.log(`  ✓ ${rel}  (${(html.length / 1024).toFixed(1)} KB)`);
+  const same = fs.existsSync(abs) && fs.readFileSync(abs, 'utf8') === html;
+  if (!same) fs.writeFileSync(abs, html);
+  console.log(`  ${same ? '·' : '✓'} ${rel}  (${(html.length / 1024).toFixed(1)} KB)${same ? '  — өөрчлөлтгүй' : ''}`);
+  return !same;
 }
 
 console.log('LFS багцын хуудас үүсгэж байна…\n');
@@ -567,8 +582,8 @@ for (const L of ['mn', 'en']) {
   const t = T[L];
   for (const p of active) {
     const rel = `${t.base.replace(/^\//, '')}/${p.slug}/index.html`;
-    write(rel, page(p, L));
-    urls.push(`${SITE}${t.base}/${p.slug}/`);
+    const changed = write(rel, page(p, L));
+    urls.push({ url: `${SITE}${t.base}/${p.slug}/`, changed });
   }
   write(`${t.base.replace(/^\//, '')}/index.html`, redirectPage(t));
 }
