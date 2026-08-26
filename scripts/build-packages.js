@@ -37,7 +37,7 @@ const T = {
     perPerson: '/ хүн', groupNote: '👥 2-оос дээш хүн ирвэл үнийг тохиролцоно',
     ctaTitle: 'Захиалахад бэлэн үү?', ctaSub: 'Мэдээллээ илгээхэд 24 цагийн дотор холбоо барина.',
     notIncluded: 'Энэ багцад ОРООГҮЙ', crumbHome: 'Нүүр', crumbPkgs: 'Багцууд',
-    footerLinks: [['/', 'Нүүр'], ['/routes/', 'Маршрут'], ['/health/', 'Эрүүл мэнд'], ['/tips/', 'Зөвлөмж'], ['/booking/', 'Захиалга']],
+    footerLinks: [['/', 'Нүүр'], ['/health/', 'Эрүүл мэнд'], ['/apartment/', 'Байр түрээс'], ['/routes/', 'Маршрут'], ['/tips/', 'Зөвлөмж'], ['/booking/', 'Захиалга']],
     rights: '© 2026 LFS Shanghai. Бүх эрх хуулиар хамгаалагдсан.',
     navBook: 'Захиалах'
   },
@@ -55,7 +55,7 @@ const T = {
     perPerson: 'per person', groupNote: '👥 Group price available for 2+ people',
     ctaTitle: 'Ready to book?', ctaSub: 'Send us your details and we reply within 24 hours.',
     notIncluded: 'NOT included in this package', crumbHome: 'Home', crumbPkgs: 'Packages',
-    footerLinks: [['/en/', 'Home'], ['/en/routes/', 'Routes'], ['/en/health/', 'Healthcare'], ['/en/tips/', 'Tips'], ['/en/booking/', 'Book Now']],
+    footerLinks: [['/en/', 'Home'], ['/en/health/', 'Healthcare'], ['/en/apartment/', 'Apartment Rental'], ['/en/routes/', 'Routes'], ['/en/tips/', 'Tips'], ['/en/booking/', 'Book Now']],
     rights: '© 2026 LFS Shanghai — Trusted Guide for Mongolian Travelers',
     navBook: 'Book Now'
   }

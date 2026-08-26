@@ -238,6 +238,18 @@ body{
   display:inline-flex;align-items:center;gap:7px;
 }
 .btn-ghost:hover{background:var(--border)}
+/* Хариу үзүүлэх 3 баганат сүлжээ (монгол хуудастай ижил) */
+@media(max-width:860px){.gallery-grid-wrap{grid-template-columns:repeat(2,1fr) !important}}
+@media(max-width:600px){.gallery-grid-wrap{grid-template-columns:1fr !important}}
+.offer-strip{max-width:1160px;margin:0 auto;padding:40px 24px 8px;display:grid;grid-template-columns:repeat(3,1fr);gap:16px}
+.offer{display:block;background:var(--bg2);border:1px solid var(--border);border-radius:18px;padding:24px;text-decoration:none;transition:transform .2s,box-shadow .2s,border-color .2s}
+.offer:hover{transform:translateY(-3px);box-shadow:0 10px 32px rgba(0,0,0,.08);border-color:var(--blue)}
+.offer-ico{font-size:28px;margin-bottom:10px}
+.offer-name{font-size:14px;font-weight:600;color:var(--muted);margin-bottom:6px}
+.offer-price{font-size:24px;font-weight:800;letter-spacing:-.03em;color:var(--dark2);margin-bottom:8px}
+.offer-price span{font-size:12px;font-weight:500;color:var(--muted);margin-left:6px;letter-spacing:0}
+.offer-note{font-size:12.5px;color:var(--muted);line-height:1.55}
+@media(max-width:860px){.offer-strip{grid-template-columns:1fr;gap:12px;padding:28px 20px 4px}.offer{padding:20px}.offer-ico{font-size:24px;margin-bottom:8px}.offer-price{font-size:21px}}
 .hero-stats{
   display:flex;gap:40px;flex-wrap:wrap;justify-content:center;
   padding-top:32px;
@@ -412,18 +424,6 @@ body{
 
 /* ── ITINERARIES ── */
 .itin-section{background:var(--bg);padding:100px 24px}
-.itin-tabs{display:flex;gap:8px;margin-top:48px;margin-bottom:32px;flex-wrap:wrap}
-.itin-tab{
-  padding:8px 20px;border-radius:20px;
-  font-size:13px;font-weight:500;
-  border:1px solid var(--border);background:none;
-  color:var(--muted);cursor:pointer;font-family:inherit;
-  transition:.2s;
-}
-.itin-tab.active,.itin-tab:hover{background:var(--dark2);color:#fff;border-color:var(--dark2)}
-.itin-content{display:none}
-.itin-content.active{display:grid;grid-template-columns:1fr 1fr;gap:20px}
-@media(max-width:700px){.itin-content.active{grid-template-columns:1fr}}
 .itin-panel{
   background:var(--bg2);
   border-radius:var(--radius2);
@@ -719,8 +719,6 @@ section,#booking-section{scroll-margin-top:60px}
 
   /* Itineraries */
   .itin-panel{padding:24px 20px}
-  .itin-tabs{gap:6px}
-  .itin-tab{padding:7px 14px;font-size:12px}
 
   /* Tips */
   .tips-grid{gap:12px}
@@ -774,7 +772,6 @@ section,#booking-section{scroll-margin-top:60px}
   .why-card{padding:24px}
   .medical-title{font-size:30px}
   .section-title{letter-spacing:-.03em}
-  .itin-tab{font-size:11px;padding:6px 10px}
 }
 </style>
 <script src="/js/pixel.js" defer></script>
@@ -846,14 +843,15 @@ section,#booking-section{scroll-margin-top:60px}
 <div class="nav-links" id="navLinks">
   <button class="nav-link active" onclick="scrollTo_(0);toggleMobileMenu()">Home</button>
   <button class="nav-link" onclick="scrollToId('medical');toggleMobileMenu()">Healthcare</button>
-  <button class="nav-link" onclick="scrollToId('itineraries');toggleMobileMenu()">Itineraries</button>
+  <button class="nav-link" onclick="scrollToId('apartment');toggleMobileMenu()">Apartment Rental</button>
+  <button class="nav-link" onclick="window.location.href='/en/pricing/';toggleMobileMenu()">Pricing</button>
   <button class="nav-link" onclick="window.location.href='/en/tips/#guide20k';toggleMobileMenu()">Student 20K Tips</button>
   <button class="nav-link" onclick="window.location.href='/en/tips/';toggleMobileMenu()">Tips</button>
   <button class="nav-link" onclick="window.location.href='/en/metro/';toggleMobileMenu()">Metro Guide</button>
   <button class="nav-link" onclick="window.location.href='/en/routes/';toggleMobileMenu()">Routes</button>
   <button class="nav-link" onclick="window.location.href='/en/planner/';toggleMobileMenu()" style="color:#e8392a;">✦ Trip Planner</button>
   <button class="nav-link" onclick="window.location.href='/en/contact/';toggleMobileMenu()">Contact</button>
-  <button class="nav-link" onclick="window.location.href='/login/';toggleMobileMenu()">Login</button>
+  <button class="nav-link" onclick="window.location.href='/en/login/';toggleMobileMenu()">Login</button>
   <button class="nav-link" onclick="window.location.href='/en/booking/';toggleMobileMenu()" style="color:#0071e3;font-weight:600">Book Now →</button>
   <div class="mob-lang-switch">
     <a href="/" class="mob-lang-btn">МН</a>
@@ -904,68 +902,29 @@ section,#booking-section{scroll-margin-top:60px}
 </section>
 </div>
 
-<!-- INTRO BAND -->
-<div class="intro-band">
-  <div class="intro-grid">
-    <div class="intro-item">
-      <div class="intro-icon">🗣️</div>
-      <div class="intro-label">Mongolian-speaking Guide</div>
-      <div class="intro-desc">Chinese, Mongolian & English spoken</div>
-    </div>
-    <div class="intro-item">
-      <div class="intro-icon">🗺️</div>
-      <div class="intro-label">Custom Itinerary</div>
-      <div class="intro-desc">Designed around your needs & pace</div>
-    </div>
-    <div class="intro-item">
-      <div class="intro-icon">✈️</div>
-      <div class="intro-label">Airport Pickup</div>
-      <div class="intro-desc">From Pudong & Hongqiao airports</div>
-    </div>
-    <div class="intro-item">
-      <div class="intro-icon">💼</div>
-      <div class="intro-label">Business Services</div>
-      <div class="intro-desc">Expo, exhibitions, interpreter services</div>
-    </div>
-  </div>
+<!-- WHAT WE SELL — WITH PRICES -->
+<div class="offer-strip">
+  <a href="/en/health/" class="offer">
+    <div class="offer-ico">🩺</div>
+    <div class="offer-name">Travel &amp; health packages</div>
+    <div class="offer-price">₮1,899,000<span>from</span></div>
+    <div class="offer-note">3 packages · flights, hotel, medical tests</div>
+  </a>
+  <a href="/en/apartment/" class="offer">
+    <div class="offer-ico">🏠</div>
+    <div class="offer-name">Apartment rental</div>
+    <div class="offer-price">1,000 ¥<span>one-time</span></div>
+    <div class="offer-note">Search · viewings · lease translation</div>
+  </a>
+  <a href="/en/pricing/" class="offer">
+    <div class="offer-ico">📋</div>
+    <div class="offer-name">Individual services</div>
+    <div class="offer-price">500 ¥<span>per day</span></div>
+    <div class="offer-note">Guide · interpreter · hotel · airport pickup</div>
+  </a>
 </div>
 
-<!-- SERVICES -->
-<section class="services-section reveal" id="services">
-  <div class="section-max">
-    <div class="section-eyebrow reveal">Services</div>
-    <div class="section-title reveal reveal-delay-1">What We Do</div>
-    <div class="section-sub reveal reveal-delay-2">Professional Mongolian guide. All your travel needs solved in one place.</div>
-    <div class="services-grid reveal reveal-delay-3">
-      <div class="service-item">
-        <div class="service-emoji">🩺</div>
-        <div class="service-name">VIP Healthcare</div>
-        <div class="service-desc">Full-body health screening at an international top-tier hospital. Queue-free in 2–3 hours.</div>
-        <button class="service-link" onclick="scrollToId('medical')">Learn More →</button>
-      </div>
-      <div class="service-item">
-        <div class="service-emoji">🏙️</div>
-        <div class="service-name">City Tour</div>
-        <div class="service-desc">Visit The Bund, Yuyuan, Shanghai Tower and more with your Mongolian-speaking guide.</div>
-        <button class="service-link" onclick="scrollToId('itineraries')">View Itineraries →</button>
-      </div>
-      <div class="service-item">
-        <div class="service-emoji">🛍️</div>
-        <div class="service-name">Shopping Escort</div>
-        <div class="service-desc">IFC, Plaza 66, Nanjing Road — navigate the best shops with your Mongolian-speaking guide.</div>
-        <button class="service-link" onclick="window.location.href='/en/booking/'">Book Now →</button>
-      </div>
-      <div class="service-item">
-        <div class="service-emoji">🍜</div>
-        <div class="service-name">Food Tour</div>
-        <div class="service-desc">Experience Shanghai cuisine — Xiaolongbao, 5-star buffets, and local favorites.</div>
-        <button class="service-link" onclick="window.location.href='/en/booking/'">Book Now →</button>
-      </div>
-    </div>
-  </div>
-</section>
-
-<!-- MEDICAL DARK SECTION -->
+<!-- MEDICAL PACKAGES -->
 <section class="medical-section" id="medical">
   <div class="medical-glow"></div>
   <div class="medical-inner">
@@ -1020,490 +979,34 @@ section,#booking-section{scroll-margin-top:60px}
   </div>
 </section>
 
-<!-- WHY US -->
-<section class="why-section" id="why">
+<!-- APARTMENT RENTAL -->
+<section style="background:var(--bg);padding:100px 24px" id="apartment">
   <div class="section-max">
-    <div class="section-eyebrow reveal">Why Choose Us</div>
-    <div class="section-title reveal reveal-delay-1">Your Trust is<br>Our Greatest Value</div>
-    <div class="why-grid">
-      <div class="why-card reveal reveal-delay-1">
-        <div class="why-num">★</div>
-        <div class="why-title">Professional Experience</div>
-        <div class="why-text">Mongolian-speaking guide specialized in Shanghai. Personalized itineraries with 5-star service.</div>
-      </div>
-      <div class="why-card reveal reveal-delay-2">
-        <div class="why-num">24/7</div>
-        <div class="why-title">Support</div>
-        <div class="why-text">Ready to help before, during, and after your trip. You'll never feel alone in China.</div>
-      </div>
-      <div class="why-card reveal reveal-delay-3">
-        <div class="why-num">VIP</div>
-        <div class="why-title">Personal Service</div>
-        <div class="why-text">Not a group tour — a personalized itinerary designed around your needs, your pace.</div>
-      </div>
-    </div>
-  </div>
-</section>
+    <div class="section-eyebrow reveal">🏠 Long-stay service</div>
+    <div class="section-title reveal reveal-delay-1">Help renting<br>an apartment in Shanghai</div>
+    <div class="section-sub reveal reveal-delay-2">A separate service for students and working arrivals. We find the listings, view them with you in person and explain the Chinese lease — a one-time fee of 1,000 CNY.</div>
 
-<!-- ITINERARIES -->
-<section class="itin-section" id="itineraries">
-  <div class="section-max-wide">
-    <div class="section-eyebrow reveal">Sample Itineraries</div>
-    <div class="section-title reveal reveal-delay-1">Shanghai Routes</div>
-    <div class="section-sub reveal reveal-delay-2">Carefully crafted itineraries from 1 to 5 days. Fully customizable to your needs.</div>
-    <div class="itin-tabs reveal reveal-delay-3">
-      <button class="itin-tab active" onclick="switchItin('classic',this)">🏙️ Classic</button>
-      <button class="itin-tab" onclick="switchItin('food',this)">🍜 Food</button>
-      <button class="itin-tab" onclick="switchItin('shopping',this)">🛍️ Shopping</button>
-      <button class="itin-tab" onclick="switchItin('culture',this)">🎎 Culture</button>
-    </div>
-
-    <div class="itin-content active" id="itin-classic">
-      <div class="itin-panel">
-        <h3>Classic Shanghai — 3 Days</h3>
-        <div class="itin-day">
-          <div class="itin-day-header">
-            <div class="itin-day-badge">1</div>
-            <div class="itin-day-title">Heart of the City</div>
-          </div>
-          <div class="itin-stops">
-            <div class="itin-stop">The Bund — colonial-era waterfront along the Huangpu River</div>
-            <div class="itin-stop">Yuyuan Garden — 450-year-old traditional Chinese garden</div>
-            <div class="itin-stop">Nanshi — old town, inner gate, local market</div>
-            <div class="itin-stop">Xiaolongbao dinner — Din Tai Fung</div>
-          </div>
-        </div>
-        <div class="itin-day">
-          <div class="itin-day-header">
-            <div class="itin-day-badge">2</div>
-            <div class="itin-day-title">Modern Shanghai</div>
-          </div>
-          <div class="itin-stops">
-            <div class="itin-stop">Shanghai Tower — world's 2nd tallest building, 118 floors</div>
-            <div class="itin-stop">Starbucks Reserve Roastery — world's largest Starbucks</div>
-            <div class="itin-stop">Xintiandi — art architecture, galleries, coffee</div>
-            <div class="itin-stop">Nanjing Road — main shopping street</div>
-          </div>
-        </div>
-        <div class="itin-day">
-          <div class="itin-day-header">
-            <div class="itin-day-badge">3</div>
-            <div class="itin-day-title">Culture & Leisure</div>
-          </div>
-          <div class="itin-stops">
-            <div class="itin-stop">Shanghai Museum — 5,000 years of history</div>
-            <div class="itin-stop">Zhujiajiao Water Town — canal town, boat rides</div>
-            <div class="itin-stop">M50 Art District — contemporary art village</div>
-          </div>
-        </div>
-        <div class="itin-meta">
-          <div><span>3</span> Days</div>
-          <div><span>10+</span> Locations</div>
-          <div><span>All</span> Included</div>
-        </div>
+    <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:20px;margin-top:48px" class="gallery-grid-wrap">
+      <div class="reveal reveal-delay-1" style="background:var(--bg2);border-radius:20px;padding:28px">
+        <div style="font-size:30px;margin-bottom:12px">🔍</div>
+        <div style="font-size:15px;font-weight:700;color:var(--dark2);margin-bottom:6px">We search and show</div>
+        <div style="font-size:13px;color:var(--muted);line-height:1.65">We filter options against your budget and location, then see 2-3 of them with you in one day.</div>
       </div>
-      <div class="itin-panel">
-        <h3>VIP Healthcare + City — 2 Days</h3>
-        <div class="itin-day">
-          <div class="itin-day-header">
-            <div class="itin-day-badge">1</div>
-            <div class="itin-day-title">VIP Health Check Day</div>
-          </div>
-          <div class="itin-stops">
-            <div class="itin-stop">07:00 — Arrive at hospital, registration</div>
-            <div class="itin-stop">07:30 — Breakfast (included)</div>
-            <div class="itin-stop">08:00–11:00 — Full-body health checkup</div>
-            <div class="itin-stop">12:00 — Receive results, consult with doctor</div>
-            <div class="itin-stop">13:00 — Lunch and sightseeing along Xintiandi & Nanjing</div>
-          </div>
-        </div>
-        <div class="itin-day">
-          <div class="itin-day-header">
-            <div class="itin-day-badge">2</div>
-            <div class="itin-day-title">City Tour + Shopping</div>
-          </div>
-          <div class="itin-stops">
-            <div class="itin-stop">The Bund + Pudong panoramic views</div>
-            <div class="itin-stop">IFC Mall — luxury brand stores</div>
-            <div class="itin-stop">5-star buffet dinner</div>
-            <div class="itin-stop">Depart from Hongqiao / Pudong Airport</div>
-          </div>
-        </div>
-        <div class="itin-meta">
-          <div><span>2</span> Days</div>
-          <div><span>VIP</span> Hospital</div>
-          <div><span>Most</span> Popular</div>
-        </div>
+      <div class="reveal reveal-delay-2" style="background:var(--bg2);border-radius:20px;padding:28px">
+        <div style="font-size:30px;margin-bottom:12px">📄</div>
+        <div style="font-size:15px;font-weight:700;color:var(--dark2);margin-bottom:6px">We explain the lease</div>
+        <div style="font-size:13px;color:var(--muted);line-height:1.65">The lease is in Chinese. We go through it line by line, and you sign only once you understand it.</div>
+      </div>
+      <div class="reveal reveal-delay-3" style="background:var(--bg2);border-radius:20px;padding:28px">
+        <div style="font-size:30px;margin-bottom:12px">📹</div>
+        <div style="font-size:15px;font-weight:700;color:var(--dark2);margin-bottom:6px">Choose before you arrive</div>
+        <div style="font-size:13px;color:var(--muted);line-height:1.65">Pick your place from Mongolia by photo and live video. We hold it 5-7 days and you move in the day you land.</div>
       </div>
     </div>
 
-    <div class="itin-content" id="itin-food">
-      <div class="itin-panel">
-        <h3>Food Tour</h3>
-        <div class="itin-day">
-          <div class="itin-day-header"><div class="itin-day-badge">1</div><div class="itin-day-title">Traditional Shanghai Cuisine</div></div>
-          <div class="itin-stops">
-            <div class="itin-stop">Din Tai Fung — famous Xiaolongbao (soup dumplings)</div>
-            <div class="itin-stop">Yuyuan Bazaar — street food at the traditional market</div>
-            <div class="itin-stop">Nanxiang Mantou Dian — 100-year-old restaurant</div>
-            <div class="itin-stop">5-star buffet dinner — Pudong Shangri-La</div>
-          </div>
-        </div>
-        <div class="itin-day">
-          <div class="itin-day-header"><div class="itin-day-badge">2</div><div class="itin-day-title">Modern Food Culture</div></div>
-          <div class="itin-stops">
-            <div class="itin-stop">Starbucks Reserve Roastery — world's largest</div>
-            <div class="itin-stop">Ferguson Lane — European cuisine, art district</div>
-            <div class="itin-stop">Xintiandi — international restaurants</div>
-            <div class="itin-stop">Tianzifang — street food, craft beer</div>
-          </div>
-        </div>
-        <div class="itin-meta"><div><span>2</span> Days</div><div><span>8+</span> Restaurants</div><div><span>With</span> Commentary</div></div>
-      </div>
-      <div class="itin-panel">
-        <h3>Food Guide</h3>
-        <div class="itin-day">
-          <div class="itin-day-header"><div class="itin-day-badge">💡</div><div class="itin-day-title">Must Try</div></div>
-          <div class="itin-stops">
-            <div class="itin-stop">Xiaolongbao — soup dumplings (symbol of Shanghai)</div>
-            <div class="itin-stop">Shengjianbao — pan-fried dumplings</div>
-            <div class="itin-stop">Scallion pancake — green onion flatbread</div>
-            <div class="itin-stop">Hairy crab (autumn) — Shanghai's luxury delicacy</div>
-            <div class="itin-stop">Red braised pork — slow-cooked pork belly</div>
-          </div>
-        </div>
-        <div class="itin-meta"><div><span>With</span> Commentary</div></div>
-        <div style="display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-top:12px">
-          <div style="border-radius:10px;overflow:hidden;aspect-ratio:4/3;background:var(--bg2);"><img src="https://images.unsplash.com/photo-1563245372-f21724e3856d?w=400&q=80" style="width:100%;height:100%;object-fit:cover" alt="Xiaolongbao"></div>
-          <div style="border-radius:10px;overflow:hidden;aspect-ratio:4/3;background:var(--bg2);"><img src="https://images.unsplash.com/photo-1582878826629-29b7ad1cdc43?w=400&q=80" style="width:100%;height:100%;object-fit:cover" alt="Shanghai food"></div>
-          <div style="border-radius:10px;overflow:hidden;aspect-ratio:4/3;background:var(--bg2);"><img src="https://images.unsplash.com/photo-1547592166-23ac45744acd?w=400&q=80" style="width:100%;height:100%;object-fit:cover" alt="Dim sum"></div>
-          <div style="border-radius:10px;overflow:hidden;aspect-ratio:4/3;background:var(--bg2);"><img src="https://images.unsplash.com/photo-1569050467447-ce54b3bbc37d?w=400&q=80" style="width:100%;height:100%;object-fit:cover" alt="Chinese food"></div>
-        </div>
-      </div>
+    <div style="text-align:center;margin-top:40px" class="reveal reveal-delay-3">
+      <a href="/en/apartment/" style="display:inline-flex;align-items:center;gap:6px;padding:13px 30px;background:var(--blue);border-radius:50px;font-size:14px;font-weight:600;color:#fff;text-decoration:none;transition:.2s" onmouseover="this.style.opacity='.88'" onmouseout="this.style.opacity=''">Apartment rental details →</a>
     </div>
-
-    <div class="itin-content" id="itin-shopping">
-      <div class="itin-panel">
-        <h3>Shopping Tour — 2 Days</h3>
-        <div class="itin-day">
-          <div class="itin-day-header"><div class="itin-day-badge">1</div><div class="itin-day-title">Luxury Brands</div></div>
-          <div class="itin-stops">
-            <div class="itin-stop">IFC Mall — LV, Gucci, Prada, Hermès</div>
-            <div class="itin-stop">Plaza 66 — Chanel, Dior, Saint Laurent</div>
-            <div class="itin-stop">Nanjing West Road — premier luxury shopping street</div>
-            <div class="itin-stop">iapm Mall — open late, luxury brands</div>
-          </div>
-        </div>
-        <div class="itin-day">
-          <div class="itin-day-header"><div class="itin-day-badge">2</div><div class="itin-day-title">Local Goods + Markets</div></div>
-          <div class="itin-stops">
-            <div class="itin-stop">South Bund Fabric Market — custom-tailored clothing</div>
-            <div class="itin-stop">Yuyuan Bazaar — traditional souvenirs</div>
-            <div class="itin-stop">Tianzifang — crafts, artwork, gifts</div>
-            <div class="itin-stop">Qipu Road — affordable wholesale goods</div>
-          </div>
-        </div>
-        <div class="itin-meta"><div><span>2</span> Days</div><div><span>10+</span> Stores</div><div><span>Price</span> Negotiation</div></div>
-      </div>
-      <div class="itin-panel">
-        <h3>Shopping Tips</h3>
-        <div class="itin-day">
-          <div class="itin-day-header"><div class="itin-day-badge">💡</div><div class="itin-day-title">What You Need to Know</div></div>
-          <div class="itin-stops">
-            <div class="itin-stop">Tax refund — claim back on purchases over 500 CNY</div>
-            <div class="itin-stop">Use WeChat Pay — cashless shopping only</div>
-            <div class="itin-stop">Beware of fakes — counterfeit goods at popular markets</div>
-            <div class="itin-stop">Bring your passport — required for duty-free shopping</div>
-          </div>
-        </div>
-        <div class="itin-meta"><div><span>All</span> Tips</div><div><span>In</span> English</div></div>
-      </div>
-    </div>
-
-    <div class="itin-content" id="itin-culture">
-      <div class="itin-panel">
-        <h3>Cultural Tour — 3 Days</h3>
-        <div class="itin-day">
-          <div class="itin-day-header"><div class="itin-day-badge">1</div><div class="itin-day-title">Historical Shanghai</div></div>
-          <div class="itin-stops">
-            <div class="itin-stop">Shanghai Museum — 140,000 artifacts, 5,000 years of history</div>
-            <div class="itin-stop">The Bund — colonial architecture, scenic views</div>
-            <div class="itin-stop">Yuyuan Garden — Ming Dynasty classical garden</div>
-          </div>
-        </div>
-        <div class="itin-day">
-          <div class="itin-day-header"><div class="itin-day-badge">2</div><div class="itin-day-title">Modern Art</div></div>
-          <div class="itin-stops">
-            <div class="itin-stop">M50 Art District — art village with 50+ galleries</div>
-            <div class="itin-stop">Rockbund Art Museum — contemporary art</div>
-            <div class="itin-stop">Tianzifang — bohemian lanes, handicrafts</div>
-          </div>
-        </div>
-        <div class="itin-day">
-          <div class="itin-day-header"><div class="itin-day-badge">3</div><div class="itin-day-title">Water Town Tour</div></div>
-          <div class="itin-stops">
-            <div class="itin-stop">Zhujiajiao — 1,700-year-old water town</div>
-            <div class="itin-stop">Boat rides, handicraft shops</div>
-            <div class="itin-stop">Traditional Chinese dinner</div>
-          </div>
-        </div>
-        <div class="itin-meta"><div><span>3</span> Days</div><div><span>Deep</span> Culture</div><div><span>Guide</span> Included</div></div>
-      </div>
-      <div class="itin-panel">
-        <h3>Culture Tips</h3>
-        <div class="itin-day">
-          <div class="itin-day-header"><div class="itin-day-badge">💡</div><div class="itin-day-title">Chinese Customs</div></div>
-          <div class="itin-stops">
-            <div class="itin-stop">Remove hats in temples, maintain silence</div>
-            <div class="itin-stop">Inform in advance if you have dietary restrictions</div>
-            <div class="itin-stop">Ask permission before taking photos — especially of people</div>
-            <div class="itin-stop">Chinese greeting: 你好 (Nǐ hǎo) — Hello</div>
-          </div>
-        </div>
-        <div class="itin-meta"><div><span>Deep</span> Culture</div><div><span>Guide</span> Included</div></div>
-      </div>
-    </div>
-  </div>
-</section>
-
-<!-- TIPS -->
-<section class="tips-section" id="tips">
-  <div class="section-max-wide">
-    <div class="section-eyebrow reveal">Before You Travel to China</div>
-    <div class="section-title reveal reveal-delay-1">Everything You Need to Know</div>
-    <div class="section-sub reveal reveal-delay-2">Practical tips for first-time visitors to Shanghai.</div>
-    <div class="tips-grid">
-      <div class="tip-card reveal reveal-delay-1">
-        <div class="tip-icon">📱</div>
-        <div class="tip-title">Download a VPN</div>
-        <div class="tip-text">Google, Facebook, Instagram, and WhatsApp are blocked in China. Install a VPN before you go — ExpressVPN and NordVPN work well.</div>
-        <div class="tip-tag">Essential</div>
-      </div>
-      <div class="tip-card reveal reveal-delay-2">
-        <div class="tip-icon">💳</div>
-        <div class="tip-title">Set Up Alipay</div>
-        <div class="tip-text">China is cashless — payments are by QR code only. Set up WeChat Pay or Alipay before you go. Few places accept international cards.</div>
-        <div class="tip-tag">Important</div>
-      </div>
-      <div class="tip-card reveal reveal-delay-3">
-        <div class="tip-icon">🛂</div>
-        <div class="tip-title">Visa</div>
-        <div class="tip-text">Mongolian passport holders can enter visa-free for up to 30 days. Ensure your passport is valid for at least 6 more months.</div>
-        <div class="tip-tag">Know This</div>
-      </div>
-      <div class="tip-card reveal reveal-delay-1">
-        <div class="tip-icon">📡</div>
-        <div class="tip-title">SIM Card or Pocket WiFi</div>
-        <div class="tip-text">Get a Chinese SIM card or pocket WiFi. Available at the airport. Mongolian SIM roaming is expensive.</div>
-        <div class="tip-tag">Tips</div>
-      </div>
-      <div class="tip-card reveal reveal-delay-2">
-        <div class="tip-icon">🏥</div>
-        <div class="tip-title">Travel Insurance</div>
-        <div class="tip-text">Emergency medical costs in China are very high. Always get travel insurance. Notify us in advance if you plan a VIP health check.</div>
-        <div class="tip-tag">Safety</div>
-      </div>
-      <div class="tip-card reveal reveal-delay-2">
-        <div class="tip-icon">🗺️</div>
-        <div class="tip-title">Maps</div>
-        <div class="tip-text">Google Maps doesn't work in China. Use Baidu Maps or Apple Maps. Gaode Maps (高德地图) has the most accurate maps.</div>
-        <div class="tip-tag">Navigation</div>
-      </div>
-      <div class="tip-card reveal reveal-delay-3">
-        <div class="tip-icon">🚇</div>
-        <div class="tip-title">Metro</div>
-        <div class="tip-text">Shanghai's metro is cheap, fast, and reliable. Get a Jiaotong card — valid at all stations and buses. Card deposit is 20 CNY.</div>
-        <div class="tip-tag">Transport</div>
-      </div>
-      <div class="tip-card reveal reveal-delay-1">
-        <div class="tip-icon">🌐</div>
-        <div class="tip-title">Language</div>
-        <div class="tip-text">English is rarely spoken in China. Google Translate's camera feature is very useful. With a Mongolian guide, there's no language barrier.</div>
-        <div class="tip-tag">Communication</div>
-      </div>
-      <div class="tip-card reveal reveal-delay-2">
-        <div class="tip-icon">🏨</div>
-        <div class="tip-title">Hotel</div>
-        <div class="tip-text">Passport details are required when booking. Choose hotels that accept foreign guests — Airbnb is restricted in China.</div>
-        <div class="tip-tag">Accommodation</div>
-      </div>
-    </div>
-  </div>
-</section>
-
-<!-- PRICING -->
-<section style="background:var(--bg2);padding:100px 0" id="pricing">
-  <div class="section-max">
-    <div class="section-eyebrow reveal">Pricing · Packages</div>
-    <div class="section-title reveal reveal-delay-1">Health + Travel Package</div>
-    <div class="section-sub reveal reveal-delay-2">5 days / 4 nights — Flights, 5-star hotel, 23 medical tests and the full city tour in one price</div>
-
-    <div style="margin-top:56px;display:grid;grid-template-columns:1fr 340px;gap:32px;align-items:start" class="reveal reveal-delay-2">
-
-      <!-- Itinerary days -->
-      <div style="display:flex;flex-direction:column;gap:16px">
-
-        <!-- Day 1 -->
-        <div style="background:var(--card);border-radius:var(--radius);padding:28px 32px;box-shadow:var(--shadow);border:1px solid var(--border)">
-          <div style="display:flex;align-items:center;gap:16px;margin-bottom:16px">
-            <div style="width:40px;height:40px;border-radius:50%;background:#0071e3;color:#fff;display:flex;align-items:center;justify-content:center;font-size:14px;font-weight:700;flex-shrink:0">1</div>
-            <div>
-              <div style="font-size:12px;color:var(--muted2);text-transform:uppercase;letter-spacing:.06em;margin-bottom:2px">Day 1</div>
-              <div style="font-size:16px;font-weight:600;color:var(--dark2)">Arrival · Airport Pickup</div>
-            </div>
-          </div>
-          <div style="padding-left:56px;font-size:14px;color:var(--muted);line-height:1.7">
-            Picked up from the airport at 17:00 and transferred to the hospital. Initial consultation and preparation for tomorrow's health check.
-          </div>
-        </div>
-
-        <!-- Day 2 -->
-        <div style="background:var(--card);border-radius:var(--radius);padding:28px 32px;box-shadow:var(--shadow);border:1px solid var(--border)">
-          <div style="display:flex;align-items:center;gap:16px;margin-bottom:16px">
-            <div style="width:40px;height:40px;border-radius:50%;background:#0071e3;color:#fff;display:flex;align-items:center;justify-content:circle;font-size:14px;font-weight:700;flex-shrink:0;align-items:center;justify-content:center">2</div>
-            <div>
-              <div style="font-size:12px;color:var(--muted2);text-transform:uppercase;letter-spacing:.06em;margin-bottom:2px">Day 2</div>
-              <div style="font-size:16px;font-weight:600;color:var(--dark2)">VIP Health Check · City Tour</div>
-            </div>
-          </div>
-          <div style="padding-left:56px;font-size:14px;color:var(--muted);line-height:1.7">
-            Morning health check, receive results with your interpreter and personal nurse. Then explore the city — <strong style="color:var(--dark2)">Nanjing Road</strong>, <strong style="color:var(--dark2)">The Bund</strong>, a river cruise, and views from <strong style="color:var(--dark2)">Shanghai Tower</strong>.
-          </div>
-        </div>
-
-        <!-- Day 3 -->
-        <div style="background:var(--card);border-radius:var(--radius);padding:28px 32px;box-shadow:var(--shadow);border:1px solid var(--border)">
-          <div style="display:flex;align-items:center;gap:16px;margin-bottom:16px">
-            <div style="width:40px;height:40px;border-radius:50%;background:#0071e3;color:#fff;display:flex;align-items:center;justify-content:center;font-size:14px;font-weight:700;flex-shrink:0">3</div>
-            <div>
-              <div style="font-size:12px;color:var(--muted2);text-transform:uppercase;letter-spacing:.06em;margin-bottom:2px">Day 3</div>
-              <div style="font-size:16px;font-weight:600;color:var(--dark2)">Zoo · Luxury Buffet · Yu Garden</div>
-            </div>
-          </div>
-          <div style="padding-left:56px;font-size:14px;color:var(--muted);line-height:1.7">
-            Visit <strong style="color:var(--dark2)">Shanghai Zoo</strong> with over 10,000 animals of 370+ species. Enjoy a luxury buffet lunch and stroll through <strong style="color:var(--dark2)">Yu Garden</strong>.
-          </div>
-        </div>
-
-        <!-- Day 4 -->
-        <div style="background:var(--card);border-radius:var(--radius);padding:28px 32px;box-shadow:var(--shadow);border:1px solid var(--border)">
-          <div style="display:flex;align-items:center;gap:16px;margin-bottom:16px">
-            <div style="width:40px;height:40px;border-radius:50%;background:#0071e3;color:#fff;display:flex;align-items:center;justify-content:center;font-size:14px;font-weight:700;flex-shrink:0">4</div>
-            <div>
-              <div style="font-size:12px;color:var(--muted2);text-transform:uppercase;letter-spacing:.06em;margin-bottom:2px">Day 4</div>
-              <div style="font-size:16px;font-weight:600;color:var(--dark2)">Shopping · Xintiandi · LV · Starbucks Factory</div>
-            </div>
-          </div>
-          <div style="padding-left:56px;font-size:14px;color:var(--muted);line-height:1.7">
-            Visit <strong style="color:var(--dark2)">Xintiandi Plaza</strong>, browse <strong style="color:var(--dark2)">Louis Vuitton</strong>, and tour the world's only open <strong style="color:var(--dark2)">Starbucks Factory</strong>.
-          </div>
-        </div>
-
-        <!-- Day 5 -->
-        <div style="background:var(--card);border-radius:var(--radius);padding:28px 32px;box-shadow:var(--shadow);border:1px solid var(--border)">
-          <div style="display:flex;align-items:center;gap:16px;margin-bottom:16px">
-            <div style="width:40px;height:40px;border-radius:50%;background:var(--muted2);color:#fff;display:flex;align-items:center;justify-content:center;font-size:14px;font-weight:700;flex-shrink:0">5</div>
-            <div>
-              <div style="font-size:12px;color:var(--muted2);text-transform:uppercase;letter-spacing:.06em;margin-bottom:2px">Day 5</div>
-              <div style="font-size:16px;font-weight:600;color:var(--dark2)">Departure · Airport Transfer</div>
-            </div>
-          </div>
-          <div style="padding-left:56px;font-size:14px;color:var(--muted);line-height:1.7">
-            Morning transfer to the airport for your return flight to Mongolia.
-          </div>
-        </div>
-
-      </div>
-
-      <!-- Price card -->
-      <div style="position:sticky;top:80px">
-        <div style="background:#000;border-radius:var(--radius2);padding:36px 32px;color:#fff">
-          <div style="font-size:11px;text-transform:uppercase;letter-spacing:.1em;color:rgba(255,255,255,.45);margin-bottom:12px">Total Price</div>
-          <div style="font-size:48px;font-weight:700;letter-spacing:-.02em;line-height:1;margin-bottom:4px">4,600,000<span style="font-size:22px;font-weight:400;opacity:.6">₮</span></div>
-          <div style="font-size:13px;color:rgba(255,255,255,.4);margin-bottom:32px">5 days · 4 nights · 1 person</div>
-
-          <div style="display:flex;flex-direction:column;gap:12px;margin-bottom:32px">
-            <div style="display:flex;align-items:center;gap:10px;font-size:13px;color:rgba(255,255,255,.75)">
-              <span style="color:#30d158;font-size:15px">✓</span> Return flight tickets
-            </div>
-            <div style="display:flex;align-items:center;gap:10px;font-size:13px;color:rgba(255,255,255,.75)">
-              <span style="color:#30d158;font-size:15px">✓</span> 5-star hotel · 4 nights
-            </div>
-            <div style="display:flex;align-items:center;gap:10px;font-size:13px;color:rgba(255,255,255,.75)">
-              <span style="color:#30d158;font-size:15px">✓</span> Airport pickup
-            </div>
-            <div style="display:flex;align-items:center;gap:10px;font-size:13px;color:rgba(255,255,255,.75)">
-              <span style="color:#30d158;font-size:15px">✓</span> VIP health check — 23 tests
-            </div>
-            <div style="display:flex;align-items:center;gap:10px;font-size:13px;color:rgba(255,255,255,.75)">
-              <span style="color:#30d158;font-size:15px">✓</span> Interpreter + personal nurse
-            </div>
-            <div style="display:flex;align-items:center;gap:10px;font-size:13px;color:rgba(255,255,255,.75)">
-              <span style="color:#30d158;font-size:15px">✓</span> City tour (all days)
-            </div>
-            <div style="display:flex;align-items:center;gap:10px;font-size:13px;color:rgba(255,255,255,.75)">
-              <span style="color:#30d158;font-size:15px">✓</span> Daily meals · luxury buffet
-            </div>
-            <div style="display:flex;align-items:center;gap:10px;font-size:13px;color:rgba(255,255,255,.75)">
-              <span style="color:#30d158;font-size:15px">✓</span> Shopping guide · all entrance tickets
-            </div>
-            <div style="display:flex;align-items:center;gap:10px;font-size:13px;color:rgba(255,255,255,.75)">
-              <span style="color:#30d158;font-size:15px">✓</span> Airport drop-off
-            </div>
-          </div>
-
-          <button onclick="window.location.href='/en/booking/'" style="width:100%;padding:16px;background:#0071e3;color:#fff;border:none;border-radius:12px;font-size:15px;font-weight:600;cursor:pointer;font-family:'Inter',sans-serif;letter-spacing:-.01em;transition:.2s" onmouseover="this.style.background='#0077ed'" onmouseout="this.style.background='#0071e3'">Book Now →</button>
-          <a href="/en/packages/health-travel/" style="display:block;text-align:center;margin-top:10px;padding:13px;border-radius:12px;border:1px solid rgba(255,255,255,.25);color:rgba(255,255,255,.85);font-size:14px;font-weight:600;text-decoration:none">Full package details →</a>
-
-          <div style="margin-top:16px;font-size:11px;color:rgba(255,255,255,.25);text-align:center">Flights, hotel and meals all included</div>
-        </div>
-      </div>
-
-    </div>
-
-    <!-- Individual service pricing -->
-    <div style="margin-top:48px;padding-top:48px;border-top:1px solid var(--border)" class="reveal">
-      <div style="font-size:12px;font-weight:600;letter-spacing:.08em;text-transform:uppercase;color:var(--blue);margin-bottom:12px">Individual Service Pricing</div>
-      <div style="font-size:clamp(24px,4vw,36px);font-weight:700;letter-spacing:-.03em;color:var(--dark2);margin-bottom:8px">Guide · Interpreter</div>
-      <div style="font-size:15px;color:var(--muted);margin-bottom:36px">Can be booked separately if not included in a package.</div>
-
-      <div style="display:grid;grid-template-columns:1fr 1fr;gap:16px;max-width:700px">
-
-        <!-- Guide card -->
-        <div style="background:var(--card);border-radius:var(--radius2);padding:32px;box-shadow:var(--shadow);border:1px solid var(--border)">
-          <div style="font-size:28px;margin-bottom:16px">🧑‍💼</div>
-          <div style="font-size:13px;font-weight:600;text-transform:uppercase;letter-spacing:.06em;color:var(--muted2);margin-bottom:6px">Guide</div>
-          <div style="font-size:36px;font-weight:700;letter-spacing:-.03em;color:var(--dark2);line-height:1">500 <span style="font-size:18px;font-weight:400;color:var(--muted)">CNY/day</span></div>
-          <div style="margin-top:20px;padding-top:20px;border-top:1px solid var(--border);display:flex;flex-direction:column;gap:10px">
-            <div style="display:flex;gap:8px;font-size:13px;color:var(--muted)"><span style="color:var(--blue);flex-shrink:0">✓</span> Airport pickup & drop-off</div>
-            <div style="display:flex;gap:8px;font-size:13px;color:var(--muted)"><span style="color:var(--blue);flex-shrink:0">✓</span> City tour in Mongolian</div>
-            <div style="display:flex;gap:8px;font-size:13px;color:var(--muted)"><span style="color:var(--blue);flex-shrink:0">✓</span> Restaurant & shopping recommendations</div>
-          </div>
-        </div>
-
-        <!-- Translator card -->
-        <div style="background:var(--card);border-radius:var(--radius2);padding:32px;box-shadow:var(--shadow);border:1px solid var(--border)">
-          <div style="font-size:28px;margin-bottom:16px">🗣️</div>
-          <div style="font-size:13px;font-weight:600;text-transform:uppercase;letter-spacing:.06em;color:var(--muted2);margin-bottom:6px">Interpreter</div>
-          <div style="font-size:36px;font-weight:700;letter-spacing:-.03em;color:var(--dark2);line-height:1">500 <span style="font-size:18px;font-weight:400;color:var(--muted)">CNY/day</span></div>
-          <div style="margin-top:20px;padding-top:20px;border-top:1px solid var(--border);display:flex;flex-direction:column;gap:10px">
-            <div style="display:flex;gap:8px;font-size:13px;color:var(--muted)"><span style="color:var(--blue);flex-shrink:0">✓</span> Mongolian–Chinese interpretation</div>
-            <div style="display:flex;gap:8px;font-size:13px;color:var(--muted)"><span style="color:var(--blue);flex-shrink:0">✓</span> Medical interpretation (professional)</div>
-            <div style="display:flex;gap:8px;font-size:13px;color:var(--muted)"><span style="color:var(--blue);flex-shrink:0">✓</span> Business negotiations & contracts</div>
-          </div>
-        </div>
-
-      </div>
-
-      <!-- Discount note -->
-      <div style="margin-top:20px;max-width:700px;background:rgba(0,113,227,.06);border:1px solid rgba(0,113,227,.15);border-radius:14px;padding:16px 20px;display:flex;align-items:flex-start;gap:12px">
-        <span style="font-size:18px;flex-shrink:0">💬</span>
-        <div style="font-size:13px;color:var(--muted);line-height:1.6">
-          <strong style="color:var(--dark2)">Discounts available:</strong> We can negotiate pricing for group bookings or multi-day arrangements. <a href="#" onclick="window.location.href='/en/booking/';return false" style="color:var(--blue);text-decoration:none;font-weight:500">Contact Us →</a>
-        </div>
-      </div>
-    </div>
-
   </div>
 </section>
 
@@ -1637,6 +1140,157 @@ section,#booking-section{scroll-margin-top:60px}
           <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"/></svg>
           Connect directly on Facebook
         </a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- INTRO BAND -->
+<div class="intro-band">
+  <div class="intro-grid">
+    <div class="intro-item">
+      <div class="intro-icon">🗣️</div>
+      <div class="intro-label">Mongolian-speaking Guide</div>
+      <div class="intro-desc">Chinese, Mongolian & English spoken</div>
+    </div>
+    <div class="intro-item">
+      <div class="intro-icon">🗺️</div>
+      <div class="intro-label">Custom Itinerary</div>
+      <div class="intro-desc">Designed around your needs & pace</div>
+    </div>
+    <div class="intro-item">
+      <div class="intro-icon">✈️</div>
+      <div class="intro-label">Airport Pickup</div>
+      <div class="intro-desc">From Pudong & Hongqiao airports</div>
+    </div>
+    <div class="intro-item">
+      <div class="intro-icon">💼</div>
+      <div class="intro-label">Business Services</div>
+      <div class="intro-desc">Expo, exhibitions, interpreter services</div>
+    </div>
+  </div>
+</div>
+
+<!-- SERVICES -->
+<section class="services-section reveal" id="services">
+  <div class="section-max">
+    <div class="section-eyebrow reveal">Services</div>
+    <div class="section-title reveal reveal-delay-1">What We Do</div>
+    <div class="section-sub reveal reveal-delay-2">Professional Mongolian guide. All your travel needs solved in one place.</div>
+    <div class="services-grid reveal reveal-delay-3">
+      <div class="service-item">
+        <div class="service-emoji">🩺</div>
+        <div class="service-name">VIP Healthcare</div>
+        <div class="service-desc">Full-body health screening at an international top-tier hospital. Queue-free in 2–3 hours.</div>
+        <button class="service-link" onclick="scrollToId('medical')">Learn More →</button>
+      </div>
+      <div class="service-item">
+        <div class="service-emoji">🏙️</div>
+        <div class="service-name">City Tour</div>
+        <div class="service-desc">Visit The Bund, Yuyuan, Shanghai Tower and more with your Mongolian-speaking guide.</div>
+        <button class="service-link" onclick="window.location.href='/en/routes/'">View Itineraries →</button>
+      </div>
+      <div class="service-item">
+        <div class="service-emoji">🛍️</div>
+        <div class="service-name">Shopping Escort</div>
+        <div class="service-desc">IFC, Plaza 66, Nanjing Road — navigate the best shops with your Mongolian-speaking guide.</div>
+        <button class="service-link" onclick="window.location.href='/en/booking/'">Book Now →</button>
+      </div>
+      <div class="service-item">
+        <div class="service-emoji">🍜</div>
+        <div class="service-name">Food Tour</div>
+        <div class="service-desc">Experience Shanghai cuisine — Xiaolongbao, 5-star buffets, and local favorites.</div>
+        <button class="service-link" onclick="window.location.href='/en/booking/'">Book Now →</button>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- WHY US -->
+<section class="why-section" id="why">
+  <div class="section-max">
+    <div class="section-eyebrow reveal">Why Choose Us</div>
+    <div class="section-title reveal reveal-delay-1">Your Trust is<br>Our Greatest Value</div>
+    <div class="why-grid">
+      <div class="why-card reveal reveal-delay-1">
+        <div class="why-num">★</div>
+        <div class="why-title">Professional Experience</div>
+        <div class="why-text">Mongolian-speaking guide specialized in Shanghai. Personalized itineraries with 5-star service.</div>
+      </div>
+      <div class="why-card reveal reveal-delay-2">
+        <div class="why-num">24/7</div>
+        <div class="why-title">Support</div>
+        <div class="why-text">Ready to help before, during, and after your trip. You'll never feel alone in China.</div>
+      </div>
+      <div class="why-card reveal reveal-delay-3">
+        <div class="why-num">VIP</div>
+        <div class="why-title">Personal Service</div>
+        <div class="why-text">Not a group tour — a personalized itinerary designed around your needs, your pace.</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- TIPS -->
+<section class="tips-section" id="tips">
+  <div class="section-max-wide">
+    <div class="section-eyebrow reveal">Before You Travel to China</div>
+    <div class="section-title reveal reveal-delay-1">Everything You Need to Know</div>
+    <div class="section-sub reveal reveal-delay-2">Practical tips for first-time visitors to Shanghai.</div>
+    <div class="tips-grid">
+      <div class="tip-card reveal reveal-delay-1">
+        <div class="tip-icon">📱</div>
+        <div class="tip-title">Download a VPN</div>
+        <div class="tip-text">Google, Facebook, Instagram, and WhatsApp are blocked in China. Install a VPN before you go — ExpressVPN and NordVPN work well.</div>
+        <div class="tip-tag">Essential</div>
+      </div>
+      <div class="tip-card reveal reveal-delay-2">
+        <div class="tip-icon">💳</div>
+        <div class="tip-title">Set Up Alipay</div>
+        <div class="tip-text">China is cashless — payments are by QR code only. Set up WeChat Pay or Alipay before you go. Few places accept international cards.</div>
+        <div class="tip-tag">Important</div>
+      </div>
+      <div class="tip-card reveal reveal-delay-3">
+        <div class="tip-icon">🛂</div>
+        <div class="tip-title">Visa</div>
+        <div class="tip-text">Mongolian passport holders can enter visa-free for up to 30 days. Ensure your passport is valid for at least 6 more months.</div>
+        <div class="tip-tag">Know This</div>
+      </div>
+      <div class="tip-card reveal reveal-delay-1">
+        <div class="tip-icon">📡</div>
+        <div class="tip-title">SIM Card or Pocket WiFi</div>
+        <div class="tip-text">Get a Chinese SIM card or pocket WiFi. Available at the airport. Mongolian SIM roaming is expensive.</div>
+        <div class="tip-tag">Tips</div>
+      </div>
+      <div class="tip-card reveal reveal-delay-2">
+        <div class="tip-icon">🏥</div>
+        <div class="tip-title">Travel Insurance</div>
+        <div class="tip-text">Emergency medical costs in China are very high. Always get travel insurance. Notify us in advance if you plan a VIP health check.</div>
+        <div class="tip-tag">Safety</div>
+      </div>
+      <div class="tip-card reveal reveal-delay-2">
+        <div class="tip-icon">🗺️</div>
+        <div class="tip-title">Maps</div>
+        <div class="tip-text">Google Maps doesn't work in China. Use Baidu Maps or Apple Maps. Gaode Maps (高德地图) has the most accurate maps.</div>
+        <div class="tip-tag">Navigation</div>
+      </div>
+      <div class="tip-card reveal reveal-delay-3">
+        <div class="tip-icon">🚇</div>
+        <div class="tip-title">Metro</div>
+        <div class="tip-text">Shanghai's metro is cheap, fast, and reliable. Get a Jiaotong card — valid at all stations and buses. Card deposit is 20 CNY.</div>
+        <div class="tip-tag">Transport</div>
+      </div>
+      <div class="tip-card reveal reveal-delay-1">
+        <div class="tip-icon">🌐</div>
+        <div class="tip-title">Language</div>
+        <div class="tip-text">English is rarely spoken in China. Google Translate's camera feature is very useful. With a Mongolian guide, there's no language barrier.</div>
+        <div class="tip-tag">Communication</div>
+      </div>
+      <div class="tip-card reveal reveal-delay-2">
+        <div class="tip-icon">🏨</div>
+        <div class="tip-title">Hotel</div>
+        <div class="tip-text">Passport details are required when booking. Choose hotels that accept foreign guests — Airbnb is restricted in China.</div>
+        <div class="tip-tag">Accommodation</div>
       </div>
     </div>
   </div>
@@ -1797,13 +1451,6 @@ const revealObserver = new IntersectionObserver(entries => {
 document.querySelectorAll('.reveal').forEach(el => revealObserver.observe(el));
 
 // ── ITINERARY TABS ──
-function switchItin(id, btn) {
-  document.querySelectorAll('.itin-content').forEach(c => c.classList.remove('active'));
-  document.querySelectorAll('.itin-tab').forEach(t => t.classList.remove('active'));
-  document.getElementById('itin-' + id)?.classList.add('active');
-  btn.classList.add('active');
-}
-
 // ── BOOKING FORM ──
 function submitBooking(e) {
   e.preventDefault();

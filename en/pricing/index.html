@@ -1,0 +1,364 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Pricing &amp; Packages — LFS Shanghai</title>
+<link rel="icon" type="image/svg+xml" href="/favicon.svg">
+<link rel="icon" type="image/png" sizes="32x32" href="/favicon.png">
+<link rel="apple-touch-icon" href="/apple-touch-icon.png">
+<meta name="robots" content="index, follow">
+<meta name="description" content="LFS Shanghai pricing: Health + Travel Package, Basic Checkup Package, Travel Only Package, plus guides, interpreters and hotel booking. Shanghai travel prices for Mongolian travellers.">
+<meta property="og:type" content="website">
+<meta property="og:locale" content="en_US">
+<meta property="og:title" content="Pricing &amp; Packages — LFS Shanghai">
+<meta property="og:description" content="LFS Shanghai pricing: 3 travel packages, guides, interpreters and hotel booking.">
+<meta property="og:url" content="https://lfsshanghai.com/en/pricing/">
+<meta property="og:image" content="https://lfsshanghai.com/img/health/Bund2.jpg">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="800">
+<link rel="canonical" href="https://lfsshanghai.com/en/pricing/">
+<link rel="alternate" hreflang="mn" href="https://lfsshanghai.com/pricing/">
+<link rel="alternate" hreflang="en" href="https://lfsshanghai.com/en/pricing/">
+<link rel="alternate" hreflang="x-default" href="https://lfsshanghai.com/pricing/">
+<script type="application/ld+json">
+{"@context":"https://schema.org","@type":"WebPage","name":"Үнэ · Багц — LFS Shanghai","description":"LFS Shanghai үйлчилгээний үнэ, багцууд","url":"https://lfsshanghai.com/pricing/"}
+</script>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-81DTJ80VLR"></script>
+<script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag("js",new Date());gtag("config","G-81DTJ80VLR");</script>
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+:root{
+  --bg:#fff;--bg2:#f5f5f7;--text:#1d1d1f;--muted:#6e6e73;--muted2:#86868b;
+  --blue:#0071e3;--border:rgba(0,0,0,.08);--radius:16px;--radius2:20px;
+  --shadow:0 2px 12px rgba(0,0,0,.06);--shadow2:0 8px 32px rgba(0,0,0,.1);
+  --dark2:#1d1d1f;
+}
+body{font-family:'Inter',system-ui,-apple-system,sans-serif;background:var(--bg2);color:var(--text);-webkit-font-smoothing:antialiased;min-height:100vh}
+
+/* NAV */
+.nav{position:sticky;top:0;z-index:100;height:52px;display:flex;align-items:center;justify-content:space-between;padding:0 24px;background:rgba(255,255,255,.9);backdrop-filter:saturate(180%) blur(20px);-webkit-backdrop-filter:saturate(180%) blur(20px);border-bottom:1px solid var(--border)}
+.nav-logo{font-size:17px;font-weight:700;color:var(--text);text-decoration:none;letter-spacing:-.02em}
+.nav-logo span{color:var(--blue)}
+.nav-links{display:flex;align-items:center;gap:4px}
+.nav-link{padding:6px 12px;font-size:13px;color:var(--muted);text-decoration:none;border-radius:8px;transition:color .15s}
+.nav-link:hover{color:var(--text)}
+
+/* HERO */
+.hero{background:#fff;padding:72px 24px 56px;text-align:center}
+.hero-eyebrow{font-size:12px;font-weight:600;letter-spacing:.08em;text-transform:uppercase;color:var(--blue);margin-bottom:12px}
+.hero-title{font-size:clamp(36px,6vw,56px);font-weight:800;letter-spacing:-.04em;color:var(--dark2);margin-bottom:16px;line-height:1.1}
+.hero-sub{font-size:17px;color:var(--muted);max-width:520px;margin:0 auto;line-height:1.6}
+
+/* MAIN */
+.main{max-width:960px;margin:0 auto;padding:56px 24px 96px}
+
+/* GOLDEN PACKAGE */
+.pkg{background:#000;border-radius:var(--radius2);padding:48px;color:#fff;margin-bottom:56px;position:relative;overflow:hidden}
+.pkg::before{content:'';position:absolute;top:-60px;right:-60px;width:300px;height:300px;background:radial-gradient(circle,rgba(0,113,227,.35) 0%,transparent 70%);pointer-events:none}
+.pkg-badge{display:inline-block;background:rgba(255,255,255,.1);border:1px solid rgba(255,255,255,.15);border-radius:20px;padding:4px 14px;font-size:11px;font-weight:600;letter-spacing:.08em;text-transform:uppercase;color:rgba(255,255,255,.7);margin-bottom:20px}
+.pkg-title{font-size:clamp(28px,5vw,40px);font-weight:800;letter-spacing:-.03em;margin-bottom:8px}
+.pkg-sub{font-size:15px;color:rgba(255,255,255,.5);margin-bottom:36px}
+.pkg-body{display:grid;grid-template-columns:1fr auto;gap:40px;align-items:start}
+.pkg-includes{display:flex;flex-direction:column;gap:12px}
+.pkg-row{display:flex;align-items:center;gap:10px;font-size:14px;color:rgba(255,255,255,.8)}
+.pkg-check{color:#30d158;font-size:16px;flex-shrink:0}
+.pkg-price-card{background:rgba(255,255,255,.07);border:1px solid rgba(255,255,255,.12);border-radius:var(--radius2);padding:32px;min-width:220px;text-align:center}
+.pkg-price-label{font-size:11px;text-transform:uppercase;letter-spacing:.1em;color:rgba(255,255,255,.4);margin-bottom:10px}
+.pkg-price-amount{font-size:44px;font-weight:800;letter-spacing:-.03em;line-height:1;margin-bottom:4px}
+.pkg-price-period{font-size:13px;color:rgba(255,255,255,.35);margin-bottom:24px}
+.pkg-btn{display:block;width:100%;padding:14px;background:var(--blue);color:#fff;border:none;border-radius:12px;font-size:14px;font-weight:600;cursor:pointer;font-family:'Inter',sans-serif;text-decoration:none;text-align:center;transition:background .2s}
+.pkg-btn:hover{background:#0077ed}
+.pkg-note{margin-top:10px;font-size:11px;color:rgba(255,255,255,.2);text-align:center}
+.pkg-more-link{display:block;text-align:center;margin-top:10px;padding:10px;border-radius:10px;border:1px solid rgba(255,255,255,.2);color:rgba(255,255,255,.8);font-size:13px;font-weight:600;text-decoration:none;transition:.2s}
+.pkg-more-link:hover{background:rgba(255,255,255,.1);color:#fff}
+
+/* SECTION DIVIDER */
+.section-label{font-size:12px;font-weight:600;letter-spacing:.08em;text-transform:uppercase;color:var(--blue);margin-bottom:10px}
+.section-title{font-size:clamp(24px,4vw,34px);font-weight:800;letter-spacing:-.03em;color:var(--dark2);margin-bottom:8px}
+.section-sub{font-size:15px;color:var(--muted);margin-bottom:36px;line-height:1.6}
+
+/* SERVICE CARDS */
+.services-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:20px;margin-bottom:24px}
+.svc{background:#fff;border-radius:var(--radius2);padding:32px;border:1px solid var(--border);box-shadow:var(--shadow);transition:box-shadow .2s,transform .2s}
+.svc:hover{box-shadow:var(--shadow2);transform:translateY(-2px)}
+.svc-icon{font-size:28px;margin-bottom:16px}
+.svc-label{font-size:12px;font-weight:600;text-transform:uppercase;letter-spacing:.07em;color:var(--muted2);margin-bottom:8px}
+.svc-price{font-size:36px;font-weight:700;letter-spacing:-.03em;color:var(--dark2);line-height:1}
+.svc-price-unit{font-size:16px;font-weight:400;color:var(--muted);margin-left:4px}
+.svc-divider{height:1px;background:var(--border);margin:20px 0}
+.svc-row{display:flex;gap:8px;font-size:13px;color:var(--muted);margin-bottom:10px;line-height:1.5}
+.svc-row:last-child{margin-bottom:0}
+.svc-check{color:var(--blue);flex-shrink:0;font-size:14px}
+
+/* STUDENT CARD */
+.student-card{background:linear-gradient(135deg,#0071e3 0%,#0055c4 100%);border-radius:var(--radius2);padding:40px;color:#fff;margin-bottom:56px}
+.student-card-inner{display:grid;grid-template-columns:1fr 1fr;gap:40px;align-items:start}
+.student-badge{display:inline-block;background:rgba(255,255,255,.15);border-radius:20px;padding:4px 14px;font-size:11px;font-weight:600;letter-spacing:.08em;text-transform:uppercase;color:rgba(255,255,255,.9);margin-bottom:16px}
+.student-title{font-size:clamp(22px,4vw,30px);font-weight:800;letter-spacing:-.03em;margin-bottom:12px;line-height:1.2}
+.student-desc{font-size:14px;color:rgba(255,255,255,.75);line-height:1.6;margin-bottom:24px}
+.student-price-big{font-size:42px;font-weight:800;letter-spacing:-.03em;margin-bottom:4px}
+.student-price-type{font-size:13px;color:rgba(255,255,255,.5);margin-bottom:24px}
+.student-btn{display:inline-block;background:#fff;color:var(--blue);padding:12px 24px;border-radius:12px;font-size:14px;font-weight:700;text-decoration:none;transition:opacity .2s}
+.student-btn:hover{opacity:.9}
+.student-items{display:flex;flex-direction:column;gap:10px;padding-top:8px}
+.student-item{display:flex;align-items:flex-start;gap:10px;font-size:13px;color:rgba(255,255,255,.85);line-height:1.5}
+.student-item-dot{width:6px;height:6px;border-radius:50%;background:rgba(255,255,255,.5);flex-shrink:0;margin-top:6px}
+
+/* DISCOUNT BANNER */
+.discount-banner{background:rgba(0,113,227,.06);border:1px solid rgba(0,113,227,.15);border-radius:14px;padding:20px 24px;display:flex;align-items:flex-start;gap:14px;margin-top:24px}
+.discount-icon{font-size:20px;flex-shrink:0;margin-top:1px}
+.discount-text{font-size:13px;color:var(--muted);line-height:1.6}
+.discount-text strong{color:var(--dark2)}
+.discount-text a{color:var(--blue);text-decoration:none;font-weight:500}
+
+/* CTA SECTION */
+.cta-section{margin-top:64px;background:#fff;border-radius:var(--radius2);padding:48px;text-align:center;border:1px solid var(--border)}
+.cta-title{font-size:clamp(22px,4vw,30px);font-weight:800;letter-spacing:-.03em;color:var(--dark2);margin-bottom:12px}
+.cta-sub{font-size:15px;color:var(--muted);margin-bottom:32px;line-height:1.6}
+.cta-btns{display:flex;gap:12px;justify-content:center;flex-wrap:wrap}
+.cta-btn-primary{padding:14px 32px;background:var(--blue);color:#fff;border:none;border-radius:30px;font-size:15px;font-weight:600;cursor:pointer;text-decoration:none;font-family:'Inter',sans-serif;transition:background .2s}
+.cta-btn-primary:hover{background:#0077ed}
+.cta-btn-ghost{padding:14px 32px;background:transparent;color:var(--blue);border:1.5px solid var(--blue);border-radius:30px;font-size:15px;font-weight:600;cursor:pointer;text-decoration:none;font-family:'Inter',sans-serif;transition:.2s}
+.cta-btn-ghost:hover{background:rgba(0,113,227,.06)}
+
+footer{text-align:center;padding:32px 24px;font-size:12px;color:var(--muted)}
+footer a{color:var(--muted);text-decoration:none}
+footer a:hover{color:var(--blue)}
+
+@media(max-width:700px){
+  .pkg-body{grid-template-columns:1fr}
+  .pkg-price-card{min-width:unset}
+  .services-grid{grid-template-columns:1fr}
+  .student-card-inner{grid-template-columns:1fr}
+  .pkg{padding:32px 24px}
+  .student-card{padding:28px 24px}
+  .cta-section{padding:32px 24px}
+  .hero{padding:56px 16px 40px}
+  .main{padding:40px 16px 72px}
+}
+</style>
+<script src="/js/pixel.js" defer></script>
+</head>
+<body>
+
+<nav class="nav">
+  <a href="/en/" class="nav-logo">LFS <span>Shanghai</span></a>
+  <div class="nav-links">
+    <a href="/en/routes/" class="nav-link">Routes</a>
+    <a href="/en/tips/" class="nav-link">Tips</a>
+    <a href="/en/login/" class="nav-link">Login</a>
+    <a href="/en/booking/" class="nav-link" style="background:var(--blue);color:#fff;border-radius:20px;padding:6px 14px">Book Now</a>
+  </div>
+</nav>
+
+<div class="hero">
+  <div class="hero-eyebrow">LFS Shanghai</div>
+  <h1 class="hero-title">Pricing &amp; Packages</h1>
+  <p class="hero-sub">Transparent pricing for everything you need for a comfortable trip to Shanghai.</p>
+</div>
+
+<main class="main">
+
+  <!-- PACKAGE 1: Health + Travel Package -->
+  <div class="pkg">
+    <div class="pkg-badge">🥇 Most popular · Everything in one</div>
+    <div class="pkg-title">Health + Travel Package</div>
+    <div class="pkg-sub">5 days / 4 nights — flights, a 5-star hotel, 23 medical tests and the sightseeing, all in one price</div>
+    <div class="pkg-body">
+      <div class="pkg-includes">
+        <div class="pkg-row"><span class="pkg-check">✓</span> Flights — outbound and return</div>
+        <div class="pkg-row"><span class="pkg-check">✓</span> 5-star hotel · 4 nights</div>
+        <div class="pkg-row"><span class="pkg-check">✓</span> Transport — fully covered within the city</div>
+        <div class="pkg-row"><span class="pkg-check">✓</span> Guide and Mongolian interpreter</div>
+        <div class="pkg-row"><span class="pkg-check">✓</span> Meals every day</div>
+        <div class="pkg-row"><span class="pkg-check">✓</span> All entrance tickets</div>
+        <div class="pkg-row"><span class="pkg-check">✓</span> VIP hospital care — 23 medical tests</div>
+        <div class="pkg-row"><span class="pkg-check">✓</span> Private nurse · results in Mongolian and English</div>
+        <div style="margin-top:8px;padding:12px 16px;background:rgba(52,199,89,.12);border:1px solid rgba(52,199,89,.25);border-radius:10px;font-size:12px;color:rgba(255,255,255,.75);line-height:1.6">
+          ✅ Everything is in the price — flights, hotel, meals, transport and tickets. No extra charges.
+        </div>
+      </div>
+      <div class="pkg-price-card">
+        <div class="pkg-price-label">Total price</div>
+        <div class="pkg-price-amount">4,600,000<span style="font-size:20px;font-weight:400;opacity:.5">₮</span></div>
+        <div class="pkg-price-period">5 days · 4 nights · per person</div>
+        <a href="/booking/?package=full" class="pkg-btn">Book now →</a>
+        <a href="/en/packages/health-travel/" class="pkg-more-link">See details →</a>
+        <div class="pkg-note">All costs included</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- PACKAGE 2: Basic Checkup Package -->
+  <div class="pkg">
+    <div class="pkg-badge">🩺 Basic package · Tests only</div>
+    <div class="pkg-title">Basic Checkup Package</div>
+    <div class="pkg-sub">1 day — core tests only, flights not included</div>
+    <div class="pkg-body">
+      <div class="pkg-includes">
+        <div class="pkg-row"><span class="pkg-check">✓</span> Full blood count · biochemistry</div>
+        <div class="pkg-row"><span class="pkg-check">✓</span> ECG</div>
+        <div class="pkg-row"><span class="pkg-check">✓</span> Chest X-ray</div>
+        <div class="pkg-row"><span class="pkg-check">✓</span> Ultrasound — liver, kidneys and internal organs</div>
+        <div class="pkg-row"><span class="pkg-check">✓</span> Eye exam · blood pressure, weight, height</div>
+        <div class="pkg-row"><span class="pkg-check">✓</span> Private nurse and Mongolian interpreter</div>
+        <div class="pkg-row"><span class="pkg-check">✓</span> No queueing — all tests done in 2-3 hours</div>
+        <div class="pkg-row"><span class="pkg-check">✓</span> Airport pickup and hotel drop-off</div>
+        <div style="margin-top:8px;padding:12px 16px;background:rgba(255,255,255,.06);border-radius:10px;font-size:12px;color:rgba(255,255,255,.4);line-height:1.6">
+          Flights are not included. No city sightseeing — this is the tests-only package.
+        </div>
+      </div>
+      <div class="pkg-price-card">
+        <div class="pkg-price-label">Total price</div>
+        <div class="pkg-price-amount">1,899,000<span style="font-size:20px;font-weight:400;opacity:.5">₮</span></div>
+        <div class="pkg-price-period">1 day · per person</div>
+        <a href="/booking/?package=basic" class="pkg-btn">Book now →</a>
+        <a href="/en/packages/basic-checkup/" class="pkg-more-link">See details →</a>
+        <div class="pkg-note">Flights separate</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- PACKAGE 3: Travel Only Package -->
+  <div class="pkg">
+    <div class="pkg-badge">🗺️ New · Includes Disneyland</div>
+    <div class="pkg-title">Travel Only Package</div>
+    <div class="pkg-sub">5 days / 4 nights — flights, a 5-star hotel and meals all included · Disneyland</div>
+    <div class="pkg-body">
+      <div class="pkg-includes">
+        <div class="pkg-row"><span class="pkg-check">✓</span> Flights — outbound and return</div>
+        <div class="pkg-row"><span class="pkg-check">✓</span> 5-star hotel · 4 nights</div>
+        <div class="pkg-row"><span class="pkg-check">✓</span> Nanjing Road · The Bund · river cruise · Shanghai Tower</div>
+        <div class="pkg-row"><span class="pkg-check">✓</span> Shanghai Disneyland · luxury buffet · Yu Garden</div>
+        <div class="pkg-row"><span class="pkg-check">✓</span> Xintiandi · Louis Vuitton · Starbucks Roastery</div>
+        <div class="pkg-row"><span class="pkg-check">✓</span> A private Mongolian-speaking guide throughout</div>
+        <div class="pkg-row"><span class="pkg-check">✓</span> All transport within the city</div>
+        <div class="pkg-row"><span class="pkg-check">✓</span> Airport pickup and hotel drop-off</div>
+        <div class="pkg-row"><span class="pkg-check">✓</span> 24/7 support in Mongolian</div>
+        <div style="margin-top:8px;padding:12px 16px;background:rgba(255,255,255,.06);border-radius:10px;font-size:12px;color:rgba(255,255,255,.4);line-height:1.6">
+          Medical tests are not included. Disneyland replaces the zoo visit.
+        </div>
+      </div>
+      <div class="pkg-price-card">
+        <div class="pkg-price-label">Total price</div>
+        <div class="pkg-price-amount">3,200,000<span style="font-size:20px;font-weight:400;opacity:.5">₮</span></div>
+        <div class="pkg-price-period">5 days · 4 nights · per person</div>
+        <a href="/booking/?package=travel" class="pkg-btn">Book now →</a>
+        <a href="/en/packages/travel-only/" class="pkg-more-link">See details →</a>
+        <div class="pkg-note">All costs included</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- INDIVIDUAL SERVICES -->
+  <div class="section-label">Individual service pricing</div>
+  <div class="section-title">Guide · Interpreter · Hotel · Airport pickup</div>
+  <p class="section-sub">These can be booked on their own if you are not taking a package.</p>
+
+  <div class="services-grid">
+
+    <div class="svc">
+      <div class="svc-icon">🧑‍💼</div>
+      <div class="svc-label">Guide</div>
+      <div class="svc-price">500<span class="svc-price-unit">CNY / day</span></div>
+      <div class="svc-divider"></div>
+      <div class="svc-row"><span class="svc-check">✓</span> Airport pickup and drop-off</div>
+      <div class="svc-row"><span class="svc-check">✓</span> City guiding in Mongolian</div>
+      <div class="svc-row"><span class="svc-check">✓</span> Restaurant and shopping recommendations</div>
+    </div>
+
+    <div class="svc">
+      <div class="svc-icon">🗣️</div>
+      <div class="svc-label">Interpreter</div>
+      <div class="svc-price">500<span class="svc-price-unit">CNY / day</span></div>
+      <div class="svc-divider"></div>
+      <div class="svc-row"><span class="svc-check">✓</span> Mongolian–Chinese interpreting</div>
+      <div class="svc-row"><span class="svc-check">✓</span> Medical interpreting (specialist)</div>
+      <div class="svc-row"><span class="svc-check">✓</span> Business negotiations and contracts</div>
+    </div>
+
+    <div class="svc">
+      <div class="svc-icon">🏨</div>
+      <div class="svc-label">Hotel booking</div>
+      <div class="svc-price">50<span class="svc-price-unit">CNY / time</span></div>
+      <div class="svc-divider"></div>
+      <div class="svc-row"><span class="svc-check">✓</span> Comfortable hotels in central Shanghai</div>
+      <div class="svc-row"><span class="svc-check">✓</span> Chosen to fit your budget and location</div>
+      <div class="svc-row"><span class="svc-check">✓</span> We handle the booking and the confirmation</div>
+    </div>
+
+    <div class="svc">
+      <div class="svc-icon">🚗</div>
+      <div class="svc-label">Airport pickup</div>
+      <div class="svc-price">200<span class="svc-price-unit">CNY / time</span></div>
+      <div class="svc-divider"></div>
+      <div class="svc-row"><span class="svc-check">✓</span> We meet you at the airport</div>
+      <div class="svc-row"><span class="svc-check">✓</span> We take you to your destination</div>
+      <div class="svc-row"><span class="svc-check">✓</span> From either Pudong or Hongqiao airport</div>
+    </div>
+
+  </div>
+
+  <div class="discount-banner">
+    <div class="discount-icon">💬</div>
+    <div class="discount-text">
+      <strong>Discounts are available:</strong> If you are coming as a larger group or booking several days, the price can be agreed in advance. <a href="/en/booking/">Contact us →</a>
+    </div>
+  </div>
+
+  <!-- STUDENT GUIDE -->
+  <div style="height:56px"></div>
+  <div class="section-label">For students · For young travellers</div>
+  <div class="section-title">Student Consultation</div>
+  <p class="section-sub">A digital consultation for students and young travellers coming to Shanghai for the first time.</p>
+
+  <div class="student-card">
+    <div class="student-card-inner">
+      <div>
+        <div class="student-badge">Digital consultation</div>
+        <div class="student-title">Everything explained with screenshots and video</div>
+        <p class="student-desc">Setting up Alipay and WeChat Pay, getting a SIM, finding cheap food, using public transport — all covered in one session.</p>
+        <div class="student-price-big">20,000<span style="font-size:20px;font-weight:400;opacity:.6">₮</span></div>
+        <div class="student-price-type">One-time consultation</div>
+        <a href="https://www.facebook.com/profile.php?id=100076380514835" target="_blank" rel="noopener" class="student-btn">Book via Facebook →</a>
+      </div>
+      <div>
+        <div style="font-size:12px;font-weight:600;text-transform:uppercase;letter-spacing:.07em;color:rgba(255,255,255,.5);margin-bottom:14px">What is covered</div>
+        <div class="student-items">
+          <div class="student-item"><div class="student-item-dot"></div>Setting up Alipay and WeChat Pay (with a Mongolian card)</div>
+          <div class="student-item"><div class="student-item-dot"></div>Where to get a SIM card and what it costs</div>
+          <div class="student-item"><div class="student-item-dot"></div>Getting and using a metro card</div>
+          <div class="student-item"><div class="student-item-dot"></div>Good, cheap places to eat</div>
+          <div class="student-item"><div class="student-item-dot"></div>Setting up a VPN</div>
+          <div class="student-item"><div class="student-item-dot"></div>The apps you must install for China</div>
+          <div class="student-item"><div class="student-item-dot"></div>Student visa (X1/X2) guidance</div>
+          <div class="student-item"><div class="student-item-dot"></div>Safety advice for the city</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- CTA -->
+  <div class="cta-section">
+    <div class="cta-title">Ready to book?</div>
+    <p class="cta-sub">Send us your details and we will be in touch within 24 hours. If you have questions you can also reach us on Facebook.</p>
+    <div class="cta-btns">
+      <a href="/en/booking/" class="cta-btn-primary">Send a request →</a>
+      <a href="https://www.facebook.com/profile.php?id=100076380514835" target="_blank" rel="noopener" class="cta-btn-ghost">Contact us on Facebook</a>
+    </div>
+  </div>
+
+</main>
+
+<footer>
+  © 2026 LFS Shanghai ·
+  <a href="/privacy/">Privacy</a> ·
+  <a href="/terms/">Terms</a> ·
+  <a href="/en/contact/">Contact</a>
+</footer>
+
+<script src="/js/messenger-btn.js"></script>
+</body>
+</html>
