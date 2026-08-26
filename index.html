@@ -291,6 +291,15 @@ body{
   display:inline-flex;align-items:center;gap:7px;
 }
 .btn-outline:hover{background:rgba(255,255,255,.12);border-color:#fff}
+.offer-strip{max-width:1160px;margin:0 auto;padding:40px 24px 8px;display:grid;grid-template-columns:repeat(3,1fr);gap:16px}
+.offer{display:block;background:var(--bg2);border:1px solid var(--border);border-radius:18px;padding:24px;text-decoration:none;transition:transform .2s,box-shadow .2s,border-color .2s}
+.offer:hover{transform:translateY(-3px);box-shadow:0 10px 32px rgba(0,0,0,.08);border-color:var(--blue)}
+.offer-ico{font-size:28px;margin-bottom:10px}
+.offer-name{font-size:14px;font-weight:600;color:var(--muted);margin-bottom:6px}
+.offer-price{font-size:24px;font-weight:800;letter-spacing:-.03em;color:var(--dark2);margin-bottom:8px}
+.offer-price span{font-size:12px;font-weight:500;color:var(--muted);margin-left:6px;letter-spacing:0}
+.offer-note{font-size:12.5px;color:var(--muted);line-height:1.55}
+@media(max-width:860px){.offer-strip{grid-template-columns:1fr;gap:12px;padding:28px 20px 4px}.offer{padding:20px}.offer-ico{font-size:24px;margin-bottom:8px}.offer-price{font-size:21px}}
 .hero-stats{
   display:flex;flex-wrap:wrap;justify-content:center;
   gap:0;padding:0;
@@ -485,45 +494,27 @@ body{
 .why-text{font-size:14px;color:var(--muted);line-height:1.65}
 
 /* ── ITINERARIES ── */
-.itin-section{background:var(--bg);padding:100px 24px}
-.itin-tabs{display:flex;gap:8px;margin-top:48px;margin-bottom:32px;flex-wrap:wrap}
-.itin-tab{
   padding:8px 20px;border-radius:20px;
   font-size:13px;font-weight:500;
   border:1px solid var(--border);background:none;
   color:var(--muted);cursor:pointer;font-family:inherit;
   transition:.2s;
 }
-.itin-tab.active,.itin-tab:hover{background:var(--dark2);color:#fff;border-color:var(--dark2)}
-.itin-content{display:none}
-.itin-content.active{display:grid;grid-template-columns:1fr 1fr;gap:20px}
-@media(max-width:700px){.itin-content.active{grid-template-columns:1fr}}
-.itin-panel{
   background:var(--bg2);
   border-radius:var(--radius2);
   padding:32px;
 }
-.itin-panel h3{font-size:22px;font-weight:700;letter-spacing:-.03em;color:var(--dark2);margin-bottom:24px}
-.itin-day{margin-bottom:20px}
-.itin-day-header{display:flex;align-items:center;gap:12px;margin-bottom:12px}
-.itin-day-badge{
   width:30px;height:30px;border-radius:50%;
   background:var(--blue);color:#fff;
   display:flex;align-items:center;justify-content:center;
   font-size:11px;font-weight:700;flex-shrink:0;
 }
-.itin-day-title{font-size:13px;font-weight:600;color:var(--dark2)}
-.itin-stops{padding-left:42px}
-.itin-stop{
   display:flex;gap:8px;margin-bottom:8px;
   font-size:13px;color:var(--muted);line-height:1.5;
 }
-.itin-stop::before{content:'';width:4px;height:4px;border-radius:50%;background:var(--blue);margin-top:8px;flex-shrink:0;opacity:.5}
-.itin-meta{
   display:flex;gap:16px;margin-top:20px;padding-top:16px;
   border-top:1px solid var(--border);font-size:12px;color:var(--muted);
 }
-.itin-meta span{color:var(--dark2);font-weight:600;margin-right:4px}
 
 /* ── TIPS SECTION ── */
 .tips-section{background:var(--bg2);padding:100px 24px}
@@ -819,11 +810,6 @@ section,#booking-section{scroll-margin-top:60px}
   .medical-card{padding:24px}
 
   /* Itineraries — hide content, show CTA card */
-  .itin-content{display:none!important}
-  .itin-mobile-cta{display:block!important}
-  .itin-panel{padding:24px 20px}
-  .itin-tabs{gap:6px;display:none}
-  .itin-tab{padding:7px 14px;font-size:12px}
 
   /* Tips */
   .tips-grid{gap:12px}
@@ -877,7 +863,6 @@ section,#booking-section{scroll-margin-top:60px}
   .why-card{padding:24px}
   .medical-title{font-size:30px}
   .section-title{letter-spacing:-.03em}
-  .itin-tab{font-size:11px;padding:6px 10px}
 }
 </style>
 <script src="/js/pixel.js" defer></script>
@@ -964,7 +949,7 @@ section,#booking-section{scroll-margin-top:60px}
   <button class="nav-link" onclick="window.location.href='/tips/#guide20k';closeMobileMenu()">Оюутны 20К зөвлөмж</button>
   <button class="nav-link" onclick="window.location.href='/metro/';closeMobileMenu()">Метро</button>
   <button class="nav-link" onclick="window.location.href='/planner/';closeMobileMenu()" style="color:#e8392a;">✦ Аяллын Төлөвлөгч</button>
-  <button class="nav-link" onclick="scrollToId('pricing');closeMobileMenu()">Үнэ</button>
+  <button class="nav-link" onclick="window.location.href='/pricing/';closeMobileMenu()">Үнэ</button>
   <button class="nav-link" onclick="window.location.href='/contact/';closeMobileMenu()">Холбогдох</button>
   <button class="nav-link" id="mob-auth-btn" onclick="window.location.href='/login/';closeMobileMenu()">Нэвтрэх</button>
   <a href="/booking/" class="nav-link" style="color:#0071e3;font-weight:600">Захиалах →</a>
@@ -1011,7 +996,29 @@ section,#booking-section{scroll-margin-top:60px}
 
 </section>
 
-<!-- STATS BAR -->
+<!-- ЮУ ЗАРДАГ — ҮНЭТЭЙГЭЭ -->
+<div class="offer-strip">
+  <a href="/health/" class="offer">
+    <div class="offer-ico">🩺</div>
+    <div class="offer-name">Аялал ба эмнэлгийн багц</div>
+    <div class="offer-price">₮1,899,000<span>-с эхлэн</span></div>
+    <div class="offer-note">3 багц · нислэг, буудал, шинжилгээ</div>
+  </a>
+  <a href="/apartment/" class="offer">
+    <div class="offer-ico">🏠</div>
+    <div class="offer-name">Байр түрээс</div>
+    <div class="offer-price">1,000 ¥<span>нэг удаа</span></div>
+    <div class="offer-note">Байр хайх · үзүүлэх · гэрээ орчуулах</div>
+  </a>
+  <a href="/tips/#guide20k" class="offer">
+    <div class="offer-ico">📚</div>
+    <div class="offer-name">Оюутны зөвлөгөө</div>
+    <div class="offer-price">₮20,000<span>нэг удаа</span></div>
+    <div class="offer-note">Хятадад сурахаар бэлдэж буй хүнд</div>
+  </a>
+</div>
+
+<!-- ТОО БАРИМТ -->
 <div class="hero-stats">
   <div class="hero-stat">
     <div class="hero-stat-num" data-count="150" data-suffix="+">150+</div>
@@ -1028,33 +1035,7 @@ section,#booking-section{scroll-margin-top:60px}
   </div>
 </div>
 
-<!-- INTRO BAND -->
-<div class="intro-band">
-  <div class="intro-grid">
-    <div class="intro-item">
-      <div class="intro-icon">🗣️</div>
-      <div class="intro-label">Монгол хэлтэй хөтөч</div>
-      <div class="intro-desc">Хятад, Монгол, Англи хэл дээр үйлчилгээ</div>
-    </div>
-    <div class="intro-item">
-      <div class="intro-icon">🗺️</div>
-      <div class="intro-label">Хувийн маршрут</div>
-      <div class="intro-desc">Таны хэрэгцээнд тулгуурлан боловсруулна</div>
-    </div>
-    <div class="intro-item">
-      <div class="intro-icon">✈️</div>
-      <div class="intro-label">Нисэх буудлаас тосох</div>
-      <div class="intro-desc">Pudong болон Hongqiao буудлаас</div>
-    </div>
-    <div class="intro-item">
-      <div class="intro-icon">💼</div>
-      <div class="intro-label">Бизнесийн үйлчилгээ</div>
-      <div class="intro-desc">Экспо, үзэсгэлэн, хэлмэрч үйлчилгээ</div>
-    </div>
-  </div>
-</div>
-
-<!-- MEDICAL DARK SECTION -->
+<!-- 3 БАГЦ -->
 <section class="medical-section" id="medical">
   <div class="medical-glow"></div>
   <div class="medical-inner">
@@ -1128,59 +1109,7 @@ section,#booking-section{scroll-margin-top:60px}
   </div>
 </section>
 
-<!-- STUDENT 20K GUIDE -->
-<section id="student-guide" style="padding:80px 24px 0;max-width:1160px;margin:0 auto">
-  <div class="student-card reveal">
-    <div class="student-eyebrow">Оюутнуудад · Залуустаа</div>
-    <div class="student-title">Хятадад анх удаа<br>суралцахаар төлөвлөж буй<br>оюутанд</div>
-    <div class="student-desc">Утсаар ярьж, зураг бичлэгээр ойлгомжтой тайлбарлана. Хятад явахаасаа өмнө хэрэгтэй бүхнээ бэлдэхэд тусална.</div>
-    <div class="student-price-row">
-      <div class="student-price">20,000</div>
-      <div class="student-price-unit">₮</div>
-    </div>
-    <div class="student-price-note">Нэг удаагийн зөвлөгөө</div>
-    <div style="display:flex;align-items:center;gap:12px;flex-wrap:wrap">
-      <a href="https://www.facebook.com/profile.php?id=100076380514835" target="_blank" class="student-cta">
-        <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"/></svg>
-        Одоо захиалах →
-      </a>
-      <a href="/tips/#guide20k" class="student-more">Дэлгэрэнгүй →</a>
-    </div>
-    <span class="student-cta-note" style="margin-top:10px">Facebook Messenger-ээр холбогдоно</span>
-  </div>
-</section>
-
-<!-- WHY US -->
-<section class="why-section" id="why">
-  <div class="section-max">
-    <div class="section-eyebrow reveal">Яагаад биднийг сонгох вэ</div>
-    <div class="section-title reveal reveal-delay-1">Та чемоданаа бэлд,<br>үлдсэнийг бидэнд даатга</div>
-    <div class="why-grid" style="grid-template-columns:repeat(auto-fit,minmax(200px,1fr))">
-      <div class="why-card reveal reveal-delay-1">
-        <div class="why-num" style="font-size:34px;opacity:1">🩺</div>
-        <div class="why-title">Эмнэлэг + Аялал</div>
-        <div class="why-text">Эрүүл мэндийн үйлчилгээ болон хот аяллыг нэг удаагийн ирэлтэд хамт зохион байгуулна.</div>
-      </div>
-      <div class="why-card reveal reveal-delay-2">
-        <div class="why-num" style="font-size:34px;opacity:1">🤝</div>
-        <div class="why-title">Зөвхөн тантай</div>
-        <div class="why-text">Бүлгийн аялал биш — зөвхөн та болон танай хүмүүстэй. Ямар ч харийн хүнгүй, цэвэр хувийн үйлчилгээ.</div>
-      </div>
-      <div class="why-card reveal reveal-delay-3">
-        <div class="why-num" style="font-size:34px;opacity:1">⚡</div>
-        <div class="why-title">24/7 Дэмжлэг</div>
-        <div class="why-text">Аяллын өмнө зөвлөгөө, явах үедээ хамт, буцсаны дараа ч тусална. Утасдахад л хангалттай.</div>
-      </div>
-      <div class="why-card reveal reveal-delay-4">
-        <div class="why-num" style="font-size:34px;opacity:1">🏆</div>
-        <div class="why-title">Мэргэжлийн туршлага</div>
-        <div class="why-text">Шанхайд амьдарч, олон монгол аялагчтай ажилласан туршлагатай. Хотын нуугдмал газрууд, хамгийн сайн үнэ — бид мэднэ.</div>
-      </div>
-    </div>
-  </div>
-</section>
-
-<!-- APARTMENT RENTAL -->
+<!-- БАЙР ТҮРЭЭС -->
 <section style="background:var(--bg);padding:100px 24px" id="apartment">
   <div class="section-max">
     <div class="section-eyebrow reveal">🏠 Урт хугацааны үйлчилгээ</div>
@@ -1211,268 +1140,29 @@ section,#booking-section{scroll-margin-top:60px}
   </div>
 </section>
 
-<!-- ITINERARIES -->
-<section class="itin-section" id="itineraries">
-  <div class="section-max-wide">
-    <div class="section-eyebrow reveal">Жишиг аяллын хуваарь</div>
-    <div class="section-title reveal reveal-delay-1">Шанхайн маршрутууд</div>
-    <div class="section-sub reveal reveal-delay-2">1 өдрөөс 5 өдөр хүртэлх бодитоор боловсруулсан маршрутууд. Таны хэрэгцээнд нийцүүлэн өөрчилж болно.</div>
-    <div class="itin-tabs reveal reveal-delay-3">
-      <button class="itin-tab active" onclick="switchItin('classic',this)">🏙️ Сонгодог</button>
-      <button class="itin-tab" onclick="switchItin('food',this)">🍜 Хоол</button>
-      <button class="itin-tab" onclick="switchItin('shopping',this)">🛍️ Шоппинг</button>
-      <button class="itin-tab" onclick="switchItin('culture',this)">🎎 Соёл</button>
+<!-- ОЮУТНЫ ЗӨВЛӨГӨӨ -->
+<section id="student-guide" style="padding:80px 24px 0;max-width:1160px;margin:0 auto">
+  <div class="student-card reveal">
+    <div class="student-eyebrow">Оюутнуудад · Залуустаа</div>
+    <div class="student-title">Хятадад анх удаа<br>суралцахаар төлөвлөж буй<br>оюутанд</div>
+    <div class="student-desc">Утсаар ярьж, зураг бичлэгээр ойлгомжтой тайлбарлана. Хятад явахаасаа өмнө хэрэгтэй бүхнээ бэлдэхэд тусална.</div>
+    <div class="student-price-row">
+      <div class="student-price">20,000</div>
+      <div class="student-price-unit">₮</div>
     </div>
-    <!-- Mobile: show CTA instead of full content -->
-    <a href="/routes/" class="itin-mobile-cta reveal reveal-delay-3" style="display:none;text-decoration:none;margin:8px 0 0;padding:24px 20px;background:var(--bg2);border-radius:20px;text-align:center;border:1px solid var(--border)">
-      <div style="font-size:36px;margin-bottom:10px">🗺️</div>
-      <div style="font-size:17px;font-weight:700;color:var(--dark2);margin-bottom:6px">Бүх маршрутыг харах</div>
-      <div style="font-size:13px;color:var(--muted);margin-bottom:14px">Сонгодог · Хоол · Шоппинг · Соёл · Эрүүл мэнд</div>
-      <div style="display:inline-block;background:var(--blue);color:#fff;padding:10px 24px;border-radius:20px;font-size:14px;font-weight:600">Маршрут харах →</div>
-    </a>
-
-    <div class="itin-content active" id="itin-classic">
-      <div class="itin-panel">
-        <h3>Классик Шанхай — 3 өдөр</h3>
-        <div class="itin-day">
-          <div class="itin-day-header">
-            <div class="itin-day-badge">1</div>
-            <div class="itin-day-title">Хотын зүрх</div>
-          </div>
-          <div class="itin-stops">
-            <div class="itin-stop">The Bund — хуучин колониаль гудамж, Хуанпу голын эрэг</div>
-            <div class="itin-stop">Yuyuan Garden — 450 жилийн настай уламжлалт Хятад цэцэрлэг</div>
-            <div class="itin-stop">Nanshi — хуучин хот, дотоод хаалга, жижиг зах</div>
-            <div class="itin-stop">Xiaolongbao оройн хоол — Din Tai Fung</div>
-          </div>
-        </div>
-        <div class="itin-day">
-          <div class="itin-day-header">
-            <div class="itin-day-badge">2</div>
-            <div class="itin-day-title">Орчин үеийн Шанхай</div>
-          </div>
-          <div class="itin-stops">
-            <div class="itin-stop">Shanghai Tower — дэлхийн 2-р өндөр барилга, 118 давхар</div>
-            <div class="itin-stop">Starbucks Reserve Roastery — дэлхийн хамгийн том Starbucks</div>
-            <div class="itin-stop">Xintiandi — уран архитектур, art gallery, кофе</div>
-            <div class="itin-stop">Nanjing Road — гол дэлгүүрийн гудамж</div>
-          </div>
-        </div>
-        <div class="itin-day">
-          <div class="itin-day-header">
-            <div class="itin-day-badge">3</div>
-            <div class="itin-day-title">Соёл & Амралт</div>
-          </div>
-          <div class="itin-stops">
-            <div class="itin-stop">Shanghai Museum — 5000 жилийн түүхийн үзмэр</div>
-            <div class="itin-stop">Zhujiajiao Water Town — усан хот, завиар аялал</div>
-            <div class="itin-stop">M50 Art District — орчин үеийн урлагийн тосгон</div>
-          </div>
-        </div>
-        <div class="itin-meta">
-          <div><span>3</span> өдөр</div>
-          <div><span>10+</span> байршил</div>
-          <div><span>Бүгд</span> орно</div>
-        </div>
-      </div>
-      <div class="itin-panel">
-        <h3>VIP Эрүүл мэнд + Хот — 2 өдөр</h3>
-        <div class="itin-day">
-          <div class="itin-day-header">
-            <div class="itin-day-badge">1</div>
-            <div class="itin-day-title">VIP Шинжилгээний өдөр</div>
-          </div>
-          <div class="itin-stops">
-            <div class="itin-stop">07:00 — Эмнэлэгт ирэх, бүртгэл</div>
-            <div class="itin-stop">07:30 — Өглөөний цай (орно)</div>
-            <div class="itin-stop">08:00–11:00 — Иж бүрэн шинжилгээ</div>
-            <div class="itin-stop">12:00 — Шинжилгээний хариу авч, эмчтэй зөвлөлдөх</div>
-            <div class="itin-stop">13:00 — Xintiandi, Nanjing дагуу хоол, аялал</div>
-          </div>
-        </div>
-        <div class="itin-day">
-          <div class="itin-day-header">
-            <div class="itin-day-badge">2</div>
-            <div class="itin-day-title">Хот аялал + Шоппинг</div>
-          </div>
-          <div class="itin-stops">
-            <div class="itin-stop">The Bund + Pudong харагдах тандалт</div>
-            <div class="itin-stop">IFC Mall — брэндийн дэлгүүрүүд</div>
-            <div class="itin-stop">5 одтой буффет оройн хоол</div>
-            <div class="itin-stop">Хунцяо / Пүдун нисэх буудлаар буцах</div>
-          </div>
-        </div>
-        <div class="itin-meta">
-          <div><span>2</span> өдөр</div>
-          <div><span>VIP</span> эмнэлэг</div>
-          <div><span>Хамгийн</span> түгээмэл</div>
-        </div>
-      </div>
+    <div class="student-price-note">Нэг удаагийн зөвлөгөө</div>
+    <div style="display:flex;align-items:center;gap:12px;flex-wrap:wrap">
+      <a href="https://www.facebook.com/profile.php?id=100076380514835" target="_blank" class="student-cta">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"/></svg>
+        Одоо захиалах →
+      </a>
+      <a href="/tips/#guide20k" class="student-more">Дэлгэрэнгүй →</a>
     </div>
-
-    <div class="itin-content" id="itin-food">
-      <div class="itin-panel">
-        <h3>Хоолны Аялал</h3>
-        <div class="itin-day">
-          <div class="itin-day-header"><div class="itin-day-badge">1</div><div class="itin-day-title">Уламжлалт Шанхай хоол</div></div>
-          <div class="itin-stops">
-            <div class="itin-stop">Din Tai Fung — алдарт Xiaolongbao (хиам уурын боов)</div>
-            <div class="itin-stop">Yuyuan Bazaar — уламжлалт зах дэх жижиг хоолнууд</div>
-            <div class="itin-stop">Nanxiang Mantou Dian — 100 жилийн настай ресторан</div>
-            <div class="itin-stop">5 одтой буффет оройн хоол — Pudong Shangri-La</div>
-          </div>
-        </div>
-        <div class="itin-day">
-          <div class="itin-day-header"><div class="itin-day-badge">2</div><div class="itin-day-title">Орчин үеийн хоолны соёл</div></div>
-          <div class="itin-stops">
-            <div class="itin-stop">Starbucks Reserve Roastery — дэлхийн хамгийн том</div>
-            <div class="itin-stop">Ferguson Lane — Европ хоол, арт district</div>
-            <div class="itin-stop">Xintiandi — олон улсын ресторанууд</div>
-            <div class="itin-stop">Tianzifang — гудамжны хоол, craft beer</div>
-          </div>
-        </div>
-        <div class="itin-meta"><div><span>2</span> өдөр</div><div><span>8+</span> ресторан</div><div><span>Монгол</span> тайлбартай</div></div>
-      </div>
-      <div class="itin-panel">
-        <h3>Хоолны гарын авлага</h3>
-        <div class="itin-day">
-          <div class="itin-day-header"><div class="itin-day-badge">💡</div><div class="itin-day-title">Заавал амтлах ёстой</div></div>
-          <div class="itin-stops">
-            <div class="itin-stop">Xiaolongbao — хиамтай уурын боов (Шанхайн бэлэг тэмдэг)</div>
-            <div class="itin-stop">Shengjianbao — хуурсан уурын боов</div>
-            <div class="itin-stop">Scallion pancake — сонгины навчтай гурилан хоол</div>
-            <div class="itin-stop">Hairy crab (намрын улиралд) — Шанхайн тансаг хоол</div>
-            <div class="itin-stop">Red braised pork — улаан буудай мах</div>
-          </div>
-        </div>
-        <div class="itin-meta"><div><span>Монгол</span> тайлбартай</div></div>
-        <div style="display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-top:12px">
-          <div style="border-radius:10px;overflow:hidden;aspect-ratio:4/3;background:var(--bg2);"><img src="/img/food/xiaolongbao.jpg" style="width:100%;height:100%;object-fit:cover" alt="Xiaolongbao" loading="lazy"></div>
-          <div style="border-radius:10px;overflow:hidden;aspect-ratio:4/3;background:var(--bg2);"><img src="/img/food/shanghai-food.jpg" style="width:100%;height:100%;object-fit:cover" alt="Shanghai food" loading="lazy"></div>
-          <div style="border-radius:10px;overflow:hidden;aspect-ratio:4/3;background:var(--bg2);"><img src="/img/food/dimsum-2.jpg" style="width:100%;height:100%;object-fit:cover" alt="Dim sum" loading="lazy"></div>
-          <div style="border-radius:10px;overflow:hidden;aspect-ratio:4/3;background:var(--bg2);"><img src="/img/food/chinese-food-2.jpg" style="width:100%;height:100%;object-fit:cover" alt="Chinese food" loading="lazy"></div>
-        </div>
-      </div>
-    </div>
-
-    <div class="itin-content" id="itin-shopping">
-      <div class="itin-panel">
-        <h3>Шоппингийн Аялал — 2 өдөр</h3>
-        <div class="itin-day">
-          <div class="itin-day-header"><div class="itin-day-badge">1</div><div class="itin-day-title">Брэндийн дэлгүүрүүд</div></div>
-          <div class="itin-stops">
-            <div class="itin-stop">IFC Mall — LV, Gucci, Prada, Hermès</div>
-            <div class="itin-stop">Plaza 66 — Chanel, Dior, Saint Laurent</div>
-            <div class="itin-stop">Nanjing West Road — брэндийн гол гудамж</div>
-            <div class="itin-stop">iapm Mall — орой хүртэл нээлттэй, luxury брэндүүд</div>
-          </div>
-        </div>
-        <div class="itin-day">
-          <div class="itin-day-header"><div class="itin-day-badge">2</div><div class="itin-day-title">Орон нутгийн бараа + Зах</div></div>
-          <div class="itin-stops">
-            <div class="itin-stop">South Bund Fabric Market — тохируулга хийлгэх хувцас</div>
-            <div class="itin-stop">Yuyuan Bazaar — уламжлалт дурсгалын зүйлс</div>
-            <div class="itin-stop">Tianzifang — гар урлал, уран зураг, бэлэг</div>
-            <div class="itin-stop">Qipu Road — хямд бөгөөд олон ширхэгтэй бараа</div>
-          </div>
-        </div>
-        <div class="itin-meta"><div><span>2</span> өдөр</div><div><span>10+</span> дэлгүүр</div><div><span>Үнэ</span> тохирч өгнө</div></div>
-      </div>
-      <div class="itin-panel">
-        <h3>Шоппингийн зөвлөмж</h3>
-        <div class="itin-day">
-          <div class="itin-day-header"><div class="itin-day-badge">💡</div><div class="itin-day-title">Мэдэх ёстой зүйлс</div></div>
-          <div class="itin-stops">
-            <div class="itin-stop">Tax refund — 500 юань-аас дээш худалдан авалтад ОХУ-д буцаан авна</div>
-            <div class="itin-stop">WeChat Pay ашиглах — бэлэн мөнгөгүй л дэлгүүр хийж болно</div>
-            <div class="itin-stop">Хуурамч бараас болгоомжил — алдарт захуудад хуурамч байдаг</div>
-            <div class="itin-stop">Passport авч явах — Duty Free-д паспорт шаардана</div>
-          </div>
-        </div>
-        <div class="itin-meta"><div><span>Бүх</span> зөвлөмж</div><div><span>Монгол</span> хэлээр</div></div>
-      </div>
-    </div>
-
-    <div class="itin-content" id="itin-culture">
-      <div class="itin-panel">
-        <h3>Соёлын Аялал — 3 өдөр</h3>
-        <div class="itin-day">
-          <div class="itin-day-header"><div class="itin-day-badge">1</div><div class="itin-day-title">Түүхийн Шанхай</div></div>
-          <div class="itin-stops">
-            <div class="itin-stop">Shanghai Museum — 140,000 үзмэр, 5000 жилийн түүх</div>
-            <div class="itin-stop">The Bund — колониаль архитектур, харагдах байдал</div>
-            <div class="itin-stop">Yuyuan Garden — Мин улсын үеийн цэцэрлэг</div>
-          </div>
-        </div>
-        <div class="itin-day">
-          <div class="itin-day-header"><div class="itin-day-badge">2</div><div class="itin-day-title">Орчин үеийн урлаг</div></div>
-          <div class="itin-stops">
-            <div class="itin-stop">M50 Art District — 50+ gallery бүхий урлагийн тосгон</div>
-            <div class="itin-stop">Rockbund Art Museum — орчин үеийн урлаг</div>
-            <div class="itin-stop">Tianzifang — bohemian гудамж, гар урлал</div>
-          </div>
-        </div>
-        <div class="itin-day">
-          <div class="itin-day-header"><div class="itin-day-badge">3</div><div class="itin-day-title">Усан хот аялал</div></div>
-          <div class="itin-stops">
-            <div class="itin-stop">Zhujiajiao — 1700 жилийн настай усан хот</div>
-            <div class="itin-stop">Завиар аялал, гар урлалын дэлгүүрүүд</div>
-            <div class="itin-stop">Уламжлалт Хятад хоол оройн хоол</div>
-          </div>
-        </div>
-        <div class="itin-meta"><div><span>3</span> өдөр</div><div><span>Соёл</span> гүнзгий</div><div><span>Тайлбар</span> монголоор</div></div>
-      </div>
-      <div class="itin-panel">
-        <h3>Соёлын зөвлөмж</h3>
-        <div class="itin-day">
-          <div class="itin-day-header"><div class="itin-day-badge">💡</div><div class="itin-day-title">Хятадын ёс заншил</div></div>
-          <div class="itin-stops">
-            <div class="itin-stop">Сүм, хийдэд орохдоо малгайгаа авах, чимээгүй байх</div>
-            <div class="itin-stop">Хоолны дэглэмийн хүн бол урьдчилан хэлэх</div>
-            <div class="itin-stop">Зураг авахад зөвшөөрөл авах — ялангуяа хүмүүс</div>
-            <div class="itin-stop">Хятадын мэндчилгэг: 你好 (Nǐ hǎo) — сайн уу</div>
-          </div>
-        </div>
-        <div class="itin-meta"><div><span>Гүн</span> соёл</div><div><span>Монгол</span> тайлбар</div></div>
-      </div>
-    </div>
+    <span class="student-cta-note" style="margin-top:10px">Facebook Messenger-ээр холбогдоно</span>
   </div>
 </section>
 
-<!-- TIPS -->
-<section class="tips-section" id="tips">
-  <div class="section-max-wide">
-    <div class="section-eyebrow reveal">Хятад руу явахаасаа өмнө</div>
-    <div class="section-title reveal reveal-delay-1">Мэдэх ёстой бүх зүйл</div>
-    <div class="section-sub reveal reveal-delay-2">Анх удаа Шанхайд ирж байгаа хүмүүст зориулсан бодит зөвлөгөөнүүд.</div>
-    <div class="tips-grid">
-      <div class="tip-card reveal reveal-delay-1">
-        <div class="tip-icon">📱</div>
-        <div class="tip-title">VPN татах</div>
-        <div class="tip-text">Хятадад Google, Facebook, Instagram, WhatsApp ажиллахгүй. Явахаасаа өмнө VPN суулга — ExpressVPN, NordVPN сайн ажилладаг.</div>
-        <div class="tip-tag">Заавал</div>
-      </div>
-      <div class="tip-card reveal reveal-delay-2">
-        <div class="tip-icon">💳</div>
-        <div class="tip-title">Alipay бэлдэх</div>
-        <div class="tip-text">Хятадад бэлэн мөнгөгүй, зөвхөн QR кодоор төлдөг. WeChat Pay эсвэл Alipay-г заавал бэлтгэ. Олон улсын карт ажилладаг газар цөөн.</div>
-        <div class="tip-tag">Чухал</div>
-      </div>
-      <div class="tip-card reveal reveal-delay-3">
-        <div class="tip-icon">🛂</div>
-        <div class="tip-title">Виз</div>
-        <div class="tip-text">Монгол паспорттай бол 30 хоног хүртэл визгүй орох боломжтой. Паспортны дуусах хугацаа 6 сараас дээш эсэхийг шалгаарай.</div>
-        <div class="tip-tag">Мэдэх ёстой</div>
-      </div>
-    </div>
-    <div style="text-align:center;margin-top:40px">
-      <a href="/tips/" style="display:inline-flex;align-items:center;gap:6px;padding:12px 28px;border:1.5px solid var(--border);border-radius:50px;font-size:14px;font-weight:500;color:var(--dark2);text-decoration:none;transition:.2s" onmouseover="this.style.borderColor='var(--blue)';this.style.color='var(--blue)'" onmouseout="this.style.borderColor='var(--border)';this.style.color='var(--dark2)'">Бүх зөвлөмж үзэх →</a>
-    </div>
-  </div>
-</section>
-
-<!-- TESTIMONIALS -->
-<!-- REVIEWS — js/reviews.js-ээс уншина. Бодит үнэлгээ байхгүй бол ЭНЭ ХЭСЭГ ОГТ ХАРАГДАХГҮЙ. -->
+<!-- СЭТГЭГДЭЛ -->
 <section style="background:var(--bg);padding:100px 24px;display:none" id="reviews">
   <div style="max-width:980px;margin:0 auto">
     <div class="section-eyebrow reveal">Үйлчлүүлэгчид</div>
@@ -1483,284 +1173,7 @@ section,#booking-section{scroll-margin-top:60px}
   </div>
 </section>
 
-<!-- PRICING -->
-<section style="background:var(--bg2);padding:100px 0" id="pricing">
-  <div class="section-max">
-    <div class="section-eyebrow reveal">Үнэ · Багц</div>
-    <div class="section-title reveal reveal-delay-1">Шинжилгээ + Аялал багц</div>
-    <div class="section-sub reveal reveal-delay-2">5 өдөр / 4 шөнө — Нислэг, 5 одтой буудал, 23 төрлийн шинжилгээ, аялал бүгд нэг үнэд</div>
-
-    <div style="margin-top:56px;display:grid;grid-template-columns:1fr 340px;gap:32px;align-items:start" class="reveal reveal-delay-2">
-
-      <!-- Itinerary days -->
-      <div style="display:flex;flex-direction:column;gap:16px">
-
-        <!-- Day 1 -->
-        <div style="background:var(--card);border-radius:var(--radius);padding:28px 32px;box-shadow:var(--shadow);border:1px solid var(--border)">
-          <div style="display:flex;align-items:center;gap:16px;margin-bottom:16px">
-            <div style="width:40px;height:40px;border-radius:50%;background:#0071e3;color:#fff;display:flex;align-items:center;justify-content:center;font-size:14px;font-weight:700;flex-shrink:0">1</div>
-            <div>
-              <div style="font-size:12px;color:var(--muted2);text-transform:uppercase;letter-spacing:.06em;margin-bottom:2px">Өдөр 1</div>
-              <div style="font-size:16px;font-weight:600;color:var(--dark2)">Ирэлт · Нисэх онгоцны буудлаас угтах</div>
-            </div>
-          </div>
-          <div style="padding-left:56px;font-size:14px;color:var(--muted);line-height:1.7">
-            17:00 цагт нисэх онгоцны буудлаас угтаж, эмнэлэгт хүргэнэ. Анхдагч зөвлөгөө өгч, маргаашийн шинжилгээнд бэлтгэнэ.
-          </div>
-        </div>
-
-        <!-- Day 2 -->
-        <div style="background:var(--card);border-radius:var(--radius);padding:28px 32px;box-shadow:var(--shadow);border:1px solid var(--border)">
-          <div style="display:flex;align-items:center;gap:16px;margin-bottom:16px">
-            <div style="width:40px;height:40px;border-radius:50%;background:#0071e3;color:#fff;display:flex;align-items:center;justify-content:circle;font-size:14px;font-weight:700;flex-shrink:0;align-items:center;justify-content:center">2</div>
-            <div>
-              <div style="font-size:12px;color:var(--muted2);text-transform:uppercase;letter-spacing:.06em;margin-bottom:2px">Өдөр 2</div>
-              <div style="font-size:16px;font-weight:600;color:var(--dark2)">VIP Эмнэлгийн шинжилгээ · Хотын тойрон аялал</div>
-            </div>
-          </div>
-          <div style="padding-left:56px;font-size:14px;color:var(--muted);line-height:1.7">
-            Өглөө шинжилгээнд орж, хариугаа орчуулагч, хувийн сувилагчтайгаа хамт авна. Дараа нь хотын төвөөр аялна — алдарт <strong style="color:var(--dark2)">Nanjing Road</strong>, <strong style="color:var(--dark2)">The Bund</strong>, голоор завиар явж, <strong style="color:var(--dark2)">Shanghai Tower</strong>-ийн дээрээс гарч үзнэ.
-          </div>
-        </div>
-
-        <!-- Day 3 -->
-        <div style="background:var(--card);border-radius:var(--radius);padding:28px 32px;box-shadow:var(--shadow);border:1px solid var(--border)">
-          <div style="display:flex;align-items:center;gap:16px;margin-bottom:16px">
-            <div style="width:40px;height:40px;border-radius:50%;background:#0071e3;color:#fff;display:flex;align-items:center;justify-content:center;font-size:14px;font-weight:700;flex-shrink:0">3</div>
-            <div>
-              <div style="font-size:12px;color:var(--muted2);text-transform:uppercase;letter-spacing:.06em;margin-bottom:2px">Өдөр 3</div>
-              <div style="font-size:16px;font-weight:600;color:var(--dark2)">Амьтны хүрээлэн · Yu Garden</div>
-            </div>
-          </div>
-          <div style="padding-left:56px;font-size:14px;color:var(--muted);line-height:1.7">
-            370 гаруй нэр төрлийн 10,000 гаруй амьтантай <strong style="color:var(--dark2)">Shanghai Zoo</strong>-г үзнэ. Luxury дээд зэрэглэлийн буфет хоол идэж, <strong style="color:var(--dark2)">Yu Garden</strong>-оор зочилно.
-          </div>
-        </div>
-
-        <!-- Day 4 -->
-        <div style="background:var(--card);border-radius:var(--radius);padding:28px 32px;box-shadow:var(--shadow);border:1px solid var(--border)">
-          <div style="display:flex;align-items:center;gap:16px;margin-bottom:16px">
-            <div style="width:40px;height:40px;border-radius:50%;background:#0071e3;color:#fff;display:flex;align-items:center;justify-content:center;font-size:14px;font-weight:700;flex-shrink:0">4</div>
-            <div>
-              <div style="font-size:12px;color:var(--muted2);text-transform:uppercase;letter-spacing:.06em;margin-bottom:2px">Өдөр 4</div>
-              <div style="font-size:16px;font-weight:600;color:var(--dark2)">Шоппинг · Xintiandi · LV · Starbucks үйлдвэр</div>
-            </div>
-          </div>
-          <div style="padding-left:56px;font-size:14px;color:var(--muted);line-height:1.7">
-            <strong style="color:var(--dark2)">Xintiandi Plaza</strong>-д орж, <strong style="color:var(--dark2)">Louis Vuitton</strong> дэлгүүрийг үзэж, дэлхийд цорын ганц нээлттэй <strong style="color:var(--dark2)">Starbucks үйлдвэр</strong>-т зочилно.
-          </div>
-        </div>
-
-        <!-- Day 5 -->
-        <div style="background:var(--card);border-radius:var(--radius);padding:28px 32px;box-shadow:var(--shadow);border:1px solid var(--border)">
-          <div style="display:flex;align-items:center;gap:16px;margin-bottom:16px">
-            <div style="width:40px;height:40px;border-radius:50%;background:var(--muted2);color:#fff;display:flex;align-items:center;justify-content:center;font-size:14px;font-weight:700;flex-shrink:0">5</div>
-            <div>
-              <div style="font-size:12px;color:var(--muted2);text-transform:uppercase;letter-spacing:.06em;margin-bottom:2px">Өдөр 5</div>
-              <div style="font-size:16px;font-weight:600;color:var(--dark2)">Буцах · Нисэх онгоцны буудалд хүргэх</div>
-            </div>
-          </div>
-          <div style="padding-left:56px;font-size:14px;color:var(--muted);line-height:1.7">
-            Өглөө нисэх онгоцны буудалд хүргэж, Монголруу амжилттай буцна.
-          </div>
-        </div>
-
-      </div>
-
-      <!-- Price card -->
-      <div style="position:sticky;top:80px">
-        <div style="background:#000;border-radius:var(--radius2);padding:36px 32px;color:#fff">
-          <div style="font-size:11px;text-transform:uppercase;letter-spacing:.1em;color:rgba(255,255,255,.45);margin-bottom:12px">Нийт үнэ</div>
-          <div style="font-size:48px;font-weight:700;letter-spacing:-.02em;line-height:1;margin-bottom:4px">4,600,000<span style="font-size:22px;font-weight:400;opacity:.6">₮</span></div>
-          <div style="font-size:13px;color:rgba(255,255,255,.4);margin-bottom:32px">5 өдөр · 4 шөнө · 1 хүн</div>
-
-          <div style="display:flex;flex-direction:column;gap:12px;margin-bottom:32px">
-            <div style="display:flex;align-items:center;gap:10px;font-size:13px;color:rgba(255,255,255,.75)">
-              <span style="color:#30d158;font-size:15px">✓</span> Нислэгийн тасалбар (очиж, буцах)
-            </div>
-            <div style="display:flex;align-items:center;gap:10px;font-size:13px;color:rgba(255,255,255,.75)">
-              <span style="color:#30d158;font-size:15px">✓</span> 5 одтой зочид буудал · 4 шөнө
-            </div>
-            <div style="display:flex;align-items:center;gap:10px;font-size:13px;color:rgba(255,255,255,.75)">
-              <span style="color:#30d158;font-size:15px">✓</span> Нисэх онгоцны буудлаас угтах
-            </div>
-            <div style="display:flex;align-items:center;gap:10px;font-size:13px;color:rgba(255,255,255,.75)">
-              <span style="color:#30d158;font-size:15px">✓</span> VIP эмнэлэг — 23 төрлийн шинжилгээ
-            </div>
-            <div style="display:flex;align-items:center;gap:10px;font-size:13px;color:rgba(255,255,255,.75)">
-              <span style="color:#30d158;font-size:15px">✓</span> Орчуулагч + хувийн сувилагч
-            </div>
-            <div style="display:flex;align-items:center;gap:10px;font-size:13px;color:rgba(255,255,255,.75)">
-              <span style="color:#30d158;font-size:15px">✓</span> Хотын тойрон аялал (бүх өдөр)
-            </div>
-            <div style="display:flex;align-items:center;gap:10px;font-size:13px;color:rgba(255,255,255,.75)">
-              <span style="color:#30d158;font-size:15px">✓</span> Өдөр тутмын хоол · Luxury буфет
-            </div>
-            <div style="display:flex;align-items:center;gap:10px;font-size:13px;color:rgba(255,255,255,.75)">
-              <span style="color:#30d158;font-size:15px">✓</span> Шоппинг хөтөч · үзвэрийн тасалбар
-            </div>
-            <div style="display:flex;align-items:center;gap:10px;font-size:13px;color:rgba(255,255,255,.75)">
-              <span style="color:#30d158;font-size:15px">✓</span> Нисэх онгоцны буудалд хүргэх
-            </div>
-          </div>
-
-          <button onclick="window.location.href='/booking/'" style="width:100%;padding:16px;background:#0071e3;color:#fff;border:none;border-radius:12px;font-size:15px;font-weight:600;cursor:pointer;font-family:'Inter',sans-serif;letter-spacing:-.01em;transition:.2s" onmouseover="this.style.background='#0077ed'" onmouseout="this.style.background='#0071e3'">Одоо Захиалах →</button>
-
-          <div style="margin-top:16px;font-size:11px;color:rgba(255,255,255,.25);text-align:center">Нислэг, буудал, хоол бүгд үнэд багтсан</div>
-        </div>
-      </div>
-
-    </div>
-
-    <!-- Individual service pricing -->
-    <div style="margin-top:48px;padding-top:48px;border-top:1px solid var(--border)" class="reveal">
-      <div style="font-size:12px;font-weight:600;letter-spacing:.08em;text-transform:uppercase;color:var(--blue);margin-bottom:12px">Тусдаа үйлчилгээний үнэ</div>
-      <div style="font-size:clamp(24px,4vw,36px);font-weight:700;letter-spacing:-.03em;color:var(--dark2);margin-bottom:8px">Хөтөч · Орчуулагч · Буудал · Угтах</div>
-      <div style="font-size:15px;color:var(--muted);margin-bottom:36px">Багцад хамрагдахгүй тохиолдолд тусдаа захиалах боломжтой.</div>
-
-      <div style="display:grid;grid-template-columns:1fr 1fr;gap:16px;max-width:840px">
-
-        <!-- Guide card -->
-        <div style="background:var(--card);border-radius:var(--radius2);padding:32px;box-shadow:var(--shadow);border:1px solid var(--border)">
-          <div style="font-size:28px;margin-bottom:16px">🧑‍💼</div>
-          <div style="font-size:13px;font-weight:600;text-transform:uppercase;letter-spacing:.06em;color:var(--muted2);margin-bottom:6px">Хөтөч</div>
-          <div style="font-size:36px;font-weight:700;letter-spacing:-.03em;color:var(--dark2);line-height:1">500 <span style="font-size:18px;font-weight:400;color:var(--muted)">юань/өдөр</span></div>
-          <div style="margin-top:20px;padding-top:20px;border-top:1px solid var(--border);display:flex;flex-direction:column;gap:10px">
-            <div style="display:flex;gap:8px;font-size:13px;color:var(--muted)"><span style="color:var(--blue);flex-shrink:0">✓</span> Нисэх буудлаас угтах, хүргэх</div>
-            <div style="display:flex;gap:8px;font-size:13px;color:var(--muted)"><span style="color:var(--blue);flex-shrink:0">✓</span> Монгол хэлээр хотоор хөтлөх</div>
-            <div style="display:flex;gap:8px;font-size:13px;color:var(--muted)"><span style="color:var(--blue);flex-shrink:0">✓</span> Ресторан, дэлгүүр зориулах</div>
-          </div>
-        </div>
-
-        <!-- Translator card -->
-        <div style="background:var(--card);border-radius:var(--radius2);padding:32px;box-shadow:var(--shadow);border:1px solid var(--border)">
-          <div style="font-size:28px;margin-bottom:16px">🗣️</div>
-          <div style="font-size:13px;font-weight:600;text-transform:uppercase;letter-spacing:.06em;color:var(--muted2);margin-bottom:6px">Орчуулагч</div>
-          <div style="font-size:36px;font-weight:700;letter-spacing:-.03em;color:var(--dark2);line-height:1">500 <span style="font-size:18px;font-weight:400;color:var(--muted)">юань/өдөр</span></div>
-          <div style="margin-top:20px;padding-top:20px;border-top:1px solid var(--border);display:flex;flex-direction:column;gap:10px">
-            <div style="display:flex;gap:8px;font-size:13px;color:var(--muted)"><span style="color:var(--blue);flex-shrink:0">✓</span> Монгол–Хятад орчуулга</div>
-            <div style="display:flex;gap:8px;font-size:13px;color:var(--muted)"><span style="color:var(--blue);flex-shrink:0">✓</span> Эмнэлгийн орчуулга (мэргэжлийн)</div>
-            <div style="display:flex;gap:8px;font-size:13px;color:var(--muted)"><span style="color:var(--blue);flex-shrink:0">✓</span> Бизнесийн хэлэлцээр, гэрээ</div>
-          </div>
-        </div>
-
-        <!-- Hotel booking card -->
-        <div style="background:var(--card);border-radius:var(--radius2);padding:32px;box-shadow:var(--shadow);border:1px solid var(--border)">
-          <div style="font-size:28px;margin-bottom:16px">🏨</div>
-          <div style="font-size:13px;font-weight:600;text-transform:uppercase;letter-spacing:.06em;color:var(--muted2);margin-bottom:6px">Буудал захиалах</div>
-          <div style="font-size:36px;font-weight:700;letter-spacing:-.03em;color:var(--dark2);line-height:1">50 <span style="font-size:18px;font-weight:400;color:var(--muted)">юань/удаа</span></div>
-          <div style="margin-top:20px;padding-top:20px;border-top:1px solid var(--border);display:flex;flex-direction:column;gap:10px">
-            <div style="display:flex;gap:8px;font-size:13px;color:var(--muted)"><span style="color:var(--blue);flex-shrink:0">✓</span> Шанхай хотын төвд тав тухтай буудал</div>
-            <div style="display:flex;gap:8px;font-size:13px;color:var(--muted)"><span style="color:var(--blue);flex-shrink:0">✓</span> Таны бюджет, байршилд тохируулан сонгоно</div>
-            <div style="display:flex;gap:8px;font-size:13px;color:var(--muted)"><span style="color:var(--blue);flex-shrink:0">✓</span> Захиалга, баталгаажуулалтыг бид хариуцна</div>
-          </div>
-        </div>
-
-        <!-- Airport pickup card -->
-        <div style="background:var(--card);border-radius:var(--radius2);padding:32px;box-shadow:var(--shadow);border:1px solid var(--border)">
-          <div style="font-size:28px;margin-bottom:16px">🚗</div>
-          <div style="font-size:13px;font-weight:600;text-transform:uppercase;letter-spacing:.06em;color:var(--muted2);margin-bottom:6px">Нисэх буудлаас угтах</div>
-          <div style="font-size:36px;font-weight:700;letter-spacing:-.03em;color:var(--dark2);line-height:1">200 <span style="font-size:18px;font-weight:400;color:var(--muted)">юань/удаа</span></div>
-          <div style="margin-top:20px;padding-top:20px;border-top:1px solid var(--border);display:flex;flex-direction:column;gap:10px">
-            <div style="display:flex;gap:8px;font-size:13px;color:var(--muted)"><span style="color:var(--blue);flex-shrink:0">✓</span> Нисэх буудлаас тосож угтана</div>
-            <div style="display:flex;gap:8px;font-size:13px;color:var(--muted)"><span style="color:var(--blue);flex-shrink:0">✓</span> Таны хүрэх газар хүртэл хүргэнэ</div>
-            <div style="display:flex;gap:8px;font-size:13px;color:var(--muted)"><span style="color:var(--blue);flex-shrink:0">✓</span> Пүдун болон Хунцяо буудал аль алинаас</div>
-          </div>
-        </div>
-
-      </div>
-
-      <!-- Discount note -->
-      <div style="margin-top:20px;max-width:700px;background:rgba(0,113,227,.06);border:1px solid rgba(0,113,227,.15);border-radius:14px;padding:16px 20px;display:flex;align-items:flex-start;gap:12px">
-        <span style="font-size:18px;flex-shrink:0">💬</span>
-        <div style="font-size:13px;color:var(--muted);line-height:1.6">
-          <strong style="color:var(--dark2)">Хөнгөлөлт авах боломжтой:</strong> Олон хүнтэй группээр ирж байгаа буюу олон өдрийн захиалга хийх тохиолдолд үнийг урьдчилан тохиролцож болно. <a href="#" onclick="window.location.href='/booking/';return false" style="color:var(--blue);text-decoration:none;font-weight:500">Холбогдох →</a>
-        </div>
-      </div>
-    </div>
-
-  </div>
-</section>
-
-<!-- GALLERY -->
-<!-- TRIP PLANNER PROMO -->
-<section style="background:#fff;padding:80px 24px" id="planner-promo">
-  <div style="max-width:1160px;margin:0 auto">
-    <div class="section-eyebrow reveal">Шинэ боломж</div>
-    <div class="section-title reveal reveal-delay-1">Аяллын Төлөвлөгч</div>
-    <div class="section-sub reveal reveal-delay-2">Огноо, хүмүүс, сонирхол, газрууд бүгдийг нэг дор. Найзтайгаа хуваалц.</div>
-    <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:20px;margin-top:48px" class="gallery-grid-wrap">
-      <div class="reveal reveal-delay-1" style="background:linear-gradient(135deg,#1a1a2e,#2d2d4e);border-radius:20px;padding:28px;color:#fff;position:relative;overflow:hidden;">
-        <div style="font-size:2.2rem;margin-bottom:12px">📅</div>
-        <div style="font-size:1rem;font-weight:700;margin-bottom:6px">Огноо & Хүмүүс</div>
-        <div style="font-size:.85rem;color:rgba(255,255,255,.65);line-height:1.5">Хэзээ, хэдүүлээ, хэнтэй явахаа тохируулаарай. Өдөр бүрийн хуваарь гарна.</div>
-      </div>
-      <div class="reveal reveal-delay-2" style="background:linear-gradient(135deg,#e8392a,#ff6b5a);border-radius:20px;padding:28px;color:#fff;position:relative;overflow:hidden;">
-        <div style="font-size:2.2rem;margin-bottom:12px">📍</div>
-        <div style="font-size:1rem;font-weight:700;margin-bottom:6px">15+ Газар харах</div>
-        <div style="font-size:.85rem;color:rgba(255,255,255,.8);line-height:1.5">Соёл, хоол, шоппинг, амрах — LFS-ийн зөвлөмжтэй газруудыг харж, дуртайгаа хадгал.</div>
-      </div>
-      <div class="reveal reveal-delay-3" style="background:linear-gradient(135deg,#d4a843,#f0c060);border-radius:20px;padding:28px;color:#fff;position:relative;overflow:hidden;">
-        <div style="font-size:2.2rem;margin-bottom:12px">🔗</div>
-        <div style="font-size:1rem;font-weight:700;margin-bottom:6px">Найзтайгаа хуваалц</div>
-        <div style="font-size:.85rem;color:rgba(255,255,255,.85);line-height:1.5">Төлөвлөгөөгөө линкээр хуваалцаж, хамт явагчдаа харуулаарай.</div>
-      </div>
-    </div>
-    <div style="text-align:center;margin-top:40px;">
-      <a href="/planner/" style="display:inline-block;background:#e8392a;color:#fff;border-radius:50px;padding:14px 40px;font-size:1rem;font-weight:700;text-decoration:none;transition:background .2s;letter-spacing:-.01em;" onmouseover="this.style.background='#c42d1f'" onmouseout="this.style.background='#e8392a'">
-        Төлөвлөгч нээх →
-      </a>
-    </div>
-  </div>
-</section>
-
-<section style="background:var(--bg2);padding:100px 24px" id="gallery">
-  <div style="max-width:1160px;margin:0 auto">
-    <div class="section-eyebrow reveal">Шанхай</div>
-    <div class="section-title reveal reveal-delay-1">Үзэсгэлэнт газрууд</div>
-    <div class="section-sub reveal reveal-delay-2">Манай хөтөчтэй хамт дараах газруудаар аялаарай.</div>
-    <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:16px;margin-top:48px" class="gallery-grid-wrap">
-      <div class="reveal reveal-delay-1" style="border-radius:18px;overflow:hidden;aspect-ratio:4/3;background:linear-gradient(135deg,#1a1a2e 0%,#16213e 50%,#0f3460 100%);display:flex;flex-direction:column;justify-content:flex-end;padding:20px;cursor:pointer;transition:transform .2s;position:relative">
-        <img src="/img/health/Bund2.jpg" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover" onerror="this.style.display='none'">
-        <div style="position:absolute;inset:0;background:linear-gradient(to top,rgba(0,0,0,.75) 0%,rgba(0,0,0,.1) 55%,transparent 100%)"></div>
-        <div style="position:relative;font-size:16px;font-weight:700;color:#fff;letter-spacing:-.02em">The Bund</div>
-        <div style="position:relative;font-size:12px;color:rgba(255,255,255,.75);margin-top:2px">外滩 · Шанхайн тэмдэг</div>
-      </div>
-      <div class="reveal reveal-delay-2" style="border-radius:18px;overflow:hidden;aspect-ratio:4/3;background:linear-gradient(135deg,#134e5e 0%,#71b280 100%);display:flex;flex-direction:column;justify-content:flex-end;padding:20px;cursor:pointer;transition:transform .2s;position:relative">
-        <img src="/img/health/pexels-daniel-reynaga-337914704-35521663.jpg" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:center 30%" onerror="this.style.display='none'">
-        <div style="position:absolute;inset:0;background:linear-gradient(to top,rgba(0,0,0,.75) 0%,rgba(0,0,0,.1) 55%,transparent 100%)"></div>
-        <div style="position:relative;font-size:16px;font-weight:700;color:#fff;letter-spacing:-.02em">Yu Garden</div>
-        <div style="position:relative;font-size:12px;color:rgba(255,255,255,.75);margin-top:2px">豫园 · Хятадын уламжлалт хүрээлэн</div>
-      </div>
-      <div class="reveal reveal-delay-3" style="border-radius:18px;overflow:hidden;aspect-ratio:4/3;background:linear-gradient(135deg,#4776e6 0%,#8e54e9 100%);display:flex;flex-direction:column;justify-content:flex-end;padding:20px;cursor:pointer;transition:transform .2s;position:relative">
-        <img src="/img/health/pexels-daciana-cristina-visan-2149801141-35049458.jpg" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover" onerror="this.style.display='none'">
-        <div style="position:absolute;inset:0;background:linear-gradient(to top,rgba(0,0,0,.75) 0%,rgba(0,0,0,.1) 55%,transparent 100%)"></div>
-        <div style="position:relative;font-size:16px;font-weight:700;color:#fff;letter-spacing:-.02em">Oriental Pearl Tower</div>
-        <div style="position:relative;font-size:12px;color:rgba(255,255,255,.75);margin-top:2px">东方明珠 · Дэлхийд алдарт цамхаг</div>
-      </div>
-      <div class="reveal reveal-delay-1" style="border-radius:18px;overflow:hidden;aspect-ratio:4/3;background:linear-gradient(135deg,#f7971e 0%,#ffd200 100%);display:flex;flex-direction:column;justify-content:flex-end;padding:20px;cursor:pointer;transition:transform .2s;position:relative">
-        <img src="/img/health/pexels-mohamed-does-349386075-37430246.jpg" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover" onerror="this.style.display='none'">
-        <div style="position:absolute;inset:0;background:linear-gradient(to top,rgba(0,0,0,.75) 0%,rgba(0,0,0,.1) 55%,transparent 100%)"></div>
-        <div style="position:relative;font-size:16px;font-weight:700;color:#fff;letter-spacing:-.02em">Nanjing Road</div>
-        <div style="position:relative;font-size:12px;color:rgba(255,255,255,.75);margin-top:2px">南京路 · Дэлхийн хамгийн завгүй гудамж</div>
-      </div>
-      <div class="reveal reveal-delay-2" style="border-radius:18px;overflow:hidden;aspect-ratio:4/3;background:linear-gradient(135deg,#11998e 0%,#38ef7d 100%);display:flex;flex-direction:column;justify-content:flex-end;padding:20px;cursor:pointer;transition:transform .2s;position:relative">
-        <img src="/img/health/pexels-bingqian-li-230971044-36064465.jpg" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover" onerror="this.style.display='none'">
-        <div style="position:absolute;inset:0;background:linear-gradient(to top,rgba(0,0,0,.75) 0%,rgba(0,0,0,.1) 55%,transparent 100%)"></div>
-        <div style="position:relative;font-size:16px;font-weight:700;color:#fff;letter-spacing:-.02em">French Concession</div>
-        <div style="position:relative;font-size:12px;color:rgba(255,255,255,.75);margin-top:2px">法租界 · Кофе, урлаг, архитектур</div>
-      </div>
-      <div class="reveal reveal-delay-3" style="border-radius:18px;overflow:hidden;aspect-ratio:4/3;background:linear-gradient(135deg,#c94b4b 0%,#4b134f 100%);display:flex;flex-direction:column;justify-content:flex-end;padding:20px;cursor:pointer;transition:transform .2s;position:relative">
-        <img src="/img/health/Tower1.jpg" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:center 15%" onerror="this.style.display='none'">
-        <div style="position:absolute;inset:0;background:linear-gradient(to top,rgba(0,0,0,.75) 0%,rgba(0,0,0,.1) 55%,transparent 100%)"></div>
-        <div style="position:relative;font-size:16px;font-weight:700;color:#fff;letter-spacing:-.02em">Shanghai Tower</div>
-        <div style="position:relative;font-size:12px;color:rgba(255,255,255,.75);margin-top:2px">上海中心 · Дэлхийн 2-р өндөр барилга</div>
-      </div>
-    </div>
-  </div>
-</section>
-
-<!-- BOOKING -->
+<!-- ЗАХИАЛГА -->
 <section class="booking-section" id="booking">
   <div class="section-max">
     <div class="section-eyebrow reveal">Хөтөч Захиалах</div>
@@ -1897,7 +1310,96 @@ section,#booking-section{scroll-margin-top:60px}
   </div>
 </section>
 
-<!-- BLOG PREVIEW -->
+<!-- ҮЙЛЧИЛГЭЭНИЙ ТОЙМ -->
+<div class="intro-band">
+  <div class="intro-grid">
+    <div class="intro-item">
+      <div class="intro-icon">🗣️</div>
+      <div class="intro-label">Монгол хэлтэй хөтөч</div>
+      <div class="intro-desc">Хятад, Монгол, Англи хэл дээр үйлчилгээ</div>
+    </div>
+    <div class="intro-item">
+      <div class="intro-icon">🗺️</div>
+      <div class="intro-label">Хувийн маршрут</div>
+      <div class="intro-desc">Таны хэрэгцээнд тулгуурлан боловсруулна</div>
+    </div>
+    <div class="intro-item">
+      <div class="intro-icon">✈️</div>
+      <div class="intro-label">Нисэх буудлаас тосох</div>
+      <div class="intro-desc">Pudong болон Hongqiao буудлаас</div>
+    </div>
+    <div class="intro-item">
+      <div class="intro-icon">💼</div>
+      <div class="intro-label">Бизнесийн үйлчилгээ</div>
+      <div class="intro-desc">Экспо, үзэсгэлэн, хэлмэрч үйлчилгээ</div>
+    </div>
+  </div>
+</div>
+
+
+<!-- ЯАГААД БИД -->
+<section class="why-section" id="why">
+  <div class="section-max">
+    <div class="section-eyebrow reveal">Яагаад биднийг сонгох вэ</div>
+    <div class="section-title reveal reveal-delay-1">Та чемоданаа бэлд,<br>үлдсэнийг бидэнд даатга</div>
+    <div class="why-grid" style="grid-template-columns:repeat(auto-fit,minmax(200px,1fr))">
+      <div class="why-card reveal reveal-delay-1">
+        <div class="why-num" style="font-size:34px;opacity:1">🩺</div>
+        <div class="why-title">Эмнэлэг + Аялал</div>
+        <div class="why-text">Эрүүл мэндийн үйлчилгээ болон хот аяллыг нэг удаагийн ирэлтэд хамт зохион байгуулна.</div>
+      </div>
+      <div class="why-card reveal reveal-delay-2">
+        <div class="why-num" style="font-size:34px;opacity:1">🤝</div>
+        <div class="why-title">Зөвхөн тантай</div>
+        <div class="why-text">Бүлгийн аялал биш — зөвхөн та болон танай хүмүүстэй. Ямар ч харийн хүнгүй, цэвэр хувийн үйлчилгээ.</div>
+      </div>
+      <div class="why-card reveal reveal-delay-3">
+        <div class="why-num" style="font-size:34px;opacity:1">⚡</div>
+        <div class="why-title">24/7 Дэмжлэг</div>
+        <div class="why-text">Аяллын өмнө зөвлөгөө, явах үедээ хамт, буцсаны дараа ч тусална. Утасдахад л хангалттай.</div>
+      </div>
+      <div class="why-card reveal reveal-delay-4">
+        <div class="why-num" style="font-size:34px;opacity:1">🏆</div>
+        <div class="why-title">Мэргэжлийн туршлага</div>
+        <div class="why-text">Шанхайд амьдарч, олон монгол аялагчтай ажилласан туршлагатай. Хотын нуугдмал газрууд, хамгийн сайн үнэ — бид мэднэ.</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ЗӨВЛӨМЖ -->
+<section class="tips-section" id="tips">
+  <div class="section-max-wide">
+    <div class="section-eyebrow reveal">Хятад руу явахаасаа өмнө</div>
+    <div class="section-title reveal reveal-delay-1">Мэдэх ёстой бүх зүйл</div>
+    <div class="section-sub reveal reveal-delay-2">Анх удаа Шанхайд ирж байгаа хүмүүст зориулсан бодит зөвлөгөөнүүд.</div>
+    <div class="tips-grid">
+      <div class="tip-card reveal reveal-delay-1">
+        <div class="tip-icon">📱</div>
+        <div class="tip-title">VPN татах</div>
+        <div class="tip-text">Хятадад Google, Facebook, Instagram, WhatsApp ажиллахгүй. Явахаасаа өмнө VPN суулга — ExpressVPN, NordVPN сайн ажилладаг.</div>
+        <div class="tip-tag">Заавал</div>
+      </div>
+      <div class="tip-card reveal reveal-delay-2">
+        <div class="tip-icon">💳</div>
+        <div class="tip-title">Alipay бэлдэх</div>
+        <div class="tip-text">Хятадад бэлэн мөнгөгүй, зөвхөн QR кодоор төлдөг. WeChat Pay эсвэл Alipay-г заавал бэлтгэ. Олон улсын карт ажилладаг газар цөөн.</div>
+        <div class="tip-tag">Чухал</div>
+      </div>
+      <div class="tip-card reveal reveal-delay-3">
+        <div class="tip-icon">🛂</div>
+        <div class="tip-title">Виз</div>
+        <div class="tip-text">Монгол паспорттай бол 30 хоног хүртэл визгүй орох боломжтой. Паспортны дуусах хугацаа 6 сараас дээш эсэхийг шалгаарай.</div>
+        <div class="tip-tag">Мэдэх ёстой</div>
+      </div>
+    </div>
+    <div style="text-align:center;margin-top:40px">
+      <a href="/tips/" style="display:inline-flex;align-items:center;gap:6px;padding:12px 28px;border:1.5px solid var(--border);border-radius:50px;font-size:14px;font-weight:500;color:var(--dark2);text-decoration:none;transition:.2s" onmouseover="this.style.borderColor='var(--blue)';this.style.color='var(--blue)'" onmouseout="this.style.borderColor='var(--border)';this.style.color='var(--dark2)'">Бүх зөвлөмж үзэх →</a>
+    </div>
+  </div>
+</section>
+
+<!-- БЛОГ -->
 <section style="background:var(--bg2);padding:100px 24px" id="blog-preview">
   <div style="max-width:980px;margin:0 auto">
     <div class="section-eyebrow reveal">Блог</div>
@@ -1938,7 +1440,38 @@ section,#booking-section{scroll-margin-top:60px}
   </div>
 </section>
 
-<!-- TRIP.COM AFFILIATE SECTION -->
+<!-- АЯЛЛЫН ТӨЛӨВЛӨГЧ -->
+<section style="background:#fff;padding:80px 24px" id="planner-promo">
+  <div style="max-width:1160px;margin:0 auto">
+    <div class="section-eyebrow reveal">Шинэ боломж</div>
+    <div class="section-title reveal reveal-delay-1">Аяллын Төлөвлөгч</div>
+    <div class="section-sub reveal reveal-delay-2">Огноо, хүмүүс, сонирхол, газрууд бүгдийг нэг дор. Найзтайгаа хуваалц.</div>
+    <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:20px;margin-top:48px" class="gallery-grid-wrap">
+      <div class="reveal reveal-delay-1" style="background:linear-gradient(135deg,#1a1a2e,#2d2d4e);border-radius:20px;padding:28px;color:#fff;position:relative;overflow:hidden;">
+        <div style="font-size:2.2rem;margin-bottom:12px">📅</div>
+        <div style="font-size:1rem;font-weight:700;margin-bottom:6px">Огноо & Хүмүүс</div>
+        <div style="font-size:.85rem;color:rgba(255,255,255,.65);line-height:1.5">Хэзээ, хэдүүлээ, хэнтэй явахаа тохируулаарай. Өдөр бүрийн хуваарь гарна.</div>
+      </div>
+      <div class="reveal reveal-delay-2" style="background:linear-gradient(135deg,#e8392a,#ff6b5a);border-radius:20px;padding:28px;color:#fff;position:relative;overflow:hidden;">
+        <div style="font-size:2.2rem;margin-bottom:12px">📍</div>
+        <div style="font-size:1rem;font-weight:700;margin-bottom:6px">15+ Газар харах</div>
+        <div style="font-size:.85rem;color:rgba(255,255,255,.8);line-height:1.5">Соёл, хоол, шоппинг, амрах — LFS-ийн зөвлөмжтэй газруудыг харж, дуртайгаа хадгал.</div>
+      </div>
+      <div class="reveal reveal-delay-3" style="background:linear-gradient(135deg,#d4a843,#f0c060);border-radius:20px;padding:28px;color:#fff;position:relative;overflow:hidden;">
+        <div style="font-size:2.2rem;margin-bottom:12px">🔗</div>
+        <div style="font-size:1rem;font-weight:700;margin-bottom:6px">Найзтайгаа хуваалц</div>
+        <div style="font-size:.85rem;color:rgba(255,255,255,.85);line-height:1.5">Төлөвлөгөөгөө линкээр хуваалцаж, хамт явагчдаа харуулаарай.</div>
+      </div>
+    </div>
+    <div style="text-align:center;margin-top:40px;">
+      <a href="/planner/" style="display:inline-block;background:#e8392a;color:#fff;border-radius:50px;padding:14px 40px;font-size:1rem;font-weight:700;text-decoration:none;transition:background .2s;letter-spacing:-.01em;" onmouseover="this.style.background='#c42d1f'" onmouseout="this.style.background='#e8392a'">
+        Төлөвлөгч нээх →
+      </a>
+    </div>
+  </div>
+</section>
+
+<!-- TRIP.COM -->
 <section style="background:#fff;padding:80px 24px">
   <div style="max-width:980px;margin:0 auto">
     <div class="section-eyebrow reveal">✈️ Аяллын платформ</div>
@@ -2018,7 +1551,7 @@ section,#booking-section{scroll-margin-top:60px}
         <a class="footer-link" href="/tips/">Зөвлөмж</a>
         <a class="footer-link" href="/metro/">Метро гарын авлага</a>
         <a class="footer-link" href="/blog/">Блог</a>
-        <button class="footer-link" onclick="scrollToId('pricing')">Үнэ</button>
+        <a class="footer-link" href="/pricing/">Үнэ</a>
         <button class="footer-link" onclick="window.location.href='/booking/'">Захиалах</button>
       </div>
       <div>
@@ -2172,14 +1705,6 @@ const revealObserver = new IntersectionObserver(entries => {
   entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add('visible'); } });
 }, {threshold:.12, rootMargin:'0px 0px -40px 0px'});
 document.querySelectorAll('.reveal').forEach(el => revealObserver.observe(el));
-
-// ── ITINERARY TABS ──
-function switchItin(id, btn) {
-  document.querySelectorAll('.itin-content').forEach(c => c.classList.remove('active'));
-  document.querySelectorAll('.itin-tab').forEach(t => t.classList.remove('active'));
-  document.getElementById('itin-' + id)?.classList.add('active');
-  btn.classList.add('active');
-}
 
 // ── BOOKING FORM ──
 function submitBooking(e) {
