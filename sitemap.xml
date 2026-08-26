@@ -26,6 +26,12 @@
   </url>
 
   <url>
+    <loc>https://lfsshanghai.com/apartment/</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.9</priority>
+  </url>
+
+  <url>
     <loc>https://lfsshanghai.com/routes/</loc>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
@@ -53,6 +59,18 @@
     <loc>https://lfsshanghai.com/blog/shanghai-guide/</loc>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
+  </url>
+
+  <url>
+    <loc>https://lfsshanghai.com/blog/china-visa-application/</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+
+  <url>
+    <loc>https://lfsshanghai.com/blog/china-30-days-rules/</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
   </url>
 
   <url>
@@ -122,11 +140,11 @@
   </url>
 
   <!-- packages:start -->
-  <url><loc>https://lfsshanghai.com/packages/health-travel/</loc><lastmod>2026-08-10</lastmod><changefreq>monthly</changefreq><priority>0.9</priority></url>
-  <url><loc>https://lfsshanghai.com/packages/basic-checkup/</loc><lastmod>2026-08-10</lastmod><changefreq>monthly</changefreq><priority>0.9</priority></url>
-  <url><loc>https://lfsshanghai.com/packages/travel-only/</loc><lastmod>2026-08-10</lastmod><changefreq>monthly</changefreq><priority>0.9</priority></url>
-  <url><loc>https://lfsshanghai.com/en/packages/health-travel/</loc><lastmod>2026-08-10</lastmod><changefreq>monthly</changefreq><priority>0.9</priority></url>
-  <url><loc>https://lfsshanghai.com/en/packages/basic-checkup/</loc><lastmod>2026-08-10</lastmod><changefreq>monthly</changefreq><priority>0.9</priority></url>
-  <url><loc>https://lfsshanghai.com/en/packages/travel-only/</loc><lastmod>2026-08-10</lastmod><changefreq>monthly</changefreq><priority>0.9</priority></url>
+  <url><loc>https://lfsshanghai.com/packages/health-travel/</loc><lastmod>2026-08-26</lastmod><changefreq>monthly</changefreq><priority>0.9</priority></url>
+  <url><loc>https://lfsshanghai.com/packages/basic-checkup/</loc><lastmod>2026-08-26</lastmod><changefreq>monthly</changefreq><priority>0.9</priority></url>
+  <url><loc>https://lfsshanghai.com/packages/travel-only/</loc><lastmod>2026-08-26</lastmod><changefreq>monthly</changefreq><priority>0.9</priority></url>
+  <url><loc>https://lfsshanghai.com/en/packages/health-travel/</loc><lastmod>2026-08-26</lastmod><changefreq>monthly</changefreq><priority>0.9</priority></url>
+  <url><loc>https://lfsshanghai.com/en/packages/basic-checkup/</loc><lastmod>2026-08-26</lastmod><changefreq>monthly</changefreq><priority>0.9</priority></url>
+  <url><loc>https://lfsshanghai.com/en/packages/travel-only/</loc><lastmod>2026-08-26</lastmod><changefreq>monthly</changefreq><priority>0.9</priority></url>
   <!-- packages:end -->
 </urlset>
