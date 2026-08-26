@@ -1,12 +1,23 @@
-/* LFS Shanghai — Meta Pixel
+/* LFS Shanghai — Хэмжилт (Meta Pixel + Google Analytics 4)
  *
  * Pixel ID зөвхөн доорх PIXEL_ID мөрөнд байна. Өөр хаана ч давхардуулж бичихгүй.
  * Хятадад connect.facebook.net хаалттай тул fbq ачаалагдахгүй байж магадгүй —
  * бүх дуудлага typeof шалгалттай, сайт ямар ч тохиолдолд унтрахгүй.
  *
+ * GA4 руу мөн зэрэг илгээнэ. gtag нь хуудсаас хамаараад gtag.js-ээр эсвэл
+ * Firebase Analytics-аар үүсдэг тул ачаалах үед биш, ДУУДАХ үед шалгана.
+ * gtag байхгүй хуудсанд чимээгүй алгасна.
+ *
+ * GA4 дээр key event болгож тэмдэглэх ёстой event-ууд:
+ *   generate_lead      — захиалга амжилттай илгээгдсэн
+ *   contact_messenger  — Messenger / Facebook линк дарсан
+ *   contact_phone      — утасны дугаар дарсан
+ *   contact_email      — и-мэйл хаяг дарсан
+ *
  * Хэрэглэх:
  *   window.lfsPixel.trackLead(serviceName)  — захиалга backend-д хадгалагдсаны ДАРАА
  *   window.lfsPixel.trackContact()          — Messenger/Facebook линк дарахад (автомат)
+ *   window.lfsTrack.event(name, params)     — GA4 руу нэмэлт event
  */
 (function () {
   'use strict';
@@ -23,6 +34,13 @@
     t.src = v; s = b.getElementsByTagName(e)[0];
     s.parentNode.insertBefore(t, s)
   }(window, document, 'script', 'https://connect.facebook.net/en_US/fbevents.js');
+
+  // ── Google Analytics 4 ──
+  // gtag хараахан үүсээгүй байж болзошгүй тул дуудагдах бүрд шалгана.
+  function ga(event, params) {
+    if (typeof window.gtag !== 'function') return;
+    try { window.gtag('event', event, params || {}); } catch (err) { /* GA алдаа сайтыг зогсоохгүй */ }
+  }
 
   // Бүх fbq дуудлага энэ функцээр дамжина — өөр хаана ч fbq-г шууд дуудахгүй
   function track(event, params) {
@@ -89,6 +107,12 @@
       params.currency = price.currency;
     }
     track('Lead', params);
+
+    // GA4 — Meta-тай ижил утгаар
+    var gaParams = { content_name: name };
+    if (packageLabel) gaParams.package = packageLabel;
+    if (price) { gaParams.value = price.value; gaParams.currency = price.currency; }
+    ga('generate_lead', gaParams);
   }
 
   // ── Contact ──
@@ -98,13 +122,19 @@
 
   function trackContact() {
     track('Contact');
+    ga('contact_messenger');
   }
 
   document.addEventListener('click', function (e) {
     var t = e.target;
     if (!t || typeof t.closest !== 'function') return;
     var a = t.closest('a[href]');
-    if (a && CONTACT_HREF.test(a.getAttribute('href') || '')) trackContact();
+    if (!a) return;
+    var href = a.getAttribute('href') || '';
+    if (CONTACT_HREF.test(href)) { trackContact(); return; }
+    // Утас, и-мэйл — GA4-д тусад нь. Meta-д Contact гэж нэгтгэнэ.
+    if (/^tel:/i.test(href))    { track('Contact'); ga('contact_phone'); return; }
+    if (/^mailto:/i.test(href)) { track('Contact'); ga('contact_email'); return; }
   }, true);
 
   window.lfsPixel = {
@@ -112,4 +142,7 @@
     trackContact: trackContact,
     leadPriceFor: leadPriceFor
   };
+
+  // GA4 руу нэмэлт event илгээх нийтийн гарц (жишээ: захиалгын алхмууд)
+  window.lfsTrack = { event: ga };
 })();

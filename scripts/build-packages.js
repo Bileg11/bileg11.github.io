@@ -20,6 +20,7 @@ const ROOT = path.resolve(__dirname, '..');
 const DATA = require(path.join(ROOT, 'js', 'packages.js'));
 const RV   = require(path.join(ROOT, 'js', 'reviews.js'));
 const SITE = 'https://lfsshanghai.com';
+const GA_ID = 'G-81DTJ80VLR';   // Google Analytics 4 — сайтын бусад хуудастай ижил
 
 const T = {
   mn: {
@@ -472,6 +473,8 @@ function page(p, L) {
 <meta name="twitter:card" content="summary_large_image">
 ${jsonLd(p, L, t, url, altUrl)}
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+<script async src="https://www.googletagmanager.com/gtag/js?id=${GA_ID}"></script>
+<script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag("js",new Date());gtag("config","${GA_ID}");</script>
 <style>
 ${CSS}
 </style>
