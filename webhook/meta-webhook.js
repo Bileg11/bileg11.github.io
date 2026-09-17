@@ -184,6 +184,46 @@ async function sendMorningBrief() {
   }
 }
 
+// ── SOCIAL FOLLOWER TRACKING ──────────────────────────────────────
+// IG + FB дагагчийн тоог татаж, өмнөх өдрийн тоотой харьцуулж delta гаргана.
+// social/{today} snapshot + social/latest (харьцуулах суурь) хадгална.
+async function trackFollowers() {
+  const out = { ig: null, fb: null, igDelta: null, fbDelta: null };
+
+  if (IG_ID && META_TOKEN) {
+    try {
+      const r = await fetch(`https://graph.facebook.com/v25.0/${IG_ID}?fields=followers_count&access_token=${META_TOKEN}`);
+      const d = await r.json();
+      if (d.followers_count != null) out.ig = d.followers_count;
+    } catch (e) { console.error('[Followers] IG:', e.message); }
+  }
+  if (FB_ID) {
+    try {
+      const pageToken = await getPageToken();
+      const r = await fetch(`https://graph.facebook.com/v25.0/${FB_ID}?fields=followers_count,fan_count&access_token=${pageToken}`);
+      const d = await r.json();
+      const fb = d.followers_count != null ? d.followers_count : d.fan_count;
+      if (fb != null) out.fb = fb;
+    } catch (e) { console.error('[Followers] FB:', e.message); }
+  }
+
+  try {
+    const prevSnap = await dbLFS.doc(`users/${UID}/social/latest`).get();
+    const prev = prevSnap.exists ? prevSnap.data() : {};
+    if (out.ig != null && prev.ig != null) out.igDelta = out.ig - prev.ig;
+    if (out.fb != null && prev.fb != null) out.fbDelta = out.fb - prev.fb;
+
+    await dbLFS.doc(`users/${UID}/social/${todayKey()}`).set(
+      { ig: out.ig, fb: out.fb, at: new Date().toISOString() }, { merge: true });
+    await dbLFS.doc(`users/${UID}/social/latest`).set(
+      { ig: out.ig != null ? out.ig : (prev.ig != null ? prev.ig : null),
+        fb: out.fb != null ? out.fb : (prev.fb != null ? prev.fb : null),
+        at: new Date().toISOString() }, { merge: true });
+  } catch (e) { console.error('[Followers] store:', e.message); }
+
+  return out;
+}
+
 // ── DAILY EXECUTIVE REPORT (server.js-с cron дуудна) ─────────────
 async function sendDailyReport() {
   try {
@@ -203,6 +243,13 @@ async function sendDailyReport() {
     const escalateCount = d.escalate     || 0;
     const revenue       = revenueSnap.exists ? (revenueSnap.data().total || 0) : 0;
 
+    // Social дагагчийн тоо + өмнөх өдрөөс хойшх өөрчлөлт
+    const fol = await trackFollowers();
+    const arrow = n => n == null ? '' : (n > 0 ? ` (▲${n})` : n < 0 ? ` (▼${Math.abs(n)})` : ' (=)');
+    const socialLine =
+      (fol.ig != null ? `\n• Instagram дагагч: *${fol.ig}*${arrow(fol.igDelta)}` : '') +
+      (fol.fb != null ? `\n• Facebook дагагч: *${fol.fb}*${arrow(fol.fbDelta)}` : '');
+
     const report =
 `📊 *J.A.R.V.I.SЫН ӨДРИЙН ТАЙЛАН*
 _${today}_
@@ -216,7 +263,7 @@ _${today}_
 • Захиалгын form дуусгасан: *${bookingLeads}* захиалга
 • Захиалгын линк харуулсан: *${bookingCount}* удаа
 • Ажилтантай холбогдсон: *${agentCount}* удаа
-• Автомат сэрэмжлүүлэг: *${escalateCount}* удаа${revenue ? `\n• Бүртгэгдсэн орлого: *${revenue.toLocaleString()}₮*` : ''}
+• Автомат сэрэмжлүүлэг: *${escalateCount}* удаа${revenue ? `\n• Бүртгэгдсэн орлого: *${revenue.toLocaleString()}₮*` : ''}${socialLine}
 
 Маргаашийн ажилд чинь амжилт хүсье. 🚀`;
 
@@ -234,6 +281,10 @@ _${today}_
         lfs_chats_today:   agentCount,
         lfs_guide_today:   guideCount,
         lfs_medical_today: medicalCount,
+        lfs_ig_followers:  fol.ig,
+        lfs_fb_followers:  fol.fb,
+        lfs_ig_delta:      fol.igDelta,
+        lfs_fb_delta:      fol.fbDelta,
         lfs_synced_at:     new Date().toISOString(),
       }, { merge: true });
     } catch (e) {
