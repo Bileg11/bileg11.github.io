@@ -383,9 +383,38 @@ async function fetchNewImage(query = 'shanghai') {
   return 'https://images.unsplash.com/photo-1481627834876-b7833e8f5570';
 }
 
+// ── AI CHAT (GitHub Models татан буугдсан → Gemini) ───────────────
+// GitHub Models (models.inference.ai.azure.com) 2025 онд retire болсон
+// тул бүх текст үүсгэлтийг Gemini рүү шилжүүлэв. Хариуг ХУУЧИН
+// OpenAI хэлбэрээр буцааж, доод кодыг өөрчлөхгүй байлгана:
+//   { choices:[{ message:{ content } }] }  эсвэл  { error:{ message } }
+async function aiChat(prompt, { max_tokens = 1500, temperature = 0.85 } = {}) {
+  if (!GEMINI_KEY) return { error: { message: 'GEMINI_API_KEY тохиргоогүй' } };
+  try {
+    const r = await fetch(
+      `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent?key=${GEMINI_KEY}`,
+      {
+        method:  'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body:    JSON.stringify({
+          contents:         [{ parts: [{ text: prompt }] }],
+          generationConfig: { temperature, maxOutputTokens: max_tokens },
+        }),
+      }
+    );
+    const d = await r.json();
+    if (d.error) return { error: { message: d.error.message } };
+    const content = d.candidates?.[0]?.content?.parts
+      ?.map(p => p.text).filter(Boolean).join('') || '';
+    return { choices: [{ message: { content } }] };
+  } catch (e) {
+    return { error: { message: e.message } };
+  }
+}
+
 // Marketing caption-ийг хэрэглэгчийн зааврын дагуу AI-аар засна (Phase 2)
 async function editCaption(currentCaption, instruction) {
-  if (!GH_TOKEN) return null;
+  if (!GEMINI_KEY) return null;
   const prompt =
     `Доорх Instagram постын монгол текстийг хэрэглэгчийн зааврын дагуу засаж, ЗӨВХӨН шинэ текстийг буцаа (тайлбар, гарчиг нэмэхгүй).\n\n`
     + `ОДООГИЙН ТЕКСТ:\n${currentCaption}\n\n`
@@ -393,12 +422,7 @@ async function editCaption(currentCaption, instruction) {
     + `ДҮРЭМ: LFS Shanghai брэндийн өнгө аяс хадгал. "👉 lfsshanghai.com руу орж үнэгүй зөвлөгөө авна уу" CTA-г доор үлдээ. `
     + `Догол мөр хооронд хоосон мөр. Газар/хоолны нэр англи+ханз (галиглахгүй). Дугаарласан жагсаалт хэрэглэхгүй. Хаштаг байвал хамгийн доор үлдээ.`;
   try {
-    const r = await fetch('https://models.inference.ai.azure.com/chat/completions', {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json', 'Authorization': `Bearer ${GH_TOKEN}` },
-      body: JSON.stringify({ model: 'gpt-4o-mini', messages: [{ role: 'user', content: prompt }], max_tokens: 900, temperature: 0.7 }),
-    });
-    const d = await r.json();
+    const d = await aiChat(prompt, { max_tokens: 900, temperature: 0.7 });
     if (d.error) { console.error('[EditCaption]', d.error.message); return null; }
     return d.choices?.[0]?.message?.content?.trim() || null;
   } catch (e) { console.error('[EditCaption]', e.message); return null; }
@@ -474,7 +498,7 @@ async function postToIGCarousel(imageUrls, caption, hashtags) {
 // ── CAPTION GENERATOR v2.0 ────────────────────────────────────────
 // GitHub Models (gpt-4o-mini) — Gemini quota-аас хамааралгүй
 async function generateCaption(hint = '', format = 'single') {
-  if (!GH_TOKEN) return {
+  if (!GEMINI_KEY) return {
     caption: hint || 'LFS Shanghai 🌆', hashtags: '#LFSShanghai #Shanghai',
     fullCaption: `${hint || 'LFS Shanghai 🌆'}\n\n👉 lfsshanghai.com`, format,
   };
@@ -494,17 +518,7 @@ async function generateCaption(hint = '', format = 'single') {
     (format === 'reel'     ? `SCRIPT: (15 секундын товч script, 3 хэсэг)\n` : '');
 
   try {
-    const r = await fetch('https://models.inference.ai.azure.com/chat/completions', {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json', Authorization: `Bearer ${GH_TOKEN}` },
-      body: JSON.stringify({
-        model: 'gpt-4o-mini',
-        messages: [{ role: 'user', content: prompt }],
-        max_tokens: 600,
-        temperature: 0.85,
-      }),
-    });
-    const d   = await r.json();
+    const d   = await aiChat(prompt, { max_tokens: 600, temperature: 0.85 });
     const raw = d.choices?.[0]?.message?.content || '';
 
     const hook     = raw.match(/HOOK:\s*([\s\S]*?)(?=CAPTION:|$)/i)?.[1]?.trim() || '';
@@ -531,7 +545,7 @@ async function generateCaption(hint = '', format = 'single') {
 
 // ── WEEK PLAN GENERATOR ───────────────────────────────────────────
 async function generateWeekPlan() {
-  if (!GH_TOKEN) { await tgSend('⚠️ GH_TOKEN тохиргоогүй.'); return; }
+  if (!GEMINI_KEY) { await tgSend('⚠️ GEMINI_API_KEY тохиргоогүй.'); return; }
 
   await tgSend('📅 *7 хоногийн 14 пост бэлдэж байна...*\nЗахиалга болгоно уу 30 секунд.');
 
@@ -575,17 +589,7 @@ async function generateWeekPlan() {
     `]`;
 
   try {
-    const r = await fetch('https://models.inference.ai.azure.com/chat/completions', {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json', Authorization: `Bearer ${GH_TOKEN}` },
-      body: JSON.stringify({
-        model:       'gpt-4o-mini',
-        messages:    [{ role: 'user', content: prompt }],
-        max_tokens:  4000,
-        temperature: 0.9,
-      }),
-    });
-    const d   = await r.json();
+    const d   = await aiChat(prompt, { max_tokens: 4000, temperature: 0.9 });
     const raw = d.choices?.[0]?.message?.content?.trim() || '';
     console.log('[WeekPlan] Raw length:', raw.length);
 
@@ -1389,25 +1393,10 @@ async function generateMarketingIdeas(slot = 'default', customPrompt = null) {
   const systemPrompt = LFS_BRAND.replace('[INPUT_PROMPT]', task);
 
   try {
-    // GitHub Models (GPT-4o-mini) — үнэгүй, SYSTEM_USE_TOKEN ашиглана
-    const r = await fetch('https://models.inference.ai.azure.com/chat/completions', {
-      method:  'POST',
-      headers: {
-        'Content-Type':  'application/json',
-        'Authorization': `Bearer ${GH_TOKEN}`,
-      },
-      body: JSON.stringify({
-        model:    'gpt-4o-mini',
-        messages: [
-          { role: 'user', content: systemPrompt },
-        ],
-        max_tokens:  2500,
-        temperature: 0.85,
-      }),
-    });
-    const data = await r.json();
+    // Gemini (GitHub Models retire болсон тул шилжүүлэв) — үнэгүй, GEMINI_API_KEY
+    const data = await aiChat(systemPrompt, { max_tokens: 2500, temperature: 0.85 });
     if (data.error) {
-      console.error('[Marketing] GitHub Models error:', data.error.message);
+      console.error('[Marketing] AI error:', data.error.message);
       await tgSend('⚠️ Маркетинг: AI үйлчилгээ хариу алдаатай байна. Хэсэг хүлээгээд дахин /marketing оролдоорой.');
       return;
     }
