@@ -5,7 +5,7 @@
 // POST /api/meta-webhook  — Incoming messages
 
 const fetch  = require('node-fetch');
-const { admin, dbLFS } = require('./firebase');
+const { admin, dbLFS, dbPersonal } = require('./firebase');
 
 // LFS чатбот өгөгдөл → dbLFS
 
@@ -221,6 +221,24 @@ _${today}_
 Маргаашийн ажилд чинь амжилт хүсье. 🚀`;
 
     await tgNotify(report);
+
+    // ── Jarvis самбар руу sync (jarvis-bileg project, dbPersonal) ──────
+    // LFS дата lfs-shanghai төсөлд, самбар jarvis-bileg төсөлд байдаг тул
+    // өдрийн товч дүнг самбарын analytics руу хуулж, "🏢 LFS Өнөөдөр" карт
+    // амьд болгоно. (Захиалга, чат, орлого, ангилал — өдөрт 1 удаа, 22:00.)
+    try {
+      await dbPersonal.doc(`users/${UID}/analytics/${today}`).set({
+        lfs_users_today:   userCount,
+        lfs_leads_today:   bookingLeads,
+        lfs_revenue_today: revenue,
+        lfs_chats_today:   agentCount,
+        lfs_guide_today:   guideCount,
+        lfs_medical_today: medicalCount,
+        lfs_synced_at:     new Date().toISOString(),
+      }, { merge: true });
+    } catch (e) {
+      console.error('[Report] Самбар sync алдаа:', e.message);
+    }
 
   } catch (e) {
     console.error('[Report] Daily report error:', e.message);
