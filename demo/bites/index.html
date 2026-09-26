@@ -1,0 +1,340 @@
+<!DOCTYPE html>
+<html lang="mn">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="robots" content="noindex, nofollow">
+<title>BITES — Улаанбаатар (жишээ)</title>
+<meta name="description" content="BITES — Самбуугийн гудамж. Brunch, bagel, кино/жазын үдэш.">
+<meta name="theme-color" content="#221A16">
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;800&display=swap" rel="stylesheet">
+
+<script>document.documentElement.className+=" js";</script>
+
+<style>
+:root{
+  --cream:#F6EFE4;--paper:#FCF8F0;--ink:#221A16;--muted:#6E6259;
+  --amber:#C98A3E;--plum:#5C3A4E;
+  --line:rgba(34,26,22,.14);--radius:18px;--pad:20px;--maxw:520px;
+}
+*{box-sizing:border-box}
+html{-webkit-text-size-adjust:100%}
+body{margin:0;background:var(--cream);color:var(--ink);font-family:"Manrope",-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Arial,sans-serif;font-size:16px;line-height:1.6;-webkit-font-smoothing:antialiased;padding-bottom:76px}
+img,svg{max-width:100%;display:block}
+a{color:inherit}
+h1,h2,h3{margin:0;line-height:1.2;font-weight:800;letter-spacing:-.02em}
+p{margin:0}
+.wrap{max-width:var(--maxw);margin:0 auto;padding:0 var(--pad)}
+.section{padding:52px 0}
+.eyebrow{font-size:12px;letter-spacing:.18em;text-transform:uppercase;font-weight:600;color:var(--plum);margin-bottom:10px}
+.lead{color:var(--muted);margin-top:12px}
+
+.demo-banner{background:var(--ink);color:var(--cream);text-align:center;font-size:12px;font-weight:600;letter-spacing:.04em;padding:8px var(--pad)}
+.demo-banner b{color:var(--amber)}
+
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;padding:15px 22px;border-radius:999px;font-weight:700;font-size:15px;text-decoration:none;border:1px solid transparent;transition:transform .15s ease;cursor:pointer}
+.btn:active{transform:scale(.97)}
+.btn-primary{background:var(--amber);color:#221A16}
+.btn-ghost{background:rgba(255,255,255,.14);color:#fff}
+.btn-outline{background:transparent;border-color:var(--line);color:var(--ink)}
+.btn-row{display:flex;gap:10px;flex-wrap:wrap;margin-top:20px}
+.btn-block{width:100%}
+
+.hero{position:relative;overflow:hidden}
+.hero-bg{position:absolute;inset:0;z-index:0;background:linear-gradient(180deg,rgba(34,26,22,.35),rgba(34,26,22,.88)),url('img/bagels.webp') center 35%/cover no-repeat}
+.hero-inner{position:relative;z-index:1;padding:26px 0 34px;color:var(--paper)}
+.wordmark{display:inline-block;background:var(--ink);color:var(--cream);font-weight:800;font-size:13px;letter-spacing:.1em;padding:8px 14px;border-radius:999px;margin-bottom:18px}
+.hero h1{font-size:32px;color:#fff}
+.hero .lead{color:rgba(252,248,240,.85)}
+.badges{display:flex;gap:8px;flex-wrap:wrap;margin-top:18px}
+.badge{font-size:12px;font-weight:700;padding:7px 12px;border-radius:999px;background:rgba(255,255,255,.14);color:#fff;border:1px solid rgba(255,255,255,.24)}
+
+.status{display:inline-flex;align-items:center;gap:8px;font-size:13px;font-weight:700;padding:8px 14px;border-radius:999px;margin-top:18px;background:rgba(255,255,255,.14);color:#fff}
+.status .dot{width:8px;height:8px;border-radius:50%;background:#6FCF97;flex:none}
+.status.closed .dot{background:#EB5757}
+
+.menu-tag{display:inline-block;font-size:11px;font-weight:700;letter-spacing:.06em;text-transform:uppercase;background:rgba(92,58,78,.12);color:var(--plum);padding:4px 10px;border-radius:999px;margin-bottom:4px}
+.menu-list{margin-top:18px}
+.item{display:flex;align-items:center;gap:14px;padding:14px 0;border-bottom:1px solid var(--line)}
+.item:last-child{border-bottom:none}
+.thumb{width:40px;height:40px;border-radius:12px;background:rgba(201,138,62,.16);display:flex;align-items:center;justify-content:center;flex:none;color:var(--amber)}
+.thumb svg{width:20px;height:20px}
+.item-body{flex:1}
+.item-name{font-weight:700}
+.item-note{font-size:13px;color:var(--muted);margin-top:2px}
+.price{font-weight:800;white-space:nowrap}
+.menu-foot{margin-top:16px;font-size:13px;color:var(--muted)}
+
+.about{background:var(--paper)}
+.gallery{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:20px}
+.gallery img{border-radius:var(--radius);height:100%;object-fit:cover;aspect-ratio:4/5}
+.facts{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-top:24px}
+.fact{background:rgba(34,26,22,.05);border-radius:14px;padding:14px}
+.fact b{display:block;font-size:15px}
+.fact span{font-size:12px;color:var(--muted)}
+
+.map{border-radius:var(--radius);overflow:hidden;aspect-ratio:16/10;margin-top:18px}
+.map iframe{width:100%;height:100%;border:0}
+.info{margin-top:16px;background:rgba(34,26,22,.05);border-radius:14px;padding:4px 16px}
+.info-row{display:flex;justify-content:space-between;gap:14px;padding:12px 0;border-bottom:1px solid var(--line)}
+.info-row:last-child{border-bottom:none}
+.info-row .k{color:var(--muted);font-size:13px}
+.info-row .v{font-weight:700;text-align:right}
+
+.order{background:var(--plum);color:var(--paper)}
+.order .eyebrow{color:var(--amber)}
+.field{margin-top:14px}
+.field label{display:block;font-size:12px;font-weight:700;letter-spacing:.03em;margin-bottom:6px;color:rgba(252,248,240,.75)}
+.field input,.field textarea{width:100%;padding:13px 14px;border-radius:12px;border:1px solid rgba(252,248,240,.22);background:rgba(252,248,240,.08);color:#fff;font-family:inherit;font-size:15px}
+.field input::placeholder{color:rgba(252,248,240,.45)}
+.order-result{margin-top:18px;display:none;background:rgba(252,248,240,.1);border-radius:14px;padding:16px}
+.order-result.show{display:block}
+.order-result textarea{width:100%;min-height:90px;border:none;background:transparent;color:#fff;font-family:inherit;font-size:14px;line-height:1.5;resize:none}
+.copy-msg{font-size:12px;color:var(--amber);margin-top:6px;display:none}
+.copy-msg.show{display:inline-block}
+
+.links{margin-top:18px;display:flex;flex-direction:column;gap:10px}
+.link{display:flex;align-items:center;gap:12px;padding:14px 16px;border-radius:14px;background:rgba(34,26,22,.05);text-decoration:none;color:var(--ink)}
+.link svg{width:20px;height:20px;flex:none;color:var(--plum)}
+.link b{display:block;font-size:14px}
+.link span{font-size:12px;color:var(--muted)}
+.link .arrow{margin-left:auto;color:var(--muted)}
+
+footer{padding:28px var(--pad) 20px;text-align:center;font-size:12px;color:var(--muted)}
+.bar{position:fixed;left:0;right:0;bottom:0;z-index:20;background:var(--paper);border-top:1px solid var(--line);padding:10px var(--pad) calc(10px + env(safe-area-inset-bottom))}
+.bar-in{max-width:var(--maxw);margin:0 auto;display:flex;gap:10px}
+.bar-in .btn{flex:1}
+.js .reveal{opacity:0;transform:translateY(16px);transition:opacity .6s ease,transform .6s ease}
+.js .reveal.in{opacity:1;transform:none}
+</style>
+</head>
+<body>
+
+<div class="demo-banner">🔧 <b>Жишээ загвар</b> — BITES-д санал болгож буй туршилтын хуудас</div>
+
+<header class="hero">
+  <div class="hero-bg"></div>
+  <div class="wrap hero-inner">
+    <span class="wordmark">BITES</span>
+    <h1>Brunch, bagel,<br>соёлын үдэш</h1>
+    <p class="lead">Самбуугийн гудамжинд — өглөөний брунч, шинэхэн bagel, сар бүр кино/жазын үдэш зохион байгуулдаг.</p>
+
+    <span id="status" class="status"><span class="dot"></span><span id="status-text">Ачааллаж байна…</span></span>
+
+    <div class="badges">
+      <span class="badge">Brunch &amp; Bagel</span>
+      <span class="badge">Ciné-Dîner үдэш</span>
+      <span class="badge">Жазын орой</span>
+    </div>
+
+    <div class="btn-row">
+      <a class="btn btn-primary" href="#zahialga">Ширээ захиалах</a>
+      <a class="btn btn-ghost" href="#bairshil">Байршил харах</a>
+    </div>
+  </div>
+</header>
+
+<section class="section" id="tses">
+  <div class="wrap">
+    <div class="reveal">
+      <span class="menu-tag">Жишээ цэс</span>
+      <h2 style="font-size:26px">Brunch цэс</h2>
+      <p class="lead">Жишээ үнэ — бодит цэс, үнийг газар дээр нь харна уу.</p>
+    </div>
+
+    <div class="menu-list">
+      <div class="item reveal">
+        <div class="thumb"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><circle cx="12" cy="12" r="8"/><circle cx="12" cy="12" r="3"/></svg></div>
+        <div class="item-body"><div class="item-name">Bagel Classic</div><div class="item-note">Цөцгийн бяслагтай</div></div>
+        <div class="price">14,000₮</div>
+      </div>
+      <div class="item reveal">
+        <div class="thumb"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M4 12c0-4 3.5-8 8-8s8 4 8 8-3.5 8-8 8-8-4-8-8z"/></svg></div>
+        <div class="item-body"><div class="item-name">Авокадо тост</div><div class="item-note">Өндөгтэй</div></div>
+        <div class="price">18,000₮</div>
+      </div>
+      <div class="item reveal">
+        <div class="thumb"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><rect x="5" y="6" width="14" height="12" rx="2"/><path d="M8 10h8M8 14h5"/></svg></div>
+        <div class="item-body"><div class="item-name">Pancake stack</div><div class="item-note">Sirup, жимстэй</div></div>
+        <div class="price">16,000₮</div>
+      </div>
+      <div class="item reveal">
+        <div class="thumb"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M6 3h10v9a5 5 0 0 1-5 5 5 5 0 0 1-5-5V3z"/><path d="M16 6h1.5a2.5 2.5 0 0 1 0 5H16"/></svg></div>
+        <div class="item-body"><div class="item-name">Латте</div><div class="item-note">Өдөр бүр шинэ шарсан кофе</div></div>
+        <div class="price">10,000₮</div>
+      </div>
+      <div class="item reveal">
+        <div class="thumb"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M12 3v8M8 8l4 3 4-3"/><path d="M6 13h12l-1 8H7l-1-8z"/></svg></div>
+        <div class="item-body"><div class="item-name">Mimosa</div><div class="item-note">Brunch cocktail</div></div>
+        <div class="price">17,000₮</div>
+      </div>
+    </div>
+    <p class="menu-foot">Өглөөний цэс 12:00 хүртэл, дараа нь өдрийн цэс солигддог. Ням гарагт 11:00–16:00, зөвхөн bagel/pancake.</p>
+  </div>
+</section>
+
+<section class="section about">
+  <div class="wrap reveal">
+    <div class="eyebrow">Бидний тухай</div>
+    <h2>Brunch мэдрэмж,<br>соёлын хөндлөнгийн орой</h2>
+    <p>Шинэхэн bagel, brunch хоол өдөр бүр. Сар бүр Ciné-Dîner (кино+оройн зоог) болон жазын үдэш зохион байгуулдаг.</p>
+    <p style="margin-top:12px">Найрсаг уур амьсгал, брунчны цагт хамт олноороо ирэхэд тохиромжтой орчин.</p>
+
+    <div class="gallery">
+      <img src="img/bagels.webp" alt="BITES bagel" loading="lazy" width="360" height="640">
+      <img src="img/food1.webp" alt="BITES хоол" loading="lazy" width="480" height="640">
+    </div>
+
+    <div class="facts">
+      <div class="fact"><b>Brunch &amp; Bagel</b><span>Өдөр бүр шинээр</span></div>
+      <div class="fact"><b>Соёлын үдэш</b><span>Кино, жаз</span></div>
+      <div class="fact"><b>Дав-Бямба</b><span>08:00–20:00</span></div>
+      <div class="fact"><b>Ням</b><span>11:00–16:00 хязгаарлагдмал</span></div>
+    </div>
+  </div>
+</section>
+
+<section class="section" id="bairshil">
+  <div class="wrap">
+    <div class="reveal">
+      <div class="eyebrow">Байршил</div>
+      <h2 style="font-size:26px">Самбуугийн гудамжинд</h2>
+    </div>
+
+    <div class="map reveal">
+      <iframe src="https://www.google.com/maps?q=Bites+Ulaanbaatar+Sambuu+Street&output=embed" title="BITES байршил Google газрын зураг дээр" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
+    </div>
+
+    <div class="info reveal">
+      <div class="info-row"><span class="k">Хаяг</span><span class="v">Самбуугийн гудамж<br>СБД 6-р хороо</span></div>
+      <div class="info-row"><span class="k">Дав–Бям</span><span class="v">08:00–20:00</span></div>
+      <div class="info-row"><span class="k">Ням</span><span class="v">11:00–16:00</span></div>
+      <div class="info-row"><span class="k">Утас</span><span class="v">8938 3930</span></div>
+    </div>
+
+    <div class="btn-row reveal">
+      <a class="btn btn-outline" href="https://www.google.com/maps/search/?api=1&query=Bites%20Ulaanbaatar%20Sambuu%20Street" target="_blank" rel="noopener">Замын заавар авах</a>
+      <a class="btn btn-outline" href="tel:+97689383930">Залгах</a>
+    </div>
+  </div>
+</section>
+
+<section class="section order" id="zahialga">
+  <div class="wrap reveal">
+    <div class="eyebrow">Ширээ захиалах</div>
+    <h2>Brunch ширээгээ бэлдчихье</h2>
+    <p class="lead">Доор бөглөөд мессеж бэлдээрэй — утсандаа нээгдэх мессежийг зөвхөн илгээхэд л хангалттай.</p>
+
+    <div class="field"><label for="f-name">Нэр</label><input id="f-name" type="text" placeholder="Таны нэр"></div>
+    <div style="display:flex;gap:10px">
+      <div class="field" style="flex:1"><label for="f-date">Огноо</label><input id="f-date" type="date"></div>
+      <div class="field" style="flex:1"><label for="f-time">Цаг</label><input id="f-time" type="time" value="11:00"></div>
+    </div>
+    <div class="field"><label for="f-guests">Хүний тоо</label><input id="f-guests" type="number" min="1" value="2"></div>
+
+    <div class="btn-row">
+      <button class="btn btn-primary btn-block" onclick="buildOrder()">SMS мессеж бэлдэх</button>
+    </div>
+
+    <div class="order-result" id="order-result">
+      <textarea id="order-text" readonly></textarea>
+      <div class="btn-row" style="margin-top:12px">
+        <button class="btn btn-outline" style="color:#fff;border-color:rgba(252,248,240,.3)" onclick="copyOrder()">Хуулах</button>
+        <a class="btn btn-primary" id="sms-link" href="#">SMS-ээр илгээх</a>
+      </div>
+      <span class="copy-msg" id="copy-msg">Хуулсан! SMS дотор буулгаад илгээгээрэй.</span>
+    </div>
+  </div>
+</section>
+
+<section class="section" style="padding-top:0">
+  <div class="wrap reveal">
+    <div class="eyebrow">Холбоо барих</div>
+    <h2 style="font-size:22px">Утас эсвэл Instagram-аар</h2>
+
+    <div class="links">
+      <a class="link" href="tel:+97689383930">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.9v3a2 2 0 0 1-2.2 2 19.8 19.8 0 0 1-8.6-3.1 19.5 19.5 0 0 1-6-6 19.8 19.8 0 0 1-3.1-8.6A2 2 0 0 1 4.1 2h3a2 2 0 0 1 2 1.7c.1 1 .4 2 .7 3a2 2 0 0 1-.5 2.1L8 10a16 16 0 0 0 6 6l1.2-1.3a2 2 0 0 1 2.1-.5c1 .3 2 .5 3 .7a2 2 0 0 1 1.7 2z"/></svg>
+        <div><b>8938 3930</b><span>Ширээ захиалга, асуулт</span></div>
+        <span class="arrow">→</span>
+      </a>
+      <a class="link" href="https://instagram.com/bites_ulaanbaatar" target="_blank" rel="noopener">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="2.5" y="2.5" width="19" height="19" rx="5.5"/><circle cx="12" cy="12" r="4.2"/><circle cx="17.6" cy="6.4" r="1.1" fill="currentColor" stroke="none"/></svg>
+        <div><b>@bites_ulaanbaatar</b><span>Арга хэмжээ, шинэ мэдээ</span></div>
+        <span class="arrow">→</span>
+      </a>
+    </div>
+  </div>
+</section>
+
+<footer>© BITES · Улаанбаатар · Жишээ загвар</footer>
+
+<div class="bar">
+  <div class="bar-in">
+    <a class="btn btn-primary" href="#zahialga">Ширээ захиалах</a>
+    <a class="btn btn-outline" href="tel:+97689383930">Залгах</a>
+  </div>
+</div>
+
+<script>
+(function(){
+  var els = document.querySelectorAll('.reveal');
+  if(!('IntersectionObserver' in window) || window.matchMedia('(prefers-reduced-motion: reduce)').matches){
+    for(var i=0;i<els.length;i++) els[i].classList.add('in'); return;
+  }
+  var io = new IntersectionObserver(function(entries){
+    entries.forEach(function(e){ if(e.isIntersecting){ e.target.classList.add('in'); io.unobserve(e.target); } });
+  },{rootMargin:'0px 0px -8% 0px',threshold:.08});
+  els.forEach(function(el,i){ el.style.transitionDelay=(Math.min(i,4)*45)+'ms'; io.observe(el); });
+})();
+
+(function(){
+  function ubNow(){ var now=new Date(); var utcMs=now.getTime()+now.getTimezoneOffset()*60000; return new Date(utcMs+8*3600000); }
+  var ub = ubNow();
+  var day = ub.getDay(); // 0 = Sunday
+  var mins = ub.getHours()*60+ub.getMinutes();
+  var openMin, closeMin;
+  if(day === 0){ openMin = 11*60; closeMin = 16*60; } else { openMin = 8*60; closeMin = 20*60; }
+  var isOpen = mins>=openMin && mins<closeMin;
+  var el=document.getElementById('status'); var txt=document.getElementById('status-text');
+  if(isOpen){ txt.textContent='Одоо нээлттэй · '+(day===0?'16:00':'20:00')+' хүртэл'; }
+  else{
+    el.classList.add('closed');
+    if(mins<openMin){ txt.textContent='Өнөөдөр '+(day===0?'11:00':'08:00')+'-д нээнэ'; }
+    else{ txt.textContent='Маргааш '+(day===6?'11:00':'08:00')+'-д нээнэ'; }
+  }
+})();
+
+function pad(n){ return n<10 ? '0'+n : n; }
+(function(){
+  var d = new Date();
+  document.getElementById('f-date').value = d.getFullYear()+'-'+pad(d.getMonth()+1)+'-'+pad(d.getDate());
+})();
+
+function buildOrder(){
+  var name = document.getElementById('f-name').value.trim() || 'Зочин';
+  var date = document.getElementById('f-date').value;
+  var time = document.getElementById('f-time').value;
+  var guests = document.getElementById('f-guests').value || '2';
+  var msg = 'Сайн байна уу! ' + name + ' байна.\n' +
+    date + ' ' + time + ' цагт ' + guests + ' хүнд ширээ захиалмаар байна.\n\nBITES-с харлаа 🙂';
+  document.getElementById('order-text').value = msg;
+  var isIOS = /iPhone|iPad|iPod/i.test(navigator.userAgent);
+  var sep = isIOS ? '&' : '?';
+  document.getElementById('sms-link').href = 'sms:+97689383930' + sep + 'body=' + encodeURIComponent(msg);
+  document.getElementById('order-result').classList.add('show');
+  document.getElementById('order-result').scrollIntoView({behavior:'smooth', block:'center'});
+}
+
+function copyOrder(){
+  var ta = document.getElementById('order-text');
+  ta.select();
+  try{ navigator.clipboard.writeText(ta.value); }catch(e){ document.execCommand('copy'); }
+  document.getElementById('copy-msg').classList.add('show');
+}
+</script>
+</body>
+</html>

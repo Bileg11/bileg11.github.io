@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="mn">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="robots" content="noindex, nofollow">
+<title>Demo жагсаалт — зөвхөн дотоод хэрэгцээнд</title>
+<meta name="theme-color" content="#1B1815">
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;800&display=swap" rel="stylesheet">
+
+<style>
+:root{
+  --cream:#F3EFE8;--ink:#1B1815;--muted:#6E655C;--accent:#B4502E;
+  --ok:#2E8B57;--bad:#C0392B;--line:rgba(27,24,21,.13);--radius:16px;--pad:18px;--maxw:560px;
+}
+*{box-sizing:border-box}
+body{margin:0;background:var(--cream);color:var(--ink);font-family:"Manrope",-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Arial,sans-serif;font-size:16px;line-height:1.5;-webkit-font-smoothing:antialiased}
+.wrap{max-width:var(--maxw);margin:0 auto;padding:24px var(--pad) 60px}
+h1{font-size:22px;font-weight:800;margin:0 0 4px}
+.sub{color:var(--muted);font-size:13px;margin-bottom:22px}
+.card{background:#fff;border:1px solid var(--line);border-radius:var(--radius);padding:16px;margin-bottom:14px;transition:opacity .2s}
+.card.visited{opacity:.55}
+.card-top{display:flex;justify-content:space-between;align-items:flex-start;gap:10px}
+.name{font-weight:800;font-size:17px}
+.name a{text-decoration:none;color:var(--ink)}
+.status{display:inline-flex;align-items:center;gap:6px;font-size:12px;font-weight:700;margin-top:4px}
+.status .dot{width:7px;height:7px;border-radius:50%;background:var(--ok)}
+.status.closed .dot{background:var(--bad)}
+.status.closed{color:var(--bad)}
+.status:not(.closed){color:var(--ok)}
+.visit{display:flex;align-items:center;gap:6px;font-size:12px;font-weight:700;color:var(--muted);white-space:nowrap}
+.visit input{width:18px;height:18px}
+.rowlinks{display:flex;gap:8px;margin-top:12px;flex-wrap:wrap}
+.rowlinks a{
+  display:inline-flex;align-items:center;gap:6px;font-size:13px;font-weight:700;
+  padding:8px 12px;border-radius:999px;background:rgba(27,24,21,.06);text-decoration:none;color:var(--ink);
+}
+.rowlinks a.primary{background:var(--accent);color:#fff}
+footer{color:var(--muted);font-size:12px;text-align:center;margin-top:20px}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <h1>Demo жагсаалт</h1>
+  <p class="sub">🔒 Зөвхөн дотоод хэрэгцээнд — эздэд зориулсан жишээ хуудасны холбоосууд, одоогийн төлөв.</p>
+
+  <div id="list"></div>
+
+  <footer>6 бизнес · Улаанбаатарын цагаар (UTC+8) шууд тооцоолсон</footer>
+</div>
+
+<script>
+var businesses = [
+  { slug:'needle-and-brew', name:'Needle & Brew', phone:null, ig:'needlebrew',
+    hours:function(d,mins){ return {open: mins>=8*60 && mins<20*60}; } },
+  { slug:'greyseed', name:'Greyseed', phone:'+97677172323', ig:null,
+    hours:function(d,mins){ return {open: mins>=11*60 && mins<22*60}; } },
+  { slug:'yello', name:'Yello Beverage Stop', phone:'+97676087680', ig:'yello.ub',
+    hours:function(d,mins){ return {open: mins>=12*60 || mins<3*60}; } },
+  { slug:'bites', name:'BITES', phone:'+97689383930', ig:'bites_ulaanbaatar',
+    hours:function(d,mins){
+      if(d===0) return {open: mins>=11*60 && mins<16*60};
+      return {open: mins>=8*60 && mins<20*60};
+    } },
+  { slug:'dessert39', name:'Dessert39', phone:null, ig:'dessert39mongolia',
+    hours:function(d,mins){ return {open: mins>=7*60 && mins<24*60}; } },
+  { slug:'enbarr', name:'ENBARR Smokehouse', phone:'+97680871048', ig:'enbarr.ub',
+    hours:function(d,mins){ return {open: mins>=15*60 || mins<4*60}; } }
+];
+
+function ubNow(){
+  var now = new Date();
+  var utcMs = now.getTime() + now.getTimezoneOffset()*60000;
+  return new Date(utcMs + 8*3600000);
+}
+
+var listEl = document.getElementById('list');
+var ub = ubNow();
+var day = ub.getDay();
+var mins = ub.getHours()*60 + ub.getMinutes();
+
+businesses.forEach(function(b){
+  var st = b.hours(day, mins);
+  var visited = localStorage.getItem('demo-visited-' + b.slug) === '1';
+
+  var card = document.createElement('div');
+  card.className = 'card' + (visited ? ' visited' : '');
+
+  var mapsHref = 'https://www.google.com/maps/search/?api=1&query=' + encodeURIComponent(b.name + ' Ulaanbaatar');
+  var contactHref = b.phone ? ('tel:' + b.phone) : ('https://instagram.com/' + b.ig);
+  var contactLabel = b.phone ? b.phone.replace('+976','') : ('@' + b.ig);
+
+  card.innerHTML =
+    '<div class="card-top">' +
+      '<div>' +
+        '<div class="name"><a href="../' + b.slug + '/" target="_blank" rel="noopener">' + b.name + '</a></div>' +
+        '<div class="status' + (st.open ? '' : ' closed') + '"><span class="dot"></span>' + (st.open ? 'Нээлттэй' : 'Хаалттай') + '</div>' +
+      '</div>' +
+      '<label class="visit"><input type="checkbox" data-slug="' + b.slug + '"' + (visited ? ' checked' : '') + '> Очсон</label>' +
+    '</div>' +
+    '<div class="rowlinks">' +
+      '<a class="primary" href="../' + b.slug + '/" target="_blank" rel="noopener">Demo үзэх</a>' +
+      '<a href="' + contactHref + '">' + contactLabel + '</a>' +
+      '<a href="' + mapsHref + '" target="_blank" rel="noopener">Газрын зураг</a>' +
+    '</div>';
+
+  listEl.appendChild(card);
+});
+
+listEl.addEventListener('change', function(e){
+  if(e.target.matches('input[type=checkbox]')){
+    var slug = e.target.getAttribute('data-slug');
+    var key = 'demo-visited-' + slug;
+    if(e.target.checked){ localStorage.setItem(key, '1'); }
+    else{ localStorage.removeItem(key); }
+    e.target.closest('.card').classList.toggle('visited', e.target.checked);
+  }
+});
+</script>
+</body>
+</html>
