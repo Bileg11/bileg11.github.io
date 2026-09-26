@@ -1,0 +1,474 @@
+<!DOCTYPE html>
+<html lang="mn">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="robots" content="noindex, nofollow">
+<title>Needle & Brew — Улаанбаатар (жишээ)</title>
+<meta name="description" content="Needle & Brew — Сөүлийн гудамжны кофе шоп. Специалти кофе, тусгай ундаа, амьд хөгжимтэй үдэш.">
+<meta name="theme-color" content="#211D18">
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;800&display=swap" rel="stylesheet">
+
+<script>document.documentElement.className+=" js";</script>
+
+<style>
+:root{
+  --cream:#F3EEE4;
+  --paper:#FBF8F2;
+  --ink:#211D18;
+  --muted:#756B5D;
+  --wood:#8B5E3C;
+  --olive:#6F7A52;
+  --mustard:#D9A93B;
+  --terracotta:#C1583B;
+  --line:rgba(33,29,24,.12);
+  --radius:18px;
+  --pad:20px;
+  --maxw:520px;
+}
+*{box-sizing:border-box}
+html{-webkit-text-size-adjust:100%}
+body{
+  margin:0;
+  background:var(--cream);
+  color:var(--ink);
+  font-family:"Manrope",-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Arial,sans-serif;
+  font-size:16px;
+  line-height:1.6;
+  -webkit-font-smoothing:antialiased;
+  padding-bottom:76px;
+}
+img,svg{max-width:100%;display:block}
+a{color:inherit}
+h1,h2,h3{margin:0;line-height:1.2;font-weight:800;letter-spacing:-.02em}
+p{margin:0}
+
+.wrap{max-width:var(--maxw);margin:0 auto;padding:0 var(--pad)}
+.section{padding:52px 0}
+.eyebrow{
+  font-size:12px;letter-spacing:.18em;text-transform:uppercase;
+  font-weight:600;color:var(--muted);margin-bottom:10px
+}
+.lead{color:var(--muted);margin-top:12px}
+
+/* ---------- Жишээ баннер ---------- */
+.demo-banner{
+  background:var(--ink);color:var(--cream);
+  text-align:center;font-size:12px;font-weight:600;
+  letter-spacing:.04em;padding:8px var(--pad);
+}
+.demo-banner b{color:var(--mustard)}
+
+/* ---------- Товч ---------- */
+.btn{
+  display:inline-flex;align-items:center;justify-content:center;gap:8px;
+  padding:15px 22px;border-radius:999px;
+  font-weight:700;font-size:15px;text-decoration:none;
+  border:1px solid transparent;transition:transform .15s ease,opacity .15s ease;
+  cursor:pointer;
+}
+.btn:active{transform:scale(.97)}
+.btn-primary{background:var(--terracotta);color:#fff}
+.btn-ghost{background:rgba(33,29,24,.06);color:var(--ink)}
+.btn-outline{background:transparent;border-color:var(--line);color:var(--ink)}
+.btn-row{display:flex;gap:10px;flex-wrap:wrap;margin-top:20px}
+.btn-block{width:100%}
+
+/* ---------- Hero ---------- */
+.hero{position:relative;overflow:hidden}
+.hero-bg{
+  position:absolute;inset:0;z-index:0;
+  background:linear-gradient(180deg,rgba(33,29,24,.55),rgba(33,29,24,.85)),
+    url('img/hero-drinks.webp') center 30%/cover no-repeat;
+}
+.hero-inner{position:relative;z-index:1;padding:26px 0 34px;color:var(--paper)}
+.wordmark{
+  display:inline-block;background:var(--ink);color:var(--cream);
+  font-weight:800;font-size:13px;letter-spacing:.08em;
+  padding:8px 14px;border-radius:999px;margin-bottom:18px;
+}
+.hero h1{font-size:34px;color:#fff}
+.hero .lead{color:rgba(251,248,242,.82)}
+.badges{display:flex;gap:8px;flex-wrap:wrap;margin-top:18px}
+.badge{
+  font-size:12px;font-weight:700;padding:7px 12px;border-radius:999px;
+  background:rgba(255,255,255,.14);color:#fff;border:1px solid rgba(255,255,255,.25);
+}
+
+/* ---------- Статус ---------- */
+.status{
+  display:inline-flex;align-items:center;gap:8px;
+  font-size:13px;font-weight:700;padding:8px 14px;border-radius:999px;
+  margin-top:18px;background:rgba(255,255,255,.12);color:#fff;
+}
+.status .dot{width:8px;height:8px;border-radius:50%;background:#6FCF97;flex:none}
+.status.closed .dot{background:#EB5757}
+
+/* ---------- Цэс ---------- */
+.menu-tag{
+  display:inline-block;font-size:11px;font-weight:700;letter-spacing:.06em;
+  text-transform:uppercase;background:rgba(193,88,59,.12);color:var(--terracotta);
+  padding:4px 10px;border-radius:999px;margin-bottom:4px;
+}
+.menu-list{margin-top:18px}
+.item{display:flex;align-items:center;gap:14px;padding:14px 0;border-bottom:1px solid var(--line)}
+.item:last-child{border-bottom:none}
+.thumb{
+  width:40px;height:40px;border-radius:12px;background:rgba(139,94,60,.12);
+  display:flex;align-items:center;justify-content:center;flex:none;color:var(--wood)
+}
+.thumb svg{width:22px;height:22px}
+.item-body{flex:1}
+.item-name{font-weight:700}
+.item-note{font-size:13px;color:var(--muted);margin-top:2px}
+.price{font-weight:800;white-space:nowrap}
+.menu-foot{margin-top:16px;font-size:13px;color:var(--muted)}
+
+.special-box{
+  margin-top:28px;background:var(--ink);color:var(--paper);
+  border-radius:var(--radius);padding:22px;
+}
+.special-box .eyebrow{color:var(--mustard)}
+.special-item{padding:12px 0;border-bottom:1px solid rgba(251,248,242,.14)}
+.special-item:last-child{border-bottom:none}
+.special-name{font-weight:800}
+.special-note{font-size:13px;color:rgba(251,248,242,.7);margin-top:2px}
+.special-foot{margin-top:14px;font-size:12px;color:rgba(251,248,242,.55)}
+
+/* ---------- Тухай ---------- */
+.about{background:var(--paper)}
+.gallery{display:grid;grid-template-columns:1.2fr 1fr;gap:10px;margin-top:20px}
+.gallery img{border-radius:var(--radius);height:100%;object-fit:cover;aspect-ratio:3/4}
+.facts{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-top:24px}
+.fact{background:rgba(33,29,24,.04);border-radius:14px;padding:14px}
+.fact b{display:block;font-size:15px}
+.fact span{font-size:12px;color:var(--muted)}
+
+/* ---------- Байршил ---------- */
+.map{border-radius:var(--radius);overflow:hidden;aspect-ratio:16/10;margin-top:18px}
+.map iframe{width:100%;height:100%;border:0}
+.info{margin-top:16px;background:rgba(33,29,24,.04);border-radius:14px;padding:4px 16px}
+.info-row{display:flex;justify-content:space-between;gap:14px;padding:12px 0;border-bottom:1px solid var(--line)}
+.info-row:last-child{border-bottom:none}
+.info-row .k{color:var(--muted);font-size:13px}
+.info-row .v{font-weight:700;text-align:right}
+
+/* ---------- Захиалга ---------- */
+.order{background:var(--ink);color:var(--paper)}
+.order .eyebrow{color:var(--mustard)}
+.order .lead{color:rgba(251,248,242,.72)}
+.field{margin-top:14px}
+.field label{display:block;font-size:12px;font-weight:700;letter-spacing:.03em;margin-bottom:6px;color:rgba(251,248,242,.75)}
+.field input,.field textarea{
+  width:100%;padding:13px 14px;border-radius:12px;border:1px solid rgba(251,248,242,.2);
+  background:rgba(251,248,242,.06);color:#fff;font-family:inherit;font-size:15px;
+}
+.field input::placeholder,.field textarea::placeholder{color:rgba(251,248,242,.4)}
+.field textarea{resize:vertical;min-height:64px}
+.order-result{
+  margin-top:18px;display:none;background:rgba(251,248,242,.08);
+  border-radius:14px;padding:16px;
+}
+.order-result.show{display:block}
+.order-result textarea{
+  width:100%;min-height:96px;border:none;background:transparent;color:#fff;
+  font-family:inherit;font-size:14px;line-height:1.5;resize:none;
+}
+.copy-msg{font-size:12px;color:var(--mustard);margin-top:6px;display:none}
+.copy-msg.show{display:inline-block}
+
+/* ---------- Холбоо барих ---------- */
+.links{margin-top:18px;display:flex;flex-direction:column;gap:10px}
+.link{
+  display:flex;align-items:center;gap:12px;padding:14px 16px;border-radius:14px;
+  background:rgba(33,29,24,.04);text-decoration:none;color:var(--ink);
+}
+.link svg{width:20px;height:20px;flex:none;color:var(--terracotta)}
+.link b{display:block;font-size:14px}
+.link span{font-size:12px;color:var(--muted)}
+.link .arrow{margin-left:auto;color:var(--muted)}
+
+footer{padding:28px var(--pad) 20px;text-align:center;font-size:12px;color:var(--muted)}
+
+/* ---------- Доод наалт мөр ---------- */
+.bar{
+  position:fixed;left:0;right:0;bottom:0;z-index:20;
+  background:var(--paper);border-top:1px solid var(--line);
+  padding:10px var(--pad) calc(10px + env(safe-area-inset-bottom));
+}
+.bar-in{max-width:var(--maxw);margin:0 auto;display:flex;gap:10px}
+.bar-in .btn{flex:1}
+
+/* ---------- Animation ---------- */
+.js .reveal{opacity:0;transform:translateY(16px);transition:opacity .6s ease,transform .6s ease}
+.js .reveal.in{opacity:1;transform:none}
+</style>
+</head>
+<body>
+
+<div class="demo-banner">🔧 <b>Жишээ загвар</b> — Needle &amp; Brew-д санал болгож буй туршилтын хуудас</div>
+
+<!-- ================= 1. HERO ================= -->
+<header class="hero">
+  <div class="hero-bg"></div>
+  <div class="wrap hero-inner">
+    <span class="wordmark">NEEDLE &amp; BREW</span>
+    <h1>Кофе, тусгай ундаа,<br>амьд хөгжимтэй өнцөг</h1>
+    <p class="lead">Сөүлийн гудамжны гүнд нуугдсан жижиг кофе шоп — өдөр тутам кофе, үдэш болгон амтлаг тусгай ундаа, цаг үргэлжид тайван орчин.</p>
+
+    <span id="status" class="status"><span class="dot"></span><span id="status-text">Ачааллаж байна…</span></span>
+
+    <div class="badges">
+      <span class="badge">Специалти кофе</span>
+      <span class="badge">Амьд хөгжим · Sip &amp; Sound</span>
+      <span class="badge">Ургамалтай тайван орчин</span>
+    </div>
+
+    <div class="btn-row">
+      <a class="btn btn-primary" href="#zahialga">Захиалах</a>
+      <a class="btn btn-ghost" href="#bairshil" style="color:#fff;background:rgba(255,255,255,.14)">Байршил харах</a>
+    </div>
+  </div>
+</header>
+
+<!-- ================= 2. ЦЭС ================= -->
+<section class="section" id="tses">
+  <div class="wrap">
+    <div class="reveal">
+      <span class="menu-tag">Жишээ цэс</span>
+      <h2 style="font-size:26px">Өдөр тутмын цэс</h2>
+      <p class="lead">Жишээ үнэ — бодит үнэ, зүйлсийг газар дээр нь харна уу.</p>
+    </div>
+
+    <div class="menu-list">
+      <div class="item reveal">
+        <div class="thumb"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M6 3h10v9a5 5 0 0 1-5 5 5 5 0 0 1-5-5V3z"/><path d="M16 6h1.5a2.5 2.5 0 0 1 0 5H16"/><path d="M4 21h14"/></svg></div>
+        <div class="item-body"><div class="item-name">Эспрессо</div><div class="item-note">Өтгөн, тод амт</div></div>
+        <div class="price">8,500₮</div>
+      </div>
+      <div class="item reveal">
+        <div class="thumb"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M6 3h10v9a5 5 0 0 1-5 5 5 5 0 0 1-5-5V3z"/><path d="M16 6h1.5a2.5 2.5 0 0 1 0 5H16"/><path d="M4 21h14"/></svg></div>
+        <div class="item-body"><div class="item-name">Латте</div><div class="item-note">Зөөлөн, сүүтэй</div></div>
+        <div class="price">10,500₮</div>
+      </div>
+      <div class="item reveal">
+        <div class="thumb"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><circle cx="12" cy="12" r="9"/><path d="M8 12h8M12 8v8"/></svg></div>
+        <div class="item-body"><div class="item-name">Матча латте</div><div class="item-note">Японы матча нунтагаар</div></div>
+        <div class="price">11,500₮</div>
+      </div>
+      <div class="item reveal">
+        <div class="thumb"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M5 10h14l-1.5 9h-11L5 10z"/><path d="M9 10V6a3 3 0 0 1 6 0v4"/></svg></div>
+        <div class="item-body"><div class="item-name">Айс Американо</div><div class="item-note">Хүйтэн, сэрэхэд тохиромжтой</div></div>
+        <div class="price">9,000₮</div>
+      </div>
+      <div class="item reveal">
+        <div class="thumb"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M4 12c0-4 3.5-8 8-8s8 4 8 8-3.5 8-8 8-8-4-8-8z"/><path d="M9 12l3-3 3 3-3 3z"/></svg></div>
+        <div class="item-body"><div class="item-name">Круассан</div><div class="item-note">Өдөр бүр шинээр</div></div>
+        <div class="price">7,500₮</div>
+      </div>
+    </div>
+
+    <div class="special-box reveal">
+      <span class="eyebrow">Instagram-д зарлагдсан</span>
+      <h3 style="font-size:19px;color:#fff">Онцгой цуврал ундаанууд</h3>
+      <div style="margin-top:14px">
+        <div class="special-item"><div class="special-name">Espresso Martini</div></div>
+        <div class="special-item"><div class="special-name">Pear &amp; Jade</div><div class="special-note">Matcha pear highball</div></div>
+        <div class="special-item"><div class="special-name">Zen Foam</div><div class="special-note">Matcha sour</div></div>
+        <div class="special-item"><div class="special-name">Golden Hour</div><div class="special-note">Orange espresso spritz</div></div>
+        <div class="special-item"><div class="special-name">Peach Garden</div><div class="special-note">Peach jasmine fizz</div></div>
+      </div>
+      <p class="special-foot">Ой тэмдэглэлийн үеэр Instagram-д танилцуулсан амтууд. Тогтмол цэсэнд байгаа эсэхийг газар дээр нь асууна уу.</p>
+    </div>
+  </div>
+</section>
+
+<!-- ================= 3. ТУХАЙ ================= -->
+<section class="section about">
+  <div class="wrap reveal">
+    <div class="eyebrow">Бидний тухай</div>
+    <h2>Жижиг орон зай,<br>дулаахан мэдрэмж</h2>
+    <p>Айлчлагчид энд орчиноо тайван, дулаахан гэж тодотгодог — модон тавцан, дээшлүүлсэн ургамал, зөөлөн шар гэрэл.</p>
+    <p style="margin-top:12px">Тогтмол "Sip &amp; Sound" нэртэй амтлаг ундаа + амьд хөгжимтэй үдэш зохион байгуулж, зочдоо гайхшруулдаг.</p>
+
+    <div class="gallery">
+      <img src="img/interior.webp" alt="Needle & Brew дотоод засал" loading="lazy" width="1200" height="900">
+      <img src="img/patio-trees.webp" alt="Needle & Brew орчин" loading="lazy" width="512" height="640">
+    </div>
+
+    <div class="facts">
+      <div class="fact"><b>Специалти кофе</b><span>Барист гараар бэлддэг</span></div>
+      <div class="fact"><b>Sip &amp; Sound</b><span>Тогтмол хөгжимтэй үдэш</span></div>
+      <div class="fact"><b>Ургамалтай орчин</b><span>Тайван, чимээгүй буланууд</span></div>
+      <div class="fact"><b>Өдөр бүр нээлттэй</b><span>08:00 – 20:00</span></div>
+    </div>
+  </div>
+</section>
+
+<!-- ================= 4. БАЙРШИЛ ================= -->
+<section class="section" id="bairshil">
+  <div class="wrap">
+    <div class="reveal">
+      <div class="eyebrow">Байршил</div>
+      <h2 style="font-size:26px">Сөүлийн гудамжинд</h2>
+    </div>
+
+    <div class="map reveal">
+      <iframe
+        src="https://www.google.com/maps?q=Needle+and+Brew+Ulaanbaatar&output=embed"
+        title="Needle & Brew байршил Google газрын зураг дээр"
+        loading="lazy"
+        referrerpolicy="no-referrer-when-downgrade"></iframe>
+    </div>
+
+    <div class="info reveal">
+      <div class="info-row"><span class="k">Хаяг</span><span class="v">Сөүлийн гудамж 7/1<br>MGG байрын ард, СБД 4-р хороо</span></div>
+      <div class="info-row"><span class="k">Цагийн хуваарь</span><span class="v">Өдөр бүр 08:00–20:00</span></div>
+      <div class="info-row"><span class="k">Google үнэлгээ</span><span class="v">4.5 ★ (67)</span></div>
+    </div>
+
+    <div class="btn-row reveal">
+      <a class="btn btn-outline" href="https://maps.app.goo.gl/GxMhqznx72FHM5PC6" target="_blank" rel="noopener">Замын заавар авах</a>
+    </div>
+  </div>
+</section>
+
+<!-- ================= 5. ЗАХИАЛГА ================= -->
+<section class="section order" id="zahialga">
+  <div class="wrap reveal">
+    <div class="eyebrow">Урьдчилан захиалах</div>
+    <h2>Ундаагаа бэлдчихье</h2>
+    <p class="lead">Утасны дугаар олдоогүй тул захиалгыг Instagram DM-ээр хүлээн авна. Доор бөглөөд, мессежээ хуулж Instagram-руу илгээгээрэй.</p>
+
+    <div class="field">
+      <label for="f-name">Нэр</label>
+      <input id="f-name" type="text" placeholder="Таны нэр">
+    </div>
+    <div style="display:flex;gap:10px">
+      <div class="field" style="flex:1"><label for="f-date">Огноо</label><input id="f-date" type="date"></div>
+      <div class="field" style="flex:1"><label for="f-time">Цаг</label><input id="f-time" type="time" value="12:00"></div>
+    </div>
+    <div class="field">
+      <label for="f-order">Юу авахыг хүсэж байна</label>
+      <textarea id="f-order" placeholder="Жишээ: 2 Латте, 1 Круассан"></textarea>
+    </div>
+
+    <div class="btn-row">
+      <button class="btn btn-primary btn-block" onclick="buildOrder()">Мессеж бэлдэх</button>
+    </div>
+
+    <div class="order-result" id="order-result">
+      <textarea id="order-text" readonly></textarea>
+      <div class="btn-row" style="margin-top:12px">
+        <button class="btn btn-outline" style="color:#fff;border-color:rgba(251,248,242,.3)" onclick="copyOrder()">Хуулах</button>
+        <a class="btn btn-primary" href="https://instagram.com/needlebrew" target="_blank" rel="noopener">Instagram руу очих</a>
+      </div>
+      <span class="copy-msg" id="copy-msg">Хуулсан! Instagram DM-д буулгаад илгээгээрэй.</span>
+    </div>
+  </div>
+</section>
+
+<!-- ================= 6. ХОЛБОО БАРИХ ================= -->
+<section class="section" style="padding-top:0">
+  <div class="wrap reveal">
+    <div class="eyebrow">Холбоо барих</div>
+    <h2 style="font-size:22px">Instagram-аар олдоно</h2>
+
+    <div class="links">
+      <a class="link" href="https://instagram.com/needlebrew" target="_blank" rel="noopener">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="2.5" y="2.5" width="19" height="19" rx="5.5"/><circle cx="12" cy="12" r="4.2"/><circle cx="17.6" cy="6.4" r="1.1" fill="currentColor" stroke="none"/></svg>
+        <div><b>@needlebrew</b><span>Шинэ ундаа, үдэшийн мэдээ</span></div>
+        <span class="arrow">→</span>
+      </a>
+      <a class="link" href="https://maps.app.goo.gl/GxMhqznx72FHM5PC6" target="_blank" rel="noopener">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 21s7-6.1 7-11a7 7 0 1 0-14 0c0 4.9 7 11 7 11z"/><circle cx="12" cy="10" r="2.5"/></svg>
+        <div><b>Газрын зураг</b><span>Сөүлийн гудамж, СБД 4-р хороо</span></div>
+        <span class="arrow">→</span>
+      </a>
+    </div>
+  </div>
+</section>
+
+<footer>© Needle &amp; Brew · Улаанбаатар · Жишээ загвар</footer>
+
+<!-- Доод наалт мөр -->
+<div class="bar">
+  <div class="bar-in">
+    <a class="btn btn-primary" href="#zahialga">Захиалах</a>
+    <a class="btn btn-outline" href="https://maps.app.goo.gl/GxMhqznx72FHM5PC6" target="_blank" rel="noopener">Газрын зураг</a>
+  </div>
+</div>
+
+<script>
+(function(){
+  var els = document.querySelectorAll('.reveal');
+  if(!('IntersectionObserver' in window) ||
+      window.matchMedia('(prefers-reduced-motion: reduce)').matches){
+    for(var i=0;i<els.length;i++) els[i].classList.add('in');
+    return;
+  }
+  var io = new IntersectionObserver(function(entries){
+    entries.forEach(function(e){
+      if(e.isIntersecting){ e.target.classList.add('in'); io.unobserve(e.target); }
+    });
+  },{rootMargin:'0px 0px -8% 0px',threshold:.08});
+  els.forEach(function(el,i){ el.style.transitionDelay=(Math.min(i,4)*45)+'ms'; io.observe(el); });
+})();
+
+// ---- Улаанбаатарын цагаар нээлттэй эсэхийг тооцоолох (UTC+8, өдөр бүр 08:00-20:00) ----
+(function(){
+  function ubNow(){
+    var now = new Date();
+    var utcMs = now.getTime() + now.getTimezoneOffset()*60000;
+    return new Date(utcMs + 8*3600000);
+  }
+  var ub = ubNow();
+  var mins = ub.getHours()*60 + ub.getMinutes();
+  var openMin = 8*60, closeMin = 20*60;
+  var isOpen = mins >= openMin && mins < closeMin;
+  var el = document.getElementById('status');
+  var txt = document.getElementById('status-text');
+  if(isOpen){
+    txt.textContent = 'Одоо нээлттэй · 20:00 хүртэл';
+  } else {
+    el.classList.add('closed');
+    txt.textContent = (mins < openMin ? 'Өнөөдөр' : 'Маргааш') + ' 08:00-д нээнэ';
+  }
+})();
+
+// ---- Захиалгын мессеж ----
+function pad(n){ return n<10 ? '0'+n : n; }
+(function(){
+  var d = new Date();
+  document.getElementById('f-date').value = d.getFullYear()+'-'+pad(d.getMonth()+1)+'-'+pad(d.getDate());
+})();
+
+function buildOrder(){
+  var name = document.getElementById('f-name').value.trim() || 'Зочин';
+  var date = document.getElementById('f-date').value;
+  var time = document.getElementById('f-time').value;
+  var order = document.getElementById('f-order').value.trim() || '(захиалгын дэлгэрэнгүйг бичээрэй)';
+  var msg = 'Сайн байна уу! ' + name + ' байна.\n' +
+    date + ' ' + time + ' цагт авахаар:\n' + order + '\n\nNeedle & Brew-с харлаа 🙂';
+  document.getElementById('order-text').value = msg;
+  document.getElementById('order-result').classList.add('show');
+  document.getElementById('order-result').scrollIntoView({behavior:'smooth', block:'center'});
+}
+
+function copyOrder(){
+  var ta = document.getElementById('order-text');
+  ta.select();
+  try{
+    navigator.clipboard.writeText(ta.value);
+  }catch(e){
+    document.execCommand('copy');
+  }
+  var m = document.getElementById('copy-msg');
+  m.classList.add('show');
+}
+</script>
+</body>
+</html>
