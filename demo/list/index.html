@@ -49,7 +49,7 @@ footer{color:var(--muted);font-size:12px;text-align:center;margin-top:20px}
 
   <div id="list"></div>
 
-  <footer>6 бизнес · Улаанбаатарын цагаар (UTC+8) шууд тооцоолсон</footer>
+  <footer>7 бизнес · Улаанбаатарын цагаар (UTC+8) шууд тооцоолсон</footer>
 </div>
 
 <script>
@@ -68,7 +68,9 @@ var businesses = [
   { slug:'dessert39', name:'Dessert39', phone:null, ig:'dessert39mongolia',
     hours:function(d,mins){ return {open: mins>=7*60 && mins<24*60}; } },
   { slug:'enbarr', name:'ENBARR Smokehouse', phone:'+97680871048', ig:'enbarr.ub',
-    hours:function(d,mins){ return {open: mins>=15*60 || mins<4*60}; } }
+    hours:function(d,mins){ return {open: mins>=15*60 || mins<4*60}; } },
+  { slug:'brooklyn', name:'Brooklyn Coffee & Wine House', phone:'+97675059797', ig:null,
+    hours:function(d,mins){ return {open: mins>=10*60 && mins<22*60}; } }
 ];
 
 function ubNow(){
