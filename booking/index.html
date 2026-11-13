@@ -1190,6 +1190,11 @@ async function sendConfirmEmail(toEmail, toName, d) {
     await window.emailjs.send("service_lr0xy9q", "template_o0e4529", {
       to_email: toEmail,
       to_name:  toName,
+      // Template-ийн "From Name" = {{name}}, "Reply To" = {{email}}.
+      // Эдгээрийг илгээхгүй бол илгээгчийн нэр хоосон, хариу бичих хаяг
+      // байхгүй явдаг. Үйлчлүүлэгч рүү явах тул LFS-ийн мэдээллийг тавина.
+      name:     'LFS Shanghai',
+      email:    'lfs.shanghai1@gmail.com',
       service:  d.service,
       start:    d.start,
       days:     d.days,
@@ -1282,6 +1287,10 @@ window.submitBooking = async function() {
       await window.emailjs.send("service_lr0xy9q", "template_o0e4529", {
         to_email: "lfs.shanghai1@gmail.com",
         to_name:  "LFS Admin",
+        // Энэ нь админд ирэх мэдэгдэл тул "From Name"/"Reply To"-д
+        // захиалагчийн мэдээллийг тавина — шууд хариу бичих боломжтой болно.
+        name:     d.name,
+        email:    d.email,
         service:  d.service,
         start:    d.start,
         days:     d.days,

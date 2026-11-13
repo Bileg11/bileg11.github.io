@@ -7,6 +7,27 @@ const alerts   = require('./alerts');
 const app = express();
 app.use(express.json());
 
+// ── CORS ──────────────────────────────────────────────────────────────
+// lfsshanghai.com-ийн booking форм JSON-оор POST хийдэг тул браузер эхлээд
+// preflight (OPTIONS) явуулна. Эдгээр header байхгүй бол preflight унаж,
+// жинхэнэ POST ОГТ илгээгддэггүй → Telegram мэдэгдэл ирэхгүй.
+const ALLOWED_ORIGINS = [
+  'https://lfsshanghai.com',
+  'https://www.lfsshanghai.com',
+  'http://localhost',
+];
+app.use((req, res, next) => {
+  const origin = req.headers.origin || '';
+  if (ALLOWED_ORIGINS.some(o => origin.startsWith(o))) {
+    res.setHeader('Access-Control-Allow-Origin', origin);
+    res.setHeader('Vary', 'Origin');
+  }
+  res.setHeader('Access-Control-Allow-Methods', 'GET, POST, OPTIONS');
+  res.setHeader('Access-Control-Allow-Headers', 'Content-Type');
+  if (req.method === 'OPTIONS') return res.status(204).end();
+  next();
+});
+
 const TOKEN   = process.env.TELEGRAM_TOKEN;
 const CHAT_ID = process.env.TELEGRAM_CHAT_ID;
 
@@ -40,14 +61,23 @@ ${p.isLoggedIn ? '✅ Бүртгэлтэй хэрэглэгч' : '❌ Бүртг
 🎂 <b>Төрсөн:</b> ${p.birthday || '—'}`;
 
   try {
-    await fetch(`https://api.telegram.org/bot${TOKEN}/sendMessage`, {
+    const tg = await fetch(`https://api.telegram.org/bot${TOKEN}/sendMessage`, {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({ chat_id: CHAT_ID, text: msg, parse_mode: 'HTML' })
     });
+
+    // Telegram алдаа гаргавал fetch throw хийдэггүй — заавал res.ok шалгана.
+    // Үгүй бол илгээгдээгүй атлаа { ok: true } буцаж, алдаа далд үлдэнэ.
+    if (!tg.ok) {
+      const body = await tg.text().catch(() => '');
+      console.error('[Booking] Telegram failed:', tg.status, body);
+      return res.status(502).json({ ok: false, error: 'telegram_failed' });
+    }
+
     res.json({ ok: true });
   } catch (err) {
-    console.error(err);
+    console.error('[Booking]', err);
     res.status(500).json({ ok: false });
   }
 });
