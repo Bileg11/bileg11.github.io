@@ -227,9 +227,9 @@ footer a{color:var(--blue);text-decoration:none}footer a:hover{text-decoration:u
   </div>
   <div class="pricing-panel" id="pricingPanel">
     <div class="pricing-grid">
-      <div class="pricing-item"><span class="pi-name">Health + Travel Package</span><span class="pi-val">₮4,600,000</span></div>
-      <div class="pricing-item"><span class="pi-name">Basic Checkup Package</span><span class="pi-val">₮1,899,000</span></div>
-      <div class="pricing-item"><span class="pi-name">Travel Only Package</span><span class="pi-val">₮3,200,000</span></div>
+      <div class="pricing-item"><span class="pi-name">Health + Travel Package</span><span class="pi-val">₮4,800,000</span></div>
+      <div class="pricing-item"><span class="pi-name">Basic Checkup Package</span><span class="pi-val">₮2,299,000</span></div>
+      <div class="pricing-item"><span class="pi-name">Travel Only Package</span><span class="pi-val">₮3,500,000</span></div>
       <div class="pricing-item"><span class="pi-name">City Guide</span><span class="pi-val">500¥/day</span></div>
       <div class="pricing-item"><span class="pi-name">Business Interpreter</span><span class="pi-val">500¥/day</span></div>
       <div class="pricing-item"><span class="pi-name">Hotel Booking</span><span class="pi-val">50¥</span></div>
@@ -667,9 +667,9 @@ window.submitBooking=submitBooking;
   // Package → service mapping. Legacy slugs (gold/altan/silver/mungun) still work
   // so older links from Facebook posts and PDFs do not break.
   const PKG_MAP = {
-    full:   { service:'healthcare',  label:'VIP Healthcare — Health + Travel Package (₮4,600,000)' },
-    basic:  { service:'healthcare',  label:'VIP Healthcare — Basic Checkup Package (₮1,899,000)' },
-    travel: { service:'city-guide',  label:'Travel Only Package (₮3,200,000)' },
+    full:   { service:'healthcare',  label:'VIP Healthcare — Health + Travel Package (₮4,800,000)' },
+    basic:  { service:'healthcare',  label:'VIP Healthcare — Basic Checkup Package (₮2,299,000)' },
+    travel: { service:'city-guide',  label:'Travel Only Package (₮3,500,000)' },
   };
   const PKG_ALIAS = { gold:'full', altan:'full', silver:'basic', mungun:'basic' };
   const hit = PKG_MAP[PKG_ALIAS[pkg] || pkg];

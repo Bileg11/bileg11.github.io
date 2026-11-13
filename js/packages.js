@@ -242,7 +242,7 @@
       name: { mn: 'Шинжилгээ + Аялал багц', en: 'Health + Travel Package' },
       badge: { mn: 'Хамгийн алдартай', en: 'Most popular' },
       badgeClass: 'gold-badge',
-      price: { mnt: 4600000, cny: null, usd: 1310 },
+      price: { mnt: 4800000, cny: null, usd: 1330 },
       days: 5, nights: 4,
       duration: { mn: '5 өдөр / 4 шөнө', en: '5 days / 4 nights' },
       tagline: {
@@ -284,10 +284,10 @@
         { src: '/img/health/pexels-daniel-reynaga-337914704-35521663.jpg', pos: 'center 30%', bg: 'linear-gradient(135deg,#1a2a0a,#2a5a10)', icon: '🏮', mn: 'Yu Garden · хуучин хот', en: 'Yu Garden · Old City' }
       ],
       meta: {
-        title: { mn: 'Шинжилгээ + Аялал багц — ₮4,600,000 · LFS Shanghai', en: 'Health + Travel Package — ₮4,600,000 · LFS Shanghai' },
+        title: { mn: 'Шинжилгээ + Аялал багц — ₮4,800,000 · LFS Shanghai', en: 'Health + Travel Package — ₮4,800,000 · LFS Shanghai' },
         desc: {
-          mn: 'Шанхайн VIP эмнэлэгт 23 төрлийн шинжилгээ + 5 өдрийн аялал. Нислэг, 5 одтой буудал, хоол, унаа бүгд үнэд багтсан. ₮4,600,000 / хүн.',
-          en: '23 medical tests at Shanghai’s top VIP hospital plus a 5-day city tour. Flights, 5-star hotel, meals and transport included. ₮4,600,000 per person.'
+          mn: 'Шанхайн VIP эмнэлэгт 23 төрлийн шинжилгээ + 5 өдрийн аялал. Нислэг, 5 одтой буудал, хоол, унаа бүгд үнэд багтсан. ₮4,800,000 / хүн.',
+          en: '23 medical tests at Shanghai’s top VIP hospital plus a 5-day city tour. Flights, 5-star hotel, meals and transport included. ₮4,800,000 per person.'
         },
         image: '/img/health/Tower1.jpg'
       }
@@ -303,7 +303,7 @@
       name: { mn: 'Энгийн шинжилгээний багц', en: 'Basic Checkup Package' },
       badge: { mn: 'Энгийн багц', en: 'Basic checkup' },
       badgeClass: 'blue-badge',
-      price: { mnt: 1899000, cny: null, usd: 539 },
+      price: { mnt: 2299000, cny: null, usd: 640 },
       days: 1, nights: 0,
       duration: { mn: '1 өдөр', en: '1 day' },
       tagline: {
@@ -336,10 +336,10 @@
         { src: '/img/health/hospital-reception.jpg', pos: '', bg: 'linear-gradient(135deg,#1055a0,#3d8ef0)', icon: '🏥', mn: '光明中医院 · Xinchang Branch · Shanghai', en: 'Guangming TCM Hospital · Xinchang Branch' }
       ],
       meta: {
-        title: { mn: 'Энгийн шинжилгээний багц — ₮1,899,000 · LFS Shanghai', en: 'Basic Checkup Package — ₮1,899,000 · LFS Shanghai' },
+        title: { mn: 'Энгийн шинжилгээний багц — ₮2,299,000 · LFS Shanghai', en: 'Basic Checkup Package — ₮2,299,000 · LFS Shanghai' },
         desc: {
-          mn: 'Шанхайн VIP эмнэлэгт суурь шинжилгээ нэг өдөрт. Дараалалгүй, Монгол орчуулагч, хувийн сувилагчтай, хариу мөн өдөртөө. ₮1,899,000 / хүн.',
-          en: 'A basic checkup at a Shanghai VIP hospital in a single day, with a Mongolian interpreter and personal nurse. Results the same day. ₮1,899,000 per person.'
+          mn: 'Шанхайн VIP эмнэлэгт суурь шинжилгээ нэг өдөрт. Дараалалгүй, Монгол орчуулагч, хувийн сувилагчтай, хариу мөн өдөртөө. ₮2,299,000 / хүн.',
+          en: 'A basic checkup at a Shanghai VIP hospital in a single day, with a Mongolian interpreter and personal nurse. Results the same day. ₮2,299,000 per person.'
         },
         image: '/img/health/hospital-reception.jpg'
       }
@@ -355,7 +355,7 @@
       name: { mn: 'Зөвхөн аяллын багц', en: 'Travel Only Package' },
       badge: { mn: 'Шинэ', en: 'New' },
       badgeClass: 'green-badge',
-      price: { mnt: 3200000, cny: null, usd: 910 },
+      price: { mnt: 3500000, cny: null, usd: 970 },
       days: 5, nights: 4,
       duration: { mn: '5 өдөр / 4 шөнө', en: '5 days / 4 nights' },
       tagline: {
@@ -397,10 +397,10 @@
         { src: '/img/health/pexels-nazmiazmir-33826186.jpg', pos: '', bg: 'linear-gradient(135deg,#0a1a0a,#1a3a1a)', icon: '☕', mn: 'Starbucks Roastery', en: 'Starbucks Roastery' }
       ],
       meta: {
-        title: { mn: 'Зөвхөн аяллын багц — ₮3,200,000 · LFS Shanghai', en: 'Travel Only Package — ₮3,200,000 · LFS Shanghai' },
+        title: { mn: 'Зөвхөн аяллын багц — ₮3,500,000 · LFS Shanghai', en: 'Travel Only Package — ₮3,500,000 · LFS Shanghai' },
         desc: {
-          mn: 'Шанхайд 5 өдөр 4 шөнө — нислэг, 5 одтой буудал, хоол, Disneyland тасалбар бүгд багтсан. Эрүүл мэндийн шинжилгээгүй. ₮3,200,000 / хүн.',
-          en: '5 days and 4 nights in Shanghai — flights, 5-star hotel, meals and a Disneyland ticket all included. No medical checkup. ₮3,200,000 per person.'
+          mn: 'Шанхайд 5 өдөр 4 шөнө — нислэг, 5 одтой буудал, хоол, Disneyland тасалбар бүгд багтсан. Эрүүл мэндийн шинжилгээгүй. ₮3,500,000 / хүн.',
+          en: '5 days and 4 nights in Shanghai — flights, 5-star hotel, meals and a Disneyland ticket all included. No medical checkup. ₮3,500,000 per person.'
         },
         image: '/img/health/Bund2.jpg'
       }
