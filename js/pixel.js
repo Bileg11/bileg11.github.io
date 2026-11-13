@@ -24,16 +24,38 @@
 
   var PIXEL_ID = '976110361690010';
 
-  // ── Meta Pixel base code (async — render блоклохгүй) ──
+  // ── Meta Pixel stub (зөвхөн дараалал — сүлжээний хүсэлт ҮҮСГЭХГҮЙ) ──
+  // fbq дуудлагууд n.queue-д хуримтлагдаад, fbevents.js ачаалагдахад
+  // автоматаар flush болдог. Тиймээс скриптийг хожим татсан ч event алдагдахгүй.
   !function (f, b, e, v, n, t, s) {
     if (f.fbq) return; n = f.fbq = function () {
       n.callMethod ? n.callMethod.apply(n, arguments) : n.queue.push(arguments)
     };
     if (!f._fbq) f._fbq = n; n.push = n; n.loaded = !0; n.version = '2.0';
-    n.queue = []; t = b.createElement(e); t.async = !0;
-    t.src = v; s = b.getElementsByTagName(e)[0];
-    s.parentNode.insertBefore(t, s)
-  }(window, document, 'script', 'https://connect.facebook.net/en_US/fbevents.js');
+    n.queue = [];
+  }(window, document, 'script');
+
+  // ── fbevents.js-ийг load event-ээс ХОЙШ татна ──
+  // Өмнө нь энэ хүсэлт 2.6 секунд үргэлжилж, load event-ийг барьж байсан.
+  var fbRequested = false;
+  function loadFbPixel() {
+    if (fbRequested) return;
+    fbRequested = true;
+    var t = document.createElement('script');
+    t.async = true;
+    t.src = 'https://connect.facebook.net/en_US/fbevents.js';
+    var s = document.getElementsByTagName('script')[0];
+    s.parentNode.insertBefore(t, s);
+  }
+
+  // load дууссаны дараа сул зуур нь татна. requestIdleCallback байхгүй бол
+  // (Safari) богино timeout-аар орлуулна.
+  function schedulePixel() {
+    var idle = window.requestIdleCallback || function (fn) { return setTimeout(fn, 800); };
+    idle(loadFbPixel, { timeout: 3000 });
+  }
+  if (document.readyState === 'complete') schedulePixel();
+  else window.addEventListener('load', schedulePixel, { once: true });
 
   // ── Google Analytics 4 ──
   // gtag хараахан үүсээгүй байж болзошгүй тул дуудагдах бүрд шалгана.
@@ -98,6 +120,8 @@
   }
 
   function trackLead(serviceName, packageLabel) {
+    // Хөрвөлт — хүлээхгүй, яг одоо татаж дарааллыг flush хийлгэнэ
+    loadFbPixel();
     var name = serviceName || 'Booking';
     var params = { content_name: name };
     var price = leadPriceFor(name, packageLabel);

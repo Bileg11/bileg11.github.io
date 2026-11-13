@@ -869,10 +869,10 @@ section,#booking-section{scroll-margin-top:60px}
   <!-- IMAGE SLIDESHOW -->
   <div class="hero-slides" id="heroSlides">
     <div class="hero-slide active" style="background-image:url('https://images.unsplash.com/photo-1752662742861-fb76c71576d7?w=1600&q=85&auto=format&fit=crop')"></div>
-    <div class="hero-slide" style="background-image:url('https://images.unsplash.com/photo-1748078096034-46086f5b87da?w=1600&q=85&auto=format&fit=crop')"></div>
-    <div class="hero-slide" style="background-image:url('https://images.unsplash.com/photo-1647067151129-ac9991329a73?w=1600&q=85&auto=format&fit=crop')"></div>
-    <div class="hero-slide" style="background-image:url('https://images.unsplash.com/photo-1747479309766-37bbf669cffe?w=1600&q=85&auto=format&fit=crop')"></div>
-    <div class="hero-slide" style="background-image:url('https://images.unsplash.com/photo-1717400411765-0d6a4d0bc8db?w=1600&q=85&auto=format&fit=crop')"></div>
+    <div class="hero-slide" data-bg="https://images.unsplash.com/photo-1748078096034-46086f5b87da?w=1600&q=85&auto=format&fit=crop"></div>
+    <div class="hero-slide" data-bg="https://images.unsplash.com/photo-1647067151129-ac9991329a73?w=1600&q=85&auto=format&fit=crop"></div>
+    <div class="hero-slide" data-bg="https://images.unsplash.com/photo-1747479309766-37bbf669cffe?w=1600&q=85&auto=format&fit=crop"></div>
+    <div class="hero-slide" data-bg="https://images.unsplash.com/photo-1717400411765-0d6a4d0bc8db?w=1600&q=85&auto=format&fit=crop"></div>
     <button class="slide-arrow slide-prev" onclick="goSlide(curSlide-1);startAuto()" aria-label="Previous">&#8249;</button>
     <button class="slide-arrow slide-next" onclick="goSlide(curSlide+1);startAuto()" aria-label="Next">&#8250;</button>
   </div>
@@ -1393,13 +1393,35 @@ function goSlide(n) {
   curSlide = (n + slides.length) % slides.length;
   slides[curSlide].classList.add('active');
   dots[curSlide].classList.add('active');
+  lazyLoadSlide((curSlide + 1) % slides.length);
 }
 
 function startAuto() {
   clearInterval(autoTimer);
   autoTimer = setInterval(() => goSlide(curSlide + 1), 4000);
 }
-startAuto();
+
+// Lazy-load slide backgrounds — only the first slide ships eagerly
+function lazyLoadSlide(idx) {
+  const el = slides[idx];
+  if (el && el.dataset.bg && !el.style.backgroundImage) {
+    el.style.backgroundImage = `url('${el.dataset.bg}')`;
+  }
+}
+
+// Start the slideshow only after load, so it never competes with the
+// initial render. Previously all five 1600px images were fetched upfront.
+function initSlideshow() {
+  lazyLoadSlide(1);
+  startAuto();
+}
+if (document.readyState === 'complete') initSlideshow();
+else window.addEventListener('load', initSlideshow, { once: true });
+
+document.addEventListener('visibilitychange', () => {
+  if (document.hidden) clearInterval(autoTimer);
+  else if (slides.length) startAuto();
+});
 
 // ── SWIPE / DRAG ──
 const heroEl = document.getElementById('heroSlides');

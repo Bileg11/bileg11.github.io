@@ -33,9 +33,9 @@
 <link rel="preconnect" href="https://www.gstatic.com" crossorigin>
 <link rel="preload" as="image" href="/img/hero/hero-1.jpg">
 <!-- Font: preload critical weights, swap to avoid FOIT -->
-<link rel="preload" as="style" href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap">
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet" media="print" onload="this.media='all'">
-<noscript><link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet"></noscript>
+<link rel="preload" as="style" href="https://fonts.googleapis.com/css2?family=Inter:wght@300..900&display=swap">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300..900&display=swap" rel="stylesheet" media="print" onload="this.media='all'">
+<noscript><link href="https://fonts.googleapis.com/css2?family=Inter:wght@300..900&display=swap" rel="stylesheet"></noscript>
 <style>
 *{margin:0;padding:0;box-sizing:border-box}
 
@@ -1638,8 +1638,9 @@ function lazyLoadSlide(idx) {
     el.style.backgroundImage = `url('${el.dataset.bg}')`;
   }
 }
-// Pre-load first two slides immediately
-lazyLoadSlide(0); lazyLoadSlide(1);
+// Эхний слайд нь HTML-д шууд background-тай. Хоёр дахийг нь load хүртэл
+// хүлээнэ — эхний ачаалалттай өрсөлдөхгүйн тулд.
+lazyLoadSlide(0);
 
 function goSlide(n) {
   slides[curSlide].classList.remove('active');
@@ -1655,7 +1656,21 @@ function startAuto() {
   clearInterval(autoTimer);
   autoTimer = setInterval(() => goSlide(curSlide + 1), 4000);
 }
-startAuto();
+
+// Слайдшоуг load дууссаны дараа эхлүүлнэ. Өмнө нь 4 секундын таймер шууд
+// асдаг байсан тул анхны ачаалал удаан үед hero-3 хүртэл татагдаж байлаа.
+function initSlideshow() {
+  lazyLoadSlide(1);
+  startAuto();
+}
+if (document.readyState === 'complete') initSlideshow();
+else window.addEventListener('load', initSlideshow, { once: true });
+
+// Таб нуугдсан үед таймерыг зогсооно — илүү зураг татахгүй, батарей хэмнэнэ
+document.addEventListener('visibilitychange', () => {
+  if (document.hidden) clearInterval(autoTimer);
+  else if (slides.length) startAuto();
+});
 
 // ── SWIPE / DRAG ──
 const heroEl = document.getElementById('heroSlides');
