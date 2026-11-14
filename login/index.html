@@ -376,7 +376,7 @@ import {
   getAuth, onAuthStateChanged, signOut,
   signInWithEmailAndPassword, createUserWithEmailAndPassword,
   GoogleAuthProvider, signInWithPopup, signInWithRedirect, getRedirectResult,
-  sendPasswordResetEmail, sendEmailVerification
+  sendPasswordResetEmail, sendEmailVerification, updateProfile
 } from "https://www.gstatic.com/firebasejs/11.7.1/firebase-auth.js";
 import { getFirestore, doc, getDoc, setDoc } from "https://www.gstatic.com/firebasejs/11.7.1/firebase-firestore.js";
 
@@ -572,6 +572,12 @@ document.getElementById('btnReg').addEventListener('click', async () => {
       photoURL:'', phone:'', birthday:'', gender:'', createdAt: Date.now()
     });
     logEvent(analytics, 'sign_up', { method: 'email' });
+
+    // Firebase-ийн и-мэйл загвар %DISPLAY_NAME%-ийг ашигладаг тул нэрийг
+    // Auth профайлд ч бичнэ. Үгүй бол захидал "Сайн байна уу," гэж
+    // нэргүй эхэлнэ. nav.js мөн displayName-ийг уншдаг.
+    try { await updateProfile(res.user, { displayName: name }); }
+    catch(pe) { console.warn('updateProfile:', pe); }
 
     // ── И-мэйл баталгаажуулах холбоос (Firebase өөрөө илгээнэ) ──
     // Амжилтгүй болсон ч бүртгэлийг зогсоохгүй: холбоосыг профайл дээрээс
