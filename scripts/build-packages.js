@@ -314,7 +314,7 @@ function testsHtml(p, L, t) {
   const cards = DATA.TEST_GROUPS.map(g => {
     const items = g.items.map(it => {
       const [name, sub] = it[L];
-      return `      <li><div><b>${esc(name)}</b>${sub ? ` — <em>${esc(sub)}</em>` : ''}</div></li>`;
+      return `      <li><div><b>${esc(name)}</b>${sub ? `: <em>${esc(sub)}</em>` : ''}</div></li>`;
     }).join('\n');
     const n = g.items.length;
     const nLabel = L === 'mn' ? `${n} шинжилгээ` : `${n} test${n > 1 ? 's' : ''}`;
