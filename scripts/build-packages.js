@@ -31,7 +31,7 @@ const T = {
     testsTitle: 'Эмнэлгийн шинжилгээний задаргаа', testsCount: 'төрлийн шинжилгээ',
     testsSub: 'Энэ багцад багтсан бүх шинжилгээ. MRI, CT зэрэг өндөр өртөгтэй дүрс оношилгоо ч үнэд бүрэн орсон.',
     addonsTitle: 'Нэмэлтээр сонгох боломжтой нарийн шинжилгээнүүд',
-    addonsSub: 'Багцад ороогүй. Хэрэгтэй бол урьдчилан захиалж болно — үнийг эмнэлгийн мэргэжилтэнтэй тохиролцоно.',
+    addonsSub: 'Багцад ороогүй. Хэрэгтэй бол урьдчилан захиалж болно. Үнийг эмнэлгийн мэргэжилтэнтэй тохиролцоно.',
     photos: 'Зургууд', book: 'Одоо захиалах →', allPkgs: 'Бүх багц харах',
     reviewsLabel: 'Үйлчлүүлэгчид', reviewsTitle: 'Үнэлгээ', ofFive: '5-аас', reviewWord: 'үнэлгээ',
     perPerson: '/ хүн', groupNote: '👥 2-оос дээш хүн ирвэл үнийг тохиролцоно',
@@ -47,16 +47,16 @@ const T = {
     included: 'What’s included', highlights: 'Service highlights',
     itinerary: 'Day-by-day itinerary', day: 'Day ',
     testsTitle: 'Full medical test breakdown', testsCount: 'medical tests',
-    testsSub: 'Every test included in this package. MRI and CT — normally costly imaging — are part of the price.',
+    testsSub: 'Every test included in this package. MRI and CT, normally costly imaging, are part of the price.',
     addonsTitle: 'Optional add-on tests',
-    addonsSub: 'Not included in the package. Available on request — price agreed in advance with the hospital.',
+    addonsSub: 'Not included in the package. Available on request, price agreed in advance with the hospital.',
     photos: 'Photos', book: 'Book now →', allPkgs: 'See all packages',
     reviewsLabel: 'Customers', reviewsTitle: 'Reviews', ofFive: 'out of 5', reviewWord: 'reviews',
     perPerson: 'per person', groupNote: '👥 Group price available for 2+ people',
     ctaTitle: 'Ready to book?', ctaSub: 'Send us your details and we reply within 24 hours.',
     notIncluded: 'NOT included in this package', crumbHome: 'Home', crumbPkgs: 'Packages',
     footerLinks: [['/en/', 'Home'], ['/en/health/', 'Healthcare'], ['/en/apartment/', 'Apartment Rental'], ['/en/routes/', 'Routes'], ['/en/tips/', 'Tips'], ['/en/booking/', 'Book Now']],
-    rights: '© 2026 LFS Shanghai — Trusted Guide for Mongolian Travelers',
+    rights: '© 2026 LFS Shanghai · Trusted Guide for Mongolian Travelers',
     navBook: 'Book Now'
   }
 };
@@ -526,7 +526,7 @@ function redirectPage(t) {
 // өөрчлөгдөөгүй атал огноог ахиулбал Google lastmod-д итгэхээ больдог.
 function updateSitemap(entries) {
   const file = path.join(ROOT, 'sitemap.xml');
-  if (!fs.existsSync(file)) { console.log('  ⚠ sitemap.xml олдсонгүй — алгасав'); return; }
+  if (!fs.existsSync(file)) { console.log('  ⚠ sitemap.xml олдсонгүй, алгасав'); return; }
   let xml = fs.readFileSync(file, 'utf8');
 
   // Өмнөх lastmod-уудыг URL-аар нь цуглуулна
@@ -591,4 +591,4 @@ for (const L of ['mn', 'en']) {
   write(`${t.base.replace(/^\//, '')}/index.html`, redirectPage(t));
 }
 updateSitemap(urls);
-console.log(`\nДууслаа — ${active.length} багц × 2 хэл = ${active.length * 2} хуудас.`);
+console.log(`\nДууслаа, ${active.length} багц × 2 хэл = ${active.length * 2} хуудас.`);

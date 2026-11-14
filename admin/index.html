@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Admin — LFS Shanghai</title>
+<title>Admin | LFS Shanghai</title>
 <link rel="icon" type="image/svg+xml" href="/favicon.svg">
 <link rel="icon" type="image/png" sizes="32x32" href="/favicon.png">
 <link rel="apple-touch-icon" href="/apple-touch-icon.png">
@@ -205,7 +205,7 @@ body{font-family:'Inter',sans-serif;background:var(--bg);color:var(--text);min-h
 <div class="login-wrap" id="loginWrap">
   <div class="login-card">
     <div class="login-logo">LFS <span>Shanghai</span></div>
-    <div class="login-sub">Admin панел — нэвтрэх</div>
+    <div class="login-sub">Admin панел, нэвтрэх</div>
     <div class="field">
       <label>Имэйл</label>
       <input type="email" id="loginEmail" placeholder="admin@email.com" autocomplete="off">
@@ -317,7 +317,7 @@ body{font-family:'Inter',sans-serif;background:var(--bg);color:var(--text);min-h
     <div class="tab-content" id="tab-reviews">
       <div style="background:rgba(255,159,10,.12);border:1px solid rgba(255,159,10,.4);border-radius:12px;padding:16px 18px;margin-bottom:20px;font-size:13.5px;line-height:1.65;color:#ffd68a">
         <strong style="color:#ff9f0a">⚠️ Зөвхөн бодит үнэлгээ нийтэл.</strong> Зохиосон үнэлгээ нэмбэл Google-ийн rich result
-        бүхэлдээ хасагдаж, багцын үнэ ч хайлтад харагдахаа болино. Түүнээс ч чухал нь — үйлчлүүлэгчээ хуурч байгаа хэрэг.
+        бүхэлдээ хасагдаж, багцын үнэ ч хайлтад харагдахаа болино. Түүнээс ч чухал нь: үйлчлүүлэгчээ хуурч байгаа хэрэг.
       </div>
       <div style="background:var(--bg2);border:1px solid var(--border);border-radius:12px;padding:16px 18px;margin-bottom:20px;font-size:13px;line-height:1.7;color:var(--text)">
         <strong>Хэрхэн нийтлэх вэ:</strong><br>
@@ -778,7 +778,7 @@ window.switchTab = function(tab, btn) {
     const bookingsOnDay = allBookings.filter(b => b.start === dateKey);
     const pad = n => String(n).padStart(2,'0');
     document.getElementById('calDayTitle').textContent =
-      `${calYear}/${pad(calMonth+1)}/${pad(dayNum)} — ${bookingsOnDay.length} захиалга`;
+      `${calYear}/${pad(calMonth+1)}/${pad(dayNum)}, ${bookingsOnDay.length} захиалга`;
 
     const stLabel = {'new':'Шинэ','contacted':'Холбогдсон','done':'Дууссан'};
     const stClass = {'new':'badge-new','contacted':'badge-contacted','done':'badge-done'};
@@ -1165,7 +1165,7 @@ window.toggleMailCompose = function() {
   const booking = allBookings.find(x => x.id === currentDocId);
   if (!booking?.email) { toast('Имэйл хаяг байхгүй', 'error'); return; }
   document.getElementById('mailTo').textContent = booking.email;
-  document.getElementById('mailSubject').value = `LFS Shanghai — ${booking.service || 'Захиалга'}`;
+  document.getElementById('mailSubject').value = `LFS Shanghai, ${booking.service || 'Захиалга'}`;
   document.getElementById('mailBody').value = '';
   document.getElementById('mailSendMsg').textContent = '';
   panel.style.display = panel.style.display === 'none' ? 'block' : 'none';

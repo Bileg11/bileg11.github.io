@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Захиалга өгөх — LFS Shanghai</title>
+<title>Захиалга өгөх | LFS Shanghai</title>
 <link rel="manifest" href="/manifest.json">
 <link rel="icon" type="image/svg+xml" href="/favicon.svg">
 <link rel="icon" type="image/png" sizes="32x32" href="/favicon.png">
@@ -12,7 +12,7 @@
 <meta name="description" content="Шанхайд аялах захиалгаа өгнө үү. 24 цагийн дотор холбогдоно.">
 <meta name="robots" content="index, follow">
 <meta property="og:type" content="website">
-<meta property="og:title" content="Захиалга өгөх — LFS Shanghai">
+<meta property="og:title" content="Захиалга өгөх | LFS Shanghai">
 <meta property="og:description" content="Шанхайд аялах захиалгаа өгнө үү. 24 цагийн дотор холбогдоно.">
 <meta property="og:url" content="https://lfsshanghai.com/booking/">
 <meta property="og:locale" content="mn_MN">
@@ -532,7 +532,7 @@ footer{
             <!-- БАГЦ СОНГОХ -->
             <div id="package-block" style="margin-top:26px;padding-top:22px;border-top:1px solid #e5e5e7">
               <div class="step-question" style="font-size:16px;margin-bottom:4px">Багц сонгох</div>
-              <div class="step-sub" style="margin-bottom:14px">Заавал биш — багц сонговол үйлчилгээ автоматаар тохирно</div>
+              <div class="step-sub" style="margin-bottom:14px">Заавал биш. Багц сонговол үйлчилгээ автоматаар тохирно</div>
               <div class="card-grid" id="package-grid">
                 <div class="sel-card" data-pkg="full" onclick="applyPackage('full', true)">
                   <div class="sel-card-icon">🥇</div>
@@ -1026,7 +1026,7 @@ function pulseAuthNotice() {}
 
 window.shareBooking = async function() {
   const url  = window.location.origin + '/booking/';
-  const text = 'LFS Shanghai — Шанхай аяллын найдвартай хөтөч 🇨🇳';
+  const text = 'LFS Shanghai, Шанхай аяллын найдвартай хөтөч 🇨🇳';
   if (navigator.share) {
     try { await navigator.share({ title:'LFS Shanghai', text, url }); return; } catch(_) {}
   }

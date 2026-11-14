@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Нэвтрэх — LFS Shanghai</title>
+<title>Нэвтрэх | LFS Shanghai</title>
 <link rel="icon" type="image/svg+xml" href="/favicon.svg">
 <link rel="icon" type="image/png" sizes="32x32" href="/favicon.png">
 <link rel="apple-touch-icon" href="/apple-touch-icon.png">
@@ -222,10 +222,10 @@ window.loaderFallback = true;
       <div class="why-head">Бүртгэл юу өгөх вэ?</div>
       <ul class="why-list">
         <li><span>🗺️</span><div>Аяллын төлөвлөгөөгөө хадгалаад дараа үргэлжлүүлнэ, найзтайгаа линкээр хуваалцана</div></li>
-        <li><span>⚡</span><div>Захиалга өгөхөд нэр, утас, огноо автоматаар бөглөгдөнө — дахин бичих шаардлагагүй</div></li>
+        <li><span>⚡</span><div>Захиалга өгөхөд нэр, утас, огноо автоматаар бөглөгдөнө, дахин бичих шаардлагагүй</div></li>
         <li><span>📋</span><div>Өмнөх захиалгуудаа профайл дотроо хараад байна</div></li>
       </ul>
-      <div class="why-note">Бүртгэл заавал биш. Үйлчилгээ захиалахад бүртгэлгүй ч болно — бүртгэл зөвхөн давтагдах ажлыг хэмнэнэ.</div>
+      <div class="why-note">Бүртгэл заавал биш. Үйлчилгээ захиалахад бүртгэлгүй ч болно. Бүртгэл зөвхөн давтагдах ажлыг хэмнэнэ.</div>
     </div>
 
     <!-- Facebook/Instagram in-app browser warning -->
@@ -458,7 +458,7 @@ async function doSocialLogin(provider, btnId) {
     btn.innerHTML = orig;
     console.error('login error:', e.code, e.message);
     if (e.code === 'auth/popup-blocked') {
-      showMsg('social-msg', 'Popup блоклогдлоо — браузерт popup зөвшөөрнө үү.');
+      showMsg('social-msg', 'Popup блоклогдлоо. Браузерт popup зөвшөөрнө үү.');
     } else if (e.code !== 'auth/popup-closed-by-user') {
       showMsg('social-msg', `Алдаа: ${e.code || e.message}`);
     }
@@ -546,7 +546,7 @@ async function requestCode() {
   if (!EMAIL_RE.test(email)){ showMsg('reg-msg','И-мэйл хаяг буруу байна. Жишээ: name@example.com'); return false; }
 
   if (!VERIFY_TEMPLATE) {
-    console.error('VERIFY_TEMPLATE тохируулаагүй — EmailJS дээр кодын загвар үүсгэнэ үү.');
+    console.error('VERIFY_TEMPLATE тохируулаагүй. EmailJS дээр кодын загвар үүсгэнэ үү.');
     showMsg('reg-msg','И-мэйлээр бүртгүүлэх түр ажиллахгүй байна. Google-ээр нэвтэрнэ үү.');
     return false;
   }

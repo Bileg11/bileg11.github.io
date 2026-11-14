@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Sign In — LFS Shanghai</title>
+<title>Sign In | LFS Shanghai</title>
 <link rel="icon" type="image/svg+xml" href="/favicon.svg">
 <link rel="icon" type="image/png" sizes="32x32" href="/favicon.png">
 <link rel="apple-touch-icon" href="/apple-touch-icon.png">
@@ -394,7 +394,7 @@ async function doSocialLogin(provider, btnId) {
     btn.disabled = false;
     btn.innerHTML = orig;
     if (e.code === 'auth/popup-blocked') {
-      showMsg('social-msg', 'Popup was blocked — please allow popups in your browser.');
+      showMsg('social-msg', 'Popup was blocked. Please allow popups in your browser.');
     } else if (e.code !== 'auth/popup-closed-by-user') {
       showMsg('social-msg', `Error: ${e.code || e.message}`);
     }
@@ -478,7 +478,7 @@ async function requestCode() {
   if (!EMAIL_RE.test(email)){ showMsg('reg-msg','That email address looks wrong. Example: name@example.com'); return false; }
 
   if (!VERIFY_TEMPLATE) {
-    console.error('VERIFY_TEMPLATE is not set — create the EmailJS code template.');
+    console.error('VERIFY_TEMPLATE is not set, create the EmailJS code template.');
     showMsg('reg-msg','Email sign-up is temporarily unavailable. Please use Google sign-in.');
     return false;
   }
