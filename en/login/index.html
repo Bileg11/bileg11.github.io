@@ -436,12 +436,13 @@ function vcLoad()   { try { return JSON.parse(sessionStorage.getItem('_vc')||'nu
 const EMAIL_RE = /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/;
 const MIN_PASS = 8;
 
-// EmailJS template: "Verification code" (template_6tszjnb)
-// Create a dedicated EmailJS template for the verification code and put its
-// ID here. Neither existing template fits:
-//   template_o0e4529 — booking confirmation (fixed subject/body)
-//   template_tb03qyj — inbound contact message
-// The template should use {{to_name}} and {{code}}.
+// EmailJS template "Verification code". The fields sendCode() sends must
+// match the template's variables:
+//   Subject {{code}} · To Email {{to_email}} · From Name {{name}}
+//   Reply To {{email}} · body {{to_name}}, {{code}}
+// The other two templates do not fit: template_o0e4529 is the booking
+// confirmation (fixed subject/body), template_tb03qyj is the inbound
+// contact message.
 const VERIFY_TEMPLATE = 'template_6tszjnb';
 
 function showRegStep(n) {
