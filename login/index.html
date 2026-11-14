@@ -503,13 +503,13 @@ function vcLoad()   { try { return JSON.parse(sessionStorage.getItem('_vc')||'nu
 const EMAIL_RE = /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/;
 const MIN_PASS = 8;
 
-// ⚠️ ТОХИРУУЛАХ ШААРДЛАГАТАЙ
+// EmailJS загвар: "Verification code" (template_6tszjnb)
 // EmailJS дээр баталгаажуулах кодод ЗОРИУЛСАН тусдаа загвар үүсгээд
 // ID-г нь энд тавина. Одоо байгаа 2 загвар аль нь ч тохирохгүй:
 //   template_o0e4529 — захиалгын баталгаажуулалт (subject/body тогтмол)
 //   template_tb03qyj — ирсэн холбоо барих мессеж
 // Загвар дотор {{to_name}}, {{code}} хоёрыг ашиглана.
-const VERIFY_TEMPLATE = '';
+const VERIFY_TEMPLATE = 'template_6tszjnb';
 
 function showRegStep(n) {
   [1,2,3].forEach(k => {
