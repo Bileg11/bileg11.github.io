@@ -99,6 +99,23 @@ body{font-family:'Inter',sans-serif;background:var(--bg);color:var(--dark2);min-
 .empty-bookings{text-align:center;padding:40px 20px;color:var(--muted);font-size:14px}
 
 /* LOGOUT / DELETE */
+/* ── Анх бөглөж дуусгахад гарах амжилтын мэдэгдэл ── */
+.done-overlay{position:fixed;inset:0;z-index:4000;background:rgba(0,0,0,.45);
+  display:none;align-items:center;justify-content:center;padding:24px;
+  -webkit-backdrop-filter:blur(3px);backdrop-filter:blur(3px)}
+.done-overlay.open{display:flex}
+.done-card{background:var(--card,#fff);border-radius:20px;padding:36px 30px;
+  max-width:360px;width:100%;text-align:center;
+  box-shadow:0 24px 70px rgba(0,0,0,.25);animation:doneIn .3s cubic-bezier(.4,0,.2,1)}
+@keyframes doneIn{from{opacity:0;transform:scale(.92)}to{opacity:1;transform:none}}
+.done-tick{width:62px;height:62px;margin:0 auto 18px;border-radius:50%;
+  background:#e8f8ee;color:#1a7f3c;font-size:32px;
+  display:flex;align-items:center;justify-content:center}
+.done-title{font-size:21px;font-weight:700;letter-spacing:-.02em;
+  color:var(--dark,#1d1d1f);margin-bottom:8px}
+.done-sub{font-size:14px;color:var(--muted,#6e6e73);line-height:1.55}
+.done-hint{font-size:12.5px;color:var(--muted,#86868b);margin-top:18px}
+
 .logout-btn{width:100%;margin-top:20px;padding:11px;background:none;border:1px solid var(--border);border-radius:12px;font-size:14px;color:var(--red);cursor:pointer;font-family:inherit;transition:.2s}
 .logout-btn:hover{background:#fff0f0;border-color:var(--red)}
 .delete-account-btn{width:100%;margin-top:10px;padding:11px;background:none;border:none;border-radius:12px;font-size:13px;color:var(--muted);cursor:pointer;font-family:inherit;transition:.2s}
@@ -521,6 +538,11 @@ function profileSetInvalid(inputId, hintId) {
 window.saveProfile = async function() {
   const msg = document.getElementById('save-msg');
   msg.className = 'save-msg';
+  // Анх бөглөж дуусгаж байна уу, эсвэл дараа нь засаж байна уу?
+  // Хадгалахаас ӨМНӨ тогтоох ёстой — дараа нь currentProfile шинэчлэгдэнэ.
+  const wasIncomplete = !(currentProfile.firstName && currentProfile.lastName
+                       && currentProfile.phone && currentProfile.birthday
+                       && currentProfile.gender);
   const username  = document.getElementById('edit-username').value.trim().toLowerCase();
   const firstName = document.getElementById('edit-firstname').value.trim();
   const lastName  = document.getElementById('edit-lastname').value.trim();
@@ -593,7 +615,18 @@ window.saveProfile = async function() {
       window.history.replaceState({}, '', `/profile/${username}`);
     }
 
-    toast('Амжилттай хадгалагдлаа', 'success');
+    if (wasIncomplete) {
+      // Анх бөглөж дуусгалаа: голд мэдэгдэл гаргаад нүүр рүү
+      const nm = [lastName, firstName].filter(Boolean).join(' ');
+      document.getElementById('doneSub').textContent =
+        nm ? ('Баярлалаа, ' + nm + '. Таны бүртгэл бэлэн боллоо.')
+           : 'Баярлалаа. Таны бүртгэл бэлэн боллоо.';
+      document.getElementById('doneOverlay').classList.add('open');
+      setTimeout(() => { window.location.href = '/'; }, 2200);
+    } else {
+      // Дараачийн засвар: хуудсан дээрээ үлдэнэ
+      toast('Амжилттай хадгалагдлаа', 'success');
+    }
   } catch(e) {
     toast('Хадгалахад алдаа гарлаа', 'error', { subtitle: e.message });
   }
@@ -761,5 +794,13 @@ document.querySelector('.photo-edit-btn').addEventListener('click', function() {
 </script>
 <script src="/js/messenger-btn.js"></script>
 <script src="/js/nav.js" defer></script>
+<div class="done-overlay" id="doneOverlay" role="dialog" aria-modal="true">
+  <div class="done-card">
+    <div class="done-tick">✓</div>
+    <div class="done-title">Амжилттай бүртгэгдлээ</div>
+    <div class="done-sub" id="doneSub">Баярлалаа. Таны бүртгэл бэлэн боллоо.</div>
+    <div class="done-hint">Нүүр хуудас руу шилжиж байна...</div>
+  </div>
+</div>
 </body>
 </html>
