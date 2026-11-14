@@ -215,6 +215,19 @@
       btn.setAttribute('aria-label', 'Нэвтрэх');
     }
 
+    // Desktop дээрх товч (index.html-ийн #nav-auth-btn). Өмнө нь тэр хуудас
+    // өөрөө Firebase ачаалж шинэчилдэг байсныг энд шилжүүлэв.
+    var deskBtn = document.getElementById('nav-auth-btn');
+    if (deskBtn) {
+      if (state && state.signedIn) {
+        deskBtn.href = '/profile/';
+        deskBtn.textContent = (state.name ? state.name + ' ' : '') + '👤';
+      } else {
+        deskBtn.href = '/login/';
+        deskBtn.textContent = 'Нэвтрэх 👤';
+      }
+    }
+
     // Цэс дэх "Гарах" — нэвтэрсэн үед л
     if (!menu) return;
     var out = menu.querySelector('.lfsnav-signout');
