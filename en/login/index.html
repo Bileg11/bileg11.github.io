@@ -101,6 +101,24 @@ body{
 }
 .submit-btn:hover{background:var(--blue-hover)}
 .submit-btn:disabled{opacity:.6;cursor:not-allowed}
+/* ── 3-step registration ── */
+.reg-steps{display:flex;align-items:center;gap:6px;margin-bottom:34px}
+.reg-step{position:relative;flex-shrink:0;width:24px;height:24px;border-radius:50%;
+  background:#f5f5f7;color:#86868b;font-size:12px;font-weight:700;
+  display:flex;align-items:center;justify-content:center;transition:.25s}
+.reg-step i{position:absolute;top:28px;left:50%;transform:translateX(-50%);
+  font-style:normal;font-size:10px;font-weight:500;color:#86868b;white-space:nowrap}
+.reg-step.active{background:#0071e3;color:#fff}
+.reg-step.active i{color:#0071e3;font-weight:600}
+.reg-step.done{background:#d2f5dd;color:#1a7f3c}
+.reg-step-line{flex:1;height:1.5px;background:#e8e8ed;border-radius:2px}
+.reg-back{display:block;width:100%;margin-top:10px;padding:9px;background:none;
+  border:none;color:#86868b;font-size:12.5px;cursor:pointer;font-family:inherit}
+.reg-back:hover{color:#0071e3}
+.reg-verified{display:flex;align-items:center;gap:7px;margin-bottom:16px;padding:10px 13px;
+  background:#f0faf3;border:1px solid #cdeed9;border-radius:10px;
+  font-size:12.5px;color:#1a7f3c;line-height:1.4;word-break:break-all}
+.reg-verified strong{font-weight:600}
 .msg{font-size:12px;padding:10px 14px;border-radius:8px;margin-top:12px;display:none;line-height:1.5}
 .msg.error{background:#fff0f0;color:#c0392b;border:1px solid #fcc}
 .msg.success{background:#f0fff4;color:#27ae60;border:1px solid #b2f0c8}
@@ -203,35 +221,54 @@ body{
       <div class="msg" id="forgot-msg"></div>
     </div>
 
-    <!-- REGISTER -->
+    <!-- REGISTER — 3 steps: email → code → password -->
     <div id="paneReg" style="display:none">
-      <div class="field">
-        <label>Name</label>
-        <input type="text" id="reg-name" placeholder="Your name" autocomplete="name">
+
+      <div class="reg-steps" id="regSteps">
+        <span class="reg-step active" data-s="1">1<i>Email</i></span>
+        <span class="reg-step-line"></span>
+        <span class="reg-step" data-s="2">2<i>Code</i></span>
+        <span class="reg-step-line"></span>
+        <span class="reg-step" data-s="3">3<i>Password</i></span>
       </div>
-      <div class="field">
-        <label>Email</label>
-        <div style="display:flex;gap:8px">
-          <input type="email" id="reg-email" placeholder="example@gmail.com" autocomplete="email" style="flex:1;min-width:0">
-          <button type="button" id="btnSendCode" style="flex-shrink:0;padding:11px 14px;background:#f5f5f7;border:1px solid var(--border);border-radius:10px;font-size:13px;font-weight:600;cursor:pointer;font-family:inherit;color:var(--dark2);white-space:nowrap;transition:.15s">Get Code</button>
+
+      <div id="regStep1">
+        <div class="field">
+          <label>Name</label>
+          <input type="text" id="reg-name" placeholder="Your name" autocomplete="name">
         </div>
-      </div>
-      <div class="field" id="codeField" style="display:none">
-        <label>Verification Code</label>
-        <input type="text" id="verify-code" placeholder="000000" maxlength="6" inputmode="numeric" autocomplete="one-time-code" style="letter-spacing:.3em;font-size:22px;font-weight:700;text-align:center">
-        <div style="font-size:11px;color:#86868b;margin-top:5px;display:flex;justify-content:space-between;align-items:center">
-          <span id="codeHint">Enter the 6-digit code sent to your email</span>
-          <button type="button" id="btnResend" style="background:none;border:none;color:#0071e3;font-size:11px;cursor:pointer;font-family:inherit;padding:0">Resend</button>
+        <div class="field">
+          <label>Email</label>
+          <input type="email" id="reg-email" placeholder="example@gmail.com" autocomplete="email">
         </div>
+        <button class="submit-btn" id="btnSendCode">Send verification code →</button>
       </div>
-      <div class="field">
-        <label>Password</label>
-        <div class="pass-wrap">
-          <input type="password" id="reg-pass" placeholder="8+ characters" autocomplete="new-password">
-          <button type="button" class="pass-toggle" onclick="togglePass('reg-pass',this)"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg></button>
+
+      <div id="regStep2" style="display:none">
+        <div class="field">
+          <label>Verification Code</label>
+          <input type="text" id="verify-code" placeholder="000000" maxlength="6" inputmode="numeric" autocomplete="one-time-code" style="letter-spacing:.3em;font-size:22px;font-weight:700;text-align:center">
+          <div style="font-size:11px;color:#86868b;margin-top:5px;display:flex;justify-content:space-between;align-items:center;gap:8px">
+            <span id="codeHint">Enter the 6-digit code sent to your email</span>
+            <button type="button" id="btnResend" style="background:none;border:none;color:#0071e3;font-size:11px;cursor:pointer;font-family:inherit;padding:0;white-space:nowrap">Resend</button>
+          </div>
         </div>
+        <button class="submit-btn" id="btnVerify">Verify →</button>
+        <button type="button" class="reg-back" id="btnBack1">← Change email address</button>
       </div>
-      <button class="submit-btn" id="btnReg">Create Account →</button>
+
+      <div id="regStep3" style="display:none">
+        <div class="reg-verified">✓ <strong id="verifiedEmail"></strong> verified</div>
+        <div class="field">
+          <label>Create a password</label>
+          <div class="pass-wrap">
+            <input type="password" id="reg-pass" placeholder="At least 8 characters" autocomplete="new-password">
+            <button type="button" class="pass-toggle" onclick="togglePass('reg-pass',this)"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg></button>
+          </div>
+        </div>
+        <button class="submit-btn" id="btnReg">Create Account →</button>
+      </div>
+
       <div class="msg" id="reg-msg"></div>
     </div>
   </div>
@@ -241,7 +278,7 @@ body{
 
 <script src="/js/toast.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js"></script>
-<script>emailjs.init({publicKey:'8l7n3C6hIiBfZIvtO'});</script>
+<script>emailjs.init({publicKey:'jzbMLEF7IhbkS48RI'});</script>
 <script>
 function switchPane(t) {
   document.getElementById('paneLogin').style.display   = t==='login'    ? 'block' : 'none';
@@ -252,6 +289,7 @@ function switchPane(t) {
     document.getElementById('tabLogin').classList.toggle('active', t==='login');
     document.getElementById('tabReg').classList.toggle('active', t==='register');
   }
+  if (t === 'register' && typeof window.resetRegSteps === 'function') window.resetRegSteps();
 }
 function switchTab(t) { switchPane(t); }
 const eyeOpen = `<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg>`;
@@ -293,7 +331,11 @@ logEvent(analytics, 'page_view', { page_title: 'EN Login Page' });
 
 const redirectTo = new URLSearchParams(location.search).get('redirect') || '/en/profile/';
 
+// The registration flow redirects on its own after the success toast
+let registering = false;
+
 onAuthStateChanged(auth, async user => {
+  if (registering) return;
   if (user) {
     try { await ensureProfile(user); } catch(e) { console.warn('profile:', e); }
     window.location.replace(redirectTo);
@@ -366,74 +408,172 @@ document.getElementById('btnLogin').addEventListener('click', async () => {
   document.getElementById(id).addEventListener('keydown', e => { if(e.key==='Enter') document.getElementById('btnLogin').click(); })
 );
 
+// NOTE: the code is generated in the browser and held in sessionStorage.
+// That guards against typos, not against someone deliberately bypassing it
+// (the code is visible in devtools). For real verification the code must be
+// generated and checked on the Vercel function instead.
 function genCode() { return Math.floor(100000 + Math.random() * 900000).toString(); }
 function vcSave(d)  { sessionStorage.setItem('_vc', JSON.stringify({ ...d, exp: Date.now() + 10*60*1000 })); }
 function vcLoad()   { try { return JSON.parse(sessionStorage.getItem('_vc')||'null'); } catch { return null; } }
 
+const EMAIL_RE = /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/;
+const MIN_PASS = 8;
+
+// ⚠️ NEEDS CONFIGURATION
+// Create a dedicated EmailJS template for the verification code and put its
+// ID here. Neither existing template fits:
+//   template_o0e4529 — booking confirmation (fixed subject/body)
+//   template_tb03qyj — inbound contact message
+// The template should use {{to_name}} and {{code}}.
+const VERIFY_TEMPLATE = '';
+
+function showRegStep(n) {
+  [1,2,3].forEach(k => {
+    document.getElementById('regStep'+k).style.display = (k===n) ? 'block' : 'none';
+  });
+  document.querySelectorAll('.reg-step').forEach(el => {
+    const k = +el.dataset.s;
+    el.classList.toggle('active', k === n);
+    el.classList.toggle('done',   k <  n);
+  });
+  msg_clear('reg-msg');
+}
+window.resetRegSteps = () => showRegStep(1);
+
 async function sendCode(email, name, code) {
-  await emailjs.send('service_zqqvdkw', 'template_10uyn18', { email, from_name: name, passcode: code });
+  await emailjs.send('service_lr0xy9q', VERIFY_TEMPLATE, {
+    to_email: email,
+    to_name:  name || 'User',
+    code:     code,
+    name:     'LFS Shanghai',
+    email:    'lfs.shanghai1@gmail.com'
+  });
 }
 
-document.getElementById('btnSendCode').addEventListener('click', async () => {
+async function requestCode() {
   const btn   = document.getElementById('btnSendCode');
   const email = document.getElementById('reg-email').value.trim();
+  const name  = document.getElementById('reg-name').value.trim();
   msg_clear('reg-msg');
-  if (!email) { showMsg('reg-msg', 'Please enter your email.'); return; }
+  if (!name)                { showMsg('reg-msg','Please enter your name.'); return false; }
+  if (!email)               { showMsg('reg-msg','Please enter your email address.'); return false; }
+  if (!EMAIL_RE.test(email)){ showMsg('reg-msg','That email address looks wrong. Example: name@example.com'); return false; }
+
+  if (!VERIFY_TEMPLATE) {
+    console.error('VERIFY_TEMPLATE is not set — create the EmailJS code template.');
+    showMsg('reg-msg','Email sign-up is temporarily unavailable. Please use Google sign-in.');
+    return false;
+  }
+
+  const orig = btn.textContent;
   btn.disabled = true; btn.textContent = 'Sending...';
   try {
-    const name = document.getElementById('reg-name').value.trim() || 'User';
     const code = genCode();
     await sendCode(email, name, code);
     vcSave({ code, email, name });
-    document.getElementById('codeField').style.display = 'block';
+    document.getElementById('codeHint').textContent = 'Sent to ' + email;
+    showRegStep(2);
+    document.getElementById('verify-code').value = '';
     document.getElementById('verify-code').focus();
-    document.getElementById('codeHint').textContent = `Code sent to ${email}`;
-    btn.textContent = 'Resend';
-    setTimeout(() => { btn.disabled = false; }, 30000);
+    return true;
   } catch(e) {
-    btn.disabled = false; btn.textContent = 'Get Code';
-    showMsg('reg-msg', 'Failed to send code. Please try again.');
+    console.error('EmailJS:', e);
+    showMsg('reg-msg', 'Could not send the code. Check the address and try again.');
+    return false;
+  } finally {
+    btn.disabled = false; btn.textContent = orig;
   }
+}
+document.getElementById('btnSendCode').addEventListener('click', requestCode);
+
+document.getElementById('btnResend').addEventListener('click', async () => {
+  const b = document.getElementById('btnResend');
+  if (b.disabled) return;
+  b.disabled = true; b.textContent = 'Sending...';
+  const email = document.getElementById('reg-email').value.trim();
+  const name  = document.getElementById('reg-name').value.trim();
+  try {
+    const code = genCode();
+    await sendCode(email, name, code);
+    vcSave({ code, email, name });
+    document.getElementById('codeHint').textContent = 'Resent to ' + email;
+    msg_clear('reg-msg');
+  } catch(e) {
+    showMsg('reg-msg','Could not resend the code.');
+  }
+  b.textContent = 'Resend';
+  setTimeout(() => { b.disabled = false; }, 30000);
 });
 
-document.getElementById('btnResend').addEventListener('click', () => {
-  document.getElementById('btnSendCode').click();
+document.getElementById('btnBack1').addEventListener('click', () => showRegStep(1));
+
+document.getElementById('btnVerify').addEventListener('click', () => {
+  const entered = document.getElementById('verify-code').value.trim();
+  const email   = document.getElementById('reg-email').value.trim();
+  msg_clear('reg-msg');
+  if (!entered) { showMsg('reg-msg','Please enter the verification code.'); return; }
+  const v = vcLoad();
+  if (!v || v.email !== email) { showMsg('reg-msg','Request a code for this address first.'); showRegStep(1); return; }
+  if (Date.now() > v.exp)      { sessionStorage.removeItem('_vc'); showMsg('reg-msg','That code has expired. Request a new one.'); return; }
+  if (entered !== v.code)      { showMsg('reg-msg','That code is not correct. Please check it again.'); return; }
+
+  document.getElementById('verifiedEmail').textContent = email;
+  showRegStep(3);
+  document.getElementById('reg-pass').focus();
 });
 
 document.getElementById('btnReg').addEventListener('click', async () => {
-  const btn     = document.getElementById('btnReg');
-  const name    = document.getElementById('reg-name').value.trim();
-  const email   = document.getElementById('reg-email').value.trim();
-  const pass    = document.getElementById('reg-pass').value;
-  const entered = document.getElementById('verify-code').value.trim();
+  const btn   = document.getElementById('btnReg');
+  const name  = document.getElementById('reg-name').value.trim();
+  const email = document.getElementById('reg-email').value.trim();
+  const pass  = document.getElementById('reg-pass').value;
   msg_clear('reg-msg');
-  if (!name)           { showMsg('reg-msg', 'Please enter your name.'); return; }
-  if (!email)          { showMsg('reg-msg', 'Please enter your email.'); return; }
-  if (!entered)        { showMsg('reg-msg', 'Please enter the verification code.'); return; }
-  if (pass.length < 6) { showMsg('reg-msg', 'Password must be at least 6 characters.'); return; }
-  const s = vcLoad();
-  if (!s || s.email !== email) { showMsg('reg-msg', 'Please request a code for your email first.'); return; }
-  if (Date.now() > s.exp)      { sessionStorage.removeItem('_vc'); showMsg('reg-msg', 'Code expired. Please request a new one.'); return; }
-  if (entered !== s.code)      { showMsg('reg-msg', 'Incorrect code.'); return; }
-  btn.disabled = true; btn.textContent = 'Creating account...';
+  if (pass.length < MIN_PASS) { showMsg('reg-msg', `Password must be at least ${MIN_PASS} characters.`); return; }
+
+  const v = vcLoad();
+  if (!v || v.email !== email || Date.now() > v.exp) {
+    showMsg('reg-msg','Verification is no longer valid. Please start again.');
+    showRegStep(1); return;
+  }
+
+  registering = true;
+  btn.disabled = true; btn.textContent = 'Creating...';
   try {
     const res = await createUserWithEmailAndPassword(auth, email, pass);
     await setDoc(doc(db,'users',res.user.uid), {
-      firstName:'', lastName:'', email,
+      firstName:'', lastName:'', name, email,
       photoURL:'', phone:'', birthday:'', gender:'', createdAt: Date.now()
     });
     sessionStorage.removeItem('_vc');
     logEvent(analytics, 'sign_up', { method: 'email' });
-    window.location.replace(redirectTo);
+    if (typeof window.toast === 'function') {
+      window.toast('Account created. Welcome!', 'success');
+    }
+    const target = new URLSearchParams(location.search).get('redirect') || '/en/';
+    setTimeout(() => window.location.replace(target), 1400);
   } catch(e) {
+    registering = false;
     btn.disabled = false; btn.textContent = 'Create Account →';
-    showMsg('reg-msg', e.code === 'auth/email-already-in-use'
-      ? 'This email is already registered.' : 'Error: ' + (e.code||e.message));
+    if (e.code === 'auth/email-already-in-use') {
+      showMsg('reg-msg','That email is already registered. Try signing in instead.');
+    } else if (e.code === 'auth/weak-password') {
+      showMsg('reg-msg','That password is too weak. Pick a longer, mixed one.');
+    } else {
+      console.error('signup:', e);
+      showMsg('reg-msg','Something went wrong: ' + (e.code || e.message));
+    }
   }
 });
-['reg-name','reg-email','reg-pass'].forEach(id =>
-  document.getElementById(id).addEventListener('keydown', e => { if(e.key==='Enter') document.getElementById('btnReg').click(); })
-);
+
+document.getElementById('reg-name').addEventListener('keydown',  e => { if(e.key==='Enter') requestCode(); });
+document.getElementById('reg-email').addEventListener('keydown', e => { if(e.key==='Enter') requestCode(); });
+document.getElementById('verify-code').addEventListener('keydown', e => { if(e.key==='Enter') document.getElementById('btnVerify').click(); });
+document.getElementById('reg-pass').addEventListener('keydown',  e => { if(e.key==='Enter') document.getElementById('btnReg').click(); });
+
+document.getElementById('verify-code').addEventListener('input', e => {
+  e.target.value = e.target.value.replace(/\D/g,'').slice(0,6);
+  if (e.target.value.length === 6) document.getElementById('btnVerify').click();
+});
 
 document.getElementById('btnForgotSend').addEventListener('click', async () => {
   const email = document.getElementById('forgot-email').value.trim();
