@@ -108,7 +108,13 @@ body{
 .nav-btn:hover{background:var(--blue-hover);transform:scale(1.03)}
 .hamburger{display:none;flex-direction:column;gap:4px;cursor:pointer;padding:6px;border:none;background:none}
 .hamburger span{display:block;width:18px;height:1.5px;background:var(--dark2);transition:.3s;border-radius:1px}
-@media(max-width:860px){
+/* Цэсний мөр нь nav-ийн урсгалд биш, position:fixed-ээр ТӨВД байрладаг
+   тул лого ба "Захиалах" товчны доогуур дүүрч давхцдаг байв. 1400px-ээс
+   доош линк хоорондын зайг нарийсгаж, 1180px-д багтахаа больсон үед
+   hamburger руу шилжинэ. */
+@media(max-width:1400px){ .nav-link{padding:6px 9px} }
+
+@media(max-width:1180px){
   .nav-links{
     display:flex;position:fixed;top:52px;left:0;right:0;bottom:0;
     height:auto;transform:translateY(-28px) scale(0.98);z-index:499;

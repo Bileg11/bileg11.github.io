@@ -64,13 +64,24 @@
       // Утасны горимыг media query-гээр ТОДОРХОЙЛОХГҮЙ — хуудас бүрийн
       // breakpoint өөр (index 900px, routes 860px, health 720px). Оронд нь
       // hamburger харагдаж байгаа эсэхээр JS шийдээд .lfsnav-mobile класс өгнө.
-      '.lfsnav-auth{display:none}',
-      '.lfsnav-mobile .lfsnav-auth{display:inline-flex;align-items:center;gap:6px;',
-      '  margin-right:10px;padding:5px 12px;border-radius:16px;font-size:12px;font-weight:700;',
+      // Нэвтрэх/Профайл товч — desktop дээр ч, утсан дээр ч. Хуудас өөрөө
+      // auth товчтой бол (index-ийн #nav-auth-btn, planner-ийн #navAuth) тэр нь
+      // БОДИТООР харагдаж байх үед JS үүнийг нуудаг (renderAuth-ийг үз).
+      '.lfsnav-auth{display:inline-flex;align-items:center;gap:6px;',
+      '  padding:5px 12px;border-radius:16px;font-size:12px;font-weight:700;',
       '  color:var(--dark2,#1d1d1f);background:var(--bg2,#f5f5f7);',
       '  border:1px solid var(--border,rgba(0,0,0,.1));text-decoration:none;',
-      '  min-height:32px;white-space:nowrap;flex-shrink:0}',
-      '.lfsnav-mobile .lfsnav-auth img{width:20px;height:20px;border-radius:50%;object-fit:cover}',
+      '  min-height:32px;white-space:nowrap;flex-shrink:0;transition:background .2s}',
+      '.lfsnav-auth:hover{background:var(--border,rgba(0,0,0,.08))}',
+      '.lfsnav-auth img{width:20px;height:20px;border-radius:50%;object-fit:cover}',
+      // Нарийн дэлгэц дээр (booking, privacy… лого + Буцах + товч + ☰ дөрөв
+      // багтах ёстой) зөвхөн дүрсийг үлдээнэ — үгүй бол лого 2 мөр болно
+      '@media(max-width:430px){.lfsnav-auth-t{display:none}',
+      '  .lfsnav-auth{padding:5px 9px;gap:0}}',
+      // Утсан дээр hamburger-ийн хажууд зай авна (desktop дээр group-ийн gap хүрэлцэнэ)
+      '.lfsnav-mobile .lfsnav-auth{margin-right:10px}',
+      // Баруун талын group — зөвхөн лого + 1 товчтой nav-д (booking, privacy…)
+      '.lfsnav-actions{display:flex;align-items:center;gap:10px;margin-left:auto}',
       // "Гарах" ба хэл солигч — зөвхөн утасны хар дэвсгэртэй цэсэнд.
       // routes/tips дээр #navLinks нь desktop nav-аар ч ажилладаг тул
       // тэнд эдгээр гарвал цагаан дэвсгэр дээр цагаан текст болно.
@@ -190,32 +201,142 @@
     return m;
   }
 
-  // ── Утасны nav дээрх нэвтрэлтийн товч + цэс дэх "Гарах" ──
+  // ── Товчийг nav-ийн баруун талд тавих ──
+  // Хуудсууд 3 өөр бүтэцтэй тул нэг дүрэм бүгдэд таарахгүй:
+  //   1. index: hamburger нь nav-ийн ШУУД хүү, .nav-actions тусдаа бөгөөд
+  //      утсан дээр display:none болдог → товч .nav-actions-ийн ГАДНА,
+  //      hamburger-ийн өмнө байх ёстой.
+  //   2. .nav-actions / .nav-right бүхий (routes, tips, health, contact,
+  //      packages, metro, apartment): hamburger нь тэр хайрцаг дотор байдаг
+  //      тул товчийг мөн тэнд тавина.
+  //   3. Лого + 1 товчноос өөр юу ч байхгүй (booking, privacy, terms, pdf,
+  //      review, profile, login, pricing): nav нь justify-content:space-between
+  //      тул товчийг шууд нэмбэл "← Буцах" гол руу гүйнэ. Тиймээс баруун талын
+  //      .lfsnav-actions group үүсгэж, логоноос бусдыг дотор нь шилжүүлнэ.
+  function placeAuth(btn) {
+    var burger = nav.querySelector('.hamburger, .lfsnav-burger, #hamburger');
+    var box    = nav.querySelector('.nav-actions, .nav-right, .lfsnav-actions');
+    // Зөвхөн ХУУДАСНЫ өөрийн hamburger nav-ийн шууд хүү байх үед (index).
+    // Бидний үүсгэсэн .lfsnav-burger мөн шууд хүү байдаг тул түүнийг
+    // энэ дүрэмд оруулбал packages/pdf дээр товч гол руу гүйнэ.
+    var ownBurger = nav.querySelector(':scope > .hamburger, :scope > #hamburger');
+
+    if (ownBurger && box && !box.contains(ownBurger)) {  // 1
+      nav.insertBefore(btn, ownBurger);
+      return;
+    }
+    if (!box) box = makeActions();                       // 3
+    if (burger && burger.parentNode === box) box.insertBefore(btn, burger);
+    else box.appendChild(btn);                           // 2
+  }
+
+  function makeActions() {
+    var kids = Array.prototype.slice.call(nav.children);
+    var box  = document.createElement('div');
+    box.className = 'lfsnav-actions';
+    nav.appendChild(box);
+    kids.forEach(function (el, i) {
+      if (i === 0) return;                               // лого
+      if (el === menu) return;                           // nav дотор байрласан цэс
+      if (el.classList.contains('nav-logo')) return;
+      box.appendChild(el);
+    });
+    return box;
+  }
+
+  // Хуудас өөрөө nav дээр auth товчтой эсэх (index: #nav-auth-btn,
+  // planner: #navAuth). Тэр БОДИТООР харагдаж байвал бидний товч илүүц.
+  function pageAuthVisible() {
+    var el = document.getElementById('nav-auth-btn') || document.getElementById('navAuth');
+    // getClientRects() нь position:fixed nav дотор ч зөв ажиллана (offsetParent-аас
+    // ялгаатай), эцэг элемент display:none болбол хоосон буцна.
+    return !!el && el.getClientRects().length > 0;
+  }
+
+  function visible(el) { return !!el && el.getClientRects().length > 0; }
+
+  // Цэс нь nav-ийн ДОТОР байвал (routes, tips) тэр нь desktop дээрх линкийн
+  // мөр болж ажилладаг. Тэнд pill товч нэмбэл линкүүдтэй давхцана — оронд нь
+  // цэсэнд өөрт нь "Нэвтрэх/Профайл" гишүүн нэмнэ.
+  function menuIsDesktopRow() {
+    return !!menu && nav.contains(menu) && !nav.classList.contains('lfsnav-mobile');
+  }
+
+  // Хуудасны nav дээр урьдаас байсан статик /login линк (pricing). Нэвтэрсэн
+  // үед "Нэвтрэх" гэж үлдвэл буруу тул түүнийг нь шинэчилж ашиглана.
+  function adoptStaticLogin(state) {
+    var found = false;
+    // href нь нэвтэрсний дараа /profile/ болдог тул data-lfsnav-static
+    // тэмдэглэгээгээр нь дахин олдог байхаар хийв
+    var sel = 'a[href^="/login"]:not([data-lfsnav-item]):not(#lfsnavAuth), a[data-lfsnav-static]';
+    Array.prototype.forEach.call(nav.querySelectorAll(sel), function (a) {
+      a.setAttribute('data-lfsnav-static', '');
+      if (state && state.signedIn) { a.href = '/profile/'; a.textContent = 'Профайл'; }
+      else                        { a.href = '/login/';   a.textContent = 'Нэвтрэх'; }
+      if (visible(a)) found = true;
+    });
+    return found;
+  }
+
+  // Цэс дэх "Нэвтрэх/Профайл" гишүүн + desktop дээрх давхардсан "Захиалах"-ыг
+  // нуух. routes/tips дээр nav-д тусдаа "Захиалах" товч байдаг тул цэсний мөрөнд
+  // хоёр дахин гарах нь илүүц бөгөөд яг тэр өргөн л дутаж байсан.
+  function syncMenuAuth(state) {
+    if (!menu) return;
+    var a = menu.querySelector('[data-lfsnav-auth]');
+    if (!a) {
+      var tpl = menu.querySelector('a[data-lfsnav-item]');
+      a = document.createElement('a');
+      a.setAttribute('data-lfsnav-auth', '');
+      a.setAttribute('data-lfsnav-item', '');
+      if (tpl && tpl.className) a.className = tpl.className;
+      var lang = menu.querySelector('.lfsnav-lang, .mob-lang-switch');
+      if (lang) menu.insertBefore(a, lang); else menu.appendChild(a);
+    }
+    if (state && state.signedIn) { a.href = '/profile/'; a.textContent = '👤 Профайл'; }
+    else                        { a.href = '/login/';   a.textContent = 'Нэвтрэх'; }
+
+    var bookItem = menu.querySelector('a[data-lfsnav-item][href="/booking/"]');
+    var navCta   = nav.querySelector('.nav-btn, .nav-cta');
+    if (bookItem) bookItem.style.display = (menuIsDesktopRow() && visible(navCta)) ? 'none' : '';
+  }
+
+  // ── nav дээрх нэвтрэлтийн товч + цэс дэх "Гарах" ──
+  var lastState = null;
   function renderAuth(state) {
+    lastState = state;
     var btn = document.getElementById('lfsnavAuth');
     if (!btn) {
       btn = document.createElement('a');
       btn.id = 'lfsnavAuth';
       btn.className = 'lfsnav-auth';
-      // hamburger-ийн ӨМНӨ тавина — [хэл] [Нэвтрэх] [☰]
-      var burger = nav.querySelector('.hamburger, .lfsnav-burger, #hamburger');
-      if (burger && burger.parentNode) burger.parentNode.insertBefore(btn, burger);
-      else nav.appendChild(btn);
+      placeAuth(btn);
     }
 
-    // Нэвтрэх хуудсан дээр "Нэвтрэх" товч илүүц
-    var onLoginPage = /^\/(en\/)?login\/?$/.test(location.pathname);
-    btn.style.display = (onLoginPage && !(state && state.signedIn)) ? 'none' : '';
+    // Товчийг нуух 3 тохиолдол: нэвтрэх хуудсан дээр (нэвтрээгүй үед),
+    // профайл дээр (нэвтэрсэн үед — тэр хуудсан дээрээ байна), эсвэл
+    // хуудасны өөрийн auth товч харагдаж байвал.
+    syncMenuAuth(state);
+    var hasStatic     = adoptStaticLogin(state);
+    var onLoginPage   = /^\/(en\/)?login\/?$/.test(location.pathname);
+    var onProfilePage = /^\/(en\/)?profile\/?$/.test(location.pathname);
+    var signedIn      = !!(state && state.signedIn);
+    btn.style.display =
+      ((onLoginPage && !signedIn) || (onProfilePage && signedIn) ||
+       pageAuthVisible() || hasStatic || menuIsDesktopRow())
+        ? 'none' : '';
 
     if (state && state.signedIn) {
       btn.href = '/profile/';
-      btn.innerHTML = state.photo
-        ? '<img src="' + state.photo + '" alt=""> Профайл'
-        : '👤 Профайл';
+      btn.innerHTML = (state.photo
+        ? '<img src="' + state.photo + '" alt="">'
+        : '<span aria-hidden="true">👤</span>') +
+        '<span class="lfsnav-auth-t">Профайл</span>';
       btn.setAttribute('aria-label', 'Профайл руу очих');
     } else {
       btn.href = '/login/';
-      btn.textContent = 'Нэвтрэх';
+      btn.innerHTML = '<span aria-hidden="true">👤</span>' +
+                      '<span class="lfsnav-auth-t">Нэвтрэх</span>';
       btn.setAttribute('aria-label', 'Нэвтрэх');
     }
 
@@ -257,6 +378,9 @@
     var mobile = !!burger && getComputedStyle(burger).display !== 'none';
     nav.classList.toggle('lfsnav-mobile', mobile);
     if (menu) menu.classList.toggle('lfsnav-mobile-menu', mobile);
+    // index дээр #nav-auth-btn нь 860px-ээс доош нуугддаг тул өргөн
+    // өөрчлөгдөхөд товчийг нуух/гаргах шийдвэрийг дахин бодно
+    if (document.getElementById('lfsnavAuth')) renderAuth(lastState);
   }
 
   // ── Firebase-ийг ЗӨВХӨН хэрэгтэй үед татна ──
@@ -345,8 +469,8 @@
       ensureLangSwitch(menu);
     }
 
+    syncMode();                 // эхлээд утас/desktop горимыг тогтооно
     renderAuth(cachedAuth());
-    syncMode();
     window.addEventListener('resize', syncMode, { passive: true });
 
     // Firebase-ийг эхний ачаалалттай өрсөлдүүлэхгүй
