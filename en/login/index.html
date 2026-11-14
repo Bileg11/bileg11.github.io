@@ -328,7 +328,8 @@ import { getAnalytics, logEvent } from "https://www.gstatic.com/firebasejs/11.7.
 import {
   getAuth, onAuthStateChanged,
   signInWithEmailAndPassword, createUserWithEmailAndPassword,
-  GoogleAuthProvider, signInWithPopup, sendPasswordResetEmail
+  GoogleAuthProvider, signInWithPopup, signInWithRedirect, getRedirectResult,
+  sendPasswordResetEmail
 } from "https://www.gstatic.com/firebasejs/11.7.1/firebase-auth.js";
 import { getFirestore, doc, getDoc, setDoc } from "https://www.gstatic.com/firebasejs/11.7.1/firebase-firestore.js";
 
@@ -391,15 +392,37 @@ async function doSocialLogin(provider, btnId) {
     await ensureProfile(result.user).catch(e => console.warn('profile:', e));
     window.location.replace(redirectTo);
   } catch(e) {
-    btn.disabled = false;
-    btn.innerHTML = orig;
-    if (e.code === 'auth/popup-blocked') {
-      showMsg('social-msg', 'Popup was blocked. Please allow popups in your browser.');
+    console.error('login error:', e.code, e.message);
+    // Popups are routinely blocked on mobile Safari and by popup blockers.
+    // Fall back to a redirect instead of dead-ending the user.
+    const POPUP_FAILED = [
+      'auth/popup-blocked',
+      'auth/cancelled-popup-request',
+      'auth/operation-not-supported-in-this-environment'
+    ];
+    if (POPUP_FAILED.includes(e.code)) {
+      btn.innerHTML = '⏳ Redirecting to Google...';
+      try {
+        await signInWithRedirect(auth, provider);
+        return;                      // the page navigates away
+      } catch(e2) {
+        console.error('redirect error:', e2.code, e2.message);
+        showMsg('social-msg', `Error: ${e2.code || e2.message}`);
+      }
     } else if (e.code !== 'auth/popup-closed-by-user') {
       showMsg('social-msg', `Error: ${e.code || e.message}`);
     }
+    btn.disabled = false;
+    btn.innerHTML = orig;
   }
 }
+
+// After returning from a redirect sign-in, surface any error.
+// On success onAuthStateChanged does the navigation itself.
+getRedirectResult(auth).catch(e => {
+  console.error('redirect result:', e.code, e.message);
+  showMsg('social-msg', 'Sign-in failed. Please try again.');
+});
 
 document.getElementById('btnGoogle').addEventListener('click', () =>
   doSocialLogin(new GoogleAuthProvider(), 'btnGoogle')
