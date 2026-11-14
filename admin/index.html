@@ -1181,7 +1181,11 @@ window.sendAdminMail = async function() {
   msg.textContent = 'Илгээж байна...';
   msg.style.color = 'var(--muted)';
   try {
-    await emailjs.send("service_lr0xy9q", "template_o0e4529", {
+    // template_3na05tk = "Admin message" — {{subject}} ба {{message}}-ийг
+    // бодитоор рендерлэдэг. Өмнө нь template_o0e4529 ашиглаж байсан нь
+    // захиалгын баталгаажуулалтын ТОГТМОЛ загвар тул бичсэн захиа огт
+    // очихгүй, оронд нь хоосон "Захиалга хүлээн авлаа" явдаг байв.
+    await emailjs.send("service_lr0xy9q", "template_3na05tk", {
       to_email: booking.email,
       to_name:  booking.name || 'Хэрэглэгч',
       subject:  subject,
