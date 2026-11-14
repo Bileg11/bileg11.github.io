@@ -263,7 +263,7 @@ body{font-family:'Inter',sans-serif;background:var(--bg);color:var(--dark2);min-
       <button class="photo-upload-btn" id="photo-upload-btn" onclick="document.getElementById('photo-file-input').click()">
         📷 Зураг сонгох / авах
       </button>
-      <div class="photo-hint" id="hint-photo">Профайл зураг оруулна уу</div>
+      <div class="photo-hint" id="hint-photo">Профайл зураг — заавал биш</div>
     </div>
 
     <div class="section-title">Хувийн мэдээлэл</div>
@@ -351,6 +351,7 @@ body{font-family:'Inter',sans-serif;background:var(--bg);color:var(--dark2);min-
 
 <script src="/js/toast.js"></script>
 <script src="/js/calendar.js"></script>
+<script src="/js/birthday-picker.js"></script>
 <script type="module">
 import { initializeApp } from "https://www.gstatic.com/firebasejs/11.7.1/firebase-app.js";
 import { getAuth, onAuthStateChanged, signOut, deleteUser } from "https://www.gstatic.com/firebasejs/11.7.1/firebase-auth.js";
@@ -371,7 +372,9 @@ let currentUser = null;
 let currentProfile = {};
 
 // Init calendar for birthday (no min restriction)
-try { initDatepicker('edit-birthday', { placeholder: 'Огноо сонгох' }); } catch(e) {}
+// Төрсөн огноонд сарын хуанли тохиромжгүй — 1998 он руу очихын тулд
+// сараар 300 гаруй удаа дарах шаардлагатай болдог. Он/сар/өдөр гүйлгэнэ.
+try { initBirthdayPicker('edit-birthday', { placeholder: 'Огноо сонгох' }); } catch(e) { console.warn('birthday picker:', e); }
 
 // Show fallback link after 2s
 setTimeout(() => {
@@ -530,15 +533,8 @@ window.saveProfile = async function() {
   // ── Validation ──────────────────────────────────────
   let hasError = false;
 
-  if (!photoURL) {
-    const btn = document.getElementById('photo-upload-btn');
-    const hint = document.getElementById('hint-photo');
-    btn?.classList.add('invalid');
-    hint?.classList.add('show');
-    // Open the photo section so the user sees it
-    document.getElementById('photoSection').style.display = 'block';
-    hasError = true;
-  }
+  // Профайл зураг — ЗААВАЛ БИШ. Зураггүйгээс болж хадгалахыг хориглох нь
+  // бүртгэлээ дуусгахад шаардлагагүй саад болж байв.
   if (!lastName)  { profileSetInvalid('edit-lastname',  'hint-lastname');  hasError = true; }
   if (!firstName) { profileSetInvalid('edit-firstname', 'hint-firstname'); hasError = true; }
   if (!gender)    {

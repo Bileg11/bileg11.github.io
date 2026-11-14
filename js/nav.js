@@ -203,6 +203,10 @@
       else nav.appendChild(btn);
     }
 
+    // Нэвтрэх хуудсан дээр "Нэвтрэх" товч илүүц
+    var onLoginPage = /^\/(en\/)?login\/?$/.test(location.pathname);
+    btn.style.display = (onLoginPage && !(state && state.signedIn)) ? 'none' : '';
+
     if (state && state.signedIn) {
       btn.href = '/profile/';
       btn.innerHTML = state.photo

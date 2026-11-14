@@ -149,7 +149,24 @@ body{
 <div id="loader">
   <div class="loader-logo">LFS <span>Shanghai</span></div>
   <div class="loader-track"><div class="loader-fill"></div></div>
+
 </div>
+
+<!-- Firebase нь www.gstatic.com-оос ачаалагддаг. Тэр домэйн Хятадад хаалттай
+     байж болзошгүй — тийм үед onAuthStateChanged ХЭЗЭЭ Ч дуудагдахгүй тул
+     loader мөнхөд үлдэж, хэрэглэгч хуудсыг огт харахгүй байв.
+     Энэ скрипт модулиас ГАДУУР байх ёстой: модулийн import амжилтгүй
+     болбол модулийн дотоод код огт ажиллахгүй. -->
+<script>
+setTimeout(function () {
+  var l = document.getElementById('loader');
+  if (!l || l.classList.contains('hidden')) return;
+  l.classList.add('hidden');
+  var m = document.getElementById('social-msg');
+  if (m) { m.textContent = 'Slow connection. If Google sign-in does not work, use email instead.'; m.className = 'msg error'; m.style.display = 'block'; }
+}, 5000);
+window.loaderFallback = true;
+</script>
 
 <nav class="nav">
   <a href="/en/" class="nav-logo">LFS <span>Shanghai</span></a>

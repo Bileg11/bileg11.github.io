@@ -19,7 +19,12 @@ service cloud.firestore {
     // Уншиж, засаж, устгахыг ЗӨВХӨН админ.
     match /bookings/{docId} {
       allow create: if true;
-      allow read, update, delete: if isAdmin();
+      // Хэрэглэгч ЗӨВХӨН өөрийн захиалгаа уншина (profile хуудсан дээрх
+      // "Миний захиалга" хэсэг үүнийг уншдаг — өмнө нь дүрэм хориглодог
+      // байсан тул хоосон харагддаг байв).
+      allow read: if isAdmin()
+                  || (request.auth != null && resource.data.userId == request.auth.uid);
+      allow update, delete: if isAdmin();
     }
 
     // ── Санхүү — зөвхөн админ ──
