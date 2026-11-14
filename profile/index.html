@@ -258,6 +258,28 @@ body{font-family:'Inter',sans-serif;background:var(--bg);color:var(--dark2);min-
 <div class="page" id="profilePage" style="display:none">
   <div class="page-title">Миний профайл</div>
 
+  <!-- И-мэйл баталгаажаагүй үеийн сануулга. Баталгаажуулалт нь юуг ч
+       хаадаггүй (Хятадад Firebase-ийн холбоос хүрэхгүй байж магадгүй),
+       зөвхөн хаяг зөв эсэхийг батлах зорилготой. -->
+  <div id="verifyBanner" style="display:none;background:#fff8e1;border:1px solid #ffd54f;
+       border-radius:14px;padding:14px 16px;margin-bottom:16px;font-size:13px;line-height:1.6;color:#5d4037">
+    <strong>И-мэйл хаяг баталгаажаагүй байна.</strong>
+    Бид <span id="verifyEmail"></span> руу баталгаажуулах холбоос илгээсэн.
+    Ирээгүй бол спам хавтсаа шалгаад дахин авна уу.
+    <div style="margin-top:10px;display:flex;gap:8px;flex-wrap:wrap">
+      <button type="button" id="btnResendVerify"
+        style="padding:8px 16px;border-radius:18px;border:1px solid #ffb300;background:#fff;
+               color:#8d6e00;font-size:12px;font-weight:600;font-family:inherit;cursor:pointer;min-height:36px">
+        Холбоос дахин авах
+      </button>
+      <button type="button" id="btnCheckVerify"
+        style="padding:8px 16px;border-radius:18px;border:none;background:none;
+               color:#8d6e00;font-size:12px;font-weight:600;font-family:inherit;cursor:pointer;min-height:36px">
+        Баталгаажуулсан, шалгах
+      </button>
+    </div>
+  </div>
+
   <!-- PROFILE EDIT CARD -->
   <div class="profile-card">
     <div class="profile-header">
@@ -371,7 +393,7 @@ body{font-family:'Inter',sans-serif;background:var(--bg);color:var(--dark2);min-
 <script src="/js/birthday-picker.js"></script>
 <script type="module">
 import { initializeApp } from "https://www.gstatic.com/firebasejs/11.7.1/firebase-app.js";
-import { getAuth, onAuthStateChanged, signOut, deleteUser } from "https://www.gstatic.com/firebasejs/11.7.1/firebase-auth.js";
+import { getAuth, onAuthStateChanged, signOut, deleteUser, sendEmailVerification } from "https://www.gstatic.com/firebasejs/11.7.1/firebase-auth.js";
 import { getFirestore, doc, getDoc, setDoc, deleteDoc, collection, query, where, getDocs, orderBy } from "https://www.gstatic.com/firebasejs/11.7.1/firebase-firestore.js";
 
 const app = initializeApp({
@@ -419,12 +441,50 @@ onAuthStateChanged(auth, async user => {
   document.getElementById('profilePage').style.display = 'block';
 
   // Load profile from Firestore
+  showVerifyBanner(user);
+
   const snap = await getDoc(doc(db, 'users', user.uid));
   currentProfile = snap.exists() ? snap.data() : {};
   fillForm(currentProfile, user);
   loadBookings(user.email, user.uid);
   loadPlans(user.uid);
 });
+
+// И-мэйл/нууц үгээр бүртгүүлсэн хэрэглэгч баталгаажаагүй бол сануулна.
+// Google-ээр нэвтэрсэн хаяг нь аль хэдийн баталгаатай тул хамаарахгүй.
+function showVerifyBanner(user) {
+  const box = document.getElementById('verifyBanner');
+  const byPassword = user.providerData.some(p => p.providerId === 'password');
+  if (!box || user.emailVerified || !byPassword) { if (box) box.style.display = 'none'; return; }
+
+  document.getElementById('verifyEmail').textContent = user.email || '';
+  box.style.display = 'block';
+
+  const resend = document.getElementById('btnResendVerify');
+  resend.onclick = async () => {
+    resend.disabled = true; resend.textContent = 'Илгээж байна...';
+    try {
+      await sendEmailVerification(user, { url: location.origin + '/profile/' });
+      resend.textContent = 'Илгээлээ ✓';
+    } catch (e) {
+      console.warn('sendEmailVerification:', e);
+      resend.textContent = 'Алдаа гарлаа';
+      resend.disabled = false;
+    }
+  };
+
+  // Хэрэглэгч холбоос дээр дарсны дараа энэ хуудсыг дахин ачаалахгүй
+  // байж магадгүй тул гараар шалгах товч
+  document.getElementById('btnCheckVerify').onclick = async () => {
+    await user.reload();
+    if (auth.currentUser?.emailVerified) {
+      box.style.display = 'none';
+      if (typeof window.toast === 'function') window.toast('И-мэйл баталгаажлаа.', 'success');
+    } else if (typeof window.toast === 'function') {
+      window.toast('Хараахан баталгаажаагүй байна.', 'error');
+    }
+  };
+}
 
 function fillForm(p, user) {
   // Header

@@ -146,9 +146,11 @@ body{
 .reg-back{display:block;width:100%;margin-top:10px;padding:9px;background:none;
   border:none;color:#86868b;font-size:12.5px;cursor:pointer;font-family:inherit}
 .reg-back:hover{color:#0071e3}
+/* Хаягийг сануулах мөр. Өмнө нь ногоон "баталгаажлаа" байсан; одоо
+   баталгаажуулалт бүртгэлийн ДАРАА болдог тул саарал мэдээллийн өнгөтэй. */
 .reg-verified{display:flex;align-items:center;gap:7px;margin-bottom:16px;padding:10px 13px;
-  background:#f0faf3;border:1px solid #cdeed9;border-radius:10px;
-  font-size:12.5px;color:#1a7f3c;line-height:1.4;word-break:break-all}
+  background:var(--bg2,#f5f5f7);border:1px solid rgba(0,0,0,.08);border-radius:10px;
+  font-size:12.5px;color:#4a4a4f;line-height:1.4;word-break:break-all}
 .reg-verified strong{font-weight:600}
 .msg{font-size:12px;padding:10px 14px;border-radius:8px;margin-top:12px;display:none;line-height:1.5}
 .msg.error{background:#fff0f0;color:#c0392b;border:1px solid #fcc}
@@ -290,16 +292,15 @@ window.loaderFallback = true;
       <div class="msg" id="forgot-msg"></div>
     </div>
 
-    <!-- REGISTER — 3 алхам: и-мэйл → код → нууц үг -->
+    <!-- REGISTER: 2 алхам (и-мэйл → нууц үг). Баталгаажуулалтыг Firebase
+         өөрөө и-мэйлээр явуулдаг тул кодын алхам хэрэггүй болсон. -->
     <div id="paneReg" style="display:none">
 
       <!-- Алхамын заагч -->
       <div class="reg-steps" id="regSteps">
         <span class="reg-step active" data-s="1">1<i>И-мэйл</i></span>
         <span class="reg-step-line"></span>
-        <span class="reg-step" data-s="2">2<i>Код</i></span>
-        <span class="reg-step-line"></span>
-        <span class="reg-step" data-s="3">3<i>Нууц үг</i></span>
+        <span class="reg-step" data-s="2">2<i>Нууц үг</i></span>
       </div>
 
       <!-- ── Алхам 1: нэр + и-мэйл ── -->
@@ -312,26 +313,12 @@ window.loaderFallback = true;
           <label>И-мэйл</label>
           <input type="email" id="reg-email" placeholder="example@gmail.com" autocomplete="email">
         </div>
-        <button class="submit-btn" id="btnSendCode">Баталгаажуулах код авах →</button>
+        <button class="submit-btn" id="btnNext">Үргэлжлүүлэх →</button>
       </div>
 
-      <!-- ── Алхам 2: код ── -->
+      <!-- ── Алхам 2: нууц үг ── -->
       <div id="regStep2" style="display:none">
-        <div class="field">
-          <label>Баталгаажуулах код</label>
-          <input type="text" id="verify-code" placeholder="000000" maxlength="6" inputmode="numeric" autocomplete="one-time-code" style="letter-spacing:.3em;font-size:22px;font-weight:700;text-align:center">
-          <div style="font-size:11px;color:#86868b;margin-top:5px;display:flex;justify-content:space-between;align-items:center;gap:8px">
-            <span id="codeHint">И-мэйлд ирсэн 6 оронтой кодыг оруулна уу</span>
-            <button type="button" id="btnResend" style="background:none;border:none;color:#0071e3;font-size:11px;cursor:pointer;font-family:inherit;padding:0;white-space:nowrap">Дахин илгээх</button>
-          </div>
-        </div>
-        <button class="submit-btn" id="btnVerify">Баталгаажуулах →</button>
-        <button type="button" class="reg-back" id="btnBack1">← И-мэйл хаягаа засах</button>
-      </div>
-
-      <!-- ── Алхам 3: нууц үг ── -->
-      <div id="regStep3" style="display:none">
-        <div class="reg-verified">✓ <strong id="verifiedEmail"></strong> баталгаажлаа</div>
+        <div class="reg-verified">📧 <strong id="verifiedEmail"></strong></div>
         <div class="field">
           <label>Нууц үг зохиох</label>
           <div class="pass-wrap">
@@ -340,6 +327,10 @@ window.loaderFallback = true;
           </div>
         </div>
         <button class="submit-btn" id="btnReg">Бүртгэл үүсгэх →</button>
+        <button type="button" class="reg-back" id="btnBack1">← И-мэйл хаягаа засах</button>
+        <div style="font-size:11px;color:#86868b;margin-top:12px;line-height:1.5">
+          Бүртгүүлсний дараа и-мэйл хаягаа баталгаажуулах холбоос явуулна.
+        </div>
       </div>
 
       <div class="msg" id="reg-msg"></div>
@@ -350,8 +341,6 @@ window.loaderFallback = true;
 <div class="page-footer">© 2026 LFS Shanghai</div>
 
 <script src="/js/toast.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js"></script>
-<script>emailjs.init({publicKey:'jzbMLEF7IhbkS48RI'});</script>
 <script>
 function switchPane(t) {
   document.getElementById('paneLogin').style.display   = t==='login'    ? 'block' : 'none';
@@ -387,7 +376,7 @@ import {
   getAuth, onAuthStateChanged, signOut,
   signInWithEmailAndPassword, createUserWithEmailAndPassword,
   GoogleAuthProvider, signInWithPopup, signInWithRedirect, getRedirectResult,
-  sendPasswordResetEmail
+  sendPasswordResetEmail, sendEmailVerification
 } from "https://www.gstatic.com/firebasejs/11.7.1/firebase-auth.js";
 import { getFirestore, doc, getDoc, setDoc } from "https://www.gstatic.com/firebasejs/11.7.1/firebase-firestore.js";
 
@@ -513,29 +502,21 @@ document.getElementById('btnLogin').addEventListener('click', async () => {
   document.getElementById(id).addEventListener('keydown', e => { if(e.key==='Enter') document.getElementById('btnLogin').click(); })
 );
 
-// ── REGISTER — 3 алхам: и-мэйл → код → нууц үг ───────────────────────
-// ЖИЧ: код нь хөтөч дээр үүсч sessionStorage-д хадгалагдана. Энэ нь
-// бичил алдаанаас хамгаална ч санаатай тойрохоос хамгаалахгүй
-// (devtools-оор кодыг харж болно). Жинхэнэ баталгаажуулалт хэрэгтэй бол
-// кодыг Vercel функц дээр үүсгэж, тэндээ шалгах ёстой.
-function genCode() { return Math.floor(100000 + Math.random() * 900000).toString(); }
-function vcSave(d)  { sessionStorage.setItem('_vc', JSON.stringify({ ...d, exp: Date.now() + 10*60*1000 })); }
-function vcLoad()   { try { return JSON.parse(sessionStorage.getItem('_vc')||'null'); } catch { return null; } }
-
+// ── REGISTER: 2 алхам (и-мэйл → нууц үг) ─────────────────────────────
+// Өмнө нь 6 оронтой кодыг ХӨТӨЧ дээр үүсгэж sessionStorage-д хадгалдаг
+// байсан. Тэр нь зөвхөн бичгийн алдааг барьдаг, devtools-оор тойроход
+// хялбар байв. Одоо Firebase-ийн өөрийн sendEmailVerification-ийг
+// хэрэглэнэ: холбоосыг Google сервер үүсгэж, өөрөө шалгадаг тул хөтчөөс
+// хуурах боломжгүй. Нэмэлт ашиг: EmailJS-ийн сарын 200 хүсэлтээс
+// бүртгэл бүр нэгийг иддэг байсан нь болино.
+// ЖИЧ: баталгаажуулалт нь БҮРТГЭЛИЙГ хаадаггүй (Хятадад Firebase-ийн
+// холбоос хүрэхгүй байж магадгүй). Баталгаажаагүй бол профайл дээр
+// сануулга гарна.
 const EMAIL_RE = /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/;
 const MIN_PASS = 8;
 
-// EmailJS загвар "Verification code". Доорх sendCode()-ийн илгээдэг
-// талбарууд загварын хувьсагчидтай таарч байх ёстой:
-//   Subject {{code}} · To Email {{to_email}} · From Name {{name}}
-//   Reply To {{email}} · биед {{to_name}}, {{code}}
-// Бусад 2 загвар тохирохгүй: template_o0e4529 нь захиалгын
-// баталгаажуулалт (subject/body тогтмол), template_tb03qyj нь
-// ирсэн холбоо барих мессеж.
-const VERIFY_TEMPLATE = 'template_6tszjnb';
-
 function showRegStep(n) {
-  [1,2,3].forEach(k => {
+  [1,2].forEach(k => {
     document.getElementById('regStep'+k).style.display = (k===n) ? 'block' : 'none';
   });
   document.querySelectorAll('.reg-step').forEach(el => {
@@ -547,91 +528,28 @@ function showRegStep(n) {
 }
 window.resetRegSteps = () => showRegStep(1);
 
-async function sendCode(email, name, code) {
-  await emailjs.send('service_lr0xy9q', VERIFY_TEMPLATE, {
-    to_email: email,
-    to_name:  name || 'Хэрэглэгч',
-    code:     code,
-    name:     'LFS Shanghai',
-    email:    'lfs.shanghai1@gmail.com'
-  });
-}
-
-// ── Алхам 1 → 2: код илгээх ──
-async function requestCode() {
-  const btn   = document.getElementById('btnSendCode');
+// ── Алхам 1 → 2 ──
+document.getElementById('btnNext').addEventListener('click', () => {
   const email = document.getElementById('reg-email').value.trim();
   const name  = document.getElementById('reg-name').value.trim();
   msg_clear('reg-msg');
-  if (!name)                { showMsg('reg-msg','Нэрээ оруулна уу.'); return false; }
-  if (!email)               { showMsg('reg-msg','И-мэйл хаягаа оруулна уу.'); return false; }
-  if (!EMAIL_RE.test(email)){ showMsg('reg-msg','И-мэйл хаяг буруу байна. Жишээ: name@example.com'); return false; }
+  if (!name)                 { showMsg('reg-msg','Нэрээ оруулна уу.'); return; }
+  if (!email)                { showMsg('reg-msg','И-мэйл хаягаа оруулна уу.'); return; }
+  if (!EMAIL_RE.test(email)) { showMsg('reg-msg','И-мэйл хаяг буруу байна. Жишээ: name@example.com'); return; }
 
-  if (!VERIFY_TEMPLATE) {
-    console.error('VERIFY_TEMPLATE тохируулаагүй. EmailJS дээр кодын загвар үүсгэнэ үү.');
-    showMsg('reg-msg','И-мэйлээр бүртгүүлэх түр ажиллахгүй байна. Google-ээр нэвтэрнэ үү.');
-    return false;
-  }
-
-  const orig = btn.textContent;
-  btn.disabled = true; btn.textContent = 'Илгээж байна...';
-  try {
-    const code = genCode();
-    await sendCode(email, name, code);
-    vcSave({ code, email, name });
-    document.getElementById('codeHint').textContent = email + ' рүү илгээлээ';
-    showRegStep(2);
-    document.getElementById('verify-code').value = '';
-    document.getElementById('verify-code').focus();
-    return true;
-  } catch(e) {
-    console.error('EmailJS:', e);
-    showMsg('reg-msg', 'Код илгээхэд алдаа гарлаа. И-мэйл хаягаа шалгаад дахин оролдоно уу.');
-    return false;
-  } finally {
-    btn.disabled = false; btn.textContent = orig;
-  }
-}
-document.getElementById('btnSendCode').addEventListener('click', requestCode);
-
-document.getElementById('btnResend').addEventListener('click', async () => {
-  const b = document.getElementById('btnResend');
-  if (b.disabled) return;
-  b.disabled = true; b.textContent = 'Илгээж байна...';
-  const email = document.getElementById('reg-email').value.trim();
-  const name  = document.getElementById('reg-name').value.trim();
-  try {
-    const code = genCode();
-    await sendCode(email, name, code);
-    vcSave({ code, email, name });
-    document.getElementById('codeHint').textContent = email + ' рүү дахин илгээлээ';
-    msg_clear('reg-msg');
-  } catch(e) {
-    showMsg('reg-msg','Дахин илгээхэд алдаа гарлаа.');
-  }
-  b.textContent = 'Дахин илгээх';
-  setTimeout(() => { b.disabled = false; }, 30000);
+  document.getElementById('verifiedEmail').textContent = email;
+  showRegStep(2);
+  document.getElementById('reg-pass').focus();
 });
+['reg-name','reg-email'].forEach(id =>
+  document.getElementById(id).addEventListener('keydown', e => {
+    if (e.key === 'Enter') document.getElementById('btnNext').click();
+  })
+);
 
 document.getElementById('btnBack1').addEventListener('click', () => showRegStep(1));
 
-// ── Алхам 2 → 3: кодыг шалгах ──
-document.getElementById('btnVerify').addEventListener('click', () => {
-  const entered = document.getElementById('verify-code').value.trim();
-  const email   = document.getElementById('reg-email').value.trim();
-  msg_clear('reg-msg');
-  if (!entered) { showMsg('reg-msg','Баталгаажуулах кодыг оруулна уу.'); return; }
-  const v = vcLoad();
-  if (!v || v.email !== email) { showMsg('reg-msg','Эхлээд и-мэйл рүүгээ код авна уу.'); showRegStep(1); return; }
-  if (Date.now() > v.exp)      { sessionStorage.removeItem('_vc'); showMsg('reg-msg','Кодын хугацаа дууслаа. Дахин авна уу.'); return; }
-  if (entered !== v.code)      { showMsg('reg-msg','Код буруу байна. Дахин шалгана уу.'); return; }
-
-  document.getElementById('verifiedEmail').textContent = email;
-  showRegStep(3);
-  document.getElementById('reg-pass').focus();
-});
-
-// ── Алхам 3: бүртгэл үүсгэх ──
+// ── Алхам 2: бүртгэл үүсгэх ──
 document.getElementById('btnReg').addEventListener('click', async () => {
   const btn   = document.getElementById('btnReg');
   const name  = document.getElementById('reg-name').value.trim();
@@ -640,11 +558,8 @@ document.getElementById('btnReg').addEventListener('click', async () => {
   msg_clear('reg-msg');
   if (pass.length < MIN_PASS) { showMsg('reg-msg', `Нууц үг хамгийн багадаа ${MIN_PASS} тэмдэгт байх ёстой.`); return; }
 
-  // Код энэ алхамд хүрэхийн өмнө шалгагдсан ч, step DOM-оор тойрч
-  // ирэх боломжийг хаахын тулд дахин шалгана
-  const v = vcLoad();
-  if (!v || v.email !== email || Date.now() > v.exp) {
-    showMsg('reg-msg','Баталгаажуулалт хүчингүй боллоо. Эхнээс нь дахин эхлүүлнэ үү.');
+  if (!email || !EMAIL_RE.test(email)) {
+    showMsg('reg-msg','И-мэйл хаягаа шалгана уу.');
     showRegStep(1); return;
   }
 
@@ -656,12 +571,18 @@ document.getElementById('btnReg').addEventListener('click', async () => {
       firstName:'', lastName:'', name, email,
       photoURL:'', phone:'', birthday:'', gender:'', createdAt: Date.now()
     });
-    sessionStorage.removeItem('_vc');
     logEvent(analytics, 'sign_up', { method: 'email' });
+
+    // ── И-мэйл баталгаажуулах холбоос (Firebase өөрөө илгээнэ) ──
+    // Амжилтгүй болсон ч бүртгэлийг зогсоохгүй: холбоосыг профайл дээрээс
+    // дахин авч болно. Буцах хаягийг профайл руу чиглүүлнэ.
+    try {
+      await sendEmailVerification(res.user, { url: location.origin + '/profile/' });
+    } catch(ve) { console.warn('sendEmailVerification:', ve); }
 
     // Амжилтын мэдэгдэл → нүүр хуудас (эсвэл ?redirect= заасан бол тийшээ)
     if (typeof window.toast === 'function') {
-      window.toast('Амжилттай бүртгэгдлээ. Тавтай морил!', 'success');
+      window.toast('Амжилттай бүртгэгдлээ. И-мэйл хаяг руу тань баталгаажуулах холбоос илгээлээ.', 'success');
     }
     const target = new URLSearchParams(location.search).get('redirect') || '/';
     setTimeout(() => window.location.replace(target), 1400);
@@ -679,17 +600,9 @@ document.getElementById('btnReg').addEventListener('click', async () => {
   }
 });
 
-// Enter товч — алхам бүрт тохирох үйлдэл
-document.getElementById('reg-name').addEventListener('keydown',  e => { if(e.key==='Enter') requestCode(); });
-document.getElementById('reg-email').addEventListener('keydown', e => { if(e.key==='Enter') requestCode(); });
-document.getElementById('verify-code').addEventListener('keydown', e => { if(e.key==='Enter') document.getElementById('btnVerify').click(); });
+// Enter товч — нууц үгийн талбараас шууд бүртгүүлнэ
+// (нэр/и-мэйлийн Enter нь дээрх btnNext дээр хийгдсэн)
 document.getElementById('reg-pass').addEventListener('keydown',  e => { if(e.key==='Enter') document.getElementById('btnReg').click(); });
-
-// Зөвхөн цифр, 6 орон бөглөгдмөгц автоматаар шалгана
-document.getElementById('verify-code').addEventListener('input', e => {
-  e.target.value = e.target.value.replace(/\D/g,'').slice(0,6);
-  if (e.target.value.length === 6) document.getElementById('btnVerify').click();
-});
 
 // FORGOT PASSWORD
 document.getElementById('btnForgotSend').addEventListener('click', async () => {
